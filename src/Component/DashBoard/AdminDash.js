@@ -6,8 +6,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { CardFd } from './CardFd';
 import { CardFdT } from './CardFdT';
 
-// import CardWdth from '../../Assets/wc.jpg';
-// import CardDpst from '../../Assets/dc.jpg';
 
 
 
