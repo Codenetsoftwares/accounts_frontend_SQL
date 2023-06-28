@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { FaSignOutAlt } from 'react-icons/fa';
+import { useAuth } from '../../Utils/Auth';
+import { computeHeadingLevel } from '@testing-library/react';
 // import image from "./Img/imge.jpg";
 
 export default function Dashboard() {
+  const auth=useAuth();
   const [transactionType, setTransactionType] = useState(''); 
   const [transactionId, setTransactionId] = useState('');
   const [amount, setAmount] = useState('');
@@ -41,7 +44,7 @@ export default function Dashboard() {
     setAmount('');
     setStatus('');
   };
-
+console.log(auth)
   // const handleLoginDeposit = () => {
   //   setTransactionType('deposit');
   // };

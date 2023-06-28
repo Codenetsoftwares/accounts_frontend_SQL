@@ -68,7 +68,7 @@ const navigate=useNavigate();
       // persist: persist,
     })
       .then((res) => {
-        console.log(res.data.status)
+        console.log(res)
         if (res.data.status === 200) {
           localStorage.setItem("user", res.data.result.accessToken);
           console.log(auth)

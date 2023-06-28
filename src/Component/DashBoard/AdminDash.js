@@ -1,18 +1,32 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { CardFd } from './CardFd';
 import { CardFdT } from './CardFdT';
-
-
-
-
+import { useAuth } from '../../Utils/Auth';
+import TransactionSercvice from '../../Services/TransactionSercvice';
 
 const AdminDash = () => {
+  const auth=useAuth();
+
   const [startDate, setStartDate] = useState(null);
 const [endDate, setEndDate] = useState(null);
+const[documentView,setDocumentView] = useState([]);
+const[withdrawView,setWithdrawView] = useState([])
+
+
+useEffect(()=>{TransactionSercvice.depositView(auth.user).then(res=>
+  setDocumentView(res.data));
+  TransactionSercvice.withdrawView(auth.user).then(res=>
+    setWithdrawView(res.data));
+}
+
+, [auth]);
+
+console.log(documentView)
+console.log(withdrawView)
 
   return (
     <div className='main'>
