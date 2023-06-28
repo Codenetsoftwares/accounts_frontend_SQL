@@ -6,6 +6,7 @@ import Dashboard from './Component/DashBoard/Dashboard';
 import { BrowserRouter,Routes,Route } from "react-router-dom";
 import React from 'react';
 import { AuthProvider } from './Utils/Auth';
+import {RequireAuth} from './Utils/RequireAuth'
 function App() {
   return (
     
@@ -14,8 +15,8 @@ function App() {
         <BrowserRouter>
      <Routes>
       <Route index element={<LoginWth/>}/>
-      <Route path='admindash' element={<AdminDash/>}/>
-      <Route path='dashboard' element={<Dashboard/>}/>
+      <Route path='admindash' element={<RequireAuth><AdminDash/></RequireAuth>}/>
+      <Route path='dashboard' element={<RequireAuth><Dashboard/></RequireAuth>}/>
      </Routes>
       </BrowserRouter>
       </AuthProvider>
