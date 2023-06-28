@@ -12,7 +12,7 @@ const navigate=useNavigate();
 // const redirPath = location.state?.path || "/dashboard";
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
-  const[persist,setPersist]=useState('')
+  // const[persist,setPersist]=useState('')
   const [activeTab, setActiveTab] = useState(1);
 
   const handleClick = (tabNumber) => {
@@ -61,38 +61,115 @@ const navigate=useNavigate();
    
   const handleSubmit = (e) => {
     e.preventDefault();
+    switch(activeTab) {
 
-    AccService.login({
-      email: userId,
-      password: password,
-      // persist: persist,
-    })
-      .then((res) => {
-        console.log(res)
-        if (res.data.status === 200) {
-          localStorage.setItem("user", res.data.result.accessToken);
-          console.log(auth)
-          console.log("jbgjh");
-          // toast.success('Login Successfully')
-          alert('login successfull')
-          auth.login();
-          navigate('/dashboard');
-        }
-      })
-      .catch((err) => {
-        if (!err.response) {
-          alert(err.message);
-          return;
-        }
-        if (err.response.status === 403) {
-          navigate("/dashboard", {
-            state: { user: userId },
-            replace: false,
+      case 1:
+        AccService.depositlogin({
+          email: userId,
+          password: password,
+          // persist: persist,
+        })
+          .then((res) => {
+            console.log(res)
+            if (res.data.status === 200) {
+              localStorage.setItem("user", res.data.result.accessToken);
+              console.log(auth)
+              console.log("deposit");
+              // toast.success('Login Successfully')
+              alert('login successfull')
+              auth.login();
+              navigate('/dashboard');
+            }
+          })
+          .catch((err) => {
+            if (!err.response) {
+              alert(err.message);
+              return;
+            }
+            if (err.response.status === 403) {
+              navigate("/dashboard", {
+                state: { user: userId },
+                replace: false,
+              });
+              return;
+            }
+            
           });
-          return;
-        }
-        
-      });
+        break;
+
+      case 2:
+        AccService.withdrawlogin({
+          email: userId,
+          password: password,
+          // persist: persist,
+        })
+          .then((res) => {
+            console.log(res)
+            if (res.data.status === 200) {
+              localStorage.setItem("user", res.data.result.accessToken);
+              console.log(auth)
+              console.log("withdraw");
+              // toast.success('Login Successfully')
+              alert('login successfull')
+              auth.login();
+              navigate('/dashboard');
+            }
+          })
+          .catch((err) => {
+            if (!err.response) {
+              alert(err.message);
+              return;
+            }
+            if (err.response.status === 403) {
+              navigate("/dashboard", {
+                state: { user: userId },
+                replace: false,
+              });
+              return;
+            }
+            
+          });
+        break;
+
+        case 3:
+          AccService.adminlogin({
+            email: userId,
+            password: password,
+            // persist: persist,
+          })
+            .then((res) => {
+              console.log(res)
+              if (res.data.status === 200) {
+                localStorage.setItem("user", res.data.result.accessToken);
+                console.log(auth)
+                console.log("Admin");
+                // toast.success('Login Successfully')
+                alert('login successfull')
+                auth.login();
+                navigate('/admindash');
+              }
+            })
+            .catch((err) => {
+              if (!err.response) {
+                alert(err.message);
+                return;
+              }
+              if (err.response.status === 403) {
+                navigate("/admindash", {
+                  state: { user: userId },
+                  replace: false,
+                });
+                return;
+              }
+              
+            });
+          break;
+
+      default:
+        navigate("/admindash");
+    }
+
+    
   };
   return (
 

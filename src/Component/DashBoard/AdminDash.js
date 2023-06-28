@@ -27,6 +27,7 @@ useEffect(()=>{TransactionSercvice.depositView(auth.user).then(res=>
 
 console.log(documentView)
 console.log(withdrawView)
+console.log(auth);
 
   return (
     <div className='main'>
