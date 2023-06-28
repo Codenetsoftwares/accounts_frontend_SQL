@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 import  './LoginWth.css';
 import BodyBG from '../../Assets/bg.jpg';
-import { useNavigate} from 'react-router-dom'
+import { useLocation, useNavigate} from 'react-router-dom';
+import AccService from "../../Services/AccService";
+import { useAuth } from "../../Utils/Auth";
 
 const LoginWth = () => {
+  const auth=useAuth();
 const navigate=useNavigate();
-  const [userId, setUserId] = useState();
-  const [password, setPassword] = useState();
+// const location = useLocation();
+// const redirPath = location.state?.path || "/dashboard";
+  const [userId, setUserId] = useState('');
+  const [password, setPassword] = useState('');
+  const[persist,setPersist]=useState('')
   const [activeTab, setActiveTab] = useState(1);
 
   const handleClick = (tabNumber) => {
@@ -21,38 +27,73 @@ const navigate=useNavigate();
     setPassword(e.target.value);
   };
 
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+
+  //   // Store the form data
+  //   const userData = userId;
+  //   const userPassword = password;
+
+  //   // console value
+  //   console.log('User ID:', userData);
+  //   console.log('Password:', userPassword);
+    
+
+  //   // Reset
+  //   setUserId('');
+  //   setPassword('');
+
+  //   //Route
+  //   switch(activeTab) {
+  //     case 1:
+  //       navigate('/dashboard');
+  //       break;
+  //     case 2:
+  //       navigate('/dashboard');
+  //       break;
+  //       case 3:
+  //         navigate('/admindash');
+       
+  //   }
+    
+
+  // }
+   
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Store the form data
-    const userData = userId;
-    const userPassword = password;
-
-    // console value
-    console.log('User ID:', userData);
-    console.log('Password:', userPassword);
-    
-
-    // Reset
-    setUserId('');
-    setPassword('');
-
-    //Route
-    switch(activeTab) {
-      case 1:
-        navigate('/dashboard');
-        break;
-      case 2:
-        navigate('/dashboard');
-        break;
-        case 3:
-          navigate('/admindash');
-       
-    }
-    
-
-  }
-   
+    AccService.login({
+      email: userId,
+      password: password,
+      // persist: persist,
+    })
+      .then((res) => {
+        console.log(res.data.status)
+        if (res.data.status === 200) {
+          localStorage.setItem("user", res.data.result.accessToken);
+          console.log(auth)
+          console.log("jbgjh");
+          // toast.success('Login Successfully')
+          alert('login successfull')
+          auth.login();
+          navigate('/dashboard');
+        }
+      })
+      .catch((err) => {
+        if (!err.response) {
+          alert(err.message);
+          return;
+        }
+        if (err.response.status === 403) {
+          navigate("/dashboard", {
+            state: { user: userId },
+            replace: false,
+          });
+          return;
+        }
+        
+      });
+  };
   return (
 
     // {Main Div}
@@ -65,7 +106,7 @@ const navigate=useNavigate();
 <div className="nav">
 <ul className="nav nav-pills nav-justified nav-tabs custom-nav-tabs" role='tablist' style={{ width: "23rem", marginLeft: "-0.3rem" , cursor:'pointer' }}>
   <li className="nav-item text-center" style={{ width: '33%' }}>
-    <a className ={`nav-link ${activeTab === 1 ? 'active' : ''} text-black fw-bold `} 
+    <a  className ={`nav-link ${activeTab === 1 ? 'active' : ''} text-black fw-bold `} 
       data-toggle ='tab'
       aria-selected ={activeTab === 1}
       onClick={() => handleClick(1)}
@@ -92,7 +133,6 @@ const navigate=useNavigate();
     </a>
   </li>
 </ul>
-
 </div>
 
 <span className="input-group-text px-2" style={{ background: 'linear-gradient(90deg, rgba(238,200,174,1) 0%, rgba(221,34,34,0.8379726890756303) 72%)' }}>
