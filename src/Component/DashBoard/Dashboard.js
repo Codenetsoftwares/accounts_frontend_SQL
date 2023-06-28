@@ -3,6 +3,8 @@ import { FaSignOutAlt } from 'react-icons/fa';
 import { useAuth } from '../../Utils/Auth';
 import { computeHeadingLevel } from '@testing-library/react';
 // import image from "./Img/imge.jpg";
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router';
 
 export default function Dashboard() {
   const auth=useAuth();
@@ -11,6 +13,7 @@ export default function Dashboard() {
   const [amount, setAmount] = useState('');
   const [status, setStatus] = useState('');
   const [transactions, setTransactions] = useState([]);
+  const nav=useNavigate();
 
   const handleTransactionIdChange = (e) => {
     setTransactionId(e.target.value);
@@ -44,6 +47,9 @@ export default function Dashboard() {
     setAmount('');
     setStatus('');
   };
+
+
+
 console.log(auth)
   // const handleLoginDeposit = () => {
   //   setTransactionType('deposit');
@@ -54,6 +60,14 @@ console.log(auth)
   // };
 
   const handleLogout = () => {
+        const response = window.confirm(
+        'You are about to be logged out of this site'
+      );
+      if (response) {
+        toast.success('Logout successfully');
+        auth.logout();
+        nav('/');
+      }
     
     console.log('Logged out');
   };
