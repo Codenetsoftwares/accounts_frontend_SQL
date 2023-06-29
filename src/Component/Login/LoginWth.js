@@ -27,37 +27,7 @@ const navigate=useNavigate();
     setPassword(e.target.value);
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
 
-  //   // Store the form data
-  //   const userData = userId;
-  //   const userPassword = password;
-
-  //   // console value
-  //   console.log('User ID:', userData);
-  //   console.log('Password:', userPassword);
-    
-
-  //   // Reset
-  //   setUserId('');
-  //   setPassword('');
-
-  //   //Route
-  //   switch(activeTab) {
-  //     case 1:
-  //       navigate('/dashboard');
-  //       break;
-  //     case 2:
-  //       navigate('/dashboard');
-  //       break;
-  //       case 3:
-  //         navigate('/admindash');
-       
-  //   }
-    
-
-  // }
    
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -164,12 +134,7 @@ const navigate=useNavigate();
               
             });
           break;
-
-      default:
-        navigate("/admindash");
     }
-
-    
   };
   return (
 
