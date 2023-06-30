@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { FaSignOutAlt } from 'react-icons/fa';
+// import { FaSignOutAlt } from 'react-icons/fa';
 import { useAuth } from '../../Utils/Auth';
-import { computeHeadingLevel } from '@testing-library/react';
+// import { computeHeadingLevel } from '@testing-library/react';
 // import image from "./Img/imge.jpg";
-import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router';
+// import { toast } from 'react-toastify';
+// import { useNavigate } from 'react-router';
+import { DashboardNavbar } from './DashboardNavbar';
 
 export default function Dashboard() {
   const auth=useAuth();
@@ -13,7 +14,7 @@ export default function Dashboard() {
   const [amount, setAmount] = useState('');
   const [status, setStatus] = useState('');
   const [transactions, setTransactions] = useState([]);
-  const nav=useNavigate();
+  // const nav=useNavigate();
 
   const handleTransactionIdChange = (e) => {
     setTransactionId(e.target.value);
@@ -59,18 +60,18 @@ console.log(auth)
   //   setTransactionType('withdraw');
   // };
 
-  const handleLogout = () => {
-        const response = window.confirm(
-        'You are about to be logged out of this site'
-      );
-      if (response) {
-        toast.success('Logout successfully');
-        auth.logout();
-        nav('/');
-      }
+  // const handleLogout = () => {
+  //       const response = window.confirm(
+  //       'You are about to be logged out of this site'
+  //     );
+  //     if (response) {
+  //       toast.success('Logout successfully');
+  //       auth.logout();
+  //       nav('/');
+  //     }
     
-    console.log('Logged out');
-  };
+  //   console.log('Logged out');
+  // };
   const containerStyle = {
     display: 'flex',
     justifyContent: 'center',
@@ -121,24 +122,24 @@ console.log(auth)
     zIndex: -1,
   };
 
-  const logoutButtonStyle = {
-    position: 'absolute',
-    top: '1rem',
-    right: '1rem',
-    backgroundColor: '#f44336',
-    color: '#fff',
-    border: 'none',
-    padding: '0.5rem',
-    borderRadius: '0.5rem',
-    cursor: 'pointer',
-    display: 'flex',
-    alignItems: 'center',
-    transition: 'background-color 0.3s ease',
-  };
+  // const logoutButtonStyle = {
+  //   position: 'absolute',
+  //   top: '1rem',
+  //   right: '1rem',
+  //   backgroundColor: '#f44336',
+  //   color: '#fff',
+  //   border: 'none',
+  //   padding: '0.5rem',
+  //   borderRadius: '0.5rem',
+  //   cursor: 'pointer',
+  //   display: 'flex',
+  //   alignItems: 'center',
+  //   transition: 'background-color 0.3s ease',
+  // };
 
-  const logoutIconStyle = {
-    // marginRight: '0.5rem',
-  };
+  // const logoutIconStyle = {
+  //   // marginRight: '0.5rem',
+  // };
 
   // const hoverInputStyle = {
   //   ...inputStyle,
@@ -146,13 +147,16 @@ console.log(auth)
   // };
 
   return (
+    <>
+    <DashboardNavbar/>
     <div style={containerStyle}>
+      
     <div style={backgroundImageStyle} />
 
-    <button className="btn btn-danger" onClick={handleLogout} style={logoutButtonStyle}>
+    {/* <button className="btn btn-danger" onClick={handleLogout} style={logoutButtonStyle}>
       <FaSignOutAlt style={logoutIconStyle} />
       Logout
-    </button>
+    </button> */}
 
 
       <div style={cardStyle}>
@@ -242,6 +246,7 @@ console.log(auth)
         {/* ))} */}
       </div>
     </div>
+    </>
   );
 }
 

@@ -7,9 +7,12 @@ import { CardFd } from './CardFd';
 import { CardFdT } from './CardFdT';
 import { useAuth } from '../../Utils/Auth';
 import TransactionSercvice from '../../Services/TransactionSercvice';
+import { useNavigate } from 'react-router';
+import { toast } from 'react-toastify';
 
 const AdminDash = () => {
   const auth = useAuth();
+  const nav=useNavigate();
 
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -28,7 +31,21 @@ const AdminDash = () => {
   console.log("This is withdraw====> ", withdrawView)
   console.log("This is Auth=====> ", auth);
 
+  const handleLogout = () => {
+    const response = window.confirm(
+    'You are about to be logged out of this site'
+  );
+  if (response) {
+    toast.success('Logout successfully');
+    auth.logout();
+    nav('/');
+  }
+
+console.log('Logged out');
+};
+
   return (
+    
     <div className='main'>
       <nav className="navbar navbar-expand-lg navbar-light bg-light" style={{ height: '4rem' }}>
         <div>
@@ -63,6 +80,11 @@ const AdminDash = () => {
             />
           </div>
         </div>
+        <div className="collapse navbar-collapse" id="navbarTogglerDemo03" style={{marginLeft:'60rem'}}>
+
+<button className="btn btn-outline-success" type="submit" onClick={handleLogout}>Logout</button>
+
+</div>
       </nav>
       <div className='FddivCard' style={{ display: 'flex', flexDirection: 'row' }}>
         <CardFd documentView={documentView} />
