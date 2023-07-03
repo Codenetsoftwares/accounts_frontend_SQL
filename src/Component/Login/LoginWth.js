@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import  './LoginWth.css';
 import BodyBG from '../../Assets/bg.jpg';
 import { useLocation, useNavigate} from 'react-router-dom';
-import AccService from "../../Services/AccService";
+
 import { useAuth } from "../../Utils/Auth";
+import AccountService from "../../Services/AccountService";
+
 
 const LoginWth = () => {
   const auth=useAuth();
@@ -34,7 +36,7 @@ const navigate=useNavigate();
     switch(activeTab) {
 
       case 1:
-        AccService.depositlogin({
+        AccountService.depositlogin({
           email: userId,
           password: password,
           // persist: persist,
@@ -68,7 +70,7 @@ const navigate=useNavigate();
         break;
 
       case 2:
-        AccService.withdrawlogin({
+        AccountService.withdrawlogin({
           email: userId,
           password: password,
           // persist: persist,
@@ -102,7 +104,7 @@ const navigate=useNavigate();
         break;
 
         case 3:
-          AccService.adminlogin({
+          AccountService.adminlogin({
             email: userId,
             password: password,
             // persist: persist,
@@ -112,7 +114,7 @@ const navigate=useNavigate();
               if (res.data.status === 200) {
                 localStorage.setItem("user", res.data.result.accessToken);
                 console.log(auth)
-                console.log("Admin");
+                console.log("withdraw");
                 // toast.success('Login Successfully')
                 alert('login successfull')
                 auth.login();

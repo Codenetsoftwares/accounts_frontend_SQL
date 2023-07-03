@@ -18,6 +18,7 @@ export const DashboardNavbar = () => {
     
     console.log('Logged out');
   };
+  
 
 
   return (
@@ -27,7 +28,7 @@ export const DashboardNavbar = () => {
     <span className="navbar-toggler-icon"></span>
   </button>
   <div className='wellcome ml-2' >
-  <a className="navbar-brand" href="#"><b>Welcome Depositer</b></a>
+  <a className="navbar-brand" href="#"><b> {auth.user.role === 'deposit' ? 'Welcome Depositor' : 'Welcome Withdrawer'}</b></a>
   </div>
   <div className="collapse navbar-collapse" id="navbarTogglerDemo03" style={{marginLeft:'100rem'}}>
 
