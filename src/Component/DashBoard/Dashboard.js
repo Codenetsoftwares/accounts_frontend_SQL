@@ -6,6 +6,8 @@ import { useAuth } from '../../Utils/Auth';
 // import { toast } from 'react-toastify';
 // import { useNavigate } from 'react-router';
 import { DashboardNavbar } from './DashboardNavbar';
+import DashService from '../../Services/DashService';
+
 
 export default function Dashboard() {
   const auth=useAuth();
@@ -13,7 +15,7 @@ export default function Dashboard() {
   const [transactionId, setTransactionId] = useState('');
   const [amount, setAmount] = useState('');
   const [status, setStatus] = useState('');
-  const [transactions, setTransactions] = useState([]);
+  // const [transactions, setTransactions] = useState([]);
   // const nav=useNavigate();
 
   const handleTransactionIdChange = (e) => {
@@ -30,28 +32,68 @@ export default function Dashboard() {
 
   const handleTransactionTypeChange = (e) => {
     setTransactionType(e.target.value);
+    
   };
+  console.log(transactionType);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
 
-    const newTransaction = {
-      transactionId,
-      transactionType,
-      amount,
-      status
+    e.preventDefault(); // Prevent the default form submission behavior
+    if(auth.user.role==='deposit'){
+    // Prepare the data object to be sent to the backend
+    const data = {
+      transactionType:"deposit",
+      transactionID: transactionId,
+      depositAmount:amount,
+      status:status,
     };
 
-    setTransactions([...transactions, newTransaction]);
+    // Call the API service method to send the data to the backend
+    DashService.depositTransaction(data,auth.user)
+      .then(response => {
+        // Handle successful response from the backend
+        console.log(response.data);
+        alert("Transaction Created Successfully!!")
+      })
+      .catch(error => {
+        // Handle error from the backend
+        console.error(error);
+        alert(" Failed !! Transaction Id Already Exist")
+      });
+    }
+    else{
+      // Prepare the data object to be sent to the backend
+    const data = {
+      transactionType:"withdraw",
+      transactionID: transactionId,
+      withdrawAmount:amount,
+      status:status,
+    };
 
+    // Call the API service method to send the data to the backend
+    DashService.withdrawTransaction(data,auth.user)
+      .then(response => {
+        // Handle successful response from the backend
+        console.log(response.data);
+        alert("Transaction Created Successfully!!")
+      })
+      .catch(error => {
+        // Handle error from the backend
+        console.error(error);
+        alert(" Failed !! Transaction Id Already Exist")
+      });
+
+    }
+
+    // Reset the form fields after submission if needed
+    setTransactionType('');
     setTransactionId('');
-    setAmount('');
-    setStatus('');
+    setAmount(0);
+    setStatus("");
   };
-
-
-
-console.log(auth)
+  //Checking The role of the User
+  console.log(auth.user.role);
+  
   // const handleLoginDeposit = () => {
   //   setTransactionType('deposit');
   // };
@@ -180,7 +222,7 @@ console.log(auth)
               className="form-control"
               id="transactionId"
               name="transactionId"
-              value={transactionId}
+              
               onChange={handleTransactionIdChange}
               placeholder="Transaction ID"
               style={inputStyle}
@@ -188,16 +230,16 @@ console.log(auth)
           </div>
           <div className="form-group">
             <label htmlFor="amount">
-              <h5>{transactionType === 'deposit' ? 'Deposit Amount' : 'Withdraw Amount'}</h5>
+              <h5>Amount</h5>
             </label>
             <input
               type="number"
               className="form-control"
               id="amount"
               name="amount"
-              value={amount}
+              
               onChange={handleAmountChange}
-              placeholder={transactionType === 'deposit' ? 'Deposit Amount' : 'Withdraw Amount'}
+              placeholder="Amount"
               style={inputStyle}
             />
           </div>
@@ -208,7 +250,7 @@ console.log(auth)
               className="form-control"
               id="status"
               name="status"
-              value={status}
+              
               onChange={handleStatusChange}
               placeholder="Status"
               style={inputStyle}
@@ -221,16 +263,16 @@ console.log(auth)
               className="form-control"
               id="transactionType"
               name="transactionType"
-              value={transactionType}
+              value= {auth.user.role === 'deposit' ? 'Deposit' : 'Withdraw'}
               onChange={handleTransactionTypeChange}
               placeholder="Transaction Type"
               style={inputStyle}
+              disabled
             />
           </div>
           <div className="form-group">
             <button type="submit" className="btn btn-primary" style={buttonStyle} >
-              {transactionType === 'deposit' ? 'Submit Deposit' : 'Submit Withdraw'}
-              
+              Submit Transaction 
             </button>
           </div>
         </form>
