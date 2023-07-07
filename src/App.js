@@ -7,10 +7,24 @@ import { BrowserRouter,Routes,Route } from "react-router-dom";
 import React from 'react';
 import { AuthProvider } from './Utils/Auth';
 import {RequireAuth} from './Utils/RequireAuth'
+import { ToastContainer } from 'react-toastify';
+
 function App() {
   return (
     
        <React.Fragment>
+         <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
         <AuthProvider>
         <BrowserRouter>
      <Routes>
