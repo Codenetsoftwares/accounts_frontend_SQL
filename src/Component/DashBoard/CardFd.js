@@ -1,6 +1,6 @@
 import React from 'react'
 export const CardFd = ({ documentView }) => {
-
+console.log(documentView)
   if (!documentView || !documentView.deposits || !Array.isArray(documentView.deposits)) {
     return null;
   }
