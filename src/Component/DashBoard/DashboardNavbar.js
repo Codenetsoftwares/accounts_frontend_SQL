@@ -3,6 +3,8 @@ import { useAuth } from "../../Utils/Auth";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 export const DashboardNavbar = () => {
   const nav = useNavigate();
@@ -20,7 +22,7 @@ export const DashboardNavbar = () => {
     auth.logout();
     nav("/");
     toast.success("Logged out successfully");
-    alert("Logged out");
+    // alert("Logged out");
   };
 
 
@@ -29,42 +31,56 @@ export const DashboardNavbar = () => {
    
 
     <div>
-       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarTogglerDemo03"
-          aria-controls="navbarTogglerDemo03"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="wellcome ml-2">
-          <a className="navbar-brand" href="#">
+     <nav className="navbar navbar-light bg-light">
+        <div className="container-fluid">
+        <span className="navbar-brand" href="#">
             <b>
-              {" "}
-              {auth.user.role === "deposit"
-                ? "Welcome Depositor"
-                : "Welcome Withdrawer"}
+              Welcome
             </b>
-          </a>
-        </div>
-        <div
-          className="collapse navbar-collapse"
-          id="navbarTogglerDemo03"
-          style={{ marginLeft: "130rem" }}
-        >
-          <button
-            className="btn btn-outline-success"
-            type="submit"
-            onClick={handleLogout}
-          >
-            Logout
-          </button>
+          </span>
+          <form className="d-flex">
+          <span
+      className="input-group-text"
+      style={{
+        backgroundColor: "transparent",
+        border: "0",
+        animationName: "spin",
+        animationDuration: "1s",
+        animationIterationCount: "infinite",
+        animationTimingFunction: "linear",
+      }}
+    >
+      <FontAwesomeIcon icon={faUser} />
+    </span>
+            <span
+              className="input-group-text mr-1"
+              style={{ backgroundColor: "transparent", border: "0" }}
+            >
+              {auth.user.role === "deposit"
+                ? "Hi Depositor"
+                : "Hi Withdrawer"}
+            </span>
+            <button
+              className="btn  btn-outline-warning "
+              type="submit"
+              onClick={handleLogout}
+            >
+              Logout
+            </button>
+          </form>
         </div>
       </nav>
-     
+
+
+
+
+
+
+
+
+
+
+
     </div>
    
     

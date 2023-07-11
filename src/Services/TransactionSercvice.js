@@ -21,6 +21,26 @@ class TransactionService {
           },
         });
       }
+
+
+      editTransactionData(id, data, user) {
+        return axios({
+          method: 'post',
+          url: `${API_HOST}/api/admin/edit-transaction/${id}`,
+          data: data,
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
+      }
+
+
+
+
+
+
+
+
       
 }
 
