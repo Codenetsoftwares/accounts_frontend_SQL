@@ -12,7 +12,9 @@ import { toast } from "react-toastify";
 import CalenderService from "../../Services/CalenderService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
+import { Link } from "react-router-dom";
 
 const AdminDash = () => {
   const auth = useAuth();
@@ -102,9 +104,7 @@ const AdminDash = () => {
   console.log("This is Auth=====> ", auth);
 
   const handleLogout = () => {
-    const response = window.confirm(
-      "You are about to be logged out of this site"
-    );
+    const response = true;
     if (response) {
       toast.success("Logout successfully");
       auth.logout();
@@ -188,8 +188,8 @@ const AdminDash = () => {
 
 <div className="input-group input-group-sm ml-1" style={{boxShadow:'17px 15px 27px -9px rgba(0, 0, 0, 0.41)' , border:'0.5px solid black', borderRadius:'6px'}} >
   <DatePicker
-    selected={startDate}
-    onChange={(date) => setStartDate(date)}
+    selected={endDate}
+    onChange={(date) => setEndDate(date)}
     className="form-control datepicker-with-icon"
     placeholderText="End Date"
     dateFormat="dd/MM/yyyy"
@@ -212,12 +212,12 @@ const AdminDash = () => {
             {" "}
             {select === "deposit" ? (
               <div className=" mt-5">
-                {/* This is for Deposit Card */}
+                {/* This is for Deposit Card Normal View */}
                 <div
                   className="card  rounded-2 mb-2"
                   style={{
                     boxShadow: "26px -13px 32px -15px rgba(29,29,31,0.68)",
-                    backgroundColor: '#5dfcb0'
+                    backgroundColor: '#C9FC92'
                    
                   }}
                 >
@@ -232,6 +232,7 @@ const AdminDash = () => {
 
                 {documentView.length > 0 ? (
                   documentView.map((data, i) => {
+                    console.log("Data Id",data._id);
                     return (
                       <div
                         className="card rounded-2"
@@ -258,9 +259,17 @@ const AdminDash = () => {
                               {new Date(data.createdAt).getDate()}
                             </p>
                             <p className="col ">{data.depositAmount}</p>
-                            <p className="col ">{data.transactionID}</p>
+                            <p className="col ">{data.transactionID}</p>   
                           </div>
+                          <div className="col" >
+                          <Link to={`/admindash/${data._id}`} className="col">
+                              <button type="button" class="btn btn-primary">
+                              <FontAwesomeIcon icon={faEdit} data-toggle="modal" data-target="#exampleModalCenter"/>
+                              </button>
+                         </Link>
+                         </div>
                         </div>
+                       
                       </div>
                     );
                   })
@@ -269,12 +278,12 @@ const AdminDash = () => {
                 )}
               </div>
             ) : (
-              // This is for Withdraw Card
+              // This is for Withdraw Card Normal View
 
               <div className="  mt-5">
                 <div className="card rounded-2 mb-2" style={{
                     boxShadow: "26px -13px 32px -15px rgba(29,29,31,0.68)",
-                    backgroundColor:'#e35656'
+                    backgroundColor:'#E6BE8F'
                   }}>
                   <div className="card-body">
                     <div className="row">
@@ -312,6 +321,11 @@ const AdminDash = () => {
                             </p>
                             <p className="col">{data.withdrawAmount}</p>
                             <p className="col">{data.transactionID}</p>
+                            <Link to={`/admindash/${data._id}`} className="col">
+                              <button type="button" class="btn btn-primary">
+                                Edit
+                              </button>
+                            </Link>
                           </div>
                         </div>
                       </div>
@@ -331,13 +345,20 @@ const AdminDash = () => {
             {" "}
             {select === "deposit" ? (
               <div className=" mt-5">
-                {/* This is for Deposit Card */}
-                <div className="card bg-danger rounded-2 mb-2">
+               {/* This is for Deposit Card Filter View */}
+                <div
+                  className="card  rounded-2 mb-2"
+                  style={{
+                    boxShadow: "26px -13px 32px -15px rgba(29,29,31,0.68)",
+                    backgroundColor: '#C9FC92'
+                   
+                  }}
+                >
                   <div className="card-body">
-                    <div className="d-flex justify-content-between">
-                      <h4>Date</h4>
-                      <h4>Amount</h4>
-                      <h4>Transaction Id</h4>
+                    <div className="row" >
+                      <h4 className="col">Date</h4>
+                      <h4 className="col">Amount</h4>
+                      <h4 className="col">Transaction Id</h4>
                     </div>
                   </div>
                 </div>
@@ -345,10 +366,22 @@ const AdminDash = () => {
                 {documentFilter.length > 0 ? (
                   documentFilter.map((data, i) => {
                     return (
-                      <div className="card rounded-2">
-                        <div className="card-body">
-                          <div className="d-flex justify-content-between">
-                            <p>
+                      <div
+                      className="card rounded-2"
+                      style={{
+                        transition: "transform 0.3s",
+                        transform: "scale(1)",
+                      }}
+                      onMouseOver={(e) => {
+                        e.currentTarget.style.transform = "scale(1.01)";
+                      }}
+                      onMouseOut={(e) => {
+                        e.currentTarget.style.transform = "scale(1)";
+                      }}
+                    >
+                      <div className="card-body">
+                        <div className="row">
+                          <p className="col ">
                               {new Date(data.createdAt).toLocaleString(
                                 "default",
                                 {
@@ -357,8 +390,13 @@ const AdminDash = () => {
                               )}{" "}
                               {new Date(data.createdAt).getDate()}
                             </p>
-                            <p>{data.depositAmount}</p>
-                            <p>{data.transactionID}</p>
+                            <p className="col ">{data.depositAmount}</p>
+                            <p className="col ">{data.transactionID}</p>
+                            <Link to={`/admindash/${data._id}`} className="col">
+                              <button type="button" class="btn btn-primary">
+                                Edit
+                              </button>
+                            </Link>
                           </div>
                         </div>
                       </div>
@@ -369,15 +407,18 @@ const AdminDash = () => {
                 )}
               </div>
             ) : (
-              // This is for Withdraw Card
+              // This is for Withdraw Card Filter View 
 
               <div className="  mt-5">
-                <div className="card bg-danger rounded-2 mb-2">
+                <div className="card rounded-2 mb-2" style={{
+                    boxShadow: "26px -13px 32px -15px rgba(29,29,31,0.68)",
+                    backgroundColor:'#E6BE8F'
+                  }}>
                   <div className="card-body">
-                    <div className="d-flex justify-content-between">
-                      <h4>Date</h4>
-                      <h4>Amount</h4>
-                      <h4>Transaction Id</h4>
+                    <div className="row">
+                      <h4 className="col">Date</h4>
+                      <h4 className="col">Amount</h4>
+                      <h4 className="col">Transaction Id</h4>
                     </div>
                   </div>
                 </div>
@@ -385,10 +426,20 @@ const AdminDash = () => {
                 {withdrawFilter.length > 0 ? (
                   withdrawFilter.map((data, i) => {
                     return (
-                      <div className="card rounded-2">
+                      <div className="card rounded-2" 
+                      style={{
+                        transition: "transform 0.3s",
+                        transform: "scale(1)",
+                      }}
+                      onMouseOver={(e) => {
+                        e.currentTarget.style.transform = "scale(1.01)";
+                      }}
+                      onMouseOut={(e) => {
+                        e.currentTarget.style.transform = "scale(1)";
+                      }}>
                         <div className="card-body">
-                          <div className="d-flex justify-content-between">
-                            <p>
+                          <div className="row">
+                            <p className="col ">
                               {new Date(data.createdAt).toLocaleString(
                                 "default",
                                 {
@@ -397,8 +448,13 @@ const AdminDash = () => {
                               )}{" "}
                               {new Date(data.createdAt).getDate()}
                             </p>
-                            <p>{data.withdrawAmount}</p>
-                            <p>{data.transactionID}</p>
+                            <p className="col ">{data.withdrawAmount}</p>
+                            <p className="col ">{data.transactionID}</p>
+                            <Link to={`/admindash/${data._id}`} className="col">
+                              <button type="button" class="btn btn-primary">
+                                Edit
+                              </button>
+                            </Link>
                           </div>
                         </div>
                       </div>
@@ -415,6 +471,7 @@ const AdminDash = () => {
           </>
         )}
       </div>
+      
     </div>
   );
 };

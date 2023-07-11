@@ -8,6 +8,7 @@ import React from 'react';
 import { AuthProvider } from './Utils/Auth';
 import {RequireAuth} from './Utils/RequireAuth'
 import { ToastContainer } from 'react-toastify';
+import EditTransaction from './Component/DashBoard/EditTransaction';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
       <Route index element={<LoginWth/>}/>
       <Route path='admindash' element={<RequireAuth><AdminDash/></RequireAuth>}/>
       <Route path='dashboard' element={<RequireAuth><Dashboard/></RequireAuth>}/>
+      <Route path='admindash/:id' element={<RequireAuth><EditTransaction/></RequireAuth>} />
      </Routes>
       </BrowserRouter>
       </AuthProvider>
