@@ -10,6 +10,9 @@ import DashService from "../../Services/DashService";
 import Backgroundimage from "../../Assets/backgroundImage.jpg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGooglePay } from '@fortawesome/free-brands-svg-icons';
+
 
 export default function Dashboard() {
   const auth = useAuth();
@@ -18,6 +21,16 @@ export default function Dashboard() {
   const [amount, setAmount] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
 
+  const resetForm = () => {
+    // Reset the form fields after submission
+   
+    setTransactionType("");
+    setTransactionId("");
+    setAmount("");
+    setPaymentMethod("");
+    
+    
+  }
   const handleTransactionIdChange = (e) => {
     setTransactionId(e.target.value);
   };
@@ -36,7 +49,8 @@ export default function Dashboard() {
   console.log(transactionType);
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent the default form submission behavior
+    e.preventDefault();
+ // Prevent the default form submission behavior
     if (auth.user.role === "deposit") {
       // Prepare the data object to be sent to the backend
       const data = {
@@ -51,13 +65,16 @@ export default function Dashboard() {
         .then((response) => {
           // Handle successful response from the backend
           console.log(response.data);
-          toast.success("Transaction Created Successfully!");
+        toast.success("Transaction Created Successfully!!");
+       
+          
         })
         .catch((error) => {
           // Handle error from the backend
           console.error(error);
           toast.error("Failed! Transaction ID Does Not Exists");
         });
+        
     } else {
       // Prepare the data object to be sent to the backend
       const data = {
@@ -72,21 +89,26 @@ export default function Dashboard() {
         .then((response) => {
           // Handle successful response from the backend
           console.log(response.data);
-          toast.success("Transaction Created Successfully!!");
+          alert("Transaction Created Successfully!!");
+          resetForm();
+          
+         
         })
         .catch((error) => {
           // Handle error from the backend
           console.error(error);
           toast.error(" Failed !! Transaction Id Already Exist");
+          
         });
+        
+
     }
 
     // Reset the form fields after submission if needed
-    setTransactionType("");
-    setTransactionId("");
-    setAmount(0);
-    setPaymentMethod("");
+    resetForm();
   };
+
+  
   //Checking The role of the User
   console.log(auth.user.role);
 
@@ -224,15 +246,14 @@ export default function Dashboard() {
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="transactionId">
-                <h5>Transaction ID</h5>
+                <h5>Transaction ID </h5>
               </label>
               <input
                 type="text"
                 className="form-control"
-                id="transactionId"
-                name="transactionId"
                 onChange={handleTransactionIdChange}
                 placeholder="Transaction ID"
+                value={transactionId}
                 style={inputStyle}
               />
             </div>
@@ -243,8 +264,7 @@ export default function Dashboard() {
               <input
                 type="number"
                 className="form-control"
-                id="amount"
-                name="amount"
+              value={amount}
                 onChange={handleAmountChange}
                 placeholder="Amount"
                 style={inputStyle}
@@ -257,14 +277,15 @@ export default function Dashboard() {
               <select
                 class="form-select"
                 style={inputStyle}
+                value={paymentMethod}
                 onChange={handlePaymentMethodChange}
               >
                 <option selected>Open this select menu</option>
-                <option value="1">GPAy</option>
-                <option value="2">PhonePay</option>
-                <option value="3">Paytm</option>
-                <option value="4">bank</option>
-                <option value="5">others</option>
+                <option value="GPAy">GPAy</option>
+                <option value="PhonePe">PhonePe</option>
+                <option value="Paytm">Paytm</option>
+                <option value="Bank">Bank</option>
+                <option value="Others">Others</option>
               </select>
             </div>
             <div className="form-group">
