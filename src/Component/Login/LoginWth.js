@@ -51,10 +51,16 @@ const LoginWth = () => {
               auth.login();
               navigate("/dashboard");
             }
+            else{
+              toast.error(res.data.message);
+              navigate("/");
+            }
           })
+
           .catch((err) => {
+            // console.log(err.data);
             if (!err.response) {
-              toast.error(err.message);
+              toast.error(err.data.message);
               return;
             }
             if (err.response.status === 403) {
@@ -80,6 +86,10 @@ const LoginWth = () => {
               localStorage.setItem("user", res.data.result.accessToken);
               auth.login();
               navigate("/dashboard");
+            }
+            else{
+              toast.error(res.data.message);
+              navigate("/");
             }
           })
           .catch((err) => {
@@ -113,6 +123,10 @@ const LoginWth = () => {
               // alert("login successfull");
               auth.login();
               navigate("/admindash");
+            }
+            else{
+              toast.error(res.data.message);
+              navigate("/");
             }
           })
           .catch((err) => {
@@ -261,7 +275,7 @@ const LoginWth = () => {
               </span>
             </div>
             <input
-              type="text"
+              type="email"
               placeholder="User id"
               className="form-control"
               id="userId"
