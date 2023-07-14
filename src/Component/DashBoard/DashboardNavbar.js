@@ -61,7 +61,7 @@ export const DashboardNavbar = () => {
                 : "Hi Withdrawer"}
             </span>
             <button
-              className="btn  btn-outline-warning "
+              className="btn btn-outline-danger"
               type="submit"
               onClick={handleLogout}
             >

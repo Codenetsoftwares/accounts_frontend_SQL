@@ -58,8 +58,7 @@ const EditTransaction = () => {
 
 
     return (
-        <>
-       
+        <div className='EditTransaction'>
         <ul class="circles">
           <li></li>
           <li></li>
@@ -118,7 +117,7 @@ const EditTransaction = () => {
         
     </div>
     
-    </>
+    </div>
     )
 }
 

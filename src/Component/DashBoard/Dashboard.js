@@ -89,8 +89,8 @@ export default function Dashboard() {
         .then((response) => {
           // Handle successful response from the backend
           console.log(response.data);
-          alert("Transaction Created Successfully!!");
-          resetForm();
+          toast.success("Transaction Created Successfully!!");
+         
           
          
         })
@@ -272,7 +272,7 @@ export default function Dashboard() {
             </div>
             <div className="form-group">
               <label htmlFor="PaymentMethod">
-                <h5>paymentMethod</h5>
+                <h5 style={{fontWeight:'boldb   '}}>PaymentMethod</h5>
               </label>
               <select
                 class="form-select"
