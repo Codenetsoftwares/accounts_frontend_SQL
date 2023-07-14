@@ -93,18 +93,26 @@ const AdminDash = () => {
   };
 
   useEffect(() => {
-    TransactionSercvice.depositView(auth.user).then((res) =>
-      setDocumentView(res.data.deposits)
+    TransactionSercvice.depositView(auth.user).then((res) =>(
+      setDocumentView(res.data.deposits),
+      setTotalDeposit(res.data.totalDeposits)
+    )
+     
     );
-    TransactionSercvice.withdrawView(auth.user).then((res) =>
-      setWithdrawView(res.data.withdraws)
+    TransactionSercvice.withdrawView(auth.user).then((res) =>(
+      setWithdrawView(res.data.withdraws),
+      setTotalWithdraw(res.data.totalWithdraws)
+    )
     );
   }, [auth]);
   
   console.log("Deposit", documentView);
+  console.log("totalDeposit", totalDeposit);
   console.log("Withdraw", withdrawView);
+  console.log("TotalWithdraw", totalWithdraw);
   console.log("This is Auth=====> ", auth);
 
+  const TotalBlance=totalDeposit-totalWithdraw;
   const handleLogout = () => {
     const response = true;
     if (response) {
@@ -130,18 +138,26 @@ const AdminDash = () => {
       <nav className="navbar navbar-light bg-light">
         <div className="container-fluid">
           <a class="navbar-brand">
-            <b>Welcome</b>
+            <b>Total Balance:</b>
+            <b style={{
+    textShadow: '2px 2px 4px #3f5efb',
+    transform: 'translateZ(0)',
+    display: 'inline-block',
+    display: 'inline-block',
+    color: '#ff0034'
+    
+  }}>&nbsp;₹&nbsp;{TotalBlance}</b>
           </a>
           <form className="d-flex">
             <span
               className="input-group-text"
-              style={{ backgroundColor: "transparent", border: "0" }}
+              style={{ backgroundColor: "transparent", border: "0"}}
             >
               <FontAwesomeIcon icon={faUser} />
             </span>
             <span
               className="input-group-text mr-1"
-              style={{ backgroundColor: "transparent", border: "0" }}
+              style={{ backgroundColor: "transparent", border: "0"}}
             >
               Hi! Administrator
             </span>
@@ -188,6 +204,7 @@ const AdminDash = () => {
               placeholderText="Start Date"
               dateFormat="dd/MM/yyyy"
             />
+
 
             <DatePicker
               selected={endDate}
@@ -236,21 +253,22 @@ const AdminDash = () => {
                 </div>
 
                 {documentView.length > 0 ? (
-                  documentView.map((data, i) => {
-                    console.log("Data Id", data._id);
+                 documentView.map((data, i) => {
+                   
                     return (
                       <div
                         className="card rounded-2"
                         style={{
                           transition: "transform 0.3s",
                           transform: "scale(1)",
+                          boxShadow: "20px 3px 22px 1px rgba(0, 0, 0, 0.36)"
                         }}
                         onMouseOver={(e) => {
                           e.currentTarget.style.transform = "scale(1.01)";
                         }}
                         onMouseOut={(e) => {
                           e.currentTarget.style.transform = "scale(1)";
-                        }}
+                        }} 
                       >
                         <div className="card-body">
                           <div className="row">
@@ -316,6 +334,7 @@ const AdminDash = () => {
                         style={{
                           transition: "transform 0.3s",
                           transform: "scale(1)",
+                          boxShadow: "20px 3px 22px 1px rgba(0, 0, 0, 0.36)"
                         }}
                         onMouseOver={(e) => {
                           e.currentTarget.style.transform = "scale(1.01)";
@@ -395,6 +414,7 @@ const AdminDash = () => {
                         style={{
                           transition: "transform 0.3s",
                           transform: "scale(1)",
+                          boxShadow: "20px 3px 22px 1px rgba(0, 0, 0, 0.36)"
                         }}
                         onMouseOver={(e) => {
                           e.currentTarget.style.transform = "scale(1.01)";
@@ -467,6 +487,7 @@ const AdminDash = () => {
                         style={{
                           transition: "transform 0.3s",
                           transform: "scale(1)",
+                          boxShadow: "20px 3px 22px 1px rgba(0, 0, 0, 0.36)"
                         }}
                         onMouseOver={(e) => {
                           e.currentTarget.style.transform = "scale(1.01)";
