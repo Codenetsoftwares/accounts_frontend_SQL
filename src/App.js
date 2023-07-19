@@ -11,6 +11,7 @@ import { ToastContainer } from 'react-toastify';
 import EditTransaction from './Component/DashBoard/EditTransaction';
 import Sidebar from './Component/Sidebar/Sidebar';
 import TopNavbar from './Component/Sidebar/TopNavbar';
+import CreateUser from './Component/DashBoard/CreateUser';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Route path='/' element={<TopNavbar />}>
             <Route path='admindash'  element={<RequireAuth><AdminDash/></RequireAuth>} />
             <Route path='dashboard' element={<RequireAuth><Dashboard/></RequireAuth>}/>
+            <Route path='createuser' element={<RequireAuth><CreateUser/></RequireAuth>}/>
           </Route>
         
       {/* <Route path='admindash' element={<RequireAuth><AdminDash/></RequireAuth>}/> */}
