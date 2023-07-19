@@ -16,6 +16,7 @@ import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import  './AdminDash.css';
+import TopNavbar from "../Sidebar/TopNavbar";
 
 const AdminDash = () => {
   const auth = useAuth();
@@ -135,7 +136,7 @@ const AdminDash = () => {
   return (
     <div className="main">
       {/* Top Div */}
-      <nav className="navbar navbar-light bg-light">
+      {/* <nav className="navbar navbar-light bg-light">
         <div className="container-fluid">
           <a class="navbar-brand">
             <b>Total Balance:</b>
@@ -170,7 +171,8 @@ const AdminDash = () => {
             </button>
           </form>
         </div>
-      </nav>
+      </nav> */}
+      
       {/* This is the Main Card */}
       <div
         className="card card-body rounded-1 main "

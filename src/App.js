@@ -9,6 +9,8 @@ import { AuthProvider } from './Utils/Auth';
 import {RequireAuth} from './Utils/RequireAuth'
 import { ToastContainer } from 'react-toastify';
 import EditTransaction from './Component/DashBoard/EditTransaction';
+import Sidebar from './Component/Sidebar/Sidebar';
+import TopNavbar from './Component/Sidebar/TopNavbar';
 
 function App() {
   return (
@@ -29,10 +31,20 @@ function App() {
         <AuthProvider>
         <BrowserRouter>
      <Routes>
+      
       <Route index element={<LoginWth/>}/>
-      <Route path='admindash' element={<RequireAuth><AdminDash/></RequireAuth>}/>
-      <Route path='dashboard' element={<RequireAuth><Dashboard/></RequireAuth>}/>
+      
+          <Route path='/' element={<TopNavbar />}>
+            <Route path='admindash'  element={<RequireAuth><AdminDash/></RequireAuth>} />
+            <Route path='dashboard' element={<RequireAuth><Dashboard/></RequireAuth>}/>
+          </Route>
+        
+      {/* <Route path='admindash' element={<RequireAuth><AdminDash/></RequireAuth>}/> */}
+      {/* <Route path='dashboard' element={<RequireAuth><Dashboard/></RequireAuth>}/> */}
       <Route path='admindash/:id' element={<RequireAuth><EditTransaction/></RequireAuth>} />
+      <Route path='sidebar' element={<RequireAuth><Sidebar/></RequireAuth>} />
+      
+
      </Routes>
       </BrowserRouter>
       </AuthProvider>
