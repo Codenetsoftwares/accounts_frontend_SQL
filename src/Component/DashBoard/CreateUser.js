@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 
-const ContactForm = () => {
+const CreateUser = () => {
   const [formData, setFormData] = useState({
     yourName: '',
     yourSurname: '',
     yourEmail: '',
-    yourSubject: '',
-    yourMessage: '',
+    yourPassword: '',
+ 
   });
+  const [checkedItems, setCheckedItems] = useState([]);
+
+ 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,10 +22,26 @@ const ContactForm = () => {
     // Implement your form submission logic here
     // You can access the form data using 'formData'
     console.log(formData);
+    console.log(checkedItems);
+  };
+   
+  const handleCheckboxChange = (event) => {
+    const value = event.target.value;
+    if (event.target.checked) {
+      // Add the checkbox value to the array if it's checked
+      setCheckedItems((prevCheckedItems) => [...prevCheckedItems, value]);
+    } else {
+      // Remove the checkbox value from the array if it's unchecked
+      setCheckedItems((prevCheckedItems) =>
+        prevCheckedItems.filter((item) => item !== value)
+      );
+    }
   };
 
+
+
   return (
-    <div className="container my-5" style={{_}}>
+    <div className="container  mt-5 pt-5">
       <div className="row justify-content-center">
         <div className="col-lg-9">
          
@@ -70,31 +89,67 @@ const ContactForm = () => {
                   onChange={handleChange}
                   required
                 />
-              </div>
+                </div>
+
+                <div className="col-md-6">
+                <label htmlFor="your-password" className="form-label">
+                password
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="your-password"
+                  name="yourPassword"
+                  value={formData.yourPassword}
+                  onChange={handleChange}
+                  required
+                />
+                </div>
               <div className="form-check form-switch">
-  <input className="form-check-input" type="checkbox" id="flexSwitchCheckDefault"/>
-  <label className="form-check-label" for="flexSwitchCheckDefault">Default switch checkbox input</label>
+  <input 
+  className="form-check-input" 
+  type="checkbox" 
+  value="Dashboard"
+  checked={checkedItems.includes('Dashboard')}
+  onChange={handleCheckboxChange}
+/>
+  <label className="form-check-label" for="flexSwitchCheckDefault">Dashboard</label>
 </div>
 <div className="form-check form-switch">
-  <input className="form-check-input" type="checkbox" id="flexSwitchCheckDefault"/>
-  <label className="form-check-label" for="flexSwitchCheckDefault">Default switch checkbox input</label>
+  <input 
+  className="form-check-input" 
+  type="checkbox" 
+  value="create user"
+  checked={checkedItems.includes('create user')}
+  onChange={handleCheckboxChange}
+  
+ />
+  <label className="form-check-label" for="flexSwitchCheckDefault"> create user </label>
 </div>
 <div className="form-check form-switch">
-  <input className="form-check-input" type="checkbox" id="flexSwitchCheckDefault"/>
-  <label className="form-check-label" for="flexSwitchCheckDefault">Default switch checkbox input</label>
+  <input 
+  className="form-check-input" 
+  type="checkbox" 
+  value="Alert"
+  checked={checkedItems.includes('Alert')}
+  onChange={handleCheckboxChange}
+
+  />
+  <label className="form-check-label" for="flexSwitchCheckDefault">Alert</label>
 </div>
 <div className="form-check form-switch">
-  <input className="form-check-input" type="checkbox" id="flexSwitchCheckDefault"/>
-  <label className="form-check-label" for="flexSwitchCheckDefault">Default switch checkbox input</label>
+  <input 
+  className="form-check-input" 
+  type="checkbox" 
+  value="Create Transaction"
+  checked={checkedItems.includes('Create Transaction')}
+  onChange={handleCheckboxChange}
+
+  />
+  <label className="form-check-label" for="flexSwitchCheckDefault">Create Transaction</label>
+  
 </div>
-<div className="form-check form-switch">
-  <input className="form-check-input" type="checkbox" id="flexSwitchCheckDefault"/>
-  <label className="form-check-label" for="flexSwitchCheckDefault">Default switch checkbox input</label>
-</div>
-<div className="form-check form-switch">
-  <input className="form-check-input" type="checkbox" id="flexSwitchCheckDefault"/>
-  <label className="form-check-label" for="flexSwitchCheckDefault">Default switch checkbox input</label>
-</div>
+
                <div className="col-12">
                 <div className="row">
                   <div className="col-md-6">
@@ -116,4 +171,4 @@ const ContactForm = () => {
   );
 };
 
-export default ContactForm;
+export default CreateUser;
