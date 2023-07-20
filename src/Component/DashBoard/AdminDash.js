@@ -13,6 +13,8 @@ import CalenderService from "../../Services/CalenderService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { FaFilter } from 'react-icons/fa';
+import { FaEye } from 'react-icons/fa';
 import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import  './AdminDash.css';
@@ -136,7 +138,7 @@ const AdminDash = () => {
   return (
     <div className="main">
       {/* Top Div */}
-      {/* <nav className="navbar navbar-light bg-light">
+      {/* <nav className="navbar navbar-light bg-light">00
         <div className="container-fluid">
           <a class="navbar-brand">
             <b>Total Balance:</b>
@@ -178,10 +180,10 @@ const AdminDash = () => {
         className="card card-body rounded-1 main "
         // style={{ backgroundImage: gradient }}
       >
-        <div className="d-flex mt-5">
-          <h6 className="fw-bold text-nowrap">Select View Mode:</h6>
+        <div className="d-flex mt-5 mt-5 ml-5 pt-5 justify-content-center">
+          <h6 className="fw-bold text-nowrap pt-2"> View <FaEye /></h6>
           <select
-            className="form-control mx-3 "
+            className="form-control mx-3 w-25"
             value={select || ""}
             autoComplete="off"
             onChange={handleChange}
@@ -191,14 +193,14 @@ const AdminDash = () => {
               borderRadius: "6px",
             }}
           >
-            <option className="d-flex" value="deposit">Deposit</option>
-            <option className="d-flex" value="withdraw">Withdraw</option>
+            <option className="d-flex" value="deposit"><b>Deposit</b></option>
+            <option className="d-flex" value="withdraw"><b>Withdraw</b></option>
           </select>
         </div>
-        <div className="d-flex mt-2">
-          <p className="fw-bold fs-6 text-nowrap mt-1">Filter By Date:</p>
+        <div className="d-flex mt-2 pl-5 justify-content-center">
+          <p className="fw-bold fs-6 text-nowrap mt-1"><FaFilter /></p>
 
-          <div className="d-flex gap-2 flex-wrap ms-5">
+          <div className="d-flex gap-2 justify-content-center w-25 ms-5">
             <DatePicker
               selected={startDate}
               onChange={(date) => setStartDate(date)}

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { FaChartLine } from 'react-icons/fa';
 import { FaUserPlus } from 'react-icons/fa';
 import { FaExchangeAlt } from 'react-icons/fa';
-import { FaAddressBook } from 'react-icons/fa';
+import { FaExclamationTriangle } from 'react-icons/fa';
 
 const Sidebar = () => {
   const [sidebarWidth, setSidebarWidth] = useState(0);
@@ -38,8 +38,9 @@ const Sidebar = () => {
           paddingTop: "60px"
         }}
       >
+        <center>
         <a
-          href="javascript:void(0)"
+          href="#"
           className="closebtn"
           style={{
             position: "absolute",
@@ -60,7 +61,7 @@ const Sidebar = () => {
           <a
             href="#"
             style={{
-              padding: "8px 60px 8px 32px",
+              padding: "8px 60px 30px 32px",
               textDecoration: "none",
               fontSize: "25px",
               color: "#818181",
@@ -76,7 +77,7 @@ const Sidebar = () => {
           <a
             href="#"
             style={{
-              padding: "8px 54px 8px 32px",
+              padding: "8px 54px 30px 32px",
               textDecoration: "none",
               fontSize: "25px",
               color: "#818181",
@@ -92,7 +93,7 @@ const Sidebar = () => {
           <a
             href="#"
             style={{
-              padding: "8px -2px 8px 32px",
+              padding: "8px -2px 30px 32px",
               textDecoration: "none",
               fontSize: "25px",
               color: "#818181",
@@ -108,7 +109,7 @@ const Sidebar = () => {
           <a
             href="#"
             style={{
-              padding: "8px 59px 8px 32px",
+              padding: "30px 59px 8px 32px",
               textDecoration: "none",
               fontSize: "25px",
               color: "#818181",
@@ -116,10 +117,11 @@ const Sidebar = () => {
               transition: "0.3s"
             }}
           >
-             <FaAddressBook />
-            <small>Contact</small>
+             <FaExclamationTriangle />
+            <small>Alert</small>
           </a>
         </Link>
+        </center>
       </div>
 
       <div

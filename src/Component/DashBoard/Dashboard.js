@@ -223,7 +223,7 @@ export default function Dashboard() {
         theme="dark"
       /> */}
 
-      <DashboardNavbar />
+      {/* <DashboardNavbar /> */}
       <div style={containerStyle}>
         <div style={backgroundImageStyle} />
 
