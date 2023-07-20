@@ -3,11 +3,12 @@ import React, { useState } from "react";
 import "./LoginWth.css";
 import BodyBG from "../../Assets/bg.jpg";
 import { useLocation, useNavigate } from "react-router-dom";
-
+import { Link } from "react-router-dom";
 import { useAuth } from "../../Utils/Auth";
 import AccountService from "../../Services/AccountService";
 import {   ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 
 const LoginWth = () => {
   const auth = useAuth();
@@ -332,6 +333,9 @@ const LoginWth = () => {
               }}
               onClick={handleSubmit}
             />
+          </div>
+          <div className="d-flex justify-content-center">
+          <Link to="/forpas"> <b>Forgot Password?</b> </Link>
           </div>
         </form>
       </div>

@@ -12,6 +12,9 @@ import EditTransaction from './Component/DashBoard/EditTransaction';
 import Sidebar from './Component/Sidebar/Sidebar';
 import TopNavbar from './Component/Sidebar/TopNavbar';
 import CreateUser from './Component/DashBoard/CreateUser';
+import Alert from './Component/DashBoard/Alert';
+import ForPas from './Component/Login/ForPas';
+
 
 function App() {
   return (
@@ -39,13 +42,14 @@ function App() {
             <Route path='admindash'  element={<RequireAuth><AdminDash/></RequireAuth>} />
             <Route path='dashboard' element={<RequireAuth><Dashboard/></RequireAuth>}/>
             <Route path='createuser' element={<RequireAuth><CreateUser/></RequireAuth>}/>
+            <Route path='alert' element={<RequireAuth><Alert/></RequireAuth>}/>
           </Route>
         
       {/* <Route path='admindash' element={<RequireAuth><AdminDash/></RequireAuth>}/> */}
       {/* <Route path='dashboard' element={<RequireAuth><Dashboard/></RequireAuth>}/> */}
       <Route path='admindash/:id' element={<RequireAuth><EditTransaction/></RequireAuth>} />
       <Route path='sidebar' element={<RequireAuth><Sidebar/></RequireAuth>} />
-      
+      <Route path='forpas' element={<ForPas/>} />
 
      </Routes>
       </BrowserRouter>
