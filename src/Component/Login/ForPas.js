@@ -6,21 +6,46 @@ import { useNavigate } from "react-router-dom";
 const ForPas = () => {
     const [resetPage, setResetpage] = useState(false);
     const [email, setEmail] = useState("");
+    const [otp, setOtp] = useState("");
+    const [pass, setPass] = useState("");
+    const [cpass, setCpass] = useState("");
     const navigate = useNavigate();
-    const handelEmailChange = (e) => {
 
+    const handelEmailChange = (e) => {
         setEmail(e.target.value);
         console.log(email);
     }
+
+    const handelPass = (e) => {
+      setPass(e.target.value);
+      console.log(pass);
+  }
+
+
+  const handelCpass = (e) => {
+    setCpass(e.target.value);
+    console.log(cpass);
+    }
+
+
     const handelEmailSubmit=()=>{
         setResetpage(true);
         console.log(resetPage);
     }
 
+    const handelResetChange=()=>{
+      setResetpage(false);
+      console.log(resetPage);
+  }
     const handelResetpass=()=>{
         navigate("/");
     }
     
+    const handelOtp=(e)=>{
+      setOtp(e.target.value);
+      console.log(otp);
+        }
+
   return (
    <>
         <div className="bg-info d-flex justify-content-center align-items-center vh-100" style={{ backgroundImage: `url(${BodyBG})`, backgroundSize: "cover" }}>
@@ -31,7 +56,7 @@ const ForPas = () => {
           </div>
           <div className="card-body px-5">
             <p className="card-text py-2">
-              Enter your email address and we'll send you an email with recovery OTP to reset your password.
+            Enter email for recovery OTP to reset password.
             </p>
             <div className="form-outline">
               <input
@@ -73,17 +98,26 @@ const ForPas = () => {
               We have emailed you a code. Enter the code below.
             </p>
             <div className="form-outline">
+              <lebel><b>Your Email</b></lebel>
+            <input
+                className="form-control my-3"
+                value={email}
+                disabled
+              />
               <input
                 className="form-control my-3"
                 placeholder="Enter Your OTP"
+                onChange={handelOtp}
               />
               <input
                 className="form-control my-3"
                 placeholder="Enter New Password"
+                onChange={handelPass}
               />
               <input
                 className="form-control my-3"
                 placeholder="Confirm Password"
+                onChange={handelCpass}
               />
             </div>
             <button
@@ -102,7 +136,7 @@ const ForPas = () => {
             >
               Reset password
             </button>
-            
+          <button className='mt-2' style={{border:'0' , backgroundColor:'white', color:'#0a35f7'}} onClick={handelResetChange}> <u>Change Email?</u> </button> 
           </div>
         </div>
       )}
