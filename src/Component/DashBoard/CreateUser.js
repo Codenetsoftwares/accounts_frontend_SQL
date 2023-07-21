@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './CreateUser.css';
 
 const CreateUser = () => {
   const [formData, setFormData] = useState({
@@ -41,9 +42,13 @@ const CreateUser = () => {
 
 
   return (
+    <div className="bg-light animation-container">
     <div className="container mt-5 pt-5">
       <div className="row justify-content-center">
         <div className="col-lg-9">
+        <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
+        <div className="card">
+            <div className="card-body">
          
           <form onSubmit={handleSubmit}>
             <div className="row g-3">
@@ -58,6 +63,7 @@ const CreateUser = () => {
                   name="yourName"
                   value={formData.yourName}
                   onChange={handleChange}
+                  placeholder='first name'
                   required
                 />
               </div>
@@ -72,7 +78,7 @@ const CreateUser = () => {
                   name="yourSurname"
                   value={formData.yourSurname}
                   onChange={handleChange}
-                  placeholder=''
+                  placeholder='last name'
                   required
                 />
               </div>
@@ -87,6 +93,7 @@ const CreateUser = () => {
                   name="yourEmail"
                   value={formData.yourEmail}
                   onChange={handleChange}
+                  placeholder='Email'
                   required
                 />
                 </div>
@@ -102,9 +109,14 @@ const CreateUser = () => {
                   name="yourPassword"
                   value={formData.yourPassword}
                   onChange={handleChange}
+                  placeholder='password'
+                 
                   required
                 />
                 </div>
+                <label htmlFor="your-password" className="form-label">
+                <h5><span class="badge badge-secondary">Give Access Of :</span></h5>
+                </label>
               <div className="form-check form-switch">
   <input 
   className="form-check-input" 
@@ -152,9 +164,9 @@ const CreateUser = () => {
 
                <div className="col-12">
                 <div className="row">
-                  <div className="col-md-6">
+                  <div className="col-md-6  submit-button">
                     <button type="submit" className="btn btn-dark w-100 fw-bold">
-                      submit
+                      <h5>Create User</h5>
                     </button>
                   </div>
                 </div>
@@ -163,8 +175,12 @@ const CreateUser = () => {
           </form>
         </div>
       </div>
+      </div>
+      </div>
      
     </div>
+    </div>
+    </div> 
     
              
               
