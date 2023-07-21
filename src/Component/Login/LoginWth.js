@@ -116,10 +116,11 @@ const LoginWth = () => {
           // persist: persist,
         })
           .then((res) => {
-            console.log(res);
-            if (res.data.status === 200) {
-              localStorage.setItem("user", res.data.result.accessToken);
-              console.log(auth);
+            console.log('res',res);
+            console.log('res',res.data.token.accessToken);
+            if (res.status === 200) {
+              localStorage.setItem("user", res.data.token.accessToken);
+              console.log("===>",auth);
               console.log("withdraw");
               toast.success('Login Successfully')
               // alert("login successfull");
