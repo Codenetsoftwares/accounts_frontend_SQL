@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import "./LoginWth.css";
 import BodyBG from "../../Assets/bg.jpg";
+import Happy from '../../Assets/My_project.ico'
 import { useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../Utils/Auth";
@@ -18,7 +19,7 @@ const LoginWth = () => {
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
   // const[persist,setPersist]=useState('')
-  const [activeTab, setActiveTab] = useState(1);
+  const [activeTab, setActiveTab] = useState(3);
 
   const handleClick = (tabNumber) => {
     setActiveTab(tabNumber);
@@ -171,7 +172,7 @@ const LoginWth = () => {
             role="tablist"
             style={{ width: "23rem", marginLeft: "-0.3rem", cursor: "pointer" }}
           >
-            <li className="nav-item text-center" style={{ width: "33%" }}>
+            {/* <li className="nav-item text-center" style={{ width: "33%" }}>
               <a
                 className={`nav-link ${
                   activeTab === 1 ? "active" : ""
@@ -196,7 +197,7 @@ const LoginWth = () => {
               >
                 <b className="text-white">Withdraw</b>
               </a>
-            </li>
+            </li> */}
             <li className="nav-item text-center" style={{ width: "33%" }}>
               <a
                 className={`nav-link ${
@@ -206,7 +207,9 @@ const LoginWth = () => {
                 aria-selected={activeTab === 3}
                 onClick={() => handleClick(3)}
               >
-                <b className="text-white">Admin</b>
+                <b className="text-white">Happy Wave</b><br/>
+                
+
               </a>
             </li>
           </ul>
@@ -243,14 +246,13 @@ const LoginWth = () => {
           )}
           {activeTab === 3 && (
             <i
-              className="fas fa-user-shield"
+              className="happy"
               style={{
-                fontSize: "24px",
                 height: "100%",
                 display: "flex",
                 alignItems: "center",
               }}
-            ></i>
+            ><img src={Happy} /></i>
           )}
         </span>
 
