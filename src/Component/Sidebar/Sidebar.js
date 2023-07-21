@@ -105,7 +105,7 @@ const Sidebar = () => {
            <small> Create Transaction</small>
           </a>
         </Link>
-        <Link to="/contact">
+        <Link to="/alert">
           <a
             href="#"
             style={{

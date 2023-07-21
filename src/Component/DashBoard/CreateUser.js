@@ -41,7 +41,7 @@ const CreateUser = () => {
 
 
   return (
-    <div className="container  mt-5 pt-5">
+    <div className="container mt-5 pt-5">
       <div className="row justify-content-center">
         <div className="col-lg-9">
          
