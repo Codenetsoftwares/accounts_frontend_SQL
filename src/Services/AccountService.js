@@ -24,6 +24,16 @@ class AccountService {
         data: data,
       });
     }
+    createuser(data,user) {
+      return axios({
+        method: 'post',
+        url: API_HOST + '/api/create/user-admin',
+        data: data,
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        }
+      });
+    }
 }
 
 export default new AccountService();

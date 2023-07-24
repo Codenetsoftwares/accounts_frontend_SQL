@@ -1,5 +1,5 @@
 
-@keyframes gradientAnimation {
+/* @keyframes gradientAnimation {
     0% {
       background-position: 0% 50%;
     }
@@ -9,10 +9,10 @@
     100% {
       background-position: 0% 50%;
     }
-  }
+  } */
   
-  .animation-container {
-    position: fixed; /* Add this to fix the element */
+  /* .animation-container {
+    position: fixed; 
     top: 0;
     left: 0;
     width: 100%;
@@ -23,7 +23,7 @@
   }
   
 
-  /* Additional styles for the card */
+ 
 .card {
     margin-top: -200px;
     border-radius: 10px;
@@ -32,7 +32,7 @@
   
 
   
-  /* Center the submit button at the bottom */
+ 
   .submit-button {
     margin-top: auto;
-  }
+  } */
