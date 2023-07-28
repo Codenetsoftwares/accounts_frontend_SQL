@@ -9,6 +9,7 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 export const DashboardNavbar = () => {
   const nav = useNavigate();
   const auth = useAuth();
+  console.log(auth)
   // const handleLogout = () => {
   //     const response = window.confirm(
   //     'You are about to be logged out of this site'
