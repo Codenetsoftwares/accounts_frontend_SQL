@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./CreateUser.css";
+// import "./CreateUser.css";
 import AccountService from "../../Services/AccountService";
 import { useAuth } from "../../Utils/Auth";
 
@@ -13,6 +13,7 @@ const CreateUser = () => {
   });
   const [checkedItems, setCheckedItems] = useState([]);
 
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -21,23 +22,27 @@ const CreateUser = () => {
   const handleCheckboxChange = (event) => {
     const value = event.target.value;
     if (event.target.checked) {
-      // Add the checkbox value to the array if it's checked
+     
       setCheckedItems((prevCheckedItems) => [...prevCheckedItems, value]);
     } else {
-      // Remove the checkbox value from the array if it's unchecked
+    
       setCheckedItems((prevCheckedItems) =>
         prevCheckedItems.filter((item) => item !== value)
       );
     }
+
+   
   };
+
+ 
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Implement your form submission logic here
-    // You can access the form data using 'formData'
-    console.log(formData);
-    console.log(checkedItems);
   
+    console.log(checkedItems);
+
+ 
 
   //Api Fetching
   AccountService.createuser(
@@ -47,6 +52,7 @@ const CreateUser = () => {
       email: formData.yourEmail,
       password: formData.yourPassword,
       roles: checkedItems,
+     
     },
     auth.user
   )
@@ -66,14 +72,20 @@ const CreateUser = () => {
     });
   };
   return (
-    <div className="bg-light animation-container">
+    <div className="bg-light"   style={{}} > 
+   
+      {/* <div
+        className="animated-bg"
+        style={{
+          background: "linear-gradient(45deg, #87cefa, #ff69b4, #ffa500)",
+          backgroundSize: "200% 200%",
+          animation: "gradient-animation 10s ease infinite",
+        }}
+      ></div> */}
       <div className="container mt-5 pt-5">
         <div className="row justify-content-center">
           <div className="col-lg-9">
-            <div
-              className="d-flex justify-content-center align-items-center"
-              style={{ minHeight: "100vh" }}
-            >
+            <div className="row justify-content-center">
               <div className="card">
                 <div className="card-body">
                   <form >
