@@ -32,16 +32,7 @@ class TransactionService {
             Authorization: `Bearer ${user.token}`,
           },
         });
-      }
-
-
-
-
-
-
-
-
-      
+      }    
 }
 
 

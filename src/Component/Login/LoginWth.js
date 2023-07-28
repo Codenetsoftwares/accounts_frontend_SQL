@@ -45,7 +45,7 @@ const LoginWth = () => {
           .then((res) => {
             console.log(res);
             if (res.data.status === 200) {
-              localStorage.setItem("user", res.data.result.accessToken);
+              localStorage.setItem("user", res.data.token.accessToken);
               console.log(auth);
               console.log("deposit");
               // toast.success('Login Successfully')
@@ -120,12 +120,13 @@ const LoginWth = () => {
             console.log('res',res.data.token.accessToken);
             if (res.status === 200) {
               localStorage.setItem("user", res.data.token.accessToken);
+              localStorage.setItem("role", res.data.role);
               console.log("===>",auth);
               console.log("withdraw");
               toast.success('Login Successfully')
               // alert("login successfull");
               auth.login();
-              navigate("/admindash");
+              navigate("/welcome");
             }
             else{
               toast.error(res.data.message);

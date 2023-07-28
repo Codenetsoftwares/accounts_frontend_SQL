@@ -78,7 +78,7 @@ export default function Dashboard() {
     } else {
       // Prepare the data object to be sent to the backend
       const data = {
-        transactionType: "withdraw",
+        transactionType: transactionType,
         transactionID: transactionId,
         withdrawAmount: amount,
         paymentMethod: paymentMethod,
@@ -288,22 +288,24 @@ export default function Dashboard() {
                 <option value="Others">Others</option>
               </select>
             </div>
+            
             <div className="form-group">
-              <label htmlFor="transactionType">
-                <h5>Transaction Type</h5>
+              <label htmlFor="PaymentMethod">
+                <h5 style={{fontWeight:'boldb   '}}>Transaction Type</h5>
               </label>
-              <input
-                type="text"
-                className="form-control"
-                id="transactionType"
-                name="transactionType"
-                value={auth.user.role === "deposit" ? "Deposit" : "Withdraw"}
-                onChange={handleTransactionTypeChange}
-                placeholder="Transaction Type"
+              <select
+                class="form-select"
                 style={inputStyle}
-                disabled
-              />
+               onChange={handleTransactionTypeChange}
+                value={transactionType}
+              >
+                <option selected>Open this select menu</option>
+                <option value="deposit">Deposit</option>
+                <option value="withdarw">Withdarw</option>
+              </select>
             </div>
+
+
             <div className="form-group">
               <button
                 type="submit"

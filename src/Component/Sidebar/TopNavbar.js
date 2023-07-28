@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import Sidebar from "./Sidebar";
 import { Outlet } from "react-router-dom";
 import { useNavigate } from "react-router";
@@ -8,6 +8,11 @@ import { useAuth } from "../../Utils/Auth";
 const TopNavbar = () => {
     const nav = useNavigate();
     const auth = useAuth();
+
+    // useEffect(() => {
+    //   auth.login();
+    // }, []);
+
     const handleLogout = () => {
         const response = true;
         if (response) {
@@ -19,7 +24,7 @@ const TopNavbar = () => {
   return (
     <div>
       <nav class="navbar navbar-light fixed-top bg-dark justify-content-between">
-        <button
+        <a
           style={{
             
             border: "2px solid black",
@@ -27,7 +32,7 @@ const TopNavbar = () => {
           }}
         >
           <Sidebar />
-        </button>
+        </a>
         <form class="form">
           {/* <input
             class="form-control mr-sm-2"

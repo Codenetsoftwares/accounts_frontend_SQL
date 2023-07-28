@@ -8,6 +8,7 @@ import "./EditTransaction.css";
 import EditIcon from "../../Assets/edit-iconii.png";
 const EditTransaction = () => {
     const auth = useAuth();
+    console.log("This is Auth",auth);
     const { id } = useParams();
     const [transactionId, setTransactionId] = useState("");
     const [amount, setAmount] = useState("");
@@ -32,14 +33,15 @@ const EditTransaction = () => {
         const data = {
             id: transactionId,
             amount: amount,
-            paymentMethod: paymentMethod,
+            paymentMethod: paymentMethod, 
+            email: auth.user.email
         };
         console.log(id, data)
         TransactionSercvice.editTransactionData(id, data, auth.user)
             .then((response) => {
                 console.log(response.data);
-                if(transactionId.length||amount.length||paymentMethod.length>0){                 
-                    toast.success("Transaction Edited Successfully!");
+                if(transactionId.length && amount.length && paymentMethod.length>0){                 
+                    toast.success("Edit Request Send Successfully!");
                     navigate("/admindash");
                 }
                 else{
@@ -71,7 +73,7 @@ const EditTransaction = () => {
           <li></li>
           <li></li>
         </ul>
-      
+       
         <div className="wrapper" style={{
                           transition: "transform 0.3s",
                           transform: "scale(1)",
@@ -90,6 +92,10 @@ const EditTransaction = () => {
             Edit Transction
         </div>
         <form className="p-3 mt-3">
+        <div className="form-field d-flex align-items-center">
+               
+               <input placeholder="Eamil" disabled value={auth.user.email}/>
+           </div>
             <div className="form-field d-flex align-items-center">
                 
                 <input type="text"  placeholder="Amount" onChange={handleAmountChange}/>
@@ -116,8 +122,8 @@ const EditTransaction = () => {
         </form>
         
     </div>
-    
     </div>
+   
     )
 }
 
