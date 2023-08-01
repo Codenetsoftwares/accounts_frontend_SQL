@@ -160,6 +160,21 @@ const CreateUser = () => {
                         </div>
                       </div>
 
+
+                      <form htmlFor="your-password" className="form-label">
+                        <h5>
+                          <p className=" d-flex justify-content-center" disabled>
+                            <div className="badge badge-secondary" style={{
+                       WebkitUserSelect: 'none', /* Safari */
+                        msUserSelect: 'none', /* IE 10 and IE 11 */
+                        userSelect: 'none' /* Standard syntax */
+    }}>
+                              Give Access Of :
+                            </div>
+                          </p>
+                        </h5>
+                      </form>
+
                       <label htmlFor="your-password" className="form-label">
                         <h5>
                           <span className=" d-flex justify-content-center">
@@ -169,6 +184,7 @@ const CreateUser = () => {
                           </span>
                         </h5>
                       </label>
+
 
                       <div className="row  w-75 m-auto" >
                         <div className="col-md-6">

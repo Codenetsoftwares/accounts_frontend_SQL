@@ -8,7 +8,6 @@ import { AuthProvider } from "./Utils/Auth";
 import { RequireAuth } from "./Utils/RequireAuth";
 import { ToastContainer } from "react-toastify";
 import EditTransaction from "./Component/DashBoard/EditTransaction";
-import Sidebar from "./Component/Sidebar/Sidebar";
 import TopNavbar from "./Component/Sidebar/TopNavbar";
 import CreateUser from "./Component/DashBoard/CreateUser";
 import Alert from "./Component/DashBoard/Alert";
@@ -17,6 +16,7 @@ import Welcome from "./Component/DashBoard/Welcome";
 import BankDetails from "./Component/DashBoard/BankDetails";
 import WebsiteDetails from "./Component/DashBoard/WebsiteDetails";
 import UserDetails from "./Component/DashBoard/UserDetails";
+import AdminLayout from "./Component/Sidebar/AdminLayout";
 
 function App() {
   return (
@@ -38,7 +38,7 @@ function App() {
           <Routes>
             <Route index element={<LoginWth />} />
 
-            <Route path="/" element={<TopNavbar />}>
+            <Route path="/" element={<AdminLayout/>}>
               <Route
                 path="welcome"
                 element={
@@ -119,14 +119,7 @@ function App() {
                 </RequireAuth>
               }
             />
-            <Route
-              path="sidebar"
-              element={
-                <RequireAuth>
-                  <Sidebar />
-                </RequireAuth>
-              }
-            />
+           
             <Route path="forpas" element={<ForPas />} />
           </Routes>
         </BrowserRouter>

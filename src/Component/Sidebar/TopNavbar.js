@@ -1,55 +1,54 @@
-import React,{useEffect} from "react";
-import Sidebar from "./Sidebar";
-import { Outlet } from "react-router-dom";
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import React from 'react'
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";
-import { toast } from "react-toastify";
 import { useAuth } from "../../Utils/Auth";
-
+import { toast } from "react-toastify";
 const TopNavbar = () => {
-    const nav = useNavigate();
-    const auth = useAuth();
+  const nav = useNavigate();
+  const auth = useAuth();
 
-    // useEffect(() => {
-    //   auth.login();
-    // }, []);
 
-    const handleLogout = () => {
-        const response = true;
-        if (response) {
-          toast.success("Logout successfully");
-          auth.logout();
-          nav("/");
-        }
+  const handleLogout = () => {
+    const response = true;
+    if (response) {
+      auth.logout();
+      alert("You are going to Logout from this site");
+      toast.success("Logout successfully");
+      nav("/");
     }
+}
   return (
-    <div>
-      <nav class="navbar navbar-light fixed-top bg-dark justify-content-between">
-        <a
-          style={{
-            
-            border: "2px solid black",
-            background: "black"
-          }}
-        >
-          <Sidebar />
-        </a>
-        <form class="form">
-          {/* <input
-            class="form-control mr-sm-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          /> */}
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit"  onClick={handleLogout} style={{marginRight:'1rem'}}>
-            Logout
-          </button>
-        </form>
-      </nav>
-      <div>
-        <Outlet />
-      </div>
-    </div>
-  );
-};
+    <>
+        
+  <nav className="main-header navbar navbar-expand navbar-white navbar-light">
+  
+    <ul className="navbar-nav">
+      <li className="nav-item">
+        <a className="nav-link" data-widget="pushmenu" href="#" role="button"><i className="fas fa-bars"></i></a>
+      </li>
+      <li className="nav-item d-none d-sm-inline-block">
+        <Link to='welcome' href="#" className="nav-link">Home</Link>
+      </li>
+    </ul>
 
-export default TopNavbar;
+   
+    <ul className="navbar-nav ml-auto">
+      
+      <li className="nav-item">
+        <a className="nav-link" data-widget="fullscreen" href="#" role="button">
+          <i className="fas fa-expand-arrows-alt"></i>
+        </a>
+      </li>
+      <li className="nav-item">
+        <a className="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button" onClick={handleLogout}>
+          <i className="fas fa-sign-out-alt" style={{color:'red'}}></i>
+        </a>
+      </li>
+    </ul>
+  </nav> 
+    </>
+  )
+}
+
+export default TopNavbar
