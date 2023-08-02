@@ -2,7 +2,13 @@ import React, { useState } from "react";
 // import "./CreateUser.css";
 import AccountService from "../../Services/AccountService";
 import { useAuth } from "../../Utils/Auth";
-import { FaUser, FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaUser, FaEnvelope} from "react-icons/fa";
+import PasswordCU from "./PasswordCU";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+
+
 
 const CreateUser = () => {
   const auth = useAuth();
@@ -10,10 +16,10 @@ const CreateUser = () => {
     yourName: "",
     yourSurname: "",
     yourEmail: "",
-    yourPassword: "",
+ 
   });
   const [checkedItems, setCheckedItems] = useState([]);
-  const [showPassword, setShowPassword] = useState(false);
+ 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,9 +37,7 @@ const CreateUser = () => {
     }
   };
 
-  const handleTogglePassword = () => {
-    setShowPassword(!showPassword);
-  };
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -54,14 +58,17 @@ const CreateUser = () => {
       .then((res) => {
         console.log("res", res);
         if (res.status === 200) {
-          alert("User Created Sucsessfully");
-        } else {
-          alert("Failed");
+          toast.success("User Created Successfully");
+        }  else {
+          // Show error Toastify alert
+          toast.error("Failed");
         }
       })
+     
       .catch((err) => {
         if (!err.response) {
-          alert(err.message);
+          // Show error Toastify alert
+          toast.error(err.message);
           return;
         }
       });
@@ -133,32 +140,10 @@ const CreateUser = () => {
                       </div>
 
                       <div className="col-md-6">
-                        <label htmlFor="your-password" className="form-label">
-                          <FaLock /> password
-                          <span className="text-danger">*</span>
-                        </label>
-                        <div className="password-input-container d-flex">
-                          <input
-                            type={showPassword ? "text" : "password"}
-                            className="form-control"
-                            id="your-password"
-                            name="yourPassword"
-                            value={formData.yourPassword}
-                            onChange={handleChange}
-                            placeholder="password"
-                            required
-                          />
-                          <div className="input-group-append">
-                            <span className="input-group-text">
-                              {showPassword ? (
-                                <FaEyeSlash onClick={handleTogglePassword} />
-                              ) : (
-                                <FaEye onClick={handleTogglePassword} />
-                              )}
-                            </span>
-                          </div>
-                        </div>
+                     <PasswordCU/>
                       </div>
+
+                   
 
 
                       <form htmlFor="your-password" className="form-label">
@@ -175,15 +160,7 @@ const CreateUser = () => {
                         </h5>
                       </form>
 
-                      <label htmlFor="your-password" className="form-label">
-                        <h5>
-                          <span className=" d-flex justify-content-center">
-                            <div className="badge badge-secondary">
-                              Give Access Of :
-                            </div>
-                          </span>
-                        </h5>
-                      </label>
+                    
 
 
                       <div className="row  w-75 m-auto" >
