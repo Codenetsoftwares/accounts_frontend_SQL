@@ -304,7 +304,44 @@ export default function Dashboard() {
                 <option value="withdarw">Withdarw</option>
               </select>
             </div>
+            <div className="form-group">
+              <label htmlFor="PaymentMethod">
+                <h5 style={{fontWeight:'boldb'}}>Bank</h5>
+              </label>
+              <select
+                class="form-select"
+                style={inputStyle}
+                value={paymentMethod}
+                onChange={handlePaymentMethodChange}
+              >
+                <option selected>Select Bank</option>
+                <option value="GPAy">Axis Abu</option>
+                <option value="PhonePe">Hdfc Nilkamal</option>
+                <option value="Paytm">ICIC Amit</option>
+                <option value="Paytm">Fortune Enterprise</option>
+                <option value="Paytm">Dolphin Enterprise</option>
+                <option value="Paytm">Shark Enterprise</option>
+                <option value="Paytm">Sekh Enterprise</option>
 
+              </select>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="PaymentMethod">
+                <h5 style={{fontWeight:'boldb'}}>Website</h5>
+              </label>
+              <select
+                class="form-select"
+                style={inputStyle}
+                value={paymentMethod}
+                onChange={handlePaymentMethodChange}
+              >
+                <option selected>Select Website</option>
+                <option value="GPAy">Sky</option>
+                <option value="PhonePe">Dream</option>
+                <option value="Paytm">Lotus</option>
+              </select>
+            </div>
 
             <div className="form-group">
               <button
