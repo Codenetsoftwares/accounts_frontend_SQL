@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-// import "./CreateUser.css";
 import AccountService from "../../Services/AccountService";
 import { useAuth } from "../../Utils/Auth";
 import { FaUser, FaEnvelope} from "react-icons/fa";
 import PasswordCU from "./PasswordCU";
-import { ToastContainer, toast } from "react-toastify";
+import {  toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 
@@ -36,8 +35,8 @@ const CreateUser = () => {
       );
     }
   };
-
   
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -60,14 +59,14 @@ const CreateUser = () => {
         if (res.status === 200) {
           toast.success("User Created Successfully");
         }  else {
-          // Show error Toastify alert
+          
           toast.error("Failed");
         }
       })
      
       .catch((err) => {
         if (!err.response) {
-          // Show error Toastify alert
+          
           toast.error(err.message);
           return;
         }
@@ -75,13 +74,16 @@ const CreateUser = () => {
   };
 
   return (
-    <div className="bg-info" style={{ minHeight: "100vh", overflow: "hidden" }}>
-      <div className="container mt-5 pt-5">
+       <div className="bg-darkseagreen" style={{ backgroundColor: "#17A2B8"}}>
+      <div className="container pt-5">
         <div className="row justify-content-center">
           <div className="col-lg-9">
             <h1
               className="text-center mb-4"
-              style={{ fontFamily: "Roboto, sans-serif" }}
+              style={{  fontFamily: "Montserrat, sans-serif",
+              fontWeight: "bold",
+              fontStyle: "italic",
+              color: "black",}}
             >
               Welcome Administrator!
             </h1>
@@ -102,7 +104,7 @@ const CreateUser = () => {
                           name="yourName"
                           value={formData.yourName}
                           onChange={handleChange}
-                          placeholder="first name"
+                          placeholder=" Enter your first name"
                           required
                         />
                       </div>
@@ -118,7 +120,7 @@ const CreateUser = () => {
                           name="yourSurname"
                           value={formData.yourSurname}
                           onChange={handleChange}
-                          placeholder="last name"
+                          placeholder="Enter your last name"
                           required
                         />
                       </div>
@@ -134,7 +136,7 @@ const CreateUser = () => {
                           name="yourEmail"
                           value={formData.yourEmail}
                           onChange={handleChange}
-                          placeholder="Email"
+                          placeholder="Enter your e-mail"
                           required
                         />
                       </div>
@@ -153,7 +155,7 @@ const CreateUser = () => {
                        WebkitUserSelect: 'none', /* Safari */
                         msUserSelect: 'none', /* IE 10 and IE 11 */
                         userSelect: 'none' /* Standard syntax */
-    }}>
+                      }}>
                               Give Access Of :
                             </div>
                           </p>
