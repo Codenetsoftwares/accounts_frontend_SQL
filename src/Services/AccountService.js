@@ -54,6 +54,25 @@ class AccountService {
       },
     });
   }
+  getbank(user) {
+    return axios({
+      method: 'get',
+      url: API_HOST + '/api/get-bank-name',
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  website(user) {
+    return axios({
+      method: 'get',
+      url: API_HOST + '/api/get-website-name',
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
 }
 
 export default new AccountService();
