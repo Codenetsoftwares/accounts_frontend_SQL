@@ -3,7 +3,7 @@ import AccountService from "../../Services/AccountService";
 import { useAuth } from "../../Utils/Auth";
 import { FaUser, FaEnvelope } from "react-icons/fa";
 import PasswordCU from "./PasswordCU";
-import {  toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const CreateUser = () => {
@@ -49,14 +49,13 @@ const CreateUser = () => {
         console.log("res", res);
         if (res.status === 200) {
           toast.success("User Created Successfully");
-        }  else {
+        } else {
           toast.error("Failed");
         }
       })
 
       .catch((err) => {
         if (!err.response) {
-          
           toast.error(err.message);
           return;
         }
@@ -65,16 +64,18 @@ const CreateUser = () => {
   };
 
   return (
-       <div className="bg-darkseagreen" style={{ backgroundColor: "#17A2B8"}}>
+    <div className="bg-darkseagreen" style={{ backgroundColor: "#17A2B8" }}>
       <div className="container pt-5">
         <div className="row justify-content-center">
           <div className="col-lg-9">
             <h1
               className="text-center mb-4"
-              style={{  fontFamily: "Montserrat, sans-serif",
-              fontWeight: "bold",
-              fontStyle: "italic",
-              color: "black",}}
+              style={{
+                fontFamily: "Montserrat, sans-serif",
+                fontWeight: "bold",
+                fontStyle: "italic",
+                color: "black",
+              }}
             >
               Welcome Administrator!
             </h1>
@@ -142,7 +143,6 @@ const CreateUser = () => {
 
                       <form htmlFor="your-password" className="form-label">
                         <h5>
-
                           <p
                             className=" d-flex justify-content-center"
                             disabled
@@ -155,14 +155,6 @@ const CreateUser = () => {
                                 userSelect: "none" /* Standard syntax */,
                               }}
                             >
-
-                          <p className=" d-flex justify-content-center" disabled>
-                            <div className="badge badge-secondary" style={{
-                       WebkitUserSelect: 'none', /* Safari */
-                        msUserSelect: 'none', /* IE 10 and IE 11 */
-                        userSelect: 'none' /* Standard syntax */
-                      }}>
-
                               Give Access Of :
                             </div>
                           </p>
