@@ -17,6 +17,7 @@ import BankDetails from "./Component/DashBoard/BankDetails";
 import WebsiteDetails from "./Component/DashBoard/WebsiteDetails";
 import UserDetails from "./Component/DashBoard/UserDetails";
 import AdminLayout from "./Component/Sidebar/AdminLayout";
+import GetBank from "./Component/DashBoard/GetBank";
 
 function App() {
   return (
@@ -59,7 +60,7 @@ function App() {
                 path="bank"
                 element={
                   <RequireAuth>
-                    <BankDetails/>
+                   <GetBank/>
                   </RequireAuth>
                 }
               />
