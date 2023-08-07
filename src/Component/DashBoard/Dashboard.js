@@ -10,9 +10,8 @@ import DashService from "../../Services/DashService";
 import Backgroundimage from "../../Assets/backgroundImage.jpg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGooglePay } from '@fortawesome/free-brands-svg-icons';
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGooglePay } from "@fortawesome/free-brands-svg-icons";
 
 export default function Dashboard() {
   const auth = useAuth();
@@ -23,14 +22,12 @@ export default function Dashboard() {
 
   const resetForm = () => {
     // Reset the form fields after submission
-   
+
     setTransactionType("");
     setTransactionId("");
     setAmount("");
     setPaymentMethod("");
-    
-    
-  }
+  };
   const handleTransactionIdChange = (e) => {
     setTransactionId(e.target.value);
   };
@@ -50,7 +47,7 @@ export default function Dashboard() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
- // Prevent the default form submission behavior
+    // Prevent the default form submission behavior
     if (auth.user.role === "deposit") {
       // Prepare the data object to be sent to the backend
       const data = {
@@ -65,16 +62,13 @@ export default function Dashboard() {
         .then((response) => {
           // Handle successful response from the backend
           console.log(response.data);
-        toast.success("Transaction Created Successfully!!");
-       
-          
+          toast.success("Transaction Created Successfully!!");
         })
         .catch((error) => {
           // Handle error from the backend
           console.error(error);
           toast.error("Failed! Transaction ID Does Not Exists");
         });
-        
     } else {
       // Prepare the data object to be sent to the backend
       const data = {
@@ -90,25 +84,18 @@ export default function Dashboard() {
           // Handle successful response from the backend
           console.log(response.data);
           toast.success("Transaction Created Successfully!!");
-         
-          
-         
         })
         .catch((error) => {
           // Handle error from the backend
           console.error(error);
           toast.error(" Failed !! Transaction Id Already Exist");
-          
         });
-        
-
     }
 
     // Reset the form fields after submission if needed
     resetForm();
   };
 
-  
   //Checking The role of the User
   console.log(auth.user.role);
 
@@ -264,7 +251,7 @@ export default function Dashboard() {
               <input
                 type="number"
                 className="form-control"
-              value={amount}
+                value={amount}
                 onChange={handleAmountChange}
                 placeholder="Amount"
                 style={inputStyle}
@@ -272,7 +259,7 @@ export default function Dashboard() {
             </div>
             <div className="form-group">
               <label htmlFor="PaymentMethod">
-                <h5 style={{fontWeight:'boldb   '}}>PaymentMethod</h5>
+                <h5 style={{ fontWeight: "boldb   " }}>PaymentMethod</h5>
               </label>
               <select
                 class="form-select"
@@ -288,15 +275,15 @@ export default function Dashboard() {
                 <option value="Others">Others</option>
               </select>
             </div>
-            
+
             <div className="form-group">
               <label htmlFor="PaymentMethod">
-                <h5 style={{fontWeight:'boldb   '}}>Transaction Type</h5>
+                <h5 style={{ fontWeight: "boldb   " }}>Transaction Type</h5>
               </label>
               <select
                 class="form-select"
                 style={inputStyle}
-               onChange={handleTransactionTypeChange}
+                onChange={handleTransactionTypeChange}
                 value={transactionType}
               >
                 <option selected>Open this select menu</option>
@@ -306,7 +293,7 @@ export default function Dashboard() {
             </div>
             <div className="form-group">
               <label htmlFor="PaymentMethod">
-                <h5 style={{fontWeight:'boldb'}}>Bank</h5>
+                <h5 style={{ fontWeight: "boldb" }}>Bank</h5>
               </label>
               <select
                 class="form-select"
@@ -322,13 +309,13 @@ export default function Dashboard() {
                 <option value="Paytm">Dolphin Enterprise</option>
                 <option value="Paytm">Shark Enterprise</option>
                 <option value="Paytm">Sekh Enterprise</option>
-
+                <option value="Paytm">Atlas Enterprise</option>
               </select>
             </div>
 
             <div className="form-group">
               <label htmlFor="PaymentMethod">
-                <h5 style={{fontWeight:'boldb'}}>Website</h5>
+                <h5 style={{ fontWeight: "boldb" }}>Website</h5>
               </label>
               <select
                 class="form-select"
@@ -337,9 +324,11 @@ export default function Dashboard() {
                 onChange={handlePaymentMethodChange}
               >
                 <option selected>Select Website</option>
-                <option value="GPAy">Sky</option>
-                <option value="PhonePe">Dream</option>
-                <option value="Paytm">Lotus</option>
+                <option value="Sky">Sky</option>
+                <option value="Dream">Dream</option>
+                <option value="Lotus">Lotus</option>
+                <option value="Dream555">Dream555</option>
+                <option value="11Wicket">11Wicket</option>
               </select>
             </div>
 

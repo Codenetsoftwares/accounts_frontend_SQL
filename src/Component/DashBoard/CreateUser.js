@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import AccountService from "../../Services/AccountService";
 import { useAuth } from "../../Utils/Auth";
-import { FaUser, FaEnvelope} from "react-icons/fa";
+import { FaUser, FaEnvelope } from "react-icons/fa";
 import PasswordCU from "./PasswordCU";
 import {  toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-
-
 
 const CreateUser = () => {
   const auth = useAuth();
@@ -15,10 +12,9 @@ const CreateUser = () => {
     yourName: "",
     yourSurname: "",
     yourEmail: "",
- 
+    yourPassword: "",
   });
   const [checkedItems, setCheckedItems] = useState([]);
- 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,35 +31,29 @@ const CreateUser = () => {
       );
     }
   };
-  
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     console.log(checkedItems);
-
+    const data = {
+      firstname: formData.yourName,
+      lastname: formData.yourSurname,
+      email: formData.yourEmail,
+      password: formData.yourPassword,
+      roles: checkedItems,
+    };
     //Api Fetching
-    AccountService.createuser(
-      {
-        firstname: formData.yourName,
-        lastname: formData.yourSurname,
-        email: formData.yourEmail,
-        password: formData.yourPassword,
-        roles: checkedItems,
-      },
-      auth.user
-    )
+    AccountService.createuser(data, auth.user)
       .then((res) => {
         console.log("res", res);
         if (res.status === 200) {
           toast.success("User Created Successfully");
         }  else {
-          
           toast.error("Failed");
         }
       })
-     
+
       .catch((err) => {
         if (!err.response) {
           
@@ -71,6 +61,7 @@ const CreateUser = () => {
           return;
         }
       });
+    console.log(data);
   };
 
   return (
@@ -142,30 +133,43 @@ const CreateUser = () => {
                       </div>
 
                       <div className="col-md-6">
-                     <PasswordCU/>
+                        <PasswordCU
+                          setFormData={setFormData}
+                          value={formData.yourPassword}
+                          name={"yourPassword"}
+                        />
                       </div>
-
-                   
-
 
                       <form htmlFor="your-password" className="form-label">
                         <h5>
+
+                          <p
+                            className=" d-flex justify-content-center"
+                            disabled
+                          >
+                            <div
+                              className="badge badge-secondary"
+                              style={{
+                                WebkitUserSelect: "none" /* Safari */,
+                                msUserSelect: "none" /* IE 10 and IE 11 */,
+                                userSelect: "none" /* Standard syntax */,
+                              }}
+                            >
+
                           <p className=" d-flex justify-content-center" disabled>
                             <div className="badge badge-secondary" style={{
                        WebkitUserSelect: 'none', /* Safari */
                         msUserSelect: 'none', /* IE 10 and IE 11 */
                         userSelect: 'none' /* Standard syntax */
                       }}>
+
                               Give Access Of :
                             </div>
                           </p>
                         </h5>
                       </form>
 
-                    
-
-
-                      <div className="row  w-75 m-auto" >
+                      <div className="row  w-75 m-auto">
                         <div className="col-md-6">
                           <div className="form-check form-switch">
                             <input

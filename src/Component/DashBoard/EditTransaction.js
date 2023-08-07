@@ -94,7 +94,7 @@ const EditTransaction = () => {
         <form className="p-3 mt-3">
         <div className="form-field d-flex align-items-center">
                
-               <input placeholder="Eamil" disabled value={auth.user.email}/>
+               <input placeholder="Eamil" disabled value={auth.user.email} style={{fontSize:'15px' , textAlign:'center'}}/>
            </div>
             <div className="form-field d-flex align-items-center">
                 
