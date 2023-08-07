@@ -101,7 +101,7 @@ const NavSide = () => {
 
           <li className="nav-item">
             <Link to='createuser' href="pages/widgets.html" className="nav-link">
-              <i className="nav-icon fas fa-user-plus"></i>
+            &nbsp;<i className="nav-icon fas fa-user-plus"></i>
               <p>
                Create SubAdmin
                 {/* <span className="right badge badge-danger">New</span> */}
@@ -176,7 +176,7 @@ const NavSide = () => {
                     <a className='nav-link text-white' onClick={handleToggle}>
                     &nbsp; <i className="fa-solid fas fa-user" />
                       <p>
-                        Profile
+                      &nbsp;Profile
                         <i className='fas fa-angle-left right' />
                       </p>
                     </a>
@@ -187,9 +187,9 @@ const NavSide = () => {
                 ) : (
                   <li className='nav-item '>
                     <a className='nav-link text-white' onClick={handleToggle}>
-                    <i className="fa-solid fas fa-user" />
+                    &nbsp;<i className="fa-solid fas fa-user" />
                       <p>
-                        Profile
+                      &nbsp; Profile
                         <i className='fas fa-chevron-down right'></i>
                       </p>
                     </a>

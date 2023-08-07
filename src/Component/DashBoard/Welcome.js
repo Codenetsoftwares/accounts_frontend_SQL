@@ -29,7 +29,7 @@ const Welcome = () => {
 
   return (
     
-    <div className='container d-flex justify-content-center mt-5 pt-5'>
+    <div className='container d-flex justify-content-center'>
         <div id="birdsContainer" style={birdsContainerStyle}>
         <img
           src="https://clipart-library.com/img1/1663317.gif"
