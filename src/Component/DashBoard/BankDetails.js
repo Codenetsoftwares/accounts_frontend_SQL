@@ -1,24 +1,62 @@
-import React,{useState} from 'react'
+import React, { useState } from "react";
+import AccountService from "../../Services/AccountService";
+import { useAuth } from "../../Utils/Auth";
 
-const BankDetails = () => {
+const AddBank = () => {
+  const auth = useAuth();
   const [todos, setTodos] = useState([]);
-  const [newTodo, setNewTodo] = useState("");
+  // const [newTodo, setNewTodo] = useState("");
   const [editTodoId, setEditTodoId] = useState(null);
   const [editTodoText, setEditTodoText] = useState("");
+  const[bankName , setBankName]=useState("")
 
-  const handleInputChange = (event) => {
-    setNewTodo(event.target.value);
-  };
+  const handlebankname = (event) => {
+    setBankName(event.target.value);
+ };
+ console.log (bankName)
+ 
 
-  const handleAddTodo = () => {
-    if (newTodo.trim() !== "") {
-      const newTask = {
-        id: Date.now(),
-        text: newTodo,
-      };
-      setTodos([...todos, newTask]);
-      setNewTodo("");
-    }
+  // const handleAddTodo = () => {
+  //   if (newTodo.trim() !== "") {
+  //     const newTask = {
+  //       id: Date.now(),
+  //       text: newTodo,
+  //     };
+  //     setTodos([...todos, newTask]);
+  //     setNewTodo("");
+  //   }
+  // };
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    console.log();
+
+    
+    AccountService.addbank(
+      {
+        name: bankName,
+      },
+      auth.user 
+    )
+      .then((res) => {
+        console.log("res", res);
+        if (res.status === 200) {
+          alert("Bank registered successfully!");
+        }  else {
+          
+          alert("Please give a bank name to add");
+        }
+      })
+     
+      .catch((err) => {
+        if (!err.response) {
+          
+         alert(err.message);
+          return;
+        }
+      });
   };
 
   const handleDeleteTodo = (id) => {
@@ -46,10 +84,11 @@ const BankDetails = () => {
     setEditTodoId(null);
     setEditTodoText("");
   };
+  
 
   return (
-    
-       <div  style={{ background:" rgb(63,94,251)",
+
+    <div  style={{ background:" rgb(63,94,251)",
     background: "radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,194,1) 100%)", minHeight: "100vh"}} >
       <div className="container" >
         <center>
@@ -68,12 +107,11 @@ const BankDetails = () => {
               style={{ fontFamily: "fantasy", fontSize: 25, fontWeight: "bolder", textTransform: "uppercase", padding: 20 }}
               className="card-body"
               type="text"
-              value={newTodo}
-              onChange={handleInputChange}
+              onChange={handlebankname}
               placeholder="Add names here..."
             />
 
-            <button className="btn btn-primary  text-md-start " style={{ padding: 20, marginLeft: 10 }} onClick={handleAddTodo}>Add</button>
+            <button className="btn btn-primary  text-md-start " style={{ padding: 20, marginLeft: 10 }} onClick={handleSubmit}>Add</button>
 
 
           </div>
@@ -116,8 +154,8 @@ const BankDetails = () => {
         ))}
       </div>
     </div>
-    
-  )
-}
 
-export default BankDetails
+  );
+};
+
+export default AddBank;
