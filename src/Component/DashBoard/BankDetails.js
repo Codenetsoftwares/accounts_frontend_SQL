@@ -1,160 +1,113 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AccountService from "../../Services/AccountService";
 import { useAuth } from "../../Utils/Auth";
 
 const AddBank = () => {
   const auth = useAuth();
-  const [todos, setTodos] = useState([]);
-  // const [newTodo, setNewTodo] = useState("");
-  const [editTodoId, setEditTodoId] = useState(null);
-  const [editTodoText, setEditTodoText] = useState("");
-  const[bankName , setBankName]=useState("")
+  const [bankName, setBankName] = useState("");
+  const [getbankName, setGetBankName] = useState([]);
 
-  const handlebankname = (event) => {
+  const handleBankName = (event) => {
     setBankName(event.target.value);
- };
- console.log (bankName)
- 
+  };
 
-  // const handleAddTodo = () => {
-  //   if (newTodo.trim() !== "") {
-  //     const newTask = {
-  //       id: Date.now(),
-  //       text: newTodo,
-  //     };
-  //     setTodos([...todos, newTask]);
-  //     setNewTodo("");
-  //   }
-  // };
+  const handleAddBank = () => {
+    if (bankName.trim() !== "") {
+      AccountService.addbank(
+        {
+          name: bankName,
+        },
+        auth.user
+      )
+        .then((res) => {
+          console.log("res", res);
+          if (res.status === 200) {
+            alert("Bank registered successfully!");
+            setBankName("");
+            refreshBankNames();
+          } else {
+            alert("Please give a bank name to add");
+          }
+        })
+        .catch((err) => {
+          if (!err.response) {
+            alert(err.message);
+            return;
+          }
+          alert("An error occurred while adding the bank.");
+        });
+    }
+  };
 
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    console.log();
-
-    
-    AccountService.addbank(
-      {
-        name: bankName,
-      },
-      auth.user 
-    )
-      .then((res) => {
-        console.log("res", res);
-        if (res.status === 200) {
-          alert("Bank registered successfully!");
-        }  else {
-          
-          alert("Please give a bank name to add");
-        }
+  const handleDeleteBank = (bankId) => {
+    AccountService.deleteBank(auth.user, bankId)
+      .then(() => {
+        refreshBankNames();
+        alert("Bank deleted successfully!");
       })
-     
       .catch((err) => {
-        if (!err.response) {
-          
-         alert(err.message);
-          return;
-        }
+        alert("An error occurred while deleting the bank.");
       });
   };
 
-  const handleDeleteTodo = (id) => {
-    const updatedTodos = todos.filter((todo) => todo.id !== id);
-    setTodos(updatedTodos);
-  };
-
-  const handleEditTodo = (id, text) => {
-    setEditTodoId(id);
-    setEditTodoText(text);
-  };
-
-  const handleEditInputChange = (event) => {
-    setEditTodoText(event.target.value);
-  };
-
-  const handleSaveTodo = (id) => {
-    if (editTodoText.trim() === "") {
-      return;
-  }
-    const updatedTodos = todos.map((todo) =>
-      todo.id === id ? { ...todo, text: editTodoText } : todo
-    );
-    setTodos(updatedTodos);
-    setEditTodoId(null);
-    setEditTodoText("");
-  };
+  const handleEditBank = (bankId) => {
   
+    alert(`Edit bank with ID: ${bankId}`);
+  };
+
+  const refreshBankNames = () => {
+    AccountService.getbank(auth.user).then((res) => setGetBankName(res.data));
+  };
+
+  useEffect(() => {
+    refreshBankNames();
+  }, [auth]);
 
   return (
-
-    <div  style={{ background:" rgb(63,94,251)",
-    background: "radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,194,1) 100%)", minHeight: "100vh"}} >
-      <div className="container" >
-        <center>
-        <h1 className="text-center mb-4" class="btn btn-danger" style={{fontSize: 50, fontFamily: "cursive", textAlign: "center"}}>BANK NAMES</h1>
-        </center>
-        <div className="card" style={{ backgroundColor: " linear-gradient(to top, #6b4260, #784d6b, #855977, #926583, #9f718f, #ac7599, #b978a4, #c67cae, #d576bb, #e26fc8, #ef68d7, #fb5fe7" }}>
-          <div className="card-body" >
-            <h1 style={{ textAlign: "center", fontFamily: "monospace", fontSize: 25, fontWeight: "bolder" }}>
-              ENTER BANK NAME...
-            </h1>
-          </div>
-        </div>
+    <div style={{ background: "linear-gradient(90deg, #fcff9e 0%, #c67700 100%)" }}>
+      <div className="container d-flex flex-column align-items-center justify-content-center min-vh-100">
+        <h1 className="text-center mb-4 btn btn-danger" style={{ fontSize: 50, fontFamily: "cursive" }}>
+          Bank Names
+        </h1>
         <div className="card">
           <div className="card-body">
             <input
               style={{ fontFamily: "fantasy", fontSize: 25, fontWeight: "bolder", textTransform: "uppercase", padding: 20 }}
               className="card-body"
               type="text"
-              onChange={handlebankname}
-              placeholder="Add names here..."
+              value={bankName}
+              onChange={handleBankName}
+              placeholder="Add Bank Names"
             />
-
-            <button className="btn btn-primary  text-md-start " style={{ padding: 20, marginLeft: 10 }} onClick={handleSubmit}>Add</button>
-
-
+            <button className="btn btn-primary text-md-start" style={{ padding: 20, marginLeft: 10 }} onClick={handleAddBank}>
+              <i className="fas fa-piggy-bank"></i> Add Bank
+            </button>
           </div>
         </div>
-        {todos.map((todo) => (
-          <div className="card-body" style={{ fontFamily: "fantasy", fontSize: 20, fontWeight: "bolder", textTransform: "uppercase" }} key={todo.id}>
-            {editTodoId === todo.id ? (
-              <>
-                <div className="card">
-                  <div className="card-body">
-                    <input className="card-body
-                      text-md-start"
-                      style={{ fontFamily: "fantasy", fontSize: 20, fontWeight: "bolder", textTransform: "uppercase" }}
-                      type="text"
-                      value={editTodoText}
-                      onChange={handleEditInputChange}
-                    />
-                    <button  className="btn btn-warning  card-body"  style={{ padding: 20, marginLeft: 10, textTransform: "uppercase"   }} onClick={() => handleSaveTodo(todo.id)}>Save</button>
+        <div className="row mt-4">
+          {getbankName.map((data) => (
+            <div className="col-md-3 mb-4" key={data.id}>
+              <div className="card">
+                <div className="card-body">
+                  <h5 className="card-title" style={{ fontFamily: "fantasy", fontSize: 20, fontWeight: "bolder", textTransform: "uppercase" }}>
+                    {data.name}
+                  </h5>
+                  <div>
+                    <button className="btn btn-warning" style={{ padding: 10 }} onClick={() => handleEditBank(data.id)}>
+                      Edit
+                    </button>
+                    <button className="btn btn-danger" style={{ padding: 10, marginLeft: 10 }} onClick={() => handleDeleteBank(data.id)}>
+                      Delete
+                    </button>
                   </div>
                 </div>
-              </>
-            ) : (
-              <>
-                <div className="card">
-                  <div className="card-body">
-                    <span className="card-body">{todo.text}</span>
-                    <div>
-                      <button className="card-body btn btn-success" style={{ padding: 20, marginLeft: 10 }} onClick={() => handleEditTodo(todo.id, todo.text)}>
-                        Edit
-                      </button>
-                      <button className="card-body btn btn-danger" style={{ padding: 20, marginLeft: 10 }} onClick={() => handleDeleteTodo(todo.id)}>
-                        Delete
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </>
-            )}
-          </div>
+              </div>
+            </div>
+          
         ))}
       </div>
     </div>
-
+    </div>
   );
 };
 

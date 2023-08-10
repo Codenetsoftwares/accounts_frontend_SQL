@@ -60,7 +60,7 @@ function App() {
                 path="bank"
                 element={
                   <RequireAuth>
-                   <GetBank/>
+                   <BankDetails/>
                   </RequireAuth>
                 }
               />

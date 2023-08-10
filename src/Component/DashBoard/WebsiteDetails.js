@@ -16,30 +16,39 @@ const WebsiteDetails = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-  // post api fetch 
+    // Post API fetch
+    if (website.trim() !== "") {
+      AccountService.websitedetails(
+        {
+          name: website,
+        },
+        auth.user
+      )
+        .then((res) => {
+          if (res.status === 200) {
+            setGetWebsite([...getWebsite, { name: website }]);
+            setWebsite(""); // Clear input field after submission
+            alert("Website registered successfully!");
+          }
+        })
+        .catch((err) => {
+          if (!err.response) {
+            alert(err.message);
+            return;
+          }
+        });
+    } else {
+      alert("Please provide a website name to add");
+    }
+  };
 
-    AccountService.websitedetails(
-      {
-        name: website,
-      },
-      auth.user
-    )
-      .then((res) => {
-        console.log("res", res);
-        if (res.status === 200) {
-          alert("Website registered successfully!");
-        } else {
-          alert("Please give a website name to add");
-        }
-      })
 
-      .catch((err) => {
-        if (!err.response) {
-          alert(err.message);
-          return;
-        }
-      });
-};
+  const handleDelete = (index) => {
+    const newWebsiteList = [...getWebsite];
+    newWebsiteList.splice(index, 1);
+    setGetWebsite(newWebsiteList);
+    // You can also call an API here to delete on the server
+  };
 
 // get api  fetch 
 useEffect(() => {
@@ -48,30 +57,63 @@ useEffect(() => {
 console.log("Website", getWebsite);
 
 
- 
-  return (
-    <div>
-      <input
-        type="email"
-        className="form-control"
-        aria-describedby="emailHelp"
-        placeholder="Enter website"
-        onChange={handlewebsite}
-      />
-      <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
-        Add Website
-      </button>
+const handleEdit = (index) => {
+  const updatedWebsiteList = [...getWebsite];
+  const newName = prompt("Enter the new website name:", updatedWebsiteList[index].name);
 
-      {getWebsite.length > 0 &&
-        getWebsite.map((data, index) => {
-          return (
-            <div>
-              <p className="col">{data.name}</p>
-            </div>
-          );
-        })}
+  if (newName !== null && newName.trim() !== "") {
+    updatedWebsiteList[index].name = newName;
+    setGetWebsite(updatedWebsiteList);
+    // You can also call an API here to update the website name on the server
+  } else if (newName !== null) {
+    alert("Please provide a valid website name");
+  }
+};
+
+
+ 
+return (
+<div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh", background: 'linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%)' }}>
+      <div style={{ width: "300px" }}>
+        <div style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Enter website"
+            value={website}
+            onChange={handlewebsite}
+            style={{ flex: 1 }}
+          />
+          <button type="submit" className="btn btn-sm btn-primary" onClick={handleSubmit}>
+            <i className="fas fa-globe"></i> Add
+          </button>
+        </div>
+        
+        <div style={{ maxHeight: "400px", overflowY: "auto" }}>
+          {getWebsite.length > 0 &&
+            getWebsite.map((data, index) => (
+              <div key={index} className="website-item">
+                <p className="col">{data.name}</p>
+                <button
+                  className="btn btn-sm btn-danger"
+                  onClick={() => handleDelete(index)}
+                >
+                  Delete
+                </button>
+                <button
+                  className="btn btn-sm btn-secondary"
+                  onClick={() => handleEdit(index)}
+                >
+                  Edit
+                </button>
+              </div>
+            ))}
+        </div>
+      </div>
     </div>
   );
 };
+
+
 
 export default WebsiteDetails;
