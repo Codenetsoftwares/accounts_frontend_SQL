@@ -1,17 +1,15 @@
-import React, { useState, useEffect  } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "../../Utils/Auth";
 import AccountService from "../../Services/AccountService";
 
 const WebsiteDetails = () => {
   const auth = useAuth();
   const [website, setWebsite] = useState("");
-  const [getWebsite, setGetWebsite] = useState("");
+  const [getWebsite, setGetWebsite] = useState([]);
 
-  console.log("Auth", auth);
-  const handlewebsite = (event) => {
+  const handleWebsite = (event) => {
     setWebsite(event.target.value);
   };
-  console.log(website);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,7 +25,7 @@ const WebsiteDetails = () => {
         .then((res) => {
           if (res.status === 200) {
             setGetWebsite([...getWebsite, { name: website }]);
-            setWebsite(""); // Clear input field after submission
+            setWebsite("");
             alert("Website registered successfully!");
           }
         })
@@ -42,7 +40,6 @@ const WebsiteDetails = () => {
     }
   };
 
-
   const handleDelete = (index) => {
     const newWebsiteList = [...getWebsite];
     newWebsiteList.splice(index, 1);
@@ -50,30 +47,21 @@ const WebsiteDetails = () => {
     // You can also call an API here to delete on the server
   };
 
-// get api  fetch 
-useEffect(() => {
-  AccountService.website(auth.user).then((res) => setGetWebsite(res.data));
-}, [auth]);
-console.log("Website", getWebsite);
+  const handleEdit = (index) => {
+    const updatedWebsiteList = [...getWebsite];
+    const newName = prompt("Enter the new website name:", updatedWebsiteList[index].name);
 
+    if (newName !== null && newName.trim() !== "") {
+      updatedWebsiteList[index].name = newName;
+      setGetWebsite(updatedWebsiteList);
+      // You can also call an API here to update the website name on the server
+    } else if (newName !== null) {
+      alert("Please provide a valid website name");
+    }
+  };
 
-const handleEdit = (index) => {
-  const updatedWebsiteList = [...getWebsite];
-  const newName = prompt("Enter the new website name:", updatedWebsiteList[index].name);
-
-  if (newName !== null && newName.trim() !== "") {
-    updatedWebsiteList[index].name = newName;
-    setGetWebsite(updatedWebsiteList);
-    // You can also call an API here to update the website name on the server
-  } else if (newName !== null) {
-    alert("Please provide a valid website name");
-  }
-};
-
-
- 
-return (
-<div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh", background: 'linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%)' }}>
+  return (
+    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
       <div style={{ width: "300px" }}>
         <div style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
           <input
@@ -81,7 +69,7 @@ return (
             className="form-control"
             placeholder="Enter website"
             value={website}
-            onChange={handlewebsite}
+            onChange={handleWebsite}
             style={{ flex: 1 }}
           />
           <button type="submit" className="btn btn-sm btn-primary" onClick={handleSubmit}>
@@ -113,7 +101,5 @@ return (
     </div>
   );
 };
-
-
 
 export default WebsiteDetails;
