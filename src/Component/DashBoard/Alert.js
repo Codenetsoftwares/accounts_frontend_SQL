@@ -10,11 +10,11 @@ const Alert = () => {
   useEffect(() => {
     if (auth.user) {
       EditServices.ViewAlert(auth.user).then((res) =>
-        console.log("alert", res)
+        setAlert(res.data)
       );
     }
   }, [auth]);
-
+console.log(alert)
   // console.log("alert", alert);
   // console.log("This is Auth=====> ", auth);
 
@@ -25,11 +25,16 @@ const Alert = () => {
         <h1>Old value</h1>
 
         {alert.length > 0
-          ? alert.map((data) => {
+          ? alert.map((data,i) => {
               return (
-                <div>
-                  <p className="col">{} </p>
-                </div>
+                <div key={i}>
+                <h2>{data.transaction}</h2>
+                <ul>
+                  {data.changes.map((item, itemIndex) => (
+                    <li key={itemIndex}>{item.field}</li>
+                  ))}
+                </ul>
+              </div>
               );
             })
           : null}
