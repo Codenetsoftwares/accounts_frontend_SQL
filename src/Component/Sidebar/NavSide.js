@@ -29,7 +29,8 @@ const NavSide = () => {
       <aside
         className="main-sidebar elevation-4"
         style={{
-          backgroundColor: "#fcac2b",
+          backgroundImage:
+            " linear-gradient(270deg, rgba(255,231,0,1) 20%, rgba(255,214,98,1) 59%)",
         }}
       >
         <div className="d-flex flex-row">

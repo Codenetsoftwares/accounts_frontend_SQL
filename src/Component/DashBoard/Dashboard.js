@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // import { FaSignOutAlt } from 'react-icons/fa';
 import { useAuth } from "../../Utils/Auth";
 // import { computeHeadingLevel } from '@testing-library/react';
@@ -12,6 +12,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGooglePay } from "@fortawesome/free-brands-svg-icons";
+import AccountService from "../../Services/AccountService";
 
 export default function Dashboard() {
   const auth = useAuth();
@@ -19,6 +20,19 @@ export default function Dashboard() {
   const [transactionId, setTransactionId] = useState("");
   const [amount, setAmount] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
+
+  // Get bank Api
+  const [getbankName, setGetBankName] = useState([]);
+  useEffect(() => {
+    AccountService.getbank(auth.user).then((res) => setGetBankName(res.data));
+  }, [auth]);
+  console.log("Bank Names", getbankName);
+  // Get Website Api
+  const [getWebsite, setGetWebsite] = useState([]);
+  useEffect(() => {
+    AccountService.website(auth.user).then((res) => setGetWebsite(res.data));
+  }, [auth]);
+  console.log("Website", getWebsite);
 
   const resetForm = () => {
     // Reset the form fields after submission
@@ -156,19 +170,19 @@ export default function Dashboard() {
     // border:'2px solid black'
   };
 
-  const backgroundImageStyle = {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    width: "100%",
-    height: "100%",
-    opacity: 0.6,
-    backgroundImage: `url(${Backgroundimage})`,
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "cover",
-    zIndex: -1,
-    // border:
-  };
+  // const backgroundImageStyle = {
+  //   position: "fixed",
+  //   top: 0,
+  //   left: 0,
+  //   width: "100%",
+  //   height: "100%",
+  //   opacity: 0.6,
+  //   backgroundImage: `url(${Backgroundimage})`,
+  //   backgroundRepeat: "no-repeat",
+  //   backgroundSize: "cover",
+  //   zIndex: -1,
+  //   // border:
+  // };
 
   // const logoutButtonStyle = {
 
@@ -212,7 +226,7 @@ export default function Dashboard() {
 
       {/* <DashboardNavbar /> */}
       <div style={containerStyle}>
-        <div style={backgroundImageStyle} />
+        {/* <div style={backgroundImageStyle} /> */}
 
         {/* <button className="btn btn-danger" onClick={handleLogout} style={logoutButtonStyle}>
       <FaSignOutAlt style={logoutIconStyle} />
@@ -302,14 +316,12 @@ export default function Dashboard() {
                 onChange={handlePaymentMethodChange}
               >
                 <option selected>Select Bank</option>
-                <option value="GPAy">Axis Abu</option>
-                <option value="PhonePe">Hdfc Nilkamal</option>
-                <option value="Paytm">ICIC Amit</option>
-                <option value="Paytm">Fortune Enterprise</option>
-                <option value="Paytm">Dolphin Enterprise</option>
-                <option value="Paytm">Shark Enterprise</option>
-                <option value="Paytm">Sekh Enterprise</option>
-                <option value="Paytm">Atlas Enterprise</option>
+
+                {getbankName.map((bank, index) => (
+                  <option key={index} value={bank.name}>
+                    {bank.name}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -324,11 +336,11 @@ export default function Dashboard() {
                 onChange={handlePaymentMethodChange}
               >
                 <option selected>Select Website</option>
-                <option value="Sky">Sky</option>
-                <option value="Dream">Dream</option>
-                <option value="Lotus">Lotus</option>
-                <option value="Dream555">Dream555</option>
-                <option value="11Wicket">11Wicket</option>
+                {getWebsite.map((website, index) => (
+                  <option key={index} value={website.name}>
+                    {website.name}
+                  </option>
+                ))}
               </select>
             </div>
 
