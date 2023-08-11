@@ -18,6 +18,7 @@ import WebsiteDetails from "./Component/DashBoard/WebsiteDetails";
 import UserDetails from "./Component/DashBoard/UserDetails";
 import AdminLayout from "./Component/Sidebar/AdminLayout";
 import GetBank from "./Component/DashBoard/GetBank";
+import AdminBank from "./Component/DashBoard/AdminBank";
 
 function App() {
   return (
@@ -39,7 +40,7 @@ function App() {
           <Routes>
             <Route index element={<LoginWth />} />
 
-            <Route path="/" element={<AdminLayout/>}>
+            <Route path="/" element={<AdminLayout />}>
               <Route
                 path="welcome"
                 element={
@@ -56,11 +57,15 @@ function App() {
                   </RequireAuth>
                 }
               />
-               <Route
+              <Route
                 path="bank"
                 element={
                   <RequireAuth>
+
+                    <AdminBank />
+
                    <BankDetails/>
+
                   </RequireAuth>
                 }
               />
@@ -69,20 +74,19 @@ function App() {
                 path="website"
                 element={
                   <RequireAuth>
-                    <WebsiteDetails/>
+                    <WebsiteDetails />
                   </RequireAuth>
                 }
               />
 
-                <Route
+              <Route
                 path="user"
                 element={
                   <RequireAuth>
-                    <UserDetails/>
+                    <UserDetails />
                   </RequireAuth>
                 }
               />
-
 
               <Route
                 path="dashboard"
@@ -120,7 +124,7 @@ function App() {
                 </RequireAuth>
               }
             />
-           
+
             <Route path="forpas" element={<ForPas />} />
           </Routes>
         </BrowserRouter>

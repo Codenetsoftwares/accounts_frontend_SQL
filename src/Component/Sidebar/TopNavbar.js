@@ -28,7 +28,7 @@ const TopNavbar = () => {
         <a className="nav-link" data-widget="pushmenu" href="#" role="button"><i className="fas fa-bars"></i></a>
       </li>
       <li className="nav-item d-none d-sm-inline-block">
-        <Link to='welcome' href="#" className="nav-link">Home</Link>
+        <Link to='welcome'  className="nav-link">Home</Link>
       </li>
     </ul>
 
