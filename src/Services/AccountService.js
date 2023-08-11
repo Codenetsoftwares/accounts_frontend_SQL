@@ -73,6 +73,29 @@ class AccountService {
       },
     });
   }
+
+  deletebank(data,id, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/delete-bank-name/:id${id}`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  deletewebsite(data,id, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/delete-wesite-name/:id${id}`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
 }
 
 export default new AccountService();

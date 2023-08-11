@@ -43,6 +43,7 @@ const CreateUser = () => {
       password: formData.yourPassword,
       roles: checkedItems,
     };
+    
     //Api Fetching
     AccountService.createuser(data, auth.user)
       .then((res) => {
@@ -63,8 +64,26 @@ const CreateUser = () => {
     console.log(data);
   };
 
+  const styles = {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    overflow: "hidden",
+  };
+
   return (
-    <div className="bg-darkseagreen" style={{ backgroundColor: "#17A2B8" }}>
+    <div
+      style={{
+        ...styles,
+        background: 'linear-gradient(90deg, rgba(23,183,184,1) 0%, rgba(23,184,155,0.9668242296918768) 100%)',
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+      className="d-flex align-items-center justify-content-center">
+         
       <div className="container pt-5">
         <div className="row justify-content-center">
           <div className="col-lg-9">
@@ -282,6 +301,7 @@ const CreateUser = () => {
         </div>
       </div>
     </div>
+   
   );
 };
 
