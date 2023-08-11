@@ -61,7 +61,11 @@ function App() {
                 path="bank"
                 element={
                   <RequireAuth>
+
                     <AdminBank />
+
+                   <BankDetails/>
+
                   </RequireAuth>
                 }
               />

@@ -50,11 +50,6 @@ const AddBank = () => {
       });
   };
 
-  const handleEditBank = (bankId) => {
-  
-    alert(`Edit bank with ID: ${bankId}`);
-  };
-
   const refreshBankNames = () => {
     AccountService.getbank(auth.user).then((res) => setGetBankName(res.data));
   };
@@ -70,14 +65,14 @@ const AddBank = () => {
           Bank Names
         </h1>
         <div className="card">
-          <div className="card-body">
+          <div className="card-body d-flex align-items-center">
             <input
               style={{ fontFamily: "fantasy", fontSize: 25, fontWeight: "bolder", textTransform: "uppercase", padding: 20 }}
               className="card-body"
               type="text"
               value={bankName}
               onChange={handleBankName}
-              placeholder="Add Bank Names"
+              placeholder="Add names here..."
             />
             <button className="btn btn-primary text-md-start" style={{ padding: 20, marginLeft: 10 }} onClick={handleAddBank}>
               <i className="fas fa-piggy-bank"></i> Add Bank
@@ -103,10 +98,9 @@ const AddBank = () => {
                 </div>
               </div>
             </div>
-          
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
     </div>
   );
 };
