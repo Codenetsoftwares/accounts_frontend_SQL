@@ -3,11 +3,13 @@ import { useAuth } from "../../Utils/Auth";
 import AccountService from "../../Services/AccountService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { useParams } from 'react-router';
 
 const WebsiteDetails = () => {
+  const { id } = useParams();
   const auth = useAuth();
   const [website, setWebsite] = useState("");
-  const [getWebsite, setGetWebsite] = useState("");
+  const [getWebsite, setGetWebsite] = useState([]);
 
   console.log("Auth", auth);
   const handlewebsite = (event) => {
@@ -35,6 +37,7 @@ const WebsiteDetails = () => {
         }
       })
 
+      
       .catch((err) => {
         if (!err.response) {
           alert(err.message);
@@ -44,11 +47,38 @@ const WebsiteDetails = () => {
     window.location.reload();
   };
 
+  
+  const handeldeletewebsite = (e) => {
+    e.preventDefault();
+    const reversegetWebsite =  [getWebsite.reverse()];
+    const data = {
+      WebsiteName:reversegetWebsite,
+    }
+      
+    // console.log( data)
+    AccountService.deletewebsite(id, data, auth.user)
+        .then((res) => {
+            // console.log(response.data);
+            if (res.status === 200) {
+              alert( "Website name removed successfully!" );
+            }            
+        })
+        .catch((error) => {
+            console.error(error);
+            alert.error("e.message");
+        })    
+         
+};
+
+
   // get api  fetch
   useEffect(() => {
     AccountService.website(auth.user).then((res) => setGetWebsite(res.data));
   }, [auth]);
   console.log("Website", getWebsite);
+
+
+
 
   return (
     <>
@@ -77,6 +107,7 @@ const WebsiteDetails = () => {
                     <FontAwesomeIcon
                       icon={faTrashAlt}
                       className="delete-icon"
+                      onClick={handeldeletewebsite}
                     />
                   </div>
                 );

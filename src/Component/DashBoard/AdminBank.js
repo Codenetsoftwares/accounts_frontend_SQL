@@ -3,11 +3,12 @@ import AccountService from "../../Services/AccountService";
 import { useAuth } from "../../Utils/Auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { useParams } from 'react-router';
 const AdminBank = () => {
   const auth = useAuth();
   const [bankName, setBankName] = useState("");
   const [getbankName, setGetBankName] = useState([{}]);
-
+  const { id } = useParams();
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -41,6 +42,31 @@ const AdminBank = () => {
     setBankName(event.target.value);
   };
 
+
+
+const handeldeletebank = (e) => {
+    e.preventDefault();
+    const data = {
+      name:getbankName ,
+    }
+      
+    // console.log( data)
+    AccountService.deletebank(id, data, auth.user)
+        .then((res) => {
+            // console.log(response.data);
+            if (res.status === 200) {
+              alert("Bank Deleted successfully!");
+            }            
+        })
+        .catch((error) => {
+            console.error(error);
+            alert.error("e.message");
+        })    
+         
+};
+
+
+
   useEffect(() => {
     AccountService.getbank(auth.user).then((res) => setGetBankName(res.data));
   }, [auth]);
@@ -71,6 +97,8 @@ const AdminBank = () => {
                     <FontAwesomeIcon
                       icon={faTrashAlt}
                       className="delete-icon"
+                      onClick={handeldeletebank}
+                     
                     />
                   </div>
                 );
@@ -81,5 +109,7 @@ const AdminBank = () => {
     </div>
   );
 };
+
+
 
 export default AdminBank;
