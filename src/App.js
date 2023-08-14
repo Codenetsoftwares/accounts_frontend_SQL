@@ -15,10 +15,11 @@ import ForPas from "./Component/Login/ForPas";
 import Welcome from "./Component/DashBoard/Welcome";
 import BankDetails from "./Component/DashBoard/BankDetails";
 import WebsiteDetails from "./Component/DashBoard/WebsiteDetails";
-import UserDetails from "./Component/DashBoard/UserDetails";
+
 import AdminLayout from "./Component/Sidebar/AdminLayout";
 import GetBank from "./Component/DashBoard/GetBank";
 import AdminBank from "./Component/DashBoard/AdminBank";
+import UserProfile from "./Component/DashBoard/UserProfile";
 
 function App() {
   return (
@@ -76,10 +77,10 @@ function App() {
               />
 
               <Route
-                path="user"
+                path="userprofile"
                 element={
                   <RequireAuth>
-                    <UserDetails />
+                    <UserProfile />
                   </RequireAuth>
                 }
               />

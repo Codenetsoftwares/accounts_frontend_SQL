@@ -218,7 +218,7 @@ const NavSide = () => {
                     </p>
                   </a>
 
-                  <Link to="createuser" className="nav-link text-white">
+                  <Link to="userprofile" className="nav-link text-white">
                     <i className="far fa-circle nav-icon" />
                     <p>User Profile</p>
                   </Link>
