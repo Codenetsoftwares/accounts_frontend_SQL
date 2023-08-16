@@ -20,6 +20,7 @@ import AdminLayout from "./Component/Sidebar/AdminLayout";
 import GetBank from "./Component/DashBoard/GetBank";
 import AdminBank from "./Component/DashBoard/AdminBank";
 import UserProfile from "./Component/DashBoard/UserProfile";
+import InnerUserProfile from "./Component/DashBoard/InnerUserProfile";
 
 function App() {
   return (
@@ -80,7 +81,7 @@ function App() {
                 path="userprofile"
                 element={
                   <RequireAuth>
-                    <UserProfile />
+                    <UserProfile/>
                   </RequireAuth>
                 }
               />
@@ -98,6 +99,14 @@ function App() {
                 element={
                   <RequireAuth>
                     <CreateUser />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="innerprofile/:id"
+                element={
+                  <RequireAuth>
+                   <InnerUserProfile/>
                   </RequireAuth>
                 }
               />
