@@ -95,8 +95,6 @@ const WebsiteDetails = () => {
                 return (
                   <div className="d-flex flex-row">
                     <p className="col ">{data.name}</p>
-
-                    <FontAwesomeIcon icon={faEdit} className="edit-icon mr-2" />
                     <FontAwesomeIcon
                       icon={faTrashAlt}
                       className="delete-icon"

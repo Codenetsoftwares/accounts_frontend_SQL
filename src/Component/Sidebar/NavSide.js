@@ -223,10 +223,10 @@ const NavSide = () => {
                     <p>User Profile</p>
                   </Link>
 
-                  <a className="nav-link text-white">
+                  <Link to="alert" className="nav-link text-white">
                     <i className="far fa-circle nav-icon" />
-                    <p>Introducer</p>
-                  </a>
+                    <p>Alert</p>
+                  </Link>
                 </li>
               )}
             </ul>
