@@ -95,6 +95,20 @@ class AccountService {
       },
     });
   }
+
+
+  userprofile(user) {
+    return axios({
+      method: 'get',
+      url: API_HOST + '/api/user-profile',
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+
+
 }
 
 export default new AccountService();
