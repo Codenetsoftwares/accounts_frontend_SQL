@@ -3,16 +3,16 @@ import AccountService from "../../Services/AccountService";
 import { useAuth } from "../../Utils/Auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import { useParams } from 'react-router';
+// import { useParams } from "react-router";
 const AdminBank = () => {
   const auth = useAuth();
   const [bankName, setBankName] = useState("");
   const [getbankName, setGetBankName] = useState([{}]);
-  const { id } = useParams();
+  // const { id } = useParams();
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log();
+   
 
     AccountService.addbank(
       {
@@ -42,30 +42,27 @@ const AdminBank = () => {
     setBankName(event.target.value);
   };
 
-
-
-const handeldeletebank = (e) => {
+  const handeldeletebank = (e, name) => {
     e.preventDefault();
+    console.log(name);
     const data = {
-      name:getbankName ,
-    }
-      
+      name: name,
+    };
+
     // console.log( data)
-    AccountService.deletebank(id, data, auth.user)
-        .then((res) => {
-            // console.log(response.data);
-            if (res.status === 200) {
-              alert("Bank Deleted successfully!");
-            }            
-        })
-        .catch((error) => {
-            console.error(error);
-            alert.error("e.message");
-        })    
-         
-};
-
-
+    AccountService.deletebank(data, auth.user)
+      .then((res) => {
+        // console.log(response.data);
+        if (res.status === 200) {
+          alert("Bank Deleted successfully!");
+          window.location.reload();
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        alert.error("e.message");
+      });
+  };
 
   useEffect(() => {
     AccountService.getbank(auth.user).then((res) => setGetBankName(res.data));
@@ -93,12 +90,13 @@ const handeldeletebank = (e) => {
                 return (
                   <div className="d-flex flex-row">
                     <p className="col">{data.name}</p>
-                    <FontAwesomeIcon icon={faEdit} className="edit-icon mr-2" />
+                    {/* <FontAwesomeIcon icon={faEdit} className="edit-icon mr-2" /> */}
                     <FontAwesomeIcon
                       icon={faTrashAlt}
                       className="delete-icon"
-                      onClick={handeldeletebank}
-                     
+                      onClick={(e) => {
+                        handeldeletebank(e, data.name);
+                      }}
                     />
                   </div>
                 );
@@ -109,7 +107,5 @@ const handeldeletebank = (e) => {
     </div>
   );
 };
-
-
 
 export default AdminBank;

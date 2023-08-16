@@ -3,7 +3,7 @@ import { useAuth } from "../../Utils/Auth";
 import AccountService from "../../Services/AccountService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import { useParams } from 'react-router';
+import { useParams } from "react-router";
 
 const WebsiteDetails = () => {
   const { id } = useParams();
@@ -37,7 +37,6 @@ const WebsiteDetails = () => {
         }
       })
 
-      
       .catch((err) => {
         if (!err.response) {
           alert(err.message);
@@ -47,38 +46,32 @@ const WebsiteDetails = () => {
     window.location.reload();
   };
 
-  
-  const handeldeletewebsite = (e) => {
+  const handeldeletewebsite = (e, name) => {
     e.preventDefault();
-    const reversegetWebsite =  [getWebsite.reverse()];
     const data = {
-      WebsiteName:reversegetWebsite,
-    }
-      
-    // console.log( data)
-    AccountService.deletewebsite(id, data, auth.user)
-        .then((res) => {
-            // console.log(response.data);
-            if (res.status === 200) {
-              alert( "Website name removed successfully!" );
-            }            
-        })
-        .catch((error) => {
-            console.error(error);
-            alert.error("e.message");
-        })    
-         
-};
+      name: name,
+    };
 
+    // console.log( data)
+    AccountService.deletewebsite(data, auth.user)
+      .then((res) => {
+        // console.log(response.data);
+        if (res.status === 200) {
+          alert("Website Deleted successfully!");
+          window.location.reload();
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        alert.error("e.message");
+      });
+  };
 
   // get api  fetch
   useEffect(() => {
     AccountService.website(auth.user).then((res) => setGetWebsite(res.data));
   }, [auth]);
   console.log("Website", getWebsite);
-
-
-
 
   return (
     <>
@@ -102,12 +95,12 @@ const WebsiteDetails = () => {
                 return (
                   <div className="d-flex flex-row">
                     <p className="col ">{data.name}</p>
-
-                    <FontAwesomeIcon icon={faEdit} className="edit-icon mr-2" />
                     <FontAwesomeIcon
                       icon={faTrashAlt}
                       className="delete-icon"
-                      onClick={handeldeletewebsite}
+                      onClick={(e) => {
+                        handeldeletewebsite(e, data.name);
+                      }}
                     />
                   </div>
                 );

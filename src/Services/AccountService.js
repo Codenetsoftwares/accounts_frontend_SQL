@@ -56,8 +56,8 @@ class AccountService {
   }
   getbank(user) {
     return axios({
-      method: 'get',
-      url: API_HOST + '/api/get-bank-name',
+      method: "get",
+      url: API_HOST + "/api/get-bank-name",
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -66,18 +66,18 @@ class AccountService {
 
   website(user) {
     return axios({
-      method: 'get',
-      url: API_HOST + '/api/get-website-name',
+      method: "get",
+      url: API_HOST + "/api/get-website-name",
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
     });
   }
 
-  deletebank(data,id, user) {
+  deletebank(data, user) {
     return axios({
       method: "post",
-      url: `${API_HOST}/api/delete-bank-name/:id${id}`,
+      url: API_HOST + "/api/delete-bank-name",
       data: data,
       headers: {
         Authorization: `Bearer ${user.token}`,
@@ -85,16 +85,17 @@ class AccountService {
     });
   }
 
-  deletewebsite(data,id, user) {
+  deletewebsite(data, user) {
     return axios({
       method: "post",
-      url: `${API_HOST}/api/delete-wesite-name/:id${id}`,
+      url: API_HOST + "/api/delete-wesite-name",
       data: data,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
     });
   }
+
 
   userprofile(user) {
     return axios({
@@ -105,6 +106,8 @@ class AccountService {
       },
     });
   }
+
+
 
 }
 

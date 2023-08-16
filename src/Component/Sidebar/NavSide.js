@@ -30,7 +30,7 @@ const NavSide = () => {
         className="main-sidebar elevation-4"
         style={{
           backgroundImage:
-            " linear-gradient(270deg, rgba(255,231,0,1) 20%, rgba(255,214,98,1) 59%)",
+            "linear-gradient(270deg, rgba(254,216,216,1) 0%, rgba(255,135,98,1) 59%)",
         }}
       >
         <div className="d-flex flex-row">
@@ -115,7 +115,7 @@ const NavSide = () => {
               <li className="nav-item">
                 <Link to="bank" href="pages/widgets.html" className="nav-link">
                   <i className="nav-icon fas fa-university"></i>
-                  <p>
+                  <p className="text-dark">
                     Bank View
                     {/* <span className="right badge badge-danger">New</span> */}
                   </p>
@@ -129,7 +129,7 @@ const NavSide = () => {
                   className="nav-link"
                 >
                   &nbsp;<i className="nav-icon fas fa-user-plus"></i>
-                  <p>
+                  <p className="text-dark">
                     Create SubAdmin
                     {/* <span className="right badge badge-danger">New</span> */}
                   </p>
@@ -139,7 +139,7 @@ const NavSide = () => {
               <li className="nav-item">
                 <Link to="website" href="#" className="nav-link">
                   <i className="nav-icon fas fa-globe"></i>
-                  <p>
+                  <p className="text-dark">
                     Website View
                     {/* <i className="fas fa-angle-left right"></i>
                 <span className="badge badge-info right">6</span> */}
@@ -223,10 +223,10 @@ const NavSide = () => {
                     <p>User Profile</p>
                   </Link>
 
-                  <a className="nav-link text-white">
+                  <Link to="alert" className="nav-link text-white">
                     <i className="far fa-circle nav-icon" />
-                    <p>Afilate</p>
-                  </a>
+                    <p>Alert</p>
+                  </Link>
                 </li>
               )}
             </ul>
