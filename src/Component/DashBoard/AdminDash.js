@@ -379,17 +379,20 @@ const AdminDash = () => {
                               )}{" "}
                               {new Date(data.createdAt).getDate()}
                             </p>
-                            <p className="col fs-6">
-                              ₹&nbsp;{data.withdrawAmount}
-                            </p>
+                            <p className="col fs-6">₹&nbsp;{data.amount}</p>
                             <p className="col fs-6 text-break">
                               {data.transactionID}
                             </p>
-                            <p className="col fs-6 ">{data.paymentMethod}</p>
+                            <p className="col fs-6">{data.paymentMethod}</p>
+                            <p className="col fs-6 text-break">
+                              {data.subAdminId}
+                            </p>
+                            <p className="col fs-6">{data.userId}</p>
+                            <p className="col fs-6">{data.bankName}</p>
+                            <p className="col fs-6">{data.websiteName}</p>
                           </div>
-
                           <Link to={`/admindash/${data._id}`} className="col">
-                            <button type="button" class="btn btn-primary">
+                            <button type="button" className="btn btn-primary">
                               <FontAwesomeIcon
                                 icon={faEdit}
                                 data-toggle="modal"
@@ -428,8 +431,12 @@ const AdminDash = () => {
                     <div className="row">
                       <h4 className="col fs-6">Date</h4>
                       <h4 className="col fs-6">Amount</h4>
-                      <h4 className="col fs-6"> Id</h4>
+                      <h4 className="col fs-6">Transaction Id</h4>
                       <h4 className="col fs-6">Gateway</h4>
+                      <h4 className="col fs-6">CreatedBy</h4>
+                      <h4 className="col fs-6">User Id</h4>
+                      <h4 className="col fs-6">Bank</h4>
+                      <h4 className="col fs-6">Website</h4>
                     </div>
                   </div>
                 </div>
@@ -453,7 +460,7 @@ const AdminDash = () => {
                       >
                         <div className="card-body">
                           <div className="row">
-                            <p className="col fs-6 ">
+                            <p className="col fs-6">
                               {new Date(data.createdAt).toLocaleString(
                                 "default",
                                 {
@@ -462,17 +469,20 @@ const AdminDash = () => {
                               )}{" "}
                               {new Date(data.createdAt).getDate()}
                             </p>
-                            <p className="col fs-6 ">
-                              ₹&nbsp;{data.depositAmount}
-                            </p>
-                            <p className="col fs-6 text-break ">
+                            <p className="col fs-6">₹&nbsp;{data.amount}</p>
+                            <p className="col fs-6 text-break">
                               {data.transactionID}
                             </p>
                             <p className="col fs-6">{data.paymentMethod}</p>
+                            <p className="col fs-6 text-break">
+                              {data.subAdminId}
+                            </p>
+                            <p className="col fs-6">{data.userId}</p>
+                            <p className="col fs-6">{data.bankName}</p>
+                            <p className="col fs-6">{data.websiteName}</p>
                           </div>
-
                           <Link to={`/admindash/${data._id}`} className="col">
-                            <button type="button" class="btn btn-primary">
+                            <button type="button" className="btn btn-primary">
                               <FontAwesomeIcon
                                 icon={faEdit}
                                 data-toggle="modal"
@@ -504,8 +514,12 @@ const AdminDash = () => {
                     <div className="row">
                       <h4 className="col fs-6">Date</h4>
                       <h4 className="col fs-6">Amount</h4>
-                      <h4 className="col fs-6"> Id</h4>
+                      <h4 className="col fs-6">Transaction Id</h4>
                       <h4 className="col fs-6">Gateway</h4>
+                      <h4 className="col fs-6">CreatedBy</h4>
+                      <h4 className="col fs-6">User Id</h4>
+                      <h4 className="col fs-6">Bank</h4>
+                      <h4 className="col fs-6">Website</h4>
                     </div>
                   </div>
                 </div>
@@ -538,17 +552,20 @@ const AdminDash = () => {
                               )}{" "}
                               {new Date(data.createdAt).getDate()}
                             </p>
-                            <p className="col fs-6 ">
-                              ₹&nbsp;{data.withdrawAmount}
-                            </p>
+                            <p className="col fs-6">₹&nbsp;{data.amount}</p>
                             <p className="col fs-6 text-break">
                               {data.transactionID}
                             </p>
-                            <p className="col fs-6 ">{data.paymentMethod}</p>
+                            <p className="col fs-6">{data.paymentMethod}</p>
+                            <p className="col fs-6 text-break">
+                              {data.subAdminId}
+                            </p>
+                            <p className="col fs-6">{data.userId}</p>
+                            <p className="col fs-6">{data.bankName}</p>
+                            <p className="col fs-6">{data.websiteName}</p>
                           </div>
-
                           <Link to={`/admindash/${data._id}`} className="col">
-                            <button type="button" class="btn btn-primary">
+                            <button type="button" className="btn btn-primary">
                               <FontAwesomeIcon
                                 icon={faEdit}
                                 data-toggle="modal"
