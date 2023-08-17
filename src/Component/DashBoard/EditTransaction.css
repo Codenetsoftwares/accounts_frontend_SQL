@@ -37,9 +37,9 @@
   padding: 40px 30px 30px 30px;
   background-color: #ecf0f3;
   border-radius: 15px;
-  box-shadow:  10px 10px 26px 8px rgba(0,0,0,0.75);
+  box-shadow: 10px 10px 26px 8px rgba(0, 0, 0, 0.75);
   z-index: 1;
-  margin-top: 12rem;
+  margin-top: 2rem;
 }
 
 .logo {
