@@ -51,7 +51,10 @@ const Alert = () => {
                         {data.transactionID}
                       </p>
                       <p className="col fs-6 ">{data.paymentMethod}</p>
+                      <p className="col fs-6 ">{data.userId}</p>
+                      <p className="col fs-6 ">{data.websiteName}</p>
                       <p className="col fs-6 ">₹&nbsp;{data.amount}</p>
+                      <p className="col fs-6 ">{data.bankName}</p>
                     </div>
                   </div>
                   <div className="col d-flex justify-content-center gap-2 mb-2">

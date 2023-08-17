@@ -13,11 +13,11 @@ import CalenderService from "../../Services/CalenderService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
-import { FaFilter } from 'react-icons/fa';
-import { FaEye } from 'react-icons/fa';
+import { FaFilter } from "react-icons/fa";
+import { FaEye } from "react-icons/fa";
 import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import  './AdminDash.css';
+import "./AdminDash.css";
 import TopNavbar from "../Sidebar/TopNavbar";
 
 const AdminDash = () => {
@@ -96,26 +96,27 @@ const AdminDash = () => {
   };
 
   useEffect(() => {
-    TransactionSercvice.depositView(auth.user).then((res) =>(
-      setDocumentView(res.data.deposits),
-      setTotalDeposit(res.data.totalDeposits)
-    )
-     
+    TransactionSercvice.depositView(auth.user).then(
+      (res) => (
+        setDocumentView(res.data.deposits),
+        setTotalDeposit(res.data.totalDeposits)
+      )
     );
-    TransactionSercvice.withdrawView(auth.user).then((res) =>(
-      setWithdrawView(res.data.withdraws),
-      setTotalWithdraw(res.data.totalWithdraws)
-    )
+    TransactionSercvice.withdrawView(auth.user).then(
+      (res) => (
+        setWithdrawView(res.data.withdraws),
+        setTotalWithdraw(res.data.totalWithdraws)
+      )
     );
   }, [auth]);
-  
+
   console.log("Deposit", documentView);
   console.log("totalDeposit", totalDeposit);
   console.log("Withdraw", withdrawView);
   console.log("TotalWithdraw", totalWithdraw);
   console.log("This is Auth=====> ", auth);
 
-  const TotalBlance=totalDeposit-totalWithdraw;
+  const TotalBlance = totalDeposit - totalWithdraw;
   const handleLogout = () => {
     const response = true;
     if (response) {
@@ -126,7 +127,6 @@ const AdminDash = () => {
 
     console.log("Logged out");
   };
-  
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -174,14 +174,17 @@ const AdminDash = () => {
           </form>
         </div>
       </nav> */}
-      
+
       {/* This is the Main Card */}
       <div
         className="card card-body rounded-1 main "
         // style={{ backgroundImage: gradient }}
       >
         <div className="d-flex mt-5 mt-5 ml-5 pt-5 justify-content-center">
-          <h6 className="fw-bold text-nowrap pt-2"> View <FaEye /></h6>
+          <h6 className="fw-bold text-nowrap pt-2">
+            {" "}
+            View <FaEye />
+          </h6>
           <select
             className="form-control mx-3 w-25"
             value={select || ""}
@@ -193,12 +196,18 @@ const AdminDash = () => {
               borderRadius: "6px",
             }}
           >
-            <option className="d-flex" value="deposit"><b>Deposit</b></option>
-            <option className="d-flex" value="withdraw"><b>Withdraw</b></option>
+            <option className="d-flex" value="deposit">
+              <b>Deposit</b>
+            </option>
+            <option className="d-flex" value="withdraw">
+              <b>Withdraw</b>
+            </option>
           </select>
         </div>
         <div className="d-flex mt-2 pl-5 justify-content-center">
-          <p className="fw-bold fs-6 text-nowrap mt-1"><FaFilter /></p>
+          <p className="fw-bold fs-6 text-nowrap mt-1">
+            <FaFilter />
+          </p>
 
           <div className="d-flex gap-2 justify-content-center w-25 ms-5">
             <DatePicker
@@ -209,7 +218,6 @@ const AdminDash = () => {
               dateFormat="dd/MM/yyyy"
             />
 
-
             <DatePicker
               selected={endDate}
               onChange={(date) => setEndDate(date)}
@@ -218,7 +226,7 @@ const AdminDash = () => {
               dateFormat="dd/MM/yyyy"
             />
 
-            <div >
+            <div>
               {" "}
               <button
                 type="button"
@@ -250,29 +258,32 @@ const AdminDash = () => {
                     <div className="row">
                       <h4 className="col fs-6">Date</h4>
                       <h4 className="col fs-6">Amount</h4>
-                      <h4 className="col fs-6"> Id</h4>
+                      <h4 className="col fs-6">Transaction Id</h4>
                       <h4 className="col fs-6">Gateway</h4>
+                      <h4 className="col fs-6">CreatedBy</h4>
+                      <h4 className="col fs-6">User Id</h4>
+                      <h4 className="col fs-6">Bank</h4>
+                      <h4 className="col fs-6">Website</h4>
                     </div>
                   </div>
                 </div>
 
                 {documentView.length > 0 ? (
-                 documentView.map((data, i) => {
-                   
+                  documentView.map((data, i) => {
                     return (
                       <div
                         className="card rounded-2"
                         style={{
                           transition: "transform 0.3s",
                           transform: "scale(1)",
-                          boxShadow: "20px 3px 22px 1px rgba(0, 0, 0, 0.36)"
+                          boxShadow: "20px 3px 22px 1px rgba(0, 0, 0, 0.36)",
                         }}
                         onMouseOver={(e) => {
                           e.currentTarget.style.transform = "scale(1.01)";
                         }}
                         onMouseOut={(e) => {
                           e.currentTarget.style.transform = "scale(1)";
-                        }} 
+                        }}
                       >
                         <div className="card-body">
                           <div className="row">
@@ -285,11 +296,17 @@ const AdminDash = () => {
                               )}{" "}
                               {new Date(data.createdAt).getDate()}
                             </p>
-                            <p className="col fs-6">₹&nbsp;{data.depositAmount}</p>
+                            <p className="col fs-6">₹&nbsp;{data.amount}</p>
                             <p className="col fs-6 text-break">
                               {data.transactionID}
                             </p>
                             <p className="col fs-6">{data.paymentMethod}</p>
+                            <p className="col fs-6 text-break">
+                              {data.subAdminId}
+                            </p>
+                            <p className="col fs-6">{data.userId}</p>
+                            <p className="col fs-6">{data.bankName}</p>
+                            <p className="col fs-6">{data.websiteName}</p>
                           </div>
                           <Link to={`/admindash/${data._id}`} className="col">
                             <button type="button" className="btn btn-primary">
@@ -320,12 +337,16 @@ const AdminDash = () => {
                       "linear-gradient(90deg, rgba(251,60,60,1) 0%, rgba(246,171,243,1) 50%, rgba(251,60,60,1) 100%)",
                   }}
                 >
-                 <div className="card-body">
+                  <div className="card-body">
                     <div className="row">
                       <h4 className="col fs-6">Date</h4>
                       <h4 className="col fs-6">Amount</h4>
-                      <h4 className="col fs-6"> Id</h4>
+                      <h4 className="col fs-6">Transaction Id</h4>
                       <h4 className="col fs-6">Gateway</h4>
+                      <h4 className="col fs-6">CreatedBy</h4>
+                      <h4 className="col fs-6">User Id</h4>
+                      <h4 className="col fs-6">Bank</h4>
+                      <h4 className="col fs-6">Website</h4>
                     </div>
                   </div>
                 </div>
@@ -338,7 +359,7 @@ const AdminDash = () => {
                         style={{
                           transition: "transform 0.3s",
                           transform: "scale(1)",
-                          boxShadow: "20px 3px 22px 1px rgba(0, 0, 0, 0.36)"
+                          boxShadow: "20px 3px 22px 1px rgba(0, 0, 0, 0.36)",
                         }}
                         onMouseOver={(e) => {
                           e.currentTarget.style.transform = "scale(1.01)";
@@ -358,21 +379,24 @@ const AdminDash = () => {
                               )}{" "}
                               {new Date(data.createdAt).getDate()}
                             </p>
-                            <p className="col fs-6">₹&nbsp;{data.withdrawAmount}</p>
-                            <p className="col fs-6 text-break">{data.transactionID}</p>
+                            <p className="col fs-6">
+                              ₹&nbsp;{data.withdrawAmount}
+                            </p>
+                            <p className="col fs-6 text-break">
+                              {data.transactionID}
+                            </p>
                             <p className="col fs-6 ">{data.paymentMethod}</p>
                           </div>
-                          
-                            <Link to={`/admindash/${data._id}`} className="col">
-                              <button type="button" class="btn btn-primary">
-                                <FontAwesomeIcon
-                                  icon={faEdit}
-                                  data-toggle="modal"
-                                  data-target="#exampleModalCenter"
-                                />
-                              </button>
-                            </Link>
-                         
+
+                          <Link to={`/admindash/${data._id}`} className="col">
+                            <button type="button" class="btn btn-primary">
+                              <FontAwesomeIcon
+                                icon={faEdit}
+                                data-toggle="modal"
+                                data-target="#exampleModalCenter"
+                              />
+                            </button>
+                          </Link>
                         </div>
                       </div>
                     );
@@ -418,7 +442,7 @@ const AdminDash = () => {
                         style={{
                           transition: "transform 0.3s",
                           transform: "scale(1)",
-                          boxShadow: "20px 3px 22px 1px rgba(0, 0, 0, 0.36)"
+                          boxShadow: "20px 3px 22px 1px rgba(0, 0, 0, 0.36)",
                         }}
                         onMouseOver={(e) => {
                           e.currentTarget.style.transform = "scale(1.01)";
@@ -438,21 +462,24 @@ const AdminDash = () => {
                               )}{" "}
                               {new Date(data.createdAt).getDate()}
                             </p>
-                            <p className="col fs-6 ">₹&nbsp;{data.depositAmount}</p>
-                            <p className="col fs-6 text-break ">{data.transactionID}</p>
+                            <p className="col fs-6 ">
+                              ₹&nbsp;{data.depositAmount}
+                            </p>
+                            <p className="col fs-6 text-break ">
+                              {data.transactionID}
+                            </p>
                             <p className="col fs-6">{data.paymentMethod}</p>
                           </div>
-                          
-                            <Link to={`/admindash/${data._id}`} className="col">
-                              <button type="button" class="btn btn-primary">
-                                <FontAwesomeIcon
-                                  icon={faEdit}
-                                  data-toggle="modal"
-                                  data-target="#exampleModalCenter"
-                                />
-                              </button>
-                            </Link>
-                          
+
+                          <Link to={`/admindash/${data._id}`} className="col">
+                            <button type="button" class="btn btn-primary">
+                              <FontAwesomeIcon
+                                icon={faEdit}
+                                data-toggle="modal"
+                                data-target="#exampleModalCenter"
+                              />
+                            </button>
+                          </Link>
                         </div>
                       </div>
                     );
@@ -491,7 +518,7 @@ const AdminDash = () => {
                         style={{
                           transition: "transform 0.3s",
                           transform: "scale(1)",
-                          boxShadow: "20px 3px 22px 1px rgba(0, 0, 0, 0.36)"
+                          boxShadow: "20px 3px 22px 1px rgba(0, 0, 0, 0.36)",
                         }}
                         onMouseOver={(e) => {
                           e.currentTarget.style.transform = "scale(1.01)";
@@ -511,27 +538,30 @@ const AdminDash = () => {
                               )}{" "}
                               {new Date(data.createdAt).getDate()}
                             </p>
-                            <p className="col fs-6 ">₹&nbsp;{data.withdrawAmount}</p>
-                            <p className="col fs-6 text-break">{data.transactionID}</p>
+                            <p className="col fs-6 ">
+                              ₹&nbsp;{data.withdrawAmount}
+                            </p>
+                            <p className="col fs-6 text-break">
+                              {data.transactionID}
+                            </p>
                             <p className="col fs-6 ">{data.paymentMethod}</p>
                           </div>
-                          
-                            <Link to={`/admindash/${data._id}`} className="col">
-                              <button type="button" class="btn btn-primary">
-                                <FontAwesomeIcon
-                                  icon={faEdit}
-                                  data-toggle="modal"
-                                  data-target="#exampleModalCenter"
-                                />
-                              </button>
-                            </Link>
-                         
+
+                          <Link to={`/admindash/${data._id}`} className="col">
+                            <button type="button" class="btn btn-primary">
+                              <FontAwesomeIcon
+                                icon={faEdit}
+                                data-toggle="modal"
+                                data-target="#exampleModalCenter"
+                              />
+                            </button>
+                          </Link>
                         </div>
                       </div>
                     );
                   })
                 ) : (
-                  <h1  className="text-center">No Transaction Found</h1>
+                  <h1 className="text-center">No Transaction Found</h1>
                 )}
                 {/* {withdrawFilter.length === 0 && (
                   <h1 className="text-center">No Withdraws Found</h1>

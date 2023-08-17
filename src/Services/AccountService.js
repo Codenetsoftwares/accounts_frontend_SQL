@@ -97,10 +97,11 @@ class AccountService {
   }
 
 
-  userprofile(user) {
+  addBank(data, user) {
     return axios({
-      method: 'get',
-      url: API_HOST + '/api/user-profile',
+      method: "post",
+      url: API_HOST + "/api/add-bank-name",
+      data: data,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -121,6 +122,37 @@ class AccountService {
 
 
 
+  userprofile(user) {
+    return axios({
+      method: "get",
+      url: API_HOST + "/api/user-profile",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+
+  singlebank(id, user) {
+    return axios({
+      method: 'get',
+      url: `${API_HOST}/api/get-single-bank-name/${id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  editBank(data, id, user) {
+    return axios({
+      method: "put",
+      url: `${API_HOST}/api/bank-edit/${id}`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
 
 }
 
