@@ -3,6 +3,9 @@ import AccountService from "../../Services/AccountService";
 import { useAuth } from "../../Utils/Auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import InnerBank from "../InnerBank";
+import { Link } from "react-router-dom";
+
 // import { useParams } from "react-router";
 const AdminBank = () => {
   const auth = useAuth();
@@ -12,7 +15,7 @@ const AdminBank = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-   
+
 
     AccountService.addbank(
       {
@@ -46,7 +49,7 @@ const AdminBank = () => {
     e.preventDefault();
     console.log(name);
     const data = {
-      name: name,
+      bankName: name,
     };
 
     // console.log( data)
@@ -60,7 +63,7 @@ const AdminBank = () => {
       })
       .catch((error) => {
         console.error(error);
-        alert.error("e.message");
+        // alert.error("e.message");
       });
   };
 
@@ -71,39 +74,52 @@ const AdminBank = () => {
   return (
     <div>
       <div class="card text-center card text-center mt-2 mr-5 ml-5">
-        <div class="card-header">BankDetails</div>
+        <div class="card-header">Payment Details</div>
         <div class="card-body">
-          <input
+          {/* <input
             class="form-control mb-2"
             id="inputPassword2"
             placeholder="Name"
             onChange={handlebankname}
-          />
-          <a href="#" class="btn btn-primary" onClick={handleSubmit}>
+          /> */}
+          <button class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#innerbnk">
             Add Bank
-          </a>
+          </button>
         </div>
         <div class="card-footer text-muted">
           <div class="card-body">
             {getbankName.length > 0 &&
               getbankName.map((data, index) => {
                 return (
-                  <div className="d-flex flex-row">
-                    <p className="col">{data.name}</p>
-                    {/* <FontAwesomeIcon icon={faEdit} className="edit-icon mr-2" /> */}
-                    <FontAwesomeIcon
-                      icon={faTrashAlt}
-                      className="delete-icon"
-                      onClick={(e) => {
-                        handeldeletebank(e, data.name);
-                      }}
-                    />
+                  <div class="card d-flex justify-content-between">
+                    <div class="card-body d-flex justify-content-between">
+                      <p className="col">{data.bankName}</p>
+                      <Link to={`/editbank/${data._id}`} className="col">
+                        <button type="button" class="btn btn-primary">
+                          <FontAwesomeIcon
+                            icon={faEdit}
+                            data-toggle="modal"
+                            data-target="#exampleModalCenter"
+                          />
+                        </button>
+                      </Link>
+                      <FontAwesomeIcon
+                        icon={faTrashAlt}
+                        className="delete-icon"
+                        onClick={(e) => {
+                          handeldeletebank(e, data.bankName);
+                        }}
+                      />
+                    </div>
                   </div>
                 );
               })}
           </div>
         </div>
       </div>
+      <InnerBank />
     </div>
   );
 };
