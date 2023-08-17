@@ -201,8 +201,23 @@ const CreateUser = () => {
                             <input
                               className="form-check-input"
                               type="checkbox"
-                              value="create user"
-                              checked={checkedItems.includes("create user")}
+                              value="BankView"
+                              checked={checkedItems.includes("BankView")}
+                              onChange={handleCheckboxChange}
+                            />
+                            <label
+                              className="form-check-label"
+                              for="flexSwitchCheckDefault"
+                            >
+                              Bank View
+                            </label>
+                          </div>
+                          <div className="form-check form-switch">
+                            <input
+                              className="form-check-input"
+                              type="checkbox"
+                              value="CreateSubAdmin"
+                              checked={checkedItems.includes("CreateSubAdmin")}
                               onChange={handleCheckboxChange}
                             />
                             <label
@@ -212,30 +227,15 @@ const CreateUser = () => {
                               Create SubAdmin
                             </label>
                           </div>
-                          <div className="form-check form-switch">
-                            <input
-                              className="form-check-input"
-                              type="checkbox"
-                              value="Alert"
-                              checked={checkedItems.includes("Alert")}
-                              onChange={handleCheckboxChange}
-                            />
-                            <label
-                              className="form-check-label"
-                              for="flexSwitchCheckDefault"
-                            >
-                              Alert
-                            </label>
-                          </div>
                         </div>
                         <div className="col-md-6 align-items-end">
                           <div className="form-check form-switch">
                             <input
                               className="form-check-input"
                               type="checkbox"
-                              value="Create Transaction"
+                              value="WebsiteView"
                               checked={checkedItems.includes(
-                                "Create Transaction"
+                                "WebsiteView"
                               )}
                               onChange={handleCheckboxChange}
                             />
@@ -243,37 +243,37 @@ const CreateUser = () => {
                               className="form-check-label"
                               for="flexSwitchCheckDefault"
                             >
-                              Create Transaction
+                              Website View
                             </label>
                           </div>
                           <div className="form-check form-switch">
                             <input
                               className="form-check-input"
                               type="checkbox"
-                              value="website details"
-                              checked={checkedItems.includes("website details")}
+                              value="Profile"
+                              checked={checkedItems.includes("Profile")}
                               onChange={handleCheckboxChange}
                             />
                             <label
                               className="form-check-label"
                               for="flexSwitchCheckDefault"
                             >
-                              Website Details
+                              Profile
                             </label>
                           </div>
                           <div className="form-check form-switch">
                             <input
                               className="form-check-input"
                               type="checkbox"
-                              value="bank details"
-                              checked={checkedItems.includes("bank details")}
+                              value="EditRequest"
+                              checked={checkedItems.includes("EditRequest")}
                               onChange={handleCheckboxChange}
                             />
                             <label
                               className="form-check-label"
                               for="flexSwitchCheckDefault"
                             >
-                              Bank Details
+                             Edit Request
                             </label>
                           </div>
                         </div>
