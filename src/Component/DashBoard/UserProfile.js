@@ -6,7 +6,7 @@ import { useNavigate, Link } from "react-router-dom";
 const UserProfile = () => {
   const auth = useAuth();
   const [users, setUsers] = useState([]);
-  const [q, setQ] = useState('');
+  const [q, setQ] = useState("");
   const navigate = useNavigate();
   // const handelinnerprofile =()=>{
   //   navigate(`/innerprofile/${users._id}`);
@@ -17,20 +17,20 @@ const UserProfile = () => {
   }, [auth]);
   console.log("users", users);
 
-  const filteredUsers = users.filter(affiliate => {
+  const filteredUsers = users.filter((affiliate) => {
     const fullName = affiliate.firstname.toLowerCase();
     return fullName.includes(q.toLowerCase());
   });
 
-
   return (
     <div className="m-3">
+      <h1 className="d-flex justify-content-center">User Profile</h1>
       <div class="input-group input-group-sm ">
         <input
           type="search"
           name="search-form"
           id="search-form"
-          className="search-input"
+          className="search-input "
           placeholder="Search User by Name"
           value={q}
           onChange={(e) => setQ(e.target.value)}
@@ -39,7 +39,7 @@ const UserProfile = () => {
           aria-describedby="inputGroup-sizing-sm"
         />
       </div>
-      <h1 className="d-flex justify-content-center">User Profile</h1>
+
       <ul>
         {filteredUsers.map((users) => (
           <div className="card container-fluid w-75">
