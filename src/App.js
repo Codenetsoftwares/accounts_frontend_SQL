@@ -1,7 +1,6 @@
 // import './App.css';
 import LoginWth from "../src/Component/Login/LoginWth";
 import AdminDash from "../src/Component/DashBoard/AdminDash";
-import Dashboard from "./Component/DashBoard/Dashboard";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React from "react";
 import { AuthProvider } from "./Utils/Auth";
@@ -21,6 +20,7 @@ import GetBank from "./Component/DashBoard/GetBank";
 import AdminBank from "./Component/DashBoard/AdminBank";
 import UserProfile from "./Component/DashBoard/UserProfile";
 import InnerUserProfile from "./Component/DashBoard/InnerUserProfile";
+import CreateTransaction from "./Component/DashBoard/CreateTransaction";
 
 function App() {
   return (
@@ -81,7 +81,7 @@ function App() {
                 path="userprofile"
                 element={
                   <RequireAuth>
-                    <UserProfile/>
+                    <UserProfile />
                   </RequireAuth>
                 }
               />
@@ -90,7 +90,7 @@ function App() {
                 path="dashboard"
                 element={
                   <RequireAuth>
-                    <Dashboard />
+                    <CreateTransaction />
                   </RequireAuth>
                 }
               />
@@ -106,7 +106,7 @@ function App() {
                 path="innerprofile/:id"
                 element={
                   <RequireAuth>
-                   <InnerUserProfile/>
+                    <InnerUserProfile />
                   </RequireAuth>
                 }
               />

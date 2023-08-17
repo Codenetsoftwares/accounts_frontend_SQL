@@ -1,27 +1,22 @@
 import React, { useState, useEffect } from "react";
-// import { FaSignOutAlt } from 'react-icons/fa';
 import { useAuth } from "../../Utils/Auth";
-// import { computeHeadingLevel } from '@testing-library/react';
-// import image from "./Img/imge.jpg";
-// import { toast } from 'react-toastify';
-// import { useNavigate } from 'react-router';
-import { DashboardNavbar } from "./DashboardNavbar";
+import AccountService from "../../Services/AccountService";
 import DashService from "../../Services/DashService";
-import Backgroundimage from "../../Assets/backgroundImage.jpg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGooglePay } from "@fortawesome/free-brands-svg-icons";
-import AccountService from "../../Services/AccountService";
 
-export default function Dashboard() {
+const CreateTransaction = () => {
   const auth = useAuth();
   const [transactionType, setTransactionType] = useState("");
   const [transactionId, setTransactionId] = useState("");
   const [amount, setAmount] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
+  const [Bank, SetBank] = useState("");
+  const [Website, setWebsite] = useState("");
+  const [uid, setUid] = useState("");
 
-  // Get bank Api
   const [getbankName, setGetBankName] = useState([]);
   useEffect(() => {
     AccountService.getbank(auth.user).then((res) => setGetBankName(res.data));
@@ -33,6 +28,7 @@ export default function Dashboard() {
     AccountService.website(auth.user).then((res) => setGetWebsite(res.data));
   }, [auth]);
   console.log("Website", getWebsite);
+  console.log("Auth==>>", auth);
 
   const resetForm = () => {
     // Reset the form fields after submission
@@ -42,6 +38,10 @@ export default function Dashboard() {
     setAmount("");
     setPaymentMethod("");
   };
+  const handleUserIdChange = (e) => {
+    setUid(e.target.value);
+  };
+
   const handleTransactionIdChange = (e) => {
     setTransactionId(e.target.value);
   };
@@ -57,82 +57,48 @@ export default function Dashboard() {
   const handleTransactionTypeChange = (e) => {
     setTransactionType(e.target.value);
   };
-  console.log(transactionType);
+
+  const handleBankChange = (e) => {
+    const value = e.target.value;
+    SetBank(value);
+  };
+  console.log(Bank);
+
+  const handleWebsiteChange = (e) => {
+    const value = e.target.value;
+    setWebsite(value);
+  };
+  console.log(Website);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Prevent the default form submission behavior
-    if (auth.user.role === "deposit") {
-      // Prepare the data object to be sent to the backend
-      const data = {
-        transactionType: "deposit",
-        transactionID: transactionId,
-        depositAmount: amount,
-        paymentMethod: paymentMethod,
-      };
 
-      // Call the API service method to send the data to the backend
-      DashService.depositTransaction(data, auth.user)
-        .then((response) => {
-          // Handle successful response from the backend
-          console.log(response.data);
-          toast.success("Transaction Created Successfully!!");
-        })
-        .catch((error) => {
-          // Handle error from the backend
-          console.error(error);
-          toast.error("Failed! Transaction ID Does Not Exists");
-        });
-    } else {
-      // Prepare the data object to be sent to the backend
-      const data = {
-        transactionType: transactionType,
-        transactionID: transactionId,
-        withdrawAmount: amount,
-        paymentMethod: paymentMethod,
-      };
+    // Prepare the data object to be sent to the backend
+    const data = {
+      transactionID: transactionId,
+      transactionType: transactionType,
+      amount: amount,
+      paymentMethod: paymentMethod,
+      subAdminId: auth.user.email,
+      userId: uid,
+      bankName: Bank,
+      websiteName: Website,
+    };
 
-      // Call the API service method to send the data to the backend
-      DashService.withdrawTransaction(data, auth.user)
-        .then((response) => {
-          // Handle successful response from the backend
-          console.log(response.data);
-          toast.success("Transaction Created Successfully!!");
-        })
-        .catch((error) => {
-          // Handle error from the backend
-          console.error(error);
-          toast.error(" Failed !! Transaction Id Already Exist");
-        });
-    }
-
-    // Reset the form fields after submission if needed
-    resetForm();
+    // Call the API service method to send the data to the backend
+    DashService.CreateTransaction(data, auth.user)
+      .then((response) => {
+        // Handle successful response from the backend
+        console.log(response.data);
+        toast.success("Transaction Created Successfully!!");
+      })
+      .catch((error) => {
+        // Handle error from the backend
+        console.error(error);
+        toast.error("Failed! Transaction ID Does Not Exists");
+      });
   };
-
-  //Checking The role of the User
-  console.log(auth.user.role);
-
-  // const handleLoginDeposit = () => {
-  //   setTransactionType('deposit');
-  // };
-
-  // const handleLoginWithdraw = () => {
-  //   setTransactionType('withdraw');
-  // };
-
-  // const handleLogout = () => {
-  //       const response = window.confirm(
-  //       'You are about to be logged out of this site'
-  //     );
-  //     if (response) {
-  //       toast.success('Logout successfully');
-  //       auth.logout();
-  //       nav('/');
-  //     }
-
-  //   console.log('Logged out');
-  // };
   const containerStyle = {
     display: "flex",
     justifyContent: "center",
@@ -170,81 +136,24 @@ export default function Dashboard() {
     // border:'2px solid black'
   };
 
-  // const backgroundImageStyle = {
-  //   position: "fixed",
-  //   top: 0,
-  //   left: 0,
-  //   width: "100%",
-  //   height: "100%",
-  //   opacity: 0.6,
-  //   backgroundImage: `url(${Backgroundimage})`,
-  //   backgroundRepeat: "no-repeat",
-  //   backgroundSize: "cover",
-  //   zIndex: -1,
-  //   // border:
-  // };
-
-  // const logoutButtonStyle = {
-
-  //   position: 'absolute',
-  //   top: '1rem',
-  //   right: '1rem',
-  //   backgroundColor: '#f44336',
-  //   color: '#fff',
-  //   border: 'none',
-  //   padding: '0.5rem',
-  //   borderRadius: '0.5rem',
-  //   cursor: 'pointer',
-  //   display: 'flex',
-  //   alignItems: 'center',
-  //   transition: 'background-color 0.3s ease',
-  // };
-
-  // const logoutIconStyle = {
-  //   // marginRight: '0.5rem',
-  // };
-
-  // const hoverInputStyle = {
-  //   ...inputStyle,
-  //   boxShadow: '0px 0px 5px 1px rgba(0, 0, 0, 0.2)', // Add hover box-shadow
-  // };
-
   return (
     <>
-      {/* <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-      /> */}
-
-      {/* <DashboardNavbar /> */}
       <div style={containerStyle}>
-        {/* <div style={backgroundImageStyle} /> */}
-
-        {/* <button className="btn btn-danger" onClick={handleLogout} style={logoutButtonStyle}>
-      <FaSignOutAlt style={logoutIconStyle} />
-      Logout
-    </button> */}
-
         <div style={cardStyle}>
-          {/* <h2>{transactionType === 'deposit' ? 'Deposit' : 'Withdraw'}</h2>
-        {transactionType === 'deposit' ? (
-          <button className="btn btn-primary" onClick={handleLoginWithdraw} style={transactionType === 'withdraw' ? hoverButtonStyle : buttonStyle}>
-            Switch to Withdraw
-          </button>
-        ) : (
-          <button className="btn btn-primary" onClick={handleLoginDeposit} style={transactionType === 'deposit' ? hoverButtonStyle : buttonStyle}>
-            Switch to Deposit
-          </button>
-        )} */}
           <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label htmlFor="UID">
+                <h5>User ID </h5>
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                onChange={handleUserIdChange}
+                placeholder="User ID"
+                value={uid}
+                style={inputStyle}
+              />
+            </div>
             <div className="form-group">
               <label htmlFor="transactionId">
                 <h5>Transaction ID </h5>
@@ -312,14 +221,13 @@ export default function Dashboard() {
               <select
                 class="form-select"
                 style={inputStyle}
-                value={paymentMethod}
-                onChange={handlePaymentMethodChange}
+                value={getbankName.bankName}
+                onChange={handleBankChange}
               >
                 <option selected>Select Bank</option>
-
                 {getbankName.map((bank, index) => (
-                  <option key={index} value={bank.name}>
-                    {bank.name}
+                  <option key={index} value={bank.bankName}>
+                    {bank.bankName}
                   </option>
                 ))}
               </select>
@@ -332,8 +240,8 @@ export default function Dashboard() {
               <select
                 class="form-select"
                 style={inputStyle}
-                value={paymentMethod}
-                onChange={handlePaymentMethodChange}
+                value={getWebsite.name}
+                onChange={handleWebsiteChange}
               >
                 <option selected>Select Website</option>
                 {getWebsite.map((website, index) => (
@@ -354,18 +262,10 @@ export default function Dashboard() {
               </button>
             </div>
           </form>
-
-          {/*        
-        {transactions.map((transaction, index) => (
-          <div key={index}>
-            <h5>Transaction ID: {transaction.transactionId}</h5>
-            <p>Transaction Type: {transaction.transactionType}</p>
-            <p>Amount: {transaction.amount}</p>
-            <p>Status: {transaction.status}</p>
-          </div> */}
-          {/* ))} */}
         </div>
       </div>
     </>
   );
-}
+};
+
+export default CreateTransaction;
