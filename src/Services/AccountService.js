@@ -107,6 +107,19 @@ class AccountService {
     });
   }
 
+  
+  inneruserprofile( id , data , user) {
+    return axios({
+      method: 'put',
+      url: `${API_HOST}/api/admin/user-profile-edit/${id}`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+
 
 
 }

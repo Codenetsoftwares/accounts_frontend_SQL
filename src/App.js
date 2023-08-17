@@ -21,6 +21,8 @@ import GetBank from "./Component/DashBoard/GetBank";
 import AdminBank from "./Component/DashBoard/AdminBank";
 import UserProfile from "./Component/DashBoard/UserProfile";
 import InnerUserProfile from "./Component/DashBoard/InnerUserProfile";
+import TransactionDetails from "./Component/DashBoard/TransactionDetails";
+
 
 function App() {
   return (
@@ -109,6 +111,17 @@ function App() {
                    <InnerUserProfile/>
                   </RequireAuth>
                 }
+              />
+
+               <Route
+                path="transactiondetails"
+                element={
+                  <RequireAuth>
+                    <TransactionDetails/>
+                    </RequireAuth>
+                }
+                   
+                
               />
               <Route
                 path="alert"
