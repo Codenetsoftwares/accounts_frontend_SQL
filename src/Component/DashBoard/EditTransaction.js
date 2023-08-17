@@ -47,6 +47,7 @@ const EditTransaction = () => {
       amount: amount,
       paymentMethod: paymentMethod,
       userId: uid,
+      subAdminId: auth.user.email,
       bankName: Bank,
       websiteName: Website,
     };
