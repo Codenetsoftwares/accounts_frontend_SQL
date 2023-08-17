@@ -20,7 +20,9 @@ import GetBank from "./Component/DashBoard/GetBank";
 import AdminBank from "./Component/DashBoard/AdminBank";
 import UserProfile from "./Component/DashBoard/UserProfile";
 import InnerUserProfile from "./Component/DashBoard/InnerUserProfile";
+import EditBank from "./Component/EditBank";
 import CreateTransaction from "./Component/DashBoard/CreateTransaction";
+
 
 function App() {
   return (
@@ -130,7 +132,14 @@ function App() {
                 </RequireAuth>
               }
             />
-
+            <Route
+              path="editbank/:id"
+              element={
+                <RequireAuth>
+                  <EditBank />
+                </RequireAuth>
+              }
+            />
             <Route path="forpas" element={<ForPas />} />
           </Routes>
         </BrowserRouter>

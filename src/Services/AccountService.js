@@ -96,6 +96,19 @@ class AccountService {
     });
   }
 
+
+  addBank(data, user) {
+    return axios({
+      method: "post",
+      url: API_HOST + "/api/add-bank-name",
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+
   userprofile(user) {
     return axios({
       method: "get",
@@ -105,6 +118,29 @@ class AccountService {
       },
     });
   }
+
+
+  singlebank(id, user) {
+    return axios({
+      method: 'get',
+      url: `${API_HOST}/api/get-single-bank-name/${id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  editBank(data, id, user) {
+    return axios({
+      method: "put",
+      url: `${API_HOST}/api/bank-edit/${id}`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
 }
 
 export default new AccountService();
