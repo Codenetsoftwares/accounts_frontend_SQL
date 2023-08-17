@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "../../Utils/Auth";
 import TransactionSercvice from "../../Services/TransactionSercvice";
 import { useParams } from "react-router";
@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import "./EditTransaction.css";
 import EditIcon from "../../Assets/edit-iconii.png";
+import AccountService from "../../Services/AccountService";
+
 const EditTransaction = () => {
   const auth = useAuth();
   console.log("This is Auth", auth);
@@ -14,6 +16,9 @@ const EditTransaction = () => {
   const [amount, setAmount] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
   const [transactionType, setTransactionType] = useState("");
+  const [uid, setUid] = useState("");
+  const [Bank, SetBank] = useState("");
+  const [Website, setWebsite] = useState("");
   const navigate = useNavigate();
 
   const handleTransactionIdChange = (e) => {
@@ -30,14 +35,20 @@ const EditTransaction = () => {
   const handleTransactionType = (e) => {
     setTransactionType(e.target.value);
   };
-
+  const handleUserIDChange = (e) => {
+    setUid(e.target.value);
+  };
+  console.log(Bank);
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = {
       transactionID: transactionId,
+      transactionType: transactionType,
       amount: amount,
       paymentMethod: paymentMethod,
-      transactionType: transactionType,
+      userId: uid,
+      bankName: Bank,
+      websiteName: Website,
     };
     console.log(id, data);
     TransactionSercvice.editTransactionData(id, data, auth.user)
@@ -55,10 +66,29 @@ const EditTransaction = () => {
         toast.error("Failed! Invalid Data");
       });
   };
+  const [getbankName, setGetBankName] = useState([]);
+  useEffect(() => {
+    AccountService.getbank(auth.user).then((res) => setGetBankName(res.data));
+  }, [auth]);
+  console.log("Bank Names", getbankName);
 
+  // Get Website Api
+  const [getWebsite, setGetWebsite] = useState([]);
+  useEffect(() => {
+    AccountService.website(auth.user).then((res) => setGetWebsite(res.data));
+  }, [auth]);
+
+  const handleBankChange = (e) => {
+    const value = e.target.value;
+    SetBank(value);
+  };
+  const handleWebsiteChange = (e) => {
+    const value = e.target.value;
+    setWebsite(value);
+  };
   return (
     <div className="EditTransaction">
-      <ul class="circles">
+      {/* <ul class="circles">
         <li></li>
         <li></li>
         <li></li>
@@ -69,7 +99,7 @@ const EditTransaction = () => {
         <li></li>
         <li></li>
         <li></li>
-      </ul>
+      </ul> */}
 
       <div
         className="wrapper"
@@ -100,10 +130,18 @@ const EditTransaction = () => {
           <div className="form-field d-flex align-items-center">
             <input
               type="text"
+              placeholder="User Id"
+              onChange={handleUserIDChange}
+            />
+          </div>
+          <div className="form-field d-flex align-items-center">
+            <input
+              type="text"
               placeholder="Amount"
               onChange={handleAmountChange}
             />
           </div>
+
           <div className="form-field d-flex align-items-center">
             <input
               placeholder="Transaction ID"
@@ -130,6 +168,36 @@ const EditTransaction = () => {
               <option value="Withdraw">Withdraw</option>
             </select>
           </div>
+
+          <div className="form-field d-flex align-items-center">
+            <select
+              class="form-select"
+              value={getbankName.bankName}
+              onChange={handleBankChange}
+            >
+              <option selected>Select Bank</option>
+              {getbankName.map((bank, index) => (
+                <option key={index} value={bank.bankName}>
+                  {bank.bankName}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="form-field d-flex align-items-center">
+            <select
+              class="form-select"
+              value={getWebsite.name}
+              onChange={handleWebsiteChange}
+            >
+              <option selected>Select Website</option>
+              {getWebsite.map((website, index) => (
+                <option key={index} value={website.name}>
+                  {website.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
           <button className="btn mt-3" onClick={handleSubmit}>
             Submit
           </button>

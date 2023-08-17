@@ -96,6 +96,7 @@ class AccountService {
     });
   }
 
+
   addBank(data, user) {
     return axios({
       method: "post",
@@ -107,15 +108,17 @@ class AccountService {
     });
   }
 
+
   userprofile(user) {
     return axios({
-      method: 'get',
-      url: API_HOST + '/api/user-profile',
+      method: "get",
+      url: API_HOST + "/api/user-profile",
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
     });
   }
+
 
   singlebank(id, user) {
     return axios({
