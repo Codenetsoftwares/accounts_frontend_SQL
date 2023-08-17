@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faSave } from "@fortawesome/free-solid-svg-icons";
 import AccountService from "../../Services/AccountService";
 import { useAuth } from "../../Utils/Auth";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const InnerUserProfile = () => {
   const { id } = useParams();
@@ -183,8 +183,11 @@ const InnerUserProfile = () => {
                       >
                         Payment Details
                       </button>
-                      <Link to="/transaction-details" className="btn btn-link">
-                      Transaction Details
+                      <Link
+                        to={`/transactiondetails/${id}`}
+                        className="btn btn-link"
+                      >
+                        Transaction Details
                       </Link>
                       {isAccordionOpen && (
                         <div className="accordion">

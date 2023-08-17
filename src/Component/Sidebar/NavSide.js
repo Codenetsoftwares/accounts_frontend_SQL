@@ -223,12 +223,21 @@ const NavSide = () => {
                     <p>User Profile</p>
                   </Link>
 
-                  <Link to="alert" className="nav-link text-white">
+                  {/* <Link to="alert" className="nav-link text-white">
                     <i className="far fa-circle nav-icon" />
                     <p>Alert</p>
-                  </Link>
+                  </Link> */}
                 </li>
               )}
+              <li className="nav-item">
+                <Link to="alert" href="pages/widgets.html" className="nav-link">
+                  <i className="nav-icon fas fa-university"></i>
+                  <p className="text-dark">
+                    <small>Transaction Request</small>
+                    {/* <span className="right badge badge-danger">New</span> */}
+                  </p>
+                </Link>
+              </li>
             </ul>
           </nav>
         </div>

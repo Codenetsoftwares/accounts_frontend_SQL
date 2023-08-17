@@ -26,8 +26,6 @@ import TransactionDetails from "./Component/DashBoard/TransactionDetails";
 import EditBank from "./Component/EditBank";
 import CreateTransaction from "./Component/DashBoard/CreateTransaction";
 
-
-
 function App() {
   return (
     <React.Fragment>
@@ -117,15 +115,13 @@ function App() {
                 }
               />
 
-               <Route
-                path="transactiondetails"
+              <Route
+                path="transactiondetails/:id"
                 element={
                   <RequireAuth>
-                    <TransactionDetails/>
-                    </RequireAuth>
+                    <TransactionDetails />
+                  </RequireAuth>
                 }
-                   
-                
               />
               <Route
                 path="alert"
