@@ -30,7 +30,9 @@ const NavSide = () => {
         className="main-sidebar elevation-4"
         style={{
           backgroundImage:
-            "linear-gradient(270deg, rgba(254,216,216,1) 0%, rgba(255,135,98,1) 59%)"
+
+            "linear-gradient(270deg, rgba(254,216,216,1) 0%, rgba(255,135,98,1) 59%)",
+
         }}
       >
         <div className="d-flex flex-row">
@@ -45,6 +47,8 @@ const NavSide = () => {
               &nbsp;Happy Wave
             </span>
           </p>
+
+            <div className="fs-4 ml-4" style={{width: '15%'}}   data-widget="pushmenu"  >x</div>
         </div>
 
         <div className="sidebar">
