@@ -25,6 +25,8 @@ import TransactionDetails from "./Component/DashBoard/TransactionDetails";
 
 import EditBank from "./Component/EditBank";
 import CreateTransaction from "./Component/DashBoard/CreateTransaction";
+import WebsiteStatement from "./Component/DashBoard/WebsiteStatement";
+import BankStatement from "./Component/DashBoard/BankStatement";
 
 function App() {
   return (
@@ -77,6 +79,24 @@ function App() {
                 element={
                   <RequireAuth>
                     <WebsiteDetails />
+                  </RequireAuth>
+                }
+              />
+
+              <Route
+                path="websitestatement"
+                element={
+                  <RequireAuth>
+                    <WebsiteStatement />
+                  </RequireAuth>
+                }
+              />
+
+              <Route
+                path="bankstatement"
+                element={
+                  <RequireAuth>
+                    <BankStatement/>
                   </RequireAuth>
                 }
               />
