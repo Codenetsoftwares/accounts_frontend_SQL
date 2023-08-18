@@ -26,6 +26,7 @@ const TopNavbar = () => {
               className="nav-link"
               href="#"
               role="button"
+              data-widget="pushmenu"
             >    
               <i className="fas fa-bars"></i>
             </a>

@@ -47,8 +47,7 @@ const NavSide = () => {
               &nbsp;Happy Wave
             </span>
           </p>
-
-            <div className="fs-4 ms-4" style={{width: '15%'}}   data-widget="pushmenu"  >x</div>
+          <div className="fs-4 ms-4 " style={{ width: '15%' }} data-widget="pushmenu">x</div>
         </div>
 
         <div className="sidebar">
