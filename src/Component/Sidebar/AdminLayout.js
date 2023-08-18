@@ -5,7 +5,7 @@ import Layout from './Layout'
 
 const AdminLayout = () => {
   return (
-    <div data-widget="pushmenu">
+    <div >
       <TopNavbar/>
       <NavSide/>
       <Layout/>
