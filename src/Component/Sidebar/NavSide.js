@@ -12,7 +12,7 @@ const NavSide = () => {
   useEffect(() => {
     setUserEmail(auth.user.email);
   }, [auth]);
-  console.log(useremail);
+  // console.log(useremail);
 
   const handleToggle = () => {
     setIsToggle(!isToggle);
@@ -30,8 +30,9 @@ const NavSide = () => {
         className="main-sidebar elevation-4"
         style={{
           backgroundImage:
+
             "linear-gradient(270deg, rgba(254,216,216,1) 0%, rgba(255,135,98,1) 59%)",
-             
+
         }}
       >
         <div className="d-flex flex-row">
