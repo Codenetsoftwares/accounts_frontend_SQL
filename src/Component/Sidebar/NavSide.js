@@ -12,7 +12,7 @@ const NavSide = () => {
   useEffect(() => {
     setUserEmail(auth.user.email);
   }, [auth]);
-  console.log(useremail);
+  // console.log(useremail);
 
   const handleToggle = () => {
     setIsToggle(!isToggle);
@@ -30,7 +30,9 @@ const NavSide = () => {
         className="main-sidebar elevation-4"
         style={{
           backgroundImage:
+
             "linear-gradient(270deg, rgba(254,216,216,1) 0%, rgba(255,135,98,1) 59%)",
+
         }}
       >
         <div className="d-flex flex-row">
@@ -45,6 +47,7 @@ const NavSide = () => {
               &nbsp;Happy Wave
             </span>
           </p>
+          <div className="fs-4 ms-4 " style={{ width: '15%' }} data-widget="pushmenu">x</div>
         </div>
 
         <div className="sidebar">
@@ -223,17 +226,17 @@ const NavSide = () => {
                     <p>User Profile</p>
                   </Link>
 
-                  {/* <Link to="alert" className="nav-link text-white">
+                  <Link to="#" className="nav-link text-white">
                     <i className="far fa-circle nav-icon" />
-                    <p>Alert</p>
-                  </Link> */}
+                    <p>Introducer</p>
+                  </Link>
                 </li>
               )}
               <li className="nav-item">
                 <Link to="alert" href="pages/widgets.html" className="nav-link">
-                  <i className="nav-icon fas fa-university"></i>
+                  &nbsp;<i className="alert-icon fas fa-bell"></i>
                   <p className="text-dark">
-                    <small>Transaction Request</small>
+                    &nbsp; Edit Request
                     {/* <span className="right badge badge-danger">New</span> */}
                   </p>
                 </Link>

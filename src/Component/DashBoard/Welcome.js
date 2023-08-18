@@ -1,3 +1,4 @@
+
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import useLocalStorage from "use-local-storage";
@@ -9,45 +10,12 @@ const Welcome = () => {
     defaultDark ? "dark" : "light"
   );
 
-  // const birdsContainerStyle = {
-  //   position: "absolute",
-  //   top: "15vw",
-  //   animationName: "birdsFlying",
-  //   animationDelay: "0s",
-  //   animationDuration: "30s",
-  //   animationIterationCount: "infinite",
-  //   animationTimingFunction: "linear",
-  //   zIndex: "-1"
-  // };
-
-  // const welcomeStyle = {
-  //   color: "#3f5efb",
-  //   textShadow: "2px 2px 5px black",
-  //   position: "fixed",
-  //   textAlign: "center",
-  //   height: "100vh",
-  //   lineHeight: "100vh",
-  //   fontSize: "40px",
-  //   fontFamily: '"Courier New", Courier, monospace',
-  //   width: "100%",
-  //   top: "0",
-  //   left: "0",
-  //   zIndex: "0"
-  // };
-  // const styles = {
-  //   position: "fixed",
-  //   top: 0,
-  //   left: 0,
-  //   width: "100%",
-  //   height: "100%",
-  //   overflow: "hidden",
-  // };
+ 
 
 
   return (
     <div
       className="container-fluid  mb-3 "
-      style={{ border: "2px solid red " }}
     >
       <nav className="navbar navbar-dark bg-dark py-2 ">
         <div className="container">
@@ -67,12 +35,14 @@ const Welcome = () => {
         >
           <div className="container text-center">
             <h1 className="display-5">Welcome to Our CRM Software</h1>
+
             <p className="lead">
               This is our central hub for managing accounts.
             </p>
             <div className="Guidance p-4 border rounded">
               <h2>Getting Started</h2>
               <p>Follow these steps to start using the CRM:</p>
+
               <ol
                 className="mt-4 p-5 bg-primary text-white rounded list-group list-group-numbered"
                 style={{ textAlign: "left" }}
@@ -122,6 +92,7 @@ const Welcome = () => {
           </footer>
         </div>
       </div>
+
     </div>
   );
 };

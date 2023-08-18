@@ -210,8 +210,8 @@ const CreateTransaction = () => {
                 value={transactionType}
               >
                 <option selected>Open this select menu</option>
-                <option value="deposit">Deposit</option>
-                <option value="withdarw">Withdarw</option>
+                <option value="Deposit">Deposit</option>
+                <option value="Withdarw">Withdarw</option>
               </select>
             </div>
             <div className="form-group">

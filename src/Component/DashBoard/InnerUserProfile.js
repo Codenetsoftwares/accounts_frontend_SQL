@@ -73,6 +73,7 @@ const InnerUserProfile = () => {
         }
       });
   };
+  console.log("User Deatils",foundObject);
 
   return (
     <div
