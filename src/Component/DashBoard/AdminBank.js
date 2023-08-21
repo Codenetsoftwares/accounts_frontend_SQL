@@ -58,8 +58,8 @@ const AdminBank = () => {
     navigate(`/editbank/${_id}`);
   };
 
-  const handelstatement = () => {
-    navigate("/bankstatement");
+  const handelstatement = (e, accountNumber) => {
+    navigate(`/bankstatement/${accountNumber}`);
   };
 
   const handeldeletebank = (e, name) => {
@@ -140,7 +140,9 @@ const AdminBank = () => {
                         <button
                           type="button"
                           class="btn btn-info btn-sm"
-                          onClick={handelstatement}
+                          onClick={(e) => {
+                            handelstatement(e, data.accountNumber);
+                          }}
                         >
                           <FontAwesomeIcon
                             icon={faFileAlt}

@@ -1,8 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useAuth } from "../../Utils/Auth";
+import { useParams } from "react-router";
+import AccountService from "../../Services/AccountService";
 
 const BankStatement = () => {
+  const { id } = useParams();
+  const auth = useAuth();
+  const [Manualstmnt, SetManualstmnt] = useState([]);
+  const [Userstmnt, SetUserstmnt] = useState([]);
+  console.log(id);
+
+  useEffect(() => {
+    AccountService.GetBankStMent(id, auth.user).then((res) =>
+      SetManualstmnt(res.data)
+    );
+  }, [id, auth]);
+
+  useEffect(() => {
+    AccountService.GetBankuserStMent(id, auth.user).then((res) =>
+      SetUserstmnt(res.data)
+    );
+  }, [id, auth]);
+
+  console.log("Bank Names Manual =>>>", Manualstmnt);
+  console.log("Bank Names User =>>>", Userstmnt);
   return (
     <div>
       <div className=" container mt-5">
