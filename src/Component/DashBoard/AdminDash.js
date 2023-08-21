@@ -30,6 +30,8 @@ const AdminDash = () => {
   const [withdrawView, setWithdrawView] = useState([]);
   const [documentFilter, setDocumentFilter] = useState([]);
   const [withdrawFilter, setWithdrawFilter] = useState([]);
+  const [subAdminlist, setSubAdminlist] = useState([]);
+  const [subAdmin, setSubAdmin] = useState("");
   const [select, setSelect] = useState("deposit");
   const [outerSelect, setOuterSelect] = useState(true);
   const [totalDeposit, setTotalDeposit] = useState("");
@@ -135,6 +137,21 @@ const AdminDash = () => {
     console.log(outerSelect);
   };
 
+  const handleSubAdmin = (e) => {
+    const value = e.target.value;
+    setSubAdmin(value);
+
+  };
+
+  // useEffect(() => {
+  //   if (auth.user) {
+  //     TransactionSercvice.subAdminList(auth.user).then((res) => {
+  //       setSubAdminlist(res.data);
+  //     });
+  //   }
+  // }, []);
+
+
   return (
     <div className="main">
       {/* Top Div */}
@@ -178,7 +195,7 @@ const AdminDash = () => {
       {/* This is the Main Card */}
       <div
         className="card card-body rounded-1 main "
-        // style={{ backgroundImage: gradient }}
+      // style={{ backgroundImage: gradient }}
       >
         <div className="d-flex mt-5 mt-5 ml-5 pt-5 justify-content-center">
           <h6 className="fw-bold text-nowrap pt-2">
@@ -202,6 +219,31 @@ const AdminDash = () => {
             <option className="d-flex" value="withdraw">
               <b>Withdraw</b>
             </option>
+          </select>
+        </div>
+        <div className="d-flex pt-3 justify-content-center">
+          <h6 className="fw-bold text-nowrap pt-2">
+            {" "}
+            SubAdminlist
+          </h6>
+          <select
+            className="form-control mx-3 w-25"
+            value={subAdmin || ""}
+            autoComplete="off"
+            onChange={handleSubAdmin}
+            style={{
+              boxShadow: " 17px 15px 27px -9px rgba(0,0,0,0.41)",
+              border: "0.5px solid black",
+              borderRadius: "6px",
+            }}
+            required
+          >
+            <option selected>Select Team</option>
+            {subAdminlist.map((data) => {
+              return (
+                <option key={data.lichessId}>{data.teamId}</option>
+              );
+            })}
           </select>
         </div>
         <div className="d-flex mt-2 pl-5 justify-content-center">

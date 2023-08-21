@@ -43,7 +43,7 @@ const CreateUser = () => {
       password: formData.yourPassword,
       roles: checkedItems,
     };
-    
+
     //Api Fetching
     AccountService.createuser(data, auth.user)
       .then((res) => {
@@ -83,7 +83,7 @@ const CreateUser = () => {
         alignItems: "center",
       }}
       className="d-flex align-items-center justify-content-center">
-         
+
       <div className="container pt-5">
         <div className="row justify-content-center">
           <div className="col-lg-9">
@@ -216,6 +216,21 @@ const CreateUser = () => {
                             <input
                               className="form-check-input"
                               type="checkbox"
+                              value="create-transaction"
+                              checked={checkedItems.includes("create-transaction")}
+                              onChange={handleCheckboxChange}
+                            />
+                            <label
+                              className="form-check-label"
+                              for="flexSwitchCheckDefault"
+                            >
+                              Create Transaction
+                            </label>
+                          </div>
+                          <div className="form-check form-switch">
+                            <input
+                              className="form-check-input"
+                              type="checkbox"
                               value="CreateSubAdmin"
                               checked={checkedItems.includes("CreateSubAdmin")}
                               onChange={handleCheckboxChange}
@@ -273,7 +288,7 @@ const CreateUser = () => {
                               className="form-check-label"
                               for="flexSwitchCheckDefault"
                             >
-                             Edit Request
+                              Edit Request
                             </label>
                           </div>
                         </div>
@@ -301,7 +316,7 @@ const CreateUser = () => {
         </div>
       </div>
     </div>
-   
+
   );
 };
 

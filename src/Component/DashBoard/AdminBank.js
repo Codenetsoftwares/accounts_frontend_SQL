@@ -103,12 +103,12 @@ const AdminBank = () => {
               getbankName.map((data, index) => {
                 return (
                   <div class="card d-flex justify-content-between">
-                    <div class="card-body d-flex justify-content-between">
-                      <p className="col">{data.bankName}</p>
-                      <div className=" d-flex gap-2">
+                    <div class="card-body ">
+                      <p className="">{data.bankName}</p>
+                      <div className=" d-flex justify-content-center gap-1">
                         <button
                           type="button"
-                          class="btn btn-danger"
+                          class="btn btn-danger btn-sm"
                           data-bs-toggle="modal"
                           data-bs-target="#modalWthbl"
                         >
@@ -119,7 +119,7 @@ const AdminBank = () => {
                         </button>
                         <button
                           type="button"
-                          class="btn btn-success"
+                          class="btn btn-success btn-sm"
                           data-bs-toggle="modal"
                           data-bs-target="#modalAdbl"
                         >
@@ -127,7 +127,7 @@ const AdminBank = () => {
                         </button>
                         <button
                           type="button"
-                          class="btn btn-info"
+                          class="btn btn-info btn-sm"
                           onClick={handelstatement}
                         >
                           <FontAwesomeIcon
@@ -137,7 +137,7 @@ const AdminBank = () => {
                         </button>
                         <button
                           type="button"
-                          class="btn btn-warning "
+                          class="btn btn-warning btn-sm "
                           onClick={(e) => {
                             handelEditbank(e, data._id);
                           }}
@@ -149,7 +149,7 @@ const AdminBank = () => {
                           />
                         </button>
 
-                        <button type="button" class="btn btn-danger">
+                        <button type="button" class="btn btn-danger  btn-sm">
                           <FontAwesomeIcon
                             icon={faTrashAlt}
                             className="delete-icon"
