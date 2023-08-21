@@ -137,11 +137,11 @@ const AdminDash = () => {
     console.log(outerSelect);
   };
 
-  const handleSubAdmin = (e) => {
-    const value = e.target.value;
-    setSubAdmin(value);
+  // const handleSubAdmin = (e) => {
+  //   const value = e.target.value;
+  //   setSubAdmin(value);
 
-  };
+  // };
 
   // useEffect(() => {
   //   if (auth.user) {
@@ -221,7 +221,7 @@ const AdminDash = () => {
             </option>
           </select>
         </div>
-        <div className="d-flex pt-3 justify-content-center">
+        {/* <div className="d-flex pt-3 justify-content-center">
           <h6 className="fw-bold text-nowrap pt-2">
             {" "}
             SubAdminlist
@@ -245,7 +245,7 @@ const AdminDash = () => {
               );
             })}
           </select>
-        </div>
+        </div> */}
         <div className="d-flex mt-2 pl-5 justify-content-center">
           <p className="fw-bold fs-6 text-nowrap mt-1">
             <FaFilter />
