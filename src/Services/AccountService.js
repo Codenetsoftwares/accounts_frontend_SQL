@@ -169,6 +169,25 @@ class AccountService {
       },
     });
   }
+
+  GetBankStMent(id, user) {
+    return axios({
+      method: "get",
+      url: `${API_HOST}/api/admin/bank-account-summary/${id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+  GetBankuserStMent(id, user) {
+    return axios({
+      method: "get",
+      url: `${API_HOST}/api/admin/user-bank-account-summary/${id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
 }
 
 export default new AccountService();
