@@ -22,6 +22,16 @@ class TransactionService {
     });
   }
 
+  subAdminList(user) {
+    return axios({
+      method: "get",
+      url: API_HOST + "/",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
   editTransactionData(id, data, user) {
     return axios({
       method: "put",
