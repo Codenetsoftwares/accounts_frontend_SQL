@@ -21,6 +21,7 @@ const AdminBank = () => {
   const auth = useAuth();
   const [bankName, setBankName] = useState("");
   const [getbankName, setGetBankName] = useState([{}]);
+  const [Id, setId] = useState([]);
   // const { id } = useParams();
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -87,6 +88,11 @@ const AdminBank = () => {
     AccountService.getbank(auth.user).then((res) => setGetBankName(res.data));
   }, [auth]);
   console.log("Bank Names", getbankName);
+
+  const handelId = (id) => {
+    setId(id);
+  };
+  console.log(Id);
   return (
     <div>
       <div class="card text-center card text-center mt-2 mr-5 ml-5">
@@ -115,6 +121,9 @@ const AdminBank = () => {
                           <FontAwesomeIcon
                             icon={faMinus}
                             className="add-icon"
+                            onClick={() => {
+                              handelId(data._id);
+                            }}
                           />
                         </button>
                         <button
@@ -122,6 +131,9 @@ const AdminBank = () => {
                           class="btn btn-success btn-sm"
                           data-bs-toggle="modal"
                           data-bs-target="#modalAdbl"
+                          onClick={() => {
+                            handelId(data._id);
+                          }}
                         >
                           <FontAwesomeIcon icon={faPlus} className="add-icon" />
                         </button>
@@ -238,8 +250,8 @@ const AdminBank = () => {
             Add New Bank
           </button>
         </div>
-        <ModalAddBl />
-        <ModalWthBl />
+        <ModalAddBl ID={Id} />
+        <ModalWthBl ID={Id} />
         <InnerBank />
         <ModalBkdl />
       </div>

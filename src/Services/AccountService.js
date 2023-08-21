@@ -96,7 +96,6 @@ class AccountService {
     });
   }
 
-
   addBank(data, user) {
     return axios({
       method: "post",
@@ -108,10 +107,9 @@ class AccountService {
     });
   }
 
-  
-  inneruserprofile( id , data , user) {
+  inneruserprofile(id, data, user) {
     return axios({
-      method: 'put',
+      method: "put",
       url: `${API_HOST}/api/admin/user-profile-edit/${id}`,
       data: data,
       headers: {
@@ -119,8 +117,6 @@ class AccountService {
       },
     });
   }
-
-
 
   userprofile(user) {
     return axios({
@@ -132,10 +128,9 @@ class AccountService {
     });
   }
 
-
   singlebank(id, user) {
     return axios({
-      method: 'get',
+      method: "get",
       url: `${API_HOST}/api/get-single-bank-name/${id}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
@@ -154,6 +149,26 @@ class AccountService {
     });
   }
 
+  ManualBankEntryDeposit(id, data, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/admin/add-bank-balance/${id}`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+  ManualBankEntryWithdraw(id, data, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/admin/withdraw-bank-balance/${id}`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
 }
 
 export default new AccountService();

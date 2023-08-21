@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAuth } from "../../Utils/Auth";
-const ModalAdWbl = () => {
+import AccountService from "../../Services/AccountService";
+
+const ModalAdWbl = ({ ID }) => {
   const auth = useAuth();
+  const [Amount, SetAmount] = useState(0);
+
+  const handelamtchange = (e) => {
+    SetAmount(e.target.value);
+  };
+
   return (
     <div>
       <div
@@ -46,6 +54,7 @@ const ModalAdWbl = () => {
                     type="number"
                     className="form-control"
                     placeholder="Amount"
+                    onChange={handelamtchange}
                   />
                 </div>
               </form>
@@ -58,7 +67,7 @@ const ModalAdWbl = () => {
               >
                 Close
               </button>
-              <button type="button" className="btn btn-primary">
+              <button type="button" className="btn btn-primary" >
                 Save changes
               </button>
             </div>
