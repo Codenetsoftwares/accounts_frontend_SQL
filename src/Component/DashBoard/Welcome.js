@@ -1,14 +1,14 @@
 
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import useLocalStorage from "use-local-storage";
+// import useLocalStorage from "use-local-storage";
 
 const Welcome = () => {
   const defaultDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  const [theme, setTheme] = useLocalStorage(
-    "theme",
-    defaultDark ? "dark" : "light"
-  );
+  // const [theme, setTheme] = useLocalStorage(
+  //   "theme",
+  //   defaultDark ? "dark" : "light"
+  // );
 
  
 
