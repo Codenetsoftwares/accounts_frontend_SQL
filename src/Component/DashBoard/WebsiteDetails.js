@@ -10,10 +10,10 @@ import {
   faFileAlt,
   faMinus,
 } from "@fortawesome/free-solid-svg-icons";
-import { useParams } from "react-router";
 import ModalAdWbl from "../Modal/ModalAdWbl";
-import ModalWthBl from "../Modal/ModalWthBl";
 import ModalWbdl from "../Modal/ModalWbdl";
+import ModalWthWbl from "../Modal/ModalWthWbl";
+
 
 const WebsiteDetails = () => {
   // const { id } = useParams();
@@ -21,7 +21,8 @@ const WebsiteDetails = () => {
   const navigate = useNavigate();
   const [website, setWebsite] = useState("");
   const [getWebsite, setGetWebsite] = useState([]);
-  const [Id, setId] = useState([]);
+  const [name, setName] = useState([]);
+  const [Id, setId] = useState("");
 
   console.log("Auth", auth);
   const handlewebsite = (event) => {
@@ -58,11 +59,16 @@ const WebsiteDetails = () => {
     window.location.reload();
   };
 
+  const handelName = (id) => {
+    setName(id);
+  };
+  console.log("This is Name==>>>", name);
+
   const handelId = (id) => {
     setId(id);
   };
-  console.log(Id);
 
+  console.log('ide',Id)
   // const handeldeletewebsite = (e, name) => {
   //   e.preventDefault();
   //   alert("Are You Sure You Want To Delete This Website?");
@@ -91,8 +97,8 @@ const WebsiteDetails = () => {
   }, [auth]);
   console.log("Website", getWebsite);
 
-  const handelstatement = () => {
-    navigate("/websitestatement");
+  const handelstatement = (e,name) => {
+    navigate(`/websitestatement/${name}`);
   };
   return (
     <>
@@ -113,6 +119,7 @@ const WebsiteDetails = () => {
           <div class="card-body">
             {getWebsite.length > 0 &&
               getWebsite.map((data, index) => {
+                {localStorage.setItem("IdWeb",data._id)}
                 return (
                   <div class="card d-flex justify-content-between">
                     <div class="card-body d-flex justify-content-between">
@@ -134,13 +141,18 @@ const WebsiteDetails = () => {
                           class="btn btn-success"
                           data-bs-toggle="modal"
                           data-bs-target="#modalAdWbl"
+                          onClick={() => {
+                            handelId(data._id);
+                          }}
                         >
                           <FontAwesomeIcon icon={faPlus} className="add-icon" />
                         </button>
                         <button
                           type="button"
                           class="btn btn-info"
-                          onClick={handelstatement}
+                          onClick={(e) => {
+                            handelstatement (e, data.name);
+                          }}
                         >
                           <FontAwesomeIcon
                             icon={faFileAlt}
@@ -156,7 +168,7 @@ const WebsiteDetails = () => {
                             icon={faTrashAlt}
                             className="delete-icon"
                             onClick={() => {
-                              handelId(data.name);
+                              handelName(data.name);
                             }}
                             data-bs-toggle="modal"
                             data-bs-target="#modalWbdl"
@@ -169,9 +181,9 @@ const WebsiteDetails = () => {
               })}
           </div>
         </div>
-        <ModalAdWbl />
-        <ModalWthBl />
-        <ModalWbdl name={Id} />
+        <ModalWthWbl />
+        <ModalAdWbl ID={Id} />
+        <ModalWbdl name={name} />
       </div>
     </>
   );
