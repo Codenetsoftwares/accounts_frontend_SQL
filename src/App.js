@@ -27,6 +27,7 @@ import EditBank from "./Component/EditBank";
 import CreateTransaction from "./Component/DashBoard/CreateTransaction";
 import WebsiteStatement from "./Component/DashBoard/WebsiteStatement";
 import BankStatement from "./Component/DashBoard/BankStatement";
+import CreateActualUser from "./Component/DashBoard/CreateActualUser";
 
 function App() {
   return (
@@ -93,10 +94,10 @@ function App() {
               />
 
               <Route
-                path="websitestatement/:id"
+                path="bankstatement/:id"
                 element={
                   <RequireAuth>
-                    <BankStatement/>
+                    <BankStatement />
                   </RequireAuth>
                 }
               />
@@ -123,6 +124,14 @@ function App() {
                 element={
                   <RequireAuth>
                     <CreateUser />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="createactualuser"
+                element={
+                  <RequireAuth>
+                    <CreateActualUser />
                   </RequireAuth>
                 }
               />

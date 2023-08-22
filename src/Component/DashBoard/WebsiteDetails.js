@@ -14,7 +14,6 @@ import ModalAdWbl from "../Modal/ModalAdWbl";
 import ModalWbdl from "../Modal/ModalWbdl";
 import ModalWthWbl from "../Modal/ModalWthWbl";
 
-
 const WebsiteDetails = () => {
   // const { id } = useParams();
   const auth = useAuth();
@@ -68,7 +67,7 @@ const WebsiteDetails = () => {
     setId(id);
   };
 
-  console.log('ide',Id)
+  console.log("ide", Id);
   // const handeldeletewebsite = (e, name) => {
   //   e.preventDefault();
   //   alert("Are You Sure You Want To Delete This Website?");
@@ -97,89 +96,90 @@ const WebsiteDetails = () => {
   }, [auth]);
   console.log("Website", getWebsite);
 
-  const handelstatement = (e,name) => {
+  const handelstatement = (e, name) => {
     navigate(`/websitestatement/${name}`);
   };
   return (
     <>
       <div class="card text-center mt-2 mr-5 ml-5">
         <div class="card-header">Website Details</div>
-        <div class="card-body">
-          <input
-            class="form-control mb-2"
-            id="inputPassword2"
-            placeholder="Name"
-            onChange={handlewebsite}
-          />
-          <a href="#" class="btn btn-primary" onClick={handleSubmit}>
-            Add Website
-          </a>
-        </div>
-        <div class="card-footer text-muted">
-          <div class="card-body">
-            {getWebsite.length > 0 &&
-              getWebsite.map((data, index) => {
-                {localStorage.setItem("IdWeb",data._id)}
-                return (
-                  <div class="card d-flex justify-content-between">
-                    <div class="card-body d-flex justify-content-between">
-                      <p className="col">{data.name}</p>
-                      <div className=" d-flex gap-2">
-                        <button
-                          type="button"
-                          class="btn btn-danger"
-                          data-bs-toggle="modal"
-                          data-bs-target="#modalWthbl"
-                        >
-                          <FontAwesomeIcon
-                            icon={faMinus}
-                            className="add-icon"
-                          />
-                        </button>
-                        <button
-                          type="button"
-                          class="btn btn-success"
-                          data-bs-toggle="modal"
-                          data-bs-target="#modalAdWbl"
-                          onClick={() => {
-                            handelId(data._id);
-                          }}
-                        >
-                          <FontAwesomeIcon icon={faPlus} className="add-icon" />
-                        </button>
-                        <button
-                          type="button"
-                          class="btn btn-info"
-                          onClick={(e) => {
-                            handelstatement (e, data.name);
-                          }}
-                        >
-                          <FontAwesomeIcon
-                            icon={faFileAlt}
-                            className="add-icon"
-                          />
-                        </button>
-                        <button type="button" class="btn btn-warning ">
-                          <FontAwesomeIcon icon={faEdit} />
-                        </button>
 
-                        <button type="button" class="btn btn-danger">
-                          <FontAwesomeIcon
-                            icon={faTrashAlt}
-                            className="delete-icon"
-                            onClick={() => {
-                              handelName(data.name);
-                            }}
-                            data-bs-toggle="modal"
-                            data-bs-target="#modalWbdl"
-                          />
-                        </button>
-                      </div>
+        <div class="card-body">
+          {getWebsite.length > 0 &&
+            getWebsite.map((data, index) => {
+              {
+                localStorage.setItem("IdWeb", data._id);
+              }
+              return (
+                <div class="card d-flex justify-content-between">
+                  <div class="card-body ">
+                    <p className="col">{data.name}</p>
+                    <div className=" d-flex justify-content-center gap-1">
+                      <button
+                        type="button"
+                        class="btn btn-danger  btn-sm"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalWthbl"
+                      >
+                        <FontAwesomeIcon icon={faMinus} className="add-icon" />
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-success  btn-sm"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalAdWbl"
+                        onClick={() => {
+                          handelId(data._id);
+                        }}
+                      >
+                        <FontAwesomeIcon icon={faPlus} className="add-icon" />
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-info  btn-sm"
+                        onClick={(e) => {
+                          handelstatement(e, data.name);
+                        }}
+                      >
+                        <FontAwesomeIcon
+                          icon={faFileAlt}
+                          className="add-icon"
+                        />
+                      </button>
+                      <button type="button" class="btn btn-warning  btn-sm">
+                        <FontAwesomeIcon icon={faEdit} />
+                      </button>
+
+                      <button type="button" class="btn btn-danger  btn-sm">
+                        <FontAwesomeIcon
+                          icon={faTrashAlt}
+                          className="delete-icon"
+                          onClick={() => {
+                            handelName(data.name);
+                          }}
+                          data-bs-toggle="modal"
+                          data-bs-target="#modalWbdl"
+                        />
+                      </button>
                     </div>
                   </div>
-                );
-              })}
-          </div>
+                </div>
+              );
+            })}
+        </div>
+        <div class="card-footer text-muted ">
+          
+            <input
+              class="form-control mb-2 text-center"
+              id="inputPassword2"
+              placeholder="Name"
+              onChange={handlewebsite}
+              
+            />
+            <a href="#" class="btn btn-primary" onClick={handleSubmit}>
+              Add Website
+            </a>
+         
         </div>
         <ModalWthWbl />
         <ModalAdWbl ID={Id} />

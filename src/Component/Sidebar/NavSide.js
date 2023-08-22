@@ -108,7 +108,7 @@ const NavSide = () => {
 
                     <Link to="admindash" className="nav-link text-white">
                       <i className="far fa-circle nav-icon" />
-                      <p>DashBoard</p>
+                      <p>Transaction Details</p>
                     </Link>
 
                     <Link to="dashboard" className="nav-link text-white">

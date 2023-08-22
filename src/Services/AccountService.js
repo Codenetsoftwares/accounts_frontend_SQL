@@ -211,7 +211,6 @@ class AccountService {
     });
   }
 
-
   GetWebsiteStateMent(id, user) {
     return axios({
       method: "get",
@@ -232,7 +231,13 @@ class AccountService {
     });
   }
 
-
+  createActualuser(data) {
+    return axios({
+      method: "post",
+      url: API_HOST + "/api/accounts/user/register",
+      data: data,
+    });
+  }
 }
 
 export default new AccountService();
