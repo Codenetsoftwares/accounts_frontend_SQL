@@ -13,39 +13,14 @@ const WebsiteStatement = () => {
   const auth = useAuth();
   const [Manualstmnt, SetManualstmnt] = useState([]);
   const [Userstmnt, SetUserstmnt] = useState([]);
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const [documentView, setDocumentView] = useState([]);
-  const [documentFilter, setDocumentFilter] = useState([]);
-  const [outerSelect, setOuterSelect] = useState(true);
+
+  const [select, setSelect] = useState("Manual Entry");
   console.log("This is Website Name",id);
  
-
-
-  const handleDate = () => {
-    setOuterSelect(false);
-    const sdate = new Date(startDate);
-    const edate = new Date(endDate);
-    edate.setHours(23, 59, 59);
-
-    const filteredDocuments = documentView.filter((data) => {
-      const transactionDate = new Date(data.createdAt);
-      return transactionDate >= sdate && transactionDate <= edate;
-    });
-
-    setDocumentFilter(filteredDocuments);
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setSelect(value);
   };
-
-  const handlereset = () => {
-    setOuterSelect(true);
-  };
- 
- 
- 
- 
- 
- 
- 
  
   useEffect(() => {
     AccountService.GetWebsiteStateMent(id, auth.user).then((res) =>
@@ -62,158 +37,140 @@ const WebsiteStatement = () => {
   console.log("Website Names Manual =>>>", Manualstmnt);
   console.log("Website Names User =>>>", Userstmnt);
   return (
-    <div className="container-fuid">
-    <div className="container mt-5">
-      <div className="d-flex mt-2 pl-5 justify-content-center">
-        <p className="fw-bold fs-6 text-nowrap mt-1">
-          <FaFilter />
-        </p>
-        <div className="d-flex gap-2 justify-content-center w-50 ms-5">
-          <DatePicker
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
-            className="form-control datepicker-with-icon input-group input-group-sm"
-            placeholderText="Start Date"
-            dateFormat="dd/MM/yyyy"
-          />
-          <DatePicker
-            selected={endDate}
-            onChange={(date) => setEndDate(date)}
-            className="form-control datepicker-with-icon input-group input-group-sm"
-            placeholderText="End Date"
-            dateFormat="dd/MM/yyyy"
-          />
-          <div>
-            <button
-              type="button"
-              className="btn btn-dark"
-              style={{
-                boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-              }}
-              onClick={handleDate}
-            >
-              Filter
-            </button>
-            <button
-              type="button"
-              className="btn btn-dark"
-              style={{
-                boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-              }}
-              onClick={handlereset}
-            >
-              Reset
-            </button>
-          </div>
+    <div>
+      <div className=" container mt-5">
+        {/* This is for Normal View */}
+        <div className="d-flex mt-5 mt-5 ml-5 pt-5 justify-content-center">
+          <h6 className="fw-bold text-nowrap pt-2">View</h6>
+          <select
+            className="form-control mx-3 w-25 mb-2"
+            value={select || ""}
+            autoComplete="off"
+            onChange={handleChange}
+            style={{
+              boxShadow: " 17px 15px 27px -9px rgba(0,0,0,0.41)",
+              border: "0.5px solid black",
+              borderRadius: "6px",
+            }}
+          >
+            <option className="d-flex" value="Manual Entry">
+              <b>Manual Entry</b>
+            </option>
+            <option className="d-flex" value="User Entry">
+              <b>User Entry</b>
+            </option>
+          </select>
         </div>
-      </div>
 
-          <div className="card-body">
-            <div className="row">
-              <h4 className="col fs-6">Date</h4>
-              <h4 className="col fs-6">Before Balance</h4>
-              <h4 className="col fs-6">Current Balance</h4>
-              <h4 className="col fs-6">Name</h4>
-              <h4 className="col fs-6">CreatedBy</h4>
-              <h4 className="col fs-6">SubAdmin ID</h4>
-              <h4 className="col fs-6">subAdminName</h4>
-              <h4 className="col fs-6">Transaction Type</h4>
-              <h4 className="col fs-6">withdrawAmount</h4>
+        {select === "Manual Entry" ? (
+          <div
+            className="card  rounded-2 mb-2"
+            style={{
+              boxShadow: "26px -13px 32px -15px rgba(29,29,31,0.68)",
+              backgroundImage:
+                "linear-gradient(90deg, rgba(60,251,165,1) 0%, rgba(171,246,241,1) 50%, rgba(60,251,165,1) 100%)",
+            }}
+          >
+            <div className="card rounded-2 mb-2">
+              <div className="card-body">
+                <div className="row">
+                  <h4 className="col fs-6 font-weight-bold">Date</h4>
+                  <h4 className="col fs-6 font-weight-bold">Amount</h4>
+                  <h4 className="col fs-6 font-weight-bold">CreatedBy</h4>
+                  <h4 className="col fs-6 font-weight-bold">Website</h4>
+                  <h4 className="col fs-6 font-weight-bold">
+                    Transaction Type
+                  </h4>
+                  <h4 className="col fs-6 font-weight-bold">Balance</h4>
+                </div>
+                <hr style={{ color: "green" }} />
+                {Manualstmnt.map((transaction, index) => (
+                  <div className="row" key={index}>
+                    <p className="col fs-6">
+                      {new Date(transaction.date).toLocaleString("default", {
+                        month: "long",
+                      })}{" "}
+                      {new Date(transaction.date).getDate()}
+                    </p>
+                    <p className="col fs-6">{transaction.withdrawAmount}</p>
+                    <p className="col fs-6">{transaction.subAdminName}</p>
+                    <p className="col fs-6">{transaction.name}</p>
+                    <p className="col fs-6">{transaction.transactionType}</p>
+                    <p className="col fs-6">
+                      {transaction.transactionType === "Withdraw" ? (
+                        <span style={{ color: "red" }}>
+                          {transaction.currentBalance} -
+                        </span>
+                      ) : (
+                        <span style={{ color: "green" }}>
+                          {transaction.currentBalance} +
+                        </span>
+                      )}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-          {outerSelect ? (
-          <>
-            {documentView.length > 0 ? (
-              documentView.map((data, i) => (
-                <div
-                  key={i}
-                  className="accordion mb-2"
-                  style={{
-                    transition: "transform 0.3s",
-                    transform: "scale(1)",
-                    boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.transform = "scale(1.01)";
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.transform = "scale(1)";
-                  }}
-                >
-                  <div className="card-body">
-                    <div className="row">
-                      <p className="col fs-6">
-                        {new Date(data.createdAt).toLocaleString("default", {
-                          month: "long",
-                        })}{" "}
-                        {new Date(data.createdAt).getDate()}
-                      </p>
-                      <p className="col fs-4">₹&nbsp;{data.Date}</p>
-                      <p className="col fs-6 text-break">
-                        {data.transactionID}
-                      </p>
-                      <p className="col fs-6">{data.paymentMethod}</p>
-                      <p className="col fs-6 text-break">{data.subAdminId}</p>
-                      <p className="col fs-6">{data.userId}</p>
-                      <p className="col fs-6">{data.bankName}</p>
-                      <p className="col fs-6">{data.websiteName}</p>
-                    </div>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <h1 className="text-center">No Transaction Found</h1>
-            )}
-          </>
         ) : (
-          <>
-            {documentFilter.length > 0 ? (
-              documentFilter.map((data, i) => (
-                <div
-                  key={i}
-                  className="accordion mb-2"
-                  style={{
-                    transition: "transform 0.3s",
-                    transform: "scale(1)",
-                    boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.transform = "scale(1.01)";
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.transform = "scale(1)";
-                  }}
-                >
-                  <div className="card-body">
-                    <div className="row">
-                      <p className="col fs-6">
-                        {new Date(data.createdAt).toLocaleString("default", {
-                          month: "long",
-                        })}{" "}
-                        {new Date(data.createdAt).getDate()}
-                      </p>
-                      <p className="col fs-6">₹&nbsp;{data.amount}</p>
-                      <p className="col fs-6 text-break">
-                        {data.transactionID}
-                      </p>
-                      <p className="col fs-6">{data.paymentMethod}</p>
-                      <p className="col fs-6 text-break">{data.subAdminId}</p>
-                      <p className="col fs-6">{data.userId}</p>
-                      <p className="col fs-6">{data.bankName}</p>
-                      <p className="col fs-6">{data.websiteName}</p>
-                    </div>
-                  </div>
+          <div
+            className="card  rounded-2 mb-2"
+            style={{
+              boxShadow: "26px -13px 32px -15px rgba(29,29,31,0.68)",
+              backgroundImage:
+                "linear-gradient(90deg, rgba(60,251,165,1) 0%, rgba(171,246,241,1) 50%, rgba(60,251,165,1) 100%)",
+            }}
+          >
+            <div className="card rounded-2 mb-2">
+              <div className="card-body">
+                <div className="row">
+                  <h4 className="col fs-6 font-weight-bold">Date</h4>
+                  <h4 className="col fs-6 font-weight-bold">Amount</h4>
+                  <h4 className="col fs-6 font-weight-bold">CreatedBy</h4>
+                  <h4 className="col fs-6 font-weight-bold">User Id</h4>
+                  <h4 className="col fs-6 font-weight-bold">Website</h4>
+                  <h4 className="col fs-6 font-weight-bold">
+                    Transaction Type
+                  </h4>
+                  <h4 className="col fs-6 font-weight-bold">Balance</h4>
                 </div>
-              ))
-            ) : (
-              <h1 className="text-center">No Transaction Found</h1>
-            )}
-          </>
+                <hr style={{ color: "green" }} />
+                {Userstmnt.map((transaction, index) => (
+                  <div className="row" key={index}>
+                    <p className="col fs-6">
+                      {new Date(transaction.createdAt).toLocaleString(
+                        "default",
+                        {
+                          month: "long",
+                        }
+                      )}{" "}
+                      {new Date(transaction.createdAt).getDate()}
+                    </p>
+                    <p className="col fs-6">{transaction.amount}</p>
+                    <p className="col fs-6">{transaction.subAdminName}</p>
+                    <p className="col fs-6">{transaction.userId}</p>
+                    <p className="col fs-6">{transaction.websiteName}</p>
+                    <p className="col fs-6">{transaction.transactionType}</p>
+
+                    <p className="col fs-6">
+                      {transaction.transactionType === "Withdraw" ? (
+                        <span style={{ color: "red" }}>
+                          {transaction.amount} -
+                        </span>
+                      ) : (
+                        <span style={{ color: "green" }}>
+                          {transaction.amount} +
+                        </span>
+                      )}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         )}
-
-
-        </div>
       </div>
+    </div>
     
   );
 };
