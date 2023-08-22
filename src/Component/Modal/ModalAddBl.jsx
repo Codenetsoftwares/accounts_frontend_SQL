@@ -11,11 +11,11 @@ const ModalAddBl = ({ ID }) => {
   const handelsubmit = (e) => {
     e.preventDefault();
     const data = {
-      amount: Amount,
+      amount: Number(Amount),
       transactionType: "Deposit",
     };
 
-    // console.log( data)
+    console.log("data", data);
     AccountService.ManualBankEntryDeposit(ID, data, auth.user)
       .then((res) => {
         // console.log(response.data);
