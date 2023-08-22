@@ -27,7 +27,7 @@ const CreateActualUser = () => {
     yourContact: "",
   });
   const [checkedItems, setCheckedItems] = useState([]);
-
+  console.log("This is FromData=>>>", formData);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -48,32 +48,28 @@ const CreateActualUser = () => {
     e.preventDefault();
 
     console.log(checkedItems);
-    // const data = {
-    //   firstname: formData.yourName,
-    //   lastname: formData.yourSurname,
-    //   email: formData.yourEmail,
-    //   password: formData.yourPassword,
-    //   roles: checkedItems,
-    // };
-
-    // //Api Fetching
-    // AccountService.createuser(data, auth.user)
-    //   .then((res) => {
-    //     console.log("res", res);
-    //     if (res.status === 200) {
-    //       toast.success("User Created Successfully");
-    //     } else {
-    //       toast.error("Failed");
-    //     }
-    //   })
-
-    //   .catch((err) => {
-    //     if (!err.response) {
-    //       toast.error(err.message);
-    //       return;
-    //     }
-    //   });
-    // console.log(data);
+    const data = {
+      firstname: formData.yourName,
+      lastname: formData.yourSurname,
+      email: formData.yourEmail,
+      password: formData.yourConfirmPassword,
+      contactNumber: formData.yourContact,
+      introducerId: formData.yourIntroducerId,
+      introducerPercentage: formData.yourIntroducerPercentage,
+    };
+    AccountService.createActualuser({ data })
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          alert("User Created Sucessfully");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.res.data) {
+          console.log(err.res.data.message);
+        }
+      });
   };
 
   const styles = {
@@ -124,11 +120,11 @@ const CreateActualUser = () => {
                         <input
                           type="email"
                           className="form-control"
-                          id="E-mail"
-                          name="E-mail"
+                          id="your-email"
+                          name="yourEmail"
                           value={formData.yourEmail}
                           onChange={handleChange}
-                          placeholder=" Enter your E-mail"
+                          placeholder="Enter your e-mail"
                           required
                         />
                       </div>
@@ -141,11 +137,10 @@ const CreateActualUser = () => {
                           type="text"
                           className="form-control"
                           id="contact-number"
-                          name="Contact"
+                          name="yourContact"
                           value={formData.yourContact}
                           onChange={handleChange}
                           placeholder="Enter your Contact Number"
-                          required
                         />
                       </div>
                       <div className="col-md-6">
@@ -219,7 +214,7 @@ const CreateActualUser = () => {
                           <span className="text-danger">*</span>
                         </label>
                         <input
-                          type="text"
+                          type="password"
                           className="form-control"
                           id="text"
                           name="Password"
