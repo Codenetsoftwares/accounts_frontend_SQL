@@ -36,7 +36,7 @@ const WebsiteDetails = () => {
 
     AccountService.websitedetails(
       {
-        name: website,
+        websiteName: website,
       },
       auth.user
     )
@@ -55,7 +55,7 @@ const WebsiteDetails = () => {
           return;
         }
       });
-    window.location.reload();
+    // window.location.reload();
   };
 
   const handelName = (id) => {
@@ -113,7 +113,7 @@ const WebsiteDetails = () => {
               return (
                 <div class="card d-flex justify-content-between">
                   <div class="card-body ">
-                    <p className="col">{data.name}</p>
+                    <p className="col">{data.websiteName}</p>
                     <div className=" d-flex justify-content-center gap-1">
                       <button
                         type="button"
@@ -138,7 +138,7 @@ const WebsiteDetails = () => {
                         type="button"
                         class="btn btn-info  btn-sm"
                         onClick={(e) => {
-                          handelstatement(e, data.name);
+                          handelstatement(e, data.websiteName);
                         }}
                       >
                         <FontAwesomeIcon
@@ -155,7 +155,7 @@ const WebsiteDetails = () => {
                           icon={faTrashAlt}
                           className="delete-icon"
                           onClick={() => {
-                            handelName(data.name);
+                            handelName(data.websiteName);
                           }}
                           data-bs-toggle="modal"
                           data-bs-target="#modalWbdl"
@@ -168,18 +168,15 @@ const WebsiteDetails = () => {
             })}
         </div>
         <div class="card-footer text-muted ">
-          
-            <input
-              class="form-control mb-2 text-center"
-              id="inputPassword2"
-              placeholder="Name"
-              onChange={handlewebsite}
-              
-            />
-            <a href="#" class="btn btn-primary" onClick={handleSubmit}>
-              Add Website
-            </a>
-         
+          <input
+            class="form-control mb-2 text-center"
+            id="inputPassword2"
+            placeholder="Name"
+            onChange={handlewebsite}
+          />
+          <a href="#" class="btn btn-primary" onClick={handleSubmit}>
+            Add Website
+          </a>
         </div>
         <ModalWthWbl />
         <ModalAdWbl ID={Id} />
