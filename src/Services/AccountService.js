@@ -188,6 +188,51 @@ class AccountService {
       },
     });
   }
+
+  ManualWebsiteEntryDeposit(id, data, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/admin/add-website-balance/${id}`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  ManualWebsiteEntryWithdraw(id, data, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/admin/withdraw-website-balance/${id}`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+
+  GetWebsiteStateMent(id, user) {
+    return axios({
+      method: "get",
+      url: `${API_HOST}/api/admin/website-account-summary/${id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  GetWebsiteSmmry(id, user) {
+    return axios({
+      method: "get",
+      url: `${API_HOST}/api/admin/user-website-account-summary/${id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+
 }
 
 export default new AccountService();
