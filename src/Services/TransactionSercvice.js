@@ -22,10 +22,40 @@ class TransactionService {
     });
   }
 
+  getAccountSummary(user) {
+    return axios({
+      method: "get",
+      url: API_HOST + "/api/admin/account-summary",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
   subAdminList(user) {
     return axios({
       method: "get",
-      url: API_HOST + "/",
+      url: API_HOST + "/api/admin/sub-admin-name",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  websiteList(user) {
+    return axios({
+      method: "get",
+      url: API_HOST + "/api/admin/website-name",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  bankList(user) {
+    return axios({
+      method: "get",
+      url: API_HOST + "/api/admin/bank-name",
       headers: {
         Authorization: `Bearer ${user.token}`,
       },

@@ -26,54 +26,43 @@ const AdminDash = () => {
 
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [accountData, setAccountData] = useState([]);
   const [documentView, setDocumentView] = useState([]);
-  const [withdrawView, setWithdrawView] = useState([]);
   const [documentFilter, setDocumentFilter] = useState([]);
-  const [withdrawFilter, setWithdrawFilter] = useState([]);
   const [subAdminlist, setSubAdminlist] = useState([]);
   const [subAdmin, setSubAdmin] = useState("");
-  const [select, setSelect] = useState("deposit");
-  const [outerSelect, setOuterSelect] = useState(true);
-  const [totalDeposit, setTotalDeposit] = useState("");
-  const [totalWithdraw, setTotalWithdraw] = useState("");
-  // const handelDate=()=>{
-  //   //This is start Date
-  //   const sdate = new Date(startDate);
-  //   const syear = sdate.getFullYear();
-  //   const smonth = String(sdate.getMonth() + 1).padStart(2, '0');
-  //   const sday = String(sdate.getDate()).padStart(2, '0');
-  //   const formattedsDate = `${syear}-${smonth}-${sday}`;
+  const [bankList, setBankList] = useState([]);
+  const [bank, setBank] = useState("");
+  const [websiteList, setWebsiteList] = useState([]);
+  const [website, setWebsite] = useState("");
+  const [select, setSelect] = useState("All");
+  const [toggle, setToggle] = useState(true);
 
-  //   //This is end Date
-  //   const edate = new Date(endDate);
-  //   const eyear = edate.getFullYear();
-  //   const emonth = String(edate.getMonth() + 1).padStart(2, '0');
-  //   const eday = String(edate.getDate()).padStart(2, '0');
-  //   const formattedeDate = `${eyear}-${emonth}-${eday}`;
+  const test = ["transactionType", "subAdminName", "websiteName", "bankName"];
 
-  // CalenderService.celenderdepositTransaction({startDate:formattedsDate,
-  //   endDate: formattedeDate}, auth.user)
-  //   .then((res) => {
-  //     setDocumentView(res.data)
-  //     }
-  //   )
-  //   .catch((err) => {
-  //       alert(err.message)
-  //   });
+  const handleClick = (key, value) => {
+    let nArr = [...documentView];
+    // const originalData = [...documentView];
 
-  //   CalenderService.celenderwithdrawTransaction({startDate:formattedsDate,
-  //     endDate: formattedeDate}, auth.user)
-  //     .then((res) => {
-  //       setWithdrawView(res.data)
-  //       }
-  //     )
-  //     .catch((err) => {
-  //         alert(err.message)
-  //     });
-  // }
+    if (test.includes(key)) {
+      nArr = nArr.filter((item) => item[key] === value);
+    }
+    // if (nArr.length === 0) {
+    //   nArr = originalData;
+    // }
+    setDocumentView(nArr);
+  };
+
+
+  useEffect(() => {
+    TransactionSercvice.getAccountSummary(auth.user).then((res) => (setDocumentView(res.data),
+      setAccountData(res.data))
+    );
+  }, [auth]);
+
+  console.log("data", documentView);
 
   const handelDate = () => {
-    setOuterSelect(false);
     const sdate = new Date(startDate);
     console.log("sdate", sdate);
     const edate = new Date(endDate);
@@ -85,113 +74,67 @@ const AdminDash = () => {
       // console.log('st', transactionDate)
       return transactionDate >= sdate && transactionDate <= edate;
     });
-
-    const filteredWithdraws = withdrawView.filter((data) => {
-      const transactionDate = new Date(data.createdAt);
-      // console.log('end', transactionDate)
-      return transactionDate >= sdate && transactionDate <= edate;
-    });
-
     setDocumentFilter(filteredDocuments);
-    setWithdrawFilter(filteredWithdraws);
-    console.log(outerSelect);
+    setToggle(false)
   };
 
-  useEffect(() => {
-    TransactionSercvice.depositView(auth.user).then(
-      (res) => (
-        setDocumentView(res.data.deposits),
-        setTotalDeposit(res.data.totalDeposits)
-      )
-    );
-    TransactionSercvice.withdrawView(auth.user).then(
-      (res) => (
-        setWithdrawView(res.data.withdraws),
-        setTotalWithdraw(res.data.totalWithdraws)
-      )
-    );
-  }, [auth]);
-
-  console.log("Deposit", documentView);
-  console.log("totalDeposit", totalDeposit);
-  console.log("Withdraw", withdrawView);
-  console.log("TotalWithdraw", totalWithdraw);
-  console.log("This is Auth=====> ", auth);
-
-  const TotalBlance = totalDeposit - totalWithdraw;
-  const handleLogout = () => {
-    const response = true;
-    if (response) {
-      toast.success("Logout successfully");
-      auth.logout();
-      nav("/");
-    }
-
-    console.log("Logged out");
-  };
-
+  const handleReset = () => {
+    setDocumentView(accountData);
+    setSubAdmin("");
+    setBank("");
+    setWebsite("");
+    setStartDate("");
+    setEndDate("");
+    setToggle(true)
+  }
   const handleChange = (e) => {
     const value = e.target.value;
     setSelect(value);
-    setOuterSelect(true);
-    console.log(outerSelect);
+    handleClick("transactionType", value)
   };
-
+  console.log("filterdata", documentFilter);
   const handleSubAdmin = (e) => {
     const value = e.target.value;
     setSubAdmin(value);
-
+    handleClick("subAdminName", value)
+  };
+  const handleBank = (e) => {
+    const value = e.target.value;
+    setBank(value);
+    handleClick("bankName", value)
+  };
+  const handleWebsite = (e) => {
+    const value = e.target.value;
+    setWebsite(value);
+    handleClick("websiteName", value)
   };
 
-  // useEffect(() => {
-  //   if (auth.user) {
-  //     TransactionSercvice.subAdminList(auth.user).then((res) => {
-  //       setSubAdminlist(res.data);
-  //     });
-  //   }
-  // }, []);
-
-
+  useEffect(() => {
+    if (auth.user) {
+      TransactionSercvice.subAdminList(auth.user).then((res) => {
+        setSubAdminlist(res.data);
+      });
+    }
+  }, [auth]);
+  console.log(subAdminlist);
+  useEffect(() => {
+    if (auth.user) {
+      TransactionSercvice.bankList(auth.user).then((res) => {
+        setBankList(res.data);
+      });
+    }
+  }, [auth]);
+  console.log(bankList);
+  useEffect(() => {
+    if (auth.user) {
+      TransactionSercvice.websiteList(auth.user).then((res) => {
+        setWebsiteList(res.data);
+      });
+    }
+  }, [auth]);
+  console.log(websiteList);
   return (
     <div className="main">
-      {/* Top Div */}
-      {/* <nav className="navbar navbar-light bg-light">00
-        <div className="container-fluid">
-          <a class="navbar-brand">
-            <b>Total Balance:</b>
-            <b style={{
-    textShadow: '2px 2px 4px #3f5efb',
-    transform: 'translateZ(0)',
-    display: 'inline-block',
-    display: 'inline-block',
-    color: '#ff0034'
-    
-  }}>&nbsp;₹&nbsp;{TotalBlance}</b>
-          </a>
-          <form className="d-flex">
-            <span
-              className="input-group-text"
-              style={{ backgroundColor: "transparent", border: "0"}}
-            >
-              <FontAwesomeIcon icon={faUser} />
-            </span>
-            <span
-              className="input-group-text mr-1"
-              style={{ backgroundColor: "transparent", border: "0"}}
-            >
-              Hi! Administrator
-            </span>
-            <button
-              className=" btn btn-danger"
-              type="submit"
-              onClick={handleLogout}
-            >
-              Logout
-            </button>
-          </form>
-        </div>
-      </nav> */}
-
       {/* This is the Main Card */}
       <div
         className="card card-body rounded-1 main "
@@ -213,19 +156,19 @@ const AdminDash = () => {
               borderRadius: "6px",
             }}
           >
-            <option className="d-flex" value="deposit">
+            <option className="d-flex" value="All">
+              <b>All</b>
+            </option>
+            <option className="d-flex" value="Deposit">
               <b>Deposit</b>
             </option>
-            <option className="d-flex" value="withdraw">
+            <option className="d-flex" value="Withdraw">
               <b>Withdraw</b>
             </option>
           </select>
         </div>
         <div className="d-flex pt-3 justify-content-center">
-          <h6 className="fw-bold text-nowrap pt-2">
-            {" "}
-            SubAdminlist
-          </h6>
+          <h6 className="fw-bold text-nowrap pt-2"> SubAdminlist</h6>
           <select
             className="form-control mx-3 w-25"
             value={subAdmin || ""}
@@ -238,11 +181,49 @@ const AdminDash = () => {
             }}
             required
           >
-            <option selected>Select Team</option>
+            <option selected>Select subAdmin</option>
             {subAdminlist.map((data) => {
-              return (
-                <option key={data.lichessId}>{data.teamId}</option>
-              );
+              return <option key={data._id} value={data.firstname}>{data.firstname}</option>;
+            })}
+          </select>
+        </div>
+        <div className="d-flex pt-3 justify-content-center">
+          <h6 className="fw-bold text-nowrap pt-2"> BankNameList</h6>
+          <select
+            className="form-control mx-3 w-25"
+            value={bank || ""}
+            autoComplete="off"
+            onChange={handleBank}
+            style={{
+              boxShadow: " 17px 15px 27px -9px rgba(0,0,0,0.41)",
+              border: "0.5px solid black",
+              borderRadius: "6px",
+            }}
+            required
+          >
+            <option selected>Select Bank</option>
+            {bankList.map((data) => {
+              return <option key={data._id} value={data.bankName}>{data.bankName}</option>;
+            })}
+          </select>
+        </div>
+        <div className="d-flex pt-3 justify-content-center">
+          <h6 className="fw-bold text-nowrap pt-2"> WebsitesList</h6>
+          <select
+            className="form-control mx-3 w-25"
+            value={website || ""}
+            autoComplete="off"
+            onChange={handleWebsite}
+            style={{
+              boxShadow: " 17px 15px 27px -9px rgba(0,0,0,0.41)",
+              border: "0.5px solid black",
+              borderRadius: "6px",
+            }}
+            required
+          >
+            <option selected>Select website</option>
+            {websiteList.map((data) => {
+              return <option key={data._id} value={data.name}>{data.name}</option>;
             })}
           </select>
         </div>
@@ -279,357 +260,181 @@ const AdminDash = () => {
                 Filter
               </button>
             </div>
+            <div>
+              <button
+                type="button"
+                className="btn btn-dark"
+                style={{ boxShadow: "17px 15px 27px -9px rgba(0, 0, 0, 0.41)" }}
+                onClick={handleReset}
+              >
+                Reset
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {toggle ? <div className=" container mt-5">
+        {/* This is for Deposit Card Normal View */}
+        <div
+          className="card  rounded-2 mb-2"
+          style={{
+            boxShadow: "26px -13px 32px -15px rgba(29,29,31,0.68)",
+            backgroundImage:
+              "linear-gradient(90deg, rgba(60,251,165,1) 0%, rgba(171,246,241,1) 50%, rgba(60,251,165,1) 100%)",
+          }}
+        >
+          <div className="card-body">
+            <div className="row">
+              <h4 className="col fs-6">Date</h4>
+              <h4 className="col fs-6">Amount</h4>
+              <h4 className="col fs-6">Transaction Id</h4>
+              <h4 className="col fs-6">Gateway</h4>
+              <h4 className="col fs-6">CreatedBy</h4>
+              <h4 className="col fs-6">User Id</h4>
+              <h4 className="col fs-6">Bank</h4>
+              <h4 className="col fs-6">Website</h4>
+            </div>
           </div>
         </div>
 
-        {outerSelect ? (
-          <>
-            {" "}
-            {select === "deposit" ? (
-              <div className=" container mt-5">
-                {/* This is for Deposit Card Normal View */}
-                <div
-                  className="card  rounded-2 mb-2"
-                  style={{
-                    boxShadow: "26px -13px 32px -15px rgba(29,29,31,0.68)",
-                    backgroundImage:
-                      "linear-gradient(90deg, rgba(60,251,165,1) 0%, rgba(171,246,241,1) 50%, rgba(60,251,165,1) 100%)",
-                  }}
-                >
-                  <div className="card-body">
-                    <div className="row">
-                      <h4 className="col fs-6">Date</h4>
-                      <h4 className="col fs-6">Amount</h4>
-                      <h4 className="col fs-6">Transaction Id</h4>
-                      <h4 className="col fs-6">Gateway</h4>
-                      <h4 className="col fs-6">CreatedBy</h4>
-                      <h4 className="col fs-6">User Id</h4>
-                      <h4 className="col fs-6">Bank</h4>
-                      <h4 className="col fs-6">Website</h4>
-                    </div>
+        {documentView.length > 0 ? (
+          documentView.map((data, i) => {
+            return (
+              <div
+                className="card rounded-2"
+                style={{
+                  transition: "transform 0.3s",
+                  transform: "scale(1)",
+                  boxShadow: "20px 3px 22px 1px rgba(0, 0, 0, 0.36)",
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.transform = "scale(1.01)";
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.transform = "scale(1)";
+                }}
+              >
+                <div className="card-body">
+                  <div className="row">
+                    <p className="col fs-6">
+                      {new Date(data.createdAt).toLocaleString(
+                        "default",
+                        {
+                          month: "long",
+                        }
+                      )}{" "}
+                      {new Date(data.createdAt).getDate()}
+                    </p>
+                    <p className="col fs-6">₹&nbsp;{data.amount}</p>
+                    <p className="col fs-6 text-break">
+                      {data.transactionID}
+                    </p>
+                    <p className="col fs-6">{data.paymentMethod}</p>
+                    <p className="col fs-6 text-break">
+                      {data.subAdminId}
+                    </p>
+                    <p className="col fs-6">{data.userId}</p>
+                    <p className="col fs-6">{data.bankName}</p>
+                    <p className="col fs-6">{data.websiteName}</p>
                   </div>
+                  <Link to={`/admindash/${data._id}`} className="col">
+                    <button type="button" className="btn btn-primary">
+                      <FontAwesomeIcon
+                        icon={faEdit}
+                        data-toggle="modal"
+                        data-target="#exampleModalCenter"
+                      />
+                    </button>
+                  </Link>
                 </div>
-
-                {documentView.length > 0 ? (
-                  documentView.map((data, i) => {
-                    return (
-                      <div
-                        className="card rounded-2"
-                        style={{
-                          transition: "transform 0.3s",
-                          transform: "scale(1)",
-                          boxShadow: "20px 3px 22px 1px rgba(0, 0, 0, 0.36)",
-                        }}
-                        onMouseOver={(e) => {
-                          e.currentTarget.style.transform = "scale(1.01)";
-                        }}
-                        onMouseOut={(e) => {
-                          e.currentTarget.style.transform = "scale(1)";
-                        }}
-                      >
-                        <div className="card-body">
-                          <div className="row">
-                            <p className="col fs-6">
-                              {new Date(data.createdAt).toLocaleString(
-                                "default",
-                                {
-                                  month: "long",
-                                }
-                              )}{" "}
-                              {new Date(data.createdAt).getDate()}
-                            </p>
-                            <p className="col fs-6">₹&nbsp;{data.amount}</p>
-                            <p className="col fs-6 text-break">
-                              {data.transactionID}
-                            </p>
-                            <p className="col fs-6">{data.paymentMethod}</p>
-                            <p className="col fs-6 text-break">
-                              {data.subAdminId}
-                            </p>
-                            <p className="col fs-6">{data.userId}</p>
-                            <p className="col fs-6">{data.bankName}</p>
-                            <p className="col fs-6">{data.websiteName}</p>
-                          </div>
-                          <Link to={`/admindash/${data._id}`} className="col">
-                            <button type="button" className="btn btn-primary">
-                              <FontAwesomeIcon
-                                icon={faEdit}
-                                data-toggle="modal"
-                                data-target="#exampleModalCenter"
-                              />
-                            </button>
-                          </Link>
-                        </div>
-                      </div>
-                    );
-                  })
-                ) : (
-                  <h1 className="text-center">No Transaction Found</h1>
-                )}
               </div>
-            ) : (
-              // This is for Withdraw Card Normal View
-
-              <div className="container mt-5">
-                <div
-                  className="card  rounded-2 mb-2"
-                  style={{
-                    boxShadow: "26px -13px 32px -15px rgba(29,29,31,0.68)",
-                    backgroundImage:
-                      "linear-gradient(90deg, rgba(251,60,60,1) 0%, rgba(246,171,243,1) 50%, rgba(251,60,60,1) 100%)",
-                  }}
-                >
-                  <div className="card-body">
-                    <div className="row">
-                      <h4 className="col fs-6">Date</h4>
-                      <h4 className="col fs-6">Amount</h4>
-                      <h4 className="col fs-6">Transaction Id</h4>
-                      <h4 className="col fs-6">Gateway</h4>
-                      <h4 className="col fs-6">CreatedBy</h4>
-                      <h4 className="col fs-6">User Id</h4>
-                      <h4 className="col fs-6">Bank</h4>
-                      <h4 className="col fs-6">Website</h4>
-                    </div>
-                  </div>
-                </div>
-
-                {withdrawView.length > 0 ? (
-                  withdrawView.map((data, i) => {
-                    return (
-                      <div
-                        className="card rounded-2"
-                        style={{
-                          transition: "transform 0.3s",
-                          transform: "scale(1)",
-                          boxShadow: "20px 3px 22px 1px rgba(0, 0, 0, 0.36)",
-                        }}
-                        onMouseOver={(e) => {
-                          e.currentTarget.style.transform = "scale(1.01)";
-                        }}
-                        onMouseOut={(e) => {
-                          e.currentTarget.style.transform = "scale(1)";
-                        }}
-                      >
-                        <div className="card-body">
-                          <div className="row">
-                            <p className="col fs-6">
-                              {new Date(data.createdAt).toLocaleString(
-                                "default",
-                                {
-                                  month: "long",
-                                }
-                              )}{" "}
-                              {new Date(data.createdAt).getDate()}
-                            </p>
-                            <p className="col fs-6">₹&nbsp;{data.amount}</p>
-                            <p className="col fs-6 text-break">
-                              {data.transactionID}
-                            </p>
-                            <p className="col fs-6">{data.paymentMethod}</p>
-                            <p className="col fs-6 text-break">
-                              {data.subAdminId}
-                            </p>
-                            <p className="col fs-6">{data.userId}</p>
-                            <p className="col fs-6">{data.bankName}</p>
-                            <p className="col fs-6">{data.websiteName}</p>
-                          </div>
-                          <Link to={`/admindash/${data._id}`} className="col">
-                            <button type="button" className="btn btn-primary">
-                              <FontAwesomeIcon
-                                icon={faEdit}
-                                data-toggle="modal"
-                                data-target="#exampleModalCenter"
-                              />
-                            </button>
-                          </Link>
-                        </div>
-                      </div>
-                    );
-                  })
-                ) : (
-                  <h1>No Transaction Found</h1>
-                )}
-                {withdrawView.length === 0 && (
-                  <h1 className="text-center">No Withdraws Found</h1>
-                )}
-              </div>
-            )}
-          </>
+            );
+          })
         ) : (
-          <>
-            {" "}
-            {select === "deposit" ? (
-              <div className="  container mt-5">
-                {/* This is for Deposit Card Filter View */}
-                <div
-                  className="card  rounded-2 mb-2"
-                  style={{
-                    boxShadow: "26px -13px 32px -15px rgba(29,29,31,0.68)",
-                    backgroundImage:
-                      "linear-gradient(90deg, rgba(60,251,165,1) 0%, rgba(171,246,241,1) 50%, rgba(60,251,165,1) 100%)",
-                  }}
-                >
-                  <div className="card-body">
-                    <div className="row">
-                      <h4 className="col fs-6">Date</h4>
-                      <h4 className="col fs-6">Amount</h4>
-                      <h4 className="col fs-6">Transaction Id</h4>
-                      <h4 className="col fs-6">Gateway</h4>
-                      <h4 className="col fs-6">CreatedBy</h4>
-                      <h4 className="col fs-6">User Id</h4>
-                      <h4 className="col fs-6">Bank</h4>
-                      <h4 className="col fs-6">Website</h4>
-                    </div>
-                  </div>
-                </div>
-
-                {documentFilter.length > 0 ? (
-                  documentFilter.map((data, i) => {
-                    return (
-                      <div
-                        className="card rounded-2"
-                        style={{
-                          transition: "transform 0.3s",
-                          transform: "scale(1)",
-                          boxShadow: "20px 3px 22px 1px rgba(0, 0, 0, 0.36)",
-                        }}
-                        onMouseOver={(e) => {
-                          e.currentTarget.style.transform = "scale(1.01)";
-                        }}
-                        onMouseOut={(e) => {
-                          e.currentTarget.style.transform = "scale(1)";
-                        }}
-                      >
-                        <div className="card-body">
-                          <div className="row">
-                            <p className="col fs-6">
-                              {new Date(data.createdAt).toLocaleString(
-                                "default",
-                                {
-                                  month: "long",
-                                }
-                              )}{" "}
-                              {new Date(data.createdAt).getDate()}
-                            </p>
-                            <p className="col fs-6">₹&nbsp;{data.amount}</p>
-                            <p className="col fs-6 text-break">
-                              {data.transactionID}
-                            </p>
-                            <p className="col fs-6">{data.paymentMethod}</p>
-                            <p className="col fs-6 text-break">
-                              {data.subAdminId}
-                            </p>
-                            <p className="col fs-6">{data.userId}</p>
-                            <p className="col fs-6">{data.bankName}</p>
-                            <p className="col fs-6">{data.websiteName}</p>
-                          </div>
-                          <Link to={`/admindash/${data._id}`} className="col">
-                            <button type="button" className="btn btn-primary">
-                              <FontAwesomeIcon
-                                icon={faEdit}
-                                data-toggle="modal"
-                                data-target="#exampleModalCenter"
-                              />
-                            </button>
-                          </Link>
-                        </div>
-                      </div>
-                    );
-                  })
-                ) : (
-                  <h1 className="text-center">No Transaction Found</h1>
-                )}
-              </div>
-            ) : (
-              // This is for Withdraw Card Filter View
-
-              <div className=" container mt-5">
-                <div
-                  className="card rounded-2 mb-2"
-                  style={{
-                    boxShadow: "26px -13px 32px -15px rgba(29,29,31,0.68)",
-                    backgroundImage:
-                      "linear-gradient(90deg, rgba(251,60,60,1) 0%, rgba(246,171,243,1) 50%, rgba(251,60,60,1) 100%)",
-                  }}
-                >
-                  <div className="card-body">
-                    <div className="row">
-                      <h4 className="col fs-6">Date</h4>
-                      <h4 className="col fs-6">Amount</h4>
-                      <h4 className="col fs-6">Transaction Id</h4>
-                      <h4 className="col fs-6">Gateway</h4>
-                      <h4 className="col fs-6">CreatedBy</h4>
-                      <h4 className="col fs-6">User Id</h4>
-                      <h4 className="col fs-6">Bank</h4>
-                      <h4 className="col fs-6">Website</h4>
-                    </div>
-                  </div>
-                </div>
-
-                {withdrawFilter.length > 0 ? (
-                  withdrawFilter.map((data, i) => {
-                    return (
-                      <div
-                        className="card rounded-2"
-                        style={{
-                          transition: "transform 0.3s",
-                          transform: "scale(1)",
-                          boxShadow: "20px 3px 22px 1px rgba(0, 0, 0, 0.36)",
-                        }}
-                        onMouseOver={(e) => {
-                          e.currentTarget.style.transform = "scale(1.01)";
-                        }}
-                        onMouseOut={(e) => {
-                          e.currentTarget.style.transform = "scale(1)";
-                        }}
-                      >
-                        <div className="card-body">
-                          <div className="row">
-                            <p className="col fs-6">
-                              {new Date(data.createdAt).toLocaleString(
-                                "default",
-                                {
-                                  month: "long",
-                                }
-                              )}{" "}
-                              {new Date(data.createdAt).getDate()}
-                            </p>
-                            <p className="col fs-6">₹&nbsp;{data.amount}</p>
-                            <p className="col fs-6 text-break">
-                              {data.transactionID}
-                            </p>
-                            <p className="col fs-6">{data.paymentMethod}</p>
-                            <p className="col fs-6 text-break">
-                              {data.subAdminId}
-                            </p>
-                            <p className="col fs-6">{data.userId}</p>
-                            <p className="col fs-6">{data.bankName}</p>
-                            <p className="col fs-6">{data.websiteName}</p>
-                          </div>
-                          <Link to={`/admindash/${data._id}`} className="col">
-                            <button type="button" className="btn btn-primary">
-                              <FontAwesomeIcon
-                                icon={faEdit}
-                                data-toggle="modal"
-                                data-target="#exampleModalCenter"
-                              />
-                            </button>
-                          </Link>
-                        </div>
-                      </div>
-                    );
-                  })
-                ) : (
-                  <h1 className="text-center">No Transaction Found</h1>
-                )}
-                {/* {withdrawFilter.length === 0 && (
-                  <h1 className="text-center">No Withdraws Found</h1>
-                )} */}
-              </div>
-            )}
-          </>
+          <h1 className="text-center">No Transaction Found</h1>
         )}
-      </div>
+      </div> : <div className=" container mt-5">
+        {/* This is for Deposit Card Normal View */}
+        <div
+          className="card  rounded-2 mb-2"
+          style={{
+            boxShadow: "26px -13px 32px -15px rgba(29,29,31,0.68)",
+            backgroundImage:
+              "linear-gradient(90deg, rgba(60,251,165,1) 0%, rgba(171,246,241,1) 50%, rgba(60,251,165,1) 100%)",
+          }}
+        >
+          <div className="card-body">
+            <div className="row">
+              <h4 className="col fs-6">Date</h4>
+              <h4 className="col fs-6">Amount</h4>
+              <h4 className="col fs-6">Transaction Id</h4>
+              <h4 className="col fs-6">Gateway</h4>
+              <h4 className="col fs-6">CreatedBy</h4>
+              <h4 className="col fs-6">User Id</h4>
+              <h4 className="col fs-6">Bank</h4>
+              <h4 className="col fs-6">Website</h4>
+            </div>
+          </div>
+        </div>
+
+        {documentFilter.length > 0 ? (
+          documentFilter.map((data, i) => {
+            return (
+              <div
+                className="card rounded-2"
+                style={{
+                  transition: "transform 0.3s",
+                  transform: "scale(1)",
+                  boxShadow: "20px 3px 22px 1px rgba(0, 0, 0, 0.36)",
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.transform = "scale(1.01)";
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.transform = "scale(1)";
+                }}
+              >
+                <div className="card-body">
+                  <div className="row">
+                    <p className="col fs-6">
+                      {new Date(data.createdAt).toLocaleString(
+                        "default",
+                        {
+                          month: "long",
+                        }
+                      )}{" "}
+                      {new Date(data.createdAt).getDate()}
+                    </p>
+                    <p className="col fs-6">₹&nbsp;{data.amount}</p>
+                    <p className="col fs-6 text-break">
+                      {data.transactionID}
+                    </p>
+                    <p className="col fs-6">{data.paymentMethod}</p>
+                    <p className="col fs-6 text-break">
+                      {data.subAdminId}
+                    </p>
+                    <p className="col fs-6">{data.userId}</p>
+                    <p className="col fs-6">{data.bankName}</p>
+                    <p className="col fs-6">{data.websiteName}</p>
+                  </div>
+                  <Link to={`/admindash/${data._id}`} className="col">
+                    <button type="button" className="btn btn-primary">
+                      <FontAwesomeIcon
+                        icon={faEdit}
+                        data-toggle="modal"
+                        data-target="#exampleModalCenter"
+                      />
+                    </button>
+                  </Link>
+                </div>
+              </div>
+            );
+          })
+        ) : (
+          <h1 className="text-center">No Transaction Found</h1>
+        )}
+      </div>}
     </div>
   );
 };
