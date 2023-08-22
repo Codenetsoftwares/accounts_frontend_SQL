@@ -7,7 +7,7 @@ const ModalWbdl = ({ name }) => {
 
   const handeldeletewebsite = () => {
     const data = {
-      name: name,
+      websiteName: name,
     };
     AccountService.deletewebsite(data, auth.user)
       .then((res) => {

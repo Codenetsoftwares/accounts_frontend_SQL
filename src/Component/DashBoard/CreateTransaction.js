@@ -14,6 +14,8 @@ const CreateTransaction = () => {
   const [amount, setAmount] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
   const [Bank, SetBank] = useState("");
+  const [BankAccNo, SetBankAccNo] = useState([]);
+
   const [Website, setWebsite] = useState("");
   const [uid, setUid] = useState("");
 
@@ -58,11 +60,14 @@ const CreateTransaction = () => {
     setTransactionType(e.target.value);
   };
 
-  const handleBankChange = (e) => {
-    const value = e.target.value;
-    SetBank(value);
-  };
-  console.log(Bank);
+  // const handleBankChange = (e) => {
+
+  //   const value = e.target.value;
+  //   // const value1 = e.target.value1;
+  //   // SetBank(value1);
+  //   SetBankAccNo(value);
+  // };
+  console.log("==>>>", BankAccNo);
 
   const handleWebsiteChange = (e) => {
     const value = e.target.value;
@@ -78,11 +83,12 @@ const CreateTransaction = () => {
     const data = {
       transactionID: transactionId,
       transactionType: transactionType,
-      amount: amount,
+      amount: Number(amount),
       paymentMethod: paymentMethod,
       subAdminId: auth.user.email,
       userId: uid,
-      bankName: Bank,
+      bankName: BankAccNo[0],
+      accountNumber: BankAccNo[1],
       websiteName: Website,
     };
 
@@ -221,12 +227,17 @@ const CreateTransaction = () => {
               <select
                 class="form-select"
                 style={inputStyle}
-                value={getbankName.bankName}
-                onChange={handleBankChange}
+                value={JSON.stringify(BankAccNo)} // Store the array as a JSON string
+                onChange={(e) => {
+                  SetBankAccNo(JSON.parse(e.target.value)); // Parse the JSON string back to an array
+                }}
               >
                 <option selected>Select Bank</option>
                 {getbankName.map((bank, index) => (
-                  <option key={index} value={bank.bankName}>
+                  <option
+                    key={index}
+                    value={JSON.stringify([bank.bankName, bank.accountNumber])} // Store the array as a JSON string
+                  >
                     {bank.bankName}
                   </option>
                 ))}
@@ -240,13 +251,13 @@ const CreateTransaction = () => {
               <select
                 class="form-select"
                 style={inputStyle}
-                value={getWebsite.name}
+                value={getWebsite.websiteName}
                 onChange={handleWebsiteChange}
               >
                 <option selected>Select Website</option>
                 {getWebsite.map((website, index) => (
-                  <option key={index} value={website.name}>
-                    {website.name}
+                  <option key={index} value={website.websiteName}>
+                    {website.websiteName}
                   </option>
                 ))}
               </select>
