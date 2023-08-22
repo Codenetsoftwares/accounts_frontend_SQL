@@ -1,7 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAuth } from "../../Utils/Auth";
-const ModalWthBl = () => {
+import AccountService from "../../Services/AccountService";
+
+const ModalWthBl = ({ ID }) => {
   const auth = useAuth();
+  const [Amount, SetAmount] = useState(0);
+
+  const handelamtchange = (e) => {
+    SetAmount(e.target.value);
+  };
+
+  const handelsubmit = (e) => {
+    e.preventDefault();
+    const data = {
+      amount: Amount,
+      transactionType: "Withdraw",
+    };
+
+    // console.log( data)
+    AccountService.ManualBankEntryWithdraw(ID, data, auth.user)
+      .then((res) => {
+        // console.log(response.data);
+        if (res.status === 200) {
+          alert("Transaction Succesfull");
+          window.location.reload();
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        // alert.error("e.message");
+      });
+  };
+
   return (
     <div>
       <div
@@ -46,6 +76,8 @@ const ModalWthBl = () => {
                     type="number"
                     className="form-control"
                     placeholder="Amount"
+                    onChange={handelamtchange}
+                    value={Amount}
                   />
                 </div>
               </form>
@@ -58,7 +90,11 @@ const ModalWthBl = () => {
               >
                 Close
               </button>
-              <button type="button" className="btn btn-primary">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={handelsubmit}
+              >
                 Save changes
               </button>
             </div>

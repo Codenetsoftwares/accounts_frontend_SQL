@@ -84,7 +84,7 @@ function App() {
               />
 
               <Route
-                path="websitestatement"
+                path="websitestatement/:id"
                 element={
                   <RequireAuth>
                     <WebsiteStatement />
@@ -93,7 +93,7 @@ function App() {
               />
 
               <Route
-                path="bankstatement"
+                path="websitestatement/:id"
                 element={
                   <RequireAuth>
                     <BankStatement/>

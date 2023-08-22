@@ -1,8 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAuth } from "../../Utils/Auth";
+import AccountService from "../../Services/AccountService";
 
-const ModalAddBl = () => {
+const ModalAddBl = ({ ID }) => {
   const auth = useAuth();
+  const [Amount, SetAmount] = useState(0);
+  const handelamtchange = (e) => {
+    SetAmount(e.target.value);
+  };
+  const handelsubmit = (e) => {
+    e.preventDefault();
+    const data = {
+      amount: Number(Amount),
+      transactionType: "Deposit",
+    };
+
+    console.log("data", data);
+    AccountService.ManualBankEntryDeposit(ID, data, auth.user)
+      .then((res) => {
+        // console.log(response.data);
+        if (res.status === 200) {
+          alert("Transaction Succesfull");
+          window.location.reload();
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        // alert.error("e.message");
+      });
+  };
 
   return (
     <div>
@@ -48,6 +74,8 @@ const ModalAddBl = () => {
                     type="number"
                     className="form-control"
                     placeholder="Amount"
+                    onChange={handelamtchange}
+                    value={Amount}
                   />
                 </div>
               </form>
@@ -60,7 +88,11 @@ const ModalAddBl = () => {
               >
                 Close
               </button>
-              <button type="button" className="btn btn-primary">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={handelsubmit}
+              >
                 Save changes
               </button>
             </div>

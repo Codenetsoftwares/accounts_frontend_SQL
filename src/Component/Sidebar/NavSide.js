@@ -30,9 +30,7 @@ const NavSide = () => {
         className="main-sidebar elevation-4"
         style={{
           backgroundImage:
-
             "linear-gradient(270deg, rgba(254,216,216,1) 0%, rgba(255,135,98,1) 59%)",
-
         }}
       >
         <div className="d-flex flex-row">
@@ -47,7 +45,13 @@ const NavSide = () => {
               &nbsp;Happy Wave
             </span>
           </p>
-          <div className="fs-4 ms-4 " style={{ width: '15%' }} data-widget="pushmenu">x</div>
+          <div
+            className="fs-4 ms-4 "
+            style={{ width: "15%" }}
+            data-widget="pushmenu"
+          >
+            x
+          </div>
         </div>
 
         <div className="sidebar">
@@ -134,6 +138,20 @@ const NavSide = () => {
                   &nbsp;<i className="nav-icon fas fa-user-plus"></i>
                   <p className="text-dark">
                     Create SubAdmin
+                    {/* <span className="right badge badge-danger">New</span> */}
+                  </p>
+                </Link>
+              </li>
+
+              <li className="nav-item">
+                <Link
+                  to="/createactualuser"
+                  href="pages/widgets.html"
+                  className="nav-link"
+                >
+                  &nbsp;<i className="nav-icon fas fa-user-plus"></i>
+                  <p className="text-dark">
+                    Create User
                     {/* <span className="right badge badge-danger">New</span> */}
                   </p>
                 </Link>

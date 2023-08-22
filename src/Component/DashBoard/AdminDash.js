@@ -92,6 +92,7 @@ const AdminDash = () => {
     setSelect(value);
     handleClick("transactionType", value)
   };
+
   console.log("filterdata", documentFilter);
   const handleSubAdmin = (e) => {
     const value = e.target.value;
@@ -167,6 +168,7 @@ const AdminDash = () => {
             </option>
           </select>
         </div>
+
         <div className="d-flex pt-3 justify-content-center">
           <h6 className="fw-bold text-nowrap pt-2"> SubAdminlist</h6>
           <select
@@ -226,7 +228,7 @@ const AdminDash = () => {
               return <option key={data._id} value={data.name}>{data.name}</option>;
             })}
           </select>
-        </div>
+        </div> */}
         <div className="d-flex mt-2 pl-5 justify-content-center">
           <p className="fw-bold fs-6 text-nowrap mt-1">
             <FaFilter />
