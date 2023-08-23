@@ -15,16 +15,16 @@ const WebsiteStatement = () => {
   const [Userstmnt, SetUserstmnt] = useState([]);
 
   const [select, setSelect] = useState("Manual Entry");
-  console.log("This is Website Name",id);
- 
+  console.log("This is Website Name", id);
+
   const handleChange = (e) => {
     const value = e.target.value;
     setSelect(value);
   };
- 
+
   useEffect(() => {
     AccountService.GetWebsiteStateMent(id, auth.user).then((res) =>
-    SetManualstmnt(res.data)
+      SetManualstmnt(res.data)
     );
   }, [id, auth]);
 
@@ -84,31 +84,35 @@ const WebsiteStatement = () => {
                   <h4 className="col fs-6 font-weight-bold">Balance</h4>
                 </div>
                 <hr style={{ color: "green" }} />
-                {Manualstmnt.map((transaction, index) => (
-                  <div className="row" key={index}>
-                    <p className="col fs-6">
-                      {new Date(transaction.date).toLocaleString("default", {
-                        month: "long",
-                      })}{" "}
-                      {new Date(transaction.date).getDate()}
-                    </p>
-                    <p className="col fs-6">{transaction.withdrawAmount}</p>
-                    <p className="col fs-6">{transaction.subAdminName}</p>
-                    <p className="col fs-6">{transaction.name}</p>
-                    <p className="col fs-6">{transaction.transactionType}</p>
-                    <p className="col fs-6">
-                      {transaction.transactionType === "Withdraw" ? (
-                        <span style={{ color: "red" }}>
-                          {transaction.currentBalance} -
-                        </span>
-                      ) : (
-                        <span style={{ color: "green" }}>
-                          {transaction.currentBalance} +
-                        </span>
-                      )}
-                    </p>
-                  </div>
-                ))}
+                {
+                  Manualstmnt.length > 0 ? (
+                    Manualstmnt.map((transaction, index) => (
+                      <div className="row" key={index}>
+                        <p className="col fs-6">
+                          {new Date(transaction.date).toLocaleString("default", {
+                            month: "long",
+                          })}{" "}
+                          {new Date(transaction.date).getDate()}
+                        </p>
+                        <p className="col fs-6">{transaction.withdrawAmount}</p>
+                        <p className="col fs-6">{transaction.subAdminName}</p>
+                        <p className="col fs-6">{transaction.name}</p>
+                        <p className="col fs-6">{transaction.transactionType}</p>
+                        <p className="col fs-6">
+                          {transaction.transactionType === "Withdraw" ? (
+                            <span style={{ color: "red" }}>
+                              {transaction.currentBalance} -
+                            </span>
+                          ) : (
+                            <span style={{ color: "green" }}>
+                              {transaction.currentBalance} +
+                            </span>
+                          )}
+                        </p>
+                      </div>
+                    ))
+                  ) : (<h1>No Transaction Found</h1>)
+                }
               </div>
             </div>
           </div>
@@ -135,43 +139,45 @@ const WebsiteStatement = () => {
                   <h4 className="col fs-6 font-weight-bold">Balance</h4>
                 </div>
                 <hr style={{ color: "green" }} />
-                {Userstmnt.map((transaction, index) => (
-                  <div className="row" key={index}>
-                    <p className="col fs-6">
-                      {new Date(transaction.createdAt).toLocaleString(
-                        "default",
-                        {
-                          month: "long",
-                        }
-                      )}{" "}
-                      {new Date(transaction.createdAt).getDate()}
-                    </p>
-                    <p className="col fs-6">{transaction.amount}</p>
-                    <p className="col fs-6">{transaction.subAdminName}</p>
-                    <p className="col fs-6">{transaction.userId}</p>
-                    <p className="col fs-6">{transaction.websiteName}</p>
-                    <p className="col fs-6">{transaction.transactionType}</p>
+                {Userstmnt.length > 0 ? (
+                  Userstmnt.map((transaction, index) => (
+                    <div className="row" key={index}>
+                      <p className="col fs-6">
+                        {new Date(transaction.createdAt).toLocaleString(
+                          "default",
+                          {
+                            month: "long",
+                          }
+                        )}{" "}
+                        {new Date(transaction.createdAt).getDate()}
+                      </p>
+                      <p className="col fs-6">{transaction.amount}</p>
+                      <p className="col fs-6">{transaction.subAdminName}</p>
+                      <p className="col fs-6">{transaction.userId}</p>
+                      <p className="col fs-6">{transaction.websiteName}</p>
+                      <p className="col fs-6">{transaction.transactionType}</p>
 
-                    <p className="col fs-6">
-                      {transaction.transactionType === "Withdraw" ? (
-                        <span style={{ color: "red" }}>
-                          {transaction.amount} -
-                        </span>
-                      ) : (
-                        <span style={{ color: "green" }}>
-                          {transaction.amount} +
-                        </span>
-                      )}
-                    </p>
-                  </div>
-                ))}
+                      <p className="col fs-6">
+                        {transaction.transactionType === "Withdraw" ? (
+                          <span style={{ color: "red" }}>
+                            {transaction.amount} -
+                          </span>
+                        ) : (
+                          <span style={{ color: "green" }}>
+                            {transaction.amount} +
+                          </span>
+                        )}
+                      </p>
+                    </div>
+                  ))
+                ) : (<h1>No Transaction Found</h1>)}
               </div>
             </div>
           </div>
         )}
       </div>
     </div>
-    
+
   );
 };
 
