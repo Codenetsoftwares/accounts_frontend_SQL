@@ -8,6 +8,7 @@ const NavSide = () => {
   const [isTogglenav, setIsTogglenav] = useState(true);
   const [isToggleDash, setIsToggleDash] = useState(true);
   const [useremail, setUserEmail] = useState([]);
+  const [IsToggleTransaction, setIsToggleTransaction] = useState(true);
 
   useEffect(() => {
     setUserEmail(auth.user.email);
@@ -22,6 +23,9 @@ const NavSide = () => {
   };
   const handleNavToggle = () => {
     setIsTogglenav(!isTogglenav);
+  };
+  const handleToggleTransaction = () => {
+    setIsToggleTransaction(!IsToggleTransaction);
   };
   return (
     <div>
@@ -118,16 +122,47 @@ const NavSide = () => {
                   </li>
                 )}
               </li>
+              {IsToggleTransaction ? (
+                <li className="nav-item ">
+                  <a className="nav-link " onClick={handleToggleTransaction}>
+                    &nbsp; <i className="fa-solid fas fa-user" />
+                    <p>
+                      &nbsp;Transaction
+                      <i className="fas fa-angle-left right" />
+                    </p>
+                  </a>
+                </li>
+              ) : (
+                <li className="nav-item ">
+                  <a className="nav-link " onClick={handleToggleTransaction}>
+                    &nbsp;
+                    <i className="fa-solid fas fa-user" />
+                    <p>
+                      &nbsp; Transaction
+                      <i className="fas fa-chevron-down right"></i>
+                    </p>
+                  </a>
 
-              <li className="nav-item">
+                  <Link to="bank" className="nav-link text-white">
+                    <i className="far fa-circle nav-icon" />
+                    <p>Bank</p>
+                  </Link>
+
+                  <Link to="website" className="nav-link text-white">
+                    <i className="far fa-circle nav-icon" />
+                    <p>Website</p>
+                  </Link>
+                </li>
+              )}
+              {/* <li className="nav-item">
                 <Link to="bank" href="pages/widgets.html" className="nav-link">
                   <i className="nav-icon fas fa-university"></i>
                   <p className="text-dark">
                     Bank View
-                    {/* <span className="right badge badge-danger">New</span> */}
+          
                   </p>
                 </Link>
-              </li>
+              </li> */}
 
               <li className="nav-item">
                 <Link
@@ -157,66 +192,14 @@ const NavSide = () => {
                 </Link>
               </li>
 
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link to="website" href="#" className="nav-link">
                   <i className="nav-icon fas fa-globe"></i>
                   <p className="text-dark">
                     Website View
-                    {/* <i className="fas fa-angle-left right"></i>
-                <span className="badge badge-info right">6</span> */}
                   </p>
                 </Link>
-                {/* <ul className="nav nav-treeview">
-              <li className="nav-item">
-                <a href="pages/layout/top-nav.html" className="nav-link">
-                  <i className="far fa-circle nav-icon"></i>
-                  <p>Top Navigation</p>
-                </a>
-              </li>
-              <li className="nav-item">
-                <a href="pages/layout/top-nav-sidebar.html" className="nav-link">
-                  <i className="far fa-circle nav-icon"></i>
-                  <p>Top Navigation + Sidebar</p>
-                </a>
-              </li>
-              <li className="nav-item">
-                <a href="pages/layout/boxed.html" className="nav-link">
-                  <i className="far fa-circle nav-icon"></i>
-                  <p>Boxed</p>
-                </a>
-              </li>
-              <li className="nav-item">
-                <a href="pages/layout/fixed-sidebar.html" className="nav-link">
-                  <i className="far fa-circle nav-icon"></i>
-                  <p>Fixed Sidebar</p>
-                </a>
-              </li>
-              <li className="nav-item">
-                <a href="pages/layout/fixed-sidebar-custom.html" className="nav-link">
-                  <i className="far fa-circle nav-icon"></i>
-                  <p>Fixed Sidebar <small>+ Custom Area</small></p>
-                </a>
-              </li>
-              <li className="nav-item">
-                <a href="pages/layout/fixed-topnav.html" className="nav-link">
-                  <i className="far fa-circle nav-icon"></i>
-                  <p>Fixed Navbar</p>
-                </a>
-              </li>
-              <li className="nav-item">
-                <a href="pages/layout/fixed-footer.html" className="nav-link">
-                  <i className="far fa-circle nav-icon"></i>
-                  <p>Fixed Footer</p>
-                </a>
-              </li>
-              <li className="nav-item">
-                <a href="pages/layout/collapsed-sidebar.html" className="nav-link">
-                  <i className="far fa-circle nav-icon"></i>
-                  <p>Collapsed Sidebar</p>
-                </a>
-              </li>
-            </ul> */}
-              </li>
+              </li> */}
 
               {isToggle ? (
                 <li className="nav-item ">
