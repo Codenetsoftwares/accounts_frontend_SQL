@@ -14,7 +14,7 @@ const ModalWthWbl = () => {
   const handelsubmit = () => {
     const data = {
       amount: Amount,
-      transactionType: "Withdraw",
+      transactionType: "Manual-Withdraw",
     };
     // Post API Fetch
     AccountService.ManualWebsiteEntryWithdraw(ids, data, auth.user)
