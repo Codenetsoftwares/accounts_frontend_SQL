@@ -8,7 +8,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import { FaFilter } from "react-icons/fa";
 
 const WebsiteStatement = () => {
-
   const { id } = useParams();
   const auth = useAuth();
   const [Manualstmnt, SetManualstmnt] = useState([]);
@@ -23,15 +22,29 @@ const WebsiteStatement = () => {
   };
 
   useEffect(() => {
-    AccountService.GetWebsiteStateMent(id, auth.user).then((res) =>
-      SetManualstmnt(res.data)
-    );
+    const fetchManualStatement = async () => {
+      try {
+        const res = await AccountService.GetWebsiteStateMent(id, auth.user);
+        SetManualstmnt(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchManualStatement();
   }, [id, auth]);
 
   useEffect(() => {
-    AccountService.GetWebsiteSmmry(id, auth.user).then((res) =>
-      SetUserstmnt(res.data)
-    );
+    const fetchUserStatement = async () => {
+      try {
+        const res = await AccountService.GetWebsiteSmmry(id, auth.user);
+        SetUserstmnt(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchUserStatement();
   }, [id, auth]);
 
   console.log("Website Names Manual =>>>", Manualstmnt);
@@ -96,21 +109,15 @@ const WebsiteStatement = () => {
                         )}{" "}
                         {new Date(transaction.createdAt).getDate()}
                       </p>
-                      <p className="col fs-6">{transaction.depositAmount}</p>
+                      {transaction.transactionType === "Manual-Deposit" ? (
+                        <p className="col fs-6">{transaction.depositAmount}</p>
+                      ) : (
+                        <p className="col fs-6">{transaction.withdrawAmount}</p>
+                      )}
                       <p className="col fs-6">{transaction.subAdminName}</p>
                       <p className="col fs-6">{transaction.websiteName}</p>
                       <p className="col fs-6">{transaction.transactionType}</p>
-                      <p className="col fs-6">
-                        {transaction.transactionType === "Withdraw" ? (
-                          <span style={{ color: "red" }}>
-                            {transaction.currentBalance} -
-                          </span>
-                        ) : (
-                          <span style={{ color: "green" }}>
-                            {transaction.currentBalance} +
-                          </span>
-                        )}
-                      </p>
+                      <p className="col fs-6">{transaction.currentBalance}</p>
                     </div>
                   ))
                 ) : (

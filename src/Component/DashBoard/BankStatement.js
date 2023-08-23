@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router";
 import { useAuth } from "../../Utils/Auth";
 import { useParams } from "react-router";
 import AccountService from "../../Services/AccountService";
+import { toast } from "react-toastify";
 
 const BankStatement = () => {
   const { id } = useParams();
@@ -13,15 +13,23 @@ const BankStatement = () => {
   console.log(id);
 
   useEffect(() => {
-    AccountService.GetBankStMent(id, auth.user).then((res) =>
-      SetManualstmnt(res.data)
-    );
+    AccountService.GetBankStMent(id, auth.user)
+      .then((res) => SetManualstmnt(res.data))
+      .catch((err) => {
+        // console.log(err.response.data.message);
+        toast.err("No Details Found");
+        console.error(err, "object");
+      });
   }, [id, auth]);
 
   useEffect(() => {
-    AccountService.GetBankuserStMent(id, auth.user).then((res) =>
-      SetUserstmnt(res.data)
-    );
+    AccountService.GetBankuserStMent(id, auth.user)
+      .then((res) => SetUserstmnt(res.data))
+      .catch((err) => {
+        console.log(err.response.data.message);
+        toast.error("No Details Found");
+        console.error(err, "object");
+      });
   }, [id, auth]);
 
   console.log("Bank Names Manual =>>>", Manualstmnt);
@@ -92,7 +100,11 @@ const BankStatement = () => {
                         )}{" "}
                         {new Date(transaction.createdAt).getDate()}
                       </p>
-                      <p className="col fs-6">{transaction.depositAmount}</p>
+                      {transaction.transactionType === "Manual-Deposit" ? (
+                        <p className="col fs-6">{transaction.depositAmount}</p>
+                      ) : (
+                        <p className="col fs-6">{transaction.withdrawAmount}</p>
+                      )}
                       <p className="col fs-6">{transaction.subAdminName}</p>
                       <p className="col fs-6">{transaction.bankName}</p>
                       <p className="col fs-6">{transaction.transactionType}</p>

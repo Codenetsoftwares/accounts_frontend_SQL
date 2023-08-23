@@ -15,7 +15,7 @@ const InnerBank = ({ getbankName }) => {
 
   const auth = useAuth();
   console.log("This is Auth==>>>", auth);
-  console.log('getbank', getbankName)
+  console.log("getbank", getbankName);
   const bnamechnage = (e) => {
     setBname(e.target.value);
   };
@@ -51,12 +51,14 @@ const InnerBank = ({ getbankName }) => {
       accountHolderName: hname,
       upiId: upi,
       upiAppName: upiName,
-      upiNumber: upiPhoneNumber
+      upiNumber: upiPhoneNumber,
     };
     AccountService.addBank(data, auth.user)
       .then((response) => {
-        console.log('bank', response.data);
-        toast.success("Bank Added Sucessfully");
+        console.log("bank", response.data);
+        alert("Bank Added Sucessfully");
+        window.location.reload();
+
       })
       .catch((error) => {
         toast.error(error);

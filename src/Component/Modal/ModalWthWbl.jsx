@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { useAuth } from "../../Utils/Auth";
 import AccountService from "../../Services/AccountService";
-import { toast } from "react-toastify";
 
-const ModalWthWbl = () => {
+const ModalWthWbl = ({ ID }) => {
   const auth = useAuth();
   const [Amount, SetAmount] = useState(0);
 
@@ -11,24 +10,24 @@ const ModalWthWbl = () => {
     SetAmount(e.target.value);
   };
 
-  const ids = localStorage.getItem("IdWeb");
-  console.log("ids", ids);
-  const handelsubmit = () => {
+  const handelsubmit = (e) => {
+    e.preventDefault();
     const data = {
       amount: Amount,
       transactionType: "Manual-Withdraw",
     };
-    // Post API Fetch
-    AccountService.ManualWebsiteEntryWithdraw(ids, data, auth.user)
+
+    console.log(ID);
+    AccountService.ManualWebsiteEntryWithdraw(ID, data, auth.user)
       .then((res) => {
         // console.log(response.data);
         if (res.status === 200) {
-          toast.success("Transaction Succesfull");
+          alert("Transaction Succesfull");
           window.location.reload();
         }
       })
       .catch((error) => {
-        toast.error(error);
+        console.error(error);
         // alert.error("e.message");
       });
   };
@@ -37,7 +36,7 @@ const ModalWthWbl = () => {
     <div>
       <div
         className="modal fade"
-        id="modalWthbl"
+        id="modalWthwbl"
         tabindex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
@@ -46,7 +45,7 @@ const ModalWthWbl = () => {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLabel">
-                Provide Withdrawal Amount
+                Provide Withdrawal Amount......
               </h5>
 
               <button
@@ -78,6 +77,7 @@ const ModalWthWbl = () => {
                     className="form-control"
                     placeholder="Amount"
                     onChange={handelamtchange}
+                    value={Amount}
                   />
                 </div>
               </form>
