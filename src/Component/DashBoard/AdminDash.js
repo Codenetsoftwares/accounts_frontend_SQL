@@ -21,7 +21,6 @@ import "./AdminDash.css";
 import TopNavbar from "../Sidebar/TopNavbar";
 import AccountService from "../../Services/AccountService";
 
-
 const AdminDash = () => {
   const auth = useAuth();
   const nav = useNavigate();
@@ -55,14 +54,13 @@ const AdminDash = () => {
     setDocumentView(nArr);
   };
 
-
   useEffect(() => {
-    TransactionSercvice.getAccountSummary(auth.user).then((res) => (setDocumentView(res.data),
-      setAccountData(res.data))
+    TransactionSercvice.getAccountSummary(auth.user).then(
+      (res) => (setDocumentView(res.data), setAccountData(res.data))
     );
   }, [auth]);
 
-  console.log("data", documentView);
+  console.log("data ===>>>>>", documentView);
 
   const handelDate = () => {
     const sdate = new Date(startDate);
@@ -77,7 +75,7 @@ const AdminDash = () => {
       return transactionDate >= sdate && transactionDate <= edate;
     });
     setDocumentFilter(filteredDocuments);
-    setToggle(false)
+    setToggle(false);
   };
 
   const handleReset = () => {
@@ -87,29 +85,29 @@ const AdminDash = () => {
     setWebsite("");
     setStartDate("");
     setEndDate("");
-    setToggle(true)
-  }
+    setToggle(true);
+  };
   const handleChange = (e) => {
     const value = e.target.value;
     setSelect(value);
-    handleClick("transactionType", value)
+    handleClick("transactionType", value);
   };
 
   console.log("filterdata", documentFilter);
   const handleSubAdmin = (e) => {
     const value = e.target.value;
     setSubAdmin(value);
-    handleClick("subAdminName", value)
+    handleClick("subAdminName", value);
   };
   const handleBank = (e) => {
     const value = e.target.value;
     setBank(value);
-    handleClick("bankName", value)
+    handleClick("bankName", value);
   };
   const handleWebsite = (e) => {
     const value = e.target.value;
     setWebsite(value);
-    handleClick("websiteName", value)
+    handleClick("websiteName", value);
   };
 
   useEffect(() => {
@@ -138,7 +136,7 @@ const AdminDash = () => {
       {/* This is the Main Card */}
       <div
         className="card card-body rounded-1 main "
-      // style={{ backgroundImage: gradient }}
+        // style={{ backgroundImage: gradient }}
       >
         <div className="d-flex mt-5 mt-5 ml-5 pt-5 justify-content-center">
           <h6 className="fw-bold text-nowrap pt-2">
@@ -184,7 +182,11 @@ const AdminDash = () => {
           >
             <option selected>Select subAdmin</option>
             {subAdminlist.map((data) => {
-              return <option key={data._id} value={data.firstname}>{data.firstname}</option>;
+              return (
+                <option key={data._id} value={data.firstname}>
+                  {data.firstname}
+                </option>
+              );
             })}
           </select>
         </div>
@@ -204,7 +206,11 @@ const AdminDash = () => {
           >
             <option selected>Select Bank</option>
             {bankList.map((data) => {
-              return <option key={data._id} value={data.bankName}>{data.bankName}</option>;
+              return (
+                <option key={data._id} value={data.bankName}>
+                  {data.bankName}
+                </option>
+              );
             })}
           </select>
         </div>
@@ -224,7 +230,11 @@ const AdminDash = () => {
           >
             <option selected>Select website</option>
             {websiteList.map((data) => {
-              return <option key={data._id} value={data.websiteName}>{data.websiteName}</option>;
+              return (
+                <option key={data._id} value={data.websiteName}>
+                  {data.websiteName}
+                </option>
+              );
             })}
           </select>
         </div>
@@ -275,167 +285,165 @@ const AdminDash = () => {
         </div>
       </div>
 
-      {toggle ? <div className=" container mt-5">
-        {/* This is for Deposit Card Normal View */}
-        <div
-          className="card  rounded-2 mb-2"
-          style={{
-            boxShadow: "26px -13px 32px -15px rgba(29,29,31,0.68)",
-            backgroundImage:
-              "linear-gradient(90deg, rgba(60,251,165,1) 0%, rgba(171,246,241,1) 50%, rgba(60,251,165,1) 100%)",
-          }}
-        >
-          <div className="card-body">
-            <div className="row">
-              <h4 className="col fs-6">Date</h4>
-              <h4 className="col fs-6">Amount</h4>
-              <h4 className="col fs-6">Transaction Id</h4>
-              <h4 className="col fs-6">Gateway</h4>
-              <h4 className="col fs-6">CreatedBy</h4>
-              <h4 className="col fs-6">User Id</h4>
-              <h4 className="col fs-6">Bank</h4>
-              <h4 className="col fs-6">Website</h4>
+      {toggle ? (
+        <div className=" container mt-5">
+          {/* This is for Deposit Card Normal View */}
+          <div
+            className="card  rounded-2 mb-2"
+            style={{
+              boxShadow: "26px -13px 32px -15px rgba(29,29,31,0.68)",
+              backgroundImage:
+                "linear-gradient(90deg, rgba(60,251,165,1) 0%, rgba(171,246,241,1) 50%, rgba(60,251,165,1) 100%)",
+            }}
+          >
+            <div className="card-body">
+              <div className="row">
+                <h4 className="col fs-6">Date</h4>
+                <h4 className="col fs-6">Amount</h4>
+                <h4 className="col fs-6">Transaction Id</h4>
+                <h4 className="col fs-6">Transaction Type</h4>
+                <h4 className="col fs-6">Gateway</h4>
+                <h4 className="col fs-6">CreatedBy</h4>
+                <h4 className="col fs-6">User Id</h4>
+                <h4 className="col fs-6">Bank</h4>
+                <h4 className="col fs-6">Website</h4>
+              </div>
             </div>
           </div>
-        </div>
 
-        {documentView.length > 0 ? (
-          documentView.map((data, i) => {
-            return (
-              <div
-                className="card rounded-2"
-                style={{
-                  transition: "transform 0.3s",
-                  transform: "scale(1)",
-                  boxShadow: "20px 3px 22px 1px rgba(0, 0, 0, 0.36)",
-                }}
-                onMouseOver={(e) => {
-                  e.currentTarget.style.transform = "scale(1.01)";
-                }}
-                onMouseOut={(e) => {
-                  e.currentTarget.style.transform = "scale(1)";
-                }}
-              >
-                <div className="card-body">
-                  <div className="row">
-                    <p className="col fs-6">
-                      {new Date(data.createdAt).toLocaleString(
-                        "default",
-                        {
+          {documentView.length > 0 ? (
+            documentView.map((data, i) => {
+              return (
+                <div
+                  className="card rounded-2"
+                  style={{
+                    transition: "transform 0.3s",
+                    transform: "scale(1)",
+                    boxShadow: "20px 3px 22px 1px rgba(0, 0, 0, 0.36)",
+                  }}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.transform = "scale(1.01)";
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.transform = "scale(1)";
+                  }}
+                >
+                  <div className="card-body">
+                    <div className="row">
+                      <p className="col fs-6">
+                        {new Date(data.createdAt).toLocaleString("default", {
                           month: "long",
-                        }
-                      )}{" "}
-                      {new Date(data.createdAt).getDate()}
-                    </p>
-                    <p className="col fs-6">₹&nbsp;{data.amount}</p>
-                    <p className="col fs-6 text-break">
-                      {data.transactionID}
-                    </p>
-                    <p className="col fs-6">{data.paymentMethod}</p>
-                    <p className="col fs-6 text-break">
-                      {data.subAdminId}
-                    </p>
-                    <p className="col fs-6">{data.userId}</p>
-                    <p className="col fs-6">{data.bankName}</p>
-                    <p className="col fs-6">{data.websiteName}</p>
+                        })}{" "}
+                        {new Date(data.createdAt).getDate()}
+                      </p>
+                      <p className="col fs-6">₹&nbsp;{data.amount}</p>
+                      <p className="col fs-6 text-break">
+                        {data.transactionID}
+                      </p>
+                      <p className="col fs-6 text-break">
+                        {data.transactionType}
+                      </p>
+                      <p className="col fs-6">{data.paymentMethod}</p>
+                      <p className="col fs-6 text-break">{data.subAdminName}</p>
+                      <p className="col fs-6">{data.userId}</p>
+                      <p className="col fs-6">{data.bankName}</p>
+                      <p className="col fs-6">{data.websiteName}</p>
+                    </div>
+                    <Link to={`/admindash/${data._id}`} className="col">
+                      <button type="button" className="btn btn-primary">
+                        <FontAwesomeIcon
+                          icon={faEdit}
+                          data-toggle="modal"
+                          data-target="#exampleModalCenter"
+                        />
+                      </button>
+                    </Link>
                   </div>
-                  <Link to={`/admindash/${data._id}`} className="col">
-                    <button type="button" className="btn btn-primary">
-                      <FontAwesomeIcon
-                        icon={faEdit}
-                        data-toggle="modal"
-                        data-target="#exampleModalCenter"
-                      />
-                    </button>
-                  </Link>
                 </div>
+              );
+            })
+          ) : (
+            <h1 className="text-center">No Transaction Found</h1>
+          )}
+        </div>
+      ) : (
+        <div className=" container mt-5">
+          {/* This is for Deposit Card Normal View */}
+          <div
+            className="card  rounded-2 mb-2"
+            style={{
+              boxShadow: "26px -13px 32px -15px rgba(29,29,31,0.68)",
+              backgroundImage:
+                "linear-gradient(90deg, rgba(60,251,165,1) 0%, rgba(171,246,241,1) 50%, rgba(60,251,165,1) 100%)",
+            }}
+          >
+            <div className="card-body">
+              <div className="row">
+                <h4 className="col fs-6">Date</h4>
+                <h4 className="col fs-6">Amount</h4>
+                <h4 className="col fs-6">Transaction Id</h4>
+                <h4 className="col fs-6">Gateway</h4>
+                <h4 className="col fs-6">CreatedBy</h4>
+                <h4 className="col fs-6">User Id</h4>
+                <h4 className="col fs-6">Bank</h4>
+                <h4 className="col fs-6">Website</h4>
               </div>
-            );
-          })
-        ) : (
-          <h1 className="text-center">No Transaction Found</h1>
-        )}
-      </div> : <div className=" container mt-5">
-        {/* This is for Deposit Card Normal View */}
-        <div
-          className="card  rounded-2 mb-2"
-          style={{
-            boxShadow: "26px -13px 32px -15px rgba(29,29,31,0.68)",
-            backgroundImage:
-              "linear-gradient(90deg, rgba(60,251,165,1) 0%, rgba(171,246,241,1) 50%, rgba(60,251,165,1) 100%)",
-          }}
-        >
-          <div className="card-body">
-            <div className="row">
-              <h4 className="col fs-6">Date</h4>
-              <h4 className="col fs-6">Amount</h4>
-              <h4 className="col fs-6">Transaction Id</h4>
-              <h4 className="col fs-6">Gateway</h4>
-              <h4 className="col fs-6">CreatedBy</h4>
-              <h4 className="col fs-6">User Id</h4>
-              <h4 className="col fs-6">Bank</h4>
-              <h4 className="col fs-6">Website</h4>
             </div>
           </div>
-        </div>
 
-        {documentFilter.length > 0 ? (
-          documentFilter.map((data, i) => {
-            return (
-              <div
-                className="card rounded-2"
-                style={{
-                  transition: "transform 0.3s",
-                  transform: "scale(1)",
-                  boxShadow: "20px 3px 22px 1px rgba(0, 0, 0, 0.36)",
-                }}
-                onMouseOver={(e) => {
-                  e.currentTarget.style.transform = "scale(1.01)";
-                }}
-                onMouseOut={(e) => {
-                  e.currentTarget.style.transform = "scale(1)";
-                }}
-              >
-                <div className="card-body">
-                  <div className="row">
-                    <p className="col fs-6">
-                      {new Date(data.createdAt).toLocaleString(
-                        "default",
-                        {
+          {documentFilter.length > 0 ? (
+            documentFilter.map((data, i) => {
+              return (
+                <div
+                  className="card rounded-2"
+                  style={{
+                    transition: "transform 0.3s",
+                    transform: "scale(1)",
+                    boxShadow: "20px 3px 22px 1px rgba(0, 0, 0, 0.36)",
+                  }}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.transform = "scale(1.01)";
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.transform = "scale(1)";
+                  }}
+                >
+                  <div className="card-body">
+                    <div className="row">
+                      <p className="col fs-6">
+                        {new Date(data.createdAt).toLocaleString("default", {
                           month: "long",
-                        }
-                      )}{" "}
-                      {new Date(data.createdAt).getDate()}
-                    </p>
-                    <p className="col fs-6">₹&nbsp;{data.amount}</p>
-                    <p className="col fs-6 text-break">
-                      {data.transactionID}
-                    </p>
-                    <p className="col fs-6">{data.paymentMethod}</p>
-                    <p className="col fs-6 text-break">
-                      {data.subAdminId}
-                    </p>
-                    <p className="col fs-6">{data.userId}</p>
-                    <p className="col fs-6">{data.bankName}</p>
-                    <p className="col fs-6">{data.websiteName}</p>
+                        })}{" "}
+                        {new Date(data.createdAt).getDate()}
+                      </p>
+                      <p className="col fs-6">₹&nbsp;{data.amount}</p>
+                      <p className="col fs-6 text-break">
+                        {data.transactionID}
+                      </p>
+                      <p className="col fs-6">{data.paymentMethod}</p>
+                      <p className="col fs-6 text-break">{data.subAdminId}</p>
+                      <p className="col fs-6">{data.userId}</p>
+                      <p className="col fs-6">{data.bankName}</p>
+                      <p className="col fs-6">{data.websiteName}</p>
+                    </div>
+                    <Link to={`/admindash/${data._id}`} className="col">
+                      <button type="button" className="btn btn-primary">
+                        <FontAwesomeIcon
+                          icon={faEdit}
+                          data-toggle="modal"
+                          data-target="#exampleModalCenter"
+                        />
+                      </button>
+                    </Link>
                   </div>
-                  <Link to={`/admindash/${data._id}`} className="col">
-                    <button type="button" className="btn btn-primary">
-                      <FontAwesomeIcon
-                        icon={faEdit}
-                        data-toggle="modal"
-                        data-target="#exampleModalCenter"
-                      />
-                    </button>
-                  </Link>
                 </div>
-              </div>
-            );
-          })
-        ) : (
-          <h1 className="text-center">No Transaction Found</h1>
-        )}
-      </div>}
+              );
+            })
+          ) : (
+            <h1 className="text-center">No Transaction Found</h1>
+          )}
+        </div>
+      )}
     </div>
   );
 };

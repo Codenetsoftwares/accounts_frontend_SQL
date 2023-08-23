@@ -15,7 +15,7 @@ const ModalWthBl = ({ ID }) => {
     e.preventDefault();
     const data = {
       amount: Amount,
-      transactionType: "Withdraw",
+      transactionType: "Manual-Withdraw",
     };
 
     // console.log( data)
