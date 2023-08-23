@@ -11,10 +11,10 @@ console.log('id',ID)
   };
   const handelsubmit =()=>{
    
-    const data ={
-      amount:Amount,
-      transactionType:'Deposit'
-    }
+    const data = {
+      amount: Amount,
+      transactionType: "Manual-Deposit",
+    };
     AccountService.ManualWebsiteEntryDeposit(ID, data, auth.user)
       .then((res) => {
         // console.log(response.data);

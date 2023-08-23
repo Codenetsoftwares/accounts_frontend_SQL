@@ -142,7 +142,7 @@ const BankStatement = () => {
                       )}{" "}
                       {new Date(transaction.createdAt).getDate()}
                     </p>
-                    <p className="col fs-6">{transaction.amount}</p>
+                    <p className="col fs-6">{transaction.depositAmount}</p>
                     <p className="col fs-6">{transaction.subAdminName}</p>
                     <p className="col fs-6">{transaction.userId}</p>
                     <p className="col fs-6">{transaction.bankName}</p>
