@@ -32,8 +32,6 @@ const BankStatement = () => {
     setSelect(value);
   };
 
-
-
   return (
     <div>
       <div className=" container mt-5">
@@ -82,37 +80,38 @@ const BankStatement = () => {
                   <h4 className="col fs-6 font-weight-bold">Balance</h4>
                 </div>
                 <hr style={{ color: "green" }} />
-                {
-                  Manualstmnt.length >= 0 ? (
-                    Manualstmnt.map((transaction, index) => (
-                      <div className="row" key={index}>
-                        <p className="col fs-6">
-                          {new Date(transaction.date).toLocaleString("default", {
+                {Manualstmnt.length >= 0 ? (
+                  Manualstmnt.map((transaction, index) => (
+                    <div className="row" key={index}>
+                      <p className="col fs-6">
+                        {new Date(transaction.createdAt).toLocaleString(
+                          "default",
+                          {
                             month: "long",
-                          })}{" "}
-                          {new Date(transaction.date).getDate()}
-                        </p>
-                        <p className="col fs-6">{transaction.withdrawAmount}</p>
-                        <p className="col fs-6">{transaction.subAdminName}</p>
-                        <p className="col fs-6">{transaction.bankName}</p>
-                        <p className="col fs-6">{transaction.transactionType}</p>
-                        <p className="col fs-6">
-                          {transaction.transactionType === "Withdraw" ? (
-                            <span style={{ color: "red" }}>
-                              {transaction.currentBalance} -
-                            </span>
-                          ) : (
-                            <span style={{ color: "green" }}>
-                              {transaction.currentBalance} +
-                            </span>
-                          )}
-                        </p>
-                      </div>
-                    ))
-                  ) : (
-                    <h1 className="text-black">No Transaction Found</h1>
-                  )
-                }
+                          }
+                        )}{" "}
+                        {new Date(transaction.createdAt).getDate()}
+                      </p>
+                      <p className="col fs-6">{transaction.depositAmount}</p>
+                      <p className="col fs-6">{transaction.subAdminName}</p>
+                      <p className="col fs-6">{transaction.bankName}</p>
+                      <p className="col fs-6">{transaction.transactionType}</p>
+                      <p className="col fs-6">
+                        {transaction.transactionType === "Withdraw" ? (
+                          <span style={{ color: "red" }}>
+                            {transaction.currentBalance} -
+                          </span>
+                        ) : (
+                          <span style={{ color: "green" }}>
+                            {transaction.currentBalance} +
+                          </span>
+                        )}
+                      </p>
+                    </div>
+                  ))
+                ) : (
+                  <h1 className="text-black">No Transaction Found</h1>
+                )}
               </div>
             </div>
           </div>
@@ -139,44 +138,40 @@ const BankStatement = () => {
                   <h4 className="col fs-6 font-weight-bold">Balance</h4>
                 </div>
                 <hr style={{ color: "green" }} />
-                {
-                  Userstmnt.length > 0 ? (
-                      
-                        Userstmnt.map((transaction, index) => (
-                          <div className="row" key={index}>
-                            <p className="col fs-6">
-                              {new Date(transaction.createdAt).toLocaleString(
-                                "default",
-                                {
-                                  month: "long",
-                                }
-                              )}{" "}
-                              {new Date(transaction.createdAt).getDate()}
-                            </p>
-                            <p className="col fs-6">{transaction.amount}</p>
-                            <p className="col fs-6">{transaction.subAdminName}</p>
-                            <p className="col fs-6">{transaction.userId}</p>
-                            <p className="col fs-6">{transaction.bankName}</p>
-                            <p className="col fs-6">{transaction.transactionType}</p>
+                {Userstmnt.length > 0 ? (
+                  Userstmnt.map((transaction, index) => (
+                    <div className="row" key={index}>
+                      <p className="col fs-6">
+                        {new Date(transaction.createdAt).toLocaleString(
+                          "default",
+                          {
+                            month: "long",
+                          }
+                        )}{" "}
+                        {new Date(transaction.createdAt).getDate()}
+                      </p>
+                      <p className="col fs-6">{transaction.amount}</p>
+                      <p className="col fs-6">{transaction.subAdminName}</p>
+                      <p className="col fs-6">{transaction.userId}</p>
+                      <p className="col fs-6">{transaction.bankName}</p>
+                      <p className="col fs-6">{transaction.transactionType}</p>
 
-                            <p className="col fs-6">
-                              {transaction.transactionType === "Withdraw" ? (
-                                <span style={{ color: "red" }}>
-                                  {transaction.currentBalance} -
-                                </span>
-                              ) : (
-                                <span style={{ color: "green" }}>
-                                  {transaction.currentBalance} +
-                                </span>
-                              )}
-                            </p>
-                          </div>
-                        ))
-                      
-                    ) : (
-                        <h1>No Transaction found</h1>
-                  )
-                }
+                      <p className="col fs-6">
+                        {transaction.transactionType === "Withdraw" ? (
+                          <span style={{ color: "red" }}>
+                            {transaction.beforeBalanceBankDeposit} -
+                          </span>
+                        ) : (
+                          <span style={{ color: "green" }}>
+                            {transaction.beforeBalanceBankDeposit} +
+                          </span>
+                        )}
+                      </p>
+                    </div>
+                  ))
+                ) : (
+                  <h1>No Transaction found</h1>
+                )}
               </div>
             </div>
           </div>
