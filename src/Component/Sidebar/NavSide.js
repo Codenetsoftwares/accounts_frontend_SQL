@@ -46,16 +46,22 @@ const NavSide = () => {
               style={{ opacity: ".8" }}
             />
             <span className="brand-text font-weight-light">
-              &nbsp;Happy Wave
+              &nbsp;obhisab.com
+            </span>
+            <span
+              className="fs-4 ms-4 "
+              style={{ width: "15%" }}
+              data-widget="pushmenu"
+            >
+              &#10005;
             </span>
           </p>
+
           <div
             className="fs-4 ms-4 "
             style={{ width: "15%" }}
             data-widget="pushmenu"
-          >
-            
-          </div>
+          ></div>
         </div>
 
         <div className="sidebar">
@@ -166,7 +172,7 @@ const NavSide = () => {
                 </li>
               ) : (
                 <li className="nav-item ">
-                    <a className="nav-link " onClick={handleToggleCreate}>
+                  <a className="nav-link " onClick={handleToggleCreate}>
                     &nbsp;
                     <i className="fa-solid fas fa-user" />
                     <p>
@@ -175,14 +181,14 @@ const NavSide = () => {
                     </p>
                   </a>
 
-                    <Link to="/createuser" className="nav-link text-white">
+                  <Link to="/createuser" className="nav-link text-white">
                     <i className="far fa-circle nav-icon" />
-                      <p>Create SubAdmin</p>
+                    <p>Create SubAdmin</p>
                   </Link>
 
-                    <Link to="/createactualuser" className="nav-link text-white">
+                  <Link to="/createactualuser" className="nav-link text-white">
                     <i className="far fa-circle nav-icon" />
-                      <p>Create User</p>
+                    <p>Create User</p>
                   </Link>
                 </li>
               )}
