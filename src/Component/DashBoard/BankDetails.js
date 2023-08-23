@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import AccountService from "../../Services/AccountService";
 import { useAuth } from "../../Utils/Auth";
+import { toast } from "react-toastify";
 
 const AddBank = () => {
   const auth = useAuth();
@@ -22,19 +23,19 @@ const AddBank = () => {
         .then((res) => {
           console.log("res", res);
           if (res.status === 200) {
-            alert("Bank registered successfully!");
+            toast.success("Bank registered successfully!");
             setBankName("");
             refreshBankNames();
           } else {
-            alert("Please give a bank name to add");
+            toast.error("Please give a bank name to add");
           }
         })
         .catch((err) => {
           if (!err.response) {
-            alert(err.message);
+            toast.error(err.message);
             return;
           }
-          alert("An error occurred while adding the bank.");
+          toast.error("An error occurred while adding the bank.");
         });
     }
   };
@@ -43,10 +44,10 @@ const AddBank = () => {
     AccountService.deleteBank(auth.user, bankId)
       .then(() => {
         refreshBankNames();
-        alert("Bank deleted successfully!");
+        toast.success("Bank deleted successfully!");
       })
       .catch((err) => {
-        alert("An error occurred while deleting the bank.");
+        toast.error("An error occurred while deleting the bank.");
       });
   };
 

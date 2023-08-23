@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useAuth } from "../../Utils/Auth";
 import AccountService from "../../Services/AccountService";
+import { toast } from "react-toastify";
+
 const ModalWthWbl = () => {
   const auth = useAuth();
   const [Amount, SetAmount] = useState(0);
@@ -21,12 +23,12 @@ const ModalWthWbl = () => {
       .then((res) => {
         // console.log(response.data);
         if (res.status === 200) {
-          alert("Transaction Succesfull");
+          toast.success("Transaction Succesfull");
           window.location.reload();
         }
       })
       .catch((error) => {
-        console.error(error);
+        toast.error(error);
         // alert.error("e.message");
       });
   };

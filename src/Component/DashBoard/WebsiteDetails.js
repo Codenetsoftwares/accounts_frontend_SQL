@@ -13,6 +13,7 @@ import {
 import ModalAdWbl from "../Modal/ModalAdWbl";
 import ModalWbdl from "../Modal/ModalWbdl";
 import ModalWthWbl from "../Modal/ModalWthWbl";
+import { toast } from "react-toastify";
 
 const WebsiteDetails = () => {
   // const { id } = useParams();
@@ -43,15 +44,15 @@ const WebsiteDetails = () => {
       .then((res) => {
         console.log("res", res);
         if (res.status === 200) {
-          alert("Website registered successfully!");
+          toast.success("Website registered successfully!");
         } else {
-          alert("Please give a website name to add");
+          toast.error("Please give a website name to add");
         }
       })
 
       .catch((err) => {
         if (!err.response) {
-          alert(err.message);
+          toast.error(err.message);
           return;
         }
       });

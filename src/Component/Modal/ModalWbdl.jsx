@@ -1,7 +1,7 @@
 import React from "react";
 import { useAuth } from "../../Utils/Auth";
 import AccountService from "../../Services/AccountService";
-
+import { toast } from "react-toastify";
 const ModalWbdl = ({ name }) => {
   const auth = useAuth();
 
@@ -12,12 +12,12 @@ const ModalWbdl = ({ name }) => {
     AccountService.deletewebsite(data, auth.user)
       .then((res) => {
         if (res.status === 200) {
-          alert("Website Deleted successfully!");
+          toast.success("Website Deleted successfully!");
           window.location.reload();
         }
       })
       .catch((error) => {
-        console.error(error);
+        toast.error(error);
       });
     console.log(data);
   };

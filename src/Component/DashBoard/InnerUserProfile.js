@@ -5,6 +5,7 @@ import { faEdit, faSave } from "@fortawesome/free-solid-svg-icons";
 import AccountService from "../../Services/AccountService";
 import { useAuth } from "../../Utils/Auth";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const InnerUserProfile = () => {
   const { id } = useParams();
@@ -60,15 +61,15 @@ const InnerUserProfile = () => {
       .then((res) => {
         console.log("res", res);
         if (res.status === 201) {
-          alert("Profile updated");
+          toast.success("Profile updated");
         } else {
-          alert("Failed");
+          toast.error("Failed");
         }
       })
 
       .catch((err) => {
         if (!err.response) {
-          alert(err.message);
+          toast.error(err.message);
           return;
         }
       });

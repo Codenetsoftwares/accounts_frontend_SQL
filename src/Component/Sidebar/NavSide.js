@@ -54,7 +54,7 @@ const NavSide = () => {
             style={{ width: "15%" }}
             data-widget="pushmenu"
           >
-            x
+            
           </div>
         </div>
 
