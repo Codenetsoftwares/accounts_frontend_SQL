@@ -136,7 +136,7 @@ const AdminDash = () => {
       {/* This is the Main Card */}
       <div
         className="card card-body rounded-1 main "
-        // style={{ backgroundImage: gradient }}
+      // style={{ backgroundImage: gradient }}
       >
         <div className="d-flex mt-5 mt-5 ml-5 pt-5 justify-content-center">
           <h6 className="fw-bold text-nowrap pt-2">
@@ -336,18 +336,28 @@ const AdminDash = () => {
                         })}{" "}
                         {new Date(data.createdAt).getDate()}
                       </p>
-                      <p className="col fs-6">₹&nbsp;{data.amount}</p>
-                      <p className="col fs-6 text-break">
-                        {data.transactionID}
-                      </p>
-                      <p className="col fs-6 text-break">
-                        {data.transactionType}
-                      </p>
-                      <p className="col fs-6">{data.paymentMethod}</p>
+                      {data.amount && (<p className="col fs-6">₹&nbsp;{data.amount}</p>)}
+                      {data.depositAmount && (<p className="col fs-6">₹&nbsp;{data.depositAmount}</p>)}
+                      {data.withdrawAmount && (<p className="col fs-6">₹&nbsp;{data.withdrawAmount}</p>)}
+                      {data.transactionID && (<p className="col fs-6 text-break">{data.transactionID}</p>)}
+                      {data.depositAmount && (<p className="col fs-6 text-break">N.A</p>)}
+                      {data.withdrawAmount && (<p className="col fs-6 text-break">N.A</p>)}
+                      {data.transactionType && (<p className="col fs-6 text-break">{data.transactionType}</p>)}
+                      {data.depositAmount && (<p className="col fs-6 text-break">N.A</p>)}
+                      {data.withdrawAmount && (<p className="col fs-6 text-break">N.A</p>)}
+                      {data.paymentMethod && (<p className="col fs-6">{data.paymentMethod}</p>)}
                       <p className="col fs-6 text-break">{data.subAdminName}</p>
-                      <p className="col fs-6">{data.userId}</p>
-                      <p className="col fs-6">{data.bankName}</p>
-                      <p className="col fs-6">{data.websiteName}</p>
+                      {data.paymentMethod && (<p className="col fs-6">{data.userId}</p>)}
+                      {data.depositAmount && (<p className="col fs-6 text-break">N.A</p>)}
+                      {data.withdrawAmount && (<p className="col fs-6 text-break">N.A</p>)}
+                      <p className="col fs-6">{data.bankName ? data.bankName : "N.A"}</p>
+                      <p className="col fs-6">{data.websiteName ? data.websiteName : "N.A"}</p>
+                      {/* {data.websiteName && (<p className="col fs-6">{data.Bank}</p>)}
+                      {data.depositAmount && (<p className="col fs-6 text-break">N.A</p>)}
+                      {data.withdrawAmount && (<p className="col fs-6 text-break">N.A</p>)}
+                      {data.websiteName && (<p className="col fs-6">{data.websiteName}</p>)}
+                      {data.depositAmount && (<p className="col fs-6 text-break">N.A</p>)}
+                      {data.withdrawAmount && (<p className="col fs-6 text-break">N.A</p>)} */}
                     </div>
                     <Link to={`/admindash/${data._id}`} className="col">
                       <button type="button" className="btn btn-primary">
@@ -416,15 +426,29 @@ const AdminDash = () => {
                         })}{" "}
                         {new Date(data.createdAt).getDate()}
                       </p>
-                      <p className="col fs-6">₹&nbsp;{data.amount}</p>
-                      <p className="col fs-6 text-break">
-                        {data.transactionID}
-                      </p>
-                      <p className="col fs-6">{data.paymentMethod}</p>
-                      <p className="col fs-6 text-break">{data.subAdminId}</p>
-                      <p className="col fs-6">{data.userId}</p>
-                      <p className="col fs-6">{data.bankName}</p>
-                      <p className="col fs-6">{data.websiteName}</p>
+                      {data.amount && (<p className="col fs-6">₹&nbsp;{data.amount}</p>)}
+                      {data.depositAmount && (<p className="col fs-6">₹&nbsp;{data.depositAmount}</p>)}
+                      {data.withdrawAmount && (<p className="col fs-6">₹&nbsp;{data.withdrawAmount}</p>)}
+                      {data.transactionID && (<p className="col fs-6 text-break">{data.transactionID}</p>)}
+                      {data.depositAmount && (<p className="col fs-6 text-break">N.A</p>)}
+                      {data.withdrawAmount && (<p className="col fs-6 text-break">N.A</p>)}
+                      {data.transactionType && (<p className="col fs-6 text-break">{data.transactionType}</p>)}
+                      {data.depositAmount && (<p className="col fs-6 text-break">N.A</p>)}
+                      {data.withdrawAmount && (<p className="col fs-6 text-break">N.A</p>)}
+                      {data.paymentMethod && (<p className="col fs-6">{data.paymentMethod}</p>)}
+
+                      <p className="col fs-6 text-break">{data.subAdminName}</p>
+                      {data.paymentMethod && (<p className="col fs-6">{data.userId}</p>)}
+                      {data.depositAmount && (<p className="col fs-6 text-break">N.A</p>)}
+                      {data.withdrawAmount && (<p className="col fs-6 text-break">N.A</p>)}
+                      <p className="col fs-6">{data.bankName ? data.bankName : "N.A"}</p>
+                      <p className="col fs-6">{data.websiteName ? data.websiteName : "N.A"}</p>
+                      {/* {data.websiteName && (<p className="col fs-6">{data.Bank}</p>)}
+                      {data.depositAmount && (<p className="col fs-6 text-break">N.A</p>)}
+                      {data.withdrawAmount && (<p className="col fs-6 text-break">N.A</p>)}
+                      {data.websiteName && (<p className="col fs-6">{data.websiteName}</p>)}
+                      {data.depositAmount && (<p className="col fs-6 text-break">N.A</p>)}
+                      {data.withdrawAmount && (<p className="col fs-6 text-break">N.A</p>)} */}
                     </div>
                     <Link to={`/admindash/${data._id}`} className="col">
                       <button type="button" className="btn btn-primary">
