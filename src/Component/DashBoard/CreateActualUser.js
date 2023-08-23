@@ -48,15 +48,18 @@ const CreateActualUser = () => {
     e.preventDefault();
 
     console.log(checkedItems);
-    const data = {
-      firstname: formData.yourName,
-      lastname: formData.yourSurname,
-      email: formData.yourEmail,
-      password: formData.yourConfirmPassword,
-      contactNumber: formData.yourContact,
-      introducerId: formData.yourIntroducerId,
-      introducerPercentage: formData.yourIntroducerPercentage,
+    
+      const data = {
+        firstname: formData.yourFirstName,
+        lastname: formData.yourLastname,
+        email: formData.yourEmail,
+        password: formData.yourEnterPassword,
+        contactNumber: formData.yourContact,
+        introducerId: formData.yourIntroducerId,
+        introducerPercentage: formData.yourIntroducerPercentage,
     };
+    if (formData.yourEnterPassword === formData.yourConfirmPassword) {
+    
     AccountService.createActualuser({ data })
       .then((res) => {
         console.log(res);
@@ -70,6 +73,7 @@ const CreateActualUser = () => {
           console.log(err.res.data.message);
         }
       });
+    }
   };
 
   const styles = {
@@ -152,8 +156,8 @@ const CreateActualUser = () => {
                           type="text"
                           className="form-control"
                           id="text"
-                          name="FirstName"
-                          value={formData.yourName}
+                          name="yourFirstName"
+                          value={formData.yourFirstName}
                           onChange={handleChange}
                           placeholder="Enter your First Name"
                           required
@@ -168,8 +172,8 @@ const CreateActualUser = () => {
                           type="text"
                           className="form-control"
                           id="text"
-                          name="FirstName"
-                          value={formData.LastName}
+                          name="yourLastname"
+                          value={formData.yourLastname}
                           onChange={handleChange}
                           placeholder="Enter your Last Name"
                           required
@@ -184,8 +188,8 @@ const CreateActualUser = () => {
                           type="text"
                           className="form-control"
                           id="text"
-                          name="IntroducerID"
-                          value={formData.IntroducerID}
+                          name="yourIntroducerId"
+                          value={formData.yourIntroducerId}
                           onChange={handleChange}
                           placeholder="Enter your Introducer ID"
                           required
@@ -200,8 +204,8 @@ const CreateActualUser = () => {
                           type="text"
                           className="form-control"
                           id="text"
-                          name="IntroducerPercentage"
-                          value={formData.IntroducerPercentage}
+                          name="yourIntroducerPercentage"
+                          value={formData.yourIntroducerPercentage}
                           onChange={handleChange}
                           placeholder="Enter your Introducer Percentage"
                           required
@@ -217,8 +221,8 @@ const CreateActualUser = () => {
                           type="password"
                           className="form-control"
                           id="text"
-                          name="Password"
-                          value={formData.EnterPassword}
+                          name="yourEnterPassword"
+                          value={formData.yourEnterPassword}
                           onChange={handleChange}
                           placeholder="Enter Password"
                           required
@@ -234,8 +238,8 @@ const CreateActualUser = () => {
                           type="text"
                           className="form-control"
                           id="text"
-                          name="Confirm Password"
-                          value={formData.confirmPassword}
+                          name="yourConfirmPassword"
+                          value={formData.yourConfirmPassword}
                           onChange={handleChange}
                           placeholder="Confirm Password"
                           required
