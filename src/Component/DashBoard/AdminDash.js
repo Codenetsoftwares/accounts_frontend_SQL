@@ -19,6 +19,8 @@ import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import "./AdminDash.css";
 import TopNavbar from "../Sidebar/TopNavbar";
+import AccountService from "../../Services/AccountService";
+
 
 const AdminDash = () => {
   const auth = useAuth();
@@ -127,12 +129,9 @@ const AdminDash = () => {
   }, [auth]);
   console.log(bankList);
   useEffect(() => {
-    if (auth.user) {
-      TransactionSercvice.websiteList(auth.user).then((res) => {
-        setWebsiteList(res.data);
-      });
-    }
+    AccountService.website(auth.user).then((res) => setWebsiteList(res.data));
   }, [auth]);
+
   console.log(websiteList);
   return (
     <div className="main">
@@ -225,10 +224,10 @@ const AdminDash = () => {
           >
             <option selected>Select website</option>
             {websiteList.map((data) => {
-              return <option key={data._id} value={data.name}>{data.name}</option>;
+              return <option key={data._id} value={data.websiteName}>{data.websiteName}</option>;
             })}
           </select>
-        </div> 
+        </div>
         <div className="d-flex mt-2 pl-5 justify-content-center">
           <p className="fw-bold fs-6 text-nowrap mt-1">
             <FaFilter />
