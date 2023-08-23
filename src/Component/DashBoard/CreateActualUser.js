@@ -100,18 +100,7 @@ const CreateActualUser = () => {
       <div className="container pt-5">
         <div className="row justify-content-center">
           <div className="col-lg-9">
-            <h1
-              className="text-center mb-4"
-              style={{
-                fontFamily: "Montserrat, sans-serif",
-                fontWeight: "bold",
-                fontStyle: "italic",
-                color: "black",
-              }}
-            >
-              Welcome Administrator!
-            </h1>
-            <div className="row justify-content-center">
+           <div className="row justify-content-center">
               <div className="card">
                 <div className="card-body">
                   <form>

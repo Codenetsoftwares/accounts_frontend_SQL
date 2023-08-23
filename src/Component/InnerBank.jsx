@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useAuth } from "../Utils/Auth";
 import AccountService from "../Services/AccountService";
+import { toast } from "react-toastify";
 
 const InnerBank = ({ getbankName }) => {
   const [bname, setBname] = useState("");
@@ -57,9 +58,10 @@ const InnerBank = ({ getbankName }) => {
         console.log("bank", response.data);
         alert("Bank Added Sucessfully");
         window.location.reload();
+
       })
       .catch((error) => {
-        console.error(error);
+        toast.error(error);
       });
   };
 

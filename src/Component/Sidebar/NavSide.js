@@ -5,7 +5,7 @@ import Topimg from "../../Assets/Topimgg.png";
 const NavSide = () => {
   const auth = useAuth();
   const [isToggle, setIsToggle] = useState(true);
-  const [isTogglenav, setIsTogglenav] = useState(true);
+  const [isToggleCreate, setIsToggleCreate] = useState(true);
   const [isToggleDash, setIsToggleDash] = useState(true);
   const [useremail, setUserEmail] = useState([]);
   const [IsToggleTransaction, setIsToggleTransaction] = useState(true);
@@ -21,8 +21,8 @@ const NavSide = () => {
   const handleToggleDash = () => {
     setIsToggleDash(!isToggleDash);
   };
-  const handleNavToggle = () => {
-    setIsTogglenav(!isTogglenav);
+  const handleToggleCreate = () => {
+    setIsToggleCreate(!isToggleCreate);
   };
   const handleToggleTransaction = () => {
     setIsToggleTransaction(!IsToggleTransaction);
@@ -54,7 +54,7 @@ const NavSide = () => {
             style={{ width: "15%" }}
             data-widget="pushmenu"
           >
-            x
+            
           </div>
         </div>
 
@@ -110,12 +110,12 @@ const NavSide = () => {
                       </p>
                     </a>
 
-                    <Link to="admindash" className="nav-link text-white">
+                    <Link to="/admindash" className="nav-link text-white">
                       <i className="far fa-circle nav-icon" />
                       <p>Transaction Details</p>
                     </Link>
 
-                    <Link to="dashboard" className="nav-link text-white">
+                    <Link to="/dashboard" className="nav-link text-white">
                       <i className="far fa-circle nav-icon" />
                       <p>Create Transaction</p>
                     </Link>
@@ -143,14 +143,46 @@ const NavSide = () => {
                     </p>
                   </a>
 
-                  <Link to="bank" className="nav-link text-white">
+                  <Link to="/bank" className="nav-link text-white">
                     <i className="far fa-circle nav-icon" />
                     <p>Bank</p>
                   </Link>
 
-                  <Link to="website" className="nav-link text-white">
+                  <Link to="/website" className="nav-link text-white">
                     <i className="far fa-circle nav-icon" />
                     <p>Website</p>
+                  </Link>
+                </li>
+              )}
+              {isToggleCreate ? (
+                <li className="nav-item ">
+                  <a className="nav-link " onClick={handleToggleCreate}>
+                    &nbsp; <i className="fa-solid fas fa-user" />
+                    <p>
+                      &nbsp; Create
+                      <i className="fas fa-angle-left right" />
+                    </p>
+                  </a>
+                </li>
+              ) : (
+                <li className="nav-item ">
+                    <a className="nav-link " onClick={handleToggleCreate}>
+                    &nbsp;
+                    <i className="fa-solid fas fa-user" />
+                    <p>
+                      &nbsp; Create
+                      <i className="fas fa-chevron-down right"></i>
+                    </p>
+                  </a>
+
+                    <Link to="/createuser" className="nav-link text-white">
+                    <i className="far fa-circle nav-icon" />
+                      <p>Create SubAdmin</p>
+                  </Link>
+
+                    <Link to="/createactualuser" className="nav-link text-white">
+                    <i className="far fa-circle nav-icon" />
+                      <p>Create User</p>
                   </Link>
                 </li>
               )}
@@ -164,7 +196,7 @@ const NavSide = () => {
                 </Link>
               </li> */}
 
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link
                   to="createuser"
                   href="pages/widgets.html"
@@ -173,12 +205,11 @@ const NavSide = () => {
                   &nbsp;<i className="nav-icon fas fa-user-plus"></i>
                   <p className="text-dark">
                     Create SubAdmin
-                    {/* <span className="right badge badge-danger">New</span> */}
                   </p>
                 </Link>
-              </li>
+              </li> */}
 
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link
                   to="/createactualuser"
                   href="pages/widgets.html"
@@ -187,10 +218,9 @@ const NavSide = () => {
                   &nbsp;<i className="nav-icon fas fa-user-plus"></i>
                   <p className="text-dark">
                     Create User
-                    {/* <span className="right badge badge-danger">New</span> */}
                   </p>
                 </Link>
-              </li>
+              </li> */}
 
               {/* <li className="nav-item">
                 <Link to="website" href="#" className="nav-link">

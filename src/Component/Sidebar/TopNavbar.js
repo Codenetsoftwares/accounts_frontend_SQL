@@ -12,7 +12,7 @@ const TopNavbar = () => {
     const response = true;
     if (response) {
       auth.logout();
-      alert("You are going to Logout from this site");
+      window.confirm("You are going to Logout from this site");
       toast.success("Logout successfully");
       nav("/");
     }
