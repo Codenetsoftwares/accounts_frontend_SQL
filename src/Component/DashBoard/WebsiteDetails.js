@@ -44,6 +44,7 @@ const WebsiteDetails = () => {
         console.log("res", res);
         if (res.status === 200) {
           alert("Website registered successfully!");
+          window.location.reload();
         } else {
           alert("Please give a website name to add");
         }
@@ -68,27 +69,33 @@ const WebsiteDetails = () => {
   };
 
   console.log("ide", Id);
-  // const handeldeletewebsite = (e, name) => {
-  //   e.preventDefault();
-  //   alert("Are You Sure You Want To Delete This Website?");
-  //   const data = {
-  //     name: name,
-  //   };
 
-  //   // console.log( data)
-  //   AccountService.deletewebsite(data, auth.user)
-  //     .then((res) => {
-  //       // console.log(response.data);
-  //       if (res.status === 200) {
-  //         alert("Website Deleted successfully!");
-  //         window.location.reload();
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //       alert.error("e.message");
-  //     });
-  // };
+  const handeldeletewebsite = (name) => {
+    console.log(name);
+    const userConfirmed = window.confirm(
+      "Are You Sure You Want to Delete This Bank?"
+    );
+
+    if (userConfirmed) {
+      const data = {
+        websiteName: name,
+      };
+
+      // console.log( data)
+      AccountService.deletewebsite(data, auth.user)
+        .then((res) => {
+          // console.log(response.data);
+          if (res.status === 200) {
+            alert("Website Deleted successfully!");
+            window.location.reload();
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+          alert.error("e.message");
+        });
+    }
+  };
 
   // get api  fetch
   useEffect(() => {
@@ -119,7 +126,10 @@ const WebsiteDetails = () => {
                         type="button"
                         class="btn btn-danger  btn-sm"
                         data-bs-toggle="modal"
-                        data-bs-target="#modalWthbl"
+                        data-bs-target="#modalWthwbl"
+                        onClick={() => {
+                          handelId(data._id);
+                        }}
                       >
                         <FontAwesomeIcon icon={faMinus} className="add-icon" />
                       </button>
@@ -155,10 +165,8 @@ const WebsiteDetails = () => {
                           icon={faTrashAlt}
                           className="delete-icon"
                           onClick={() => {
-                            handelName(data.websiteName);
+                            handeldeletewebsite(data.websiteName);
                           }}
-                          data-bs-toggle="modal"
-                          data-bs-target="#modalWbdl"
                         />
                       </button>
                     </div>
@@ -178,7 +186,7 @@ const WebsiteDetails = () => {
             Add Website
           </a>
         </div>
-        <ModalWthWbl />
+        <ModalWthWbl ID={Id} />
         <ModalAdWbl ID={Id} />
         <ModalWbdl name={name} />
       </div>

@@ -62,27 +62,35 @@ const AdminBank = () => {
     navigate(`/bankstatement/${accountNumber}`);
   };
 
-  const handeldeletebank = (e, name) => {
+  const handleDeleteBank = (e, name) => {
     e.preventDefault();
-    console.log(name);
-    const data = {
-      bankName: name,
-    };
 
-    // console.log( data)
-    AccountService.deletebank(data, auth.user)
-      .then((res) => {
-        // console.log(response.data);
-        if (res.status === 200) {
-          alert("Bank Deleted successfully!");
-          window.location.reload();
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-        // alert.error("e.message");
-      });
+    const userConfirmed = window.confirm(
+      "Are You Sure You Want to Delete This Bank?"
+    );
+
+    if (userConfirmed) {
+      console.log(name);
+      const data = {
+        bankName: name,
+      };
+
+      // console.log(data)
+      AccountService.deletebank(data, auth.user)
+        .then((res) => {
+          // console.log(response.data);
+          if (res.status === 200) {
+            alert("Bank Deleted successfully!");
+            window.location.reload();
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+          // alert.error("e.message");
+        });
+    }
   };
+
 
   useEffect(() => {
     AccountService.getbank(auth.user).then((res) => setGetBankName(res.data));
@@ -167,11 +175,9 @@ const AdminBank = () => {
                           <FontAwesomeIcon
                             icon={faTrashAlt}
                             className="delete-icon"
-                            // onClick={(e) => {
-                            //   handeldeletebank(e, data.bankName);
-                            // }}
-                            data-toggle="modal"
-                            data-target="#modalBkdl"
+                            onClick={(e) => {
+                              handleDeleteBank(e, data.bankName);
+                            }}
                           />
                         </button>
                       </div>
@@ -255,7 +261,6 @@ const AdminBank = () => {
         <ModalAddBl ID={Id} />
         <ModalWthBl ID={Id} />
         <InnerBank />
-        <ModalBkdl />
       </div>
     </div>
   );
