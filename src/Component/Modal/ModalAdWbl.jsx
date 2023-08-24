@@ -7,22 +7,20 @@ const ModalAdWbl = ({ ID }) => {
   const auth = useAuth();
   const [Amount, SetAmount] = useState(0);
   const [Remarks, SetRemarks] = useState("");
-   
-   
-  console.log('id', ID)
-  
+
+  console.log("id", ID);
+
   const handelamtchange = (e) => {
     SetAmount(e.target.value);
   };
 
-   const handelRemarkschange = (e) => {
-     SetRemarks(e.target.value);
+  const handelRemarkschange = (e) => {
+    SetRemarks(e.target.value);
   };
-  
-  const handelsubmit =()=>{
-   
+
+  const handelsubmit = () => {
     const data = {
-      amount: Amount,
+      amount: Number(Amount),
       transactionType: "Manual-Deposit",
       remark: Remarks,
     };
@@ -38,7 +36,7 @@ const ModalAdWbl = ({ ID }) => {
         toast.error(error);
         // alert.error("e.message");
       });
-  }
+  };
 
   return (
     <div>
