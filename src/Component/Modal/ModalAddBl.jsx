@@ -6,14 +6,22 @@ import { toast } from "react-toastify";
 const ModalAddBl = ({ ID }) => {
   const auth = useAuth();
   const [Amount, SetAmount] = useState(0);
+  const [Remarks, SetRemarks] = useState("");
+
   const handelamtchange = (e) => {
     SetAmount(e.target.value);
   };
+
+  const handelRemarkschange = (e) => {
+    SetRemarks(e.target.value);
+  };
+
   const handelsubmit = (e) => {
     e.preventDefault();
     const data = {
       amount: Number(Amount),
       transactionType: "Manual-Deposit",
+      remark: Remarks,
     };
 
     console.log("data", data);
@@ -22,7 +30,7 @@ const ModalAddBl = ({ ID }) => {
         // console.log(response.data);
         if (res.status === 200) {
           toast.success("Transaction Succesfull");
-          window.location.reload();
+          // window.location.reload();
         }
       })
       .catch((error) => {
@@ -44,7 +52,7 @@ const ModalAddBl = ({ ID }) => {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLabel">
-                Provide Deposit Amount
+                Provide Bank Deposit Amount
               </h5>
 
               <button
@@ -79,6 +87,13 @@ const ModalAddBl = ({ ID }) => {
                     value={Amount}
                   />
                 </div>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Remarks"
+                  onChange={handelRemarkschange}
+                  value={Remarks}
+                />
               </form>
             </div>
             <div className="modal-footer">

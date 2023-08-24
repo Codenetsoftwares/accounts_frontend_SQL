@@ -21,7 +21,8 @@ const AdminBank = () => {
   const auth = useAuth();
   const [bankName, setBankName] = useState("");
   const [getbankName, setGetBankName] = useState([{}]);
-  const [Id, setId] = useState([]);
+  const [Id, setId] = useState();
+  const [IdWithdraw, setIdWithdraw] = useState();
   // const { id } = useParams();
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -91,7 +92,6 @@ const AdminBank = () => {
     }
   };
 
-
   useEffect(() => {
     AccountService.getbank(auth.user).then((res) => setGetBankName(res.data));
   }, [auth]);
@@ -100,6 +100,11 @@ const AdminBank = () => {
   const handelId = (id) => {
     setId(id);
   };
+
+  // const handelWithdrawId = (id) => {
+  //   setIdWithdraw(id);
+  // };
+
   console.log(Id);
   return (
     <div>
@@ -125,13 +130,13 @@ const AdminBank = () => {
                           class="btn btn-danger btn-sm"
                           data-bs-toggle="modal"
                           data-bs-target="#modalWthbl"
+                          onClick={() => {
+                            handelId(data._id);
+                          }}
                         >
                           <FontAwesomeIcon
                             icon={faMinus}
                             className="add-icon"
-                            onClick={() => {
-                              handelId(data._id);
-                            }}
                           />
                         </button>
                         <button

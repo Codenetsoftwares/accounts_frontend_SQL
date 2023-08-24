@@ -6,19 +6,26 @@ import { toast } from "react-toastify";
 const ModalWthBl = ({ ID }) => {
   const auth = useAuth();
   const [Amount, SetAmount] = useState(0);
+  const [Remarks, SetRemarks] = useState("");
 
   const handelamtchange = (e) => {
     SetAmount(e.target.value);
   };
 
+  const handelRemarkschange = (e) => {
+    SetRemarks(e.target.value);
+  };
+
   const handelsubmit = (e) => {
     e.preventDefault();
+    console.log("This is", ID);
     const data = {
       amount: Amount,
       transactionType: "Manual-Withdraw",
+      remark: Remarks,
     };
 
-    // console.log( data)
+    console.log(data);
     AccountService.ManualBankEntryWithdraw(ID, data, auth.user)
       .then((res) => {
         // console.log(response.data);
@@ -46,7 +53,7 @@ const ModalWthBl = ({ ID }) => {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLabel">
-                Provide Withdrawal Amount
+                Provide Bank Withdrawal Amount
               </h5>
 
               <button
@@ -81,6 +88,13 @@ const ModalWthBl = ({ ID }) => {
                     value={Amount}
                   />
                 </div>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Remarks"
+                  onChange={handelRemarkschange}
+                  value={Remarks}
+                />
               </form>
             </div>
             <div className="modal-footer">
