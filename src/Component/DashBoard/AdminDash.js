@@ -65,6 +65,7 @@ const AdminDash = () => {
       (res) => (setDocumentView(res.data), setAccountData(res.data))
     );
   }, [auth]);
+  console.log(documentView)
 
   const handelDate = () => {
     const sdate = moment(startDatevalue, 'DD-MM-YYYY HH:mm').toDate();
@@ -78,6 +79,7 @@ const AdminDash = () => {
   };
 
   const handleReset = () => {
+    setSelect("")
     setDocumentView(accountData);
     setSubAdmin("");
     setBank("");
@@ -85,6 +87,8 @@ const AdminDash = () => {
     setStartDate("");
     setEndDate("");
     setToggle(true);
+    SetStartDatesetValue("");
+    setEndDateValue("");
   };
 
   const handleChange = (e) => {
@@ -172,6 +176,11 @@ const AdminDash = () => {
             </option>
             <option className="d-flex" value="Withdraw">
               <b>Withdraw</b>
+            </option>
+            <option className="d-flex" value="Manual-Deposit">
+              <b>Manual Deposit</b>
+            </option> <option className="d-flex" value="Manual-Withdraw">
+              <b>Manual Withdraw</b>
             </option>
           </select>
         </div>
