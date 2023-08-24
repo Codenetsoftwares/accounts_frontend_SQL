@@ -66,17 +66,11 @@ const AdminDash = () => {
     );
   }, [auth]);
 
-  console.log("data ===>>>>>", documentView);
-
   const handelDate = () => {
     const sdate = moment(startDatevalue, 'DD-MM-YYYY HH:mm').toDate();
     const edate = moment(endDatevalue, 'DD-MM-YYYY HH:mm').toDate();
-    console.log(sdate)
-    console.log(edate)
     const filteredDocuments = documentView.filter((data) => {
-      console.log(new Date(data.createdAt))
       const transactionDate = new Date(data.createdAt);
-      // console.log('st', transactionDate)
       return transactionDate >= sdate && transactionDate <= edate;
     });
     setDocumentFilter(filteredDocuments);
@@ -92,23 +86,26 @@ const AdminDash = () => {
     setEndDate("");
     setToggle(true);
   };
+
   const handleChange = (e) => {
     const value = e.target.value;
     setSelect(value);
     handleClick("transactionType", value);
   };
 
-  console.log("filterdata", documentFilter);
   const handleSubAdmin = (e) => {
     const value = e.target.value;
     setSubAdmin(value);
     handleClick("subAdminName", value);
+
   };
+
   const handleBank = (e) => {
     const value = e.target.value;
     setBank(value);
     handleClick("bankName", value);
   };
+
   const handleWebsite = (e) => {
     const value = e.target.value;
     setWebsite(value);
@@ -123,9 +120,6 @@ const AdminDash = () => {
     setEndDateValue(moment(e).format('DD-MM-YYYY HH:mm'))
   };
 
-  console.log(startDatevalue)
-  console.log(endDatevalue)
-
   useEffect(() => {
     if (auth.user) {
       TransactionSercvice.subAdminList(auth.user).then((res) => {
@@ -133,7 +127,7 @@ const AdminDash = () => {
       });
     }
   }, [auth]);
-  console.log(subAdminlist);
+
   useEffect(() => {
     if (auth.user) {
       TransactionSercvice.bankList(auth.user).then((res) => {
@@ -141,12 +135,12 @@ const AdminDash = () => {
       });
     }
   }, [auth]);
-  console.log(bankList);
+
   useEffect(() => {
     AccountService.website(auth.user).then((res) => setWebsiteList(res.data));
   }, [auth]);
 
-  console.log(websiteList);
+
   return (
     <div className="main">
       {/* This is the Main Card */}
