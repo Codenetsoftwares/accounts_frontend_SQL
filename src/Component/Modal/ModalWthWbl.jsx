@@ -5,9 +5,14 @@ import AccountService from "../../Services/AccountService";
 const ModalWthWbl = ({ ID }) => {
   const auth = useAuth();
   const [Amount, SetAmount] = useState(0);
+  const [Remarks, SetRemarks] = useState("");
 
   const handelamtchange = (e) => {
     SetAmount(e.target.value);
+  };
+
+  const handelRemarkschange = (e) => {
+    SetRemarks(e.target.value);
   };
 
   const handelsubmit = (e) => {
@@ -15,6 +20,7 @@ const ModalWthWbl = ({ ID }) => {
     const data = {
       amount: Amount,
       transactionType: "Manual-Withdraw",
+      remark: Remarks,
     };
 
     console.log(ID);
@@ -45,7 +51,7 @@ const ModalWthWbl = ({ ID }) => {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLabel">
-                Provide Withdrawal Amount......
+                Provide Website Withdrawal Amount
               </h5>
 
               <button
@@ -70,7 +76,7 @@ const ModalWthWbl = ({ ID }) => {
                     placeholder="SubAdmin"
                     value={auth.user.email}
                     disabled
-                    style={{ fontSize: "10px" }}
+                    style={{ fontSize: "8px" }}
                   />
                   <input
                     type="number"
@@ -80,6 +86,13 @@ const ModalWthWbl = ({ ID }) => {
                     value={Amount}
                   />
                 </div>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Remarks"
+                  onChange={handelRemarkschange}
+                  value={Remarks}
+                />
               </form>
             </div>
             <div className="modal-footer">

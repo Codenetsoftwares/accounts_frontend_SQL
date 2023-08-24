@@ -6,15 +6,25 @@ import { toast } from "react-toastify";
 const ModalAdWbl = ({ ID }) => {
   const auth = useAuth();
   const [Amount, SetAmount] = useState(0);
-console.log('id',ID)
+  const [Remarks, SetRemarks] = useState("");
+   
+   
+  console.log('id', ID)
+  
   const handelamtchange = (e) => {
     SetAmount(e.target.value);
   };
+
+   const handelRemarkschange = (e) => {
+     SetRemarks(e.target.value);
+  };
+  
   const handelsubmit =()=>{
    
     const data = {
       amount: Amount,
       transactionType: "Manual-Deposit",
+      remark: Remarks,
     };
     AccountService.ManualWebsiteEntryDeposit(ID, data, auth.user)
       .then((res) => {
@@ -43,7 +53,7 @@ console.log('id',ID)
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLabel">
-                Provide Deposit Amount
+                Provide Website Deposit Amount
               </h5>
 
               <button
@@ -77,6 +87,13 @@ console.log('id',ID)
                     onChange={handelamtchange}
                   />
                 </div>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Remarks"
+                  onChange={handelRemarkschange}
+                  value={Remarks}
+                />
               </form>
             </div>
             <div className="modal-footer">
@@ -87,7 +104,11 @@ console.log('id',ID)
               >
                 Close
               </button>
-              <button type="button" className="btn btn-primary" onClick={handelsubmit}>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={handelsubmit}
+              >
                 Save changes
               </button>
             </div>
