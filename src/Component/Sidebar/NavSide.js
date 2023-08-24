@@ -34,7 +34,7 @@ const NavSide = () => {
         className="main-sidebar elevation-4"
         style={{
           backgroundImage:
-            "linear-gradient(270deg, rgba(254,216,216,1) 0%, rgba(255,135,98,1) 59%)",
+            "linear-gradient(270deg, rgba(255,213,213,1) 0%, rgba(241,98,245,1) 100%)",
         }}
       >
         <div className="d-flex flex-row">
@@ -49,7 +49,7 @@ const NavSide = () => {
               &nbsp;obhisab.com
             </span>
             <span
-              className="fs-4 ms-4 "
+              className="fs-4 ms-4  d-xl-none"
               style={{ width: "15%" }}
               data-widget="pushmenu"
             >
