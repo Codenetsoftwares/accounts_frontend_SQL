@@ -18,7 +18,7 @@ const ModalWthWbl = ({ ID }) => {
   const handelsubmit = (e) => {
     e.preventDefault();
     const data = {
-      amount: Amount,
+      amount: Number(Amount),
       transactionType: "Manual-Withdraw",
       remark: Remarks,
     };

@@ -84,47 +84,57 @@ const WebsiteStatement = () => {
                 "linear-gradient(90deg, rgba(60,251,165,1) 0%, rgba(171,246,241,1) 50%, rgba(60,251,165,1) 100%)",
             }}
           >
-            <div className="card rounded-2 mb-2">
-              <div className="card-body">
-                <div className="row">
-                  <h4 className="col fs-6 font-weight-bold">Date</h4>
-                  <h4 className="col fs-6 font-weight-bold">Amount</h4>
-                  <h4 className="col fs-6 font-weight-bold">CreatedBy</h4>
-                  <h4 className="col fs-6 font-weight-bold">Website</h4>
-                  <h4 className="col fs-6 font-weight-bold">
-                    Transaction Type
-                  </h4>
-                  <h4 className="col fs-6 font-weight-bold">Balance</h4>
-                </div>
-                <hr style={{ color: "green" }} />
-                {Manualstmnt.length > 0 ? (
-                  Manualstmnt.map((transaction, index) => (
-                    <div className="row" key={index}>
-                      <p className="col fs-6">
-                        {new Date(transaction.createdAt).toLocaleString(
-                          "default",
-                          {
-                            month: "long",
-                          }
-                        )}{" "}
-                        {new Date(transaction.createdAt).getDate()}
-                      </p>
-                      {transaction.transactionType === "Manual-Deposit" ? (
-                        <p className="col fs-6">{transaction.depositAmount}</p>
-                      ) : (
-                        <p className="col fs-6">{transaction.withdrawAmount}</p>
-                      )}
-                      <p className="col fs-6">{transaction.subAdminName}</p>
-                      <p className="col fs-6">{transaction.websiteName}</p>
-                      <p className="col fs-6">{transaction.transactionType}</p>
-                      <p className="col fs-6">{transaction.currentBalance}</p>
-                    </div>
-                  ))
-                ) : (
-                  <h1>No Transaction Found</h1>
-                )}
-              </div>
-            </div>
+            <table className="table table-bordered">
+              <thead>
+                <tr className="text-center">
+                  <th scope="col ">Txn Date & Time</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col">Transaction Type</th>
+                  <th scope="col">Sub Admin Name</th>
+                  <th scope="col">Before Balance</th>
+                  <th scope="col">Current Balance </th>
+                  <th scope="col">Remarks</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Manualstmnt.map((item, index) => (
+                  <tr className="text-center" key={index}>
+                    <td>
+                      {new Date(item.createdAt).toLocaleString("en-GB", {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        hour12: true,
+                      })}
+                    </td>
+
+                    {/* <td>{item.transactionID}</td> */}
+                    {item.transactionType === "Manual-Deposit" ? (
+                      <td>{item.depositAmount}</td>
+                    ) : (
+                      <td>{item.withdrawAmount}</td>
+                    )}
+
+                    <td
+                      style={{
+                        color:
+                          item.transactionType === "Manual-Deposit"
+                            ? "green"
+                            : "red",
+                      }}
+                    >
+                      {item.transactionType}
+                    </td>
+                    <td>{item.subAdminName}</td>
+                    <td>{item.beforeBalance}</td>
+                    <td>{item.currentBalance}</td>
+                    <td>{item.remark}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         ) : (
           <div
