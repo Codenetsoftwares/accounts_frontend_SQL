@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+// import DatePicker from "react-datepicker";
+// import "react-datepicker/dist/react-datepicker.css";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { CardFd } from "./CardFd";
@@ -20,6 +20,9 @@ import { Link } from "react-router-dom";
 import "./AdminDash.css";
 import TopNavbar from "../Sidebar/TopNavbar";
 import AccountService from "../../Services/AccountService";
+import Datetime from "react-datetime";
+import "react-datetime/css/react-datetime.css";
+import moment from "moment";
 
 const AdminDash = () => {
   const auth = useAuth();
@@ -38,6 +41,9 @@ const AdminDash = () => {
   const [website, setWebsite] = useState("");
   const [select, setSelect] = useState("All");
   const [toggle, setToggle] = useState(true);
+  const [startDatevalue, SetStartDatesetValue] = useState(new Date());
+  const [endDatevalue, setEndDateValue] = useState(new Date());
+
 
   const test = ["transactionType", "subAdminName", "websiteName", "bankName"];
 
@@ -63,13 +69,12 @@ const AdminDash = () => {
   console.log("data ===>>>>>", documentView);
 
   const handelDate = () => {
-    const sdate = new Date(startDate);
-    console.log("sdate", sdate);
-    const edate = new Date(endDate);
-    edate.setHours(23, 59, 59);
-    console.log("ldate", edate);
-
+    const sdate = moment(startDatevalue, 'DD-MM-YYYY HH:mm').toDate();
+    const edate = moment(endDatevalue, 'DD-MM-YYYY HH:mm').toDate();
+    console.log(sdate)
+    console.log(edate)
     const filteredDocuments = documentView.filter((data) => {
+      console.log(new Date(data.createdAt))
       const transactionDate = new Date(data.createdAt);
       // console.log('st', transactionDate)
       return transactionDate >= sdate && transactionDate <= edate;
@@ -109,6 +114,17 @@ const AdminDash = () => {
     setWebsite(value);
     handleClick("websiteName", value);
   };
+
+  const handleStartDatevalue = (e) => {
+    SetStartDatesetValue(moment(e).format('DD-MM-YYYY HH:mm'))
+  };
+
+  const handleEndDatevalue = (e) => {
+    setEndDateValue(moment(e).format('DD-MM-YYYY HH:mm'))
+  };
+
+  console.log(startDatevalue)
+  console.log(endDatevalue)
 
   useEffect(() => {
     if (auth.user) {
@@ -238,28 +254,24 @@ const AdminDash = () => {
             })}
           </select>
         </div>
-        <div className="d-flex mt-2 pl-5 justify-content-center">
-          <p className="fw-bold fs-6 text-nowrap mt-1">
-            <FaFilter />
-          </p>
+        {/* <div className="d-flex mt-2 pl-5 justify-content-center">
+         
 
-          <div className="d-flex gap-2 justify-content-center w-25 ms-5">
-            <DatePicker
-              selected={startDate}
-              onChange={(date) => setStartDate(date)}
-              className="form-control datepicker-with-icon input-group input-group-sm"
-              placeholderText="Start Date"
-              dateFormat="dd/MM/yyyy"
-            />
-
-            <DatePicker
-              selected={endDate}
-              onChange={(date) => setEndDate(date)}
-              className="form-control datepicker-with-icon input-group input-group-sm "
-              placeholderText="End Date"
-              dateFormat="dd/MM/yyyy"
-            />
-
+          <div className="d-flex gap-2 justify-content-between w-25 ms-4">
+            <label className="form-label">
+              Start date
+            </label>
+            <Datetime value={startDatevalue}
+              onChange={handleStartDatevalue}
+              dateFormat="DD-MM-YYYY"
+              timeFormat="mm:HH" />
+            <label className="form-label">
+              Date date
+            </label>
+            <Datetime value={endDatevalue}
+              onChange={handleEndDatevalue}
+              dateFormat="DD-MM-YYYY"
+              timeFormat="mm-HH" />
             <div>
               {" "}
               <button
@@ -281,6 +293,42 @@ const AdminDash = () => {
                 Reset
               </button>
             </div>
+          </div>
+        </div> */}
+        <div className="d-flex pt-3 justify-content-center">
+          <h6 className="fw-bold text-nowrap pt-2"> Start Date</h6>
+          <Datetime value={startDatevalue}
+            onChange={handleStartDatevalue}
+            dateFormat="DD-MM-YYYY"
+            timeFormat="HH:mm" />
+        </div>
+        <div className="d-flex pt-3 justify-content-center">
+          <h6 className="fw-bold text-nowrap pt-2"> End Date</h6>
+          <Datetime value={endDatevalue}
+            onChange={handleEndDatevalue}
+            dateFormat="DD-MM-YYYY"
+            timeFormat="HH:mm" />
+        </div>
+        <div className="d-flex pt-3 justify-content-center">
+          <div className="mx-2">
+            <button
+              type="button"
+              className="btn btn-dark"
+              style={{ boxShadow: "17px 15px 27px -9px rgba(0, 0, 0, 0.41)" }}
+              onClick={handelDate}
+            >
+              Filter
+            </button>
+          </div>
+          <div className="mx-2">
+            <button
+              type="button"
+              className="btn btn-dark"
+              style={{ boxShadow: "17px 15px 27px -9px rgba(0, 0, 0, 0.41)" }}
+              onClick={handleReset}
+            >
+              Reset
+            </button>
           </div>
         </div>
       </div>
@@ -331,10 +379,8 @@ const AdminDash = () => {
                   <div className="card-body">
                     <div className="row">
                       <p className="col fs-6">
-                        {new Date(data.createdAt).toLocaleString("default", {
-                          month: "long",
-                        })}{" "}
-                        {new Date(data.createdAt).getDate()}
+                        {new Date(data.createdAt).toLocaleString("default")}{" "}
+
                       </p>
                       {data.amount && (<p className="col fs-6">₹&nbsp;{data.amount}</p>)}
                       {data.depositAmount && (<p className="col fs-6">₹&nbsp;{data.depositAmount}</p>)}
@@ -421,10 +467,7 @@ const AdminDash = () => {
                   <div className="card-body">
                     <div className="row">
                       <p className="col fs-6">
-                        {new Date(data.createdAt).toLocaleString("default", {
-                          month: "long",
-                        })}{" "}
-                        {new Date(data.createdAt).getDate()}
+                        {new Date(data.createdAt).toLocaleString("default")}{" "}
                       </p>
                       {data.amount && (<p className="col fs-6">₹&nbsp;{data.amount}</p>)}
                       {data.depositAmount && (<p className="col fs-6">₹&nbsp;{data.depositAmount}</p>)}
