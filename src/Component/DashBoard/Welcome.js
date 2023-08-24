@@ -1,4 +1,3 @@
-
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 // import useLocalStorage from "use-local-storage";
@@ -10,13 +9,8 @@ const Welcome = () => {
   //   defaultDark ? "dark" : "light"
   // );
 
- 
-
-
   return (
-    <div
-      className="container-fluid  mb-3 "
-    >
+    <div className="container-fluid  mb-3 ">
       <nav className="navbar navbar-dark bg-dark py-2 ">
         <div className="container">
           <a className="navbar-brand" href="/">
@@ -30,7 +24,7 @@ const Welcome = () => {
           style={{
             minHeight: "calc(100vh - 120px)",
             background:
-              "linear-gradient(90deg, rgba(23,183,184,1) 0%, rgba(23,184,155,0.9668242296918768) 100%)",
+              "radial-gradient(circle, rgba(244,183,255,1) 0%, rgba(98,202,245,1) 100%)",
           }}
         >
           <div className="container text-center">
@@ -44,8 +38,12 @@ const Welcome = () => {
               <p>Follow these steps to start using the CRM:</p>
 
               <ol
-                className="mt-4 p-5 bg-primary text-white rounded list-group list-group-numbered"
-                style={{ textAlign: "left" }}
+                className="mt-4 p-5  text-white rounded list-group list-group-numbered"
+                style={{
+                  textAlign: "left",
+                  backgroundImage:
+                    "radial-gradient(circle, rgba(245,255,183,1) 0%, rgba(98,202,245,1) 100%)",
+                }}
               >
                 <li className="list-group-item">
                   Create an account or log in.
@@ -92,7 +90,6 @@ const Welcome = () => {
           </footer>
         </div>
       </div>
-
     </div>
   );
 };
