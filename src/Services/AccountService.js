@@ -128,6 +128,16 @@ class AccountService {
     });
   }
 
+  Introducerprofile(user) {
+    return axios({
+      method: "get",
+      url: API_HOST + "/api/intoducer-profile",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
   singlebank(id, user) {
     return axios({
       method: "get",
@@ -230,6 +240,30 @@ class AccountService {
       },
     });
   }
+
+  createIntroducer(data, user) {
+    console.log("user", user);
+    return axios({
+      method: "post",
+      url: API_HOST + "/api/admin/accounts/introducer/register",
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  // Stress(data, user) {
+  //   console.log("user", user);
+  //   return axios({
+  //     method: "post",
+  //     url: `${API_HOST}/`,
+  //     data: data,
+  //     headers: {
+  //       Authorization: `Bearer ${user.token}`,
+  //     },
+  //   });
+  // }
 
   createActualuser(data) {
     return axios({

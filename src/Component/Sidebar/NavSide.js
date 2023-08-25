@@ -190,6 +190,10 @@ const NavSide = () => {
                     <i className="far fa-circle nav-icon" />
                     <p>Create User</p>
                   </Link>
+                  <Link to="/createintroducer" className="nav-link text-white">
+                    <i className="far fa-circle nav-icon" />
+                    <p>Create Introducer</p>
+                  </Link>
                 </li>
               )}
               {/* <li className="nav-item">
@@ -263,7 +267,7 @@ const NavSide = () => {
                     <p>User Profile</p>
                   </Link>
 
-                  <Link to="#" className="nav-link text-white">
+                  <Link to="/introducerprofile" className="nav-link text-white">
                     <i className="far fa-circle nav-icon" />
                     <p>Introducer</p>
                   </Link>
