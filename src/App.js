@@ -28,6 +28,9 @@ import CreateTransaction from "./Component/DashBoard/CreateTransaction";
 import WebsiteStatement from "./Component/DashBoard/WebsiteStatement";
 import BankStatement from "./Component/DashBoard/BankStatement";
 import CreateActualUser from "./Component/DashBoard/CreateActualUser";
+import CreateIntroducer from "./Component/DashBoard/CreateIntroducer";
+import IntroducerProfile from "./Component/DashBoard/IntroducerProfile";
+
 
 function App() {
   return (
@@ -112,6 +115,15 @@ function App() {
               />
 
               <Route
+                path="introducerprofile"
+                element={
+                  <RequireAuth>
+                   <IntroducerProfile/>
+                  </RequireAuth>
+                }
+              />
+
+              <Route
                 path="dashboard"
                 element={
                   <RequireAuth>
@@ -132,6 +144,14 @@ function App() {
                 element={
                   <RequireAuth>
                     <CreateActualUser />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="createintroducer"
+                element={
+                  <RequireAuth>
+                    <CreateIntroducer />
                   </RequireAuth>
                 }
               />
