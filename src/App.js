@@ -30,7 +30,7 @@ import BankStatement from "./Component/DashBoard/BankStatement";
 import CreateActualUser from "./Component/DashBoard/CreateActualUser";
 import CreateIntroducer from "./Component/DashBoard/CreateIntroducer";
 import IntroducerProfile from "./Component/DashBoard/IntroducerProfile";
-
+import InnerIntroducer from "./Component/DashBoard/InnerIntroducer";
 
 function App() {
   return (
@@ -118,7 +118,15 @@ function App() {
                 path="introducerprofile"
                 element={
                   <RequireAuth>
-                   <IntroducerProfile/>
+                    <IntroducerProfile />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="innerintroducer/:id"
+                element={
+                  <RequireAuth>
+                    <InnerIntroducer />
                   </RequireAuth>
                 }
               />

@@ -47,7 +47,7 @@ const IntroducerProfile = () => {
           <div className="card container-fluid w-75">
             <div className="card-body">
               <Link
-                to={`/innerprofile/${users._id}`}
+                to={`/innerintroducer/${users._id}`}
                 style={{ cursor: "pointer" }}
               >
                 {users.email}
