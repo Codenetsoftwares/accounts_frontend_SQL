@@ -78,6 +78,7 @@ const EditTransaction = () => {
   useEffect(() => {
     AccountService.website(auth.user).then((res) => setGetWebsite(res.data));
   }, [auth]);
+  console.log("Web Names", getWebsite);
 
   const handleBankChange = (e) => {
     const value = e.target.value;
@@ -192,8 +193,8 @@ const EditTransaction = () => {
             >
               <option selected>Select Website</option>
               {getWebsite.map((website, index) => (
-                <option key={index} value={website.name}>
-                  {website.name}
+                <option key={index} value={website.websiteName}>
+                  {website.websiteName}
                 </option>
               ))}
             </select>

@@ -121,7 +121,7 @@ const NavSide = () => {
                       <p>Transaction Details</p>
                     </Link>
 
-                    <Link to="/dashboard" className="nav-link text-white">
+                    <Link to="/buttons" className="nav-link text-white">
                       <i className="far fa-circle nav-icon" />
                       <p>Create Transaction</p>
                     </Link>
@@ -281,11 +281,11 @@ const NavSide = () => {
                     {/* <span className="right badge badge-danger">New</span> */}
                   </p>
                 </Link>
-
+                {/* 
                 <Link to="/buttons" className="nav-link text-white">
-                      <i className="far fa-circle nav-icon" />
-                      <p> media</p>
-                    </Link>
+                  <i className="far fa-circle nav-icon" />
+                  <p> media</p>
+                </Link> */}
               </li>
             </ul>
           </nav>
