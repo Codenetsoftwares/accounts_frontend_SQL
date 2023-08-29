@@ -272,6 +272,27 @@ class AccountService {
       data: data,
     });
   }
+
+  IntroducerClient(id, user) {
+    return axios({
+      method: "get",
+      url: `${API_HOST}/api/intoducer/client-data/${id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  Introducercut(id, user , data) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/admin/introducer/introducerCut/${id}`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
 }
 
 export default new AccountService();
