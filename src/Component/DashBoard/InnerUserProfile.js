@@ -204,14 +204,55 @@ const InnerUserProfile = () => {
                               </button>
                             </h2>
                             <div className="accordion-collapse collapse show">
-                              <div className="accordion-body">
-                                <p>Account Name: {foundObject.accountName}</p>
-                                <p>
-                                  Account Number: {foundObject.accountNumber}
-                                </p>
-                                <p>IFSC Code: {foundObject.ifscCode}</p>
-                              </div>
-                            </div>
+      <div className="accordion-body">
+        <div className="row">
+          <div className="col-md-6">
+            <div className="form-group">
+              <label htmlFor="bankName" className="form-label">Bank Name:</label>
+              <input
+                type="text"
+                id="bankName"
+                className="form-control"
+                // value={isEditing ? editedData.bankName : foundObject.bankDetail.bankName}
+                disabled={!isEditing}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="accountNumber" className="form-label">Account Number:</label>
+              <input
+                type="text"
+                id="accountNumber"
+                className="form-control"
+                // value={isEditing ? editedData.accountNumber : foundObject.bankDetail.accountNumber}
+                disabled={!isEditing}
+              />
+            </div>
+          </div>
+          <div className="col-md-6">
+            <div className="form-group">
+              <label htmlFor="ifscCode" className="form-label">IFSC Code:</label>
+              <input
+                type="text"
+                id="ifscCode"
+                className="form-control"
+                // value={isEditing ? editedData.ifscCode : foundObject.bankDetail.ifscCode}
+                disabled={!isEditing}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="accountHolderName" className="form-label">Account Holder Name:</label>
+              <input
+                type="text"
+                id="accountHolderName"
+                className="form-control"
+                // value={isEditing ? editedData.accountHolderName : foundObject.bankDetail.accountHolderName}
+                disabled={!isEditing}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
                           </div>
                         </div>
                       )}

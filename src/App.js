@@ -2,6 +2,7 @@
 import LoginWth from "../src/Component/Login/LoginWth";
 import AdminDash from "../src/Component/DashBoard/AdminDash";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+// import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import React from "react";
 import { AuthProvider } from "./Utils/Auth";
 import { RequireAuth } from "./Utils/RequireAuth";
@@ -31,6 +32,10 @@ import CreateActualUser from "./Component/DashBoard/CreateActualUser";
 import CreateIntroducer from "./Component/DashBoard/CreateIntroducer";
 import IntroducerProfile from "./Component/DashBoard/IntroducerProfile";
 import InnerIntroducer from "./Component/DashBoard/InnerIntroducer";
+
+import ButtonDemo from "./Component/DashBoard/ButtonDemo";
+import Withdraw from "./Component/DashBoard/Withdraw";
+import Deposit from "./Component/Sidebar/Deposit";
 
 function App() {
   return (
@@ -113,6 +118,22 @@ function App() {
                   </RequireAuth>
                 }
               />
+               <Route
+                path="withdraw"
+                element={
+                  <RequireAuth>
+                    <Withdraw/>
+                  </RequireAuth>
+                }
+              />
+            <Route
+                path="deposit"
+                element={
+                  <RequireAuth>
+                    <Deposit/>
+                  </RequireAuth>
+                }
+              />
 
               <Route
                 path="introducerprofile"
@@ -177,6 +198,15 @@ function App() {
                 element={
                   <RequireAuth>
                     <TransactionDetails />
+                  </RequireAuth>
+                }
+              />
+
+           <Route
+                path="buttons"
+                element={
+                  <RequireAuth>
+                  <ButtonDemo/>
                   </RequireAuth>
                 }
               />
