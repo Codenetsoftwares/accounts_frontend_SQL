@@ -12,8 +12,8 @@ const Welcome = () => {
   return (
     <div className="container-fluid  mb-3 ">
       <nav className="navbar navbar-dark bg-dark py-2 ">
-        <div className="container">
-          <a className="navbar-brand" href="/">
+        <div className="container d-flex justify-content-center">
+          <a className="navbar-brand " href="#">
             CRM Software
           </a>
         </div>
@@ -28,7 +28,7 @@ const Welcome = () => {
           }}
         >
           <div className="container text-center">
-            <h1 className="display-5">Welcome to Our CRM Software</h1>
+            <h1 className="display-5">Welcome to obhisab.com</h1>
 
             <p className="lead">
               This is our central hub for managing accounts.
