@@ -2,6 +2,7 @@
 import LoginWth from "../src/Component/Login/LoginWth";
 import AdminDash from "../src/Component/DashBoard/AdminDash";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+// import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import React from "react";
 import { AuthProvider } from "./Utils/Auth";
 import { RequireAuth } from "./Utils/RequireAuth";
@@ -28,6 +29,10 @@ import CreateTransaction from "./Component/DashBoard/CreateTransaction";
 import WebsiteStatement from "./Component/DashBoard/WebsiteStatement";
 import BankStatement from "./Component/DashBoard/BankStatement";
 import CreateActualUser from "./Component/DashBoard/CreateActualUser";
+
+import ButtonDemo from "./Component/DashBoard/ButtonDemo";
+import Withdraw from "./Component/DashBoard/Withdraw";
+import Deposit from "./Component/Sidebar/Deposit";
 
 function App() {
   return (
@@ -110,6 +115,22 @@ function App() {
                   </RequireAuth>
                 }
               />
+               <Route
+                path="withdraw"
+                element={
+                  <RequireAuth>
+                    <Withdraw/>
+                  </RequireAuth>
+                }
+              />
+            <Route
+                path="deposit"
+                element={
+                  <RequireAuth>
+                    <Deposit/>
+                  </RequireAuth>
+                }
+              />
 
               <Route
                 path="dashboard"
@@ -149,6 +170,15 @@ function App() {
                 element={
                   <RequireAuth>
                     <TransactionDetails />
+                  </RequireAuth>
+                }
+              />
+
+           <Route
+                path="buttons"
+                element={
+                  <RequireAuth>
+                  <ButtonDemo/>
                   </RequireAuth>
                 }
               />

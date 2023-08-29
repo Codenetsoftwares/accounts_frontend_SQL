@@ -277,6 +277,11 @@ const NavSide = () => {
                     {/* <span className="right badge badge-danger">New</span> */}
                   </p>
                 </Link>
+
+                <Link to="/buttons" className="nav-link text-white">
+                      <i className="far fa-circle nav-icon" />
+                      <p> media</p>
+                    </Link>
               </li>
             </ul>
           </nav>
