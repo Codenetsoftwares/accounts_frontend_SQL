@@ -48,25 +48,13 @@ const WebsiteStatement = () => {
       try {
         const res = await AccountService.GetWebsiteStateMent(id, auth.user);
         SetManualstmnt(res.data);
+        setAccountData(res.data);
       } catch (err) {
         console.log(err);
       }
     };
 
     fetchManualStatement();
-  }, [id, auth]);
-
-  useEffect(() => {
-    const fetchUserStatement = async () => {
-      try {
-        const res = await AccountService.GetWebsiteSmmry(id, auth.user);
-        SetUserstmnt(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    fetchUserStatement();
   }, [id, auth]);
 
   const handelDate = () => {

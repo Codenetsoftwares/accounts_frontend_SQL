@@ -9,7 +9,6 @@ import moment from "moment";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-
 const BankStatement = () => {
   const { id } = useParams();
   const auth = useAuth();
@@ -43,20 +42,10 @@ const BankStatement = () => {
 
   useEffect(() => {
     AccountService.GetBankStMent(id, auth.user)
-      .then((res) => SetManualstmnt(res.data))
+      .then((res) => (setDocumentView(res.data), setAccountData(res.data)))
       .catch((err) => {
         // console.log(err.response.data.message);
         toast.err("No Details Found");
-        console.error(err, "object");
-      });
-  }, [id, auth]);
-
-  useEffect(() => {
-    AccountService.GetBankuserStMent(id, auth.user)
-      .then((res) => SetUserstmnt(res.data))
-      .catch((err) => {
-        console.log(err.response.data.message);
-        toast.error("No Details Found");
         console.error(err, "object");
       });
   }, [id, auth]);
