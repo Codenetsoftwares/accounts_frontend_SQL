@@ -6,6 +6,9 @@ import { toast } from "react-toastify";
 import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
 import moment from "moment";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 
 const BankStatement = () => {
   const { id } = useParams();
@@ -162,125 +165,7 @@ const BankStatement = () => {
             </button>
           </div>
         </div>
-        {select === "Manual Entry" ? (
-          <div
-            className="card  rounded-2 mb-2"
-            style={{
-              boxShadow: "26px -13px 32px -15px rgba(29,29,31,0.68)",
-              backgroundImage:
-                "linear-gradient(90deg, rgba(60,251,165,1) 0%, rgba(171,246,241,1) 50%, rgba(60,251,165,1) 100%)",
-            }}
-          >
-            <table className="table table-bordered">
-              <thead>
-                <tr className="text-center">
-                  <th scope="col ">Txn Date & Time</th>
-                  <th scope="col">Amount</th>
-                  <th scope="col">Transaction Type</th>
-                  <th scope="col">Sub Admin Name</th>
-                  <th scope="col">Before Balance</th>
-                  <th scope="col">Current Balance </th>
-                  <th scope="col">Remarks</th>
-                </tr>
-              </thead>
-              <tbody>
-                {Manualstmnt.map((item, index) => (
-                  <tr className="text-center" key={index}>
-                    <td>
-                      {new Date(item.createdAt).toLocaleString("en-GB", {
-                        day: "2-digit",
-                        month: "2-digit",
-                        year: "numeric",
-                        hour: "2-digit",
-                        minute: "2-digit",
-                        hour12: true,
-                      })}
-                    </td>
-
-                    {/* <td>{item.transactionID}</td> */}
-                    {item.transactionType === "Manual-Deposit" ? (
-                      <td style={{ color: "green" }}>{item.depositAmount}</td>
-                    ) : (
-                      <td style={{ color: "red" }}>{item.withdrawAmount}</td>
-                    )}
-
-                    <td
-                      style={{
-                        color:
-                          item.transactionType === "Manual-Deposit"
-                            ? "green"
-                            : "red",
-                      }}
-                    >
-                      {item.transactionType}
-                    </td>
-                    <td>{item.subAdminName}</td>
-                    <td>{item.beforeBalance}</td>
-                    <td>{item.currentBalance}</td>
-                    <td>{item.remark}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        ) : (
-          <div
-            className="card  rounded-2 mb-2"
-            style={{
-              boxShadow: "26px -13px 32px -15px rgba(29,29,31,0.68)",
-              backgroundImage:
-                "linear-gradient(90deg, rgba(60,251,165,1) 0%, rgba(171,246,241,1) 50%, rgba(60,251,165,1) 100%)",
-            }}
-          >
-            <div className="card rounded-2 mb-2">
-              <div className="card-body">
-                <div className="row">
-                  <h4 className="col fs-6 font-weight-bold">Date</h4>
-                  <h4 className="col fs-6 font-weight-bold">Amount</h4>
-                  <h4 className="col fs-6 font-weight-bold">CreatedBy</h4>
-                  <h4 className="col fs-6 font-weight-bold">User Id</h4>
-                  <h4 className="col fs-6 font-weight-bold">Bank</h4>
-                  <h4 className="col fs-6 font-weight-bold">
-                    Transaction Type
-                  </h4>
-                  <h4 className="col fs-6 font-weight-bold">Balance</h4>
-                </div>
-                <hr style={{ color: "green" }} />
-                {Userstmnt.length > 0 ? (
-                  Userstmnt.map((transaction, index) => (
-                    <div className="row" key={index}>
-                      <p className="col fs-6">
-                        {new Date(transaction.createdAt).toLocaleString(
-                          "default"
-                        )}
-                      </p>
-                      <p className="col fs-6">{transaction.amount}</p>
-                      <p className="col fs-6">{transaction.subAdminName}</p>
-                      <p className="col fs-6">{transaction.userId}</p>
-                      <p className="col fs-6">{transaction.bankName}</p>
-                      <p className="col fs-6">{transaction.transactionType}</p>
-
-                      <p className="col fs-6">
-                        {transaction.transactionType === "Withdraw" ? (
-                          <span style={{ color: "red" }}>
-                            {transaction.beforeBalanceBankDeposit} -
-                          </span>
-                        ) : (
-                          <span style={{ color: "green" }}>
-                            {transaction.beforeBalanceBankDeposit} +
-                          </span>
-                        )}
-                      </p>
-                    </div>
-                  ))
-                ) : (
-                  <h1>No Transaction found</h1>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
-        {/* {toggle ? (
+        {toggle ? (
           <div className=" container mt-5">
             <div
               className="card  rounded-2 mb-2"
@@ -384,15 +269,6 @@ const BankStatement = () => {
                           {data.websiteName ? data.websiteName : "N.A"}
                         </p>
                       </div>
-                      <Link to={`/admindash/${data._id}`} className="col">
-                        <button type="button" className="btn btn-primary">
-                          <FontAwesomeIcon
-                            icon={faEdit}
-                            data-toggle="modal"
-                            data-target="#exampleModalCenter"
-                          />
-                        </button>
-                      </Link>
                     </div>
                   </div>
                 );
@@ -505,15 +381,6 @@ const BankStatement = () => {
                           {data.websiteName ? data.websiteName : "N.A"}
                         </p>
                       </div>
-                      <Link to={`/admindash/${data._id}`} className="col">
-                        <button type="button" className="btn btn-primary">
-                          <FontAwesomeIcon
-                            icon={faEdit}
-                            data-toggle="modal"
-                            data-target="#exampleModalCenter"
-                          />
-                        </button>
-                      </Link>
                     </div>
                   </div>
                 );
@@ -522,7 +389,7 @@ const BankStatement = () => {
               <h1 className="text-center">No Transaction Found</h1>
             )}
           </div>
-        )} */}
+        )}
       </div>
     </div>
   );
