@@ -35,7 +35,8 @@ import InnerIntroducer from "./Component/DashBoard/InnerIntroducer";
 
 import ButtonDemo from "./Component/DashBoard/ButtonDemo";
 import Withdraw from "./Component/DashBoard/Withdraw";
-import Deposit from "./Component/Sidebar/Deposit";
+import Deposit from "./Component/DashBoard/Deposit";
+
 
 function App() {
   return (
@@ -127,10 +128,10 @@ function App() {
                 }
               />
             <Route
-                path="deposit"
+                path="/deposit"
                 element={
                   <RequireAuth>
-                    <Deposit/>
+                  <Deposit/>
                   </RequireAuth>
                 }
               />

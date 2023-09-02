@@ -1,9 +1,10 @@
+
 import React, { useState, useEffect } from "react";
-import { BsArrowLeftRight } from "react-icons/bs";
+import { BsArrowLeftRight, } from "react-icons/bs";
 import { useAuth } from "../../Utils/Auth";
 import AccountService from "../../Services/AccountService";
 
-function Withdraw() {
+function Deposit() {
   const auth = useAuth();
   const [Bank , setBank] = useState([]);
   const [Website, setWebsite] = useState([]);
@@ -24,19 +25,11 @@ function Withdraw() {
     AccountService.userId(auth.user).then((res) => setUId(res.data));
     }, [auth]);
     console.log("user Id",UId)
+
   
 
-
-  //  const handleWebsiteChange = (e) => {
-  //   const value = e.target.value;
-  //   setWebsite(value);
-  // };
-
-
-
-
   return (
-    <div
+   <div
       className="Container fluid='lg'"
       style={{
         display: "flex",
@@ -192,7 +185,7 @@ function Withdraw() {
                 marginBottom: "10px",
               }}
             >
-              SUBMIT
+             ok
             </button>
             <div
               className="message"
@@ -208,4 +201,4 @@ function Withdraw() {
   );
 }
 
-export default Withdraw;
+export default Deposit;

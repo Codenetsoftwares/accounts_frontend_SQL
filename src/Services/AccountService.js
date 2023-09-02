@@ -74,6 +74,16 @@ class AccountService {
     });
   }
 
+  userId(user) {
+    return axios({
+      method: "get",
+      url: API_HOST + "/api/superadmin/user-id",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
   deletebank(data, user) {
     return axios({
       method: "post",
