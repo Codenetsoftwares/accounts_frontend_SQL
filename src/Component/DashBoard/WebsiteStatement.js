@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-// import { useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { useAuth } from "../../Utils/Auth";
 import { useParams } from "react-router";
 import AccountService from "../../Services/AccountService";
@@ -7,11 +7,16 @@ import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
 import moment from "moment";
 import { CSVLink } from "react-csv";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import TransactionSercvice from "../../Services/TransactionSercvice";
+import { toast } from "react-toastify";
 
 const WebsiteStatement = () => {
   const { id } = useParams();
   const auth = useAuth();
-
+  const navigate = useNavigate();
   const [accountData, setAccountData] = useState([]);
   const [documentView, setDocumentView] = useState([]);
   const [documentFilter, setDocumentFilter] = useState([]);
@@ -84,6 +89,18 @@ const WebsiteStatement = () => {
     setToggle(true);
     SetStartDatesetValue(new Date());
     setEndDateValue(new Date());
+  };
+
+  const handleDel = (id) => {
+    TransactionSercvice.delWebTransactionData(id, auth.user)
+      .then((response) => {
+        console.log(response.data);
+        navigate("/admindash");
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error("Failed! Invalid Data");
+      });
   };
 
   console.log("Website Names Manual =>>>", Manualstmnt);
@@ -273,6 +290,19 @@ const WebsiteStatement = () => {
                           {data.websiteName ? data.websiteName : "N.A"}
                         </p>
                       </div>
+                      <Link to={`/editwebsitedata/${data._id}`} className="col">
+                        <button type="button" className="btn btn-primary">
+                          <FontAwesomeIcon icon={faEdit} />
+                        </button>
+                      </Link>
+                      <Link to={`/admindash/${data._id}`} className="col">
+                        <button type="button" class="btn btn-danger">
+                          <FontAwesomeIcon
+                            icon={faTrashAlt}
+                            onClick={handleDel(data._id)}
+                          />
+                        </button>
+                      </Link>
                     </div>
                   </div>
                 );
@@ -385,6 +415,23 @@ const WebsiteStatement = () => {
                           {data.websiteName ? data.websiteName : "N.A"}
                         </p>
                       </div>
+                      <Link to={`/admindash/${data._id}`} className="col">
+                        <button type="button" className="btn btn-primary">
+                          <FontAwesomeIcon
+                            icon={faEdit}
+                            data-toggle="modal"
+                            data-target="#exampleModalCenter"
+                          />
+                        </button>
+                      </Link>
+
+                      <button type="button" class="btn btn-danger">
+                        <FontAwesomeIcon
+                          icon={faTrashAlt}
+                          className="delete-icon"
+                          onClick={handleDel(data._id)}
+                        />
+                      </button>
                     </div>
                   </div>
                 );

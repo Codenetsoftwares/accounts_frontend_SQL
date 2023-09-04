@@ -36,7 +36,8 @@ import InnerIntroducer from "./Component/DashBoard/InnerIntroducer";
 import ButtonDemo from "./Component/DashBoard/ButtonDemo";
 import Withdraw from "./Component/DashBoard/Withdraw";
 import Deposit from "./Component/DashBoard/Deposit";
-
+import EditWebTransaction from "./Component/DashBoard/EditWebTransaction";
+import EditBnkTransaction from "./Component/DashBoard/EditBnkTransaction ";
 
 function App() {
   return (
@@ -119,19 +120,19 @@ function App() {
                   </RequireAuth>
                 }
               />
-               <Route
+              <Route
                 path="withdraw"
                 element={
                   <RequireAuth>
-                    <Withdraw/>
+                    <Withdraw />
                   </RequireAuth>
                 }
               />
-            <Route
+              <Route
                 path="/deposit"
                 element={
                   <RequireAuth>
-                  <Deposit/>
+                    <Deposit />
                   </RequireAuth>
                 }
               />
@@ -203,11 +204,11 @@ function App() {
                 }
               />
 
-           <Route
+              <Route
                 path="buttons"
                 element={
                   <RequireAuth>
-                  <ButtonDemo/>
+                    <ButtonDemo />
                   </RequireAuth>
                 }
               />
@@ -228,6 +229,30 @@ function App() {
               element={
                 <RequireAuth>
                   <EditTransaction />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="admindash/:id"
+              element={
+                <RequireAuth>
+                  <EditTransaction />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="editwebsitedata/:id"
+              element={
+                <RequireAuth>
+                  <EditWebTransaction />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="editbankdata/:id"
+              element={
+                <RequireAuth>
+                  <EditBnkTransaction />
                 </RequireAuth>
               }
             />
