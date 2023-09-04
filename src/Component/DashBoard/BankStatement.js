@@ -45,11 +45,11 @@ const BankStatement = () => {
       .then((res) => (setDocumentView(res.data), setAccountData(res.data)))
       .catch((err) => {
         // console.log(err.response.data.message);
-        toast.err("No Details Found");
+        // toast.err("No Details Found");
         console.error(err, "object");
       });
   }, [id, auth]);
-
+  console.log(documentView);
   const handelDate = () => {
     const sdate = moment(startDatevalue, "DD-MM-YYYY HH:mm").toDate();
     const edate = moment(endDatevalue, "DD-MM-YYYY HH:mm").toDate();
@@ -74,8 +74,8 @@ const BankStatement = () => {
     setSelect("");
     setDocumentView(accountData);
     setToggle(true);
-    SetStartDatesetValue("");
-    setEndDateValue("");
+    SetStartDatesetValue(new Date());
+    setEndDateValue(new Date());
   };
 
   const handleStartDatevalue = (e) => {
@@ -106,11 +106,17 @@ const BankStatement = () => {
             <option className="d-flex" value="All">
               <b>All</b>
             </option>
-            <option className="d-flex" value="Manual Entry">
-              <b>Manual Entry</b>
+            <option className="d-flex" value="Manual-Deposit">
+              <b>Manual Entry(Deposit)</b>
             </option>
-            <option className="d-flex" value="User Entry">
-              <b>User Entry</b>
+            <option className="d-flex" value="Manual-Deposit">
+              <b>Manual Entry(Withdraw)</b>
+            </option>
+            <option className="d-flex" value="Deposit">
+              <b>User Entry(Deposit)</b>
+            </option>
+            <option className="d-flex" value="Withdraw">
+              <b>User Entry(Withdraw)</b>
             </option>
           </select>
         </div>

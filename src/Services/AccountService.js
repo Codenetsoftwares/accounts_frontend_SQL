@@ -183,7 +183,7 @@ class AccountService {
   GetBankStMent(id, user) {
     return axios({
       method: "get",
-      url: `${API_HOST}/api/admin/bank-account-summary/${id}`,
+      url: `${API_HOST}/api/admin/manual-user-bank-account-summary/${id}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -224,7 +224,7 @@ class AccountService {
   GetWebsiteStateMent(id, user) {
     return axios({
       method: "get",
-      url: `${API_HOST}/api/admin/website-account-summary/${id}`,
+      url: `${API_HOST}/api/admin/manual-user-website-account-summary/${id}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -283,7 +283,7 @@ class AccountService {
     });
   }
 
-  Introducercut(id, user , data) {
+  Introducercut(id, user, data) {
     return axios({
       method: "post",
       url: `${API_HOST}/api/admin/introducer/introducerCut/${id}`,
