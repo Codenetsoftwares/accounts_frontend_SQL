@@ -275,11 +275,14 @@ class AccountService {
   //   });
   // }
 
-  createActualuser(data) {
+  createActualuser(data ,user) {
     return axios({
       method: "post",
-      url: API_HOST + "/api/accounts/user/register",
+      url: API_HOST + "/api/admin/user/register",
       data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
     });
   }
 

@@ -35,14 +35,14 @@ const InnerIntroducer = () => {
               Name:&nbsp;{user.firstname}&nbsp;{user.lastname}
             </p>
             <p>
-              <button
+              {/* <button
                 type="button"
                 class="btn btn-primary"
                 data-toggle="modal"
                 data-target="#showpercentage"
               >
                 Send Percentage
-              </button>
+              </button> */}
             </p>
           </div>
         </div>
