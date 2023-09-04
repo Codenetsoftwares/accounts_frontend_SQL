@@ -6,6 +6,7 @@ import AccountService from "../../Services/AccountService";
 import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
 import moment from "moment";
+import { CSVLink } from "react-csv";
 
 const WebsiteStatement = () => {
   const { id } = useParams();
@@ -160,6 +161,11 @@ const WebsiteStatement = () => {
             >
               Reset
             </button>
+          </div>
+          <div className="mx-2">
+            <CSVLink data={Manualstmnt} className="btn btn-success">
+              Download Data
+            </CSVLink>
           </div>
         </div>
 

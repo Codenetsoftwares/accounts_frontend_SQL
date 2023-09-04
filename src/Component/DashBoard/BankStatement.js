@@ -8,6 +8,8 @@ import "react-datetime/css/react-datetime.css";
 import moment from "moment";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { CSVLink } from "react-csv";
 
 const BankStatement = () => {
   const { id } = useParams();
@@ -159,6 +161,11 @@ const BankStatement = () => {
               Reset
             </button>
           </div>
+          <div className="mx-2">
+            <CSVLink data={Manualstmnt} className="btn btn-success">
+              Download Data
+            </CSVLink>
+          </div>
         </div>
         {toggle ? (
           <div className=" container mt-5">
@@ -264,6 +271,23 @@ const BankStatement = () => {
                           {data.websiteName ? data.websiteName : "N.A"}
                         </p>
                       </div>
+                      <Link to={`/admindash/${data._id}`} className="col">
+                        <button type="button" className="btn btn-primary">
+                          <FontAwesomeIcon
+                            icon={faEdit}
+                            data-toggle="modal"
+                            data-target="#exampleModalCenter"
+                          />
+                        </button>
+                      </Link>
+                      <Link to={`/admindash/${data._id}`} className="col">
+                        <button type="button" class="btn btn-danger">
+                          <FontAwesomeIcon
+                            icon={faTrashAlt}
+                            className="delete-icon"
+                          />
+                        </button>
+                      </Link>
                     </div>
                   </div>
                 );
@@ -376,6 +400,23 @@ const BankStatement = () => {
                           {data.websiteName ? data.websiteName : "N.A"}
                         </p>
                       </div>
+                      <Link to={`/admindash/${data._id}`} className="col">
+                        <button type="button" className="btn btn-primary">
+                          <FontAwesomeIcon
+                            icon={faEdit}
+                            data-toggle="modal"
+                            data-target="#exampleModalCenter"
+                          />
+                        </button>
+                      </Link>
+                      <Link to={`/admindash/${data._id}`} className="col">
+                        <button type="button" class="btn btn-danger">
+                          <FontAwesomeIcon
+                            icon={faTrashAlt}
+                            className="delete-icon"
+                          />
+                        </button>
+                      </Link>
                     </div>
                   </div>
                 );
