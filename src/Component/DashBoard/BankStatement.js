@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../Utils/Auth";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import AccountService from "../../Services/AccountService";
 import { toast } from "react-toastify";
 import Datetime from "react-datetime";
@@ -10,10 +10,12 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { CSVLink } from "react-csv";
+import TransactionSercvice from "../../Services/TransactionSercvice";
 
 const BankStatement = () => {
   const { id } = useParams();
   const auth = useAuth();
+  const navigate = useNavigate();
 
   const [accountData, setAccountData] = useState([]);
   const [documentView, setDocumentView] = useState([]);
@@ -86,6 +88,18 @@ const BankStatement = () => {
 
   const handleEndDatevalue = (e) => {
     setEndDateValue(moment(e).format("DD-MM-YYYY HH:mm"));
+  };
+
+  const handleDel = (id) => {
+    TransactionSercvice.delBankTransactionData(id, auth.user)
+      .then((response) => {
+        console.log(response.data);
+        navigate("/admindash");
+      })
+      .catch((error) => {
+        console.error(error);
+        toast.error("Failed! Invalid Data");
+      });
   };
 
   return (
@@ -271,23 +285,16 @@ const BankStatement = () => {
                           {data.websiteName ? data.websiteName : "N.A"}
                         </p>
                       </div>
-                      <Link to={`/admindash/${data._id}`} className="col">
+                      <Link to={`/editbankdata/${data._id}`} className="col">
                         <button type="button" className="btn btn-primary">
-                          <FontAwesomeIcon
-                            icon={faEdit}
-                            data-toggle="modal"
-                            data-target="#exampleModalCenter"
-                          />
+                          <FontAwesomeIcon icon={faEdit} />
                         </button>
                       </Link>
-                      <Link to={`/admindash/${data._id}`} className="col">
-                        <button type="button" class="btn btn-danger">
-                          <FontAwesomeIcon
-                            icon={faTrashAlt}
-                            className="delete-icon"
-                          />
-                        </button>
-                      </Link>
+
+                      <button type="button" class="btn btn-danger">
+                        <FontAwesomeIcon icon={faTrashAlt} />
+                        onClick={handleDel(data._id)}
+                      </button>
                     </div>
                   </div>
                 );
@@ -402,21 +409,15 @@ const BankStatement = () => {
                       </div>
                       <Link to={`/admindash/${data._id}`} className="col">
                         <button type="button" className="btn btn-primary">
-                          <FontAwesomeIcon
-                            icon={faEdit}
-                            data-toggle="modal"
-                            data-target="#exampleModalCenter"
-                          />
+                          <FontAwesomeIcon icon={faEdit} />
                         </button>
                       </Link>
-                      <Link to={`/admindash/${data._id}`} className="col">
-                        <button type="button" class="btn btn-danger">
-                          <FontAwesomeIcon
-                            icon={faTrashAlt}
-                            className="delete-icon"
-                          />
-                        </button>
-                      </Link>
+                      <button type="button" class="btn btn-danger">
+                        <FontAwesomeIcon
+                          icon={faTrashAlt}
+                          onClick={handleDel(data._id)}
+                        />
+                      </button>
                     </div>
                   </div>
                 );
