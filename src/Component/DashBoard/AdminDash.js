@@ -28,8 +28,6 @@ const AdminDash = () => {
   const auth = useAuth();
   const nav = useNavigate();
 
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
   const [accountData, setAccountData] = useState([]);
   const [documentView, setDocumentView] = useState([]);
   const [documentFilter, setDocumentFilter] = useState([]);
@@ -84,8 +82,6 @@ const AdminDash = () => {
     setSubAdmin("");
     setBank("");
     setWebsite("");
-    setStartDate("");
-    setEndDate("");
     setToggle(true);
     SetStartDatesetValue("");
     setEndDateValue("");
