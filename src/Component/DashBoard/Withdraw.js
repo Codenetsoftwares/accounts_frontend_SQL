@@ -2,12 +2,22 @@ import React, { useState, useEffect } from "react";
 import { BsArrowLeftRight } from "react-icons/bs";
 import { useAuth } from "../../Utils/Auth";
 import AccountService from "../../Services/AccountService";
+import DashService from "../../Services/DashService";
 
 function Withdraw() {
   const auth = useAuth();
   const [Bank , setBank] = useState([]);
   const [Website, setWebsite] = useState([]);
+  const [WebsiteName, setWebsiteName] = useState([]);
   const [UId, setUId] = useState([]);
+  const [SendUId, setSendUId] = useState([]);
+  const [remarks, setRemarks] = useState("");
+  const [BankAccNo, SetBankAccNo] = useState([]);
+  const [transactionId, setTransactionId] = useState("");
+  const [transactionType, setTransactionType] = useState("");
+  const [amount, setAmount] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("");
+  const [bonus, setBonus] = useState("");
 
 
   useEffect(() => {
@@ -25,13 +35,39 @@ function Withdraw() {
     }, [auth]);
     console.log("user Id",UId)
   
+  //  const handleWithdraw =()=>{
+  //   console.log("=>>>>>>>",SendUId);
+  //  }
 
-
-  //  const handleWebsiteChange = (e) => {
-  //   const value = e.target.value;
-  //   setWebsite(value);
-  // };
-
+    const handleSubmit = () => {
+      // transactionID, transactionType, amount, paymentMethod, userId, subAdminId, accountNumber, websiteName, bankName, bankCharges, bonus, remarks
+      const data = {
+        transactionID: transactionId,
+        transactionType: "Withdraw",
+        amount: Number(amount),
+        paymentMethod: paymentMethod,
+        subAdminId: auth.user.email,
+        userId: SendUId,
+        bankName: BankAccNo[0],
+        accountNumber: Number(BankAccNo[1]),
+        websiteName: WebsiteName,
+        bonus:  Number(bonus),
+        remarks: remarks
+      };
+  
+      // Call the API service method to send the data to the backend
+     DashService.CreateTransactionWithdraw(data, auth.user)
+        .then((response) => {
+          // Handle successful response from the backend
+          console.log(response.data);
+         alert("Transaction Created Successfully!!");
+        })
+        .catch((error) => {
+          // Handle error from the backend
+          console.error(error);
+          alert("Failed! Transaction ID Does Not Exists");
+        });
+    };
 
 
 
@@ -86,8 +122,11 @@ function Withdraw() {
               <select
                 type="text"
                 className="form-select"
+                onChange={(e) => {
+                  setSendUId((e.target.value)); // Parse the JSON string back to an array
+                }}
               > 
-              <option selected>userId</option>
+              <option>userId</option>
               {UId.map((data, index) => (
                   <option key={index} value={data.userId}>
                     {data.userId}
@@ -105,6 +144,10 @@ function Withdraw() {
                 type="text"
                 className="form-control"
                 placeholder="Transaction Id"
+                onChange={(e) => {
+                  setTransactionId((e.target.value)); // Parse the JSON string back to an array
+                }} 
+                
               />
             </div>
 
@@ -120,6 +163,9 @@ function Withdraw() {
                 type="text"
                 className="form-control"
                 placeholder="Amount"
+                onChange={(e) => {
+                  setAmount((e.target.value)); // Parse the JSON string back to an array
+                }} 
               />
             </div>
 
@@ -133,6 +179,9 @@ function Withdraw() {
                 type="text"
                 className="form-control"
                 placeholder="Payment Method"
+                onChange={(e) => {
+                  setPaymentMethod((e.target.value)); // Parse the JSON string back to an array
+                }} 
               />
             </div>
 
@@ -142,7 +191,9 @@ function Withdraw() {
                   <i class="fa fa-gift"></i>
                 </span>
               </div>
-              <input type="text" className="form-control" placeholder="Bonus" />
+              <input type="text" className="form-control" placeholder="Bonus" onChange={(e) => {
+                  setBonus((e.target.value)); // Parse the JSON string back to an array
+                }}/>
             </div>
 
             <div className="input-group mb-3">
@@ -151,17 +202,23 @@ function Withdraw() {
                   <i class="fa fa-university"></i>
                 </span>
               </div>
-           
               <select
-                type="text"
-                className="form-select"
-              > 
-              <option selected>Select Bank</option>
-              {Bank.map((data, index) => (
-                  <option key={index} value={data.bankName}>
-                    {data.bankName}
+                class="form-select"
+                
+                value={JSON.stringify(BankAccNo)} // Store the array as a JSON string
+                onChange={(e) => {
+                  SetBankAccNo(JSON.parse(e.target.value)); // Parse the JSON string back to an array
+                }}
+              >
+                <option selected>Select Bank</option>
+                {Bank.map((bank, index) => (
+                  <option
+                    key={index}
+                    value={JSON.stringify([bank.bankName, bank.accountNumber])} // Store the array as a JSON string
+                  >
+                    {bank.bankName}
                   </option>
-                   ))}
+                ))}
               </select>
             </div>
 
@@ -174,6 +231,9 @@ function Withdraw() {
               <select
                 type="text"
                className="form-select"
+               onChange={(e) => {
+                setWebsiteName((e.target.value)); // Parse the JSON string back to an array
+              }}
               > 
               <option selected>Select Website</option>
               {Website.map((data, index) => (
@@ -184,9 +244,25 @@ function Withdraw() {
               </select>
              
             </div>
+            <div className="input-group mb-3">
+              <div className="input-group-prepend">
+                <span className="input-group-text">
+                  <i class="fas fa-comment"></i>
+                </span>
+              </div>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Remarks"
+                value={remarks}
+                onChange={(e) => setRemarks(e.target.value)}
+              />
+            </div>
+           
             <button
               type="button"
               className="btn btn-secondary btn-block"
+              onClick={handleSubmit}
               style={{
                 marginTop: "40px",
                 marginBottom: "10px",
