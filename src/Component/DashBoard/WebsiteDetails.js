@@ -14,6 +14,7 @@ import ModalAdWbl from "../Modal/ModalAdWbl";
 import ModalWbdl from "../Modal/ModalWbdl";
 import ModalWthWbl from "../Modal/ModalWthWbl";
 import { toast } from "react-toastify";
+import EditWebsite from "../Modal/EditWebsite";
 
 const WebsiteDetails = () => {
   // const { id } = useParams();
@@ -23,6 +24,7 @@ const WebsiteDetails = () => {
   const [getWebsite, setGetWebsite] = useState([]);
   const [name, setName] = useState([]);
   const [Id, setId] = useState("");
+  const [WebId, setWebId] = useState("");
 
   console.log("Auth", auth);
   const handlewebsite = (event) => {
@@ -99,6 +101,11 @@ const WebsiteDetails = () => {
     }
   };
 
+  const handelWebsiteEdit = (id) => {
+    setWebId(id);
+    
+  }
+
   // get api  fetch
   useEffect(() => {
     AccountService.website(auth.user).then((res) => setGetWebsite(res.data));
@@ -158,7 +165,15 @@ const WebsiteDetails = () => {
                           className="add-icon"
                         />
                       </button>
-                      <button type="button" class="btn btn-warning  btn-sm">
+                      <button
+                        type="button"
+                        class="btn btn-warning  btn-sm"
+                        onClick={() => {
+                          handelWebsiteEdit(data._id, data.websiteName);
+                        }}
+                        data-bs-toggle="modal"
+                        data-bs-target="#editwebsite"
+                      >
                         <FontAwesomeIcon icon={faEdit} />
                       </button>
 
@@ -191,6 +206,7 @@ const WebsiteDetails = () => {
         <ModalWthWbl ID={Id} />
         <ModalAdWbl ID={Id} />
         <ModalWbdl name={name} />
+        <EditWebsite ID={WebId} />
       </div>
     </>
   );

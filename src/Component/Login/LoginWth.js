@@ -2,14 +2,13 @@
 import React, { useState } from "react";
 import "./LoginWth.css";
 import BodyBG from "../../Assets/bg.jpg";
-import Happy from '../../Assets/My_project.ico'
+import Happy from "../../Assets/My_project.ico";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../Utils/Auth";
 import AccountService from "../../Services/AccountService";
-import {   ToastContainer, toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 
 const LoginWth = () => {
   const auth = useAuth();
@@ -52,8 +51,7 @@ const LoginWth = () => {
               toast.success("Login successfull");
               auth.login();
               navigate("/dashboard");
-            }
-            else{
+            } else {
               toast.error(res.data.message);
               navigate("/");
             }
@@ -88,8 +86,7 @@ const LoginWth = () => {
               localStorage.setItem("user", res.data.result.accessToken);
               auth.login();
               navigate("/dashboard");
-            }
-            else{
+            } else {
               toast.error(res.data.message);
               navigate("/");
             }
@@ -116,26 +113,25 @@ const LoginWth = () => {
           // persist: persist,
         })
           .then((res) => {
-            console.log('res',res);
-            console.log('res',res.data.token.accessToken);
+            console.log("res", res);
+            console.log("res", res.data.token.accessToken);
             if (res.status === 200) {
               localStorage.setItem("user", res.data.token.accessToken);
               localStorage.setItem("role", res.data.role);
-              console.log("===>",auth);
-              console.log("withdraw");
-              toast.success('Login Successfully')
+              console.log("===>", auth);
+              console.log("admin");
+              toast.success("Login Successfully");
               // alert("login successfull");
               auth.login();
               navigate("/welcome");
-            }
-            else{
+            } else {
               toast.error(res.data.message);
               navigate("/");
             }
           })
           .catch((err) => {
-            if (!err.response) {
-             alert(err.message);
+            if (err.response) {
+              toast.error("Invalid User Id Or Password");
               return;
             }
             if (err.response.status === 403) {
@@ -155,7 +151,6 @@ const LoginWth = () => {
       className="bg-info d-flex justify-content-center  align-items-center vh-100"
       style={{ backgroundImage: `url(${BodyBG})`, backgroundSize: "cover" }}
     >
-
       <div
         className=" card bg-transparent   p-5 rounded-3 justify-content-center kaushik"
         style={{
@@ -209,9 +204,8 @@ const LoginWth = () => {
                 aria-selected={activeTab === 3}
                 onClick={() => handleClick(3)}
               >
-                <b className="text-white">Happy Wave</b><br/>
-                
-
+                <b className="text-white">Happy Wave</b>
+                <br />
               </a>
             </li>
           </ul>
@@ -254,7 +248,9 @@ const LoginWth = () => {
                 display: "flex",
                 alignItems: "center",
               }}
-            ><img src={Happy} /></i>
+            >
+              <img src={Happy} />
+            </i>
           )}
         </span>
 
@@ -306,7 +302,6 @@ const LoginWth = () => {
                     alignItems: "center",
                   }}
                 ></i>
-                
               </span>
             </div>
             <input
@@ -340,7 +335,10 @@ const LoginWth = () => {
             />
           </div>
           <div className="d-flex justify-content-center">
-          <Link to="/forpas"> <b>Forgot Password?</b> </Link>
+            <Link to="/forpas">
+              {" "}
+              <b>Forgot Password?</b>{" "}
+            </Link>
           </div>
         </form>
       </div>

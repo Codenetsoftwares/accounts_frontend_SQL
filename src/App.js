@@ -36,7 +36,15 @@ import InnerIntroducer from "./Component/DashBoard/InnerIntroducer";
 import ButtonDemo from "./Component/DashBoard/ButtonDemo";
 import Withdraw from "./Component/DashBoard/Withdraw";
 import Deposit from "./Component/DashBoard/Deposit";
-
+import EditWebTransaction from "./Component/DashBoard/EditWebTransaction";
+import EditBnkTransaction from "./Component/DashBoard/EditBnkTransaction ";
+import TransactionPage from "./Component/DashBoard/TransactionPage";
+import BankPage from "./Component/DashBoard/BankPage";
+import WebsitePage from "./Component/DashBoard/WebsitePage";
+import BankEdit from "./Component/DashBoard/BankEdit";
+import BankDel from "./Component/DashBoard/BankDel";
+import WebsitePageEdit from "./Component/DashBoard/WebsitePageEdit";
+import WebsitePageDel from "./Component/DashBoard/WebsitePageDel";
 
 function App() {
   return (
@@ -119,19 +127,19 @@ function App() {
                   </RequireAuth>
                 }
               />
-               <Route
+              <Route
                 path="withdraw"
                 element={
                   <RequireAuth>
-                    <Withdraw/>
+                    <Withdraw />
                   </RequireAuth>
                 }
               />
-            <Route
+              <Route
                 path="/deposit"
                 element={
                   <RequireAuth>
-                  <Deposit/>
+                    <Deposit />
                   </RequireAuth>
                 }
               />
@@ -202,12 +210,53 @@ function App() {
                   </RequireAuth>
                 }
               />
-
-           <Route
+              <Route
                 path="buttons"
                 element={
                   <RequireAuth>
-                  <ButtonDemo/>
+                    <ButtonDemo />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="TransactionAlert"
+                element={
+                  <RequireAuth>
+                    <TransactionPage />
+                  </RequireAuth>
+                }
+              />
+              <Route path="BankPage" element={<BankPage />} />
+              <Route path="WebsitePage" element={<WebsitePage />} />
+              <Route
+                path="BankEdit"
+                element={
+                  <RequireAuth>
+                    <BankEdit />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="BankDelete"
+                element={
+                  <RequireAuth>
+                    <BankEdit />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="WebsiteEdit"
+                element={
+                  <RequireAuth>
+                    <WebsitePageEdit />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="WebsiteDelete"
+                element={
+                  <RequireAuth>
+                    <WebsitePageDel />
                   </RequireAuth>
                 }
               />
@@ -228,6 +277,30 @@ function App() {
               element={
                 <RequireAuth>
                   <EditTransaction />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="admindash/:id"
+              element={
+                <RequireAuth>
+                  <EditTransaction />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="editwebsitedata/:id"
+              element={
+                <RequireAuth>
+                  <EditWebTransaction />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="editbankdata/:id"
+              element={
+                <RequireAuth>
+                  <EditBnkTransaction />
                 </RequireAuth>
               }
             />

@@ -4,11 +4,13 @@ import { BsArrowLeftRight, } from "react-icons/bs";
 import { useAuth } from "../../Utils/Auth";
 import AccountService from "../../Services/AccountService";
 
+
 function Deposit() {
   const auth = useAuth();
   const [Bank , setBank] = useState([]);
   const [Website, setWebsite] = useState([]);
   const [UId, setUId] = useState([]);
+  const [remarks, setRemarks] = useState("");
 
 
   useEffect(() => {
@@ -132,10 +134,10 @@ function Deposit() {
             <div className="input-group mb-3">
               <div className="input-group-prepend">
                 <span className="input-group-text">
-                  <i class="fa fa-gift"></i>
+                  <i class="fas fa-piggy-bank"></i>
                 </span>
               </div>
-              <input type="text" className="form-control" placeholder="Bonus" />
+              <input type="text" className="form-control" placeholder="Bank Charge" />
             </div>
 
             <div className="input-group mb-3">
@@ -176,6 +178,20 @@ function Deposit() {
                    ))}
               </select>
              
+            </div>
+            <div className="input-group mb-3">
+              <div className="input-group-prepend">
+                <span className="input-group-text">
+                  <i class="fas fa-comment"></i>
+                </span>
+              </div>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Remarks"
+                value={remarks}
+                onChange={(e) => setRemarks(e.target.value)}
+              />
             </div>
             <button
               type="button"

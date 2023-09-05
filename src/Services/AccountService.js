@@ -193,7 +193,7 @@ class AccountService {
   GetBankStMent(id, user) {
     return axios({
       method: "get",
-      url: `${API_HOST}/api/admin/bank-account-summary/${id}`,
+      url: `${API_HOST}/api/admin/manual-user-bank-account-summary/${id}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -234,7 +234,7 @@ class AccountService {
   GetWebsiteStateMent(id, user) {
     return axios({
       method: "get",
-      url: `${API_HOST}/api/admin/website-account-summary/${id}`,
+      url: `${API_HOST}/api/admin/manual-user-website-account-summary/${id}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -275,11 +275,14 @@ class AccountService {
   //   });
   // }
 
-  createActualuser(data) {
+  createActualuser(data ,user) {
     return axios({
       method: "post",
-      url: API_HOST + "/api/accounts/user/register",
+      url: API_HOST + "/api/admin/user/register",
       data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
     });
   }
 
@@ -293,7 +296,7 @@ class AccountService {
     });
   }
 
-  Introducercut(id, user , data) {
+  Introducercut(id, user, data) {
     return axios({
       method: "post",
       url: `${API_HOST}/api/admin/introducer/introducerCut/${id}`,
@@ -303,15 +306,24 @@ class AccountService {
       },
     });
   }
+
  SaveBankTransaction(id, user) {
     return axios({
       method: "post",
       url: `${API_HOST}/api/admin/save-bank-transaction-request/${id}`,
+
+  EditWebsite(data,id, user) {
+    return axios({
+      method: "put",
+      url: `${API_HOST}/api/website-edit/${id}`,
+      data: data,
+
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
     });
   }
+
  DeleteBankTransaction(id, user) {
     return axios({
       method: "post",
@@ -361,6 +373,7 @@ class AccountService {
     });
   }
   
+
 }
 
 export default new AccountService();

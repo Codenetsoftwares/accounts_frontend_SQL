@@ -19,12 +19,13 @@ const CreateActualUser = () => {
   const [formData, setFormData] = useState({
     yourFirstName: "",
     yourLastname: "",
-    yourEmail: "",
+    yourUserName: "",
     yourEnterPassword: "",
     yourConfirmPassword: "",
     yourIntroducerPercentage: "",
     yourIntroducerId: "",
     yourContact: "",
+    yourUserId: "",
   });
   const [checkedItems, setCheckedItems] = useState([]);
   console.log("This is FromData=>>>", formData);
@@ -48,31 +49,33 @@ const CreateActualUser = () => {
     e.preventDefault();
 
     console.log(checkedItems);
-    
-      const data = {
-        firstname: formData.yourFirstName,
-        lastname: formData.yourLastname,
-        email: formData.yourEmail,
-        password: formData.yourEnterPassword,
-        contactNumber: formData.yourContact,
-        introducerId: formData.yourIntroducerId,
-        introducerPercentage: formData.yourIntroducerPercentage,
+
+    const data = {
+      firstname: formData.yourFirstName,
+      lastname: formData.yourLastname,
+      userName: formData.yourUserName,
+      password: formData.yourEnterPassword,
+      contactNumber: formData.yourContact,
+      introducerId: formData.yourIntroducerId,
+      introducerPercentage: formData.yourIntroducerPercentage,
+      userId: formData.yourUserId,
     };
     if (formData.yourEnterPassword === formData.yourConfirmPassword) {
-    
-    AccountService.createActualuser({ data })
-      .then((res) => {
-        console.log(res);
-        if (res.status === 200) {
-          alert("User Created Sucessfully");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        if (err.res.data) {
-          console.log(err.res.data.message);
-        }
-      });
+      AccountService.createActualuser(data, auth.user)
+        .then((res) => {
+          console.log(res);
+          if (res.status === 200) {
+            alert("User Created Sucessfully");
+            window.location.reload();
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          if (err.res.data) {
+            alert("Something Went Wrong");
+            console.log(err.res.data.message);
+          }
+        });
     }
   };
 
@@ -100,24 +103,24 @@ const CreateActualUser = () => {
       <div className="container pt-5">
         <div className="row justify-content-center">
           <div className="col-lg-9">
-           <div className="row justify-content-center">
+            <div className="row justify-content-center">
               <div className="card">
                 <div className="card-body">
                   <form>
                     <div className="row g-3">
                       <div className="col-md-6">
                         <label htmlFor="Your-email" className="form-label">
-                          <FaEnvelope /> Enter Your E-mail
+                          <FaEnvelope /> User Name
                           <span className="text-danger">*</span>
                         </label>
                         <input
-                          type="email"
+                          type="text"
                           className="form-control"
-                          id="your-email"
-                          name="yourEmail"
-                          value={formData.yourEmail}
+                          id="your-UserName"
+                          name="yourUserName"
+                          value={formData.yourUserName}
                           onChange={handleChange}
-                          placeholder="Enter your e-mail"
+                          placeholder="Enter User Name"
                           required
                         />
                       </div>
@@ -148,7 +151,7 @@ const CreateActualUser = () => {
                           name="yourFirstName"
                           value={formData.yourFirstName}
                           onChange={handleChange}
-                          placeholder="Enter your First Name"
+                          placeholder="Enter First Name"
                           required
                         />
                       </div>
@@ -164,7 +167,7 @@ const CreateActualUser = () => {
                           name="yourLastname"
                           value={formData.yourLastname}
                           onChange={handleChange}
-                          placeholder="Enter your Last Name"
+                          placeholder="Enter Last Name"
                           required
                         />
                       </div>
@@ -180,7 +183,7 @@ const CreateActualUser = () => {
                           name="yourIntroducerId"
                           value={formData.yourIntroducerId}
                           onChange={handleChange}
-                          placeholder="Enter your Introducer ID"
+                          placeholder="Enter Introducer ID"
                           required
                         />
                       </div>
@@ -196,7 +199,7 @@ const CreateActualUser = () => {
                           name="yourIntroducerPercentage"
                           value={formData.yourIntroducerPercentage}
                           onChange={handleChange}
-                          placeholder="Enter your Introducer Percentage"
+                          placeholder="Enter Introducer Percentage"
                           required
                         />
                       </div>
@@ -231,6 +234,26 @@ const CreateActualUser = () => {
                           value={formData.yourConfirmPassword}
                           onChange={handleChange}
                           placeholder="Confirm Password"
+                          required
+                        />
+                      </div>
+
+                      <div className="col">
+                        <label
+                          htmlFor=""
+                          className="form-label d-flex justify-content-center"
+                        >
+                          <FaKey /> User Id
+                          <span className="text-danger">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          // id="yourUserId"
+                          name="yourUserId"
+                          value={formData.yourUserId}
+                          onChange={handleChange}
+                          placeholder="User Id"
                           required
                         />
                       </div>
