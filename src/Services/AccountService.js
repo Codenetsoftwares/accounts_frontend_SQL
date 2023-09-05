@@ -303,6 +303,64 @@ class AccountService {
       },
     });
   }
+ SaveBankTransaction(id, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/admin/save-bank-transaction-request/${id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+ DeleteBankTransaction(id, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/admin/save-bank-transaction-request/${id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+  SaveWebsiteTransaction(id, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/admin/save-website-transaction-request/${id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  DeleteWebsiteTransaction(id, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/delete-website-transaction/${id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+ SaveTransaction(id, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/admin/save-transaction-request/${id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  DeleteTransaction(id, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/delete-transaction/${id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+  
 }
 
 export default new AccountService();
