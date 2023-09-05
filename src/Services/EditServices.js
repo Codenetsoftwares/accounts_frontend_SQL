@@ -41,6 +41,15 @@ class EditServices {
       },
     });
   }
+  ViewBankDelAlert(user) {
+    return axios({
+      method: "get",
+      url: API_HOST + "/",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
   IsBankDelApprove(_id, data, user) {
     return axios({
       method: "post",
@@ -65,6 +74,15 @@ class EditServices {
       method: "post",
       url: `${API_HOST}/api/admin/approve-website-edit-request/${_id}`,
       data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+  ViewWebsiteDelAlert(user) {
+    return axios({
+      method: "get",
+      url: API_HOST + "/",
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
