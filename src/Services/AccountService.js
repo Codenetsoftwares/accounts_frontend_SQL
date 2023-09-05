@@ -306,6 +306,16 @@ class AccountService {
       },
     });
   }
+  EditWebsite(data,id, user) {
+    return axios({
+      method: "put",
+      url: `${API_HOST}/api/website-edit/${id}`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
 }
 
 export default new AccountService();

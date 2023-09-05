@@ -72,7 +72,30 @@ class TransactionService {
       },
     });
   }
-  
+
+  editBnkTransactionData(id, data, user) {
+    return axios({
+      method: "put",
+      url: `${API_HOST}/api/admin/edit-bank-transaction-request/${id}`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+  editWebTransactionData(id, data, user) {
+    return axios({
+      method: "put",
+      url: `${API_HOST}/api/admin/edit-website-transaction-request/${id}`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+
+
   delBankTransactionData(id, user) {
     return axios({
       method: "put",
