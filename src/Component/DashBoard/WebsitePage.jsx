@@ -10,9 +10,9 @@ const WebsitePage = () => {
     nav("/WebsiteDelete");
   };
   return (
-    <div>
-      <button onClick={handleEditPage}>Edit Request</button>
-      <button onClick={handleDeletePage}>Delete Request</button>
+    <div className="d-flex justify-content-center" >
+      <button className="btn-primary btn-lg" onClick={handleEditPage}>Edit Request</button>
+      <button className="btn-danger btn-lg" onClick={handleDeletePage}>Delete Request</button>
     </div>
   );
 };
