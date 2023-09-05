@@ -11,7 +11,7 @@ import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import CalenderService from "../../Services/CalenderService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faDeleteLeft, faDownLeftAndUpRightToCenter, faTrash, faUser } from "@fortawesome/free-solid-svg-icons";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FaFilter } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
@@ -151,6 +151,69 @@ const AdminDash = () => {
   useEffect(() => {
     AccountService.website(auth.user).then((res) => setWebsiteList(res.data));
   }, [auth]);
+  
+  const handleDelete = (e, transactionType, id) => {
+    switch (transactionType) {
+      case "deposit":
+        AccountService.DeleteWebsiteTransaction( id,auth.user)
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        break;
+      case "withdraw":
+        AccountService.DeleteWebsiteTransaction(id, auth.user)
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        break;
+      case "ManualBankwithdraw":
+        AccountService.DeleteWebsiteTransaction(id, auth.user)
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        break;
+      case "ManualBankdeposit":
+        AccountService.DeleteWebsiteTransaction( id, auth.user)
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        break;
+      case "ManualWebsitewithdraw":
+        AccountService.DeleteWebsiteTransaction( id, auth.user)
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        break;
+      case "ManualWebsitedeposit":
+      AccountService.DeleteWebsiteTransaction(id, auth.user)
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        break;
+      default:
+      // code block
+    }
+   
+
+  };
 
   const handelnormaledit = (
     e,
@@ -489,6 +552,25 @@ const AdminDash = () => {
                       {data.depositAmount && (<p className="col fs-6 text-break">N.A</p>)}
                       {data.withdrawAmount && (<p className="col fs-6 text-break">N.A</p>)} */}
                     </div>
+
+//                     <Link to={`/admindash/${data._id}`} className="col">
+//                       <button type="button" className="btn btn-primary">
+//                         <FontAwesomeIcon
+//                           icon={faEdit}
+//                           data-toggle="modal"
+//                           data-target="#exampleModalCenter"
+//                         />
+//                       </button>
+//                     </Link>
+                    
+                      <button type="button" className="btn btn-primary">
+                        <FontAwesomeIcon
+                          icon={faTrash}
+                          onClick={(e)=> {handleDelete(e,data._id,data.transactionType)}}
+                        />
+                      </button>
+                    
+
                     {/* <Link to={`/admindash/${data._id}`} className="col"> */}
                     <button
                       type="button"
@@ -515,6 +597,7 @@ const AdminDash = () => {
                       <FontAwesomeIcon icon={faEdit} />
                     </button>
                     {/* </Link> */}
+
                   </div>
                 </div>
               );
