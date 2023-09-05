@@ -19,12 +19,10 @@ const Alert = () => {
     nav("/WebsitePage");
   };
   return (
-    <div className="d-flex align-items-center justify-content-center">
-      <button onClick={handleTransactionPage}>TransactionDetails</button>
-      <button onClick={handleBankPage} type="button">
-        Bank
-      </button>
-      <button onClick={HandleWebsitePage}>Website</button>
+    <div className="d-flex justify-content-around h-100 ">
+      <button className="btn-lg btn-primary" onClick={handleTransactionPage}>TransactionDetails</button>
+      <button className="btn-lg btn-success" onClick={handleBankPage}>Bank</button>
+      <button className="btn-lg btn-danger" onClick={HandleWebsitePage}>Website</button>
     </div>
   );
 };
