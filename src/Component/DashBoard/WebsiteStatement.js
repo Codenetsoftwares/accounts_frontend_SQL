@@ -295,14 +295,14 @@ const WebsiteStatement = () => {
                           <FontAwesomeIcon icon={faEdit} />
                         </button>
                       </Link>
-                      <Link to={`/admindash/${data._id}`} className="col">
+                      
                         <button type="button" class="btn btn-danger">
                           <FontAwesomeIcon
                             icon={faTrashAlt}
                             onClick={handleDel(data._id)}
                           />
                         </button>
-                      </Link>
+                    
                     </div>
                   </div>
                 );

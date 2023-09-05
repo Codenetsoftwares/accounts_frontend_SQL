@@ -291,9 +291,12 @@ const BankStatement = () => {
                         </button>
                       </Link>
 
-                      <button type="button" class="btn btn-danger">
-                        <FontAwesomeIcon icon={faTrashAlt} />
+                      <button
+                        type="button"
+                        class="btn btn-danger"
                         onClick={handleDel(data._id)}
+                      >
+                        <FontAwesomeIcon icon={faTrashAlt} />
                       </button>
                     </div>
                   </div>
@@ -412,11 +415,12 @@ const BankStatement = () => {
                           <FontAwesomeIcon icon={faEdit} />
                         </button>
                       </Link>
-                      <button type="button" class="btn btn-danger">
-                        <FontAwesomeIcon
-                          icon={faTrashAlt}
-                          onClick={handleDel(data._id)}
-                        />
+                      <button
+                        type="button"
+                        class="btn btn-danger"
+                        onClick={handleDel(data._id)}
+                      >
+                        <FontAwesomeIcon icon={faTrashAlt} />
                       </button>
                     </div>
                   </div>
