@@ -72,6 +72,7 @@ class TransactionService {
       },
     });
   }
+
   editBnkTransactionData(id, data, user) {
     return axios({
       method: "put",
@@ -92,6 +93,7 @@ class TransactionService {
       },
     });
   }
+
 
 
   delBankTransactionData(id, user) {

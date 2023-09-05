@@ -10,9 +10,9 @@ const BankPage = () => {
     nav("/BankDelete");
   };
   return (
-    <div>
-      <button onClick={handleEditPage}>Edit Request</button>
-      <button onClick={handleDeletePage}>Delete Request</button>
+    <div className="d-flex justify-content-around h-100">
+      <button className=" btn-lg btn-primary" onClick={handleEditPage}>Edit Request</button>
+      <button className=" btn-lg btn-danger" onClick={handleDeletePage}>Delete Request</button>
     </div>
   );
 };
