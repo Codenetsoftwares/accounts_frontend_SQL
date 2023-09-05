@@ -38,6 +38,13 @@ import Withdraw from "./Component/DashBoard/Withdraw";
 import Deposit from "./Component/DashBoard/Deposit";
 import EditWebTransaction from "./Component/DashBoard/EditWebTransaction";
 import EditBnkTransaction from "./Component/DashBoard/EditBnkTransaction ";
+import TransactionPage from "./Component/DashBoard/TransactionPage";
+import BankPage from "./Component/DashBoard/BankPage";
+import WebsitePage from "./Component/DashBoard/WebsitePage";
+import BankEdit from "./Component/DashBoard/BankEdit";
+import BankDel from "./Component/DashBoard/BankDel";
+import WebsitePageEdit from "./Component/DashBoard/WebsitePageEdit";
+import WebsitePageDel from "./Component/DashBoard/WebsitePageDel";
 
 function App() {
   return (
@@ -203,12 +210,53 @@ function App() {
                   </RequireAuth>
                 }
               />
-
               <Route
                 path="buttons"
                 element={
                   <RequireAuth>
                     <ButtonDemo />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="TransactionAlert"
+                element={
+                  <RequireAuth>
+                    <TransactionPage />
+                  </RequireAuth>
+                }
+              />
+              <Route path="BankPage" element={<BankPage />} />
+              <Route path="WebsitePage" element={<WebsitePage />} />
+              <Route
+                path="BankEdit"
+                element={
+                  <RequireAuth>
+                    <BankEdit />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="BankDelete"
+                element={
+                  <RequireAuth>
+                    <BankEdit />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="WebsiteEdit"
+                element={
+                  <RequireAuth>
+                    <WebsitePageEdit />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="WebsiteDelete"
+                element={
+                  <RequireAuth>
+                    <WebsitePageDel />
                   </RequireAuth>
                 }
               />
