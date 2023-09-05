@@ -173,10 +173,15 @@ const AdminDash = () => {
             <option className="d-flex" value="Withdraw">
               <b>Withdraw</b>
             </option>
-            <option className="d-flex" value="Manual-Deposit">
-              <b>Manual Deposit</b>
-            </option> <option className="d-flex" value="Manual-Withdraw">
-              <b>Manual Withdraw</b>
+            <option className="d-flex" value="Manual-Bank-Deposit">
+              <b>Manual Bank Deposit</b>
+            </option> <option className="d-flex" value="Manual-Bank-Withdraw">
+              <b>Manual Bank Withdraw</b>
+            </option>
+            <option className="d-flex" value="Manual-Website-Deposit">
+              <b>Manual Website Deposit</b>
+            </option> <option className="d-flex" value="Manual-Website-Withdraw">
+              <b>Manual Website Withdraw</b>
             </option>
           </select>
         </div>
