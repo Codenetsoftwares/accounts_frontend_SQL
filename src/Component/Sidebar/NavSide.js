@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../Utils/Auth";
 import Topimg from "../../Assets/Topimgg.png";
+import userIcon from "../../Assets/user-iconn.jpg";
 const NavSide = () => {
   const auth = useAuth();
   const [isToggle, setIsToggle] = useState(true);
@@ -67,11 +68,7 @@ const NavSide = () => {
         <div className="sidebar">
           <div className="user-panel mt-3 pb-3 mb-3 d-flex">
             <div className="image">
-              <img
-                src="dist/img/user2-160x160.jpg"
-                className="img-circle elevation-2"
-                alt="User Image"
-              />
+              <img src={userIcon} className="img-circle" alt="User Image" />
             </div>
             <div className="info">
               <p href="#" className="text-white" style={{ fontSize: "10px" }}>

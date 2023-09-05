@@ -23,6 +23,7 @@ import AccountService from "../../Services/AccountService";
 import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
 import moment from "moment";
+import EditTransaction from "../Modal/EditTransaction";
 
 const AdminDash = () => {
   const auth = useAuth();
@@ -37,11 +38,23 @@ const AdminDash = () => {
   const [bank, setBank] = useState("");
   const [websiteList, setWebsiteList] = useState([]);
   const [website, setWebsite] = useState("");
+  const [NormalEditData, setNormalEditData] = useState({
+    Id: "",
+    amount: "",
+    bankName: "",
+    paymentMethod: "",
+    subAdminName: "",
+    transactionID: "",
+    transactionType: "",
+    userId: "",
+    websiteName: "",
+    depositAmount:"",
+    withdrawAmount :"",
+  });
   const [select, setSelect] = useState("All");
   const [toggle, setToggle] = useState(true);
   const [startDatevalue, SetStartDatesetValue] = useState(new Date());
   const [endDatevalue, setEndDateValue] = useState(new Date());
-
 
   const test = ["transactionType", "subAdminName", "websiteName", "bankName"];
 
@@ -63,11 +76,11 @@ const AdminDash = () => {
       (res) => (setDocumentView(res.data), setAccountData(res.data))
     );
   }, [auth]);
-  console.log(documentView)
+  console.log(documentView);
 
   const handelDate = () => {
-    const sdate = moment(startDatevalue, 'DD-MM-YYYY HH:mm').toDate();
-    const edate = moment(endDatevalue, 'DD-MM-YYYY HH:mm').toDate();
+    const sdate = moment(startDatevalue, "DD-MM-YYYY HH:mm").toDate();
+    const edate = moment(endDatevalue, "DD-MM-YYYY HH:mm").toDate();
     const filteredDocuments = documentView.filter((data) => {
       const transactionDate = new Date(data.createdAt);
       return transactionDate >= sdate && transactionDate <= edate;
@@ -77,7 +90,7 @@ const AdminDash = () => {
   };
 
   const handleReset = () => {
-    setSelect("")
+    setSelect("");
     setDocumentView(accountData);
     setSubAdmin("");
     setBank("");
@@ -97,7 +110,6 @@ const AdminDash = () => {
     const value = e.target.value;
     setSubAdmin(value);
     handleClick("subAdminName", value);
-
   };
 
   const handleBank = (e) => {
@@ -113,11 +125,11 @@ const AdminDash = () => {
   };
 
   const handleStartDatevalue = (e) => {
-    SetStartDatesetValue(moment(e).format('DD-MM-YYYY HH:mm'))
+    SetStartDatesetValue(moment(e).format("DD-MM-YYYY HH:mm"));
   };
 
   const handleEndDatevalue = (e) => {
-    setEndDateValue(moment(e).format('DD-MM-YYYY HH:mm'))
+    setEndDateValue(moment(e).format("DD-MM-YYYY HH:mm"));
   };
 
   useEffect(() => {
@@ -140,13 +152,43 @@ const AdminDash = () => {
     AccountService.website(auth.user).then((res) => setWebsiteList(res.data));
   }, [auth]);
 
+  const handelnormaledit = (
+    e,
+    id,
+    amount,
+    bankName,
+    paymentMethod,
+    subAdminName,
+    transactionID,
+    transactionType,
+    userId,
+    websiteName,
+    depositAmount,
+    withdrawAmount
+  ) => {
+    const data = {
+      id,
+      amount,
+      bankName,
+      paymentMethod,
+      subAdminName,
+      transactionID,
+      transactionType,
+      userId,
+      websiteName,
+      depositAmount,
+      withdrawAmount,
+    };
+    setNormalEditData(data);
+    console.log("====>>>>", NormalEditData);
+  };
 
   return (
     <div className="main">
       {/* This is the Main Card */}
       <div
         className="card card-body rounded-1 main "
-      // style={{ backgroundImage: gradient }}
+        // style={{ backgroundImage: gradient }}
       >
         <div className="d-flex mt-5 mt-5 ml-5 pt-5 justify-content-center">
           <h6 className="fw-bold text-nowrap pt-2">
@@ -175,7 +217,8 @@ const AdminDash = () => {
             </option>
             <option className="d-flex" value="Manual-Deposit">
               <b>Manual Deposit</b>
-            </option> <option className="d-flex" value="Manual-Withdraw">
+            </option>{" "}
+            <option className="d-flex" value="Manual-Withdraw">
               <b>Manual Withdraw</b>
             </option>
           </select>
@@ -296,17 +339,21 @@ const AdminDash = () => {
         </div> */}
         <div className="d-flex pt-3 justify-content-center">
           <h6 className="fw-bold text-nowrap pt-2"> Start Date</h6>
-          <Datetime value={startDatevalue}
+          <Datetime
+            value={startDatevalue}
             onChange={handleStartDatevalue}
             dateFormat="DD-MM-YYYY"
-            timeFormat="HH:mm" />
+            timeFormat="HH:mm"
+          />
         </div>
         <div className="d-flex pt-3 justify-content-center">
           <h6 className="fw-bold text-nowrap pt-2"> End Date</h6>
-          <Datetime value={endDatevalue}
+          <Datetime
+            value={endDatevalue}
             onChange={handleEndDatevalue}
             dateFormat="DD-MM-YYYY"
-            timeFormat="HH:mm" />
+            timeFormat="HH:mm"
+          />
         </div>
         <div className="d-flex pt-3 justify-content-center">
           <div className="mx-2">
@@ -379,24 +426,57 @@ const AdminDash = () => {
                     <div className="row">
                       <p className="col fs-6">
                         {new Date(data.createdAt).toLocaleString("default")}{" "}
-
                       </p>
-                      {data.amount && (<p className="col fs-6">₹&nbsp;{data.amount}</p>)}
-                      {data.depositAmount && (<p className="col fs-6">₹&nbsp;{data.depositAmount}</p>)}
-                      {data.withdrawAmount && (<p className="col fs-6">₹&nbsp;{data.withdrawAmount}</p>)}
-                      {data.transactionID && (<p className="col fs-6 text-break">{data.transactionID}</p>)}
-                      {data.depositAmount && (<p className="col fs-6 text-break">N.A</p>)}
-                      {data.withdrawAmount && (<p className="col fs-6 text-break">N.A</p>)}
-                      {data.transactionType && (<p className="col fs-6 text-break">{data.transactionType}</p>)}
-                      {data.depositAmount && (<p className="col fs-6 text-break">N.A</p>)}
-                      {data.withdrawAmount && (<p className="col fs-6 text-break">N.A</p>)}
-                      {data.paymentMethod && (<p className="col fs-6">{data.paymentMethod}</p>)}
+                      {data.amount && (
+                        <p className="col fs-6">₹&nbsp;{data.amount}</p>
+                      )}
+                      {data.depositAmount && (
+                        <p className="col fs-6">₹&nbsp;{data.depositAmount}</p>
+                      )}
+                      {data.withdrawAmount && (
+                        <p className="col fs-6">₹&nbsp;{data.withdrawAmount}</p>
+                      )}
+                      {data.transactionID && (
+                        <p className="col fs-6 text-break">
+                          {data.transactionID}
+                        </p>
+                      )}
+                      {data.depositAmount && (
+                        <p className="col fs-6 text-break">N.A</p>
+                      )}
+                      {data.withdrawAmount && (
+                        <p className="col fs-6 text-break">N.A</p>
+                      )}
+                      {data.transactionType && (
+                        <p className="col fs-6 text-break">
+                          {data.transactionType}
+                        </p>
+                      )}
+                      {data.depositAmount && (
+                        <p className="col fs-6 text-break">N.A</p>
+                      )}
+                      {data.withdrawAmount && (
+                        <p className="col fs-6 text-break">N.A</p>
+                      )}
+                      {data.paymentMethod && (
+                        <p className="col fs-6">{data.paymentMethod}</p>
+                      )}
                       <p className="col fs-6 text-break">{data.subAdminName}</p>
-                      {data.paymentMethod && (<p className="col fs-6">{data.userId}</p>)}
-                      {data.depositAmount && (<p className="col fs-6 text-break">N.A</p>)}
-                      {data.withdrawAmount && (<p className="col fs-6 text-break">N.A</p>)}
-                      <p className="col fs-6">{data.bankName ? data.bankName : "N.A"}</p>
-                      <p className="col fs-6">{data.websiteName ? data.websiteName : "N.A"}</p>
+                      {data.paymentMethod && (
+                        <p className="col fs-6">{data.userId}</p>
+                      )}
+                      {data.depositAmount && (
+                        <p className="col fs-6 text-break">N.A</p>
+                      )}
+                      {data.withdrawAmount && (
+                        <p className="col fs-6 text-break">N.A</p>
+                      )}
+                      <p className="col fs-6">
+                        {data.bankName ? data.bankName : "N.A"}
+                      </p>
+                      <p className="col fs-6">
+                        {data.websiteName ? data.websiteName : "N.A"}
+                      </p>
                       {/* {data.websiteName && (<p className="col fs-6">{data.Bank}</p>)}
                       {data.depositAmount && (<p className="col fs-6 text-break">N.A</p>)}
                       {data.withdrawAmount && (<p className="col fs-6 text-break">N.A</p>)}
@@ -404,15 +484,32 @@ const AdminDash = () => {
                       {data.depositAmount && (<p className="col fs-6 text-break">N.A</p>)}
                       {data.withdrawAmount && (<p className="col fs-6 text-break">N.A</p>)} */}
                     </div>
-                    <Link to={`/admindash/${data._id}`} className="col">
-                      <button type="button" className="btn btn-primary">
-                        <FontAwesomeIcon
-                          icon={faEdit}
-                          data-toggle="modal"
-                          data-target="#exampleModalCenter"
-                        />
-                      </button>
-                    </Link>
+                    {/* <Link to={`/admindash/${data._id}`} className="col"> */}
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      data-bs-toggle="modal"
+                      data-bs-target="#edittransaction"
+                      onClick={(e) => {
+                        handelnormaledit(
+                          e,
+                          data._id,
+                          data.amount,
+                          data.bankName,
+                          data.paymentMethod,
+                          data.subAdminName,
+                          data.transactionID,
+                          data.transactionType,
+                          data.userId,
+                          data.websiteName,
+                          data.depositAmount,
+                          data.withdrawAmount
+                        );
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faEdit} />
+                    </button>
+                    {/* </Link> */}
                   </div>
                 </div>
               );
@@ -468,23 +565,57 @@ const AdminDash = () => {
                       <p className="col fs-6">
                         {new Date(data.createdAt).toLocaleString("default")}{" "}
                       </p>
-                      {data.amount && (<p className="col fs-6">₹&nbsp;{data.amount}</p>)}
-                      {data.depositAmount && (<p className="col fs-6">₹&nbsp;{data.depositAmount}</p>)}
-                      {data.withdrawAmount && (<p className="col fs-6">₹&nbsp;{data.withdrawAmount}</p>)}
-                      {data.transactionID && (<p className="col fs-6 text-break">{data.transactionID}</p>)}
-                      {data.depositAmount && (<p className="col fs-6 text-break">N.A</p>)}
-                      {data.withdrawAmount && (<p className="col fs-6 text-break">N.A</p>)}
-                      {data.transactionType && (<p className="col fs-6 text-break">{data.transactionType}</p>)}
-                      {data.depositAmount && (<p className="col fs-6 text-break">N.A</p>)}
-                      {data.withdrawAmount && (<p className="col fs-6 text-break">N.A</p>)}
-                      {data.paymentMethod && (<p className="col fs-6">{data.paymentMethod}</p>)}
+                      {data.amount && (
+                        <p className="col fs-6">₹&nbsp;{data.amount}</p>
+                      )}
+                      {data.depositAmount && (
+                        <p className="col fs-6">₹&nbsp;{data.depositAmount}</p>
+                      )}
+                      {data.withdrawAmount && (
+                        <p className="col fs-6">₹&nbsp;{data.withdrawAmount}</p>
+                      )}
+                      {data.transactionID && (
+                        <p className="col fs-6 text-break">
+                          {data.transactionID}
+                        </p>
+                      )}
+                      {data.depositAmount && (
+                        <p className="col fs-6 text-break">N.A</p>
+                      )}
+                      {data.withdrawAmount && (
+                        <p className="col fs-6 text-break">N.A</p>
+                      )}
+                      {data.transactionType && (
+                        <p className="col fs-6 text-break">
+                          {data.transactionType}
+                        </p>
+                      )}
+                      {data.depositAmount && (
+                        <p className="col fs-6 text-break">N.A</p>
+                      )}
+                      {data.withdrawAmount && (
+                        <p className="col fs-6 text-break">N.A</p>
+                      )}
+                      {data.paymentMethod && (
+                        <p className="col fs-6">{data.paymentMethod}</p>
+                      )}
 
                       <p className="col fs-6 text-break">{data.subAdminName}</p>
-                      {data.paymentMethod && (<p className="col fs-6">{data.userId}</p>)}
-                      {data.depositAmount && (<p className="col fs-6 text-break">N.A</p>)}
-                      {data.withdrawAmount && (<p className="col fs-6 text-break">N.A</p>)}
-                      <p className="col fs-6">{data.bankName ? data.bankName : "N.A"}</p>
-                      <p className="col fs-6">{data.websiteName ? data.websiteName : "N.A"}</p>
+                      {data.paymentMethod && (
+                        <p className="col fs-6">{data.userId}</p>
+                      )}
+                      {data.depositAmount && (
+                        <p className="col fs-6 text-break">N.A</p>
+                      )}
+                      {data.withdrawAmount && (
+                        <p className="col fs-6 text-break">N.A</p>
+                      )}
+                      <p className="col fs-6">
+                        {data.bankName ? data.bankName : "N.A"}
+                      </p>
+                      <p className="col fs-6">
+                        {data.websiteName ? data.websiteName : "N.A"}
+                      </p>
                       {/* {data.websiteName && (<p className="col fs-6">{data.Bank}</p>)}
                       {data.depositAmount && (<p className="col fs-6 text-break">N.A</p>)}
                       {data.withdrawAmount && (<p className="col fs-6 text-break">N.A</p>)}
@@ -510,6 +641,7 @@ const AdminDash = () => {
           )}
         </div>
       )}
+      <EditTransaction Data={NormalEditData} />
     </div>
   );
 };
