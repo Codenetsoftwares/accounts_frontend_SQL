@@ -91,17 +91,17 @@ const WebsiteStatement = () => {
     setEndDateValue(new Date());
   };
 
-  const handleDel = (id) => {
-    TransactionSercvice.delWebTransactionData(id, auth.user)
-      .then((response) => {
-        console.log(response.data);
-        navigate("/admindash");
-      })
-      .catch((error) => {
-        console.error(error);
-        toast.error("Failed! Invalid Data");
-      });
-  };
+  // const handleDel = (id) => {
+  //   TransactionSercvice.delWebTransactionData(id, auth.user)
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       navigate("/admindash");
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //       toast.error("Failed! Invalid Data");
+  //     });
+  // };
 
   console.log("Website Names Manual =>>>", Manualstmnt);
   console.log("Website Names User =>>>", Userstmnt);
@@ -299,7 +299,7 @@ const WebsiteStatement = () => {
                         <button type="button" class="btn btn-danger">
                           <FontAwesomeIcon
                             icon={faTrashAlt}
-                            onClick={handleDel(data._id)}
+                            // onClick={handleDel(data._id)}
                           />
                         </button>
                     
@@ -429,7 +429,7 @@ const WebsiteStatement = () => {
                         <FontAwesomeIcon
                           icon={faTrashAlt}
                           className="delete-icon"
-                          onClick={handleDel(data._id)}
+                          // onClick={handleDel(data._id)}
                         />
                       </button>
                     </div>
