@@ -90,17 +90,17 @@ const BankStatement = () => {
     setEndDateValue(moment(e).format("DD-MM-YYYY HH:mm"));
   };
 
-  const handleDel = (id) => {
-    TransactionSercvice.delBankTransactionData(id, auth.user)
-      .then((response) => {
-        console.log(response.data);
-        navigate("/admindash");
-      })
-      .catch((error) => {
-        console.error(error);
-        toast.error("Failed! Invalid Data");
-      });
-  };
+  // const handleDel = (id) => {
+  //   TransactionSercvice.delBankTransactionData(id, auth.user)
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       navigate("/admindash");
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //       toast.error("Failed! Invalid Data");
+  //     });
+  // };
 
   return (
     <div>
@@ -294,7 +294,7 @@ const BankStatement = () => {
                       <button
                         type="button"
                         class="btn btn-danger"
-                        onClick={handleDel(data._id)}
+                      // onClick={handleDel(data._id)}
                       >
                         <FontAwesomeIcon icon={faTrashAlt} />
                       </button>
@@ -418,7 +418,7 @@ const BankStatement = () => {
                       <button
                         type="button"
                         class="btn btn-danger"
-                        onClick={handleDel(data._id)}
+                      // onClick={handleDel(data._id)}
                       >
                         <FontAwesomeIcon icon={faTrashAlt} />
                       </button>
