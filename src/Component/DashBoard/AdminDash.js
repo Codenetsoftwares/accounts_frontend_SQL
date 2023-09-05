@@ -553,15 +553,15 @@ const AdminDash = () => {
                       {data.withdrawAmount && (<p className="col fs-6 text-break">N.A</p>)} */}
                     </div>
 
-//                     <Link to={`/admindash/${data._id}`} className="col">
-//                       <button type="button" className="btn btn-primary">
-//                         <FontAwesomeIcon
-//                           icon={faEdit}
-//                           data-toggle="modal"
-//                           data-target="#exampleModalCenter"
-//                         />
-//                       </button>
-//                     </Link>
+                    {/* <Link to={`/admindash/${data._id}`} className="col">
+                      <button type="button" className="btn btn-primary">
+                        <FontAwesomeIcon
+                          icon={faEdit}
+                          data-toggle="modal"
+                          data-target="#exampleModalCenter"
+                        />
+                      </button>
+                    </Link> */}
                     
                       <button type="button" className="btn btn-primary">
                         <FontAwesomeIcon
