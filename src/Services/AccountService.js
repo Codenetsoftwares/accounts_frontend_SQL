@@ -311,6 +311,11 @@ class AccountService {
     return axios({
       method: "post",
       url: `${API_HOST}/api/admin/save-bank-transaction-request/${id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+    }
 
   EditWebsite(data,id, user) {
     return axios({
