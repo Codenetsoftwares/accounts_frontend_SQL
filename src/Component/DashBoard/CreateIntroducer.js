@@ -18,10 +18,10 @@ const CreateIntroducer = () => {
   const [formData, setFormData] = useState({
     yourFirstName: "",
     yourLastname: "",
-    yourEmail: "",
+    UserName: "",
     yourEnterPassword: "",
     yourConfirmPassword: "",
-    yourIntroducerPercentage: "",
+    // yourIntroducerPercentage: "",
     yourIntroducerId: "",
     yourContact: "",
   });
@@ -48,10 +48,10 @@ const CreateIntroducer = () => {
     const data = {
       firstname: formData.yourFirstName,
       lastname: formData.yourLastname,
-      email: formData.yourEmail,
+      email: formData.UserName,
       password: formData.yourEnterPassword,
       introducerId: formData.yourIntroducerId,
-      introducerPercentage: formData.yourIntroducerPercentage,
+      // introducerPercentage: formData.yourIntroducerPercentage,
     };
 
     AccountService.createIntroducer(data, auth.user)
@@ -99,17 +99,17 @@ const CreateIntroducer = () => {
                       <div className="row g-3">
                         <div className="col-md-6">
                           <label htmlFor="Your-email" className="form-label">
-                            <FaEnvelope /> Enter Your E-mail
+                            <FaEnvelope /> User Name
                             <span className="text-danger">*</span>
                           </label>
                           <input
                             type="email"
                             className="form-control"
-                            id="your-email"
-                            name="yourEmail"
+                            id="text"
+                            name="UserName"
                             value={formData.yourEmail}
                             onChange={handleChange}
-                            placeholder="Enter your e-mail"
+                            placeholder="UserName"
                             required
                           />
                         </div>
@@ -162,7 +162,7 @@ const CreateIntroducer = () => {
                             required
                           />
                         </div>
-                        <div className="col-md-6">
+                        {/* <div className="col-md-6">
                           <label htmlFor="" className="form-label">
                             <FaPercent /> Introducer Percentage
                             <span className="text-danger">*</span>
@@ -177,7 +177,7 @@ const CreateIntroducer = () => {
                             placeholder="Enter your Introducer Percentage"
                             required
                           />
-                        </div>
+                        </div> */}
 
                         <div className="col-md-6">
                           <label htmlFor="" className="form-label">

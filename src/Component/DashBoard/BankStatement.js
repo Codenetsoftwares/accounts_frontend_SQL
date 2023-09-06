@@ -89,7 +89,7 @@ const BankStatement = () => {
   };
 
   const handleDelete = (e, id, transactionType) => {
-    console.log(transactionType)
+    console.log(transactionType);
     switch (transactionType) {
       case "Deposit":
         AccountService.SaveTransaction({ requestId: id }, auth.user)
@@ -327,6 +327,8 @@ const BankStatement = () => {
                   <h4 className="col fs-6">User Id</h4>
                   <h4 className="col fs-6">Bank</h4>
                   <h4 className="col fs-6">Website</h4>
+                  <h4 className="col fs-6">Before Balance</h4>
+                  <h4 className="col fs-6">Live Balance</h4>
                 </div>
               </div>
             </div>
@@ -409,6 +411,11 @@ const BankStatement = () => {
                         <p className="col fs-6">
                           {data.websiteName ? data.websiteName : "N.A"}
                         </p>
+                        <p className="col fs-6">
+                          {" "}
+                          {data.websiteName}
+                        </p>
+                        <p className="col fs-6"></p>
                       </div>
                       <button
                         type="button"
@@ -438,7 +445,9 @@ const BankStatement = () => {
                       <button type="button" className="btn btn-primary">
                         <FontAwesomeIcon
                           icon={faTrash}
-                          onClick={(e) => { handleDelete(e, data._id, data.transactionType) }}
+                          onClick={(e) => {
+                            handleDelete(e, data._id, data.transactionType);
+                          }}
                         />
                       </button>
                     </div>
@@ -580,7 +589,9 @@ const BankStatement = () => {
                       <button type="button" className="btn btn-primary">
                         <FontAwesomeIcon
                           icon={faTrash}
-                          onClick={(e) => { handleDelete(e, data._id, data.transactionType) }}
+                          onClick={(e) => {
+                            handleDelete(e, data._id, data.transactionType);
+                          }}
                         />
                       </button>
                     </div>

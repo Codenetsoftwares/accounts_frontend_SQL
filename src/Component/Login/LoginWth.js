@@ -108,7 +108,7 @@ const LoginWth = () => {
 
       case 3:
         AccountService.adminlogin({
-          email: userId,
+          userName: userId,
           password: password,
           // persist: persist,
         })
@@ -277,7 +277,7 @@ const LoginWth = () => {
             </div>
             <input
               type="email"
-              placeholder="User id"
+              placeholder="User Name"
               className="form-control"
               id="userId"
               onChange={handleClickUser}
