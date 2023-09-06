@@ -76,7 +76,7 @@ class TransactionService {
   editBnkTransactionData(id, data, user) {
     return axios({
       method: "put",
-      url: `${API_HOST}/api/admin/edit-bank-transaction-request/${id}`,
+      url: `${API_HOST} ${id}`,
       data: data,
       headers: {
         Authorization: `Bearer ${user.token}`,
