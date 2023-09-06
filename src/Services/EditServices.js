@@ -22,6 +22,26 @@ class EditServices {
       },
     });
   }
+  IsBankApprove(_id, data, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/admin/approve-bank-edit-request/${_id}`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+  IsWebsiteApprove(_id, data, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/admin/approve-website-edit-request/${_id}`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
 }
 
 export default new EditServices();
