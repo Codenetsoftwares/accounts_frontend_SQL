@@ -15,17 +15,8 @@ class EditServices {
   IsApprove(_id, data, user) {
     return axios({
       method: "post",
-      url: `${API_HOST}/api/admin/approve-edit-request/${_id}`,
+      url: `${API_HOST}/api/admin/approve-transaction-edit-request/${_id}`,
       data: data,
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
-  }
-  ViewBankAlert(user) {
-    return axios({
-      method: "get",
-      url: API_HOST + "/api/superadmin/view-bank-edit-transaction-requests",
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -41,57 +32,10 @@ class EditServices {
       },
     });
   }
-  ViewBankDelAlert(user) {
-    return axios({
-      method: "get",
-      url: API_HOST + "/",
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
-  }
-  IsBankDelApprove(_id, data, user) {
-    return axios({
-      method: "post",
-      url: `${API_HOST}/api/delete-bank-transaction/${_id}`,
-      data: data,
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
-  }
-  ViewWebsiteAlert(user) {
-    return axios({
-      method: "get",
-      url: API_HOST + "/api/superadmin/view-website-edit-transaction-requests",
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
-  }
   IsWebsiteApprove(_id, data, user) {
     return axios({
       method: "post",
       url: `${API_HOST}/api/admin/approve-website-edit-request/${_id}`,
-      data: data,
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
-  }
-  ViewWebsiteDelAlert(user) {
-    return axios({
-      method: "get",
-      url: API_HOST + "/",
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
-  }
-  IsWebsiteDelApprove(_id, data, user) {
-    return axios({
-      method: "post",
-      url: `${API_HOST}/api/delete-website-transaction/${_id}`,
       data: data,
       headers: {
         Authorization: `Bearer ${user.token}`,

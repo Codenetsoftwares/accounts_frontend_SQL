@@ -153,11 +153,13 @@ const AdminDash = () => {
   }, [auth]);
   
   const handleDelete = (e, id, transactionType) => {
+
   console.log(transactionType)
   console.log(id)
     switch (transactionType) {
       case "Deposit":
         AccountService.SaveTransaction( {requestId:id},auth.user)
+
           .then((res) => {
             console.log(res.data);
             toast.success("Transaction delete request sent to Super Admin");
@@ -176,8 +178,10 @@ const AdminDash = () => {
             console.log(err);
           });
         break;
+
       case "Manual-Bank-Withdraw":
         AccountService.SaveBankTransaction({requestId:id}, auth.user)
+
           .then((res) => {
             console.log(res.data);
             toast.success("Bank Transaction delete request sent to Super Admin");
@@ -186,8 +190,10 @@ const AdminDash = () => {
             console.log(err);
           }); 
         break;
+
       case "Manual-Bank-Deposit":
         AccountService.SaveWebsiteTransaction( {requestId:id}, auth.user)
+
           .then((res) => {
             console.log(res.data);
             toast.success( "Website Transaction delete request sent to Super Admin");
@@ -196,8 +202,9 @@ const AdminDash = () => {
             console.log(err);
           });
         break;
-      case "Manual-Website-Withdraw":
-        AccountService.SaveWebsiteTransaction( {requestId:id}, auth.user)
+
+      case "Manual-Website-withdraw":
+        AccountService.DeleteWebsiteTransaction( id, auth.user)
           .then((res) => {
             console.log(res.data);
             toast.success( "Website Transaction delete request sent to Super Admin");
@@ -220,8 +227,6 @@ const AdminDash = () => {
       default:
       // code block
     }
-   
-
   };
 
   const handelnormaledit = (
