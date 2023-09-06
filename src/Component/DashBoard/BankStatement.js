@@ -8,8 +8,9 @@ import "react-datetime/css/react-datetime.css";
 import moment from "moment";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faTrashAlt, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { CSVLink } from "react-csv";
+import EditTransaction from "../Modal/EditTransaction";
 import TransactionSercvice from "../../Services/TransactionSercvice";
 
 const BankStatement = () => {
@@ -26,6 +27,19 @@ const BankStatement = () => {
   const [startDatevalue, SetStartDatesetValue] = useState(new Date());
   const [endDatevalue, setEndDateValue] = useState(new Date());
   const [toggle, setToggle] = useState(true);
+  const [NormalEditData, setNormalEditData] = useState({
+    Id: "",
+    amount: "",
+    bankName: "",
+    paymentMethod: "",
+    subAdminName: "",
+    transactionID: "",
+    transactionType: "",
+    userId: "",
+    websiteName: "",
+    depositAmount: "",
+    withdrawAmount: "",
+  });
 
   console.log(id);
 
@@ -72,6 +86,99 @@ const BankStatement = () => {
     const value = e.target.value;
     setSelect(value);
     handleClick("transactionType", value);
+  };
+
+  const handleDelete = (e, id, transactionType) => {
+    console.log(transactionType)
+    switch (transactionType) {
+      case "Deposit":
+        AccountService.DeleteWebsiteTransaction(id, auth.user)
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        break;
+      case "Withdraw":
+        AccountService.DeleteWebsiteTransaction(id, auth.user)
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        break;
+      case "Manual-Bank-Withdraw":
+        AccountService.DeleteWebsiteTransaction(id, auth.user)
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        break;
+      case "Manual-Bank-Deposit":
+        AccountService.DeleteWebsiteTransaction(id, auth.user)
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        break;
+      case "Manual-Webiste-Deposit":
+        AccountService.DeleteWebsiteTransaction(id, auth.user)
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        break;
+      case "Manual-Webiste-Withdraw":
+        AccountService.DeleteWebsiteTransaction(id, auth.user)
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        break;
+      default:
+      // code block
+    }
+  };
+
+  const handelnormaledit = (
+    e,
+    id,
+    amount,
+    bankName,
+    paymentMethod,
+    subAdminName,
+    transactionID,
+    transactionType,
+    userId,
+    websiteName,
+    depositAmount,
+    withdrawAmount
+  ) => {
+    const data = {
+      id,
+      amount,
+      bankName,
+      paymentMethod,
+      subAdminName,
+      transactionID,
+      transactionType,
+      userId,
+      websiteName,
+      depositAmount,
+      withdrawAmount,
+    };
+    setNormalEditData(data);
+    console.log("====>>>>", NormalEditData);
   };
 
   const handleReset = () => {
@@ -285,18 +392,36 @@ const BankStatement = () => {
                           {data.websiteName ? data.websiteName : "N.A"}
                         </p>
                       </div>
-                      <Link to={`/editbankdata/${data._id}`} className="col">
-                        <button type="button" className="btn btn-primary">
-                          <FontAwesomeIcon icon={faEdit} />
-                        </button>
-                      </Link>
-
                       <button
                         type="button"
-                        class="btn btn-danger"
-                      // onClick={handleDel(data._id)}
+                        className="btn btn-primary mx-2"
+                        data-bs-toggle="modal"
+                        data-bs-target="#edittransaction"
+                        onClick={(e) => {
+                          handelnormaledit(
+                            e,
+                            data._id,
+                            data.amount,
+                            data.bankName,
+                            data.paymentMethod,
+                            data.subAdminName,
+                            data.transactionID,
+                            data.transactionType,
+                            data.userId,
+                            data.websiteName,
+                            data.depositAmount,
+                            data.withdrawAmount
+                          );
+                        }}
                       >
-                        <FontAwesomeIcon icon={faTrashAlt} />
+                        <FontAwesomeIcon icon={faEdit} />
+                      </button>
+
+                      <button type="button" className="btn btn-primary">
+                        <FontAwesomeIcon
+                          icon={faTrash}
+                          onClick={(e) => { handleDelete(e, data._id, data.transactionType) }}
+                        />
                       </button>
                     </div>
                   </div>
@@ -410,17 +535,35 @@ const BankStatement = () => {
                           {data.websiteName ? data.websiteName : "N.A"}
                         </p>
                       </div>
-                      <Link to={`/admindash/${data._id}`} className="col">
-                        <button type="button" className="btn btn-primary">
-                          <FontAwesomeIcon icon={faEdit} />
-                        </button>
-                      </Link>
                       <button
                         type="button"
-                        class="btn btn-danger"
-                      // onClick={handleDel(data._id)}
+                        className="btn btn-primary"
+                        data-bs-toggle="modal"
+                        data-bs-target="#edittransaction"
+                        onClick={(e) => {
+                          handelnormaledit(
+                            e,
+                            data._id,
+                            data.amount,
+                            data.bankName,
+                            data.paymentMethod,
+                            data.subAdminName,
+                            data.transactionID,
+                            data.transactionType,
+                            data.userId,
+                            data.websiteName,
+                            data.depositAmount,
+                            data.withdrawAmount
+                          );
+                        }}
                       >
-                        <FontAwesomeIcon icon={faTrashAlt} />
+                        <FontAwesomeIcon icon={faEdit} />
+                      </button>
+                      <button type="button" className="btn btn-primary">
+                        <FontAwesomeIcon
+                          icon={faTrash}
+                          onClick={(e) => { handleDelete(e, data._id, data.transactionType) }}
+                        />
                       </button>
                     </div>
                   </div>
@@ -432,6 +575,7 @@ const BankStatement = () => {
           </div>
         )}
       </div>
+      <EditTransaction Data={NormalEditData} />
     </div>
   );
 };
