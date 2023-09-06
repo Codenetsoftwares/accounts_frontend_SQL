@@ -9,9 +9,10 @@ import moment from "moment";
 import { CSVLink } from "react-csv";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faTrashAlt, faTrash } from "@fortawesome/free-solid-svg-icons";
 import TransactionSercvice from "../../Services/TransactionSercvice";
 import { toast } from "react-toastify";
+import EditTransaction from "../Modal/EditTransaction";
 
 const WebsiteStatement = () => {
   const { id } = useParams();
@@ -26,6 +27,19 @@ const WebsiteStatement = () => {
   const [startDatevalue, SetStartDatesetValue] = useState(new Date());
   const [endDatevalue, setEndDateValue] = useState(new Date());
   const [toggle, setToggle] = useState(true);
+    const [NormalEditData, setNormalEditData] = useState({
+      Id: "",
+      amount: "",
+      bankName: "",
+      paymentMethod: "",
+      subAdminName: "",
+      transactionID: "",
+      transactionType: "",
+      userId: "",
+      websiteName: "",
+      depositAmount: "",
+      withdrawAmount: "",
+    });
 
   console.log("This is Website Name", id);
 
@@ -89,6 +103,98 @@ const WebsiteStatement = () => {
     setToggle(true);
     SetStartDatesetValue(new Date());
     setEndDateValue(new Date());
+  };
+   const handelnormaledit = (
+     e,
+     id,
+     amount,
+     bankName,
+     paymentMethod,
+     subAdminName,
+     transactionID,
+     transactionType,
+     userId,
+     websiteName,
+     depositAmount,
+     withdrawAmount
+   ) => {
+     const data = {
+       id,
+       amount,
+       bankName,
+       paymentMethod,
+       subAdminName,
+       transactionID,
+       transactionType,
+       userId,
+       websiteName,
+       depositAmount,
+       withdrawAmount,
+     };
+     setNormalEditData(data);
+     console.log("====>>>>", NormalEditData);
+  };
+  
+  const handleDelete = (e, id, transactionType) => {
+    console.log(transactionType);
+    switch (transactionType) {
+      case "Deposit":
+        AccountService.DeleteWebsiteTransaction(id, auth.user)
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        break;
+      case "Withdraw":
+        AccountService.DeleteWebsiteTransaction(id, auth.user)
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        break;
+      case "Manual-Bank-Withdraw":
+        AccountService.DeleteWebsiteTransaction(id, auth.user)
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        break;
+      case "Manual-Bank-Deposit":
+        AccountService.DeleteWebsiteTransaction(id, auth.user)
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        break;
+      case "Manual-Webiste-Deposit":
+        AccountService.DeleteWebsiteTransaction(id, auth.user)
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        break;
+      case "Manual-Webiste-Withdraw":
+        AccountService.DeleteWebsiteTransaction(id, auth.user)
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        break;
+      default:
+      // code block
+    }
   };
 
   // const handleDel = (id) => {
@@ -290,19 +396,39 @@ const WebsiteStatement = () => {
                           {data.websiteName ? data.websiteName : "N.A"}
                         </p>
                       </div>
-                      <Link to={`/editwebsitedata/${data._id}`} className="col">
-                        <button type="button" className="btn btn-primary">
-                          <FontAwesomeIcon icon={faEdit} />
-                        </button>
-                      </Link>
-                      
-                        <button type="button" class="btn btn-danger">
-                          <FontAwesomeIcon
-                            icon={faTrashAlt}
-                            // onClick={handleDel(data._id)}
-                          />
-                        </button>
-                    
+                      <button
+                        type="button"
+                        className="btn btn-primary mx-2"
+                        data-bs-toggle="modal"
+                        data-bs-target="#edittransaction"
+                        onClick={(e) => {
+                          handelnormaledit(
+                            e,
+                            data._id,
+                            data.amount,
+                            data.bankName,
+                            data.paymentMethod,
+                            data.subAdminName,
+                            data.transactionID,
+                            data.transactionType,
+                            data.userId,
+                            data.websiteName,
+                            data.depositAmount,
+                            data.withdrawAmount
+                          );
+                        }}
+                      >
+                        <FontAwesomeIcon icon={faEdit} />
+                      </button>
+
+                      <button type="button" className="btn btn-primary">
+                        <FontAwesomeIcon
+                          icon={faTrash}
+                          onClick={(e) => {
+                            handleDelete(e, data._id, data.transactionType);
+                          }}
+                        />
+                      </button>
                     </div>
                   </div>
                 );
@@ -415,21 +541,37 @@ const WebsiteStatement = () => {
                           {data.websiteName ? data.websiteName : "N.A"}
                         </p>
                       </div>
-                      <Link to={`/admindash/${data._id}`} className="col">
-                        <button type="button" className="btn btn-primary">
-                          <FontAwesomeIcon
-                            icon={faEdit}
-                            data-toggle="modal"
-                            data-target="#exampleModalCenter"
-                          />
-                        </button>
-                      </Link>
+                      <button
+                        type="button"
+                        className="btn btn-primary mx-2"
+                        data-bs-toggle="modal"
+                        data-bs-target="#edittransaction"
+                        onClick={(e) => {
+                          handelnormaledit(
+                            e,
+                            data._id,
+                            data.amount,
+                            data.bankName,
+                            data.paymentMethod,
+                            data.subAdminName,
+                            data.transactionID,
+                            data.transactionType,
+                            data.userId,
+                            data.websiteName,
+                            data.depositAmount,
+                            data.withdrawAmount
+                          );
+                        }}
+                      >
+                        <FontAwesomeIcon icon={faEdit} />
+                      </button>
 
-                      <button type="button" class="btn btn-danger">
+                      <button type="button" className="btn btn-primary">
                         <FontAwesomeIcon
-                          icon={faTrashAlt}
-                          className="delete-icon"
-                          // onClick={handleDel(data._id)}
+                          icon={faTrash}
+                          onClick={(e) => {
+                            handleDelete(e, data._id, data.transactionType);
+                          }}
                         />
                       </button>
                     </div>
@@ -442,6 +584,7 @@ const WebsiteStatement = () => {
           </div>
         )}
       </div>
+      <EditTransaction/>
     </div>
   );
 };

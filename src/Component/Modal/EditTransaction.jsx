@@ -22,7 +22,7 @@ const EditTransaction = ({ Data }) => {
     SetEditData({ ...EditData, [name]: value });
   };
   const handleSubmit = (e, transactionType) => {
-    console.log(transactionType)
+    console.log(transactionType);
     // console.log(data)
     e.preventDefault();
     const data = {
@@ -35,26 +35,28 @@ const EditTransaction = ({ Data }) => {
       bankName: EditData.Bank,
       websiteName: EditData.Website,
     };
-    const dataI = {
+    const dataWithdraw = {
       transactionID: EditData.transactionID,
       transactionType: EditData.transactionType,
-      amount: EditData.amount,
+      withdrawAmount: EditData.amount,
       paymentMethod: EditData.paymentMethod,
       userId: EditData.userId,
       subAdminId: EditData.subAdminName,
       bankName: EditData.Bank,
       websiteName: EditData.Website,
     };
-    const dataII = {
+
+    const dataDeposit = {
       transactionID: EditData.transactionID,
       transactionType: EditData.transactionType,
-      amount: EditData.amount,
+      depositAmount: EditData.amount,
       paymentMethod: EditData.paymentMethod,
       userId: EditData.userId,
       subAdminId: EditData.subAdminName,
       bankName: EditData.Bank,
       websiteName: EditData.Website,
     };
+
     switch (transactionType) {
       case "Deposit":
         TransactionSercvice.editTransactionData(Data.id, data, auth.user)
@@ -76,7 +78,11 @@ const EditTransaction = ({ Data }) => {
         break;
 
       case "Manual-Bank-Withdraw":
-        TransactionSercvice.editBnkTransactionData(Data.id, dataI, auth.user)
+        TransactionSercvice.editBnkTransactionData(
+          Data.id,
+          dataWithdraw,
+          auth.user
+        )
           .then((res) => {
             console.log(res.data);
           })
@@ -86,7 +92,11 @@ const EditTransaction = ({ Data }) => {
         break;
 
       case "Manual-Bank-Deposit":
-        TransactionSercvice.editBnkTransactionData(Data.id, dataI, auth.user)
+        TransactionSercvice.editBnkTransactionData(
+          Data.id,
+          dataDeposit,
+          auth.user
+        )
           .then((res) => {
             console.log(res.data);
           })
@@ -96,7 +106,11 @@ const EditTransaction = ({ Data }) => {
         break;
 
       case "Manual-Webiste-Withdraw":
-        TransactionSercvice.editWebTransactionData(Data.id, dataII, auth.user)
+        TransactionSercvice.editWebTransactionData(
+          Data.id,
+          dataWithdraw,
+          auth.user
+        )
           .then((res) => {
             console.log(res.data);
           })
@@ -106,7 +120,11 @@ const EditTransaction = ({ Data }) => {
         break;
 
       case "Manual-Webiste-Deposit":
-        TransactionSercvice.editWebTransactionData(Data.id, dataII, auth.user)
+        TransactionSercvice.editWebTransactionData(
+          Data.id,
+          dataDeposit,
+          auth.user
+        )
           .then((res) => {
             console.log(res.data);
           })
@@ -215,14 +233,15 @@ const EditTransaction = ({ Data }) => {
                     </option>
                     <option className="d-flex" value="Manual-Bank-Deposit">
                       <b>Manual Bank Deposit</b>
-                    </option> <option className="d-flex" value="Manual-Bank-Withdraw">
+                    </option>{" "}
+                    <option className="d-flex" value="Manual-Bank-Withdraw">
                       <b>Manual Bank Withdraw</b>
                     </option>
                     <option className="d-flex" value="Manual-Website-Deposit">
                       <b>Manual Website Deposit</b>
-                    </option> <option className="d-flex" value="Manual-Website-Withdraw">
+                    </option>{" "}
+                    <option className="d-flex" value="Manual-Website-Withdraw">
                       <b>Manual Website Withdraw</b>
-
                     </option>
                   </select>
                   <input
