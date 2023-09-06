@@ -92,54 +92,72 @@ const BankStatement = () => {
     console.log(transactionType)
     switch (transactionType) {
       case "Deposit":
-        AccountService.DeleteWebsiteTransaction(id, auth.user)
+        AccountService.SaveTransaction({ requestId: id }, auth.user)
+
           .then((res) => {
             console.log(res.data);
+            toast.success("Transaction delete request sent to Super Admin");
           })
           .catch((err) => {
             console.log(err);
           });
         break;
       case "Withdraw":
-        AccountService.DeleteWebsiteTransaction(id, auth.user)
+        AccountService.SaveTransaction({ requestId: id }, auth.user)
           .then((res) => {
             console.log(res.data);
+            toast.success("Transaction delete request sent to Super Admin");
           })
           .catch((err) => {
             console.log(err);
           });
         break;
+
       case "Manual-Bank-Withdraw":
-        AccountService.DeleteWebsiteTransaction(id, auth.user)
+        AccountService.SaveBankTransaction({ requestId: id }, auth.user)
+
           .then((res) => {
             console.log(res.data);
+            toast.success(
+              "Bank Transaction delete request sent to Super Admin"
+            );
           })
           .catch((err) => {
             console.log(err);
           });
         break;
+
       case "Manual-Bank-Deposit":
-        AccountService.DeleteWebsiteTransaction(id, auth.user)
+        AccountService.SaveWebsiteTransaction({ requestId: id }, auth.user)
+
           .then((res) => {
             console.log(res.data);
+            toast.success(
+              "Website Transaction delete request sent to Super Admin"
+            );
           })
           .catch((err) => {
             console.log(err);
           });
         break;
-      case "Manual-Webiste-Deposit":
+
+      case "Manual-Website-withdraw":
         AccountService.DeleteWebsiteTransaction(id, auth.user)
           .then((res) => {
             console.log(res.data);
+            toast.success(
+              "Website Transaction delete request sent to Super Admin"
+            );
           })
           .catch((err) => {
             console.log(err);
           });
         break;
-      case "Manual-Webiste-Withdraw":
-        AccountService.DeleteWebsiteTransaction(id, auth.user)
+      case "Manual-Website-Deposit":
+        AccountService.DeleteTransaction({ requestId: id }, auth.user)
           .then((res) => {
             console.log(res.data);
+            toast.success("Bank Transaction deleted");
           })
           .catch((err) => {
             console.log(err);
