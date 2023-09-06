@@ -30,7 +30,7 @@ const InnerIntroducer = () => {
         <div class="card container ">
           <div class="card-body text-bg-success">
             <p>User Id:&nbsp;{user.userId}</p>
-            <p>Email:&nbsp;{user.email}</p>
+            <p>User Name:&nbsp;{user.userName}</p>
             <p>
               Name:&nbsp;{user.firstname}&nbsp;{user.lastname}
             </p>
