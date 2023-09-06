@@ -94,8 +94,6 @@ class TransactionService {
     });
   }
 
-
-
   delBankTransactionData(id, user) {
     return axios({
       method: "put",

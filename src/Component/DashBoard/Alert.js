@@ -11,29 +11,93 @@ const Alert = () => {
 
   const [alert, setAlert] = useState([]);
   const [isApproved, setIsApproved] = useState();
+  var EditData = [];
 
   useEffect(() => {
     if (auth.user) {
       EditServices.ViewAlert(auth.user).then((res) => setAlert(res.data));
     }
   }, [auth]);
-  console.log(alert);
+  console.log("Request", alert);
+
+  for (let i = 0; i < alert.length; i++) {
+    EditData[i] = alert[i].changedFields;
+  }
+
+  console.log("ChangeFields===>>>>>>>>>", EditData);
+
   // console.log("alert", alert);
   // console.log("This is Auth=====> ", auth);
-  const handleApprove = (e, _id) => {
-    console.log(_id);
+  const handleApprove = (e, id, transactionType) => {
+    console.log(id);
     const flag = true;
 
     const data = {
       isApproved: flag,
     };
-    EditServices.IsApprove(_id, data, auth.user)
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    switch (transactionType) {
+      case "Deposit":
+        EditServices.IsApprove(id, data, auth.user)
+          .then((response) => {
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        break;
+      case "Withdraw":
+        EditServices.IsApprove(id, data, auth.user)
+          .then((response) => {
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        break;
+
+      case "Manual-Bank-Withdraw":
+        EditServices.IsBankApprove(id, data, auth.user)
+          .then((response) => {
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        break;
+
+      case "Manual-Bank-Deposit":
+        EditServices.IsBankApprove(id, data, auth.user)
+          .then((response) => {
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        break;
+
+      case "Manual-Website-Withdraw":
+        EditServices.IsWebsiteApprove(id, data, auth.user)
+          .then((response) => {
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        break;
+
+      case "Manual-Webiste-Deposit":
+        EditServices.IsWebsiteApprove(id, data, auth.user)
+          .then((response) => {
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        break;
+
+      default:
+      // code block
+    }
   };
 
   return (
@@ -50,10 +114,12 @@ const Alert = () => {
         ></div>
         <div className=" p-2">
           {alert.length > 0 ? (
-            alert.map((data) => {
+            alert.map((data, i) => {
               return (
                 <div className="card">
-                  <h5 class="card-title text-center text-danger">{data.message}</h5>
+                  <h5 class="card-title text-center text-danger">
+                    {data.message}
+                  </h5>
                   <div className="card-body">
                     <div className="row">
                       <p className="col fs-6">
@@ -64,39 +130,43 @@ const Alert = () => {
                       <p className="col fs-6 ">
                         Transaction Id:
                         <br />
-                        {data.transactionID}
+                        {data?.changedFields?.transactionID}
                       </p>
                       <p className="col fs-6 ">
                         Gateway:
                         <br />
-                        {data.paymentMethod}
+                        {data?.changedFields?.paymentMethod}
                       </p>
                       <p className="col fs-6 ">
                         User Id:
                         <br />
-                        {data.userId}
+                        {data?.changedFields?.userId}
                       </p>
                       <p className="col fs-6 ">
                         Website:
                         <br />
-                        {data.websiteName}
+                        {data?.changedFields?.websiteName}
                       </p>
                       <p className="col fs-6 ">
                         Amount:
                         <br />
-                        ₹&nbsp; {data.amount}
+                        {data?.changedFields?.withdrawAmount}
+                        {data?.changedFields?.amount}
+                        {data?.changedFields?.depositAmount}
                       </p>
                       <p className="col fs-6 ">
                         Bank:
                         <br />
-                        {data.bankName}
+                        {data?.changedFields?.bankName}
                       </p>
                     </div>
                   </div>
                   <div className="col d-flex justify-content-center gap-2 mb-2">
                     <button
                       class="btn btn-primary"
-                      onClick={(e) => handleApprove(e, data._id)}
+                      onClick={(e) =>
+                        handleApprove(e, data._id, data.transactionType)
+                      }
                     >
                       Approve
                     </button>
