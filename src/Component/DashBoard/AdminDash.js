@@ -152,9 +152,13 @@ const AdminDash = () => {
     AccountService.website(auth.user).then((res) => setWebsiteList(res.data));
   }, [auth]);
   
-  const handleDelete = (e, transactionType, id) => {
+  const handleDelete = (e, id, transactionType) => {
+    e.preventDefault()
+    console.log("first")
+    console.log(transactionType,id)
     switch (transactionType) {
-      case "deposit":
+      case "Deposit":
+        console.log(transactionType)
         AccountService.DeleteWebsiteTransaction( id,auth.user)
           .then((res) => {
             console.log(res.data);
@@ -172,7 +176,7 @@ const AdminDash = () => {
             console.log(err);
           });
         break;
-      case "ManualBankwithdraw":
+      case "Manual-Bank-withdraw":
         AccountService.DeleteWebsiteTransaction(id, auth.user)
           .then((res) => {
             console.log(res.data);
@@ -181,7 +185,7 @@ const AdminDash = () => {
             console.log(err);
           });
         break;
-      case "ManualBankdeposit":
+      case "Manual-Bank-deposit":
         AccountService.DeleteWebsiteTransaction( id, auth.user)
           .then((res) => {
             console.log(res.data);
@@ -190,7 +194,7 @@ const AdminDash = () => {
             console.log(err);
           });
         break;
-      case "ManualWebsitewithdraw":
+      case "Manual-Website-withdraw":
         AccountService.DeleteWebsiteTransaction( id, auth.user)
           .then((res) => {
             console.log(res.data);
@@ -199,7 +203,7 @@ const AdminDash = () => {
             console.log(err);
           });
         break;
-      case "ManualWebsitedeposit":
+      case "Manual-Website-deposit":
       AccountService.DeleteWebsiteTransaction(id, auth.user)
           .then((res) => {
             console.log(res.data);
@@ -211,8 +215,6 @@ const AdminDash = () => {
       default:
       // code block
     }
-   
-
   };
 
   const handelnormaledit = (
