@@ -306,15 +306,37 @@ class AccountService {
       },
     });
   }
-
- SaveBankTransaction(id, user) {
+  SaveTransaction(data, user) {
     return axios({
       method: "post",
-      url: `${API_HOST}/api/admin/save-bank-transaction-request/${id}`,
+      url: `${API_HOST}/api/admin/save-transaction-request`,
+      data:data,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
     });
+  }
+
+ SaveBankTransaction(data, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/admin/save-bank-transaction-request`,
+      data:data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+    }
+
+ SaveWebsiteTransaction(data, user) {
+      return axios({
+        method: "post",
+        url: `${API_HOST}/api/admin/save-website-transaction-request`,
+        data:data,
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
     }
 
   EditWebsite(data,id, user) {
@@ -332,22 +354,13 @@ class AccountService {
  DeleteBankTransaction(id, user) {
     return axios({
       method: "post",
-      url: `${API_HOST}/api/admin/save-bank-transaction-request/${id}`,
+      url: `${API_HOST}/api/delete-bank-transaction/${id}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
     });
   }
-  SaveWebsiteTransaction(id, user) {
-    return axios({
-      method: "post",
-      url: `${API_HOST}/api/admin/save-website-transaction-request/${id}`,
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
-  }
-
+ 
   DeleteWebsiteTransaction(id, user) {
     return axios({
       method: "post",
@@ -358,15 +371,7 @@ class AccountService {
     });
   }
 
- SaveTransaction(id, user) {
-    return axios({
-      method: "post",
-      url: `${API_HOST}/api/admin/save-transaction-request/${id}`,
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
-  }
+
 
   DeleteTransaction(id, user) {
     return axios({

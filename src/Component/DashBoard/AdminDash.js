@@ -153,60 +153,72 @@ const AdminDash = () => {
   }, [auth]);
   
   const handleDelete = (e, id, transactionType) => {
-    e.preventDefault()
-    console.log("first")
-    console.log(transactionType,id)
+
+  console.log(transactionType)
+  console.log(id)
     switch (transactionType) {
       case "Deposit":
-        console.log(transactionType)
-        AccountService.DeleteWebsiteTransaction( id,auth.user)
+        AccountService.SaveTransaction( {requestId:id},auth.user)
+
           .then((res) => {
             console.log(res.data);
+            toast.success("Transaction delete request sent to Super Admin");
           })
           .catch((err) => {
             console.log(err);
           });
         break;
-      case "withdraw":
-        AccountService.DeleteWebsiteTransaction(id, auth.user)
+      case "Withdraw":
+        AccountService.SaveTransaction({requestId:id}, auth.user)
           .then((res) => {
             console.log(res.data);
+            toast.success("Transaction delete request sent to Super Admin");
           })
           .catch((err) => {
             console.log(err);
           });
         break;
-      case "Manual-Bank-withdraw":
-        AccountService.DeleteWebsiteTransaction(id, auth.user)
+
+      case "Manual-Bank-Withdraw":
+        AccountService.SaveBankTransaction({requestId:id}, auth.user)
+
           .then((res) => {
             console.log(res.data);
+            toast.success("Bank Transaction delete request sent to Super Admin");
+          })
+          .catch((err) => {
+            console.log(err);
+          }); 
+        break;
+
+      case "Manual-Bank-Deposit":
+        AccountService.SaveWebsiteTransaction( {requestId:id}, auth.user)
+
+          .then((res) => {
+            console.log(res.data);
+            toast.success( "Website Transaction delete request sent to Super Admin");
           })
           .catch((err) => {
             console.log(err);
           });
         break;
-      case "Manual-Bank-deposit":
-        AccountService.DeleteWebsiteTransaction( id, auth.user)
-          .then((res) => {
-            console.log(res.data);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-        break;
+
       case "Manual-Website-withdraw":
         AccountService.DeleteWebsiteTransaction( id, auth.user)
           .then((res) => {
             console.log(res.data);
+            toast.success( "Website Transaction delete request sent to Super Admin");
           })
           .catch((err) => {
             console.log(err);
           });
         break;
-      case "Manual-Website-deposit":
-      AccountService.DeleteWebsiteTransaction(id, auth.user)
+      case "Manual-Website-Deposit":
+      AccountService.DeleteTransaction({requestId:id}, auth.user)
           .then((res) => {
             console.log(res.data);
+            toast.success( "Bank Transaction deleted");
+           
           })
           .catch((err) => {
             console.log(err);
@@ -722,6 +734,12 @@ const AdminDash = () => {
                         />
                       </button>
                     </Link>
+                    <button type="button" className="btn btn-primary">
+                        <FontAwesomeIcon
+                          icon={faTrash}
+                          onClick={(e)=> {handleDelete(e,data._id,data.transactionType)}}
+                        />
+                      </button>
                   </div>
                 </div>
               );
