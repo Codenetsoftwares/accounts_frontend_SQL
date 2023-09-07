@@ -25,6 +25,8 @@ const EditTransaction = ({ Data }) => {
     console.log(transactionType);
     // console.log(data)
     e.preventDefault();
+
+    const flag = true;
     const data = {
       transactionID: EditData.transactionID,
       transactionType: EditData.transactionType,
@@ -34,6 +36,7 @@ const EditTransaction = ({ Data }) => {
       subAdminId: EditData.subAdminName,
       bankName: EditData.Bank,
       websiteName: EditData.Website,
+      isSubmit: flag,
     };
     const dataWithdraw = {
       transactionID: EditData.transactionID,
@@ -56,7 +59,7 @@ const EditTransaction = ({ Data }) => {
       bankName: EditData.Bank,
       websiteName: EditData.Website,
     };
-
+    console.log('data', data)
     switch (transactionType) {
       case "Deposit":
         TransactionSercvice.editTransactionData(Data.id, data, auth.user)
@@ -70,7 +73,7 @@ const EditTransaction = ({ Data }) => {
       case "Withdraw":
         TransactionSercvice.editTransactionData(Data.id, data, auth.user)
           .then((res) => {
-            console.log(res.data);
+            console.log('withdraw', res.data);
           })
           .catch((err) => {
             console.log(err);
