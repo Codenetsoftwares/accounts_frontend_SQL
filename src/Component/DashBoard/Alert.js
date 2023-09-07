@@ -100,7 +100,7 @@ const Alert = () => {
     }
   };
   const handleReject = (e, id, transactionType) => {
-  
+
     switch (transactionType) {
       case "Deposit":
         EditServices.IsReject(id, auth.user)
@@ -196,34 +196,34 @@ const Alert = () => {
                       <p className="col fs-6 ">
                         Transaction Id:
                         <br />
-                        {data?.changedFields?.transactionID}
+                        <p className="text-primary">{data?.changedFields?.transactionID}</p>
                       </p>
                       <p className="col fs-6 ">
                         Gateway:
                         <br />
-                        {data?.changedFields?.paymentMethod}
+                        <p className="text-primary">{data?.changedFields?.paymentMethod}</p>
                       </p>
                       <p className="col fs-6 ">
                         User Id:
                         <br />
-                        {data?.changedFields?.userId}
+                        <p className="text-primary">{data?.changedFields?.userId}</p>
                       </p>
                       <p className="col fs-6 ">
                         Website:
                         <br />
-                        {data?.changedFields?.websiteName}
+                        <p className="text-primary">{data?.changedFields?.websiteName}</p>
                       </p>
                       <p className="col fs-6 ">
                         Amount:
                         <br />
-                        {data?.changedFields?.withdrawAmount}
-                        {data?.changedFields?.amount}
-                        {data?.changedFields?.depositAmount}
+                        <p className="text-primary">{data?.changedFields?.withdrawAmount}</p>
+                        <p className="text-primary">{data?.changedFields?.amount}</p>
+                        <p className="text-primary">{data?.changedFields?.depositAmount}</p>
                       </p>
                       <p className="col fs-6 ">
                         Bank:
                         <br />
-                        {data?.changedFields?.bankName}
+                        <p className="text-primary">{data?.changedFields?.bankName}</p>
                       </p>
                     </div>
                   </div>
@@ -236,9 +236,9 @@ const Alert = () => {
                     >
                       Approve
                     </button>
-                    <button class="btn btn-danger"  onClick={(e) =>
-                        handleReject(e, data._id, data.transactionType)
-                      }>Reject</button>
+                    <button class="btn btn-danger" onClick={(e) =>
+                      handleReject(e, data._id, data.transactionType)
+                    }>Reject</button>
                   </div>
                 </div>
               );
