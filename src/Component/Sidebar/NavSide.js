@@ -85,7 +85,8 @@ const NavSide = () => {
               data-accordion="false"
             >
               <li className="nav-item menu-open">
-                {auth.user.role.some((role) => role === "superAdmin" || role === "Dashboard") && <> {isToggleDash ? (
+                {/* {auth.user.role.some((role) => role === "superAdmin" || role === "Dashboard") && <> */}
+                  {isToggleDash ? (
                   <li className="nav-item ">
                     <a
                       href="#"
@@ -123,9 +124,11 @@ const NavSide = () => {
                       <p>Create Transaction</p>
                     </Link>
                   </li>
-                )}</>}
+                  )}
+                {/* </>} */}
               </li>
-              {auth.user.role.some((role) => role === "superAdmin" || role === "Create-Transaction" || role === "BankView" || role === "WebsiteView") && <> {IsToggleTransaction ? (
+              {/* {auth.user.role.some((role) => role === "superAdmin" || role === "Create-Transaction" || role === "BankView" || role === "WebsiteView") && <> */}
+                {IsToggleTransaction ? (
                 <li className="nav-item ">
                   <a className="nav-link " onClick={handleToggleTransaction}>
                     &nbsp; <i className="fa-solid fas fa-user" />
@@ -145,21 +148,23 @@ const NavSide = () => {
                       <i className="fas fa-chevron-down right"></i>
                     </p>
                   </a>
-                  {auth.user.role.some((role) => role === "superAdmin" || role === "BankView") && <>
+                  {/* {auth.user.role.some((role) => role === "superAdmin" || role === "BankView") && <> */}
                     <Link to="/bank" className="nav-link text-white">
                       <i className="far fa-circle nav-icon" />
                       <p>Bank</p>
                     </Link>
-                  </>}
-                  {auth.user.role.some((role) => role === "superAdmin" || role === "WebsiteView") && <>
+                  {/* </>} */}
+                  {/* {auth.user.role.some((role) => role === "superAdmin" || role === "WebsiteView") && <> */}
                     <Link to="/website" className="nav-link text-white">
                       <i className="far fa-circle nav-icon" />
                       <p>Website</p>
                     </Link>
-                  </>}
+                  {/* </>} */}
                 </li>
-              )}</>}
-              {auth.user.role.some((role) => role === "superAdmin" || role === "") && <> {isToggleCreate ? (
+              )}
+            {/* </>} */}
+              {/* {auth.user.role.some((role) => role === "superAdmin" || role === "") && <> */}
+                {isToggleCreate ? (
                 <li className="nav-item ">
                   <a className="nav-link " onClick={handleToggleCreate}>
                     &nbsp; <i className="fa-solid fas fa-user" />
@@ -194,9 +199,11 @@ const NavSide = () => {
                     <p>Create Introducer</p>
                   </Link>
                 </li>
-              )}</>}
+              )}
+            {/* </>} */}
 
-              {auth.user.role.some((role) => role === "superAdmin" || role === "Profile") && <>{isToggle ? (
+              {/* {auth.user.role.some((role) => role === "superAdmin" || role === "Profile") && <> */}
+                {isToggle ? (
                 <li className="nav-item ">
                   <a className="nav-link text-white" onClick={handleToggle}>
                     &nbsp; <i className="fa-solid fas fa-user" />
@@ -231,15 +238,18 @@ const NavSide = () => {
                     <p>SubAdmin</p>
                   </Link>
                 </li>
-              )}</>}
-              {auth.user.role.includes("superAdmin") && <li className="nav-item">
+              )}
+            {/* </>} */}
+              {/* {auth.user.role.includes("superAdmin") && */}
+                <li className="nav-item">
                 <Link to="alert" href="pages/widgets.html" className="nav-link">
                   &nbsp;<i className="alert-icon fas fa-bell"></i>
                   <p className="text-dark">
                     &nbsp; Edit Request
                   </p>
                 </Link>
-              </li>}
+              </li>
+              {/* } */}
             </ul>
           </nav>
         </div>
