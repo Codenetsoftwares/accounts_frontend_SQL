@@ -22,6 +22,15 @@ class EditServices {
       },
     });
   }
+  IsReject(_id, user) {
+    return axios({
+      method: "delete",
+      url: `${API_HOST}/api/reject/${_id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
   IsBankApprove(_id, data, user) {
     return axios({
       method: "post",

@@ -272,6 +272,7 @@ const AdminDash = () => {
       websiteName,
       depositAmount,
       withdrawAmount,
+      
     };
     setNormalEditData(data);
     console.log("====>>>>", NormalEditData);
