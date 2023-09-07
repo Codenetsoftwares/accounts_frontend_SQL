@@ -114,7 +114,7 @@ const NavSide = () => {
                       </p>
                     </a>
 
-                    <Link to="/admindash" className="nav-link text-white">
+                    <Link to="/Testing" className="nav-link text-white">
                       <i className="far fa-circle nav-icon" />
                       <p>Transaction Details</p>
                     </Link>
@@ -246,10 +246,23 @@ const NavSide = () => {
                   &nbsp;<i className="alert-icon fas fa-bell"></i>
                   <p className="text-dark">
                     &nbsp; Edit Request
+
+                    {/* <span className="right badge badge-danger">New</span> */}
+                  </p>
+                </Link>
+                {/* 
+                <Link to="/buttons" className="nav-link text-white">
+                  <i className="far fa-circle nav-icon" />
+                  <p> media</p>
+                </Link> */}
+              </li>
+              
+
                   </p>
                 </Link>
               </li>
               {/* } */}
+
             </ul>
           </nav>
         </div>
