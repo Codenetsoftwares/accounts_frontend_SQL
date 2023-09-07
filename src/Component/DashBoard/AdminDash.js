@@ -773,9 +773,10 @@ const AdminDash = () => {
 
                         onClick={(e) => {
                           handleDelete(e, data._id, data.transactionType);
-                        }}
+                        }}/>
 
                     </button>
+              
                   </div>
                 </div>
               );
