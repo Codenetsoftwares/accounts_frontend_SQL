@@ -258,10 +258,7 @@ const NavSide = () => {
               </li>
               
 
-                  </p>
-                </Link>
-              </li>
-              {/* } */}
+              
 
             </ul>
           </nav>
