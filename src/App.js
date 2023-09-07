@@ -40,6 +40,7 @@ import EditWebTransaction from "./Component/DashBoard/EditWebTransaction";
 import EditBnkTransaction from "./Component/DashBoard/EditBnkTransaction ";
 import AdminList from "./Component/SuperAdmin/AdminList";
 import AdminEditrole from "./Component/SuperAdmin/AdminEditrole";
+import DuplicateDashboard from "./Component/DashBoard/DuplicateDashboard";
 
 function App() {
   return (
@@ -233,6 +234,15 @@ function App() {
                 element={
                   <RequireAuth>
                     <Alert />
+                  </RequireAuth>
+                }
+              />
+
+              <Route
+                path="Testing"
+                element={
+                  <RequireAuth>
+                    <DuplicateDashboard />
                   </RequireAuth>
                 }
               />

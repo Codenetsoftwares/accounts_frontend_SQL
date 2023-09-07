@@ -45,7 +45,7 @@ const InnerIntroducer = () => {
                 type="button"
                 class="btn btn-primary"
                 data-toggle="modal"
-                data-target=".bd-example-modal-lg"
+                data-target=".InnerIntroducerShowTransaction"
                 onClick={(e) => handelShowPercentage(e, user.transactionDetail)}
               >
                 Show Transactions

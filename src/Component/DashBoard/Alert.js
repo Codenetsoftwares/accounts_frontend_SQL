@@ -99,6 +99,72 @@ const Alert = () => {
       // code block
     }
   };
+  const handleReject = (e, id, transactionType) => {
+  
+    switch (transactionType) {
+      case "Deposit":
+        EditServices.IsReject(id, auth.user)
+          .then((response) => {
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        break;
+      case "Withdraw":
+        EditServices.IsReject(id, auth.user)
+          .then((response) => {
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        break;
+
+      case "Manual-Bank-Withdraw":
+        EditServices.IsReject(id, auth.user)
+          .then((response) => {
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        break;
+
+      case "Manual-Bank-Deposit":
+        EditServices.IsReject(id, auth.user)
+          .then((response) => {
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        break;
+
+      case "Manual-Website-Withdraw":
+        EditServices.IsReject(id, auth.user)
+          .then((response) => {
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        break;
+
+      case "Manual-Webiste-Deposit":
+        EditServices.IsReject(id, auth.user)
+          .then((response) => {
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        break;
+
+      default:
+      // code block
+    }
+  };
 
   return (
     <>
@@ -170,7 +236,9 @@ const Alert = () => {
                     >
                       Approve
                     </button>
-                    <button class="btn btn-danger">Reject</button>
+                    <button class="btn btn-danger"  onClick={(e) =>
+                        handleReject(e, data._id, data.transactionType)
+                      }>Reject</button>
                   </div>
                 </div>
               );
