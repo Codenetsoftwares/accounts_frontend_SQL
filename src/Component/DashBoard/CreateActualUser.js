@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "../../Utils/Auth";
 import {
   FaUser,
@@ -28,6 +28,7 @@ const CreateActualUser = () => {
     yourUserId: "",
   });
   const [checkedItems, setCheckedItems] = useState([]);
+  const [IntroducerId, setIntroducerId] = useState([]);
   console.log("This is FromData=>>>", formData);
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -44,6 +45,13 @@ const CreateActualUser = () => {
       );
     }
   };
+   useEffect(() => {
+     AccountService.IntroducerUserId(auth.user).then((res) =>
+       setIntroducerId(res.data)
+     );
+   }, [auth]);
+   console.log("Introducer Id", IntroducerId);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -87,6 +95,7 @@ const CreateActualUser = () => {
     height: "100%",
     overflow: "hidden",
   };
+  console.log("====>>>>",formData.yourIntroducerId);
 
   return (
     <div
@@ -176,7 +185,29 @@ const CreateActualUser = () => {
                           <FaIdCard /> Introducer ID
                           <span className="text-danger">*</span>
                         </label>
-                        <input
+                        <div className="input-group mb-3">
+                          <div className="input-group-prepend">
+                            <span className="input-group-text">
+                              <i class="fa fa-user id"></i>
+                            </span>
+                          </div>
+                          <select
+                            type="text"
+                            className="form-select"
+                            id="text"
+                            name="yourIntroducerId"
+                            value={formData.yourIntroducerId}
+                            onChange={handleChange}
+                          >
+                            <option selected>Select Introducer</option>
+                            {IntroducerId.map((data, index) => (
+                              <option key={index} value={data.introducerId}>
+                                {data.introducerId}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        {/* <input
                           type="text"
                           className="form-control"
                           id="text"
@@ -185,7 +216,7 @@ const CreateActualUser = () => {
                           onChange={handleChange}
                           placeholder="Enter Introducer ID"
                           required
-                        />
+                        /> */}
                       </div>
                       <div className="col-md-6">
                         <label htmlFor="" className="form-label">
