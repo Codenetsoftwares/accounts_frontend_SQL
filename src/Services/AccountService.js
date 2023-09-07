@@ -84,6 +84,16 @@ class AccountService {
     });
   }
 
+  IntroducerUserId(user) {
+    return axios({
+      method: "get",
+      url: API_HOST + "/api/superadmin/Introducer-id",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
   deletebank(data, user) {
     return axios({
       method: "post",
@@ -275,7 +285,7 @@ class AccountService {
   //   });
   // }
 
-  createActualuser(data ,user) {
+  createActualuser(data, user) {
     return axios({
       method: "post",
       url: API_HOST + "/api/admin/user/register",
@@ -310,36 +320,36 @@ class AccountService {
     return axios({
       method: "post",
       url: `${API_HOST}/api/admin/save-transaction-request`,
-      data:data,
+      data: data,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
     });
   }
 
- SaveBankTransaction(data, user) {
+  SaveBankTransaction(data, user) {
     return axios({
       method: "post",
       url: `${API_HOST}/api/admin/save-bank-transaction-request`,
-      data:data,
+      data: data,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
     });
-    }
+  }
 
- SaveWebsiteTransaction(data, user) {
-      return axios({
-        method: "post",
-        url: `${API_HOST}/api/admin/save-website-transaction-request`,
-        data:data,
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
-    }
+  SaveWebsiteTransaction(data, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/admin/save-website-transaction-request`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
 
-  EditWebsite(data,id, user) {
+  EditWebsite(data, id, user) {
     return axios({
       method: "put",
       url: `${API_HOST}/api/website-edit/${id}`,
@@ -351,7 +361,7 @@ class AccountService {
     });
   }
 
- DeleteBankTransaction(id, user) {
+  DeleteBankTransaction(id, user) {
     return axios({
       method: "post",
       url: `${API_HOST}/api/delete-bank-transaction/${id}`,
@@ -360,7 +370,7 @@ class AccountService {
       },
     });
   }
- 
+
   DeleteWebsiteTransaction(id, user) {
     return axios({
       method: "post",
@@ -371,8 +381,6 @@ class AccountService {
     });
   }
 
-
-
   DeleteTransaction(id, user) {
     return axios({
       method: "post",
@@ -382,8 +390,6 @@ class AccountService {
       },
     });
   }
-  
-
 }
 
 export default new AccountService();

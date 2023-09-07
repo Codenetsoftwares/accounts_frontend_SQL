@@ -11,7 +11,12 @@ import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import CalenderService from "../../Services/CalenderService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDeleteLeft, faDownLeftAndUpRightToCenter, faTrash, faUser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faDeleteLeft,
+  faDownLeftAndUpRightToCenter,
+  faTrash,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FaFilter } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
@@ -24,6 +29,7 @@ import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
 import moment from "moment";
 import EditTransaction from "../Modal/EditTransaction";
+import { CSVLink } from "react-csv";
 
 const AdminDash = () => {
   const auth = useAuth();
@@ -48,8 +54,8 @@ const AdminDash = () => {
     transactionType: "",
     userId: "",
     websiteName: "",
-    depositAmount:"",
-    withdrawAmount :"",
+    depositAmount: "",
+    withdrawAmount: "",
   });
   const [select, setSelect] = useState("All");
   const [toggle, setToggle] = useState(true);
@@ -151,14 +157,13 @@ const AdminDash = () => {
   useEffect(() => {
     AccountService.website(auth.user).then((res) => setWebsiteList(res.data));
   }, [auth]);
-  
-  const handleDelete = (e, id, transactionType) => {
 
-  console.log(transactionType)
-  console.log(id)
+  const handleDelete = (e, id, transactionType) => {
+    console.log(transactionType);
+    console.log(id);
     switch (transactionType) {
       case "Deposit":
-        AccountService.SaveTransaction( {requestId:id},auth.user)
+        AccountService.SaveTransaction({ requestId: id }, auth.user)
 
           .then((res) => {
             console.log(res.data);
@@ -169,7 +174,7 @@ const AdminDash = () => {
           });
         break;
       case "Withdraw":
-        AccountService.SaveTransaction({requestId:id}, auth.user)
+        AccountService.SaveTransaction({ requestId: id }, auth.user)
           .then((res) => {
             console.log(res.data);
             toast.success("Transaction delete request sent to Super Admin");
@@ -180,23 +185,27 @@ const AdminDash = () => {
         break;
 
       case "Manual-Bank-Withdraw":
-        AccountService.SaveBankTransaction({requestId:id}, auth.user)
+        AccountService.SaveBankTransaction({ requestId: id }, auth.user)
 
           .then((res) => {
             console.log(res.data);
-            toast.success("Bank Transaction delete request sent to Super Admin");
+            toast.success(
+              "Bank Transaction delete request sent to Super Admin"
+            );
           })
           .catch((err) => {
             console.log(err);
-          }); 
+          });
         break;
 
       case "Manual-Bank-Deposit":
-        AccountService.SaveWebsiteTransaction( {requestId:id}, auth.user)
+        AccountService.SaveWebsiteTransaction({ requestId: id }, auth.user)
 
           .then((res) => {
             console.log(res.data);
-            toast.success( "Website Transaction delete request sent to Super Admin");
+            toast.success(
+              "Website Transaction delete request sent to Super Admin"
+            );
           })
           .catch((err) => {
             console.log(err);
@@ -204,21 +213,22 @@ const AdminDash = () => {
         break;
 
       case "Manual-Website-withdraw":
-        AccountService.DeleteWebsiteTransaction( id, auth.user)
+        AccountService.DeleteWebsiteTransaction(id, auth.user)
           .then((res) => {
             console.log(res.data);
-            toast.success( "Website Transaction delete request sent to Super Admin");
+            toast.success(
+              "Website Transaction delete request sent to Super Admin"
+            );
           })
           .catch((err) => {
             console.log(err);
           });
         break;
       case "Manual-Website-Deposit":
-      AccountService.DeleteTransaction({requestId:id}, auth.user)
+        AccountService.DeleteTransaction({ requestId: id }, auth.user)
           .then((res) => {
             console.log(res.data);
-            toast.success( "Bank Transaction deleted");
-           
+            toast.success("Bank Transaction deleted");
           })
           .catch((err) => {
             console.log(err);
@@ -294,14 +304,15 @@ const AdminDash = () => {
             </option>
             <option className="d-flex" value="Manual-Bank-Deposit">
               <b>Manual Bank Deposit</b>
-            </option> <option className="d-flex" value="Manual-Bank-Withdraw">
+            </option>{" "}
+            <option className="d-flex" value="Manual-Bank-Withdraw">
               <b>Manual Bank Withdraw</b>
             </option>
             <option className="d-flex" value="Manual-Website-Deposit">
               <b>Manual Website Deposit</b>
-            </option> <option className="d-flex" value="Manual-Website-Withdraw">
+            </option>{" "}
+            <option className="d-flex" value="Manual-Website-Withdraw">
               <b>Manual Website Withdraw</b>
-
             </option>
           </select>
         </div>
@@ -458,6 +469,19 @@ const AdminDash = () => {
               Reset
             </button>
           </div>
+          {toggle ? (
+            <div className="mx-2">
+              <CSVLink data={documentView} className="btn btn-success">
+                Download Data
+              </CSVLink>
+            </div>
+          ) : (
+            <div className="mx-2">
+              <CSVLink data={documentFilter} className="btn btn-success">
+                Download Filter Data
+              </CSVLink>
+            </div>
+          )}
         </div>
       </div>
 
@@ -576,14 +600,15 @@ const AdminDash = () => {
                         />
                       </button>
                     </Link> */}
-                    
-                      <button type="button" className="btn btn-primary">
-                        <FontAwesomeIcon
-                          icon={faTrash}
-                          onClick={(e)=> {handleDelete(e,data._id,data.transactionType)}}
-                        />
-                      </button>
-                    
+
+                    <button type="button" className="btn btn-primary">
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        onClick={(e) => {
+                          handleDelete(e, data._id, data.transactionType);
+                        }}
+                      />
+                    </button>
 
                     {/* <Link to={`/admindash/${data._id}`} className="col"> */}
                     <button
@@ -611,7 +636,6 @@ const AdminDash = () => {
                       <FontAwesomeIcon icon={faEdit} />
                     </button>
                     {/* </Link> */}
-
                   </div>
                 </div>
               );
@@ -735,11 +759,13 @@ const AdminDash = () => {
                       </button>
                     </Link>
                     <button type="button" className="btn btn-primary">
-                        <FontAwesomeIcon
-                          icon={faTrash}
-                          onClick={(e)=> {handleDelete(e,data._id,data.transactionType)}}
-                        />
-                      </button>
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        onClick={(e) => {
+                          handleDelete(e, data._id, data.transactionType);
+                        }}
+                      />
+                    </button>
                   </div>
                 </div>
               );
