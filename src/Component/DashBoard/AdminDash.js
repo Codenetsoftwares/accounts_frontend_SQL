@@ -48,8 +48,8 @@ const AdminDash = () => {
     transactionType: "",
     userId: "",
     websiteName: "",
-    depositAmount:"",
-    withdrawAmount :"",
+    depositAmount: "",
+    withdrawAmount: "",
   });
   const [select, setSelect] = useState("All");
   const [toggle, setToggle] = useState(true);
@@ -151,14 +151,14 @@ const AdminDash = () => {
   useEffect(() => {
     AccountService.website(auth.user).then((res) => setWebsiteList(res.data));
   }, [auth]);
-  
+
   const handleDelete = (e, id, transactionType) => {
 
-  console.log(transactionType)
-  console.log(id)
+    console.log(transactionType)
+    console.log(id)
     switch (transactionType) {
       case "Deposit":
-        AccountService.SaveTransaction( {requestId:id},auth.user)
+        AccountService.SaveTransaction({ requestId: id }, auth.user)
 
           .then((res) => {
             console.log(res.data);
@@ -169,7 +169,7 @@ const AdminDash = () => {
           });
         break;
       case "Withdraw":
-        AccountService.SaveTransaction({requestId:id}, auth.user)
+        AccountService.SaveTransaction({ requestId: id }, auth.user)
           .then((res) => {
             console.log(res.data);
             toast.success("Transaction delete request sent to Super Admin");
@@ -180,7 +180,7 @@ const AdminDash = () => {
         break;
 
       case "Manual-Bank-Withdraw":
-        AccountService.SaveBankTransaction({requestId:id}, auth.user)
+        AccountService.SaveBankTransaction({ requestId: id }, auth.user)
 
           .then((res) => {
             console.log(res.data);
@@ -188,15 +188,15 @@ const AdminDash = () => {
           })
           .catch((err) => {
             console.log(err);
-          }); 
+          });
         break;
 
       case "Manual-Bank-Deposit":
-        AccountService.SaveWebsiteTransaction( {requestId:id}, auth.user)
+        AccountService.SaveWebsiteTransaction({ requestId: id }, auth.user)
 
           .then((res) => {
             console.log(res.data);
-            toast.success( "Website Transaction delete request sent to Super Admin");
+            toast.success("Website Transaction delete request sent to Super Admin");
           })
           .catch((err) => {
             console.log(err);
@@ -204,21 +204,21 @@ const AdminDash = () => {
         break;
 
       case "Manual-Website-withdraw":
-        AccountService.DeleteWebsiteTransaction( id, auth.user)
+        AccountService.DeleteWebsiteTransaction(id, auth.user)
           .then((res) => {
             console.log(res.data);
-            toast.success( "Website Transaction delete request sent to Super Admin");
+            toast.success("Website Transaction delete request sent to Super Admin");
           })
           .catch((err) => {
             console.log(err);
           });
         break;
       case "Manual-Website-Deposit":
-      AccountService.DeleteTransaction({requestId:id}, auth.user)
+        AccountService.DeleteTransaction({ requestId: id }, auth.user)
           .then((res) => {
             console.log(res.data);
-            toast.success( "Bank Transaction deleted");
-           
+            toast.success("Bank Transaction deleted");
+
           })
           .catch((err) => {
             console.log(err);
@@ -265,7 +265,7 @@ const AdminDash = () => {
       {/* This is the Main Card */}
       <div
         className="card card-body rounded-1 main "
-        // style={{ backgroundImage: gradient }}
+      // style={{ backgroundImage: gradient }}
       >
         <div className="d-flex mt-5 mt-5 ml-5 pt-5 justify-content-center">
           <h6 className="fw-bold text-nowrap pt-2">
@@ -483,6 +483,12 @@ const AdminDash = () => {
                 <h4 className="col fs-6">User Id</h4>
                 <h4 className="col fs-6">Bank</h4>
                 <h4 className="col fs-6">Website</h4>
+                <h4 className="col fs-6">Before Bank Balance</h4>
+                <h4 className="col fs-6">Total Bank Balance</h4>
+                <h4 className="col fs-6">Before Website Balance</h4>
+                <h4 className="col fs-6">Total Website Balance</h4>
+                <h4 className="col fs-6">Before Balance</h4>
+                <h4 className="col fs-6">Total Balance</h4>
               </div>
             </div>
           </div>
@@ -559,6 +565,50 @@ const AdminDash = () => {
                       <p className="col fs-6">
                         {data.websiteName ? data.websiteName : "N.A"}
                       </p>
+                      {data.beforeBalanceBankWithdraw ? <p className="col fs-6">
+                        {data.beforeBalanceBankWithdraw && (
+                          <p className="col fs-6 text-break">₹&nbsp; {data.beforeBalanceBankWithdraw}</p>
+                        )}
+                        {data.beforeBalanceBankDeposit && (
+                          <p className="col fs-6 text-break">₹&nbsp; {data.beforeBalanceBankDeposit}</p>
+                        )}
+                      </p> : "N.A"}
+                      {data.beforeBalanceBankWithdraw ? <p className="col fs-6">
+                        {data.currentBalanceBankWithdraw && (
+                          <p className="col fs-6 text-break">₹&nbsp; {data.currentBalanceBankWithdraw}</p>
+                        )}
+                        {data.currentBalanceBankDeposit && (
+                          <p className="col fs-6 text-break">₹&nbsp; {data.currentBalanceBankDeposit}</p>
+                        )}
+                      </p> : "N.A"}
+                      {data.beforeBalanceBankWithdraw ? <p className="col fs-6">
+                        {data.beforeBalanceWebsiteWithdraw && (
+                          <p className="col fs-6 text-break">₹&nbsp; {data.beforeBalanceWebsiteWithdraw}</p>
+                        )}
+                        {data.beforeBalanceWebsiteDeposit && (
+                          <p className="col fs-6 text-break">₹&nbsp; {data.beforeBalanceWebsiteDeposit}</p>
+                        )}
+                      </p> : "N.A"}
+                      {data.beforeBalanceBankWithdraw ?<p className="col fs-6">
+                          {data.currentBalanceWebsiteWithdraw && (
+                            <p className="col fs-6 text-break">₹&nbsp; {data.currentBalanceWebsiteWithdraw}</p>
+                          )}
+                          {data.currentBalanceWebsiteDeposit && (
+                            <p className="col fs-6 text-break">₹&nbsp; {data.currentBalanceWebsiteDeposit}</p>
+                          )}
+                      </p> : "N.A"}
+                      {data.beforeBalance ? <p className="col fs-6">
+                          {data.beforeBalance ? data.beforeBalance : "N.A"}
+                        </p> : "N.A"}
+                      {data.currentBalance ? <p className="col fs-6">
+                        {data.currentBalance ? data.currentBalance : "N.A"}
+                      </p> : "N.A"}
+                      {/* <p className="col fs-6">
+                        {data.beforeBalance ? data.beforeBalance : "N.A"}
+                      </p> */}
+                      {/* <p className="col fs-6">
+                        {data.currentBalance ? data.currentBalance : "N.A"}
+                      </p> */}
                       {/* {data.websiteName && (<p className="col fs-6">{data.Bank}</p>)}
                       {data.depositAmount && (<p className="col fs-6 text-break">N.A</p>)}
                       {data.withdrawAmount && (<p className="col fs-6 text-break">N.A</p>)}
@@ -576,14 +626,14 @@ const AdminDash = () => {
                         />
                       </button>
                     </Link> */}
-                    
-                      <button type="button" className="btn btn-primary">
-                        <FontAwesomeIcon
-                          icon={faTrash}
-                          onClick={(e)=> {handleDelete(e,data._id,data.transactionType)}}
-                        />
-                      </button>
-                    
+
+                    <button type="button" className="btn btn-primary">
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        onClick={(e) => { handleDelete(e, data._id, data.transactionType) }}
+                      />
+                    </button>
+
 
                     {/* <Link to={`/admindash/${data._id}`} className="col"> */}
                     <button
@@ -641,6 +691,12 @@ const AdminDash = () => {
                 <h4 className="col fs-6">User Id</h4>
                 <h4 className="col fs-6">Bank</h4>
                 <h4 className="col fs-6">Website</h4>
+                <h4 className="col fs-6">Before Bank Balance</h4>
+                <h4 className="col fs-6">Total Bank Balance</h4>
+                <h4 className="col fs-6">Before Website Balance</h4>
+                <h4 className="col fs-6">Total Website Balance</h4>
+                <h4 className="col fs-6">Before Balance</h4>
+                <h4 className="col fs-6">Total Balance</h4>
               </div>
             </div>
           </div>
@@ -718,6 +774,44 @@ const AdminDash = () => {
                       <p className="col fs-6">
                         {data.websiteName ? data.websiteName : "N.A"}
                       </p>
+                      {data.beforeBalanceBankWithdraw ? <p className="col fs-6">
+                        {data.beforeBalanceBankWithdraw && (
+                          <p className="col fs-6 text-break">₹&nbsp; {data.beforeBalanceBankWithdraw}</p>
+                        )}
+                        {data.beforeBalanceBankDeposit && (
+                          <p className="col fs-6 text-break">₹&nbsp; {data.beforeBalanceBankDeposit}</p>
+                        )}
+                      </p> : "N.A"}
+                      {data.beforeBalanceBankWithdraw ? <p className="col fs-6">
+                        {data.currentBalanceBankWithdraw && (
+                          <p className="col fs-6 text-break">₹&nbsp; {data.currentBalanceBankWithdraw}</p>
+                        )}
+                        {data.currentBalanceBankDeposit && (
+                          <p className="col fs-6 text-break">₹&nbsp; {data.currentBalanceBankDeposit}</p>
+                        )}
+                      </p> : "N.A"}
+                      {data.beforeBalanceBankWithdraw ? <p className="col fs-6">
+                        {data.beforeBalanceWebsiteWithdraw && (
+                          <p className="col fs-6 text-break">₹&nbsp; {data.beforeBalanceWebsiteWithdraw}</p>
+                        )}
+                        {data.beforeBalanceWebsiteDeposit && (
+                          <p className="col fs-6 text-break">₹&nbsp; {data.beforeBalanceWebsiteDeposit}</p>
+                        )}
+                      </p> : "N.A"}
+                      {data.beforeBalanceBankWithdraw ? <p className="col fs-6">
+                        {data.currentBalanceWebsiteWithdraw && (
+                          <p className="col fs-6 text-break">₹&nbsp; {data.currentBalanceWebsiteWithdraw}</p>
+                        )}
+                        {data.currentBalanceWebsiteDeposit && (
+                          <p className="col fs-6 text-break">₹&nbsp; {data.currentBalanceWebsiteDeposit}</p>
+                        )}
+                      </p> : "N.A"}
+                      {data.beforeBalance ? <p className="col fs-6">
+                        {data.beforeBalance ? data.beforeBalance : "N.A"}
+                      </p> : "N.A"}
+                      {data.currentBalance ? <p className="col fs-6">
+                        {data.currentBalance ? data.currentBalance : "N.A"}
+                      </p> : "N.A"}
                       {/* {data.websiteName && (<p className="col fs-6">{data.Bank}</p>)}
                       {data.depositAmount && (<p className="col fs-6 text-break">N.A</p>)}
                       {data.withdrawAmount && (<p className="col fs-6 text-break">N.A</p>)}
@@ -735,11 +829,11 @@ const AdminDash = () => {
                       </button>
                     </Link>
                     <button type="button" className="btn btn-primary">
-                        <FontAwesomeIcon
-                          icon={faTrash}
-                          onClick={(e)=> {handleDelete(e,data._id,data.transactionType)}}
-                        />
-                      </button>
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        onClick={(e) => { handleDelete(e, data._id, data.transactionType) }}
+                      />
+                    </button>
                   </div>
                 </div>
               );
