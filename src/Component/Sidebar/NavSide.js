@@ -85,7 +85,8 @@ const NavSide = () => {
               data-accordion="false"
             >
               <li className="nav-item menu-open">
-                {isToggleDash ? (
+                {/* {auth.user.role.some((role) => role === "superAdmin" || role === "Dashboard") && <> */}
+                  {isToggleDash ? (
                   <li className="nav-item ">
                     <a
                       href="#"
@@ -123,9 +124,11 @@ const NavSide = () => {
                       <p>Create Transaction</p>
                     </Link>
                   </li>
-                )}
+                  )}
+                {/* </>} */}
               </li>
-              {IsToggleTransaction ? (
+              {/* {auth.user.role.some((role) => role === "superAdmin" || role === "Create-Transaction" || role === "BankView" || role === "WebsiteView") && <> */}
+                {IsToggleTransaction ? (
                 <li className="nav-item ">
                   <a className="nav-link " onClick={handleToggleTransaction}>
                     &nbsp; <i className="fa-solid fas fa-user" />
@@ -145,19 +148,23 @@ const NavSide = () => {
                       <i className="fas fa-chevron-down right"></i>
                     </p>
                   </a>
-
-                  <Link to="/bank" className="nav-link text-white">
-                    <i className="far fa-circle nav-icon" />
-                    <p>Bank</p>
-                  </Link>
-
-                  <Link to="/website" className="nav-link text-white">
-                    <i className="far fa-circle nav-icon" />
-                    <p>Website</p>
-                  </Link>
+                  {/* {auth.user.role.some((role) => role === "superAdmin" || role === "BankView") && <> */}
+                    <Link to="/bank" className="nav-link text-white">
+                      <i className="far fa-circle nav-icon" />
+                      <p>Bank</p>
+                    </Link>
+                  {/* </>} */}
+                  {/* {auth.user.role.some((role) => role === "superAdmin" || role === "WebsiteView") && <> */}
+                    <Link to="/website" className="nav-link text-white">
+                      <i className="far fa-circle nav-icon" />
+                      <p>Website</p>
+                    </Link>
+                  {/* </>} */}
                 </li>
               )}
-              {isToggleCreate ? (
+            {/* </>} */}
+              {/* {auth.user.role.some((role) => role === "superAdmin" || role === "") && <> */}
+                {isToggleCreate ? (
                 <li className="nav-item ">
                   <a className="nav-link " onClick={handleToggleCreate}>
                     &nbsp; <i className="fa-solid fas fa-user" />
@@ -193,52 +200,10 @@ const NavSide = () => {
                   </Link>
                 </li>
               )}
-              {/* <li className="nav-item">
-                <Link to="bank" href="pages/widgets.html" className="nav-link">
-                  <i className="nav-icon fas fa-university"></i>
-                  <p className="text-dark">
-                    Bank View
-          
-                  </p>
-                </Link>
-              </li> */}
+            {/* </>} */}
 
-              {/* <li className="nav-item">
-                <Link
-                  to="createuser"
-                  href="pages/widgets.html"
-                  className="nav-link"
-                >
-                  &nbsp;<i className="nav-icon fas fa-user-plus"></i>
-                  <p className="text-dark">
-                    Create SubAdmin
-                  </p>
-                </Link>
-              </li> */}
-
-              {/* <li className="nav-item">
-                <Link
-                  to="/createactualuser"
-                  href="pages/widgets.html"
-                  className="nav-link"
-                >
-                  &nbsp;<i className="nav-icon fas fa-user-plus"></i>
-                  <p className="text-dark">
-                    Create User
-                  </p>
-                </Link>
-              </li> */}
-
-              {/* <li className="nav-item">
-                <Link to="website" href="#" className="nav-link">
-                  <i className="nav-icon fas fa-globe"></i>
-                  <p className="text-dark">
-                    Website View
-                  </p>
-                </Link>
-              </li> */}
-
-              {isToggle ? (
+              {/* {auth.user.role.some((role) => role === "superAdmin" || role === "Profile") && <> */}
+                {isToggle ? (
                 <li className="nav-item ">
                   <a className="nav-link text-white" onClick={handleToggle}>
                     &nbsp; <i className="fa-solid fas fa-user" />
@@ -268,13 +233,20 @@ const NavSide = () => {
                     <i className="far fa-circle nav-icon" />
                     <p>Introducer</p>
                   </Link>
+                  <Link to="/adminlist" className="nav-link text-white">
+                    <i className="far fa-circle nav-icon" />
+                    <p>SubAdmin</p>
+                  </Link>
                 </li>
               )}
-              <li className="nav-item">
+            {/* </>} */}
+              {/* {auth.user.role.includes("superAdmin") && */}
+                <li className="nav-item">
                 <Link to="alert" href="pages/widgets.html" className="nav-link">
                   &nbsp;<i className="alert-icon fas fa-bell"></i>
                   <p className="text-dark">
                     &nbsp; Edit Request
+
                     {/* <span className="right badge badge-danger">New</span> */}
                   </p>
                 </Link>
@@ -285,11 +257,16 @@ const NavSide = () => {
                 </Link> */}
               </li>
               
+
+                  </p>
+                </Link>
+              </li>
+              {/* } */}
+
             </ul>
           </nav>
         </div>
       </aside>
-      {/* // ) : null} */}
     </div>
   );
 };

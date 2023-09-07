@@ -17,7 +17,8 @@ function Withdraw() {
   const [transactionType, setTransactionType] = useState("");
   const [amount, setAmount] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
-  const [bonus, setBonus] = useState("");
+  // const [bonus, setBonus] = useState("");
+  const [bankCharges, setBankCharges] = useState("");
 
 
   useEffect(() => {
@@ -46,12 +47,12 @@ function Withdraw() {
         transactionType: "Withdraw",
         amount: Number(amount),
         paymentMethod: paymentMethod,
-        subAdminId: auth.user.email,
+        subAdminId: auth.user.userName,
         userId: SendUId,
         bankName: BankAccNo[0],
         accountNumber: Number(BankAccNo[1]),
         websiteName: WebsiteName,
-        bonus:  Number(bonus),
+        bankCharges:  Number(bankCharges),
         remarks: remarks
       };
   
@@ -128,7 +129,9 @@ function Withdraw() {
               > 
               <option>userId</option>
               {UId.map((data, index) => (
-                  <option key={index} value={data.userId}>
+                  <option 
+                  key={index} 
+                  value={data.userId}>
                     {data.userId}
                   </option>
                    ))}
@@ -188,11 +191,11 @@ function Withdraw() {
             <div className="input-group mb-3">
               <div className="input-group-prepend">
                 <span className="input-group-text">
-                  <i class="fa fa-gift"></i>
+                  <i class="fas fa-piggy-bank"></i>
                 </span>
               </div>
-              <input type="text" className="form-control" placeholder="Bonus" onChange={(e) => {
-                  setBonus((e.target.value)); // Parse the JSON string back to an array
+              <input type="text" className="form-control" placeholder="Bank Charges" onChange={(e) => {
+                  setBankCharges((e.target.value)); // Parse the JSON string back to an array
                 }}/>
             </div>
 

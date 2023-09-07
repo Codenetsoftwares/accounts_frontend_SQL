@@ -137,7 +137,25 @@ class AccountService {
       },
     });
   }
-
+  singleIntroducerprofileEdit(id, data, user) {
+    return axios({
+      method: "put",
+      url: `${API_HOST}/api/admin/intoducer-profile-edit/${id}`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+  introducerProfile(id, user) {
+    return axios({
+      method: "get",
+      url: `${API_HOST}/api/get-single-Introducer/${id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
   userprofile(user) {
     return axios({
       method: "get",
@@ -305,7 +323,34 @@ class AccountService {
       },
     });
   }
-
+  getAdminList(user) {
+    return axios({
+      method: "get",
+      url: `${API_HOST}/api/admin/view-sub-admins`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+  getSingleAdmin(id, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/admin/single-sub-admin/${id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+  updateSingleAdminPermission(id, data, user) {
+    return axios({
+      method: "put",
+      url: `${API_HOST}/api/admin/edit-subadmin-roles/${id}`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
   Introducercut(id, user, data) {
     return axios({
       method: "post",

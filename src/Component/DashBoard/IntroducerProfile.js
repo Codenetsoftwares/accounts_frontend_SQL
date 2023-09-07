@@ -47,7 +47,7 @@ const IntroducerProfile = () => {
           <div className="card container-fluid w-75">
             <div className="card-body">
               <Link
-                to={`/innerintroducer/${users._id}`}
+                to={`/singleintroducer/${users._id}`}
                 style={{ cursor: "pointer" }}
               >
                 {users.firstname}&nbsp;{users.lastname}

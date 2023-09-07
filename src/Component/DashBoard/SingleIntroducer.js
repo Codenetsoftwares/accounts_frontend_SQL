@@ -7,10 +7,9 @@ import { useAuth } from "../../Utils/Auth";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const InnerUserProfile = () => {
+const SingleIntroducer = () => {
   const { id } = useParams();
   const auth = useAuth();
-  console.log("User ID==>>", id);
   const [users, setUsers] = useState([]);
   const [foundObject, setFoundObject] = useState([]);
   const [isAccordionOpen, setIsAccordionOpen] = useState(false); // State for accordion open/close
@@ -18,18 +17,13 @@ const InnerUserProfile = () => {
   const [editedData, setEditedData] = useState({}); // Store edited data
 
   useEffect(() => {
-    AccountService.userprofile(auth.user)
-      .then((res) => {
-        setUsers(res.data);
-        const userWithId = res.data.find((user) => user._id === id);
-        setFoundObject(userWithId);
-      })
-      .catch((error) => {
-        // Handle error
-        console.error("Error fetching user data:", error);
-      });
+    AccountService.introducerProfile(id, auth.user
+    ).then((res) => {
+      console.log(res.data);
+      setFoundObject(res.data);
+    })
   }, [auth, id]);
-  // console.log("This is User Deatils===>>",foundObject);
+  console.log("This is User Deatils===>>", foundObject);
 
   const toggleAccordion = () => {
     setIsAccordionOpen(!isAccordionOpen);
@@ -52,15 +46,11 @@ const InnerUserProfile = () => {
     const data = {
       firstname: editedData.firstname,
       lastname: editedData.lastname,
-      email: editedData.email,
-      contactnumber: editedData.contactNumber,
       userName: editedData.userName,
-      introducerPercentage: editedData.introducerPercentage,
-      websitedetail: editedData.websitedetail,
     };
-    
+
     // put Api Fetching
-    AccountService.inneruserprofile(id, data, auth.user)
+    AccountService.singleIntroducerprofileEdit(id, data, auth.user)
       .then((res) => {
         console.log("res", res);
         if (res.status === 201) {
@@ -77,7 +67,7 @@ const InnerUserProfile = () => {
         }
       });
   };
-  console.log("User Deatils",foundObject);
+  console.log("User Deatils", foundObject);
 
   return (
     <div
@@ -105,7 +95,7 @@ const InnerUserProfile = () => {
                 color: "black",
               }}
             >
-              User Data
+              Introducer Data
             </h1>
             <div className="row justify-content-center">
               <div className="card">
@@ -142,76 +132,17 @@ const InnerUserProfile = () => {
                         />
                       </div>
                       <div className="mb-3">
-                        <label className="form-label">Contact Number</label>
-                        <input
-                          name="contactNumber"
-                          value={
-                            isEditing
-                              ? editedData.contactNumber
-                              : foundObject.contactNumber
-                          }
-                          onChange={handleInputChange}
-                          className="form-control"
-                          disabled={!isEditing}
-                        />
-                      </div>
-                      {/* <div className="mb-3">
-                        <label className="form-label">Email</label>
-                        <input
-                          name="email"
-                          value={
-                            isEditing ? editedData.email : foundObject.email
-                          }
-                          onChange={handleInputChange}
-                          className="form-control"
-                          disabled={!isEditing}
-                        />
-                      </div> */}
-                      <div className="mb-3">
-                        <label className="form-label">Username</label>
+                        <label className="form-label">User Name</label>
                         <input
                           name="userName"
                           value={
-                            isEditing
-                              ? editedData.userName
-                              : foundObject.userName
+                            isEditing ? editedData.userName : foundObject.userName
                           }
                           onChange={handleInputChange}
                           className="form-control"
                           disabled={!isEditing}
                         />
                       </div>
-                      <div className="mb-3">
-                        <label className="form-label">
-                          Introducer Percentage{" "}
-                        </label>
-                        <input
-                          name="introducerPercentage"
-                          value={
-                            isEditing
-                              ? editedData.introducerPercentage
-                              : foundObject.introducerPercentage
-                          }
-                          onChange={handleInputChange}
-                          className="form-control"
-                          disabled={!isEditing}
-                        />
-                      </div>
-                      <div className="mb-3">
-                        <label className="form-label">website Details</label>
-                        <input
-                          name="WebsiteDetails"
-                          value={
-                            isEditing
-                              ? editedData.WebsiteDetails
-                              : foundObject.WebsiteDetails
-                          }
-                          onChange={handleInputChange}
-                          className="form-control"
-                          disabled={!isEditing}
-                        />
-                      </div>
-
                       <button
                         className="btn btn-link"
                         onClick={toggleAccordion}
@@ -241,13 +172,7 @@ const InnerUserProfile = () => {
                                 <div className="row">
                                   <div className="col-md-6">
                                     <div className="form-group">
-                                      <label
-                                        htmlFor="bankName"
-                                        className="form-label"
-                                      >
-                                        Bank Name:
-                                        {editedData.bankDetail}
-                                      </label>
+                                      <label htmlFor="bankName" className="form-label">Bank Name:</label>
                                       <input
                                         type="text"
                                         id="bankName"
@@ -257,12 +182,7 @@ const InnerUserProfile = () => {
                                       />
                                     </div>
                                     <div className="form-group">
-                                      <label
-                                        htmlFor="accountNumber"
-                                        className="form-label"
-                                      >
-                                        Account Number:
-                                      </label>
+                                      <label htmlFor="accountNumber" className="form-label">Account Number:</label>
                                       <input
                                         type="text"
                                         id="accountNumber"
@@ -274,12 +194,7 @@ const InnerUserProfile = () => {
                                   </div>
                                   <div className="col-md-6">
                                     <div className="form-group">
-                                      <label
-                                        htmlFor="ifscCode"
-                                        className="form-label"
-                                      >
-                                        IFSC Code:
-                                      </label>
+                                      <label htmlFor="ifscCode" className="form-label">IFSC Code:</label>
                                       <input
                                         type="text"
                                         id="ifscCode"
@@ -289,12 +204,7 @@ const InnerUserProfile = () => {
                                       />
                                     </div>
                                     <div className="form-group">
-                                      <label
-                                        htmlFor="accountHolderName"
-                                        className="form-label"
-                                      >
-                                        Account Holder Name:
-                                      </label>
+                                      <label htmlFor="accountHolderName" className="form-label">Account Holder Name:</label>
                                       <input
                                         type="text"
                                         id="accountHolderName"
@@ -337,4 +247,4 @@ const InnerUserProfile = () => {
   );
 };
 
-export default InnerUserProfile;
+export default SingleIntroducer;

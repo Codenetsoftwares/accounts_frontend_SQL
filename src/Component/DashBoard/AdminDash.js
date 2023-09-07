@@ -76,7 +76,7 @@ const AdminDash = () => {
     // }
     setDocumentView(nArr);
   };
-
+  console.log(auth)
   useEffect(() => {
     TransactionSercvice.getAccountSummary(auth.user).then(
       (res) => (setDocumentView(res.data), setAccountData(res.data))
@@ -272,7 +272,7 @@ const AdminDash = () => {
       websiteName,
       depositAmount,
       withdrawAmount,
-      
+
     };
     setNormalEditData(data);
     console.log("====>>>>", NormalEditData);
@@ -568,7 +568,7 @@ const AdminDash = () => {
                       {data.withdrawAmount && (
                         <p className="col fs-6 text-break">N.A</p>
                       )}
-                      
+
                       {data.transactionType && (
                         <p className="col fs-6 text-break">
                           {data.transactionType}
@@ -632,18 +632,18 @@ const AdminDash = () => {
                         )}
                       </p> : "N.A"}
 
-                      {data.beforeBalanceBankWithdraw ?<p className="col fs-6">
-                          {data.currentBalanceWebsiteWithdraw && (
-                            <p className="col fs-6 text-break">₹&nbsp; {data.currentBalanceWebsiteWithdraw}</p>
-                          )}
-                          {data.currentBalanceWebsiteDeposit && (
-                            <p className="col fs-6 text-break">₹&nbsp; {data.currentBalanceWebsiteDeposit}</p>
-                          )}
+                      {data.beforeBalanceBankWithdraw ? <p className="col fs-6">
+                        {data.currentBalanceWebsiteWithdraw && (
+                          <p className="col fs-6 text-break">₹&nbsp; {data.currentBalanceWebsiteWithdraw}</p>
+                        )}
+                        {data.currentBalanceWebsiteDeposit && (
+                          <p className="col fs-6 text-break">₹&nbsp; {data.currentBalanceWebsiteDeposit}</p>
+                        )}
                       </p> : "N.A"}
 
                       {data.beforeBalance ? <p className="col fs-6">
-                          {data.beforeBalance ? data.beforeBalance : "N.A"}
-                        </p> : "N.A"}
+                        {data.beforeBalance ? data.beforeBalance : "N.A"}
+                      </p> : "N.A"}
                       {data.currentBalance ? <p className="col fs-6">
                         {data.currentBalance ? data.currentBalance : "N.A"}
                       </p> : "N.A"}
@@ -881,10 +881,10 @@ const AdminDash = () => {
 
                         onClick={(e) => {
                           handleDelete(e, data._id, data.transactionType);
-                        }}/>
+                        }} />
 
                     </button>
-              
+
                   </div>
                 </div>
               );
