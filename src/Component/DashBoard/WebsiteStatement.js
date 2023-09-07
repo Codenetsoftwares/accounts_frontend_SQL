@@ -27,19 +27,19 @@ const WebsiteStatement = () => {
   const [startDatevalue, SetStartDatesetValue] = useState(new Date());
   const [endDatevalue, setEndDateValue] = useState(new Date());
   const [toggle, setToggle] = useState(true);
-    const [NormalEditData, setNormalEditData] = useState({
-      Id: "",
-      amount: "",
-      bankName: "",
-      paymentMethod: "",
-      subAdminName: "",
-      transactionID: "",
-      transactionType: "",
-      userId: "",
-      websiteName: "",
-      depositAmount: "",
-      withdrawAmount: "",
-    });
+  const [NormalEditData, setNormalEditData] = useState({
+    Id: "",
+    amount: "",
+    bankName: "",
+    paymentMethod: "",
+    subAdminName: "",
+    transactionID: "",
+    transactionType: "",
+    userId: "",
+    websiteName: "",
+    depositAmount: "",
+    withdrawAmount: "",
+  });
 
   console.log("This is Website Name", id);
 
@@ -104,37 +104,37 @@ const WebsiteStatement = () => {
     SetStartDatesetValue(new Date());
     setEndDateValue(new Date());
   };
-   const handelnormaledit = (
-     e,
-     id,
-     amount,
-     bankName,
-     paymentMethod,
-     subAdminName,
-     transactionID,
-     transactionType,
-     userId,
-     websiteName,
-     depositAmount,
-     withdrawAmount
-   ) => {
-     const data = {
-       id,
-       amount,
-       bankName,
-       paymentMethod,
-       subAdminName,
-       transactionID,
-       transactionType,
-       userId,
-       websiteName,
-       depositAmount,
-       withdrawAmount,
-     };
-     setNormalEditData(data);
-     console.log("====>>>>", NormalEditData);
+  const handelnormaledit = (
+    e,
+    id,
+    amount,
+    bankName,
+    paymentMethod,
+    subAdminName,
+    transactionID,
+    transactionType,
+    userId,
+    websiteName,
+    depositAmount,
+    withdrawAmount
+  ) => {
+    const data = {
+      id,
+      amount,
+      bankName,
+      paymentMethod,
+      subAdminName,
+      transactionID,
+      transactionType,
+      userId,
+      websiteName,
+      depositAmount,
+      withdrawAmount,
+    };
+    setNormalEditData(data);
+    console.log("====>>>>", NormalEditData);
   };
-  
+
   const handleDelete = (e, id, transactionType) => {
     console.log(transactionType);
     switch (transactionType) {
@@ -331,6 +331,12 @@ const WebsiteStatement = () => {
                   <h4 className="col fs-6">User Id</h4>
                   <h4 className="col fs-6">Bank</h4>
                   <h4 className="col fs-6">Website</h4>
+                  <h4 className="col fs-6">Before Bank Balance</h4>
+                  <h4 className="col fs-6">Total Bank Balance</h4>
+                  <h4 className="col fs-6">Before Website Balance</h4>
+                  <h4 className="col fs-6">Total Website Balance</h4>
+                  <h4 className="col fs-6">Before Balance</h4>
+                  <h4 className="col fs-6">Total Balance</h4>
                 </div>
               </div>
             </div>
@@ -413,6 +419,44 @@ const WebsiteStatement = () => {
                         <p className="col fs-6">
                           {data.websiteName ? data.websiteName : "N.A"}
                         </p>
+                        {data.beforeBalanceBankWithdraw ? <p className="col fs-6">
+                          {data.beforeBalanceBankWithdraw && (
+                            <p className="col fs-6 text-break">₹&nbsp; {data.beforeBalanceBankWithdraw}</p>
+                          )}
+                          {data.beforeBalanceBankDeposit && (
+                            <p className="col fs-6 text-break">₹&nbsp; {data.beforeBalanceBankDeposit}</p>
+                          )}
+                        </p> : "N.A"}
+                        {data.beforeBalanceBankWithdraw ? <p className="col fs-6">
+                          {data.currentBalanceBankWithdraw && (
+                            <p className="col fs-6 text-break">₹&nbsp; {data.currentBalanceBankWithdraw}</p>
+                          )}
+                          {data.currentBalanceBankDeposit && (
+                            <p className="col fs-6 text-break">₹&nbsp; {data.currentBalanceBankDeposit}</p>
+                          )}
+                        </p> : "N.A"}
+                        {data.beforeBalanceBankWithdraw ? <p className="col fs-6">
+                          {data.beforeBalanceWebsiteWithdraw && (
+                            <p className="col fs-6 text-break">₹&nbsp; {data.beforeBalanceWebsiteWithdraw}</p>
+                          )}
+                          {data.beforeBalanceWebsiteDeposit && (
+                            <p className="col fs-6 text-break">₹&nbsp; {data.beforeBalanceWebsiteDeposit}</p>
+                          )}
+                        </p> : "N.A"}
+                        {data.beforeBalanceBankWithdraw ? <p className="col fs-6">
+                          {data.currentBalanceWebsiteWithdraw && (
+                            <p className="col fs-6 text-break">₹&nbsp; {data.currentBalanceWebsiteWithdraw}</p>
+                          )}
+                          {data.currentBalanceWebsiteDeposit && (
+                            <p className="col fs-6 text-break">₹&nbsp; {data.currentBalanceWebsiteDeposit}</p>
+                          )}
+                        </p> : "N.A"}
+                        {data.beforeBalance ? <p className="col fs-6">
+                          {data.beforeBalance ? data.beforeBalance : "N.A"}
+                        </p> : "N.A"}
+                        {data.currentBalance ? <p className="col fs-6">
+                          {data.currentBalance ? data.currentBalance : "N.A"}
+                        </p> : "N.A"}
                       </div>
                       <button
                         type="button"
@@ -475,6 +519,16 @@ const WebsiteStatement = () => {
                   <h4 className="col fs-6">User Id</h4>
                   <h4 className="col fs-6">Bank</h4>
                   <h4 className="col fs-6">Website</h4>
+                  <h4 className="col fs-6">Before Bank Balance</h4>
+                  <h4 className="col fs-6">Total Bank Balance</h4>
+                  <h4 className="col fs-6">Before Website Balance</h4>
+                  <h4 className="col fs-6">Total Website Balance</h4>
+                  <h4 className="col fs-6">Before Bank Balance</h4>
+                  <h4 className="col fs-6">Total Bank Balance</h4>
+                  <h4 className="col fs-6">Before Website Balance</h4>
+                  <h4 className="col fs-6">Total Website Balance</h4>
+                  <h4 className="col fs-6">Before Balance</h4>
+                  <h4 className="col fs-6">Total Balance</h4>
                 </div>
               </div>
             </div>
@@ -558,6 +612,44 @@ const WebsiteStatement = () => {
                         <p className="col fs-6">
                           {data.websiteName ? data.websiteName : "N.A"}
                         </p>
+                        {data.beforeBalanceBankWithdraw ? <p className="col fs-6">
+                          {data.beforeBalanceBankWithdraw && (
+                            <p className="col fs-6 text-break">₹&nbsp; {data.beforeBalanceBankWithdraw}</p>
+                          )}
+                          {data.beforeBalanceBankDeposit && (
+                            <p className="col fs-6 text-break">₹&nbsp; {data.beforeBalanceBankDeposit}</p>
+                          )}
+                        </p> : "N.A"}
+                        {data.beforeBalanceBankWithdraw ? <p className="col fs-6">
+                          {data.currentBalanceBankWithdraw && (
+                            <p className="col fs-6 text-break">₹&nbsp; {data.currentBalanceBankWithdraw}</p>
+                          )}
+                          {data.currentBalanceBankDeposit && (
+                            <p className="col fs-6 text-break">₹&nbsp; {data.currentBalanceBankDeposit}</p>
+                          )}
+                        </p> : "N.A"}
+                        {data.beforeBalanceBankWithdraw ? <p className="col fs-6">
+                          {data.beforeBalanceWebsiteWithdraw && (
+                            <p className="col fs-6 text-break">₹&nbsp; {data.beforeBalanceWebsiteWithdraw}</p>
+                          )}
+                          {data.beforeBalanceWebsiteDeposit && (
+                            <p className="col fs-6 text-break">₹&nbsp; {data.beforeBalanceWebsiteDeposit}</p>
+                          )}
+                        </p> : "N.A"}
+                        {data.beforeBalanceBankWithdraw ? <p className="col fs-6">
+                          {data.currentBalanceWebsiteWithdraw && (
+                            <p className="col fs-6 text-break">₹&nbsp; {data.currentBalanceWebsiteWithdraw}</p>
+                          )}
+                          {data.currentBalanceWebsiteDeposit && (
+                            <p className="col fs-6 text-break">₹&nbsp; {data.currentBalanceWebsiteDeposit}</p>
+                          )}
+                        </p> : "N.A"}
+                        {data.beforeBalance ? <p className="col fs-6">
+                          {data.beforeBalance ? data.beforeBalance : "N.A"}
+                        </p> : "N.A"}
+                        {data.currentBalance ? <p className="col fs-6">
+                          {data.currentBalance ? data.currentBalance : "N.A"}
+                        </p> : "N.A"}
                       </div>
                       <button
                         type="button"
@@ -602,7 +694,7 @@ const WebsiteStatement = () => {
           </div>
         )}
       </div>
-      <EditTransaction/>
+      <EditTransaction />
     </div>
   );
 };

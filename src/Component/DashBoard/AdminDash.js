@@ -158,14 +158,12 @@ const AdminDash = () => {
     AccountService.website(auth.user).then((res) => setWebsiteList(res.data));
   }, [auth]);
 
-
   const handleDelete = (e, id, transactionType) => {
     console.log(transactionType);
     console.log(id);
     switch (transactionType) {
       case "Deposit":
         AccountService.SaveTransaction({ requestId: id }, auth.user)
-
 
 
           .then((res) => {
@@ -210,6 +208,7 @@ const AdminDash = () => {
             toast.success(
               "Website Transaction delete request sent to Super Admin"
             );
+
 
           })
           .catch((err) => {
@@ -515,6 +514,12 @@ const AdminDash = () => {
                 <h4 className="col fs-6">User Id</h4>
                 <h4 className="col fs-6">Bank</h4>
                 <h4 className="col fs-6">Website</h4>
+                <h4 className="col fs-6">Before Bank Balance</h4>
+                <h4 className="col fs-6">Total Bank Balance</h4>
+                <h4 className="col fs-6">Before Website Balance</h4>
+                <h4 className="col fs-6">Total Website Balance</h4>
+                <h4 className="col fs-6">Before Balance</h4>
+                <h4 className="col fs-6">Total Balance</h4>
               </div>
             </div>
           </div>
@@ -591,6 +596,50 @@ const AdminDash = () => {
                       <p className="col fs-6">
                         {data.websiteName ? data.websiteName : "N.A"}
                       </p>
+                      {data.beforeBalanceBankWithdraw ? <p className="col fs-6">
+                        {data.beforeBalanceBankWithdraw && (
+                          <p className="col fs-6 text-break">₹&nbsp; {data.beforeBalanceBankWithdraw}</p>
+                        )}
+                        {data.beforeBalanceBankDeposit && (
+                          <p className="col fs-6 text-break">₹&nbsp; {data.beforeBalanceBankDeposit}</p>
+                        )}
+                      </p> : "N.A"}
+                      {data.beforeBalanceBankWithdraw ? <p className="col fs-6">
+                        {data.currentBalanceBankWithdraw && (
+                          <p className="col fs-6 text-break">₹&nbsp; {data.currentBalanceBankWithdraw}</p>
+                        )}
+                        {data.currentBalanceBankDeposit && (
+                          <p className="col fs-6 text-break">₹&nbsp; {data.currentBalanceBankDeposit}</p>
+                        )}
+                      </p> : "N.A"}
+                      {data.beforeBalanceBankWithdraw ? <p className="col fs-6">
+                        {data.beforeBalanceWebsiteWithdraw && (
+                          <p className="col fs-6 text-break">₹&nbsp; {data.beforeBalanceWebsiteWithdraw}</p>
+                        )}
+                        {data.beforeBalanceWebsiteDeposit && (
+                          <p className="col fs-6 text-break">₹&nbsp; {data.beforeBalanceWebsiteDeposit}</p>
+                        )}
+                      </p> : "N.A"}
+                      {data.beforeBalanceBankWithdraw ?<p className="col fs-6">
+                          {data.currentBalanceWebsiteWithdraw && (
+                            <p className="col fs-6 text-break">₹&nbsp; {data.currentBalanceWebsiteWithdraw}</p>
+                          )}
+                          {data.currentBalanceWebsiteDeposit && (
+                            <p className="col fs-6 text-break">₹&nbsp; {data.currentBalanceWebsiteDeposit}</p>
+                          )}
+                      </p> : "N.A"}
+                      {data.beforeBalance ? <p className="col fs-6">
+                          {data.beforeBalance ? data.beforeBalance : "N.A"}
+                        </p> : "N.A"}
+                      {data.currentBalance ? <p className="col fs-6">
+                        {data.currentBalance ? data.currentBalance : "N.A"}
+                      </p> : "N.A"}
+                      {/* <p className="col fs-6">
+                        {data.beforeBalance ? data.beforeBalance : "N.A"}
+                      </p> */}
+                      {/* <p className="col fs-6">
+                        {data.currentBalance ? data.currentBalance : "N.A"}
+                      </p> */}
                       {/* {data.websiteName && (<p className="col fs-6">{data.Bank}</p>)}
                       {data.depositAmount && (<p className="col fs-6 text-break">N.A</p>)}
                       {data.withdrawAmount && (<p className="col fs-6 text-break">N.A</p>)}
@@ -612,9 +661,11 @@ const AdminDash = () => {
                     <button type="button" className="btn btn-primary">
                       <FontAwesomeIcon
                         icon={faTrash}
+
                         onClick={(e) => {
                           handleDelete(e, data._id, data.transactionType);
                         }}
+
                       />
                     </button>
 
@@ -674,6 +725,12 @@ const AdminDash = () => {
                 <h4 className="col fs-6">User Id</h4>
                 <h4 className="col fs-6">Bank</h4>
                 <h4 className="col fs-6">Website</h4>
+                <h4 className="col fs-6">Before Bank Balance</h4>
+                <h4 className="col fs-6">Total Bank Balance</h4>
+                <h4 className="col fs-6">Before Website Balance</h4>
+                <h4 className="col fs-6">Total Website Balance</h4>
+                <h4 className="col fs-6">Before Balance</h4>
+                <h4 className="col fs-6">Total Balance</h4>
               </div>
             </div>
           </div>
@@ -751,6 +808,44 @@ const AdminDash = () => {
                       <p className="col fs-6">
                         {data.websiteName ? data.websiteName : "N.A"}
                       </p>
+                      {data.beforeBalanceBankWithdraw ? <p className="col fs-6">
+                        {data.beforeBalanceBankWithdraw && (
+                          <p className="col fs-6 text-break">₹&nbsp; {data.beforeBalanceBankWithdraw}</p>
+                        )}
+                        {data.beforeBalanceBankDeposit && (
+                          <p className="col fs-6 text-break">₹&nbsp; {data.beforeBalanceBankDeposit}</p>
+                        )}
+                      </p> : "N.A"}
+                      {data.beforeBalanceBankWithdraw ? <p className="col fs-6">
+                        {data.currentBalanceBankWithdraw && (
+                          <p className="col fs-6 text-break">₹&nbsp; {data.currentBalanceBankWithdraw}</p>
+                        )}
+                        {data.currentBalanceBankDeposit && (
+                          <p className="col fs-6 text-break">₹&nbsp; {data.currentBalanceBankDeposit}</p>
+                        )}
+                      </p> : "N.A"}
+                      {data.beforeBalanceBankWithdraw ? <p className="col fs-6">
+                        {data.beforeBalanceWebsiteWithdraw && (
+                          <p className="col fs-6 text-break">₹&nbsp; {data.beforeBalanceWebsiteWithdraw}</p>
+                        )}
+                        {data.beforeBalanceWebsiteDeposit && (
+                          <p className="col fs-6 text-break">₹&nbsp; {data.beforeBalanceWebsiteDeposit}</p>
+                        )}
+                      </p> : "N.A"}
+                      {data.beforeBalanceBankWithdraw ? <p className="col fs-6">
+                        {data.currentBalanceWebsiteWithdraw && (
+                          <p className="col fs-6 text-break">₹&nbsp; {data.currentBalanceWebsiteWithdraw}</p>
+                        )}
+                        {data.currentBalanceWebsiteDeposit && (
+                          <p className="col fs-6 text-break">₹&nbsp; {data.currentBalanceWebsiteDeposit}</p>
+                        )}
+                      </p> : "N.A"}
+                      {data.beforeBalance ? <p className="col fs-6">
+                        {data.beforeBalance ? data.beforeBalance : "N.A"}
+                      </p> : "N.A"}
+                      {data.currentBalance ? <p className="col fs-6">
+                        {data.currentBalance ? data.currentBalance : "N.A"}
+                      </p> : "N.A"}
                       {/* {data.websiteName && (<p className="col fs-6">{data.Bank}</p>)}
                       {data.depositAmount && (<p className="col fs-6 text-break">N.A</p>)}
                       {data.withdrawAmount && (<p className="col fs-6 text-break">N.A</p>)}
