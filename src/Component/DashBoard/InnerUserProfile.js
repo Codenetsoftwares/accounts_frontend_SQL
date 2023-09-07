@@ -155,7 +155,7 @@ const InnerUserProfile = () => {
                           disabled={!isEditing}
                         />
                       </div>
-                      <div className="mb-3">
+                      {/* <div className="mb-3">
                         <label className="form-label">Email</label>
                         <input
                           name="email"
@@ -166,7 +166,7 @@ const InnerUserProfile = () => {
                           className="form-control"
                           disabled={!isEditing}
                         />
-                      </div>
+                      </div> */}
                       <div className="mb-3">
                         <label className="form-label">Username</label>
                         <input
