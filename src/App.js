@@ -38,6 +38,8 @@ import Withdraw from "./Component/DashBoard/Withdraw";
 import Deposit from "./Component/DashBoard/Deposit";
 import EditWebTransaction from "./Component/DashBoard/EditWebTransaction";
 import EditBnkTransaction from "./Component/DashBoard/EditBnkTransaction ";
+import AdminList from "./Component/SuperAdmin/AdminList";
+import AdminEditrole from "./Component/SuperAdmin/AdminEditrole";
 
 function App() {
   return (
@@ -111,7 +113,22 @@ function App() {
                   </RequireAuth>
                 }
               />
-
+              <Route
+                path="adminlist"
+                element={
+                  <RequireAuth>
+                    <AdminList />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="subadminedit/:id"
+                element={
+                  <RequireAuth>
+                    <AdminEditrole />
+                  </RequireAuth>
+                }
+              />
               <Route
                 path="userprofile"
                 element={
