@@ -158,12 +158,15 @@ const AdminDash = () => {
     AccountService.website(auth.user).then((res) => setWebsiteList(res.data));
   }, [auth]);
 
+
   const handleDelete = (e, id, transactionType) => {
     console.log(transactionType);
     console.log(id);
     switch (transactionType) {
       case "Deposit":
         AccountService.SaveTransaction({ requestId: id }, auth.user)
+
+
 
           .then((res) => {
             console.log(res.data);
@@ -203,9 +206,11 @@ const AdminDash = () => {
 
           .then((res) => {
             console.log(res.data);
+
             toast.success(
               "Website Transaction delete request sent to Super Admin"
             );
+
           })
           .catch((err) => {
             console.log(err);
@@ -216,9 +221,11 @@ const AdminDash = () => {
         AccountService.DeleteWebsiteTransaction(id, auth.user)
           .then((res) => {
             console.log(res.data);
+
             toast.success(
               "Website Transaction delete request sent to Super Admin"
             );
+
           })
           .catch((err) => {
             console.log(err);
@@ -229,6 +236,7 @@ const AdminDash = () => {
           .then((res) => {
             console.log(res.data);
             toast.success("Bank Transaction deleted");
+
           })
           .catch((err) => {
             console.log(err);
@@ -275,7 +283,7 @@ const AdminDash = () => {
       {/* This is the Main Card */}
       <div
         className="card card-body rounded-1 main "
-        // style={{ backgroundImage: gradient }}
+      // style={{ backgroundImage: gradient }}
       >
         <div className="d-flex mt-5 mt-5 ml-5 pt-5 justify-content-center">
           <h6 className="fw-bold text-nowrap pt-2">
@@ -610,6 +618,7 @@ const AdminDash = () => {
                       />
                     </button>
 
+
                     {/* <Link to={`/admindash/${data._id}`} className="col"> */}
                     <button
                       type="button"
@@ -761,10 +770,11 @@ const AdminDash = () => {
                     <button type="button" className="btn btn-primary">
                       <FontAwesomeIcon
                         icon={faTrash}
+
                         onClick={(e) => {
                           handleDelete(e, data._id, data.transactionType);
                         }}
-                      />
+
                     </button>
                   </div>
                 </div>

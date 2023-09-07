@@ -48,7 +48,9 @@ const UserProfile = () => {
                 to={`/innerprofile/${users._id}`}
                 style={{ cursor: "pointer" }}
               >
+
                 {users.firstname}&nbsp;{users.lastname}
+
               </Link>
             </div>
           </div>
