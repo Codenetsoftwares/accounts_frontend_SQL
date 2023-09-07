@@ -38,6 +38,7 @@ import Withdraw from "./Component/DashBoard/Withdraw";
 import Deposit from "./Component/DashBoard/Deposit";
 import EditWebTransaction from "./Component/DashBoard/EditWebTransaction";
 import EditBnkTransaction from "./Component/DashBoard/EditBnkTransaction ";
+import DuplicateDashboard from "./Component/DashBoard/DuplicateDashboard";
 
 function App() {
   return (
@@ -216,6 +217,15 @@ function App() {
                 element={
                   <RequireAuth>
                     <Alert />
+                  </RequireAuth>
+                }
+              />
+
+              <Route
+                path="Testing"
+                element={
+                  <RequireAuth>
+                    <DuplicateDashboard />
                   </RequireAuth>
                 }
               />

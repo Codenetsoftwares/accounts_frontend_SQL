@@ -349,7 +349,7 @@ const AdminDash = () => {
           </select>
         </div>
         <div className="d-flex pt-3 justify-content-center">
-          <h6 className="fw-bold text-nowrap pt-2"> BankNameList</h6>
+          <h6 className="fw-bold text-nowrap pt-2">BankNameList</h6>
           <select
             className="form-control mx-3 w-25"
             value={bank || ""}
@@ -555,6 +555,7 @@ const AdminDash = () => {
                       {data.withdrawAmount && (
                         <p className="col fs-6">₹&nbsp;{data.withdrawAmount}</p>
                       )}
+
                       {data.transactionID && (
                         <p className="col fs-6 text-break">
                           {data.transactionID}
@@ -566,6 +567,7 @@ const AdminDash = () => {
                       {data.withdrawAmount && (
                         <p className="col fs-6 text-break">N.A</p>
                       )}
+                      
                       {data.transactionType && (
                         <p className="col fs-6 text-break">
                           {data.transactionType}
@@ -577,10 +579,13 @@ const AdminDash = () => {
                       {data.withdrawAmount && (
                         <p className="col fs-6 text-break">N.A</p>
                       )}
+
                       {data.paymentMethod && (
                         <p className="col fs-6">{data.paymentMethod}</p>
                       )}
+
                       <p className="col fs-6 text-break">{data.subAdminName}</p>
+
                       {data.paymentMethod && (
                         <p className="col fs-6">{data.userId}</p>
                       )}
@@ -590,12 +595,15 @@ const AdminDash = () => {
                       {data.withdrawAmount && (
                         <p className="col fs-6 text-break">N.A</p>
                       )}
+
                       <p className="col fs-6">
                         {data.bankName ? data.bankName : "N.A"}
                       </p>
+
                       <p className="col fs-6">
                         {data.websiteName ? data.websiteName : "N.A"}
                       </p>
+
                       {data.beforeBalanceBankWithdraw ? <p className="col fs-6">
                         {data.beforeBalanceBankWithdraw && (
                           <p className="col fs-6 text-break">₹&nbsp; {data.beforeBalanceBankWithdraw}</p>
@@ -604,6 +612,7 @@ const AdminDash = () => {
                           <p className="col fs-6 text-break">₹&nbsp; {data.beforeBalanceBankDeposit}</p>
                         )}
                       </p> : "N.A"}
+
                       {data.beforeBalanceBankWithdraw ? <p className="col fs-6">
                         {data.currentBalanceBankWithdraw && (
                           <p className="col fs-6 text-break">₹&nbsp; {data.currentBalanceBankWithdraw}</p>
@@ -612,6 +621,7 @@ const AdminDash = () => {
                           <p className="col fs-6 text-break">₹&nbsp; {data.currentBalanceBankDeposit}</p>
                         )}
                       </p> : "N.A"}
+
                       {data.beforeBalanceBankWithdraw ? <p className="col fs-6">
                         {data.beforeBalanceWebsiteWithdraw && (
                           <p className="col fs-6 text-break">₹&nbsp; {data.beforeBalanceWebsiteWithdraw}</p>
@@ -620,6 +630,7 @@ const AdminDash = () => {
                           <p className="col fs-6 text-break">₹&nbsp; {data.beforeBalanceWebsiteDeposit}</p>
                         )}
                       </p> : "N.A"}
+
                       {data.beforeBalanceBankWithdraw ?<p className="col fs-6">
                           {data.currentBalanceWebsiteWithdraw && (
                             <p className="col fs-6 text-break">₹&nbsp; {data.currentBalanceWebsiteWithdraw}</p>
@@ -628,6 +639,7 @@ const AdminDash = () => {
                             <p className="col fs-6 text-break">₹&nbsp; {data.currentBalanceWebsiteDeposit}</p>
                           )}
                       </p> : "N.A"}
+
                       {data.beforeBalance ? <p className="col fs-6">
                           {data.beforeBalance ? data.beforeBalance : "N.A"}
                         </p> : "N.A"}
