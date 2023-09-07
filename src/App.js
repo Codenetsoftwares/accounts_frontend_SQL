@@ -41,6 +41,7 @@ import EditBnkTransaction from "./Component/DashBoard/EditBnkTransaction ";
 import AdminList from "./Component/SuperAdmin/AdminList";
 import AdminEditrole from "./Component/SuperAdmin/AdminEditrole";
 import DuplicateDashboard from "./Component/DashBoard/DuplicateDashboard";
+import SingleIntroducer from "./Component/DashBoard/SingleIntroducer";
 
 function App() {
   return (
@@ -212,7 +213,14 @@ function App() {
                   </RequireAuth>
                 }
               />
-
+              <Route
+                path="singleintroducer/:id"
+                element={
+                  <RequireAuth>
+                    <SingleIntroducer />
+                  </RequireAuth>
+                }
+              />
               <Route
                 path="transactiondetails/:id"
                 element={

@@ -137,7 +137,25 @@ class AccountService {
       },
     });
   }
-
+  singleIntroducerprofileEdit(id, data, user) {
+    return axios({
+      method: "put",
+      url: `${API_HOST}/api/admin/intoducer-profile-edit/${id}`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+  introducerProfile(id, user) {
+    return axios({
+      method: "get",
+      url: `${API_HOST}/api/get-single-Introducer/${id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
   userprofile(user) {
     return axios({
       method: "get",
