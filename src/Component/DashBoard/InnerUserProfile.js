@@ -54,8 +54,11 @@ const InnerUserProfile = () => {
       lastname: editedData.lastname,
       email: editedData.email,
       contactnumber: editedData.contactNumber,
+      userName: editedData.userName,
+      introducerPercentage: editedData.introducerPercentage,
       websitedetail: editedData.websitedetail,
     };
+    
     // put Api Fetching
     AccountService.inneruserprofile(id, data, auth.user)
       .then((res) => {
@@ -158,6 +161,30 @@ const InnerUserProfile = () => {
                           name="email"
                           value={
                             isEditing ? editedData.email : foundObject.email
+                          }
+                          onChange={handleInputChange}
+                          className="form-control"
+                          disabled={!isEditing}
+                        />
+                      </div>
+                      <div className="mb-3">
+                        <label className="form-label">Username</label>
+                        <input
+                          name="userName"
+                          value={
+                            isEditing ? editedData.userName : foundObject.userName
+                          }
+                          onChange={handleInputChange}
+                          className="form-control"
+                          disabled={!isEditing}
+                        />
+                      </div>
+                      <div className="mb-3">
+                        <label className="form-label">Introducer Percentage </label>
+                        <input
+                          name="introducerPercentage"
+                          value={
+                            isEditing ? editedData.introducerPercentage : foundObject.introducerPercentage
                           }
                           onChange={handleInputChange}
                           className="form-control"
