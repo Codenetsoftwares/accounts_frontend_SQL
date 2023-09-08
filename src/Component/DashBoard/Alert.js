@@ -26,7 +26,7 @@ const Alert = () => {
 
   console.log("ChangeFields===>>>>>>>>>", EditData);
 
-  // console.log("alert", alert);
+  console.log("alert", alert);
   // console.log("This is Auth=====> ", auth);
   const handleApprove = (e, id, transactionType) => {
     console.log(id);
@@ -188,43 +188,59 @@ const Alert = () => {
                   </h5>
                   <div className="card-body">
                     <div className="row">
-                      <p className="col fs-6">
-                        Transaction Type:
-                        <br />
-                        {data.transactionType}
-                      </p>
-                      <p className="col fs-6 ">
-                        Transaction Id:
-                        <br />
-                        <p className="text-primary">{data?.changedFields?.transactionID}</p>
-                      </p>
-                      <p className="col fs-6 ">
-                        Gateway:
-                        <br />
-                        <p className="text-primary">{data?.changedFields?.paymentMethod}</p>
-                      </p>
-                      <p className="col fs-6 ">
-                        User Id:
-                        <br />
-                        <p className="text-primary">{data?.changedFields?.userId}</p>
-                      </p>
-                      <p className="col fs-6 ">
-                        Website:
-                        <br />
-                        <p className="text-primary">{data?.changedFields?.websiteName}</p>
-                      </p>
-                      <p className="col fs-6 ">
-                        Amount:
-                        <br />
-                        <p className="text-primary">{data?.changedFields?.withdrawAmount}</p>
-                        <p className="text-primary">{data?.changedFields?.amount}</p>
-                        <p className="text-primary">{data?.changedFields?.depositAmount}</p>
-                      </p>
-                      <p className="col fs-6 ">
-                        Bank:
-                        <br />
-                        <p className="text-primary">{data?.changedFields?.bankName}</p>
-                      </p>
+                      <div className="row">
+                        <div className="row">
+                          <p className="col fs-6">
+                            Transaction Type:
+                            <br />
+                            <p className="text-success">{data.transactionType}</p>
+                          </p>
+                          <p className="col fs-6 ">
+                            Transaction Id:
+                            <br />
+                            <p className={data.changedFields?.transactionID ? "text-danger" : "text-success"}>
+                              {data.changedFields?.transactionID || data.transactionID}
+                            </p>
+                          </p>
+                          <p className="col fs-6 ">
+                            Gateway:
+                            <br />
+                            <p className={data.changedFields?.paymentMethod ? "text-danger" : "text-success"}>
+                              {data.changedFields?.paymentMethod || data.paymentMethod}
+                            </p>
+                          </p>
+                          <p className="col fs-6 ">
+                            User Id:
+                            <br />
+                            <p className={data.changedFields?.userId ? "text-danger" : "text-success"}>
+                              {data.changedFields?.userId || data.userId}
+                            </p>
+                          </p>
+                          <p className="col fs-6 ">
+                            Website:
+                            <br />
+                            <p className={data.changedFields?.websiteName ? "text-danger" : "text-success"}>
+                              {data.changedFields?.websiteName || data.websiteName}
+                            </p>
+                          </p>
+                          <p className="col fs-6 ">
+                            Amount:
+                            <br />
+                            <p className={data.changedFields?.withdrawAmount || data.changedFields?.amount || data.changedFields?.depositAmount ? "text-danger" : "text-success"}>
+                              {data.changedFields?.withdrawAmount || data.changedFields?.amount || data.changedFields?.depositAmount}
+                            </p>
+                          </p>
+                          <p className="col fs-6 ">
+                            Bank:
+                            <br />
+                            <p className={data.changedFields?.bankName ? "text-danger" : "text-success"}>
+                              {data.changedFields?.bankName || data.bankName}
+                            </p>
+                          </p>
+                        </div>
+
+                      </div>
+
                     </div>
                   </div>
                   <div className="col d-flex justify-content-center gap-2 mb-2">
