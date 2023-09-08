@@ -17,7 +17,7 @@ const NavSide = () => {
     setUserRole(auth.user.role);
   }, [auth]);
   // console.log(useremail);
-  console.log(auth)
+  console.log(userrole)
   const handleToggle = () => {
     setIsToggle(!isToggle);
   };
@@ -87,7 +87,7 @@ const NavSide = () => {
               data-accordion="false"
             >
               <li className="nav-item menu-open">
-                {userrole.some((role) => role === "superAdmin" || role === "Dashboard") && <>
+                {userrole.some((role) => role === "superAdmin" || role === "Dashboard-View" || role === "Transaction-View" || role === "Transaction-Edit-View" || role === "Transaction-Delete-View") && <>
                   {isToggleDash ? (
                     <li className="nav-item ">
                       <a
@@ -115,21 +115,21 @@ const NavSide = () => {
                           <i className="right fas fa-angle-up"></i>
                         </p>
                       </a>
-
-                      <Link to="/Testing" className="nav-link text-white">
+                      {userrole.some((role) => role === "superAdmin" || role === "Dashboard-View" || role === "Transaction-View" || role === "Transaction-Edit-View" || role === "Transaction-Delete-View") && <Link to="/Testing" className="nav-link text-white">
                         <i className="far fa-circle nav-icon" />
                         <p>Transaction Details</p>
                       </Link>
-
-                      <Link to="/buttons" className="nav-link text-white">
-                        <i className="far fa-circle nav-icon" />
-                        <p>Create Transaction</p>
-                      </Link>
+                      }
+                      {userrole.some((role) => role === "superAdmin") &&
+                        <Link to="/buttons" className="nav-link text-white">
+                          <i className="far fa-circle nav-icon" />
+                          <p>Create Transaction</p>
+                        </Link>}
                     </li>
                   )}
                 </>}
               </li>
-              {userrole.some((role) => role === "superAdmin" || role === "Create-Transaction" || role === "BankView" || role === "WebsiteView") && <>
+              {userrole.some((role) => role === "superAdmin" || role === "Bank-View" || role === "Website-View") && <>
                 {IsToggleTransaction ? (
                   <li className="nav-item ">
                     <a className="nav-link " onClick={handleToggleTransaction}>
@@ -150,13 +150,13 @@ const NavSide = () => {
                         <i className="fas fa-chevron-down right"></i>
                       </p>
                     </a>
-                    {userrole.some((role) => role === "superAdmin" || role === "BankView") && <>
+                    {userrole.some((role) => role === "superAdmin" || role === "Bank-View") && <>
                       <Link to="/bank" className="nav-link text-white">
                         <i className="far fa-circle nav-icon" />
                         <p>Bank</p>
                       </Link>
                     </>}
-                    {userrole.some((role) => role === "superAdmin" || role === "WebsiteView") && <>
+                    {userrole.some((role) => role === "superAdmin" || role === "Website-View") && <>
                       <Link to="/website" className="nav-link text-white">
                         <i className="far fa-circle nav-icon" />
                         <p>Website</p>
@@ -204,7 +204,7 @@ const NavSide = () => {
                 )}
               </>}
 
-              {userrole.some((role) => role === "superAdmin" || role === "Profile") && <>
+              {userrole.some((role) => role === "superAdmin" || role === "Profile-View") && <>
                 {isToggle ? (
                   <li className="nav-item ">
                     <a className="nav-link text-white" onClick={handleToggle}>
@@ -235,10 +235,11 @@ const NavSide = () => {
                       <i className="far fa-circle nav-icon" />
                       <p>Introducer</p>
                     </Link>
-                    <Link to="/adminlist" className="nav-link text-white">
-                      <i className="far fa-circle nav-icon" />
-                      <p>SubAdmin</p>
-                    </Link>
+                    {userrole.some((role) => role === "superAdmin" || role === "") &&
+                      <Link to="/adminlist" className="nav-link text-white">
+                        <i className="far fa-circle nav-icon" />
+                        <p>SubAdmin</p>
+                      </Link>}
                   </li>
                 )}
               </>}
