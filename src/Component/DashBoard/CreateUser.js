@@ -137,7 +137,7 @@ const CreateUser = () => {
                       </div>
                       <div className="col-md-6">
                         <label htmlFor="" className="form-label">
-                          <FaEnvelope /> Email
+                          <FaEnvelope /> User Name
                           <span className="text-danger">*</span>
                         </label>
                         <input
