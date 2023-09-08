@@ -95,192 +95,110 @@ const TransactionDetails = () => {
         </div>
 
 
-        <table class="table table-bordered  table-sm table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+        <small>
+          <table class="table table-bordered  table-sm table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
 
-          <thead className="table-success">
-            <tr align="center" bgcolor="green" className="fs-6">
-              <th scope="col fs-6" className="text-primary">
-                Date
-              </th>
-              <th scope="col text-break fs-6" className="text-primary">
-                Amount
-              </th>
-              <th scope="col  fs-6" className="text-primary">
-                Transaction Id
-              </th>
-              <th scope="col text-break fs-6" className="text-primary">
-                Transaction Type
-              </th>
-              <th scope="col fs-6" className="text-primary">
-                Gateway
-              </th>
-              <th scope="col fs-6" className="text-primary">
-                CreatedBy
-              </th>
-              <th scope="col fs-6" className="text-primary">
-                User Id
-              </th>
-              <th scope="col" className="text-primary">
-                Bank
-              </th>
-              <th scope="col" className="text-primary">
-                Website
-              </th>
+            <thead className="table-success">
+              <tr align="center" bgcolor="green" className="fs-6">
+                <th scope="col fs-6" className="text-primary">
+                  Date
+                </th>
+                <th scope="col text-break fs-6" className="text-primary">
+                  Amount
+                </th>
+                <th scope="col  fs-6" className="text-primary">
+                  Transaction Id
+                </th>
+                <th scope="col text-break fs-6" className="text-primary">
+                  Transaction Type
+                </th>
+                <th scope="col fs-6" className="text-primary">
+                  Gateway
+                </th>
+                <th scope="col fs-6" className="text-primary">
+                  CreatedBy
+                </th>
+                <th scope="col fs-6" className="text-primary">
+                  User Id
+                </th>
+                <th scope="col" className="text-primary">
+                  Bank
+                </th>
+                <th scope="col" className="text-primary">
+                  Website
+                </th>
 
-            </tr>
-          </thead>
+              </tr>
+            </thead>
 
 
-          <tbody>
-            {documentView.length > 0 ? (
-              documentView.map((data, i) => {
-                return (
-                  <tr align="center" className="fs-6">
-                    <td className="col fs-6" >
-                      {new Date(data.createdAt).toLocaleString("default", {
-                        month: "long",
-                      })}{" "}
-                      {new Date(data.createdAt).getDate()}
-                    </td>
+            <tbody>
+              {documentView.length > 0 ? (
+                documentView.map((data, i) => {
+                  return (
+                    <tr align="center" className="fs-6">
 
-                    <td className="text-break">
-                      {data.amount && (
-                        <p className="col fs-4">₹&nbsp;{data.amount}</p>
-                      )}
-                    </td>
-                    <td>
-                      {data.transactionID && (
-                        <p className="col fs-6 text-break">
-                          {data.transactionID}
+                      <td >
+                        {" "}
+                        {new Date(data.createdAt).toLocaleString(
+                          "default"
+                        )}{" "}
+                      </td>
+
+                      <td className="text-break ">
+                        {data.amount && (
+                          <p className=" fs-4">₹&nbsp;{data.amount}</p>
+                        )}
+                      </td>
+                      <td >
+                        {data.transactionID && (
+                          <p className=" fs-6 text-break">
+                            {data.transactionID}
+                          </p>
+                        )}
+                      </td>
+                      <td>
+                        {data.transactionType && (
+                          <p className="col fs-6 text-break">
+                            {data.transactionType}
+                          </p>
+                        )}
+                      </td>
+
+                      <td className="">
+                        {data.paymentMethod && (
+                          <p className=" fs-6">{data.paymentMethod}</p>
+                        )}
+
+                      </td>
+                      <td className="">{data.subAdminName}</td>
+                      <td className="">
+                        {data.paymentMethod && (
+                          <p className=" fs-6">{data.userId}</p>
+                        )}
+
+                      </td>
+                      <td className="">
+                        <p className=" fs-6">
+                          {data.bankName}
                         </p>
-                      )}
-                    </td>
-                    <td>
-                      {data.paymentMethod && (
-                        <p className="col fs-6">{data.paymentMethod}</p>
-                      )}
+                      </td>
+                      <td className="">
+                        <p className=" fs-6">
+                          {data.websiteName}
+                        </p>
+                      </td>
 
-                    </td>
-                    <td>{data.subAdminName}</td>
-                    <td>
-                      {data.paymentMethod && (
-                        <p className="col fs-6">{data.userId}</p>
-                      )}
+                    </tr>
+                  );
+                })
+              ) : (
+                <h1 className="text-center">No Transaction Found</h1>
+              )}
+            </tbody>
+          </table>
+        </small>
 
-                    </td>
-                    <td>
-                      <p className="col fs-6">
-                        {data.bankName}
-                      </p>
-                    </td>
-                    <td>
-                      <p className="col fs-6">
-                        {data.websiteName}
-                      </p>
-                    </td>
-
-                  </tr>
-                );
-              })
-            ) : (
-              <h1 className="text-center">No Transaction Found</h1>
-            )}
-          </tbody>
-        </table>
-
-
-        {/* card  */}
-
-        {/* 
-        {outerSelect ? (
-          <>
-            {documentView.length > 0 ? (
-              documentView.map((data, i) => (
-                <div
-                  key={i}
-                  className="accordion mb-2"
-                  style={{
-                    transition: "transform 0.3s",
-                    transform: "scale(1)",
-                    boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.transform = "scale(1.01)";
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.transform = "scale(1)";
-                  }}
-                >
-                  <div className="card-body">
-                    <div className="row">
-                      <p className="col fs-6">
-                        {new Date(data.createdAt).toLocaleString("default", {
-                          month: "long",
-                        })}{" "}
-                        {new Date(data.createdAt).getDate()}
-                      </p>
-                      <p className="col fs-4">₹&nbsp;{data.amount}</p>
-                      <p className="col fs-6 text-break">
-                        {data.transactionID}
-                      </p>
-                      <p className="col fs-6">{data.paymentMethod}</p>
-                      <p className="col fs-6 text-break">{data.subAdminId}</p>
-                      <p className="col fs-6">{data.userId}</p>
-                      <p className="col fs-6">{data.bankName}</p>
-                      <p className="col fs-6">{data.websiteName}</p>
-                    </div>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <h1 className="text-center">No Transaction Found</h1>
-            )}
-          </>
-        ) : (
-          <>
-            {documentFilter.length > 0 ? (
-              documentFilter.map((data, i) => (
-                <div
-                  key={i}
-                  className="accordion mb-2"
-                  style={{
-                    transition: "transform 0.3s",
-                    transform: "scale(1)",
-                    boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.transform = "scale(1.01)";
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.transform = "scale(1)";
-                  }}
-                >
-                  <div className="card-body">
-                    <div className="row">
-                      <p className="col fs-6">
-                        {new Date(data.createdAt).toLocaleString("default", {
-                          month: "long",
-                        })}{" "}
-                        {new Date(data.createdAt).getDate()}
-                      </p>
-                      <p className="col fs-6">₹&nbsp;{data.amount}</p>
-                      <p className="col fs-6 text-break">
-                        {data.transactionID}
-                      </p>
-                      <p className="col fs-6">{data.paymentMethod}</p>
-                      <p className="col fs-6 text-break">{data.subAdminId}</p>
-                      <p className="col fs-6">{data.userId}</p>
-                      <p className="col fs-6">{data.bankName}</p>
-                      <p className="col fs-6">{data.websiteName}</p>
-                    </div>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <h1 className="text-center">No Transaction Found</h1>
-            )}
-          </>
-        )} */}
       </div>
     </div>
   );
