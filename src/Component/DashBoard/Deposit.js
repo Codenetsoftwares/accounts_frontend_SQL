@@ -8,12 +8,14 @@ import DashService from "../../Services/DashService";
 
 function Deposit() {
   const auth = useAuth();
-  const [Bank , setBank] = useState([]);
+  const [Bank, setBank] = useState([]);
   const [Website, setWebsite] = useState([]);
   const [WebsiteName, setWebsiteName] = useState([]);
   const [UId, setUId] = useState([]);
   const [remarks, setRemarks] = useState("");
   const [SendUId, setSendUId] = useState([]);
+  const [introducerId, setIntroducerId] = useState([]);
+  const [Sendintroducer, setSendIntroducer] = useState([]);
   const [BankAccNo, SetBankAccNo] = useState([]);
   const [transactionId, setTransactionId] = useState("");
   const [transactionType, setTransactionType] = useState("");
@@ -24,55 +26,58 @@ function Deposit() {
 
 
   useEffect(() => {
-   AccountService.getbank(auth.user).then((res) => setBank(res.data));
+    AccountService.getbank(auth.user).then((res) => setBank(res.data));
   }, [auth]);
   console.log("bank names", Bank)
 
   useEffect(() => {
-   AccountService.website(auth.user).then((res) => setWebsite(res.data));
-   }, [auth]);
-   console.log("Website Names",Website)
- 
-   useEffect(() => {
+    AccountService.website(auth.user).then((res) => setWebsite(res.data));
+  }, [auth]);
+  console.log("Website Names", Website)
+  useEffect(() => {
     AccountService.userId(auth.user).then((res) => setUId(res.data));
-    }, [auth]);
-    console.log("user Id",UId)
+  }, [auth]);
+  useEffect(() => {
+    AccountService.introducerId(auth.user).then((res) => setIntroducerId(res.data));
+  }, [auth]);
+  console.log("user Id", introducerId)
 
-    const handleSubmit = () => {
-      // transactionID, transactionType, amount, paymentMethod, userId, subAdminId, accountNumber, websiteName, bankName, bankCharges, bonus, remarks
-      const data = {
-        transactionID: transactionId,
-        transactionType: "Withdraw",
-        amount: Number(amount),
-        paymentMethod: paymentMethod,
-        subAdminId: auth.user.userName,
-        userId: SendUId,
-        bankName: BankAccNo[0],
-        accountNumber: Number(BankAccNo[1]),
-        websiteName: WebsiteName,
-        bonus:  Number(bonus),
-        remarks: remarks
-      };
-  
-      // Call the API service method to send the data to the backend
-     DashService.CreateTransactionDeposit(data, auth.user)
-        .then((response) => {
-          // Handle successful response from the backend
-          console.log(response.data);
-         alert("Transaction Created Successfully!!");
-        })
-        .catch((error) => {
-          // Handle error from the backend
-          console.error(error);
-          alert("Failed! Transaction ID Does Not Exists");
-        });
+  const handleSubmit = () => {
+    // transactionID, transactionType, amount, paymentMethod, userId, subAdminId, accountNumber, websiteName, bankName, bankCharges, bonus, remarks
+    const data = {
+      transactionID: transactionId,
+      transactionType: "Withdraw",
+      amount: Number(amount),
+      paymentMethod: paymentMethod,
+      subAdminId: auth.user.userName,
+      userId: SendUId,
+      bankName: BankAccNo[0],
+      accountNumber: Number(BankAccNo[1]),
+      websiteName: WebsiteName,
+      bonus: Number(bonus),
+      remarks: remarks,
+      introducerId: Sendintroducer
     };
 
+    // Call the API service method to send the data to the backend
+    DashService.CreateTransactionDeposit(data, auth.user)
+      .then((response) => {
+        // Handle successful response from the backend
+        console.log(response.data);
+        alert("Transaction Created Successfully!!");
+      })
+      .catch((error) => {
+        // Handle error from the backend
+        console.error(error);
+        alert("Failed! Transaction ID Does Not Exists");
+      });
+  };
 
-  
+
+
 
   return (
-   <div
+    <div
       className="Container fluid='lg'"
       style={{
         display: "flex",
@@ -125,19 +130,40 @@ function Deposit() {
                 onChange={(e) => {
                   setSendUId((e.target.value)); // Parse the JSON string back to an array
                 }}
-              > 
-              <option selected>userId</option>
-              {UId.map((data, index) => (
+              >
+                <option selected>userId</option>
+                {UId.map((data, index) => (
                   <option key={index} value={data.userId}>
                     {data.userId}
                   </option>
-                   ))}
+                ))}
+              </select>
+            </div>
+            <div className="input-group mb-3">
+              <div className="input-group-prepend">
+                <span className="input-group-text">
+                  <i class="fa fa-user id"></i>
+                </span>
+              </div>
+              <select
+                type="text"
+                className="form-select"
+                onChange={(e) => {
+                  setSendIntroducer((e.target.value)); // Parse the JSON string back to an array
+                }}
+              >
+                <option selected>IntroducerId</option>
+                {introducerId.map((data, index) => (
+                  <option key={index} value={data.introducerId}>
+                    {data.introducerId}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="input-group mb-3">
               <div className="input-group-prepend">
                 <span className="input-group-text" >
-                  <BsArrowLeftRight/>
+                  <BsArrowLeftRight />
                 </span>
               </div>
               <input
@@ -146,7 +172,7 @@ function Deposit() {
                 placeholder="Transaction Id"
                 onChange={(e) => {
                   setTransactionId((e.target.value)); // Parse the JSON string back to an array
-                }} 
+                }}
               />
             </div>
 
@@ -164,7 +190,7 @@ function Deposit() {
                 placeholder="Amount"
                 onChange={(e) => {
                   setAmount((e.target.value)); // Parse the JSON string back to an array
-                }} 
+                }}
               />
             </div>
 
@@ -180,7 +206,7 @@ function Deposit() {
                 placeholder="Payment Method"
                 onChange={(e) => {
                   setPaymentMethod((e.target.value)); // Parse the JSON string back to an array
-                }} 
+                }}
               />
             </div>
 
@@ -190,9 +216,9 @@ function Deposit() {
                   <i class="fa fa-gift"></i>
                 </span>
               </div>
-              <input type="text" className="form-control" placeholder="Bonus"  onChange={(e) => {
-                  setBonus((e.target.value)); // Parse the JSON string back to an array
-                }}  />
+              <input type="text" className="form-control" placeholder="Bonus" onChange={(e) => {
+                setBonus((e.target.value)); // Parse the JSON string back to an array
+              }} />
             </div>
 
             <div className="input-group mb-3">
@@ -208,14 +234,14 @@ function Deposit() {
                 onChange={(e) => {
                   SetBankAccNo(JSON.parse(e.target.value)); // Parse the JSON string back to an array
                 }}
-              > 
-              <option selected>Select Bank</option>
-              {Bank.map((data, index) => (
-                  <option key={index} 
-                  value={JSON.stringify([data.bankName, data.accountNumber])}>
+              >
+                <option selected>Select Bank</option>
+                {Bank.map((data, index) => (
+                  <option key={index}
+                    value={JSON.stringify([data.bankName, data.accountNumber])}>
                     {data.bankName}
                   </option>
-                   ))}
+                ))}
               </select>
             </div>
 
@@ -227,19 +253,19 @@ function Deposit() {
               </div>
               <select
                 type="text"
-               className="form-select"
-               onChange={(e) => {
-                setWebsiteName((e.target.value)); // Parse the JSON string back to an array
-              }}
-              > 
-              <option selected>Select Website</option>
-              {Website.map((data, index) => (
+                className="form-select"
+                onChange={(e) => {
+                  setWebsiteName((e.target.value)); // Parse the JSON string back to an array
+                }}
+              >
+                <option selected>Select Website</option>
+                {Website.map((data, index) => (
                   <option key={index} value={data.websiteName}>
                     {data.websiteName}
                   </option>
-                   ))}
+                ))}
               </select>
-             
+
             </div>
             <div className="input-group mb-3">
               <div className="input-group-prepend">
@@ -264,7 +290,7 @@ function Deposit() {
                 marginBottom: "10px",
               }}
             >
-          Submit
+              Submit
             </button>
             <div
               className="message"

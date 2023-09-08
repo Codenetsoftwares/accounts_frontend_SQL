@@ -513,6 +513,7 @@ const AdminDash = () => {
                 <h4 className="col fs-6">Gateway</h4>
                 <h4 className="col fs-6">CreatedBy</h4>
                 <h4 className="col fs-6">User Id</h4>
+                <h4 className="col fs-6">Introducer Id</h4>
                 <h4 className="col fs-6">Bank</h4>
                 <h4 className="col fs-6">Website</h4>
                 <h4 className="col fs-6">Before Bank Balance</h4>
@@ -589,6 +590,15 @@ const AdminDash = () => {
 
                       {data.paymentMethod && (
                         <p className="col fs-6">{data.userId}</p>
+                      )}
+                      {data.depositAmount && (
+                        <p className="col fs-6 text-break">N.A</p>
+                      )}
+                      {data.withdrawAmount && (
+                        <p className="col fs-6 text-break">N.A</p>
+                      )}
+                      {data.paymentMethod && (
+                        <p className="col fs-6">{data.introducerId}</p>
                       )}
                       {data.depositAmount && (
                         <p className="col fs-6 text-break">N.A</p>
@@ -736,6 +746,7 @@ const AdminDash = () => {
                 <h4 className="col fs-6">Gateway</h4>
                 <h4 className="col fs-6">CreatedBy</h4>
                 <h4 className="col fs-6">User Id</h4>
+                <h4 className="col fs-6">Introducer Id</h4>
                 <h4 className="col fs-6">Bank</h4>
                 <h4 className="col fs-6">Website</h4>
                 <h4 className="col fs-6">Before Bank Balance</h4>
@@ -808,6 +819,15 @@ const AdminDash = () => {
                       <p className="col fs-6 text-break">{data.subAdminName}</p>
                       {data.paymentMethod && (
                         <p className="col fs-6">{data.userId}</p>
+                      )}
+                      {data.depositAmount && (
+                        <p className="col fs-6 text-break">N.A</p>
+                      )}
+                      {data.withdrawAmount && (
+                        <p className="col fs-6 text-break">N.A</p>
+                      )}
+                      {data.paymentMethod && (
+                        <p className="col fs-6">{data.introducerId}</p>
                       )}
                       {data.depositAmount && (
                         <p className="col fs-6 text-break">N.A</p>

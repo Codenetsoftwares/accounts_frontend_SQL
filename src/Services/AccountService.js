@@ -84,6 +84,15 @@ class AccountService {
     });
   }
 
+  introducerId(user) {
+    return axios({
+      method: "get",
+      url: API_HOST + "/api/superadmin/Introducer-id",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
   IntroducerUserId(user) {
     return axios({
       method: "get",

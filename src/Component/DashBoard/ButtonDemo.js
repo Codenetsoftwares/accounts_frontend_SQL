@@ -37,7 +37,8 @@ function ButtonDemo() {
                     <b>Withdraw</b>
                     {/* <img src="withdraw-logo.png" alt="Withdraw" className="button-logo" /> */}
                   </button>
-                </Link>}
+                </Link>
+              }
             </div>
             <div className="col-md-6">
               {userrole.some((role) => role === "superAdmin" || role === "Dashboard-View" || role === "Create-Deposit-Transaction" || role === "Create-Withdraw-Transaction" || role === "Create-Transaction") &&
@@ -55,7 +56,8 @@ function ButtonDemo() {
                     <b>Deposit</b>
                     {/* <img src="deposit-logo.png" alt="Deposit" className="button-logo" /> */}
                   </button>
-                </Link>}
+                </Link>
+              }
             </div>
           </div>
         </div>
