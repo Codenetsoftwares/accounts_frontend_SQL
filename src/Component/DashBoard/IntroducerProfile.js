@@ -47,10 +47,23 @@ const IntroducerProfile = () => {
           <div className="card container-fluid w-75">
             <div className="card-body">
               <Link
+                to={`/innerintroducer/${users._id}`}
+                style={{ cursor: "pointer" }}
+              >
+                <p>
+                  {users.firstname}&nbsp;{users.lastname}
+                 
+                </p>
+              </Link>
+
+              <br />
+              <Link
                 to={`/singleintroducer/${users._id}`}
                 style={{ cursor: "pointer" }}
               >
-                {users.firstname}&nbsp;{users.lastname}
+                <button type="button" class="btn btn-success mt-2">
+                  Edit Profile
+                </button>
               </Link>
             </div>
           </div>
