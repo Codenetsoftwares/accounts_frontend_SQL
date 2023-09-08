@@ -94,22 +94,104 @@ const TransactionDetails = () => {
           </div>
         </div>
 
-        <div className="card rounded-2 mb-2">
-          <div className="card-body">
-            <div className="row">
-              <h4 className="col fs-6">Date</h4>
-              <h4 className="col fs-6">Amount</h4>
-              <h4 className="col fs-6">Transaction Id</h4>
-              <h4 className="col fs-6">Gateway</h4>
-              <h4 className="col fs-6">Transaction Type</h4>
-              <h4 className="col fs-6">CreatedBy</h4>
-              <h4 className="col fs-6">User Id</h4>
-              <h4 className="col fs-6">Bank</h4>
-              <h4 className="col fs-6">Website</h4>
-            </div>
-          </div>
-        </div>
 
+        <table class="table table-bordered  table-sm table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+
+          <thead className="table-success">
+            <tr align="center" bgcolor="green" className="fs-6">
+              <th scope="col fs-6" className="text-primary">
+                Date
+              </th>
+              <th scope="col text-break fs-6" className="text-primary">
+                Amount
+              </th>
+              <th scope="col  fs-6" className="text-primary">
+                Transaction Id
+              </th>
+              <th scope="col text-break fs-6" className="text-primary">
+                Transaction Type
+              </th>
+              <th scope="col fs-6" className="text-primary">
+                Gateway
+              </th>
+              <th scope="col fs-6" className="text-primary">
+                CreatedBy
+              </th>
+              <th scope="col fs-6" className="text-primary">
+                User Id
+              </th>
+              <th scope="col" className="text-primary">
+                Bank
+              </th>
+              <th scope="col" className="text-primary">
+                Website
+              </th>
+
+            </tr>
+          </thead>
+
+
+          <tbody>
+            {documentView.length > 0 ? (
+              documentView.map((data, i) => {
+                return (
+                  <tr align="center" className="fs-6">
+                    <td className="col fs-6" >
+                      {new Date(data.createdAt).toLocaleString("default", {
+                        month: "long",
+                      })}{" "}
+                      {new Date(data.createdAt).getDate()}
+                    </td>
+
+                    <td className="text-break">
+                      {data.amount && (
+                        <p className="col fs-4">₹&nbsp;{data.amount}</p>
+                      )}
+                    </td>
+                    <td>
+                      {data.transactionID && (
+                        <p className="col fs-6 text-break">
+                          {data.transactionID}
+                        </p>
+                      )}
+                    </td>
+                    <td>
+                      {data.paymentMethod && (
+                        <p className="col fs-6">{data.paymentMethod}</p>
+                      )}
+
+                    </td>
+                    <td>{data.subAdminName}</td>
+                    <td>
+                      {data.paymentMethod && (
+                        <p className="col fs-6">{data.userId}</p>
+                      )}
+
+                    </td>
+                    <td>
+                      <p className="col fs-6">
+                        {data.bankName}
+                      </p>
+                    </td>
+                    <td>
+                      <p className="col fs-6">
+                        {data.websiteName}
+                      </p>
+                    </td>
+
+                  </tr>
+                );
+              })
+            ) : (
+              <h1 className="text-center">No Transaction Found</h1>
+            )}
+          </tbody>
+        </table>
+
+
+        {/* card  */}
+
+        {/* 
         {outerSelect ? (
           <>
             {documentView.length > 0 ? (
@@ -198,7 +280,7 @@ const TransactionDetails = () => {
               <h1 className="text-center">No Transaction Found</h1>
             )}
           </>
-        )}
+        )} */}
       </div>
     </div>
   );
