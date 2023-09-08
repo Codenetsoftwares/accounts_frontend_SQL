@@ -165,6 +165,26 @@ class AccountService {
       },
     });
   }
+  introducerUsersingleProfile(id, user) {
+    return axios({
+      method: "get",
+      url: `${API_HOST}/introducer-user-single-data/${id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  introducerLiveBalance(id, user) {
+    return axios({
+      method: "get",
+      url: `${API_HOST}/api/admin/introducer-live-balance/${id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
 
   Introducerprofile(user) {
     return axios({

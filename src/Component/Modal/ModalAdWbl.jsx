@@ -74,7 +74,7 @@ const ModalAdWbl = ({ ID }) => {
                     type="text"
                     className="form-control font-weight-bold"
                     placeholder="SubAdmin"
-                    value={auth.user.email}
+                    value={auth.user.userName}
                     disabled
                     style={{ fontSize: "10px" }}
                   />
