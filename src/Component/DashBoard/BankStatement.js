@@ -302,25 +302,17 @@ const BankStatement = () => {
           </div>
           <div className="mx-2">
             {toggle ? (
-              <>
-                {documentView > 0 ? (
-                  <div className="mx-2">
-                    <CSVLink data={documentView} className="btn btn-success">
-                      Download Data
-                    </CSVLink>
-                  </div>
-                ) : null}
-              </>
+              <div className="mx-2">
+                <CSVLink data={documentView} className="btn btn-success">
+                  Download Data
+                </CSVLink>
+              </div>
             ) : (
-              <>
-                {documentView > 0 ? (
-                  <div className="mx-2">
-                    <CSVLink data={documentFilter} className="btn btn-success">
-                      Download Filter Data
-                    </CSVLink>
-                  </div>
-                ) : null}
-              </>
+              <div className="mx-2">
+                <CSVLink data={documentFilter} className="btn btn-success">
+                  Download Filter Data
+                </CSVLink>
+              </div>
             )}
           </div>
         </div>

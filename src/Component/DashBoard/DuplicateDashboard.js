@@ -277,7 +277,7 @@ const DuplicateDashboard = () => {
       {/* This is the Main Card */}
       <div
         className="card card-body rounded-1 main "
-        // style={{ backgroundImage: gradient }}
+      // style={{ backgroundImage: gradient }}
       >
         <div className="d-flex mt-5 mt-5 ml-5 pt-5 justify-content-center">
           <h6 className="fw-bold text-nowrap pt-2">
@@ -523,6 +523,9 @@ const DuplicateDashboard = () => {
                 <th scope="col fs-6" className="text-primary">
                   User Id
                 </th>
+                <th scope="col fs-6" className="text-primary">
+                  Introducer Id
+                </th>
                 <th scope="col" className="text-primary">
                   Bank
                 </th>
@@ -620,6 +623,17 @@ const DuplicateDashboard = () => {
                       <td>
                         {data.paymentMethod && (
                           <p className="col fs-6">{data.userId}</p>
+                        )}
+                        {data.depositAmount && (
+                          <p className="col fs-6 text-break">N.A</p>
+                        )}
+                        {data.withdrawAmount && (
+                          <p className="col fs-6 text-break">N.A</p>
+                        )}
+                      </td>
+                      <td>
+                        {data.paymentMethod && (
+                          <p className="col fs-6">{data.introducerId}</p>
                         )}
                         {data.depositAmount && (
                           <p className="col fs-6 text-break">N.A</p>
@@ -811,6 +825,9 @@ const DuplicateDashboard = () => {
                 <th scope="col fs-6" className="text-primary">
                   User Id
                 </th>
+                <th scope="col fs-6" className="text-primary">
+                  Introducer Id
+                </th>
                 <th scope="col" className="text-primary">
                   Bank
                 </th>
@@ -908,6 +925,17 @@ const DuplicateDashboard = () => {
                       <td>
                         {data.paymentMethod && (
                           <p className="col fs-6">{data.userId}</p>
+                        )}
+                        {data.depositAmount && (
+                          <p className="col fs-6 text-break">N.A</p>
+                        )}
+                        {data.withdrawAmount && (
+                          <p className="col fs-6 text-break">N.A</p>
+                        )}
+                      </td>
+                      <td>
+                        {data.paymentMethod && (
+                          <p className="col fs-6">{data.introducerId}</p>
                         )}
                         {data.depositAmount && (
                           <p className="col fs-6 text-break">N.A</p>

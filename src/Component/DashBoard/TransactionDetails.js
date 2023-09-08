@@ -5,6 +5,7 @@ import { useParams } from "react-router";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FaFilter } from "react-icons/fa";
+import { CSVLink } from "react-csv";
 
 const TransactionDetails = () => {
   const [startDate, setStartDate] = useState(null);
@@ -90,6 +91,9 @@ const TransactionDetails = () => {
               >
                 Reset
               </button>
+              <CSVLink data={documentView} className="btn btn-success">
+                Download Data
+              </CSVLink>
             </div>
           </div>
         </div>
