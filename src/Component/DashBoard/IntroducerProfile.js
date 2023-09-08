@@ -2,10 +2,20 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../../Utils/Auth";
 import AccountService from "../../Services/AccountService";
 import { useNavigate, Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faArrowLeft,
+  faUser,
+  faNetworkWired,
+  faEdit,
+  faBalanceScale
+} from "@fortawesome/free-solid-svg-icons";
+import LiveBalanceIntroducer from "../Modal/LiveBalanceIntroducer";
 
 const IntroducerProfile = () => {
   const auth = useAuth();
   const [users, setUsers] = useState([]);
+   const [ID, setID] = useState([]);
   const [q, setQ] = useState("");
   const navigate = useNavigate();
   // const handelinnerprofile =()=>{
@@ -23,6 +33,12 @@ const IntroducerProfile = () => {
     const fullName = affiliate.firstname.toLowerCase();
     return fullName.includes(q.toLowerCase());
   });
+  const handleLiveBl = (e, ID) => {
+    setID(ID);
+   
+    
+  }
+   console.log("Live Bl",ID);
 
   return (
     <div className="m-3">
@@ -46,29 +62,47 @@ const IntroducerProfile = () => {
         {filteredUsers.map((users) => (
           <div className="card container-fluid w-75">
             <div className="card-body">
+              <p>
+                {users.firstname}&nbsp;{users.lastname}
+              </p>
+
               <Link
                 to={`/innerintroducer/${users._id}`}
                 style={{ cursor: "pointer" }}
-                
               >
-                <p>
-                  {users.firstname}&nbsp;{users.lastname}
-                </p>
+                <button type="button" class="btn btn-primary">
+                  NetWork &nbsp;
+                  <FontAwesomeIcon icon={faNetworkWired} />
+                </button>
               </Link>
-
               <br />
               <Link
                 to={`/singleintroducer/${users._id}`}
                 style={{ cursor: "pointer" }}
               >
-                <button type="button" class="btn btn-success mt-2">
-                  Edit Profile
+                <button type="button" class="btn btn-danger mt-2">
+                  Edit Profile &nbsp;
+                  <FontAwesomeIcon icon={faEdit} />
                 </button>
               </Link>
+              <br />
+              <button
+                type="button"
+                class="btn btn-warning mt-2"
+                data-toggle="modal"
+                data-target="#LiveBalance"
+                onClick={(e) => {
+                  handleLiveBl(e, users._id);
+                }}
+              >
+                Chcek Live Balance &nbsp;
+                <FontAwesomeIcon icon={faBalanceScale} />
+              </button>
             </div>
           </div>
         ))}
       </ul>
+      <LiveBalanceIntroducer ID={ID} />
     </div>
   );
 };

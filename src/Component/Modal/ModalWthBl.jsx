@@ -21,7 +21,7 @@ const ModalWthBl = ({ ID }) => {
     console.log("This is", ID);
     const data = {
       amount: Number(Amount),
-      transactionType: " Manual-Bank-Withdraw",
+      transactionType: "Manual-Bank-Withdraw",
       remark: Remarks,
     };
 
@@ -76,7 +76,7 @@ const ModalWthBl = ({ ID }) => {
                     type="text"
                     className="form-control font-weight-bold"
                     placeholder="SubAdmin"
-                    value={auth.user.email}
+                    value={auth.user.userName}
                     disabled
                     style={{ fontSize: "10px" }}
                   />

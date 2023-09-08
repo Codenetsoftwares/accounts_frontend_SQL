@@ -11,7 +11,6 @@ const NavSide = () => {
   const [useremail, setUserEmail] = useState([]);
   const [userrole, setUserRole] = useState([]);
   const [IsToggleTransaction, setIsToggleTransaction] = useState(true);
-
   useEffect(() => {
     setUserEmail(auth.user.email);
     setUserRole(auth.user.role);
@@ -59,14 +58,12 @@ const NavSide = () => {
               &#10005;
             </span>
           </p>
-
           <div
             className="fs-4 ms-4 "
             style={{ width: "15%" }}
             data-widget="pushmenu"
           ></div>
         </div>
-
         <div className="sidebar">
           <div className="user-panel mt-3 pb-3 mb-3 d-flex">
             <div className="image">
@@ -78,7 +75,6 @@ const NavSide = () => {
               </p>
             </div>
           </div>
-
           <nav className="mt-2">
             <ul
               className="nav nav-pills nav-sidebar flex-column"
@@ -186,12 +182,10 @@ const NavSide = () => {
                         <i className="fas fa-chevron-down right"></i>
                       </p>
                     </a>
-
                     <Link to="/createuser" className="nav-link text-white">
                       <i className="far fa-circle nav-icon" />
                       <p>Create SubAdmin</p>
                     </Link>
-
                     <Link to="/createactualuser" className="nav-link text-white">
                       <i className="far fa-circle nav-icon" />
                       <p>Create User</p>
@@ -203,7 +197,6 @@ const NavSide = () => {
                   </li>
                 )}
               </>}
-
               {userrole.some((role) => role === "superAdmin" || role === "Profile-View" || role === "Introducer-Profile-View" || role === "User-Profile-View") && <>
                 {isToggle ? (
                   <li className="nav-item ">
@@ -225,7 +218,6 @@ const NavSide = () => {
                         <i className="fas fa-chevron-down right"></i>
                       </p>
                     </a>
-
                     {userrole.some((role) => role === "superAdmin" || role === "Profile-View" || role === "User-Profile-View") &&
                       <Link to="userprofile" className="nav-link text-white">
                         <i className="far fa-circle nav-icon" />
@@ -252,11 +244,10 @@ const NavSide = () => {
                     &nbsp;<i className="alert-icon fas fa-bell"></i>
                     <p className="text-dark">
                       &nbsp; Edit Request
-
                       {/* <span className="right badge badge-danger">New</span> */}
                     </p>
                   </Link>
-                  {/* 
+                  {/*
                 <Link to="/buttons" className="nav-link text-white">
                   <i className="far fa-circle nav-icon" />
                   <p> media</p>
@@ -270,5 +261,4 @@ const NavSide = () => {
     </div>
   );
 };
-
 export default NavSide;

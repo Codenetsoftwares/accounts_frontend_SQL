@@ -41,7 +41,7 @@ const BankStatement = () => {
     withdrawAmount: "",
   });
 
-  console.log("==>>>",id);
+  console.log("==>>>", id);
 
   const test = ["transactionType", "subAdminName", "websiteName", "bankName"];
 
@@ -67,7 +67,7 @@ const BankStatement = () => {
         console.error(err, "object");
       });
   }, [id, auth]);
-  console.log(documentView);
+  console.log("Transaction =>>>", documentView);
   const handelDate = () => {
     const sdate = moment(startDatevalue, "DD-MM-YYYY HH:mm").toDate();
     const edate = moment(endDatevalue, "DD-MM-YYYY HH:mm").toDate();
@@ -79,8 +79,8 @@ const BankStatement = () => {
     setToggle(false);
   };
 
-  console.log("Bank Names Manual =>>>", Manualstmnt);
-  console.log("Bank Names User =>>>", Userstmnt);
+  // console.log("Bank Names Manual =>>>", Manualstmnt);
+  // console.log("Bank Names User =>>>", Userstmnt);
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -302,17 +302,25 @@ const BankStatement = () => {
           </div>
           <div className="mx-2">
             {toggle ? (
-              <div className="mx-2">
-                <CSVLink data={documentView} className="btn btn-success">
-                  Download Data
-                </CSVLink>
-              </div>
+              <>
+                {documentView > 0 ? (
+                  <div className="mx-2">
+                    <CSVLink data={documentView} className="btn btn-success">
+                      Download Data
+                    </CSVLink>
+                  </div>
+                ) : null}
+              </>
             ) : (
-              <div className="mx-2">
-                <CSVLink data={documentFilter} className="btn btn-success">
-                  Download Filter Data
-                </CSVLink>
-              </div>
+              <>
+                {documentView > 0 ? (
+                  <div className="mx-2">
+                    <CSVLink data={documentFilter} className="btn btn-success">
+                      Download Filter Data
+                    </CSVLink>
+                  </div>
+                ) : null}
+              </>
             )}
           </div>
         </div>

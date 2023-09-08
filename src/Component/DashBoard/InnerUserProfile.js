@@ -7,6 +7,8 @@ import { useAuth } from "../../Utils/Auth";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
+
+
 const InnerUserProfile = () => {
   const { id } = useParams();
   const auth = useAuth();
