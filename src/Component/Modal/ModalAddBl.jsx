@@ -20,7 +20,7 @@ const ModalAddBl = ({ ID }) => {
     e.preventDefault();
     const data = {
       amount: Number(Amount),
-      transactionType: "Manual-Deposit",
+      transactionType: "Manual-Bank-Deposit",
       remark: Remarks,
     };
 

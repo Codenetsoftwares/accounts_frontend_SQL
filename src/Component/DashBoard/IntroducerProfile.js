@@ -49,10 +49,10 @@ const IntroducerProfile = () => {
               <Link
                 to={`/innerintroducer/${users._id}`}
                 style={{ cursor: "pointer" }}
+                
               >
                 <p>
                   {users.firstname}&nbsp;{users.lastname}
-                 
                 </p>
               </Link>
 

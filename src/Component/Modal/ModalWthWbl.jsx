@@ -19,7 +19,7 @@ const ModalWthWbl = ({ ID }) => {
     e.preventDefault();
     const data = {
       amount: Number(Amount),
-      transactionType: "Manual-Withdraw",
+      transactionType: "Manual-Website-Withdraw",
       remark: Remarks,
     };
 

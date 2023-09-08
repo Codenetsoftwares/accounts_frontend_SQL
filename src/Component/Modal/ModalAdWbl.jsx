@@ -21,7 +21,7 @@ const ModalAdWbl = ({ ID }) => {
   const handelsubmit = () => {
     const data = {
       amount: Number(Amount),
-      transactionType: "Manual-Deposit",
+      transactionType: "Manual-Webiste-Deposit",
       remark: Remarks,
     };
     AccountService.ManualWebsiteEntryDeposit(ID, data, auth.user)
