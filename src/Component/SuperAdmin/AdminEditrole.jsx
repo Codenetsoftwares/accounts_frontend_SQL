@@ -148,7 +148,40 @@ const AdminEditrole = () => {
                                         />
                                         <span> Website View</span>
                                     </label>
-                                </div>
+                                    </div>
+                                    <div>
+                                        <label>
+                                            <input
+                                                type="checkbox"
+                                                value=" Create-Deposit-Transaction"
+                                                checked={checkedItems.includes('Create-Deposit-Transaction')}
+                                                onChange={handleCheckboxChange}
+                                            />
+                                            <span>Create Deposit Transaction</span>
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label>
+                                            <input
+                                                type="checkbox"
+                                                value=" Create-Withdraw-Transaction"
+                                                checked={checkedItems.includes(' Create-Withdraw-Transaction')}
+                                                onChange={handleCheckboxChange}
+                                            />
+                                            <span> Create Withdraw Transaction</span>
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label>
+                                            <input
+                                                type="checkbox"
+                                                value="Create-Transaction"
+                                                checked={checkedItems.includes('Create-Transaction')}
+                                                onChange={handleCheckboxChange}
+                                            />
+                                            <span>Create Transaction</span>
+                                        </label>
+                                    </div>
                                 <div>
                                     <label>
                                         <input

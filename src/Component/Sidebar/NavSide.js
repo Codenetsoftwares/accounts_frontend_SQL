@@ -87,7 +87,7 @@ const NavSide = () => {
               data-accordion="false"
             >
               <li className="nav-item menu-open">
-                {userrole.some((role) => role === "superAdmin" || role === "Dashboard-View" || role === "Transaction-View" || role === "Transaction-Edit-Request" || role === "Transaction-Delete-Request") && <>
+                {userrole.some((role) => role === "superAdmin" || role === "Dashboard-View" || role === "Transaction-View" || role === "Transaction-Edit-Request" || role === "Transaction-Delete-Request" || role === "Create-Deposit-Transaction" || role === "Create-Withdraw-Transaction" || role === "Create-Transaction") && <>
                   {isToggleDash ? (
                     <li className="nav-item ">
                       <a
@@ -115,12 +115,12 @@ const NavSide = () => {
                           <i className="right fas fa-angle-up"></i>
                         </p>
                       </a>
-                        {userrole.some((role) => role === "superAdmin" || role === "Dashboard-View" || role === "Transaction-View" || role === "Transaction-Edit-Request" || role === "Transaction-Delete-Request") && <Link to="/Testing" className="nav-link text-white">
+                      {userrole.some((role) => role === "superAdmin" || role === "Dashboard-View" || role === "Transaction-View" || role === "Transaction-Edit-Request" || role === "Transaction-Delete-Request") && <Link to="/Testing" className="nav-link text-white">
                         <i className="far fa-circle nav-icon" />
                         <p>Transaction Details</p>
                       </Link>
                       }
-                      {userrole.some((role) => role === "superAdmin") &&
+                      {userrole.some((role) => role === "superAdmin" || role === "Dashboard-View" || role === "Create-Deposit-Transaction" || role === "Create-Withdraw-Transaction" || role === "Create-Transaction") &&
                         <Link to="/buttons" className="nav-link text-white">
                           <i className="far fa-circle nav-icon" />
                           <p>Create Transaction</p>
