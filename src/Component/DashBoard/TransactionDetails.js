@@ -125,6 +125,9 @@ const TransactionDetails = () => {
                 <th scope="col fs-6" className="text-primary">
                   User Id
                 </th>
+                <th scope="col fs-6" className="text-primary">
+                  Introducer Id
+                </th>
                 <th scope="col" className="text-primary">
                   Bank
                 </th>
@@ -181,6 +184,17 @@ const TransactionDetails = () => {
                           <p className=" fs-6">{data.userId}</p>
                         )}
 
+                      </td>
+                      <td>
+                        {data.paymentMethod && (
+                          <p className="col fs-6">{data.introducerId}</p>
+                        )}
+                        {data.depositAmount && (
+                          <p className="col fs-6 text-break">N.A</p>
+                        )}
+                        {data.withdrawAmount && (
+                          <p className="col fs-6 text-break">N.A</p>
+                        )}
                       </td>
                       <td className="">
                         <p className=" fs-6">
