@@ -216,6 +216,21 @@ const CreateUser = () => {
                             <input
                               className="form-check-input"
                               type="checkbox"
+                              value="Create-Transaction"
+                              checked={checkedItems.includes("Create-Transaction")}
+                              onChange={handleCheckboxChange}
+                            />
+                            <label
+                              className="form-check-label"
+                              for="flexSwitchCheckDefault"
+                            >
+                              Create Transaction
+                            </label>
+                          </div>
+                          <div className="form-check form-switch">
+                            <input
+                              className="form-check-input"
+                              type="checkbox"
                               value="Bank-View"
                               checked={checkedItems.includes("Bank-View")}
                               onChange={handleCheckboxChange}
@@ -319,6 +334,36 @@ const CreateUser = () => {
                               for="flexSwitchCheckDefault"
                             >
                               Profile View
+                            </label>
+                          </div>
+                          <div className="form-check form-switch">
+                            <input
+                              className="form-check-input"
+                              type="checkbox"
+                              value="Create-Withdraw-Transaction"
+                              checked={checkedItems.includes("Create-Withdraw-Transaction")}
+                              onChange={handleCheckboxChange}
+                            />
+                            <label
+                              className="form-check-label"
+                              for="flexSwitchCheckDefault"
+                            >
+                              Create Withdraw Transaction
+                            </label>
+                          </div>
+                          <div className="form-check form-switch">
+                            <input
+                              className="form-check-input"
+                              type="checkbox"
+                              value="Create-Deposit-Transaction"
+                              checked={checkedItems.includes("Create-Deposit-Transaction")}
+                              onChange={handleCheckboxChange}
+                            />
+                            <label
+                              className="form-check-label"
+                              for="flexSwitchCheckDefault"
+                            >
+                              Create Deposit Transaction
                             </label>
                           </div>
                         </div>
