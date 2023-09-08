@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import EditServices from "../../Services/EditServices";
 import { useAuth } from "../../Utils/Auth";
-// import Accordion from "react-bootstrap/Accordion";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import InnerAlert from "../../Modal/InnerAlert";
 
 const Alert = () => {
@@ -18,16 +15,12 @@ const Alert = () => {
       EditServices.ViewAlert(auth.user).then((res) => setAlert(res.data));
     }
   }, [auth]);
-  console.log("Request", alert);
 
   for (let i = 0; i < alert.length; i++) {
     EditData[i] = alert[i].changedFields;
   }
 
-  console.log("ChangeFields===>>>>>>>>>", EditData);
 
-  console.log("alert", alert);
-  // console.log("This is Auth=====> ", auth);
   const handleApprove = (e, id, transactionType) => {
     console.log(id);
     const flag = true;
@@ -39,6 +32,7 @@ const Alert = () => {
       case "Deposit":
         EditServices.IsApprove(id, data, auth.user)
           .then((response) => {
+            window.location.reload();
             console.log(response.data);
           })
           .catch((error) => {
@@ -48,6 +42,7 @@ const Alert = () => {
       case "Withdraw":
         EditServices.IsApprove(id, data, auth.user)
           .then((response) => {
+            window.location.reload();
             console.log(response.data);
           })
           .catch((error) => {
@@ -58,6 +53,7 @@ const Alert = () => {
       case "Manual-Bank-Withdraw":
         EditServices.IsBankApprove(id, data, auth.user)
           .then((response) => {
+            window.location.reload();
             console.log(response.data);
           })
           .catch((error) => {
@@ -68,6 +64,7 @@ const Alert = () => {
       case "Manual-Bank-Deposit":
         EditServices.IsBankApprove(id, data, auth.user)
           .then((response) => {
+            window.location.reload();
             console.log(response.data);
           })
           .catch((error) => {
@@ -78,6 +75,7 @@ const Alert = () => {
       case "Manual-Website-Withdraw":
         EditServices.IsWebsiteApprove(id, data, auth.user)
           .then((response) => {
+            window.location.reload();
             console.log(response.data);
           })
           .catch((error) => {
@@ -88,6 +86,7 @@ const Alert = () => {
       case "Manual-Webiste-Deposit":
         EditServices.IsWebsiteApprove(id, data, auth.user)
           .then((response) => {
+            window.location.reload();
             console.log(response.data);
           })
           .catch((error) => {
@@ -105,6 +104,7 @@ const Alert = () => {
       case "Deposit":
         EditServices.IsReject(id, auth.user)
           .then((response) => {
+            window.location.reload();
             console.log(response.data);
           })
           .catch((error) => {
@@ -114,6 +114,7 @@ const Alert = () => {
       case "Withdraw":
         EditServices.IsReject(id, auth.user)
           .then((response) => {
+            window.location.reload();
             console.log(response.data);
           })
           .catch((error) => {
@@ -124,6 +125,7 @@ const Alert = () => {
       case "Manual-Bank-Withdraw":
         EditServices.IsReject(id, auth.user)
           .then((response) => {
+            window.location.reload();
             console.log(response.data);
           })
           .catch((error) => {
@@ -134,6 +136,7 @@ const Alert = () => {
       case "Manual-Bank-Deposit":
         EditServices.IsReject(id, auth.user)
           .then((response) => {
+            window.location.reload();
             console.log(response.data);
           })
           .catch((error) => {
@@ -144,6 +147,7 @@ const Alert = () => {
       case "Manual-Website-Withdraw":
         EditServices.IsReject(id, auth.user)
           .then((response) => {
+            window.location.reload();
             console.log(response.data);
           })
           .catch((error) => {
@@ -154,6 +158,7 @@ const Alert = () => {
       case "Manual-Webiste-Deposit":
         EditServices.IsReject(id, auth.user)
           .then((response) => {
+            window.location.reload();
             console.log(response.data);
           })
           .catch((error) => {
@@ -227,7 +232,7 @@ const Alert = () => {
                             Amount:
                             <br />
                             <p className={data.changedFields?.withdrawAmount || data.changedFields?.amount || data.changedFields?.depositAmount ? "text-danger" : "text-success"}>
-                              {data.changedFields?.withdrawAmount || data.changedFields?.amount || data.changedFields?.depositAmount}
+                              {data.changedFields?.withdrawAmount || data.changedFields?.amount || data.changedFields?.depositAmount || data.withdrawAmount || data.amount || data.depositAmount}
                             </p>
                           </p>
                           <p className="col fs-6 ">
