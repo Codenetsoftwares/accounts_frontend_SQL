@@ -48,7 +48,7 @@ const CreateIntroducer = () => {
     const data = {
       firstname: formData.yourFirstName,
       lastname: formData.yourLastname,
-      email: formData.UserName,
+      userName: formData.UserName,
       password: formData.yourEnterPassword,
       introducerId: formData.yourIntroducerId,
       // introducerPercentage: formData.yourIntroducerPercentage,
@@ -68,8 +68,8 @@ const CreateIntroducer = () => {
 
   const styles = {
     position: "fixed",
-      top: 0,
-    
+    top: 0,
+
     left: 0,
     width: "100%",
     height: "100%",
@@ -221,7 +221,7 @@ const CreateIntroducer = () => {
                               className="btn btn-dark w-100 fw-bold"
                             >
                               {" "}
-                              Create User
+                              Create Introducer
                             </button>
                           </div>
                         </div>

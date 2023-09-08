@@ -39,7 +39,7 @@ const CreateUser = () => {
     const data = {
       firstname: formData.yourName,
       lastname: formData.yourSurname,
-      email: formData.yourEmail,
+      userName: formData.yourEmail,
       password: formData.yourPassword,
       roles: checkedItems,
     };
@@ -147,7 +147,7 @@ const CreateUser = () => {
                           name="yourEmail"
                           value={formData.yourEmail}
                           onChange={handleChange}
-                          placeholder="Enter your e-mail"
+                          placeholder="Enter UserName"
                           required
                         />
                       </div>
@@ -302,7 +302,7 @@ const CreateUser = () => {
                               className="btn btn-dark w-100 fw-bold"
                             >
                               {" "}
-                              Create User
+                              Create Sub-Admin
                             </button>
                           </div>
                         </div>
