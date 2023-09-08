@@ -204,7 +204,7 @@ const NavSide = () => {
                 )}
               </>}
 
-              {userrole.some((role) => role === "superAdmin" || role === "Profile-View") && <>
+              {userrole.some((role) => role === "superAdmin" || role === "Profile-View" || role === "Introducer-Profile-View" || role === "User-Profile-View") && <>
                 {isToggle ? (
                   <li className="nav-item ">
                     <a className="nav-link text-white" onClick={handleToggle}>
@@ -226,15 +226,18 @@ const NavSide = () => {
                       </p>
                     </a>
 
-                    <Link to="userprofile" className="nav-link text-white">
-                      <i className="far fa-circle nav-icon" />
-                      <p>User Profile</p>
-                    </Link>
-
-                    <Link to="/introducerprofile" className="nav-link text-white">
-                      <i className="far fa-circle nav-icon" />
-                      <p>Introducer</p>
-                    </Link>
+                    {userrole.some((role) => role === "superAdmin" || role === "Profile-View" || role === "User-Profile-View") &&
+                      <Link to="userprofile" className="nav-link text-white">
+                        <i className="far fa-circle nav-icon" />
+                        <p>User Profile</p>
+                      </Link>
+                    }
+                    {userrole.some((role) => role === "superAdmin" || role === "Profile-View" || role === "Introducer-Profile-View") &&
+                      <Link to="/introducerprofile" className="nav-link text-white">
+                        <i className="far fa-circle nav-icon" />
+                        <p>Introducer</p>
+                      </Link>
+                    }
                     {userrole.some((role) => role === "superAdmin" || role === "") &&
                       <Link to="/adminlist" className="nav-link text-white">
                         <i className="far fa-circle nav-icon" />
