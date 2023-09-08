@@ -109,79 +109,134 @@ const AdminEditrole = () => {
                                     <label>
                                         <input
                                             type="checkbox"
-                                            value="Dashboard"
-                                            checked={checkedItems.includes('Dashboard')}
+                                            value="Dashboard-View"
+                                            checked={checkedItems.includes('Dashboard-View')}
                                             onChange={handleCheckboxChange}
                                         />
-                                        <span className='my-1'> Dashboard</span>
+                                        <span className='my-1'> Dashboard View</span>
                                     </label>
                                 </div>
                                 <div>
                                     <label>
                                         <input
                                             type="checkbox"
-                                            value="BankView"
-                                            checked={checkedItems.includes('BankView')}
+                                            value="Transaction-View"
+                                            checked={checkedItems.includes('Transaction-View')}
                                             onChange={handleCheckboxChange}
                                         />
-                                        <span> BankView</span>
+                                        <span>  Transaction View</span>
                                     </label>
                                 </div>
                                 <div>
                                     <label>
                                         <input
                                             type="checkbox"
-                                            value="create-transaction"
-                                            checked={checkedItems.includes('create-transaction')}
+                                            value="Bank-View"
+                                            checked={checkedItems.includes('Bank-View')}
                                             onChange={handleCheckboxChange}
                                         />
-                                        <span> Create Transaction</span>
+                                        <span>Bank View</span>
                                     </label>
                                 </div>
                                 <div>
                                     <label>
                                         <input
                                             type="checkbox"
-                                            value="WebsiteView"
-                                            checked={checkedItems.includes('WebsiteView')}
+                                            value=" Website-View"
+                                            checked={checkedItems.includes(' Website-View')}
                                             onChange={handleCheckboxChange}
                                         />
-                                        <span> WebsiteView</span>
+                                        <span> Website View</span>
+                                    </label>
+                                    </div>
+                                    <div>
+                                        <label>
+                                            <input
+                                                type="checkbox"
+                                                value=" Create-Deposit-Transaction"
+                                                checked={checkedItems.includes('Create-Deposit-Transaction')}
+                                                onChange={handleCheckboxChange}
+                                            />
+                                            <span>Create Deposit Transaction</span>
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label>
+                                            <input
+                                                type="checkbox"
+                                                value=" Create-Withdraw-Transaction"
+                                                checked={checkedItems.includes(' Create-Withdraw-Transaction')}
+                                                onChange={handleCheckboxChange}
+                                            />
+                                            <span> Create Withdraw Transaction</span>
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label>
+                                            <input
+                                                type="checkbox"
+                                                value="Create-Transaction"
+                                                checked={checkedItems.includes('Create-Transaction')}
+                                                onChange={handleCheckboxChange}
+                                            />
+                                            <span>Create Transaction</span>
+                                        </label>
+                                    </div>
+                                <div>
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            value="Profile-View"
+                                            checked={checkedItems.includes('Profile-View')}
+                                            onChange={handleCheckboxChange}
+                                        />
+                                        <span>Profile View</span>
                                     </label>
                                 </div>
                                 <div>
                                     <label>
                                         <input
                                             type="checkbox"
-                                            value="Profile"
-                                            checked={checkedItems.includes('Profile')}
+                                            value="User-Profile-View"
+                                            checked={checkedItems.includes('User-Profile-View')}
                                             onChange={handleCheckboxChange}
                                         />
-                                        <span> Profile</span>
+                                        <span> User-Profile-View</span>
                                     </label>
                                 </div>
                                 <div>
                                     <label>
                                         <input
                                             type="checkbox"
-                                            value="EditRequest"
-                                            checked={checkedItems.includes('EditRequest')}
+                                            value="Introducer-Profile-View"
+                                            checked={checkedItems.includes('Introducer-Profile-View')}
                                             onChange={handleCheckboxChange}
                                         />
-                                        <span> EditRequest</span>
+                                        <span> Introducer Profile View</span>
                                     </label>
                                 </div>
-                                {/* <div>
+                                <div>
                                     <label>
                                         <input
                                             type="checkbox"
-                                            value="Slider-Admin"
-                                            checked={checkedItems.includes('Slider-Admin')}
+                                            value="Transaction-Edit-Request"
+                                            checked={checkedItems.includes('Transaction-Edit-Request')}
                                             onChange={handleCheckboxChange}
                                         />
-                                        <span>Slider-Admin</span>
+                                        <span> Transaction Edit Request</span>
                                     </label>
-                                </div> */}
+                                </div>
+                                <div>
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            value=" Transaction-Delete-Request"
+                                            checked={checkedItems.includes(' Transaction-Delete-Request')}
+                                            onChange={handleCheckboxChange}
+                                        />
+                                        <span> Transaction Delete Request</span>
+                                    </label>
+                                </div>
                             </div>
                             <div className="card-footer">
                                 <div className="col-12 text-end">
