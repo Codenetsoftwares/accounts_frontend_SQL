@@ -156,6 +156,17 @@ class AccountService {
       },
     });
   }
+  editsubadminprofile(id, data, user) {
+    return axios({
+      method: "put",
+      url: `${API_HOST}/api/admin/subAdmin-profile-edit/${id}`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
   introducerProfile(id, user) {
     return axios({
       method: "get",
@@ -193,7 +204,6 @@ class AccountService {
       },
     });
   }
-
 
   Introducerprofile(user) {
     return axios({

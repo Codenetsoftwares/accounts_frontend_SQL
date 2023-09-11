@@ -43,6 +43,7 @@ import AdminEditrole from "./Component/SuperAdmin/AdminEditrole";
 import DuplicateDashboard from "./Component/DashBoard/DuplicateDashboard";
 import SingleIntroducer from "./Component/DashBoard/SingleIntroducer";
 import IntroShowPr from "./Component/DashBoard/IntroShowPr";
+import EditProfileSubadmin from "./Component/SuperAdmin/EditProfileSubadmin";
 
 function App() {
   return (
@@ -222,6 +223,16 @@ function App() {
                   </RequireAuth>
                 }
               />
+
+              <Route
+                path="editsubadmin/:id"
+                element={
+                  <RequireAuth>
+                    <EditProfileSubadmin/>
+                  </RequireAuth>
+                }
+              />
+
               <Route
                 path="showpercentageintroducer"
                 element={

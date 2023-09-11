@@ -524,10 +524,10 @@ const WebsiteStatement = () => {
                     Current Bank Balance
                   </th> */}
                   {/* <th scope="col text-break fs-6" className="text-primary">
-                    Before Website Balance
+                    Before Balance
                   </th> */}
                   <th scope="col text-break fs-6" className="text-primary">
-                    Website Balance
+                    Balance
                   </th>
                   {/* <th scope="col text-break fs-6" className="text-primary">
                     Before Balance
@@ -806,10 +806,10 @@ const WebsiteStatement = () => {
                     Current Bank Balance
                   </th> */}
                   {/* <th scope="col text-break fs-6" className="text-primary">
-                    Before Website Balance
+                    Before Balance
                   </th> */}
                   <th scope="col text-break fs-6" className="text-primary">
-                    Website Balance
+                    Balance
                   </th>
                   {/* <th scope="col text-break fs-6" className="text-primary">
                     Before Balance

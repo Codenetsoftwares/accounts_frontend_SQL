@@ -371,7 +371,7 @@ const BankStatement = () => {
           </select>
         </div>
         <div className="d-flex pt-3 justify-content-center">
-          <h6 className="fw-bold text-nowrap pt-2"> BankNameList</h6>
+          <h6 className="fw-bold text-nowrap pt-2">BankNameList</h6>
           <select
             className="form-control mx-3 w-25"
             value={bank || ""}
@@ -516,10 +516,10 @@ const BankStatement = () => {
                     Website
                   </th> */}
                   {/* <th scope="col text-break fs-6" className="text-primary">
-                    Before Bank Balance
+                    Before Balance
                   </th> */}
                   <th scope="col text-break fs-6" className="text-primary">
-                    Bank Balance
+                    Balance
                   </th>
                   {/* <th scope="col text-break fs-6" className="text-primary">
                     Before Website Balance
@@ -803,10 +803,10 @@ const BankStatement = () => {
                     Website
                   </th> */}
                   {/* <th scope="col text-break fs-6" className="text-primary">
-                    Before Bank Balance
+                    Before Balance
                   </th> */}
                   <th scope="col text-break fs-6" className="text-primary">
-                    Bank Balance
+                    Balance
                   </th>
                   {/* <th scope="col text-break fs-6" className="text-primary">
                     Before Website Balance
