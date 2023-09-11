@@ -170,6 +170,7 @@ const DuplicateDashboard = () => {
     AccountService.introducerId(auth.user).then((res) => setIntroducerList(res.data));
   }, [auth]);
   console.log(introducerList)
+
   const handleDelete = (e, id, transactionType) => {
     console.log(transactionType);
     console.log(id);
@@ -568,15 +569,15 @@ const DuplicateDashboard = () => {
                 <th scope="col" className="text-primary">
                   Website
                 </th>
-                
+
                 <th scope="col text-break fs-6" className="text-primary">
                   Bank Balance
                 </th>
-                
+
                 <th scope="col text-break fs-6" className="text-primary">
                   Website Balance
                 </th>
-                
+
                 <th scope="col text-break" className="text-primary">
                   Remarks
                 </th>
@@ -679,7 +680,7 @@ const DuplicateDashboard = () => {
                           {data.websiteName ? data.websiteName : "N.A"}
                         </p>
                       </td>
-                      
+
                       <td>
                         {/* {data.beforeBalanceBankWithdraw ? (
                           <p className="col fs-6">
@@ -699,7 +700,7 @@ const DuplicateDashboard = () => {
                         )} */}
                         {data.currentBankBalance ? (data.currentBankBalance): ("N .A")}
                       </td>
-                     
+
                       <td>
                         {/* {data.beforeBalanceBankWithdraw ? (
                           <p className="col fs-6">
@@ -719,7 +720,7 @@ const DuplicateDashboard = () => {
                         )} */}
                         {data.currentWebsiteBalance ? (data.currentWebsiteBalance): ("N .A")}
                       </td>
-                      
+
 
                       <td>{data.remarks}</td>
                       <td>
