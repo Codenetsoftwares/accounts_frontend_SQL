@@ -474,6 +474,41 @@ class AccountService {
       },
     });
   }
+
+
+  
+  UserResetPassword(data, user) {
+    return axios({
+      method: "post",
+      url: API_HOST + "/api/admin/user/reset-password",
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+ IntoducerResetPassword(data, user) {
+    return axios({
+      method: "post",
+      url: API_HOST + "/api/admin/intorducer/reset-password",
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  SubAdResetPassword(data, user) {
+    return axios({
+      method: "post",
+      url: API_HOST + "/api/admin/reset-password",
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
 }
 
 export default new AccountService();
