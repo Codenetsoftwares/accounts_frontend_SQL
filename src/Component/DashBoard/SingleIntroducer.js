@@ -7,6 +7,7 @@ import { useAuth } from "../../Utils/Auth";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
+
 const SingleIntroducer = () => {
   const { id } = useParams();
   const auth = useAuth();
@@ -23,11 +24,10 @@ const SingleIntroducer = () => {
       setFoundObject(res.data);
     })
   }, [auth, id]);
+
   console.log("This is User Deatils===>>", foundObject);
 
-  const toggleAccordion = () => {
-    setIsAccordionOpen(!isAccordionOpen);
-  };
+
   const handleToggleEdit = (e) => {
     e.preventDefault();
 
@@ -143,19 +143,19 @@ const SingleIntroducer = () => {
                           disabled={!isEditing}
                         />
                       </div>
-                      <button
+                      {/* <button
                         className="btn btn-link"
                         onClick={toggleAccordion}
                       >
                         Payment Details
-                      </button>
-                      <Link
+                      </button> */}
+                      {/* <Link
                         to={`/transactiondetails/${id}`}
                         className="btn btn-link"
                       >
                         Transaction Details
-                      </Link>
-                      {isAccordionOpen && (
+                      </Link> */}
+                      {/* {isAccordionOpen && (
                         <div className="accordion">
                           <div className="accordion-item">
                             <h2 className="accordion-header">
@@ -219,7 +219,7 @@ const SingleIntroducer = () => {
                             </div>
                           </div>
                         </div>
-                      )}
+                      )} */}
                       {isEditing ? (
                         <button
                           className="btn btn-success mx-1"
