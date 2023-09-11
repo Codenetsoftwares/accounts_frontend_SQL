@@ -6,6 +6,9 @@ import AccountService from "../../Services/AccountService";
 import { useAuth } from "../../Utils/Auth";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+// import IntoducerResetPassword from "../Modal/IntroResetpassword";
+import IntroResetpassword from "../Modal/IntroResetpassword";
+
 
 const SingleIntroducer = () => {
   const { id } = useParams();
@@ -15,6 +18,7 @@ const SingleIntroducer = () => {
   const [isAccordionOpen, setIsAccordionOpen] = useState(false); // State for accordion open/close
   const [isEditing, setIsEditing] = useState(false); // Track which field is being edited
   const [editedData, setEditedData] = useState({}); // Store edited data
+  const [username, setUsername] = useState([]);
 
   useEffect(() => {
     AccountService.introducerProfile(id, auth.user
@@ -40,6 +44,9 @@ const SingleIntroducer = () => {
     setEditedData({ ...editedData, [name]: value });
   };
 
+  const handleResetPassword = (e, username) => {
+    setUsername(username)
+  };
   const handleSave = (field) => {
     setIsEditing(false);
     setEditedData({ ...editedData, [field]: "" });
@@ -50,7 +57,7 @@ const SingleIntroducer = () => {
     };
 
     // put Api Fetching
-    AccountService.singleIntroducerprofileEdit(id, data, auth.user)
+    AccountService.IntoducerResetPassword(id, data, auth.user)
       .then((res) => {
         console.log("res", res);
         if (res.status === 201) {
@@ -213,6 +220,7 @@ const SingleIntroducer = () => {
                                         disabled={!isEditing}
                                       />
                                     </div>
+                                  
                                   </div>
                                 </div>
                               </div>
@@ -234,11 +242,22 @@ const SingleIntroducer = () => {
                         >
                           <FontAwesomeIcon icon={faEdit} /> Edit
                         </button>
+                       
+  
+
+                        
                       )}
                     </>
                   )}
                 </div>
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"  onClick={(e) => {
+                  handleResetPassword(e, foundObject.userName);
+                }}>
+                      Reset password
+                </button>
+
               </div>
+              <IntroResetpassword UserName={username}/>
             </div>
           </div>
         </div>

@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../Utils/Auth';
 import AccountService from '../../Services/AccountService';
 import { toast } from 'react-toastify';
+import SubAdResetPassword from "../Modal/SubAdResetPassword";
 
 const AdminEditrole = () => {
     const auth = useAuth();
@@ -11,10 +12,14 @@ const AdminEditrole = () => {
     const [checkedItems, setCheckedItems] = useState([]);
     const [displayEdit, setDisplayEdit] = useState(false);
     const [adminData, setAdminData] = useState({});
+    const [username, setUsername] = useState([]);
 
     const setData = () => {
         setCheckedItems(adminData.roles);
     };
+    const handleResetPassword = (e, username) => {
+        setUsername(username)
+      };
 
     const handleCheckboxChange = (event) => {
         const value = event.target.value;
@@ -94,8 +99,18 @@ const AdminEditrole = () => {
                                 {""}
                                 Renew the permissions
                             </button>
+                           
+             
                         </div>
+                        <>
+                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"  onClick={(e) => {
+                  handleResetPassword(e, adminData.userName);
+                }}>
+                      Reset password
+                </button>
+                </>
                     </div>
+                    <SubAdResetPassword UserName={username}/>
                 </div>
             ) : (
                 <div>
@@ -246,7 +261,9 @@ const AdminEditrole = () => {
                                     >
                                         Save
                                     </button>
+                  
                                 </div>
+                
                             </div>
                         </div>
                     </form>

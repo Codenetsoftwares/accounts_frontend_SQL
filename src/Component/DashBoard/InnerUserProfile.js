@@ -6,6 +6,7 @@ import AccountService from "../../Services/AccountService";
 import { useAuth } from "../../Utils/Auth";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import UserResetPass from "../Modal/UserResetPass";
 
 
 
@@ -18,6 +19,7 @@ const InnerUserProfile = () => {
   const [isAccordionOpen, setIsAccordionOpen] = useState(false); // State for accordion open/close
   const [isEditing, setIsEditing] = useState(false); // Track which field is being edited
   const [editedData, setEditedData] = useState({}); // Store edited data
+  const [username, setUsername] = useState([]);
 
   useEffect(() => {
     AccountService.userprofile(auth.user)
@@ -47,6 +49,11 @@ const InnerUserProfile = () => {
     const { name, value } = event.target;
     setEditedData({ ...editedData, [name]: value });
   };
+ 
+  const handleResetPassword = (e, username) => {
+    setUsername(username)
+  };
+  console.log("password ========>", username )
 
   const handleSave = (field) => {
     setIsEditing(false);
@@ -313,28 +320,45 @@ const InnerUserProfile = () => {
                         </div>
                       )}
                       {isEditing ? (
+                       
                         <button
                           className="btn btn-success mx-1"
                           onClick={handleSave}
                         >
                           <FontAwesomeIcon icon={faSave} /> Save
                         </button>
+                       
+                     
+                        
                       ) : (
+                        <>
                         <button
                           className="btn btn-info mx-1"
                           onClick={handleToggleEdit}
                         >
                           <FontAwesomeIcon icon={faEdit} /> Edit
                         </button>
+                        
+                        </>
                       )}
                     </>
                   )}
                 </div>
+               
+                 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"  onClick={(e) => {
+                  handleResetPassword(e, foundObject.userName);
+                }}>
+                      Reset password
+                </button>
+
+
               </div>
             </div>
           </div>
         </div>
+        <UserResetPass UserName={username}/>
       </div>
+      
     </div>
   );
 };
