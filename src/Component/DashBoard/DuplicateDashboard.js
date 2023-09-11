@@ -42,6 +42,8 @@ const DuplicateDashboard = () => {
   const [subAdmin, setSubAdmin] = useState("");
   const [bankList, setBankList] = useState([]);
   const [bank, setBank] = useState("");
+  const [introducerList, setIntroducerList] = useState([]);
+  const [introducer, setIntroducer] = useState("");
   const [websiteList, setWebsiteList] = useState([]);
   const [website, setWebsite] = useState("");
   const [NormalEditData, setNormalEditData] = useState({
@@ -62,7 +64,7 @@ const DuplicateDashboard = () => {
   const [startDatevalue, SetStartDatesetValue] = useState(new Date());
   const [endDatevalue, setEndDateValue] = useState(new Date());
 
-  const test = ["transactionType", "subAdminName", "websiteName", "bankName"];
+  const test = ["transactionType", "subAdminName", "websiteName", "bankName", "introducerId"];
 
   const handleClick = (key, value) => {
     let nArr = [...documentView];
@@ -118,6 +120,12 @@ const DuplicateDashboard = () => {
     handleClick("subAdminName", value);
   };
 
+  const handleIntroducer = (e) => {
+    const value = e.target.value;
+    setIntroducer(value);
+    handleClick("introducerId", value);
+  };
+
   const handleBank = (e) => {
     const value = e.target.value;
     setBank(value);
@@ -158,6 +166,10 @@ const DuplicateDashboard = () => {
     AccountService.website(auth.user).then((res) => setWebsiteList(res.data));
   }, [auth]);
 
+  useEffect(() => {
+    AccountService.introducerId(auth.user).then((res) => setIntroducerList(res.data));
+  }, [auth]);
+  console.log(introducerList)
   const handleDelete = (e, id, transactionType) => {
     console.log(transactionType);
     console.log(id);
@@ -338,6 +350,30 @@ const DuplicateDashboard = () => {
               return (
                 <option key={data._id} value={data.firstname}>
                   {data.firstname}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+        <div className="d-flex pt-3 justify-content-center">
+          <h6 className="fw-bold text-nowrap pt-2"> Introducerlist</h6>
+          <select
+            className="form-control mx-3 w-25"
+            value={introducer || ""}
+            autoComplete="off"
+            onChange={handleIntroducer}
+            style={{
+              boxShadow: " 17px 15px 27px -9px rgba(0,0,0,0.41)",
+              border: "0.5px solid black",
+              borderRadius: "6px",
+            }}
+            required
+          >
+            <option selected>Select Introducer</option>
+            {introducerList.map((data) => {
+              return (
+                <option key={data._id} value={data.introducerId}>
+                  {data.introducerId}
                 </option>
               );
             })}
