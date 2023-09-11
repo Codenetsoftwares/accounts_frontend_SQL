@@ -23,9 +23,9 @@ const CreateActualUser = () => {
     yourEnterPassword: "",
     yourConfirmPassword: "",
     yourIntroducerPercentage: "",
-    yourIntroducerId: "",
+    yourIntroducerName: "",
     yourContact: "",
-    yourUserId: "",
+    // yourUserId: "",
   });
   const [checkedItems, setCheckedItems] = useState([]);
   const [IntroducerId, setIntroducerId] = useState([]);
@@ -53,6 +53,7 @@ const CreateActualUser = () => {
   console.log("Introducer Id", IntroducerId);
 
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -64,9 +65,9 @@ const CreateActualUser = () => {
       userName: formData.yourUserName,
       password: formData.yourEnterPassword,
       contactNumber: formData.yourContact,
-      introducerId: formData.yourIntroducerId,
+      introducersUserName: formData.yourIntroducerName,
       introducerPercentage: formData.yourIntroducerPercentage,
-      userId: formData.yourUserId,
+      // userId: formData.yourUserId,
     };
     if (formData.yourEnterPassword === formData.yourConfirmPassword) {
       AccountService.createActualuser(data, auth.user)
@@ -145,7 +146,7 @@ const CreateActualUser = () => {
                           name="yourContact"
                           value={formData.yourContact}
                           onChange={handleChange}
-                          placeholder="Enter your Contact Number"
+                          placeholder=" Contact Number"
                         />
                       </div>
                       <div className="col-md-6">
@@ -182,7 +183,7 @@ const CreateActualUser = () => {
                       </div>
                       <div className="col-md-6">
                         <label htmlFor="" className="form-label">
-                          <FaIdCard /> Introducer ID
+                          <FaIdCard /> Introducer Name
                           <span className="text-danger">*</span>
                         </label>
                         <div className="input-group mb-3">
@@ -195,14 +196,14 @@ const CreateActualUser = () => {
                             type="text"
                             className="form-select"
                             id="text"
-                            name="yourIntroducerId"
-                            value={formData.yourIntroducerId}
+                            name="yourIntroducerName"
+                            value={formData.yourIntroducerName}
                             onChange={handleChange}
                           >
                             <option selected>Select Introducer</option>
                             {IntroducerId.map((data, index) => (
-                              <option key={index} value={data.introducerId}>
-                                {data.introducerId}
+                              <option key={index} value={data.userName}>
+                                {data.userName}
                               </option>
                             ))}
                           </select>
@@ -269,7 +270,7 @@ const CreateActualUser = () => {
                         />
                       </div>
 
-                      <div className="col">
+                      {/* <div className="col">
                         <label
                           htmlFor=""
                           className="form-label d-flex justify-content-center"
@@ -287,7 +288,7 @@ const CreateActualUser = () => {
                           placeholder="User Id"
                           required
                         />
-                      </div>
+                      </div> */}
                     </div>
                     <div className="col-12">
                       <div className="row justify-content-center mt-4">

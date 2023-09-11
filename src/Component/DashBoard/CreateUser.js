@@ -115,7 +115,7 @@ const CreateUser = () => {
                           name="yourName"
                           value={formData.yourName}
                           onChange={handleChange}
-                          placeholder=" Enter your first name"
+                          placeholder="First name"
                           required
                         />
                       </div>
@@ -131,13 +131,13 @@ const CreateUser = () => {
                           name="yourSurname"
                           value={formData.yourSurname}
                           onChange={handleChange}
-                          placeholder="Enter your last name"
+                          placeholder="Last name"
                           required
                         />
                       </div>
                       <div className="col-md-6">
                         <label htmlFor="" className="form-label">
-                          <FaEnvelope /> User Name
+                          <FaEnvelope />  User Name
                           <span className="text-danger">*</span>
                         </label>
                         <input
