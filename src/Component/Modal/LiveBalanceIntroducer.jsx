@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../Utils/Auth";
 import AccountService from "../../Services/AccountService";
+import { toast } from "react-toastify";
 
 const LiveBalanceIntroducer = ({ ID }) => {
   const auth = useAuth();
@@ -13,8 +14,8 @@ const LiveBalanceIntroducer = ({ ID }) => {
         SetLiveBalance(res.data);
       })
       .catch((error) => {
-        console.error("Error fetching user data:", error);
-      });
+        toast.error(error.response.data.message)
+      })
   }, [auth.user, ID]);
   console.log("Blance", LiveBalance);
   return (
