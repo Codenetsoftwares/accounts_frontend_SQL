@@ -40,11 +40,19 @@ const InnerIntroducer = () => {
       {client.map((user) => (
         <div class="card container ">
           <div class="card-body text-bg-success">
-            <p>User Id:&nbsp;{user.userId}</p>
-            <p>User Name:&nbsp;{user.userName}</p>
             <p>
-              Name:&nbsp;{user.firstname}&nbsp;{user.lastname}
+              <b>User Name</b> :&nbsp;{user.userName}
             </p>
+            <hr />
+            <p>
+              <b>Name</b> :&nbsp;{user.firstname}&nbsp;{user.lastname}
+            </p>
+            <hr />
+            <p>
+              <b>Percentage For This User</b> :&nbsp;{user.introducerPercentage}{" "}
+              %
+            </p>
+            <hr />
             <p>
               <button
                 type="button"

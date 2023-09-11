@@ -129,15 +129,13 @@ function Withdraw() {
                 type="text"
                 className="form-select"
                 onChange={(e) => {
-                  setSendUId((e.target.value)); // Parse the JSON string back to an array
+                  setSendUId(e.target.value); // Parse the JSON string back to an array
                 }}
               >
-                <option>userId</option>
+                <option>User Name</option>
                 {UId.map((data, index) => (
-                  <option
-                    key={index}
-                    value={data.userId}>
-                    {data.userId}
+                  <option key={index} value={data.userName}>
+                    {data.userName}
                   </option>
                 ))}
               </select>
@@ -152,20 +150,20 @@ function Withdraw() {
                 type="text"
                 className="form-select"
                 onChange={(e) => {
-                  setSendIntroducer((e.target.value)); // Parse the JSON string back to an array
+                  setSendIntroducer(e.target.value); // Parse the JSON string back to an array
                 }}
               >
-                <option selected>IntroducerId</option>
+                <option selected>Introducer Name</option>
                 {introducerId.map((data, index) => (
-                  <option key={index} value={data.introducerId}>
-                    {data.introducerId}
+                  <option key={index} value={data.userName}>
+                    {data.userName}
                   </option>
                 ))}
               </select>
             </div>
             <div className="input-group mb-3">
               <div className="input-group-prepend">
-                <span className="input-group-text" >
+                <span className="input-group-text">
                   <BsArrowLeftRight />
                 </span>
               </div>
@@ -174,9 +172,8 @@ function Withdraw() {
                 className="form-control"
                 placeholder="Transaction Id"
                 onChange={(e) => {
-                  setTransactionId((e.target.value)); // Parse the JSON string back to an array
+                  setTransactionId(e.target.value); // Parse the JSON string back to an array
                 }}
-
               />
             </div>
 
@@ -193,7 +190,7 @@ function Withdraw() {
                 className="form-control"
                 placeholder="Amount"
                 onChange={(e) => {
-                  setAmount((e.target.value)); // Parse the JSON string back to an array
+                  setAmount(e.target.value); // Parse the JSON string back to an array
                 }}
               />
             </div>
@@ -209,7 +206,7 @@ function Withdraw() {
                 className="form-control"
                 placeholder="Payment Method"
                 onChange={(e) => {
-                  setPaymentMethod((e.target.value)); // Parse the JSON string back to an array
+                  setPaymentMethod(e.target.value); // Parse the JSON string back to an array
                 }}
               />
             </div>
@@ -220,9 +217,14 @@ function Withdraw() {
                   <i class="fas fa-piggy-bank"></i>
                 </span>
               </div>
-              <input type="text" className="form-control" placeholder="Bank Charges" onChange={(e) => {
-                setBankCharges((e.target.value)); // Parse the JSON string back to an array
-              }} />
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Bank Charges"
+                onChange={(e) => {
+                  setBankCharges(e.target.value); // Parse the JSON string back to an array
+                }}
+              />
             </div>
 
             <div className="input-group mb-3">
@@ -233,7 +235,6 @@ function Withdraw() {
               </div>
               <select
                 class="form-select"
-
                 value={JSON.stringify(BankAccNo)} // Store the array as a JSON string
                 onChange={(e) => {
                   SetBankAccNo(JSON.parse(e.target.value)); // Parse the JSON string back to an array
@@ -261,7 +262,7 @@ function Withdraw() {
                 type="text"
                 className="form-select"
                 onChange={(e) => {
-                  setWebsiteName((e.target.value)); // Parse the JSON string back to an array
+                  setWebsiteName(e.target.value); // Parse the JSON string back to an array
                 }}
               >
                 <option selected>Select Website</option>
@@ -271,7 +272,6 @@ function Withdraw() {
                   </option>
                 ))}
               </select>
-
             </div>
             <div className="input-group mb-3">
               <div className="input-group-prepend">

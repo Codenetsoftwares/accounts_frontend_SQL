@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../Utils/Auth";
+import Deposit from "../../Assets/Deposit.jpg";
+import Withdraw from "../../Assets/Withdraws.jpg";
 
 function ButtonDemo() {
   const auth = useAuth();
   const [userrole, setUserRole] = useState([]);
 
   useEffect(() => {
-
     setUserRole(auth.user.role);
   }, [auth]);
   return (
@@ -21,43 +22,55 @@ function ButtonDemo() {
       >
         <div className="col-md-6 text-center">
           <div className="row ">
-
             <div className="col-md-6">
-              {userrole.some((role) => role === "superAdmin" || role === "Dashboard-View" || role === "Create-Deposit-Transaction" || role === "Create-Withdraw-Transaction" || role === "Create-Transaction") &&
+              {userrole.some(
+                (role) =>
+                  role === "superAdmin" ||
+                  role === "Dashboard-View" ||
+                  role === "Create-Deposit-Transaction" ||
+                  role === "Create-Withdraw-Transaction" ||
+                  role === "Create-Transaction"
+              ) && (
                 <Link to="/withdraw" style={{ cursor: "pointer" }}>
-                  <button
-                    className="btn btn-success text-black"
-                    style={{
-                      width: "25rem",
-                      height: "25rem",
-                      backgroundImage:
-                        "radial-gradient(circle, rgba(245,255,183,1) 0%, rgba(255,41,41,1) 100%)",
-                    }}
-                  >
-                    <b>Withdraw</b>
-                    {/* <img src="withdraw-logo.png" alt="Withdraw" className="button-logo" /> */}
-                  </button>
+                  <div class="card" style={{ width: "18rem"}}>
+                    <img
+                      class="card-img-top"
+                      src={Withdraw}
+                      alt="Card image cap"
+                    />
+                    <div class="card-body">
+                      <p class="card-text">
+                        <b>Withdraw</b>
+                      </p>
+                    </div>
+                  </div>
                 </Link>
-              }
+              )}
             </div>
             <div className="col-md-6">
-              {userrole.some((role) => role === "superAdmin" || role === "Dashboard-View" || role === "Create-Deposit-Transaction" || role === "Create-Withdraw-Transaction" || role === "Create-Transaction") &&
+              {userrole.some(
+                (role) =>
+                  role === "superAdmin" ||
+                  role === "Dashboard-View" ||
+                  role === "Create-Deposit-Transaction" ||
+                  role === "Create-Withdraw-Transaction" ||
+                  role === "Create-Transaction"
+              ) && (
                 <Link to="/deposit" style={{ cursor: "pointer" }}>
-                  <button
-                    className="btn btn-success text-black "
-                    style={{
-                      width: "25rem",
-                      height: "25rem",
-
-                      backgroundImage:
-                        " radial-gradient(circle, rgba(245,255,183,1) 0%, rgba(0,255,42,1) 100%)",
-                    }}
-                  >
-                    <b>Deposit</b>
-                    {/* <img src="deposit-logo.png" alt="Deposit" className="button-logo" /> */}
-                  </button>
+                  <div class="card" style={{ width: "18rem" }}>
+                    <img
+                      class="card-img-top"
+                      src={Deposit}
+                      alt="Card image cap"
+                    />
+                    <div class="card-body">
+                      <p class="card-text">
+                        <b>Deposit</b>
+                      </p>
+                    </div>
+                  </div>
                 </Link>
-              }
+              )}
             </div>
           </div>
         </div>

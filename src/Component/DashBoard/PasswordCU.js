@@ -26,7 +26,7 @@ const PasswordCU = ({ value, setFormData, name }) => {
           name={name}
           value={value}
           onChange={handleChange}
-          placeholder="Enter your password"
+          placeholder="Enter password"
         />
         <InputGroup.Text onClick={togglePasswordVisibility}>
           {!showPassword ? <FaEyeSlash /> : <FaEye />}

@@ -50,7 +50,7 @@ const CreateIntroducer = () => {
       lastname: formData.yourLastname,
       userName: formData.UserName,
       password: formData.yourEnterPassword,
-      introducerId: formData.yourIntroducerId,
+      // introducerId: formData.yourIntroducerId,
       // introducerPercentage: formData.yourIntroducerPercentage,
     };
 
@@ -99,7 +99,7 @@ const CreateIntroducer = () => {
                       <div className="row g-3">
                         <div className="col-md-6">
                           <label htmlFor="Your-email" className="form-label">
-                            <FaEnvelope /> User Name
+                            <FaEnvelope /> Introducer User Name
                             <span className="text-danger">*</span>
                           </label>
                           <input
@@ -126,7 +126,7 @@ const CreateIntroducer = () => {
                             name="yourFirstName"
                             value={formData.yourFirstName}
                             onChange={handleChange}
-                            placeholder="Enter your First Name"
+                            placeholder=" First Name"
                             required
                           />
                         </div>
@@ -142,11 +142,11 @@ const CreateIntroducer = () => {
                             name="yourLastname"
                             value={formData.yourLastname}
                             onChange={handleChange}
-                            placeholder="Enter your Last Name"
+                            placeholder=" Last Name"
                             required
                           />
                         </div>
-                        <div className="col-md-6">
+                        {/* <div className="col-md-6">
                           <label htmlFor="" className="form-label">
                             <FaIdCard /> Introducer ID
                             <span className="text-danger">*</span>
@@ -161,7 +161,7 @@ const CreateIntroducer = () => {
                             placeholder="Enter your Introducer ID"
                             required
                           />
-                        </div>
+                        </div> */}
                         {/* <div className="col-md-6">
                           <label htmlFor="" className="form-label">
                             <FaPercent /> Introducer Percentage
@@ -191,12 +191,12 @@ const CreateIntroducer = () => {
                             name="yourEnterPassword"
                             value={formData.yourEnterPassword}
                             onChange={handleChange}
-                            placeholder="Enter Password"
+                            placeholder="Password"
                             required
                           />
                         </div>
 
-                        <div className="col-md-6">
+                        {/* <div className="col-md-6">
                           <label htmlFor="" className="form-label">
                             <FaKey /> Confirm Password
                             <span className="text-danger">*</span>
@@ -211,7 +211,7 @@ const CreateIntroducer = () => {
                             placeholder="Confirm Password"
                             required
                           />
-                        </div>
+                        </div> */}
                       </div>
                       <div className="col-12">
                         <div className="row justify-content-center mt-4">
