@@ -11,6 +11,9 @@ import {
   faBalanceScale
 } from "@fortawesome/free-solid-svg-icons";
 import LiveBalanceIntroducer from "../Modal/LiveBalanceIntroducer";
+import { toast } from "react-toastify";
+import { ToastContainer } from "react-bootstrap";
+
 
 
 const IntroducerProfile = () => {
@@ -27,7 +30,8 @@ const IntroducerProfile = () => {
   useEffect(() => {
     AccountService.Introducerprofile(auth.user).then((res) =>
       setUsers(res.data)
-    );
+    )
+    
   }, [auth]);
   console.log("users", users);
 
@@ -44,6 +48,7 @@ const IntroducerProfile = () => {
 
   return (
     <div className="m-3">
+      <ToastContainer/> 
       <h1 className="d-flex justify-content-center">Introducer Profile</h1>
       <div class="input-group input-group-sm ">
         <input

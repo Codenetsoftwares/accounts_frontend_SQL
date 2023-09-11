@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from '../../Utils/Auth';
 import AccountService from '../../Services/AccountService';
 import { toast } from 'react-toastify';
@@ -99,7 +99,18 @@ const AdminEditrole = () => {
                                 {""}
                                 Renew the permissions
                             </button>
-                           
+                            <Link
+                to={`/editsubadmin/${adminData._id}`}
+                style={{ cursor: "pointer" }}
+              >
+                <button
+                  type="button"
+                  class="btn btn-warning ml-2"
+                  
+                >
+                  Edit Profile
+                </button>
+              </Link>
              
                         </div>
                         <>
@@ -110,7 +121,7 @@ const AdminEditrole = () => {
                 </button>
                 </>
                     </div>
-                    <SubAdResetPassword UserName={username}/>
+                    <SubAdResetPassword UserName={username} />
                 </div>
             ) : (
                 <div>

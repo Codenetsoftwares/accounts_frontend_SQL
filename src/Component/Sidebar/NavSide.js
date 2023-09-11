@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../Utils/Auth";
 import Topimg from "../../Assets/Topimgg.png";
 import userIcon from "../../Assets/user-iconn.jpg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExchangeAlt, faSquarePlus } from "@fortawesome/free-solid-svg-icons";
 const NavSide = () => {
   const auth = useAuth();
   const [isToggle, setIsToggle] = useState(true);
@@ -166,7 +168,11 @@ const NavSide = () => {
                         className="nav-link "
                         onClick={handleToggleTransaction}
                       >
-                        &nbsp; <i className="fa-solid fas fa-user" />
+                        &nbsp;{" "}
+                        <FontAwesomeIcon
+                          icon={faExchangeAlt}
+                          className="transaction-icon"
+                        />
                         <p>
                           &nbsp;Transaction
                           <i className="fas fa-angle-left right" />
@@ -180,7 +186,10 @@ const NavSide = () => {
                         onClick={handleToggleTransaction}
                       >
                         &nbsp;
-                        <i className="fa-solid fas fa-user" />
+                        <FontAwesomeIcon
+                          icon={faExchangeAlt}
+                          className="transaction-icon"
+                        />
                         <p>
                           &nbsp; Transaction
                           <i className="fas fa-chevron-down right"></i>
@@ -218,7 +227,7 @@ const NavSide = () => {
                   {isToggleCreate ? (
                     <li className="nav-item ">
                       <a className="nav-link " onClick={handleToggleCreate}>
-                        &nbsp; <i className="fa-solid fas fa-user" />
+                        &nbsp; <FontAwesomeIcon icon={faSquarePlus} />
                         <p>
                           &nbsp; Create
                           <i className="fas fa-angle-left right" />
@@ -229,7 +238,7 @@ const NavSide = () => {
                     <li className="nav-item ">
                       <a className="nav-link " onClick={handleToggleCreate}>
                         &nbsp;
-                        <i className="fa-solid fas fa-user" />
+                        <FontAwesomeIcon icon={faSquarePlus} />
                         <p>
                           &nbsp; Create
                           <i className="fas fa-chevron-down right"></i>

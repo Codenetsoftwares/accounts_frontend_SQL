@@ -14,7 +14,8 @@ import { Link, useNavigate } from "react-router-dom";
 import ModalAddBl from "../Modal/ModalAddBl";
 import ModalWthBl from "../Modal/ModalWthBl";
 import ModalBkdl from "../Modal/ModalBkdl";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import { useParams } from "react-router";
 const AdminBank = () => {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ const AdminBank = () => {
   const [getbankName, setGetBankName] = useState([{}]);
   const [Id, setId] = useState();
   const [IdWithdraw, setIdWithdraw] = useState();
+
   // const { id } = useParams();
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -36,9 +38,10 @@ const AdminBank = () => {
       .then((res) => {
         console.log("res", res);
         if (res.status === 200) {
-          alert("Bank registered successfully!");
+          toast.success("Bank registered successfully!");
+          Window.location.reload();
         } else {
-          alert("Please give a bank name to add");
+          toast.error("Something Went Wrong!!");
         }
       })
 
@@ -81,15 +84,18 @@ const AdminBank = () => {
         .then((res) => {
           // console.log(response.data);
           if (res.status === 200) {
-            alert("Bank Deleted successfully!");
-            window.location.reload();
+           alert("Bank Deleted successfully!");
+             window.location.reload();
           }
+          
         })
         .catch((error) => {
-          console.error(error);
+          toast.error(error);
           // alert.error("e.message");
         });
+     
     }
+    
   };
 
   useEffect(() => {

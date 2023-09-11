@@ -42,6 +42,8 @@ const DuplicateDashboard = () => {
   const [subAdmin, setSubAdmin] = useState("");
   const [bankList, setBankList] = useState([]);
   const [bank, setBank] = useState("");
+  const [introducerList, setIntroducerList] = useState([]);
+  const [introducer, setIntroducer] = useState("");
   const [websiteList, setWebsiteList] = useState([]);
   const [website, setWebsite] = useState("");
   const [NormalEditData, setNormalEditData] = useState({
@@ -62,7 +64,7 @@ const DuplicateDashboard = () => {
   const [startDatevalue, SetStartDatesetValue] = useState(new Date());
   const [endDatevalue, setEndDateValue] = useState(new Date());
 
-  const test = ["transactionType", "subAdminName", "websiteName", "bankName"];
+  const test = ["transactionType", "subAdminName", "websiteName", "bankName", "introducerId"];
 
   const handleClick = (key, value) => {
     let nArr = [...documentView];
@@ -118,6 +120,12 @@ const DuplicateDashboard = () => {
     handleClick("subAdminName", value);
   };
 
+  const handleIntroducer = (e) => {
+    const value = e.target.value;
+    setIntroducer(value);
+    handleClick("introducerId", value);
+  };
+
   const handleBank = (e) => {
     const value = e.target.value;
     setBank(value);
@@ -157,6 +165,11 @@ const DuplicateDashboard = () => {
   useEffect(() => {
     AccountService.website(auth.user).then((res) => setWebsiteList(res.data));
   }, [auth]);
+
+  useEffect(() => {
+    AccountService.introducerId(auth.user).then((res) => setIntroducerList(res.data));
+  }, [auth]);
+  console.log(introducerList)
 
   const handleDelete = (e, id, transactionType) => {
     console.log(transactionType);
@@ -344,6 +357,30 @@ const DuplicateDashboard = () => {
           </select>
         </div>
         <div className="d-flex pt-3 justify-content-center">
+          <h6 className="fw-bold text-nowrap pt-2"> Introducerlist</h6>
+          <select
+            className="form-control mx-3 w-25"
+            value={introducer || ""}
+            autoComplete="off"
+            onChange={handleIntroducer}
+            style={{
+              boxShadow: " 17px 15px 27px -9px rgba(0,0,0,0.41)",
+              border: "0.5px solid black",
+              borderRadius: "6px",
+            }}
+            required
+          >
+            <option selected>Select Introducer</option>
+            {introducerList.map((data) => {
+              return (
+                <option key={data._id} value={data.userName}>
+                  {data.userName}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+        <div className="d-flex pt-3 justify-content-center">
           <h6 className="fw-bold text-nowrap pt-2"> BankNameList</h6>
           <select
             className="form-control mx-3 w-25"
@@ -521,10 +558,10 @@ const DuplicateDashboard = () => {
                   CreatedBy
                 </th>
                 <th scope="col fs-6" className="text-primary">
-                  User Id
+                  User Name
                 </th>
                 <th scope="col fs-6" className="text-primary">
-                  Introducer Id
+                  Introducer Name
                 </th>
                 <th scope="col" className="text-primary">
                   Bank
@@ -532,24 +569,15 @@ const DuplicateDashboard = () => {
                 <th scope="col" className="text-primary">
                   Website
                 </th>
+
                 <th scope="col text-break fs-6" className="text-primary">
-                  Before Bank Balance
+                  Bank Balance
                 </th>
+
                 <th scope="col text-break fs-6" className="text-primary">
-                  Current Bank Balance
+                  Website Balance
                 </th>
-                <th scope="col text-break fs-6" className="text-primary">
-                  Before Website Balance
-                </th>
-                <th scope="col text-break fs-6" className="text-primary">
-                  Current Website Balance
-                </th>
-                <th scope="col text-break fs-6" className="text-primary">
-                  Before Balance
-                </th>
-                <th scope="col text-break fs-6" className="text-primary">
-                  Current Balance
-                </th>
+
                 <th scope="col text-break" className="text-primary">
                   Remarks
                 </th>
@@ -622,7 +650,7 @@ const DuplicateDashboard = () => {
                       <td>{data.subAdminName}</td>
                       <td>
                         {data.paymentMethod && (
-                          <p className="col fs-6">{data.userId}</p>
+                          <p className="col fs-6">{data.userName}</p>
                         )}
                         {data.depositAmount && (
                           <p className="col fs-6 text-break">N.A</p>
@@ -633,7 +661,7 @@ const DuplicateDashboard = () => {
                       </td>
                       <td>
                         {data.paymentMethod && (
-                          <p className="col fs-6">{data.introducerId}</p>
+                          <p className="col fs-6">{data.introducerUserName}</p>
                         )}
                         {data.depositAmount && (
                           <p className="col fs-6 text-break">N.A</p>
@@ -652,26 +680,9 @@ const DuplicateDashboard = () => {
                           {data.websiteName ? data.websiteName : "N.A"}
                         </p>
                       </td>
+
                       <td>
-                        {data.beforeBalanceBankWithdraw ? (
-                          <p className="col fs-6">
-                            {data.beforeBalanceBankWithdraw && (
-                              <p className="col fs-6 text-break">
-                                ₹&nbsp; {data.beforeBalanceBankWithdraw}
-                              </p>
-                            )}
-                            {data.beforeBalanceBankDeposit && (
-                              <p className="col fs-6 text-break">
-                                ₹&nbsp; {data.beforeBalanceBankDeposit}
-                              </p>
-                            )}
-                          </p>
-                        ) : (
-                          "N.A"
-                        )}
-                      </td>
-                      <td>
-                        {data.beforeBalanceBankWithdraw ? (
+                        {/* {data.beforeBalanceBankWithdraw ? (
                           <p className="col fs-6">
                             {data.currentBalanceBankWithdraw && (
                               <p className="col fs-6 text-break">
@@ -686,28 +697,12 @@ const DuplicateDashboard = () => {
                           </p>
                         ) : (
                           "N.A"
-                        )}
+                        )} */}
+                        {data.currentBankBalance ? (data.currentBankBalance): ("N .A")}
                       </td>
+
                       <td>
-                        {data.beforeBalanceBankWithdraw ? (
-                          <p className="col fs-6">
-                            {data.beforeBalanceWebsiteWithdraw && (
-                              <p className="col fs-6 text-break">
-                                ₹&nbsp; {data.beforeBalanceWebsiteWithdraw}
-                              </p>
-                            )}
-                            {data.beforeBalanceWebsiteDeposit && (
-                              <p className="col fs-6 text-break">
-                                ₹&nbsp; {data.beforeBalanceWebsiteDeposit}
-                              </p>
-                            )}
-                          </p>
-                        ) : (
-                          "N.A"
-                        )}
-                      </td>
-                      <td>
-                        {data.beforeBalanceBankWithdraw ? (
+                        {/* {data.beforeBalanceBankWithdraw ? (
                           <p className="col fs-6">
                             {data.currentBalanceWebsiteWithdraw && (
                               <p className="col fs-6 text-break">
@@ -722,26 +717,10 @@ const DuplicateDashboard = () => {
                           </p>
                         ) : (
                           "N.A"
-                        )}
+                        )} */}
+                        {data.currentWebsiteBalance ? (data.currentWebsiteBalance): ("N .A")}
                       </td>
-                      <td>
-                        {data.beforeBalance ? (
-                          <p className="col fs-6">
-                            {data.beforeBalance ? data.beforeBalance : "N.A"}
-                          </p>
-                        ) : (
-                          "N.A"
-                        )}
-                      </td>
-                      <td>
-                        {data.currentBalance ? (
-                          <p className="col fs-6">
-                            {data.currentBalance ? data.currentBalance : "N.A"}
-                          </p>
-                        ) : (
-                          "N.A"
-                        )}
-                      </td>
+
 
                       <td>{data.remarks}</td>
                       <td>
