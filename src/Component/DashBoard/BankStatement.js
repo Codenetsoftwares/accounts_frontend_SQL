@@ -532,10 +532,10 @@ const BankStatement = () => {
                     <br />
                     (Manual)
                   </th> */}
-                  <th scope="col text-break fs-6" className="text-primary">
+                  {/* <th scope="col text-break fs-6" className="text-primary">
                     Website Balance
 
-                  </th>
+                  </th> */}
                   <th scope="col text-break" className="text-primary">
                     Remarks
                   </th>
@@ -702,7 +702,7 @@ const BankStatement = () => {
                             "N.A"
                           )}
                         </td> */}
-                        <td>
+                        {/* <td>
                           {data.currentWebsiteBalance ? (
                             <p className="col fs-6">
                               {data.currentWebsiteBalance
@@ -712,7 +712,7 @@ const BankStatement = () => {
                           ) : (
                             "N.A"
                           )}
-                        </td>
+                        </td> */}
 
                         <td>{data.remarks}</td>
                         <td>
@@ -819,10 +819,10 @@ const BankStatement = () => {
                     <br />
                     (Manual)
                   </th> */}
-                  <th scope="col text-break fs-6" className="text-primary">
+                  {/* <th scope="col text-break fs-6" className="text-primary">
                     Website Balance
 
-                  </th>
+                  </th> */}
                   <th scope="col text-break" className="text-primary">
                     Remarks
                   </th>
@@ -989,7 +989,7 @@ const BankStatement = () => {
                             "N.A"
                           )}
                         </td> */}
-                        <td>
+                        {/* <td>
                           {data.currentWebsiteBalance ? (
                             <p className="col fs-6">
                               {data.currentWebsiteBalance
@@ -999,7 +999,7 @@ const BankStatement = () => {
                           ) : (
                             "N.A"
                           )}
-                        </td>
+                        </td> */}
 
                         <td>{data.remarks}</td>
                         <td>
