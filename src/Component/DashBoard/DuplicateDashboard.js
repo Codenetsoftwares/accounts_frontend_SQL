@@ -557,10 +557,10 @@ const DuplicateDashboard = () => {
                   CreatedBy
                 </th>
                 <th scope="col fs-6" className="text-primary">
-                  User Id
+                  User Name
                 </th>
                 <th scope="col fs-6" className="text-primary">
-                  Introducer Id
+                  Introducer Name
                 </th>
                 <th scope="col" className="text-primary">
                   Bank
@@ -649,7 +649,7 @@ const DuplicateDashboard = () => {
                       <td>{data.subAdminName}</td>
                       <td>
                         {data.paymentMethod && (
-                          <p className="col fs-6">{data.userId}</p>
+                          <p className="col fs-6">{data.userName}</p>
                         )}
                         {data.depositAmount && (
                           <p className="col fs-6 text-break">N.A</p>
@@ -660,7 +660,7 @@ const DuplicateDashboard = () => {
                       </td>
                       <td>
                         {data.paymentMethod && (
-                          <p className="col fs-6">{data.introducerId}</p>
+                          <p className="col fs-6">{data.introducerUserName}</p>
                         )}
                         {data.depositAmount && (
                           <p className="col fs-6 text-break">N.A</p>
@@ -681,7 +681,7 @@ const DuplicateDashboard = () => {
                       </td>
                       
                       <td>
-                        {data.beforeBalanceBankWithdraw ? (
+                        {/* {data.beforeBalanceBankWithdraw ? (
                           <p className="col fs-6">
                             {data.currentBalanceBankWithdraw && (
                               <p className="col fs-6 text-break">
@@ -696,11 +696,12 @@ const DuplicateDashboard = () => {
                           </p>
                         ) : (
                           "N.A"
-                        )}
+                        )} */}
+                        {data.currentBankBalance ? (data.currentBankBalance): ("N .A")}
                       </td>
                      
                       <td>
-                        {data.beforeBalanceBankWithdraw ? (
+                        {/* {data.beforeBalanceBankWithdraw ? (
                           <p className="col fs-6">
                             {data.currentBalanceWebsiteWithdraw && (
                               <p className="col fs-6 text-break">
@@ -715,7 +716,8 @@ const DuplicateDashboard = () => {
                           </p>
                         ) : (
                           "N.A"
-                        )}
+                        )} */}
+                        {data.currentWebsiteBalance ? (data.currentWebsiteBalance): ("N .A")}
                       </td>
                       
 

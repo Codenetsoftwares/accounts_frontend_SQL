@@ -67,7 +67,7 @@ const BankStatement = () => {
         console.error(err, "object");
       });
   }, [id, auth]);
-  console.log("Transaction =>>>", documentView);
+  // console.log("Transaction =>>>", documentView);
   const handelDate = () => {
     const sdate = moment(startDatevalue, "DD-MM-YYYY HH:mm").toDate();
     const edate = moment(endDatevalue, "DD-MM-YYYY HH:mm").toDate();
@@ -79,8 +79,8 @@ const BankStatement = () => {
     setToggle(false);
   };
 
-  // console.log("Bank Names Manual =>>>", Manualstmnt);
-  // console.log("Bank Names User =>>>", Userstmnt);
+  console.log("documentView =>>>", documentView);
+  console.log("accountData =>>>", accountData);
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -350,7 +350,7 @@ const BankStatement = () => {
                     CreatedBy
                   </th>
                   <th scope="col fs-6" className="text-primary">
-                    User Id
+                    User Name
                   </th>
                   {/* <th scope="col" className="text-primary">
                     Bank
@@ -358,11 +358,11 @@ const BankStatement = () => {
                   {/* <th scope="col" className="text-primary">
                     Website
                   </th> */}
-                  <th scope="col text-break fs-6" className="text-primary">
+                  {/* <th scope="col text-break fs-6" className="text-primary">
                     Before Bank Balance
-                  </th>
+                  </th> */}
                   <th scope="col text-break fs-6" className="text-primary">
-                    Current Bank Balance
+                    Bank Balance
                   </th>
                   {/* <th scope="col text-break fs-6" className="text-primary">
                     Before Website Balance
@@ -370,15 +370,14 @@ const BankStatement = () => {
                   <th scope="col text-break fs-6" className="text-primary">
                     Current Website Balance
                   </th> */}
-                  <th scope="col text-break fs-6" className="text-primary">
+                  {/* <th scope="col text-break fs-6" className="text-primary">
                     Before Balance
                     <br />
                     (Manual)
-                  </th>
+                  </th> */}
                   <th scope="col text-break fs-6" className="text-primary">
-                    Current Balance
-                    <br />
-                    (Manual)
+                    Website Balance
+
                   </th>
                   <th scope="col text-break" className="text-primary">
                     Remarks
@@ -452,7 +451,7 @@ const BankStatement = () => {
                         <td>{data.subAdminName}</td>
                         <td>
                           {data.paymentMethod && (
-                            <p className="col fs-6">{data.userId}</p>
+                            <p className="col fs-6">{data.userName}</p>
                           )}
                           {data.depositAmount && (
                             <p className="col fs-6 text-break">N.A</p>
@@ -472,24 +471,18 @@ const BankStatement = () => {
                           </p>
                         </td> */}
                         <td>
-                          {data.beforeBalanceBankWithdraw ? (
-                            <p className="col fs-6">
-                              {data.beforeBalanceBankWithdraw && (
-                                <p className="col fs-6 text-break">
-                                  ₹&nbsp; {data.beforeBalanceBankWithdraw}
-                                </p>
-                              )}
-                              {data.beforeBalanceBankDeposit && (
-                                <p className="col fs-6 text-break">
-                                  ₹&nbsp; {data.beforeBalanceBankDeposit}
-                                </p>
-                              )}
-                            </p>
+                          {data.currentBankBalance ? (
+                            (
+                              <p className="col fs-6 text-break">
+                                ₹&nbsp; {data.currentBankBalance}
+                              </p>
+                            )
+
                           ) : (
                             "N.A"
                           )}
                         </td>
-                        <td>
+                        {/* <td>
                           {data.beforeBalanceBankWithdraw ? (
                             <p className="col fs-6">
                               {data.currentBalanceBankWithdraw && (
@@ -506,7 +499,7 @@ const BankStatement = () => {
                           ) : (
                             "N.A"
                           )}
-                        </td>
+                        </td> */}
                         {/* <td>
                           {data.beforeBalanceBankWithdraw ? (
                             <p className="col fs-6">
@@ -543,7 +536,7 @@ const BankStatement = () => {
                             "N.A"
                           )}
                         </td> */}
-                        <td>
+                        {/* <td>
                           {data.beforeBalance ? (
                             <p className="col fs-6">
                               {data.beforeBalance ? data.beforeBalance : "N.A"}
@@ -551,12 +544,12 @@ const BankStatement = () => {
                           ) : (
                             "N.A"
                           )}
-                        </td>
+                        </td> */}
                         <td>
-                          {data.currentBalance ? (
+                          {data.currentWebsiteBalance ? (
                             <p className="col fs-6">
-                              {data.currentBalance
-                                ? data.currentBalance
+                              {data.currentWebsiteBalance
+                                ? data.currentWebsiteBalance
                                 : "N.A"}
                             </p>
                           ) : (
@@ -564,7 +557,7 @@ const BankStatement = () => {
                           )}
                         </td>
 
-                        <td>{data.remark}</td>
+                        <td>{data.remarks}</td>
                         <td>
                           <button
                             type="button"
@@ -644,7 +637,7 @@ const BankStatement = () => {
                     CreatedBy
                   </th>
                   <th scope="col fs-6" className="text-primary">
-                    User Id
+                    User Name
                   </th>
                   {/* <th scope="col" className="text-primary">
                     Bank
@@ -652,11 +645,11 @@ const BankStatement = () => {
                   {/* <th scope="col" className="text-primary">
                     Website
                   </th> */}
-                  <th scope="col text-break fs-6" className="text-primary">
+                  {/* <th scope="col text-break fs-6" className="text-primary">
                     Before Bank Balance
-                  </th>
+                  </th> */}
                   <th scope="col text-break fs-6" className="text-primary">
-                    Current Bank Balance
+                    Bank Balance
                   </th>
                   {/* <th scope="col text-break fs-6" className="text-primary">
                     Before Website Balance
@@ -664,15 +657,14 @@ const BankStatement = () => {
                   <th scope="col text-break fs-6" className="text-primary">
                     Current Website Balance
                   </th> */}
-                  <th scope="col text-break fs-6" className="text-primary">
+                  {/* <th scope="col text-break fs-6" className="text-primary">
                     Before Balance
                     <br />
                     (Manual)
-                  </th>
+                  </th> */}
                   <th scope="col text-break fs-6" className="text-primary">
-                    Current Balance
-                    <br />
-                    (Manual)
+                    Website Balance
+
                   </th>
                   <th scope="col text-break" className="text-primary">
                     Remarks
@@ -746,7 +738,7 @@ const BankStatement = () => {
                         <td>{data.subAdminName}</td>
                         <td>
                           {data.paymentMethod && (
-                            <p className="col fs-6">{data.userId}</p>
+                            <p className="col fs-6">{data.userName}</p>
                           )}
                           {data.depositAmount && (
                             <p className="col fs-6 text-break">N.A</p>
@@ -766,24 +758,18 @@ const BankStatement = () => {
                           </p>
                         </td> */}
                         <td>
-                          {data.beforeBalanceBankWithdraw ? (
-                            <p className="col fs-6">
-                              {data.beforeBalanceBankWithdraw && (
-                                <p className="col fs-6 text-break">
-                                  ₹&nbsp; {data.beforeBalanceBankWithdraw}
-                                </p>
-                              )}
-                              {data.beforeBalanceBankDeposit && (
-                                <p className="col fs-6 text-break">
-                                  ₹&nbsp; {data.beforeBalanceBankDeposit}
-                                </p>
-                              )}
-                            </p>
+                          {data.currentBankBalance ? (
+                            (
+                              <p className="col fs-6 text-break">
+                                ₹&nbsp; {data.currentBankBalance}
+                              </p>
+                            )
+
                           ) : (
                             "N.A"
                           )}
                         </td>
-                        <td>
+                        {/* <td>
                           {data.beforeBalanceBankWithdraw ? (
                             <p className="col fs-6">
                               {data.currentBalanceBankWithdraw && (
@@ -800,7 +786,7 @@ const BankStatement = () => {
                           ) : (
                             "N.A"
                           )}
-                        </td>
+                        </td> */}
                         {/* <td>
                           {data.beforeBalanceBankWithdraw ? (
                             <p className="col fs-6">
@@ -837,7 +823,7 @@ const BankStatement = () => {
                             "N.A"
                           )}
                         </td> */}
-                        <td>
+                        {/* <td>
                           {data.beforeBalance ? (
                             <p className="col fs-6">
                               {data.beforeBalance ? data.beforeBalance : "N.A"}
@@ -845,12 +831,12 @@ const BankStatement = () => {
                           ) : (
                             "N.A"
                           )}
-                        </td>
+                        </td> */}
                         <td>
-                          {data.currentBalance ? (
+                          {data.currentWebsiteBalance ? (
                             <p className="col fs-6">
-                              {data.currentBalance
-                                ? data.currentBalance
+                              {data.currentWebsiteBalance
+                                ? data.currentWebsiteBalance
                                 : "N.A"}
                             </p>
                           ) : (
@@ -858,7 +844,7 @@ const BankStatement = () => {
                           )}
                         </td>
 
-                        <td>{data.remark}</td>
+                        <td>{data.remarks}</td>
                         <td>
                           <button
                             type="button"
