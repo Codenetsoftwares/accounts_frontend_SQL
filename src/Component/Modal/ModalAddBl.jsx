@@ -22,7 +22,7 @@ const ModalAddBl = ({ ID }) => {
     const data = {
       amount: Number(Amount),
       transactionType: "Manual-Bank-Deposit",
-      remark: Remarks,
+      remarks: Remarks,
     };
 
     console.log("data", data);

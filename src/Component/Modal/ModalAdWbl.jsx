@@ -22,7 +22,7 @@ const ModalAdWbl = ({ ID }) => {
     const data = {
       amount: Number(Amount),
       transactionType: "Manual-Webiste-Deposit",
-      remark: Remarks,
+      remarks: Remarks,
     };
     AccountService.ManualWebsiteEntryDeposit(ID, data, auth.user)
       .then((res) => {

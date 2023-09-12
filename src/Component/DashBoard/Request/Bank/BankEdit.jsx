@@ -42,8 +42,9 @@ const BankEdit = () => {
     e.preventDefault();
     EditServices.IsBankDeleteReject(id, auth.user)
       .then((response) => {
-        window.location.reload();
         console.log(response.data);
+        alert("Rejected");
+        window.location.reload();
       })
       .catch((error) => {
         console.error(error);
