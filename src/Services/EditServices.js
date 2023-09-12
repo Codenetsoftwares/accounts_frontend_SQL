@@ -41,11 +41,33 @@ class EditServices {
       },
     });
   }
+
+  IsBankEditApprove(id, data, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/admin/approve-bank-detail-edit-request/${id}`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
   IsWebsiteApprove(_id, data, user) {
     return axios({
       method: "post",
       url: `${API_HOST}/api/admin/approve-website-edit-request/${_id}`,
       data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  ViewBankEditRq(user) {
+    return axios({
+      method: "get",
+      url: API_HOST + "/api/superadmin/view-bank-edit-requests",
       headers: {
         Authorization: `Bearer ${user.token}`,
       },

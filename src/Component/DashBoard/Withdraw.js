@@ -59,7 +59,7 @@ function Withdraw() {
       websiteName: WebsiteName,
       bankCharges: Number(bankCharges),
       remarks: remarks,
-      introducerUserName: Sendintroducer,
+      // introducerUserName: Sendintroducer,
     };
 
     // Call the API service method to send the data to the backend
@@ -141,7 +141,7 @@ function Withdraw() {
                 ))}
               </select>
             </div>
-            <div className="input-group mb-3">
+            {/* <div className="input-group mb-3">
               <div className="input-group-prepend">
                 <span className="input-group-text">
                   <i class="fa fa-user id"></i>
@@ -161,7 +161,7 @@ function Withdraw() {
                   </option>
                 ))}
               </select>
-            </div>
+            </div> */}
             <div className="input-group mb-3">
               <div className="input-group-prepend">
                 <span className="input-group-text">
