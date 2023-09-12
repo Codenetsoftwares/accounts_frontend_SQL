@@ -44,7 +44,6 @@ class EditServices {
     });
   }
 
-
   IsBankEditApprove(id, data, user) {
     return axios({
       method: "post",
@@ -55,7 +54,6 @@ class EditServices {
       },
     });
   }
-
 
   IsWebsiteApprove(_id, data, user) {
     return axios({
@@ -68,7 +66,6 @@ class EditServices {
     });
   }
 
-
   ViewBankDelete(user) {
     return axios({
       method: "get",
@@ -79,8 +76,6 @@ class EditServices {
     });
   }
 
-
-  
   IsWebsiteEditApprove(id, data, user) {
     return axios({
       method: "post",
@@ -102,8 +97,6 @@ class EditServices {
     });
   }
 
-
-
   IsBankDeleteReject(_id, user) {
     return axios({
       method: "delete",
@@ -123,8 +116,6 @@ class EditServices {
       },
     });
   }
-
-
 
   IsWebsiteDeleteApprove(_id, user) {
     return axios({
@@ -148,13 +139,22 @@ class EditServices {
   ViewwebsiteEditRq(user) {
     return axios({
       method: "get",
-      url: API_HOST + "/api/superadmin/view-website-edit-requests ",
+      url: API_HOST + "/api/superadmin/view-website-edit-requests",
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
     });
   }
 
+  ViewBankEditRq(user) {
+    return axios({
+      method: "get",
+      url: API_HOST + "/api/superadmin/view-bank-edit-requests",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
 }
 
 export default new EditServices();

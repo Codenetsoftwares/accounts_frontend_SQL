@@ -41,14 +41,14 @@ const BankEdit = () => {
   const handleReject = (e, id) => {
     e.preventDefault();
     EditServices.IsBankDeleteReject(id, auth.user)
-        .then((response) => {
-            window.location.reload();
-            console.log(response.data);
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-};
+      .then((response) => {
+        window.location.reload();
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   return (
     <>
@@ -61,7 +61,7 @@ const BankEdit = () => {
               key={item.id}
             >
               <p key={index} className="ml-2 mt-2">
-                <b className="text-success">Original Data</b>
+                <b className="text-success">All Data</b>
                 <br />
                 <br />
                 <b>Account Holder Name</b>: {item.accountHolderName}
@@ -90,13 +90,17 @@ const BankEdit = () => {
                   Here are the fields that have been changed{" "}
                 </b>
 
-                <ul>
-                  {Object.keys(item.changedFields).map((key) => (
-                    <li key={key}>
-                      <b>{key}</b>: {item.changedFields[key]}
-                    </li>
-                  ))}
-                </ul>
+                {item.hasOwnProperty("changedFields") &&
+                  item.changedFields &&
+                  Object.keys(item.changedFields).length > 0 && (
+                    <ul>
+                      {Object.keys(item.changedFields).map((key) => (
+                        <li key={key}>
+                          <b>{key}</b>: {item.changedFields[key]}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
               </p>
               <p>
                 <button
@@ -106,16 +110,18 @@ const BankEdit = () => {
                 >
                   Approve
                 </button>
-                <button class="btn btn-danger" onClick={(e) =>handleReject(e, item._id)}>Reject</button>
+                <button
+                  class="btn btn-danger"
+                  onClick={(e) => handleReject(e, item._id)}
+                >
+                  Reject
+                </button>
               </p>
             </div>
           ))}
         </div>
       ) : (
-        <div
-          class="card"
-          
-        >
+        <div class="card">
           <div class="card-body">No Request Found</div>
         </div>
       )}
