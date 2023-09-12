@@ -83,7 +83,7 @@ const Alert = () => {
           });
         break;
 
-      case "Manual-Webiste-Deposit":
+      case "Manual-Website-Deposit":
         EditServices.IsWebsiteApprove(id, data, auth.user)
           .then((response) => {
             window.location.reload();
@@ -155,7 +155,7 @@ const Alert = () => {
           });
         break;
 
-      case "Manual-Webiste-Deposit":
+      case "Manual-Website-Deposit":
         EditServices.IsReject(id, auth.user)
           .then((response) => {
             window.location.reload();

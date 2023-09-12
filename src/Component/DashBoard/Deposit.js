@@ -41,8 +41,17 @@ function Deposit() {
   console.log("user Id", introducerId);
 
   const handleSubmit = () => {
-    // transactionID,transactionType,amount,paymentMethod,userName,subAdminUserName,accountNumber,websiteName,bankName,bankCharges,bonus,remarks,
-    //     introducerUserName
+    // "transactionID" : "dffgdgdg",
+    // "transactionType" : "Deposit",
+    // "amount" : 100,
+    // "paymentMethod" : "G-Pay",
+    // "userName" : "Tom@123",
+    // "subAdminUserName" : "Demo_Admin",
+    // "accountNumber" : 658451457845145,
+    // "websiteName" : "himanshu.com",
+    // "bankName" : "Himanshu Bank of Testing",
+    // "bonus" : 5,
+    // "remarks" : "Amount Transfer From Website to Bank"
     const data = {
       transactionID: transactionId,
       transactionType: "Deposit",
@@ -68,7 +77,7 @@ function Deposit() {
       .catch((error) => {
         // Handle error from the backend
         console.error(error);
-        alert("Failed! Transaction ID Does Not Exists");
+        alert("Failed! Something went wrong");
       });
   };
 
@@ -124,7 +133,7 @@ function Deposit() {
                 type="text"
                 className="form-select"
                 onChange={(e) => {
-                  setSendUId(e.target.value); // Parse the JSON string back to an array
+                  setSendUId(e.target.value); 
                 }}
               >
                 <option selected>User Name</option>

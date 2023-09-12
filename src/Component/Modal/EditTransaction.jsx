@@ -122,7 +122,7 @@ const EditTransaction = ({ Data }) => {
           });
         break;
 
-      case "Manual-Webiste-Deposit":
+      case "Manual-Website-Deposit":
         TransactionSercvice.editWebTransactionData(
           Data.id,
           dataDeposit,
@@ -240,7 +240,7 @@ const EditTransaction = ({ Data }) => {
                     <option className="d-flex" value="Manual-Bank-Withdraw">
                       <b>Manual Bank Withdraw</b>
                     </option>
-                    <option className="d-flex" value="Manual-Webiste-Deposit">
+                    <option className="d-flex" value="Manual-Website-Deposit">
                       <b>Manual Website Deposit</b>
                     </option>{" "}
                     <option className="d-flex" value="Manual-Website-Withdraw">
