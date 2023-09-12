@@ -7,18 +7,17 @@ const EditWebsite = (ID) => {
 
   const [Name, SetName] = useState("");
   const handelSubmit = () => {
-    const data = { Name };
+    const data = { websiteName: Name };
     console.log(ID);
     AccountService.EditWebsite(data, ID.ID, auth.user)
       .then((response) => {
         console.log(response.data);
-        
-          alert(response.data);
-        
+        alert(response.data);
+        window.location.reload();
       })
       .catch((error) => {
         console.error(error);
-        // toast.error("Failed! Invalid Data");
+        alert(error);
       });
   };
 
@@ -57,7 +56,7 @@ const EditWebsite = (ID) => {
                   <input
                     type="text"
                     className="form-control font-weight-bold"
-                    value={auth.user.email}
+                    value={auth.user.userName}
                     disabled
                     style={{ fontSize: "10px" }}
                   />
