@@ -66,7 +66,7 @@ const AdminBank = () => {
     navigate(`/bankstatement/${accountNumber}`);
   };
 
-  const handleDeleteBank = (e, name) => {
+  const handleDeleteBank = (e, id) => {
     e.preventDefault();
 
     const userConfirmed = window.confirm(
@@ -74,13 +74,8 @@ const AdminBank = () => {
     );
 
     if (userConfirmed) {
-      console.log(name);
-      const data = {
-        requestId: getbankName._id,
-      };
-
       // console.log(data)
-      AccountService.deletebank(data, auth.user)
+      AccountService.deletebank({ requestId: id }, auth.user)
         .then((res) => {
           // console.log(response.data);
           if (res.status === 200) {
@@ -187,7 +182,7 @@ const AdminBank = () => {
                             icon={faTrashAlt}
                             className="delete-icon"
                             onClick={(e) => {
-                              handleDeleteBank(e, data.bankName);
+                              handleDeleteBank(e, data._id);
                             }}
                           />
                         </button>
