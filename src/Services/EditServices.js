@@ -73,6 +73,28 @@ class EditServices {
       },
     });
   }
+
+  
+  IsWebsiteEditApprove(id, data, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/admin/approve-website-detail-edit-request/${id}`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  ViewwebsiteEditRq(user) {
+    return axios({
+      method: "get",
+      url: API_HOST + "/api/superadmin/view-website-edit-requests",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
 }
 
 export default new EditServices();
