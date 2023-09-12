@@ -86,7 +86,11 @@ class EditServices {
       method: "post",
       url: `${API_HOST}/api/admin/approve-website-detail-edit-request/${id}`,
       data: data,
-
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
 
   IsBankDeleteApprove(_id, user) {
     return axios({
@@ -99,7 +103,7 @@ class EditServices {
   }
 
 
-  ViewwebsiteEditRq(user) {
+
   IsBankDeleteReject(_id, user) {
     return axios({
       method: "delete",
@@ -141,7 +145,15 @@ class EditServices {
       },
     });
   }
-
+  ViewwebsiteEditRq(user) {
+    return axios({
+      method: "get",
+      url: API_HOST + "/api/superadmin/view-website-edit-requests ",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
 
 }
 
