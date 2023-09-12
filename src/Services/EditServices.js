@@ -80,6 +80,14 @@ class EditServices {
   }
 
 
+  
+  IsWebsiteEditApprove(id, data, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/admin/approve-website-detail-edit-request/${id}`,
+      data: data,
+
+
   IsBankDeleteApprove(_id, user) {
     return axios({
       method: "post",
@@ -90,6 +98,8 @@ class EditServices {
     });
   }
 
+
+  ViewwebsiteEditRq(user) {
   IsBankDeleteReject(_id, user) {
     return axios({
       method: "delete",
@@ -111,6 +121,7 @@ class EditServices {
   }
 
 
+
   IsWebsiteDeleteApprove(_id, user) {
     return axios({
       method: "post",
@@ -130,6 +141,7 @@ class EditServices {
       },
     });
   }
+
 
 }
 
