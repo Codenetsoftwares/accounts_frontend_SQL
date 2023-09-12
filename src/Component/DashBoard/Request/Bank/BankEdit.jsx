@@ -37,6 +37,19 @@ const BankEdit = () => {
         alert(error);
       });
   };
+
+  const handleReject = (e, id) => {
+    e.preventDefault();
+    EditServices.IsBankDeleteReject(id, auth.user)
+        .then((response) => {
+            window.location.reload();
+            console.log(response.data);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+};
+
   return (
     <>
       {EditRq.length > 0 ? (
@@ -93,9 +106,7 @@ const BankEdit = () => {
                 >
                   Approve
                 </button>
-                <button type="button" class="btn btn-danger">
-                  Reject
-                </button>
+                <button class="btn btn-danger" onClick={(e) =>handleReject(e, data._id)}>Reject</button>
               </p>
             </div>
           ))}

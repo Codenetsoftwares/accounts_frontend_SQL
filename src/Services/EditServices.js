@@ -22,6 +22,7 @@ class EditServices {
       },
     });
   }
+
   IsReject(_id, user) {
     return axios({
       method: "delete",
@@ -31,6 +32,7 @@ class EditServices {
       },
     });
   }
+
   IsBankApprove(_id, data, user) {
     return axios({
       method: "post",
@@ -41,6 +43,7 @@ class EditServices {
       },
     });
   }
+
 
   IsBankEditApprove(id, data, user) {
     return axios({
@@ -53,6 +56,7 @@ class EditServices {
     });
   }
 
+
   IsWebsiteApprove(_id, data, user) {
     return axios({
       method: "post",
@@ -64,7 +68,8 @@ class EditServices {
     });
   }
 
-  ViewBankEditRq(user) {
+
+  ViewBankDelete(user) {
     return axios({
       method: "get",
       url: API_HOST + "/api/superadmin/view-bank-edit-requests",
@@ -74,19 +79,38 @@ class EditServices {
     });
   }
 
+
   
   IsWebsiteEditApprove(id, data, user) {
     return axios({
       method: "post",
       url: `${API_HOST}/api/admin/approve-website-detail-edit-request/${id}`,
       data: data,
+
+
+  IsBankDeleteApprove(_id, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/delete-bank/${_id}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
     });
   }
 
+
   ViewwebsiteEditRq(user) {
+  IsBankDeleteReject(_id, user) {
+    return axios({
+      method: "delete",
+      url: `${API_HOST}/api/reject/bank-detail/${_id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  ViewWebsiteDelete(user) {
     return axios({
       method: "get",
       url: API_HOST + "/api/superadmin/view-website-edit-requests",
@@ -95,6 +119,30 @@ class EditServices {
       },
     });
   }
+
+
+
+  IsWebsiteDeleteApprove(_id, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/delete-website/${_id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  IsWebsiteDeleteReject(_id, user) {
+    return axios({
+      method: "delete",
+      url: `${API_HOST}/api/reject/website-detail/${_id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+
 }
 
 export default new EditServices();

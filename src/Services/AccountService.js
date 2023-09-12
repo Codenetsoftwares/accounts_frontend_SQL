@@ -117,7 +117,7 @@ class AccountService {
   deletewebsite(data, user) {
     return axios({
       method: "post",
-      url: API_HOST + "/api/delete-wesite-name",
+      url: API_HOST + "/api/admin/save-website-request",
       data: data,
       headers: {
         Authorization: `Bearer ${user.token}`,
