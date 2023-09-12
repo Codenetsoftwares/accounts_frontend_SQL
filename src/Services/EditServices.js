@@ -22,6 +22,7 @@ class EditServices {
       },
     });
   }
+
   IsReject(_id, user) {
     return axios({
       method: "delete",
@@ -31,6 +32,7 @@ class EditServices {
       },
     });
   }
+
   IsBankApprove(_id, data, user) {
     return axios({
       method: "post",
@@ -41,11 +43,42 @@ class EditServices {
       },
     });
   }
+
   IsWebsiteApprove(_id, data, user) {
     return axios({
       method: "post",
       url: `${API_HOST}/api/admin/approve-website-edit-request/${_id}`,
       data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  ViewBankDelete(user) {
+    return axios({
+      method: "get",
+      url: API_HOST + "/api/superadmin/view-bank-edit-requests",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  IsBankDeleteApprove(_id, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/delete-bank/${_id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  IsBankDeleteReject(_id, user) {
+    return axios({
+      method: "delete",
+      url: `${API_HOST}/${_id}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
