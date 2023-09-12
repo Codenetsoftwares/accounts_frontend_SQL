@@ -362,7 +362,8 @@ const NavSide = () => {
                       <i class='fas fa-chevron-down right'></i>
                     </p>
                   </a>
-                  <Link to="/alert" className='nav-link text-white'>
+                    <Link to="/alert" className='nav-link text-white'>
+                      <i className='far fa-circle nav-icon' />
                     <p>
                       All transaction
                     </p>
