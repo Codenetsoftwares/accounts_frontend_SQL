@@ -41,7 +41,8 @@ function Deposit() {
   console.log("user Id", introducerId);
 
   const handleSubmit = () => {
-    // transactionID, transactionType, amount, paymentMethod, userId, subAdminId, accountNumber, websiteName, bankName, bankCharges, bonus, remarks
+    // transactionID,transactionType,amount,paymentMethod,userName,subAdminUserName,accountNumber,websiteName,bankName,bankCharges,bonus,remarks,
+    //     introducerUserName
     const data = {
       transactionID: transactionId,
       transactionType: "Deposit",
@@ -54,7 +55,7 @@ function Deposit() {
       websiteName: WebsiteName,
       bonus: Number(bonus),
       remarks: remarks,
-      introducerId: Sendintroducer,
+      introducerUserName: Sendintroducer,
     };
 
     // Call the API service method to send the data to the backend
@@ -166,7 +167,7 @@ function Deposit() {
                 className="form-control"
                 placeholder="Transaction Id"
                 onChange={(e) => {
-                  setTransactionId(e.target.value); // Parse the JSON string back to an array
+                  setTransactionId(e.target.value); 
                 }}
               />
             </div>
@@ -184,7 +185,7 @@ function Deposit() {
                 className="form-control"
                 placeholder="Amount"
                 onChange={(e) => {
-                  setAmount(e.target.value); // Parse the JSON string back to an array
+                  setAmount(e.target.value); 
                 }}
               />
             </div>
@@ -200,7 +201,7 @@ function Deposit() {
                 className="form-control"
                 placeholder="Payment Method"
                 onChange={(e) => {
-                  setPaymentMethod(e.target.value); // Parse the JSON string back to an array
+                  setPaymentMethod(e.target.value); 
                 }}
               />
             </div>
@@ -216,7 +217,7 @@ function Deposit() {
                 className="form-control"
                 placeholder="Bonus"
                 onChange={(e) => {
-                  setBonus(e.target.value); // Parse the JSON string back to an array
+                  setBonus(e.target.value); 
                 }}
               />
             </div>
@@ -232,7 +233,7 @@ function Deposit() {
                 className="form-select"
                 value={JSON.stringify(BankAccNo)} // Store the array as a JSON string
                 onChange={(e) => {
-                  SetBankAccNo(JSON.parse(e.target.value)); // Parse the JSON string back to an array
+                  SetBankAccNo(JSON.parse(e.target.value)); 
                 }}
               >
                 <option selected>Select Bank</option>
