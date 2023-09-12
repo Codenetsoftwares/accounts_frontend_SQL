@@ -22,7 +22,7 @@ const ModalWthBl = ({ ID }) => {
     const data = {
       amount: Number(Amount),
       transactionType: "Manual-Bank-Withdraw",
-      remark: Remarks,
+      remarks: Remarks,
     };
 
     console.log(data);
