@@ -106,7 +106,7 @@ const BankEdit = () => {
                 >
                   Approve
                 </button>
-                <button class="btn btn-danger" onClick={(e) =>handleReject(e, data._id)}>Reject</button>
+                <button class="btn btn-danger" onClick={(e) =>handleReject(e, item._id)}>Reject</button>
               </p>
             </div>
           ))}

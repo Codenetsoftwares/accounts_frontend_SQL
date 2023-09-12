@@ -34,7 +34,7 @@ const WebsiteEdit = () => {
   };
   const handleReject = (e, id) => {
     e.preventDefault();
-    EditServices.IsBankDeleteReject(id, auth.user)
+    EditServices.IsWebsiteDeleteReject(id, auth.user)
         .then((response) => {
             window.location.reload();
             console.log(response.data);
