@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../../Utils/Auth";
 import AccountService from "../../Services/AccountService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   faEdit,
   faTrashAlt,
@@ -74,31 +74,31 @@ const WebsiteDetails = () => {
 
   console.log("ide", Id);
 
-  const handeldeletewebsite = (name) => {
-    console.log(name);
+  const handeldeletewebsite = ( id) => {
+    // e.preventDefault();
+
     const userConfirmed = window.confirm(
       "Are You Sure You Want to Delete This Bank?"
     );
 
     if (userConfirmed) {
-      const data = {
-        websiteName: name,
-      };
-
-      // console.log( data)
-      AccountService.deletewebsite(data, auth.user)
+      // console.log(data)
+      AccountService.deletewebsite({ requestId: id }, auth.user)
         .then((res) => {
           // console.log(response.data);
           if (res.status === 200) {
-            alert("Website Deleted successfully!");
+            alert("Website Deleted approval sent!")
             window.location.reload();
           }
+
         })
         .catch((error) => {
-          console.error(error);
-          alert.error("e.message");
+          toast.error(error);
+          // alert.error("e.message");
         });
+
     }
+
   };
 
   const handelWebsiteEdit = (id) => {
@@ -182,7 +182,7 @@ const WebsiteDetails = () => {
                           icon={faTrashAlt}
                           className="delete-icon"
                           onClick={() => {
-                            handeldeletewebsite(data.websiteName);
+                            handeldeletewebsite( data._id);
                           }}
                         />
                       </button>

@@ -70,7 +70,6 @@ class EditServices {
 
 
   ViewBankDelete(user) {
-
     return axios({
       method: "get",
       url: API_HOST + "/api/superadmin/view-bank-edit-requests",
@@ -94,7 +93,38 @@ class EditServices {
   IsBankDeleteReject(_id, user) {
     return axios({
       method: "delete",
-      url: `${API_HOST}/${_id}`,
+      url: `${API_HOST}/api/reject/bank-detail/${_id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  ViewWebsiteDelete(user) {
+    return axios({
+      method: "get",
+      url: API_HOST + "/api/superadmin/view-website-edit-requests",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+
+  IsWebsiteDeleteApprove(_id, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/delete-website/${_id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  IsWebsiteDeleteReject(_id, user) {
+    return axios({
+      method: "delete",
+      url: `${API_HOST}/api/reject/website-detail/${_id}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
