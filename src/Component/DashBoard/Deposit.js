@@ -44,11 +44,11 @@ function Deposit() {
     // transactionID, transactionType, amount, paymentMethod, userId, subAdminId, accountNumber, websiteName, bankName, bankCharges, bonus, remarks
     const data = {
       transactionID: transactionId,
-      transactionType: "Withdraw",
+      transactionType: "Deposit",
       amount: Number(amount),
       paymentMethod: paymentMethod,
-      subAdminId: auth.user.userName,
-      userId: SendUId,
+      subAdminUserName: auth.user.userName,
+      userName: SendUId,
       bankName: BankAccNo[0],
       accountNumber: Number(BankAccNo[1]),
       websiteName: WebsiteName,
