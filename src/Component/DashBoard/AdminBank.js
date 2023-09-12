@@ -79,7 +79,8 @@ const AdminBank = () => {
         .then((res) => {
           // console.log(response.data);
           if (res.status === 200) {
-            alert("Bank Deleted successfully!");
+            alert("Bank Deleted approval sent!")
+
             window.location.reload();
           }
 
