@@ -76,7 +76,7 @@ const AdminBank = () => {
     if (userConfirmed) {
       console.log(name);
       const data = {
-        bankName: name,
+        requestId: getbankName._id,
       };
 
       // console.log(data)
@@ -84,18 +84,18 @@ const AdminBank = () => {
         .then((res) => {
           // console.log(response.data);
           if (res.status === 200) {
-           alert("Bank Deleted successfully!");
-             window.location.reload();
+            alert("Bank Deleted successfully!");
+            window.location.reload();
           }
-          
+
         })
         .catch((error) => {
           toast.error(error);
           // alert.error("e.message");
         });
-     
+
     }
-    
+
   };
 
   useEffect(() => {

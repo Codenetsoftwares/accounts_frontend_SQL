@@ -45,20 +45,21 @@ function Withdraw() {
   //  }
 
   const handleSubmit = () => {
-    // transactionID, transactionType, amount, paymentMethod, userId, subAdminId, accountNumber, websiteName, bankName, bankCharges, bonus, remarks
+    // transactionID,transactionType,amount,paymentMethod,userName,subAdminUserName,accountNumber,websiteName,bankName,bankCharges,bonus,remarks,
+    //     introducerUserName
     const data = {
       transactionID: transactionId,
       transactionType: "Withdraw",
       amount: Number(amount),
       paymentMethod: paymentMethod,
-      subAdminId: auth.user.userName,
-      userId: SendUId,
+      subAdminUserName: auth.user.userName,
+      userName: SendUId,
       bankName: BankAccNo[0],
       accountNumber: Number(BankAccNo[1]),
       websiteName: WebsiteName,
       bankCharges: Number(bankCharges),
       remarks: remarks,
-      introducerId: Sendintroducer
+      introducerUserName: Sendintroducer,
     };
 
     // Call the API service method to send the data to the backend

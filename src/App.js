@@ -44,6 +44,11 @@ import DuplicateDashboard from "./Component/DashBoard/DuplicateDashboard";
 import SingleIntroducer from "./Component/DashBoard/SingleIntroducer";
 import IntroShowPr from "./Component/DashBoard/IntroShowPr";
 import EditProfileSubadmin from "./Component/SuperAdmin/EditProfileSubadmin";
+import BankDelete from "./Component/DashBoard/Request/Bank/BankDelete";
+import BankEdit from "./Component/DashBoard/Request/Bank/BankEdit";
+import WebsiteDelete from "./Component/DashBoard/Request/Website/WebsiteDelete";
+import WebsiteEdit from "./Component/DashBoard/Request/Website/WebsiteEdit";
+
 
 function App() {
   return (
@@ -228,7 +233,7 @@ function App() {
                 path="editsubadmin/:id"
                 element={
                   <RequireAuth>
-                    <EditProfileSubadmin/>
+                    <EditProfileSubadmin />
                   </RequireAuth>
                 }
               />
@@ -265,7 +270,38 @@ function App() {
                   </RequireAuth>
                 }
               />
-
+              <Route
+                path="bankDelete"
+                element={
+                  <RequireAuth>
+                    <BankDelete />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="bankEdit"
+                element={
+                  <RequireAuth>
+                    <BankEdit />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="websiteEdit"
+                element={
+                  <RequireAuth>
+                    < WebsiteEdit />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="websiteDelete"
+                element={
+                  <RequireAuth>
+                    <WebsiteDelete />
+                  </RequireAuth>
+                }
+              />
               <Route
                 path="Testing"
                 element={

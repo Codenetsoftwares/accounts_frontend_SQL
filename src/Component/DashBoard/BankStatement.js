@@ -264,8 +264,8 @@ const BankStatement = () => {
     setBank("");
     setWebsite("");
     setToggle(true);
-    SetStartDatesetValue("");
-    setEndDateValue("");
+    SetStartDatesetValue(new Date());
+    setEndDateValue(new Date());
   };
 
   const handleStartDatevalue = (e) => {
@@ -346,7 +346,7 @@ const BankStatement = () => {
             })}
           </select>
         </div>
-        <div className="d-flex pt-3 justify-content-center">
+        {/* <div className="d-flex pt-3 justify-content-center">
           <h6 className="fw-bold text-nowrap pt-2"> Introducerlist</h6>
           <select
             className="form-control mx-3 w-25"
@@ -369,7 +369,7 @@ const BankStatement = () => {
               );
             })}
           </select>
-        </div>
+        </div> */}
         <div className="d-flex pt-3 justify-content-center">
           <h6 className="fw-bold text-nowrap pt-2">BankNameList</h6>
           <select

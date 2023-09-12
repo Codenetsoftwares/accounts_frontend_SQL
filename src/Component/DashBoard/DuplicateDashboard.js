@@ -91,12 +91,15 @@ const DuplicateDashboard = () => {
     const edate = moment(endDatevalue, "DD-MM-YYYY HH:mm").toDate();
     const filteredDocuments = documentView.filter((data) => {
       const transactionDate = new Date(data.createdAt);
+      console.log(transactionDate)
       return transactionDate >= sdate && transactionDate <= edate;
     });
     setDocumentFilter(filteredDocuments);
     setToggle(false);
   };
-
+  console.log(documentFilter)
+  console.log(startDatevalue)
+  console.log(endDatevalue)
   const handleReset = () => {
     setSelect("");
     setDocumentView(accountData);
@@ -104,8 +107,9 @@ const DuplicateDashboard = () => {
     setBank("");
     setWebsite("");
     setToggle(true);
-    SetStartDatesetValue("");
-    setEndDateValue("");
+    SetStartDatesetValue(new Date());
+    setEndDateValue(new Date());
+    setIntroducer("");
   };
 
   const handleChange = (e) => {
@@ -698,7 +702,7 @@ const DuplicateDashboard = () => {
                         ) : (
                           "N.A"
                         )} */}
-                        {data.currentBankBalance ? (data.currentBankBalance): ("N .A")}
+                        {data.currentBankBalance ? (data.currentBankBalance) : ("N .A")}
                       </td>
 
                       <td>
@@ -718,7 +722,7 @@ const DuplicateDashboard = () => {
                         ) : (
                           "N.A"
                         )} */}
-                        {data.currentWebsiteBalance ? (data.currentWebsiteBalance): ("N .A")}
+                        {data.currentWebsiteBalance ? (data.currentWebsiteBalance) : ("N .A")}
                       </td>
 
 

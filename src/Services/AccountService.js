@@ -106,7 +106,7 @@ class AccountService {
   deletebank(data, user) {
     return axios({
       method: "post",
-      url: API_HOST + "/api/delete-bank-name",
+      url: API_HOST + "/api/admin/save-bank-request",
       data: data,
       headers: {
         Authorization: `Bearer ${user.token}`,
@@ -476,7 +476,7 @@ class AccountService {
   }
 
 
-  
+
   UserResetPassword(data, user) {
     return axios({
       method: "post",
@@ -488,7 +488,7 @@ class AccountService {
     });
   }
 
- IntoducerResetPassword(data, user) {
+  IntoducerResetPassword(data, user) {
     return axios({
       method: "post",
       url: API_HOST + "/api/admin/intorducer/reset-password",
