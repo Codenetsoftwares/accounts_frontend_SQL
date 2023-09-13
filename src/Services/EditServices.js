@@ -12,6 +12,63 @@ class EditServices {
       },
     });
   }
+  IsTransactionDeleteApprove(_id, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/delete-transaction/${_id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  IsTransactionDeleteReject(_id, user) {
+    return axios({
+      method: "delete",
+      url: `${API_HOST}/api/reject/${_id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+  IsManualBankTransactionDeleteApprove(_id, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/delete-bank-transaction/${_id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  IsManualBankTransactionDeleteReject(_id, user) {
+    return axios({
+      method: "delete",
+      url: `${API_HOST}/api/reject/${_id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+  IsManualWebsiteTransactionDeleteApprove(_id, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/delete-website-transaction/${_id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  IsManualWebsiteTransactionDeleteReject(_id, user) {
+    return axios({
+      method: "delete",
+      url: `${API_HOST}/api/reject/${_id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
   IsApprove(_id, data, user) {
     return axios({
       method: "post",

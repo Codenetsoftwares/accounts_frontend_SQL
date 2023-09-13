@@ -21,8 +21,8 @@ const Alert = () => {
   }
 
 
-  const handleApprove = (e, id, transactionType) => {
-    console.log(id);
+  const handleEditApprove = (e, id, transactionType) => {
+    e.preventDefault();
     const flag = true;
 
     const data = {
@@ -98,7 +98,7 @@ const Alert = () => {
       // code block
     }
   };
-  const handleReject = (e, id, transactionType) => {
+  const handleEditReject = (e, id, transactionType) => {
 
     switch (transactionType) {
       case "Deposit":
@@ -171,6 +171,157 @@ const Alert = () => {
     }
   };
 
+  const handleDeleteApprove = (e, id, transactionType) => {
+    e.preventDefault();
+    const flag = true;
+
+    const data = {
+      isApproved: flag,
+    };
+    switch (transactionType) {
+      case "Deposit":
+        EditServices.IsTransactionDeleteApprove(id,auth.user)
+          .then((response) => {
+            window.location.reload();
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        break;
+      case "Withdraw":
+        EditServices.IsTransactionDeleteApprove(id,auth.user)
+          .then((response) => {
+            window.location.reload();
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        break;
+
+      case "Manual-Bank-Withdraw":
+        EditServices.IsManualBankTransactionDeleteApprove(id,auth.user)
+          .then((response) => {
+            window.location.reload();
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        break;
+
+      case "Manual-Bank-Deposit":
+        EditServices.IsManualBankTransactionDeleteApprove(id,auth.user)
+          .then((response) => {
+            window.location.reload();
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        break;
+
+      case "Manual-Website-Withdraw":
+        EditServices.IsManualWebsiteTransactionDeleteApprove(id,auth.user)
+          .then((response) => {
+            window.location.reload();
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        break;
+
+      case "Manual-Website-Deposit":
+        EditServices.IsManualWebsiteTransactionDeleteApprove(id,auth.user)
+          .then((response) => {
+            window.location.reload();
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        break;
+
+      default:
+      // code block
+    }
+  };
+  const handleDeleteReject = (e, id, transactionType) => {
+
+    switch (transactionType) {
+      case "Deposit":
+        EditServices.IsTransactionDeleteReject(id, auth.user)
+          .then((response) => {
+            window.location.reload();
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        break;
+      case "Withdraw":
+        EditServices.IsTransactionDeleteReject(id, auth.user)
+          .then((response) => {
+            window.location.reload();
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        break;
+
+      case "Manual-Bank-Withdraw":
+        EditServices.IsManualBankTransactionDeleteReject(id, auth.user)
+          .then((response) => {
+            window.location.reload();
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        break;
+
+      case "Manual-Bank-Deposit":
+        EditServices.IsManualBankTransactionDeleteReject(id, auth.user)
+          .then((response) => {
+            window.location.reload();
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        break;
+
+      case "Manual-Website-Withdraw":
+        EditServices.IsManualWebsiteTransactionDeleteReject(id, auth.user)
+          .then((response) => {
+            window.location.reload();
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        break;
+
+      case "Manual-Website-Deposit":
+        EditServices.IsManualWebsiteTransactionDeleteReject(id, auth.user)
+          .then((response) => {
+            window.location.reload();
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        break;
+
+      default:
+      // code block
+    }
+  };
+
+  console.log(alert)
   return (
     <>
       <div className="container d-flex justify-content-center  ">
@@ -187,81 +338,161 @@ const Alert = () => {
           {alert.length > 0 ? (
             alert.map((data, i) => {
               return (
-                <div className="card">
-                  <h5 class="card-title text-center text-danger">
-                    {data.message}
-                  </h5>
-                  <div className="card-body">
-                    <div className="row">
+                <>
+                  {data.type === "Edit" &&
+                    <div className="card">
+                      <h5 class="card-title text-center text-danger">
+                        {data.message}
+                      </h5>
+                      <div className="card-body">
+                        <div className="row">
+                          <div className="row">
+                            <div className="row">
+                              <p className="col fs-6">
+                                Transaction Type:
+                                <br />
+                                <p className="text-success">{data.transactionType}</p>
+                              </p>
+                              <p className="col fs-6 ">
+                                Transaction Id:
+                                <br />
+                                <p className={data.changedFields?.transactionID ? "text-danger" : "text-success"}>
+                                  {data.changedFields?.transactionID || data.transactionID}
+                                </p>
+                              </p>
+                              <p className="col fs-6 ">
+                                Gateway:
+                                <br />
+                                <p className={data.changedFields?.paymentMethod ? "text-danger" : "text-success"}>
+                                  {data.changedFields?.paymentMethod || data.paymentMethod}
+                                </p>
+                              </p>
+                              <p className="col fs-6 ">
+                                User Id:
+                                <br />
+                                <p className={data.changedFields?.userId ? "text-danger" : "text-success"}>
+                                  {data.changedFields?.userId || data.userId}
+                                </p>
+                              </p>
+                              <p className="col fs-6 ">
+                                Website:
+                                <br />
+                                <p className={data.changedFields?.websiteName ? "text-danger" : "text-success"}>
+                                  {data.changedFields?.websiteName || data.websiteName}
+                                </p>
+                              </p>
+                              <p className="col fs-6 ">
+                                Amount:
+                                <br />
+                                <p className={data.changedFields?.withdrawAmount || data.changedFields?.amount || data.changedFields?.depositAmount ? "text-danger" : "text-success"}>
+                                  {data.changedFields?.withdrawAmount || data.changedFields?.amount || data.changedFields?.depositAmount || data.withdrawAmount || data.amount || data.depositAmount}
+                                </p>
+                              </p>
+                              <p className="col fs-6 ">
+                                Bank:
+                                <br />
+                                <p className={data.changedFields?.bankName ? "text-danger" : "text-success"}>
+                                  {data.changedFields?.bankName || data.bankName}
+                                </p>
+                              </p>
+                            </div>
+
+                          </div>
+
+                        </div>
+                      </div>
+                      <div className="col d-flex justify-content-center gap-2 mb-2">
+                        <button
+                          class="btn btn-primary"
+                          onClick={(e) =>
+                            handleEditApprove(e, data._id, data.transactionType)
+                          }
+                        >
+                          Approve
+                        </button>
+                        <button class="btn btn-danger" onClick={(e) =>
+                          handleEditReject(e, data._id, data.transactionType)
+                        }>Reject</button>
+                      </div>
+                    </div>
+                  }
+                  {data.type === "Delete" && <div className="card">
+                    <h5 class="card-title text-center text-danger">
+                      {data.message}
+                    </h5>
+                    <div className="card-body">
                       <div className="row">
                         <div className="row">
-                          <p className="col fs-6">
-                            Transaction Type:
-                            <br />
-                            <p className="text-success">{data.transactionType}</p>
-                          </p>
-                          <p className="col fs-6 ">
-                            Transaction Id:
-                            <br />
-                            <p className={data.changedFields?.transactionID ? "text-danger" : "text-success"}>
-                              {data.changedFields?.transactionID || data.transactionID}
+                          <div className="row">
+                            <p className="col fs-6">
+                              Transaction Type:
+                              <br />
+                              <p className="text-success">{data.transactionType}</p>
                             </p>
-                          </p>
-                          <p className="col fs-6 ">
-                            Gateway:
-                            <br />
-                            <p className={data.changedFields?.paymentMethod ? "text-danger" : "text-success"}>
-                              {data.changedFields?.paymentMethod || data.paymentMethod}
+                            <p className="col fs-6 ">
+                              Transaction Id:
+                              <br />
+                              <p className={data.changedFields?.transactionID ? "text-danger" : "text-success"}>
+                                {data.changedFields?.transactionID || data.transactionID}
+                              </p>
                             </p>
-                          </p>
-                          <p className="col fs-6 ">
-                            User Id:
-                            <br />
-                            <p className={data.changedFields?.userId ? "text-danger" : "text-success"}>
-                              {data.changedFields?.userId || data.userId}
+                            <p className="col fs-6 ">
+                              Gateway:
+                              <br />
+                              <p className={data.changedFields?.paymentMethod ? "text-danger" : "text-success"}>
+                                {data.changedFields?.paymentMethod || data.paymentMethod}
+                              </p>
                             </p>
-                          </p>
-                          <p className="col fs-6 ">
-                            Website:
-                            <br />
-                            <p className={data.changedFields?.websiteName ? "text-danger" : "text-success"}>
-                              {data.changedFields?.websiteName || data.websiteName}
+                            <p className="col fs-6 ">
+                              User Id:
+                              <br />
+                              <p className={data.changedFields?.userId ? "text-danger" : "text-success"}>
+                                {data.changedFields?.userId || data.userId}
+                              </p>
                             </p>
-                          </p>
-                          <p className="col fs-6 ">
-                            Amount:
-                            <br />
-                            <p className={data.changedFields?.withdrawAmount || data.changedFields?.amount || data.changedFields?.depositAmount ? "text-danger" : "text-success"}>
-                              {data.changedFields?.withdrawAmount || data.changedFields?.amount || data.changedFields?.depositAmount || data.withdrawAmount || data.amount || data.depositAmount}
+                            <p className="col fs-6 ">
+                              Website:
+                              <br />
+                              <p className={data.changedFields?.websiteName ? "text-danger" : "text-success"}>
+                                {data.changedFields?.websiteName || data.websiteName}
+                              </p>
                             </p>
-                          </p>
-                          <p className="col fs-6 ">
-                            Bank:
-                            <br />
-                            <p className={data.changedFields?.bankName ? "text-danger" : "text-success"}>
-                              {data.changedFields?.bankName || data.bankName}
+                            <p className="col fs-6 ">
+                              Amount:
+                              <br />
+                              <p className={data.changedFields?.withdrawAmount || data.changedFields?.amount || data.changedFields?.depositAmount ? "text-danger" : "text-success"}>
+                                {data.changedFields?.withdrawAmount || data.changedFields?.amount || data.changedFields?.depositAmount || data.withdrawAmount || data.amount || data.depositAmount}
+                              </p>
                             </p>
-                          </p>
+                            <p className="col fs-6 ">
+                              Bank:
+                              <br />
+                              <p className={data.changedFields?.bankName ? "text-danger" : "text-success"}>
+                                {data.changedFields?.bankName || data.bankName}
+                              </p>
+                            </p>
+                          </div>
+
                         </div>
 
                       </div>
-
                     </div>
-                  </div>
-                  <div className="col d-flex justify-content-center gap-2 mb-2">
-                    <button
-                      class="btn btn-primary"
-                      onClick={(e) =>
-                        handleApprove(e, data._id, data.transactionType)
-                      }
-                    >
-                      Approve
-                    </button>
-                    <button class="btn btn-danger" onClick={(e) =>
-                      handleReject(e, data._id, data.transactionType)
-                    }>Reject</button>
-                  </div>
-                </div>
+                    <div className="col d-flex justify-content-center gap-2 mb-2">
+                      <button
+                        class="btn btn-primary"
+                        onClick={(e) =>
+                          handleDeleteApprove(e, data._id, data.transactionType)
+                        }
+                      >
+                        Approve
+                      </button>
+                      <button class="btn btn-danger" onClick={(e) =>
+                        handleDeleteReject(e, data._id, data.transactionType)
+                      }>Reject</button>
+                    </div>
+                  </div>}
+                </>
+
               );
             })
           ) : (

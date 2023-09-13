@@ -374,7 +374,7 @@ const TransactionDetails = () => {
                     CreatedBy
                   </th>
                   <th scope="col fs-6" className="text-primary">
-                    Introducer Id
+                    Introducer Name
                   </th>
                   <th scope="col" className="text-primary">
                     Bank
@@ -449,7 +449,7 @@ const TransactionDetails = () => {
                         <td>{data.subAdminName}</td>
                         <td>
                           {data.paymentMethod && (
-                            <p className="col fs-6">{data.introducerId}</p>
+                            <p className="col fs-6">{data.introducerUserName}</p>
                           )}
                           {data.depositAmount && (
                             <p className="col fs-6 text-break">N.A</p>
@@ -513,7 +513,7 @@ const TransactionDetails = () => {
                     CreatedBy
                   </th>
                   <th scope="col fs-6" className="text-primary">
-                    Introducer Id
+                    Introducer Name
                   </th>
                   <th scope="col" className="text-primary">
                     Bank
@@ -599,7 +599,7 @@ const TransactionDetails = () => {
                         <td>{data.subAdminName}</td>
                         <td>
                           {data.paymentMethod && (
-                            <p className="col fs-6">{data.introducerId}</p>
+                            <p className="col fs-6">{data.introducerUserName}</p>
                           )}
                           {data.depositAmount && (
                             <p className="col fs-6 text-break">N.A</p>

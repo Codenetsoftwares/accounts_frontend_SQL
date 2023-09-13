@@ -186,7 +186,7 @@ const BankStatement = () => {
         break;
 
       case "Manual-Bank-Deposit":
-        AccountService.SaveWebsiteTransaction({ requestId: id }, auth.user)
+        AccountService.SaveBankTransaction({ requestId: id }, auth.user)
 
           .then((res) => {
             console.log(res.data);
@@ -200,7 +200,7 @@ const BankStatement = () => {
         break;
 
       case "Manual-Website-withdraw":
-        AccountService.DeleteWebsiteTransaction(id, auth.user)
+        AccountService.SaveWebsiteTransaction(id, auth.user)
           .then((res) => {
             console.log(res.data);
             toast.success(
@@ -212,7 +212,7 @@ const BankStatement = () => {
           });
         break;
       case "Manual-Website-Deposit":
-        AccountService.DeleteTransaction({ requestId: id }, auth.user)
+        AccountService.SaveWebsiteTransaction({ requestId: id }, auth.user)
           .then((res) => {
             console.log(res.data);
             toast.success("Bank Transaction deleted");
@@ -308,10 +308,10 @@ const BankStatement = () => {
             <option className="d-flex" value="All">
               <b>All</b>
             </option>
-            <option className="d-flex" value="Manual-Deposit">
+            <option className="d-flex" value="Manual-Bank-Deposit">
               <b>Manual Entry(Deposit)</b>
             </option>
-            <option className="d-flex" value="Manual-Deposit">
+            <option className="d-flex" value="Manual-Bank-Withdraw">
               <b>Manual Entry(Withdraw)</b>
             </option>
             <option className="d-flex" value="Deposit">
