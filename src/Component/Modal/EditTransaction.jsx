@@ -10,13 +10,13 @@ const EditTransaction = ({ Data }) => {
     paymentMethod: "",
     subAdminName: "",
     transactionID: "",
-    transactionType: "Deposit",
+    transactionType: "",
     userId: "",
     websiteName: "",
     depositAmount: "",
     withdrawAmount: "",
   });
-
+  console.log(Data.transactionType)
   const handleChange = (e) => {
     const { name, value } = e.target;
     SetEditData({ ...EditData, [name]: value });
@@ -221,9 +221,17 @@ const EditTransaction = ({ Data }) => {
                     onChange={handleChange}
                     name="transactionID"
                   />
-                  <select
+                  <input
+                    type="text"
                     className="form-control mb-1"
-                    value={EditData.transactionType || ""}
+                    placeholder="transactionID"
+                    value={Data.transactionType}
+                    onChange={handleChange}
+                    name="transactionType"
+                  />
+                  {/* <select
+                    className="form-control mb-1"
+                    value={Data.transactionType || ""}
                     autoComplete="off"
                     name="transactionType"
                     onChange={handleChange}
@@ -246,7 +254,7 @@ const EditTransaction = ({ Data }) => {
                     <option className="d-flex" value="Manual-Website-Withdraw">
                       <b>Manual Website Withdraw</b>
                     </option>
-                  </select>
+                  </select> */}
                   <input
                     type="text"
                     className="form-control mb-1"
@@ -277,7 +285,7 @@ const EditTransaction = ({ Data }) => {
                 type="button"
                 className="btn btn-primary"
                 data-bs-dismiss="modal"
-                onClick={(e) => handleSubmit(e, EditData.transactionType)}
+                onClick={(e) => handleSubmit(e, Data.transactionType)}
               >
                 Save changes
               </button>
