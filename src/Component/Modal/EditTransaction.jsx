@@ -16,14 +16,14 @@ const EditTransaction = ({ Data }) => {
     depositAmount: "",
     withdrawAmount: "",
   });
-  console.log(Data.transactionType)
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     SetEditData({ ...EditData, [name]: value });
   };
   const handleSubmit = (e, transactionType) => {
-    console.log(transactionType);
-    // console.log(data)
+   
+   
     e.preventDefault();
 
     const flag = true;
@@ -59,24 +59,26 @@ const EditTransaction = ({ Data }) => {
       bankName: EditData.Bank,
       websiteName: EditData.Website,
     };
-    console.log('data', data)
+
     switch (transactionType) {
       case "Deposit":
         TransactionSercvice.editTransactionData(Data.id, data, auth.user)
           .then((res) => {
-            console.log(res.data);
+            alert(res.data);
+            window.location.reload();
           })
           .catch((err) => {
-            console.log(err);
+            alert(err);
           });
         break;
       case "Withdraw":
         TransactionSercvice.editTransactionData(Data.id, data, auth.user)
           .then((res) => {
-            console.log('withdraw', res.data);
+            alert('withdraw', res.data);
+            window.location.reload();
           })
           .catch((err) => {
-            console.log(err);
+            alert(err);
           });
         break;
 
@@ -87,10 +89,11 @@ const EditTransaction = ({ Data }) => {
           auth.user
         )
           .then((res) => {
-            console.log(res.data);
+            alert(res.data);
+            window.location.reload();
           })
           .catch((err) => {
-            console.log(err);
+            alert(err);
           });
         break;
 
@@ -101,10 +104,11 @@ const EditTransaction = ({ Data }) => {
           auth.user
         )
           .then((res) => {
-            console.log(res.data);
+            alert(res.data);
+            window.location.reload();
           })
           .catch((err) => {
-            console.log(err);
+            alert(err);
           });
         break;
 
@@ -115,10 +119,11 @@ const EditTransaction = ({ Data }) => {
           auth.user
         )
           .then((res) => {
-            console.log(res.data);
+            alert(res.data);
+            window.location.reload();
           })
           .catch((err) => {
-            console.log(err);
+            alert(err);
           });
         break;
 
@@ -129,10 +134,11 @@ const EditTransaction = ({ Data }) => {
           auth.user
         )
           .then((res) => {
-            console.log(res.data);
+            alert(res.data);
+            window.location.reload();
           })
           .catch((err) => {
-            console.log(err);
+            alert(err);
           });
         break;
 
