@@ -84,10 +84,11 @@ function Withdraw() {
     setSearchTerm(value);
 
     // Filter the options based on the input value
-    const filtered = UId.filter((data) =>
-      data.userName.toLowerCase().includes(value.toLowerCase())
-    );
-
+    const filtered = value
+    ? UId.filter((data) =>
+        data.userName.toLowerCase().includes(value.toLowerCase())
+      )
+    : [];
     setFilteredOptions(filtered);
   };
 
