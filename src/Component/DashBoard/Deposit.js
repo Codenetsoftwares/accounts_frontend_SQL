@@ -92,11 +92,15 @@ function Deposit() {
     setSearchTerm(value);
 
     // Filter the options based on the input value
-    const filtered = UId.filter((data) =>
-      data.userName.toLowerCase().includes(value.toLowerCase())
-    );
+    
+    const filtered = value
+    ? UId.filter((data) =>
+        data.userName.toLowerCase().includes(value.toLowerCase())
+      )
+    : [];
 
     setFilteredOptions(filtered);
+
   };
 
   const handleOptionSelect = (option) => {
@@ -105,6 +109,7 @@ function Deposit() {
     setFilteredOptions([]); // Clear the filtered options when an option is selected
   };
 
+  
 
   return (
     <div
@@ -161,6 +166,7 @@ function Deposit() {
                   placeholder="Search by User Name"
                   value={searchTerm}
                   onChange={handleInputChange}
+                  
                 />
               </div>
               {filteredOptions.length > 0 && (
