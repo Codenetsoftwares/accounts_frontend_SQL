@@ -63,7 +63,7 @@ const InnerUserProfile = () => {
       lastname: editedData.lastname,
       email: editedData.email,
       contactnumber: editedData.contactNumber,
-      userName: editedData.userName,
+      // userName: editedData.userName,
       introducerPercentage: editedData.introducerPercentage,
       websitedetail: editedData.websitedetail,
     };

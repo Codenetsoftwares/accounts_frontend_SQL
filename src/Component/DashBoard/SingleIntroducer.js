@@ -53,7 +53,7 @@ const SingleIntroducer = () => {
     const data = {
       firstname: editedData.firstname,
       lastname: editedData.lastname,
-      userName: editedData.userName,
+      // userName: editedData.userName,
     };
 
     // put Api Fetching
