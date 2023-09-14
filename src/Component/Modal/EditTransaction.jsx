@@ -261,14 +261,14 @@ const EditTransaction = ({ Data }) => {
                       <b>Manual Website Withdraw</b>
                     </option>
                   </select> */}
-                  <input
+                  {/* <input
                     type="text"
                     className="form-control mb-1"
                     placeholder="userId"
                     value={EditData.userId}
                     onChange={handleChange}
                     name="userId"
-                  />
+                  /> */}
                   <input
                     type="text"
                     className="form-control"
