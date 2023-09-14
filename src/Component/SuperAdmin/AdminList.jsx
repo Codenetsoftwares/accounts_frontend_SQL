@@ -6,6 +6,8 @@ import { useAuth } from '../../Utils/Auth';
 
 const AdminList = () => {
     const [adminList, setAdminList] = useState([]);
+    const [Erorr, setErorr] = useState(false);
+    const [erorrData, setErorrData] = useState("");
     const auth = useAuth();
     const [q, setQ] = useState('');
 
@@ -15,7 +17,14 @@ const AdminList = () => {
             AccountService.getAdminList(auth.user)
                 .then(res => {
                     console.log(res.data);
-                    setAdminList(res.data);
+                    if (res.data === "No sub-admins") {
+                        setErorrData(res.data)
+                        setErorr(true)
+
+                    }
+                    else {
+                        setAdminList(res.data);
+                    }
                 });
         }
     }, [auth]);
@@ -44,8 +53,7 @@ const AdminList = () => {
                     aria-describedby="inputGroup-sizing-sm"
                 />
             </div>
-
-            <>{filteredUsers.length > 0 ? (<>{filteredUsers.map(((data, i) => {
+            <>{Erorr ? (<h3 className='text-center'>{erorrData}</h3>) : (<>{filteredUsers.map(((data, i) => {
                 return (
                     < div className="card container" key={data._id}>
                         <div className="card-body ">
@@ -64,7 +72,8 @@ const AdminList = () => {
                         </div>
                     </div >
                 )
-            }))}</>) : (<h1> No Player Data Found</h1>)}</>
+            }))}</>)}</>
+
         </div >
     );
 };
