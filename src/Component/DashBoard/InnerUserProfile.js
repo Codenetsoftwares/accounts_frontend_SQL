@@ -176,7 +176,7 @@ const InnerUserProfile = () => {
                           disabled={!isEditing}
                         />
                       </div> */}
-                      <div className="mb-3">
+                      {/* <div className="mb-3">
                         <label className="form-label">Username</label>
                         <input
                           name="userName"
@@ -189,7 +189,7 @@ const InnerUserProfile = () => {
                           className="form-control"
                           disabled={!isEditing}
                         />
-                      </div>
+                      </div> */}
                       <div className="mb-3">
                         <label className="form-label">
                           Introducer Percentage{" "}
