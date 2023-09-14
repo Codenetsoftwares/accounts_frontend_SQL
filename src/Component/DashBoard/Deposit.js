@@ -20,6 +20,9 @@ function Deposit() {
   const [amount, setAmount] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
   const [bonus, setBonus] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredOptions, setFilteredOptions] = useState([]);
+  const [selectedOption, setSelectedOption] = useState(null);
 
   useEffect(() => {
     AccountService.getbank(auth.user).then((res) => setBank(res.data));
@@ -58,7 +61,7 @@ function Deposit() {
       amount: Number(amount),
       paymentMethod: paymentMethod,
       subAdminUserName: auth.user.userName,
-      userName: SendUId,
+      userName: searchTerm,
       bankName: BankAccNo[0],
       accountNumber: Number(BankAccNo[1]),
       websiteName: WebsiteName,
@@ -66,8 +69,9 @@ function Deposit() {
       remarks: remarks,
       // introducerUserName: Sendintroducer,
     };
+    console.log(data);
 
-    // Call the API service method to send the data to the backend
+
     DashService.CreateTransactionDeposit(data, auth.user)
       .then((response) => {
         // Handle successful response from the backend
@@ -81,6 +85,26 @@ function Deposit() {
         alert("Failed! Something went wrong");
       });
   };
+
+  
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+
+    // Filter the options based on the input value
+    const filtered = UId.filter((data) =>
+      data.userName.toLowerCase().includes(value.toLowerCase())
+    );
+
+    setFilteredOptions(filtered);
+  };
+
+  const handleOptionSelect = (option) => {
+    setSelectedOption(option);
+    setSearchTerm(option.userName);
+    setFilteredOptions([]); // Clear the filtered options when an option is selected
+  };
+
 
   return (
     <div
@@ -124,26 +148,34 @@ function Deposit() {
         </div>
         <div className="body-form">
           <form>
-            <div className="input-group mb-3">
-              <div className="input-group-prepend">
-                <span className="input-group-text">
-                  <i class="fa fa-user id"></i>
-                </span>
+            <div>
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">
+                    <i className="fa fa-user id"></i>
+                  </span>
+                </div>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search by User Name"
+                  value={searchTerm}
+                  onChange={handleInputChange}
+                />
               </div>
-              <select
-                type="text"
-                className="form-select"
-                onChange={(e) => {
-                  setSendUId(e.target.value); 
-                }}
-              >
-                <option selected>User Name</option>
-                {UId.map((data, index) => (
-                  <option key={index} value={data.userName}>
-                    {data.userName}
-                  </option>
-                ))}
-              </select>
+              {filteredOptions.length > 0 && (
+                <div className="list-group">
+                  {filteredOptions.map((option, index) => (
+                    <button
+                      key={index}
+                      className="list-group-item list-group-item-action"
+                      onClick={() => handleOptionSelect(option)}
+                    >
+                      {option.userName}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
             {/* <div className="input-group mb-3">
               <div className="input-group-prepend">
@@ -177,7 +209,7 @@ function Deposit() {
                 className="form-control"
                 placeholder="Transaction Id"
                 onChange={(e) => {
-                  setTransactionId(e.target.value); 
+                  setTransactionId(e.target.value);
                 }}
               />
             </div>
@@ -195,7 +227,7 @@ function Deposit() {
                 className="form-control"
                 placeholder="Amount"
                 onChange={(e) => {
-                  setAmount(e.target.value); 
+                  setAmount(e.target.value);
                 }}
               />
             </div>
@@ -211,7 +243,7 @@ function Deposit() {
                 className="form-control"
                 placeholder="Payment Method"
                 onChange={(e) => {
-                  setPaymentMethod(e.target.value); 
+                  setPaymentMethod(e.target.value);
                 }}
               />
             </div>
@@ -227,7 +259,7 @@ function Deposit() {
                 className="form-control"
                 placeholder="Bonus"
                 onChange={(e) => {
-                  setBonus(e.target.value); 
+                  setBonus(e.target.value);
                 }}
               />
             </div>
@@ -243,7 +275,7 @@ function Deposit() {
                 className="form-select"
                 value={JSON.stringify(BankAccNo)} // Store the array as a JSON string
                 onChange={(e) => {
-                  SetBankAccNo(JSON.parse(e.target.value)); 
+                  SetBankAccNo(JSON.parse(e.target.value));
                 }}
               >
                 <option selected>Select Bank</option>
