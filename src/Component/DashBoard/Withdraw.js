@@ -68,6 +68,8 @@ function Withdraw() {
         // Handle successful response from the backend
         console.log(response.data);
         alert("Transaction Created Successfully!!");
+        window.location.reload();
+
       })
       .catch((error) => {
         // Handle error from the backend
