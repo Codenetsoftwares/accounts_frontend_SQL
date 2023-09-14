@@ -21,24 +21,27 @@ function Withdraw() {
   const [Sendintroducer, setSendIntroducer] = useState([]);
   // const [bonus, setBonus] = useState("");
   const [bankCharges, setBankCharges] = useState("");
-
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredOptions, setFilteredOptions] = useState([]);
 
   useEffect(() => {
     AccountService.getbank(auth.user).then((res) => setBank(res.data));
   }, [auth]);
-  console.log("bank names", Bank)
+  console.log("bank names", Bank);
 
   useEffect(() => {
     AccountService.website(auth.user).then((res) => setWebsite(res.data));
   }, [auth]);
-  console.log("Website Names", Website)
+  console.log("Website Names", Website);
 
   useEffect(() => {
     AccountService.userId(auth.user).then((res) => setUId(res.data));
   }, [auth]);
-  console.log("user Id", UId)
+  console.log("user Id", UId);
   useEffect(() => {
-    AccountService.introducerId(auth.user).then((res) => setIntroducerId(res.data));
+    AccountService.introducerId(auth.user).then((res) =>
+      setIntroducerId(res.data)
+    );
   }, [auth]);
   //  const handleWithdraw =()=>{
   //   console.log("=>>>>>>>",SendUId);
@@ -53,7 +56,7 @@ function Withdraw() {
       amount: Number(amount),
       paymentMethod: paymentMethod,
       subAdminUserName: auth.user.userName,
-      userName: SendUId,
+      userName: searchTerm,
       bankName: BankAccNo[0],
       accountNumber: Number(BankAccNo[1]),
       websiteName: WebsiteName,
@@ -61,7 +64,7 @@ function Withdraw() {
       remarks: remarks,
       // introducerUserName: Sendintroducer,
     };
-
+    console.log(data);
     // Call the API service method to send the data to the backend
     DashService.CreateTransactionWithdraw(data, auth.user)
       .then((response) => {
@@ -69,7 +72,6 @@ function Withdraw() {
         console.log(response.data);
         alert("Transaction Created Successfully!!");
         window.location.reload();
-
       })
       .catch((error) => {
         // Handle error from the backend
@@ -77,8 +79,22 @@ function Withdraw() {
         alert("Failed! Transaction ID Does Not Exists");
       });
   };
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);
 
+    // Filter the options based on the input value
+    const filtered = UId.filter((data) =>
+      data.userName.toLowerCase().includes(value.toLowerCase())
+    );
 
+    setFilteredOptions(filtered);
+  };
+
+  const handleOptionSelect = (option) => {
+    setSearchTerm(option.userName);
+    setFilteredOptions([]); // Clear the filtered options when an option is selected
+  };
 
   return (
     <div
@@ -122,26 +138,34 @@ function Withdraw() {
         </div>
         <div className="body-form">
           <form>
-            <div className="input-group mb-3">
-              <div className="input-group-prepend">
-                <span className="input-group-text">
-                  <i class="fa fa-user id"></i>
-                </span>
+            <div>
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">
+                    <i className="fa fa-user id"></i>
+                  </span>
+                </div>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search by User Name"
+                  value={searchTerm}
+                  onChange={handleInputChange}
+                />
               </div>
-              <select
-                type="text"
-                className="form-select"
-                onChange={(e) => {
-                  setSendUId(e.target.value); // Parse the JSON string back to an array
-                }}
-              >
-                <option>User Name</option>
-                {UId.map((data, index) => (
-                  <option key={index} value={data.userName}>
-                    {data.userName}
-                  </option>
-                ))}
-              </select>
+              {filteredOptions.length > 0 && (
+                <div className="list-group">
+                  {filteredOptions.map((option, index) => (
+                    <button
+                      key={index}
+                      className="list-group-item list-group-item-action"
+                      onClick={() => handleOptionSelect(option)}
+                    >
+                      {option.userName}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
             {/* <div className="input-group mb-3">
               <div className="input-group-prepend">
