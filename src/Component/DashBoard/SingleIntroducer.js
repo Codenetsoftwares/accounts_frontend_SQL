@@ -138,7 +138,7 @@ const SingleIntroducer = () => {
                           disabled={!isEditing}
                         />
                       </div>
-                      <div className="mb-3">
+                      {/* <div className="mb-3">
                         <label className="form-label">User Name</label>
                         <input
                           name="userName"
@@ -149,7 +149,7 @@ const SingleIntroducer = () => {
                           className="form-control"
                           disabled={!isEditing}
                         />
-                      </div>
+                      </div> */}
                       {/* <button
                         className="btn btn-link"
                         onClick={toggleAccordion}

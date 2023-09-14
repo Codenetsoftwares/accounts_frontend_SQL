@@ -94,6 +94,7 @@ const ModalAddBl = ({ ID }) => {
                   placeholder="Remarks"
                   onChange={handelRemarkschange}
                   value={Remarks}
+                  required
                 />
               </form>
             </div>
