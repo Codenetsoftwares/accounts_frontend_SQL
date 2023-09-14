@@ -54,10 +54,7 @@ const DuplicateDashboard = () => {
     subAdminName: "",
     transactionID: "",
     transactionType: "",
-    userId: "",
     websiteName: "",
-    depositAmount: "",
-    withdrawAmount: "",
   });
   const [select, setSelect] = useState("All");
   const [toggle, setToggle] = useState(true);
@@ -267,10 +264,7 @@ const DuplicateDashboard = () => {
     subAdminName,
     transactionID,
     transactionType,
-    userId,
     websiteName,
-    depositAmount,
-    withdrawAmount
   ) => {
     const data = {
       id,
@@ -280,10 +274,7 @@ const DuplicateDashboard = () => {
       subAdminName,
       transactionID,
       transactionType,
-      userId,
       websiteName,
-      depositAmount,
-      withdrawAmount,
     };
     setNormalEditData(data);
     console.log("====>>>>", NormalEditData);
@@ -734,6 +725,7 @@ const DuplicateDashboard = () => {
                           data-bs-toggle="modal"
                           data-bs-target="#edittransaction"
                           onClick={(e) => {
+                            console.log(data.websiteName)
                             handelnormaledit(
                               e,
                               data._id,
@@ -745,8 +737,6 @@ const DuplicateDashboard = () => {
                               data.transactionType,
                               data.userId,
                               data.websiteName,
-                              data.depositAmount,
-                              data.withdrawAmount
                             );
                           }}
                         >
@@ -1045,10 +1035,7 @@ const DuplicateDashboard = () => {
                               data.subAdminName,
                               data.transactionID,
                               data.transactionType,
-                              data.userId,
                               data.websiteName,
-                              data.depositAmount,
-                              data.withdrawAmount
                             );
                           }}
                         >
