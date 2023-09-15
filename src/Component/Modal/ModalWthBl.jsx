@@ -91,7 +91,7 @@ const ModalWthBl = ({ ID }) => {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Remarks"
+                  placeholder="Remarks *"
                   onChange={handelRemarkschange}
                   value={Remarks}
                   required
@@ -111,7 +111,7 @@ const ModalWthBl = ({ ID }) => {
                 className="btn btn-primary"
                 onClick={handelsubmit}
               >
-                Save changes
+                Withdraw
               </button>
             </div>
           </div>

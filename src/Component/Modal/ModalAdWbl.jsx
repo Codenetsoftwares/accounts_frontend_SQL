@@ -28,12 +28,13 @@ const ModalAdWbl = ({ ID }) => {
       .then((res) => {
         // console.log(response.data);
         if (res.status === 200) {
-          toast.success("Transaction Succesfull");
+          alert("Transaction Succesfull");
           window.location.reload();
         }
       })
       .catch((error) => {
-        toast.error(error);
+        alert(error);
+        console.log(error);
         // alert.error("e.message");
       });
   };
@@ -88,7 +89,7 @@ const ModalAdWbl = ({ ID }) => {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Remarks"
+                  placeholder="Remarks *"
                   onChange={handelRemarkschange}
                   value={Remarks}
                   required
@@ -108,7 +109,7 @@ const ModalAdWbl = ({ ID }) => {
                 className="btn btn-primary"
                 onClick={handelsubmit}
               >
-                Save changes
+                Deposit
               </button>
             </div>
           </div>
