@@ -15,7 +15,6 @@ import ModalWbdl from "../Modal/ModalWbdl";
 import ModalWthWbl from "../Modal/ModalWthWbl";
 import { toast } from "react-toastify";
 import EditWebsite from "../Modal/EditWebsite";
-
 const WebsiteDetails = () => {
   // const { id } = useParams();
   const auth = useAuth();
@@ -48,7 +47,6 @@ const WebsiteDetails = () => {
         if (res.status === 200) {
           alert("Website registered successfully!");
           window.location.reload();
-
         } else {
           toast.error("Please give a website name to add");
         }
@@ -74,7 +72,7 @@ const WebsiteDetails = () => {
 
   console.log("ide", Id);
 
-  const handeldeletewebsite = ( id) => {
+  const handeldeletewebsite = (id) => {
     // e.preventDefault();
 
     const userConfirmed = window.confirm(
@@ -87,24 +85,20 @@ const WebsiteDetails = () => {
         .then((res) => {
           // console.log(response.data);
           if (res.status === 200) {
-            alert("Website Deleted approval sent!")
+            alert("Website Deleted approval sent!");
             window.location.reload();
           }
-
         })
         .catch((error) => {
           toast.error(error);
           // alert.error("e.message");
         });
-
     }
-
   };
 
   const handelWebsiteEdit = (id) => {
     setWebId(id);
-    
-  }
+  };
 
   // get api  fetch
   useEffect(() => {
@@ -182,7 +176,7 @@ const WebsiteDetails = () => {
                           icon={faTrashAlt}
                           className="delete-icon"
                           onClick={() => {
-                            handeldeletewebsite( data._id);
+                            handeldeletewebsite(data._id);
                           }}
                         />
                       </button>
@@ -196,12 +190,14 @@ const WebsiteDetails = () => {
           <input
             class="form-control mb-2 text-center"
             id="inputPassword2"
-            placeholder="Name"
+            placeholder=" Enter your Website Name Here"
             onChange={handlewebsite}
+            required
           />
           <a href="#" class="btn btn-primary" onClick={handleSubmit}>
             Add Website
           </a>
+        
         </div>
         <ModalWthWbl ID={Id} />
         <ModalAdWbl ID={Id} />

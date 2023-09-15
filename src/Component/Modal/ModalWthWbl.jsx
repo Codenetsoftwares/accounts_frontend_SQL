@@ -81,7 +81,7 @@ const ModalWthWbl = ({ ID }) => {
                   <input
                     type="number"
                     className="form-control"
-                    placeholder="Amount"
+                    placeholder="Amount *"
                     onChange={handelamtchange}
                     value={Amount}
                   />
@@ -89,7 +89,7 @@ const ModalWthWbl = ({ ID }) => {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Remarks"
+                  placeholder="Remarks *"
                   onChange={handelRemarkschange}
                   value={Remarks}
                   required
@@ -109,7 +109,7 @@ const ModalWthWbl = ({ ID }) => {
                 className="btn btn-primary"
                 onClick={handelsubmit}
               >
-                Save changes
+                Withdraw
               </button>
             </div>
           </div>

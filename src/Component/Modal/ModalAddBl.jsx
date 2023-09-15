@@ -91,7 +91,7 @@ const ModalAddBl = ({ ID }) => {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Remarks"
+                  placeholder="Remarks *"
                   onChange={handelRemarkschange}
                   value={Remarks}
                   required
@@ -111,7 +111,7 @@ const ModalAddBl = ({ ID }) => {
                 className="btn btn-primary"
                 onClick={handelsubmit}
               >
-                Save changes
+                Deposit
               </button>
             </div>
           </div>

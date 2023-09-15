@@ -44,25 +44,27 @@ const InnerBank = ({ getbankName }) => {
 
   const handelsubmit = (e) => {
     e.preventDefault();
-    const data = {
-      bankName: bname,
-      accountNumber: accno,
-      ifscCode: ifsc,
-      accountHolderName: hname,
-      upiId: upi,
-      upiAppName: upiName,
-      upiNumber: upiPhoneNumber,
-    };
-    AccountService.addBank(data, auth.user)
-      .then((response) => {
-        console.log("bank", response.data);
-        alert("Bank Added Sucessfully");
-        window.location.reload();
+   
+      const data = {
+        bankName: bname,
+        accountNumber: accno,
+        ifscCode: ifsc,
+        accountHolderName: hname,
+        upiId: upi,
+        upiAppName: upiName,
+        upiNumber: upiPhoneNumber,
+      };
 
-      })
-      .catch((error) => {
-        toast.error(error);
-      });
+      AccountService.addBank(data, auth.user)
+        .then((response) => {
+          console.log("bank", response.data);
+          alert("Bank Added Sucessfully");
+          window.location.reload();
+        })
+        .catch((error) => {
+          toast.error(error);
+        });
+    
   };
 
   return (
@@ -109,35 +111,35 @@ const InnerBank = ({ getbankName }) => {
               <input
                 type="text"
                 className="form-control"
-                placeholder="IFSC CODE *"
+                placeholder="IFSC CODE "
                 aria-describedby="addon-wrapping"
                 onChange={ifscchnage}
               />
               <input
                 type="text"
                 className="form-control"
-                placeholder="Name of the Acc. Holder *"
+                placeholder="Name of the Acc. Holder "
                 aria-describedby="addon-wrapping"
                 onChange={hnamechnage}
               />
               <input
                 type="text"
                 className="form-control"
-                placeholder="UPI ID *"
+                placeholder="UPI ID "
                 aria-describedby="addon-wrapping"
                 onChange={hUpichnage}
               />
               <input
                 type="text"
                 className="form-control"
-                placeholder="UPI App Name *"
+                placeholder="UPI App Name "
                 aria-describedby="addon-wrapping"
                 onChange={hupiNamechnage}
               />
               <input
                 type="text"
                 className="form-control"
-                placeholder="UPI Phone Number *"
+                placeholder="UPI Phone Number "
                 aria-describedby="addon-wrapping"
                 onChange={hUpiNumberchnage}
               />
@@ -155,7 +157,7 @@ const InnerBank = ({ getbankName }) => {
                 className="btn btn-primary"
                 onClick={handelsubmit}
               >
-                Save changes
+                Add Bank
               </button>
             </div>
           </div>
