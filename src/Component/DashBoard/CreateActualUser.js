@@ -68,20 +68,16 @@ const CreateActualUser = () => {
     };
     if (formData.yourEnterPassword === formData.yourConfirmPassword) {
       AccountService.createActualuser(data, auth.user)
-        .then((res) => {
-          console.log(res);
-          if (res.status === 200) {
-            alert("User Created Sucessfully");
-            window.location.reload();
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          if (err.res.data) {
-            alert("Something Went Wrong");
-            console.log(err.res.data.message);
-          }
-        });
+      .then((res) => {
+        console.log("res", res);
+          toast.success(response.data.message);
+          window.location.reload()
+      })
+      .catch((err) => {
+          console.log('error',err.response.data.message )
+          toast.error(err.response.data.message);
+          return;
+      });
     }
   };
 

@@ -35,22 +35,10 @@ const BankStatement = () => {
   const [introducer, setIntroducer] = useState("");
   const [websiteList, setWebsiteList] = useState([]);
   const [website, setWebsite] = useState("");
-  const [NormalEditData, setNormalEditData] = useState({
-    Id: "",
-    amount: "",
-    bankName: "",
-    paymentMethod: "",
-    subAdminName: "",
-    transactionID: "",
-    transactionType: "",
-    userId: "",
-    websiteName: "",
-    depositAmount: "",
-    withdrawAmount: "",
-  });
+  const [dataId, setDataId] = useState("");
 
   console.log("==>>>", id);
-
+  console.log("data===>", documentView)
   const test = ["transactionType", "subAdminName", "websiteName", "bankName"];
 
   const handleClick = (key, value) => {
@@ -65,6 +53,11 @@ const BankStatement = () => {
     // }
     setDocumentView(nArr);
   };
+
+  const handleId = (e, id) => {
+    e.preventDefault()
+    setDataId(id)
+  }
 
   useEffect(() => {
     AccountService.GetBankStMent(id, auth.user)
@@ -226,36 +219,7 @@ const BankStatement = () => {
     }
   };
 
-  const handelnormaledit = (
-    e,
-    id,
-    amount,
-    bankName,
-    paymentMethod,
-    subAdminName,
-    transactionID,
-    transactionType,
-    userId,
-    websiteName,
-    depositAmount,
-    withdrawAmount
-  ) => {
-    const data = {
-      id,
-      amount,
-      bankName,
-      paymentMethod,
-      subAdminName,
-      transactionID,
-      transactionType,
-      userId,
-      websiteName,
-      depositAmount,
-      withdrawAmount,
-    };
-    setNormalEditData(data);
-    console.log("====>>>>", NormalEditData);
-  };
+
 
   const handleReset = () => {
     setSelect("");
@@ -715,20 +679,7 @@ const BankStatement = () => {
                             data-bs-toggle="modal"
                             data-bs-target="#edittransaction"
                             onClick={(e) => {
-                              handelnormaledit(
-                                e,
-                                data._id,
-                                data.amount,
-                                data.bankName,
-                                data.paymentMethod,
-                                data.subAdminName,
-                                data.transactionID,
-                                data.transactionType,
-                                data.userId,
-                                data.websiteName,
-                                data.depositAmount,
-                                data.withdrawAmount
-                              );
+                              handleId(e, data._id)
                             }}
                           >
                             <FontAwesomeIcon icon={faEdit} />
@@ -995,20 +946,7 @@ const BankStatement = () => {
                             data-bs-toggle="modal"
                             data-bs-target="#edittransaction"
                             onClick={(e) => {
-                              handelnormaledit(
-                                e,
-                                data._id,
-                                data.amount,
-                                data.bankName,
-                                data.paymentMethod,
-                                data.subAdminName,
-                                data.transactionID,
-                                data.transactionType,
-                                data.userId,
-                                data.websiteName,
-                                data.depositAmount,
-                                data.withdrawAmount
-                              );
+                              handleId(e, data._id)
                             }}
                           >
                             <FontAwesomeIcon icon={faEdit} />
@@ -1035,7 +973,7 @@ const BankStatement = () => {
           </small>
         )}
       </div>
-      <EditTransaction Data={NormalEditData} />
+      <EditTransaction id={dataId} />
     </>
   );
 };
