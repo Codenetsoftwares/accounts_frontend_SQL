@@ -70,7 +70,7 @@ const CreateActualUser = () => {
       AccountService.createActualuser(data, auth.user)
       .then((res) => {
         console.log("res", res);
-          toast.success(response.data.message);
+          toast.success(res.data.message);
           window.location.reload()
       })
       .catch((err) => {
