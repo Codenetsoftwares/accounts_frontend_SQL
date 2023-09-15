@@ -44,27 +44,28 @@ const InnerBank = ({ getbankName }) => {
 
   const handelsubmit = (e) => {
     e.preventDefault();
-   
-      const data = {
-        bankName: bname,
-        accountNumber: accno,
-        ifscCode: ifsc,
-        accountHolderName: hname,
-        upiId: upi,
-        upiAppName: upiName,
-        upiNumber: upiPhoneNumber,
-      };
 
-      AccountService.addBank(data, auth.user)
-        .then((response) => {
-          console.log("bank", response.data);
-          alert("Bank Added Sucessfully");
-          window.location.reload();
-        })
-        .catch((error) => {
-          toast.error(error);
-        });
-    
+    const data = {
+      bankName: bname,
+      accountNumber: accno,
+      ifscCode: ifsc,
+      accountHolderName: hname,
+      upiId: upi,
+      upiAppName: upiName,
+      upiNumber: upiPhoneNumber,
+    };
+
+    AccountService.addBank(data, auth.user)
+      .then((response) => {
+        console.log("bank", response.data);
+        alert(response.data.message);
+        // alert("Bank Added Sucessfully");
+        window.location.reload();
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
+        console.log(error);
+      });
   };
 
   return (

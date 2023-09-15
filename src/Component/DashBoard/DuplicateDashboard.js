@@ -61,7 +61,13 @@ const DuplicateDashboard = () => {
   const [startDatevalue, SetStartDatesetValue] = useState(new Date());
   const [endDatevalue, setEndDateValue] = useState(new Date());
 
-  const test = ["transactionType", "subAdminName", "websiteName", "bankName", "introducerId"];
+  const test = [
+    "transactionType",
+    "subAdminName",
+    "websiteName",
+    "bankName",
+    "introducerId",
+  ];
 
   const handleClick = (key, value) => {
     let nArr = [...documentView];
@@ -83,15 +89,15 @@ const DuplicateDashboard = () => {
     const edate = moment(endDatevalue, "DD-MM-YYYY HH:mm").toDate();
     const filteredDocuments = documentView.filter((data) => {
       const transactionDate = new Date(data.createdAt);
-      console.log(transactionDate)
+      console.log(transactionDate);
       return transactionDate >= sdate && transactionDate <= edate;
     });
     setDocumentFilter(filteredDocuments);
     setToggle(false);
   };
-  console.log(documentFilter)
-  console.log(startDatevalue)
-  console.log(endDatevalue)
+  console.log(documentFilter);
+  console.log(startDatevalue);
+  console.log(endDatevalue);
   const handleReset = () => {
     setSelect("");
     setDocumentView(accountData);
@@ -163,9 +169,11 @@ const DuplicateDashboard = () => {
   }, [auth]);
 
   useEffect(() => {
-    AccountService.introducerId(auth.user).then((res) => setIntroducerList(res.data));
+    AccountService.introducerId(auth.user).then((res) =>
+      setIntroducerList(res.data)
+    );
   }, [auth]);
-  console.log(introducerList)
+  console.log(introducerList);
 
   const handleDelete = (e, id, transactionType) => {
     console.log(transactionType);
@@ -259,7 +267,7 @@ const DuplicateDashboard = () => {
     subAdminName,
     transactionID,
     transactionType,
-    websiteName,
+    websiteName
   ) => {
     const data = {
       id,
@@ -280,7 +288,7 @@ const DuplicateDashboard = () => {
       {/* This is the Main Card */}
       <div
         className="card card-body rounded-1 main "
-      // style={{ backgroundImage: gradient }}
+        // style={{ backgroundImage: gradient }}
       >
         <div className="d-flex mt-5 mt-5 ml-5 pt-5 justify-content-center">
           <h6 className="fw-bold text-nowrap pt-2">
@@ -517,7 +525,7 @@ const DuplicateDashboard = () => {
       {toggle ? (
         <small>
           {/* Normal View */}
-          <table class="table table-bordered  table-sm table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl w-auto">
+          <table class="table table-bordered  table-sm table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl w-auto ">
             {/* This is for Deposit Card Normal View */}
             {/* <div
             className="card  rounded-2 mb-2"
@@ -530,28 +538,28 @@ const DuplicateDashboard = () => {
             <thead className="table-success">
               <tr align="center" bgcolor="green" className="fs-6">
                 <th scope="col fs-6" className="text-primary">
-                  Date <br />&<br /> Time
+                  Date & Time
                 </th>
                 <th scope="col text-break fs-6" className="text-primary">
                   Amount
                 </th>
                 <th scope="col text-break fs-6" className="text-primary">
-                  Transaction Id
+                  Txn Id
                 </th>
                 <th scope="col text-break fs-6" className="text-primary">
-                  Transaction Type
+                  Txn Type
                 </th>
                 <th scope="col fs-6" className="text-primary">
                   Gateway
                 </th>
                 <th scope="col fs-6" className="text-primary">
-                  CreatedBy
+                  Entry by
                 </th>
                 <th scope="col fs-6" className="text-primary">
                   User Name
                 </th>
                 <th scope="col fs-6" className="text-primary">
-                  Introducer Name
+                  Intro Name
                 </th>
                 <th scope="col" className="text-primary">
                   Bank
@@ -591,32 +599,24 @@ const DuplicateDashboard = () => {
                           "default"
                         )}{" "}
                       </td>
-                      <td className="text-break">
+                      <td>
                         {data.amount && (
-                          <p className="col fs-6">₹&nbsp;{data.amount}</p>
+                          <p className="col fs-6">{data.amount}</p>
                         )}
                         {data.depositAmount && (
-                          <p className="col fs-6">
-                            ₹&nbsp;{data.depositAmount}
-                          </p>
+                          <p className="col fs-6">{data.depositAmount}</p>
                         )}
                         {data.withdrawAmount && (
-                          <p className="col fs-6">
-                            ₹&nbsp;{data.withdrawAmount}
-                          </p>
+                          <p className="col fs-6">{data.withdrawAmount}</p>
                         )}
                       </td>
                       <td>
                         {data.transactionID && (
-                          <p className="col fs-6 text-break">
-                            {data.transactionID}
-                          </p>
+                          <p className="col fs-6 ">{data.transactionID}</p>
                         )}
-                        {data.depositAmount && (
-                          <p className="col fs-6 text-break">N.A</p>
-                        )}
+                        {data.depositAmount && <p className="col fs-6 ">N.A</p>}
                         {data.withdrawAmount && (
-                          <p className="col fs-6 text-break">N.A</p>
+                          <p className="col fs-6 ">N.A</p>
                         )}
                       </td>
                       <td>
@@ -688,7 +688,9 @@ const DuplicateDashboard = () => {
                         ) : (
                           "N.A"
                         )} */}
-                        {data.currentBankBalance ? (data.currentBankBalance) : ("N .A")}
+                        {data.currentBankBalance
+                          ? data.currentBankBalance
+                          : "N .A"}
                       </td>
 
                       <td>
@@ -708,9 +710,10 @@ const DuplicateDashboard = () => {
                         ) : (
                           "N.A"
                         )} */}
-                        {data.currentWebsiteBalance ? (data.currentWebsiteBalance) : ("N .A")}
+                        {data.currentWebsiteBalance
+                          ? data.currentWebsiteBalance
+                          : "N .A"}
                       </td>
-
 
                       <td>{data.remarks}</td>
                       <td>
@@ -720,7 +723,7 @@ const DuplicateDashboard = () => {
                           data-bs-toggle="modal"
                           data-bs-target="#edittransaction"
                           onClick={(e) => {
-                            console.log(data.websiteName)
+                            console.log(data.websiteName);
                             handelnormaledit(
                               e,
                               data._id,
@@ -730,7 +733,7 @@ const DuplicateDashboard = () => {
                               data.subAdminName,
                               data.transactionID,
                               data.transactionType,
-                              data.websiteName,
+                              data.websiteName
                             );
                           }}
                         >
@@ -759,7 +762,8 @@ const DuplicateDashboard = () => {
       ) : (
         //Filter View
         <small>
-          <table class="table table-bordered  table-sm table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl w-auto">
+          {/* Normal View */}
+          <table class="table table-bordered  table-sm table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl w-auto ">
             {/* This is for Deposit Card Normal View */}
             {/* <div
             className="card  rounded-2 mb-2"
@@ -772,28 +776,28 @@ const DuplicateDashboard = () => {
             <thead className="table-success">
               <tr align="center" bgcolor="green" className="fs-6">
                 <th scope="col fs-6" className="text-primary">
-                  Date <br />&<br /> Time
+                  Date & Time
                 </th>
                 <th scope="col text-break fs-6" className="text-primary">
                   Amount
                 </th>
                 <th scope="col text-break fs-6" className="text-primary">
-                  Transaction Id
+                  Txn Id
                 </th>
                 <th scope="col text-break fs-6" className="text-primary">
-                  Transaction Type
+                  Txn Type
                 </th>
                 <th scope="col fs-6" className="text-primary">
                   Gateway
                 </th>
                 <th scope="col fs-6" className="text-primary">
-                  CreatedBy
+                  Entry by
                 </th>
                 <th scope="col fs-6" className="text-primary">
-                  User Id
+                  User Name
                 </th>
                 <th scope="col fs-6" className="text-primary">
-                  Introducer Id
+                  Intro Name
                 </th>
                 <th scope="col" className="text-primary">
                   Bank
@@ -801,24 +805,15 @@ const DuplicateDashboard = () => {
                 <th scope="col" className="text-primary">
                   Website
                 </th>
+
                 <th scope="col text-break fs-6" className="text-primary">
-                  Before Bank Balance
+                  Bank Balance
                 </th>
+
                 <th scope="col text-break fs-6" className="text-primary">
-                  Current Bank Balance
+                  Website Balance
                 </th>
-                <th scope="col text-break fs-6" className="text-primary">
-                  Before Website Balance
-                </th>
-                <th scope="col text-break fs-6" className="text-primary">
-                  Current Website Balance
-                </th>
-                <th scope="col text-break fs-6" className="text-primary">
-                  Before Balance
-                </th>
-                <th scope="col text-break fs-6" className="text-primary">
-                  Current Balance
-                </th>
+
                 <th scope="col text-break" className="text-primary">
                   Remarks
                 </th>
@@ -842,32 +837,24 @@ const DuplicateDashboard = () => {
                           "default"
                         )}{" "}
                       </td>
-                      <td className="text-break">
+                      <td>
                         {data.amount && (
-                          <p className="col fs-6">₹&nbsp;{data.amount}</p>
+                          <p className="col fs-6">{data.amount}</p>
                         )}
                         {data.depositAmount && (
-                          <p className="col fs-6">
-                            ₹&nbsp;{data.depositAmount}
-                          </p>
+                          <p className="col fs-6">{data.depositAmount}</p>
                         )}
                         {data.withdrawAmount && (
-                          <p className="col fs-6">
-                            ₹&nbsp;{data.withdrawAmount}
-                          </p>
+                          <p className="col fs-6">{data.withdrawAmount}</p>
                         )}
                       </td>
                       <td>
                         {data.transactionID && (
-                          <p className="col fs-6 text-break">
-                            {data.transactionID}
-                          </p>
+                          <p className="col fs-6 ">{data.transactionID}</p>
                         )}
-                        {data.depositAmount && (
-                          <p className="col fs-6 text-break">N.A</p>
-                        )}
+                        {data.depositAmount && <p className="col fs-6 ">N.A</p>}
                         {data.withdrawAmount && (
-                          <p className="col fs-6 text-break">N.A</p>
+                          <p className="col fs-6 ">N.A</p>
                         )}
                       </td>
                       <td>
@@ -891,7 +878,7 @@ const DuplicateDashboard = () => {
                       <td>{data.subAdminName}</td>
                       <td>
                         {data.paymentMethod && (
-                          <p className="col fs-6">{data.userId}</p>
+                          <p className="col fs-6">{data.userName}</p>
                         )}
                         {data.depositAmount && (
                           <p className="col fs-6 text-break">N.A</p>
@@ -902,7 +889,7 @@ const DuplicateDashboard = () => {
                       </td>
                       <td>
                         {data.paymentMethod && (
-                          <p className="col fs-6">{data.introducerId}</p>
+                          <p className="col fs-6">{data.introducerUserName}</p>
                         )}
                         {data.depositAmount && (
                           <p className="col fs-6 text-break">N.A</p>
@@ -921,26 +908,9 @@ const DuplicateDashboard = () => {
                           {data.websiteName ? data.websiteName : "N.A"}
                         </p>
                       </td>
+
                       <td>
-                        {data.beforeBalanceBankWithdraw ? (
-                          <p className="col fs-6">
-                            {data.beforeBalanceBankWithdraw && (
-                              <p className="col fs-6 text-break">
-                                ₹&nbsp; {data.beforeBalanceBankWithdraw}
-                              </p>
-                            )}
-                            {data.beforeBalanceBankDeposit && (
-                              <p className="col fs-6 text-break">
-                                ₹&nbsp; {data.beforeBalanceBankDeposit}
-                              </p>
-                            )}
-                          </p>
-                        ) : (
-                          "N.A"
-                        )}
-                      </td>
-                      <td>
-                        {data.beforeBalanceBankWithdraw ? (
+                        {/* {data.beforeBalanceBankWithdraw ? (
                           <p className="col fs-6">
                             {data.currentBalanceBankWithdraw && (
                               <p className="col fs-6 text-break">
@@ -955,28 +925,14 @@ const DuplicateDashboard = () => {
                           </p>
                         ) : (
                           "N.A"
-                        )}
+                        )} */}
+                        {data.currentBankBalance
+                          ? data.currentBankBalance
+                          : "N .A"}
                       </td>
+
                       <td>
-                        {data.beforeBalanceBankWithdraw ? (
-                          <p className="col fs-6">
-                            {data.beforeBalanceWebsiteWithdraw && (
-                              <p className="col fs-6 text-break">
-                                ₹&nbsp; {data.beforeBalanceWebsiteWithdraw}
-                              </p>
-                            )}
-                            {data.beforeBalanceWebsiteDeposit && (
-                              <p className="col fs-6 text-break">
-                                ₹&nbsp; {data.beforeBalanceWebsiteDeposit}
-                              </p>
-                            )}
-                          </p>
-                        ) : (
-                          "N.A"
-                        )}
-                      </td>
-                      <td>
-                        {data.beforeBalanceBankWithdraw ? (
+                        {/* {data.beforeBalanceBankWithdraw ? (
                           <p className="col fs-6">
                             {data.currentBalanceWebsiteWithdraw && (
                               <p className="col fs-6 text-break">
@@ -991,25 +947,10 @@ const DuplicateDashboard = () => {
                           </p>
                         ) : (
                           "N.A"
-                        )}
-                      </td>
-                      <td>
-                        {data.beforeBalance ? (
-                          <p className="col fs-6">
-                            {data.beforeBalance ? data.beforeBalance : "N.A"}
-                          </p>
-                        ) : (
-                          "N.A"
-                        )}
-                      </td>
-                      <td>
-                        {data.currentBalance ? (
-                          <p className="col fs-6">
-                            {data.currentBalance ? data.currentBalance : "N.A"}
-                          </p>
-                        ) : (
-                          "N.A"
-                        )}
+                        )} */}
+                        {data.currentWebsiteBalance
+                          ? data.currentWebsiteBalance
+                          : "N .A"}
                       </td>
 
                       <td>{data.remarks}</td>
@@ -1020,6 +961,7 @@ const DuplicateDashboard = () => {
                           data-bs-toggle="modal"
                           data-bs-target="#edittransaction"
                           onClick={(e) => {
+                            console.log(data.websiteName);
                             handelnormaledit(
                               e,
                               data._id,
@@ -1029,7 +971,7 @@ const DuplicateDashboard = () => {
                               data.subAdminName,
                               data.transactionID,
                               data.transactionType,
-                              data.websiteName,
+                              data.websiteName
                             );
                           }}
                         >

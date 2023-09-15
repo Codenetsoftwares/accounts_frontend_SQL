@@ -79,19 +79,18 @@ const AdminBank = () => {
         .then((res) => {
           // console.log(response.data);
           if (res.status === 200) {
-            alert("Bank Deleted approval sent!")
-
+            alert(res.data.message);
+            // alert("Bank Deleted approval sent!");
             window.location.reload();
           }
-
         })
         .catch((error) => {
-          toast.error(error);
+          alert(error.response.data.message);
+          console.log(error);
+          // toast.error(error);
           // alert.error("e.message");
         });
-
     }
-
   };
 
   useEffect(() => {
@@ -125,7 +124,7 @@ const AdminBank = () => {
                 return (
                   <div class="card d-flex justify-content-between">
                     <div class="card-body ">
-                      <p className="">{data.bankName}</p>
+                      <p className="font-weight-bold">{data.bankName}</p>
                       <div className=" d-flex justify-content-center gap-1">
                         <button
                           type="button"

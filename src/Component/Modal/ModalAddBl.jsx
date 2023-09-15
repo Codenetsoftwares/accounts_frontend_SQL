@@ -30,12 +30,13 @@ const ModalAddBl = ({ ID }) => {
       .then((res) => {
         // console.log(response.data);
         if (res.status === 200) {
-          toast.success("Transaction Succesfull");
+          console.log(res);
+          alert(res.data.message);
           window.location.reload();
         }
       })
       .catch((error) => {
-        toast.error(error);  
+        alert(error.response.data.message);
         // alert.error("e.message");
       });
   };
