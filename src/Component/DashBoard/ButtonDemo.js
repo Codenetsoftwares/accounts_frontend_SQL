@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../Utils/Auth";
-import Deposit from "../../Assets/Deposit.jpg";
-import Withdraw from "../../Assets/Withdraws.jpg";
+import Deposit from "../../Assets/dpst.jpg";
+import Withdraw from "../../Assets/Wth.jpg";
 
 function ButtonDemo() {
   const auth = useAuth();
@@ -17,7 +17,7 @@ function ButtonDemo() {
         className="row justify-content-center align-items-center min-vh-100"
         style={{
           backgroundImage:
-            "radial-gradient(circle, rgba(255,114,53,1) 0%, rgba(250,255,53,1) 52%, rgba(255,114,53,1) 100%)",
+            "linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(184,23,170,0.9668242296918768) 100%)",
         }}
       >
         <div className="col-md-6 text-center">
@@ -32,13 +32,19 @@ function ButtonDemo() {
                   role === "Create-Transaction"
               ) && (
                 <Link to="/withdraw" style={{ cursor: "pointer" }}>
-                  <div class="card" style={{ width: "18rem"}}>
+                  <div class="card" style={{ width: "18rem" }}>
                     <img
                       class="card-img-top"
                       src={Withdraw}
                       alt="Card image cap"
                     />
-                    <div class="card-body">
+                    <div
+                      class="card-body"
+                      style={{
+                        backgroundImage:
+                          "linear-gradient(90deg, rgba(255,65,177,1) 0%, rgba(227,236,70,0.9668242296918768) 100%)",
+                      }}
+                    >
                       <p class="card-text">
                         <b>Withdraw</b>
                       </p>
@@ -63,7 +69,13 @@ function ButtonDemo() {
                       src={Deposit}
                       alt="Card image cap"
                     />
-                    <div class="card-body">
+                    <div
+                      class="card-body"
+                      style={{
+                        backgroundImage:
+                          "linear-gradient(90deg, rgba(107,255,121,1) 0%, rgba(241,255,0,0.9668242296918768) 100%)",
+                      }}
+                    >
                       <p class="card-text">
                         <b>Deposit</b>
                       </p>
