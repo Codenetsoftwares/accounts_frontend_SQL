@@ -50,6 +50,7 @@ const CreateUser = () => {
         console.log("res", res);
         if (res.status === 200) {
           toast.success("User Created Successfully");
+          window.location.reload()
         } else {
           toast.error("Failed");
         }

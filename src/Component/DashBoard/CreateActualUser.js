@@ -50,14 +50,11 @@ const CreateActualUser = () => {
       setIntroducerId(res.data)
     );
   }, [auth]);
-  console.log("Introducer Id", IntroducerId);
-
-
+  // console.log("Introducer Id", IntroducerId);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    console.log(checkedItems);
+    // console.log(checkedItems);
 
     const data = {
       firstname: formData.yourFirstName,
@@ -96,7 +93,7 @@ const CreateActualUser = () => {
     height: "100%",
     overflow: "hidden",
   };
-  console.log("====>>>>", formData.yourIntroducerId);
+  // console.log("====>>>>", formData.yourIntroducerId);
 
   return (
     <div

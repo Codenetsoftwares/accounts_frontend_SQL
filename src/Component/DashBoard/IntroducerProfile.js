@@ -70,7 +70,7 @@ const IntroducerProfile = () => {
           <div className="card container-fluid w-75">
             <div className="card-body">
               <p>
-                {users.firstname}&nbsp;{users.lastname}
+                {users.userName}  
               </p>
 
               <Link
