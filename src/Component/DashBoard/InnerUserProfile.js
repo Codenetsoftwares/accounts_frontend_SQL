@@ -220,13 +220,13 @@ const InnerUserProfile = () => {
                           disabled={!isEditing}
                         />
                       </div>
-
                       <button
                         className="btn btn-link"
                         onClick={toggleAccordion}
                       >
                         Payment Details
                       </button>
+                    
                       <Link
                         to={`/transactiondetails/${id}`}
                         className="btn btn-link"
@@ -280,8 +280,8 @@ const InnerUserProfile = () => {
                                         disabled={!isEditing}
                                       />
                                     </div>
-                                  </div>
-                                  <div className="col-md-6">
+                                    </div>
+                                    <div className="col-md-6">
                                     <div className="form-group">
                                       <label
                                         htmlFor="ifscCode"
@@ -312,6 +312,53 @@ const InnerUserProfile = () => {
                                         disabled={!isEditing}
                                       />
                                     </div>
+                                    <div className="form-group">
+                                      <label
+                                        htmlFor="Upi"
+                                        className="form-label"
+                                      >
+                                        UPI Application:
+                                      </label>
+                                      <input
+                                        type="text"
+                                        id="accountNumber"
+                                        className="form-control"
+                                        value={isEditing ? editedData.upiApp: foundObject.upiDetail.upiApp}
+                                        disabled={!isEditing}
+                                      />
+                                    </div>
+                                    <div className="form-group">
+                                      <label
+                                        htmlFor="Upi"
+                                        className="form-label"
+                                      >
+                                        UPI ID:
+                                      </label>
+                                      <input
+                                        type="text"
+                                        id="accountNumber"
+                                        className="form-control"
+                                        value={isEditing ? editedData.upiId: foundObject.upiDetail.upiId}
+                                        disabled={!isEditing}
+                                      />
+                                    </div>
+                                    <div className="form-group">
+                                      <label
+                                        htmlFor="Upi"
+                                        className="form-label"
+                                      >
+                                        UPI Number:
+                                      </label>
+                                      <input
+                                        type="text"
+                                        id="accountNumber"
+                                        className="form-control"
+                                        value={isEditing ? editedData.upiNumber: foundObject.upiDetail.upiNumber}
+                                        disabled={!isEditing}
+                                      />
+                                    </div>
+
+                        
                                   </div>
                                 </div>
                               </div>
