@@ -34,7 +34,7 @@ import { CSVLink } from "react-csv";
 const DuplicateDashboard = () => {
   const auth = useAuth();
   const nav = useNavigate();
-
+  console.log(auth)
   const [accountData, setAccountData] = useState([]);
   const [documentView, setDocumentView] = useState([]);
   const [documentFilter, setDocumentFilter] = useState([]);
@@ -46,22 +46,13 @@ const DuplicateDashboard = () => {
   const [introducer, setIntroducer] = useState("");
   const [websiteList, setWebsiteList] = useState([]);
   const [website, setWebsite] = useState("");
-  const [NormalEditData, setNormalEditData] = useState({
-    Id: "",
-    amount: "",
-    bankName: "",
-    paymentMethod: "",
-    subAdminName: "",
-    transactionID: "",
-    transactionType: "",
-    websiteName: "",
-  });
+  const [id, setId] = useState("");
   const [select, setSelect] = useState("All");
   const [toggle, setToggle] = useState(true);
   const [startDatevalue, SetStartDatesetValue] = useState(new Date());
   const [endDatevalue, setEndDateValue] = useState(new Date());
 
-  const test = ["transactionType", "subAdminName", "websiteName", "bankName", "introducerId"];
+  const test = ["transactionType", "subAdminName", "websiteName", "bankName", "introducerUserName"];
 
   const handleClick = (key, value) => {
     let nArr = [...documentView];
@@ -167,6 +158,11 @@ const DuplicateDashboard = () => {
   }, [auth]);
   console.log(introducerList)
 
+  const handleId = (e, id) => {
+    e.preventDefault()
+    setId(id)
+  }
+
   const handleDelete = (e, id, transactionType) => {
     console.log(transactionType);
     console.log(id);
@@ -250,31 +246,7 @@ const DuplicateDashboard = () => {
     }
   };
 
-  const handelnormaledit = (
-    e,
-    id,
-    amount,
-    bankName,
-    paymentMethod,
-    subAdminName,
-    transactionID,
-    transactionType,
-    websiteName,
-  ) => {
-    const data = {
-      id,
-      amount,
-      bankName,
-      paymentMethod,
-      subAdminName,
-      transactionID,
-      transactionType,
-      websiteName,
-    };
-    setNormalEditData(data);
-    console.log("====>>>>", NormalEditData);
-  };
-
+  console.log(introducerList)
   return (
     <div className="main">
       {/* This is the Main Card */}
@@ -720,18 +692,8 @@ const DuplicateDashboard = () => {
                           data-bs-toggle="modal"
                           data-bs-target="#edittransaction"
                           onClick={(e) => {
-                            console.log(data.websiteName)
-                            handelnormaledit(
-                              e,
-                              data._id,
-                              data.amount,
-                              data.bankName,
-                              data.paymentMethod,
-                              data.subAdminName,
-                              data.transactionID,
-                              data.transactionType,
-                              data.websiteName,
-                            );
+                            console.log("id===>", data._id)
+                            handleId(e, data._id)
                           }}
                         >
                           <FontAwesomeIcon icon={faEdit} />
@@ -742,6 +704,7 @@ const DuplicateDashboard = () => {
                           <FontAwesomeIcon
                             icon={faTrash}
                             onClick={(e) => {
+
                               handleDelete(e, data._id, data.transactionType);
                             }}
                           />
@@ -790,10 +753,10 @@ const DuplicateDashboard = () => {
                   CreatedBy
                 </th>
                 <th scope="col fs-6" className="text-primary">
-                  User Id
+                  User Name
                 </th>
                 <th scope="col fs-6" className="text-primary">
-                  Introducer Id
+                  Introducer Name
                 </th>
                 <th scope="col" className="text-primary">
                   Bank
@@ -801,24 +764,15 @@ const DuplicateDashboard = () => {
                 <th scope="col" className="text-primary">
                   Website
                 </th>
+
                 <th scope="col text-break fs-6" className="text-primary">
-                  Before Bank Balance
+                  Bank Balance
                 </th>
+
                 <th scope="col text-break fs-6" className="text-primary">
-                  Current Bank Balance
+                  Website Balance
                 </th>
-                <th scope="col text-break fs-6" className="text-primary">
-                  Before Website Balance
-                </th>
-                <th scope="col text-break fs-6" className="text-primary">
-                  Current Website Balance
-                </th>
-                <th scope="col text-break fs-6" className="text-primary">
-                  Before Balance
-                </th>
-                <th scope="col text-break fs-6" className="text-primary">
-                  Current Balance
-                </th>
+
                 <th scope="col text-break" className="text-primary">
                   Remarks
                 </th>
@@ -891,7 +845,7 @@ const DuplicateDashboard = () => {
                       <td>{data.subAdminName}</td>
                       <td>
                         {data.paymentMethod && (
-                          <p className="col fs-6">{data.userId}</p>
+                          <p className="col fs-6">{data.userName}</p>
                         )}
                         {data.depositAmount && (
                           <p className="col fs-6 text-break">N.A</p>
@@ -902,7 +856,7 @@ const DuplicateDashboard = () => {
                       </td>
                       <td>
                         {data.paymentMethod && (
-                          <p className="col fs-6">{data.introducerId}</p>
+                          <p className="col fs-6">{data.introducerUserName}</p>
                         )}
                         {data.depositAmount && (
                           <p className="col fs-6 text-break">N.A</p>
@@ -921,26 +875,9 @@ const DuplicateDashboard = () => {
                           {data.websiteName ? data.websiteName : "N.A"}
                         </p>
                       </td>
+
                       <td>
-                        {data.beforeBalanceBankWithdraw ? (
-                          <p className="col fs-6">
-                            {data.beforeBalanceBankWithdraw && (
-                              <p className="col fs-6 text-break">
-                                ₹&nbsp; {data.beforeBalanceBankWithdraw}
-                              </p>
-                            )}
-                            {data.beforeBalanceBankDeposit && (
-                              <p className="col fs-6 text-break">
-                                ₹&nbsp; {data.beforeBalanceBankDeposit}
-                              </p>
-                            )}
-                          </p>
-                        ) : (
-                          "N.A"
-                        )}
-                      </td>
-                      <td>
-                        {data.beforeBalanceBankWithdraw ? (
+                        {/* {data.beforeBalanceBankWithdraw ? (
                           <p className="col fs-6">
                             {data.currentBalanceBankWithdraw && (
                               <p className="col fs-6 text-break">
@@ -955,28 +892,12 @@ const DuplicateDashboard = () => {
                           </p>
                         ) : (
                           "N.A"
-                        )}
+                        )} */}
+                        {data.currentBankBalance ? (data.currentBankBalance) : ("N .A")}
                       </td>
+
                       <td>
-                        {data.beforeBalanceBankWithdraw ? (
-                          <p className="col fs-6">
-                            {data.beforeBalanceWebsiteWithdraw && (
-                              <p className="col fs-6 text-break">
-                                ₹&nbsp; {data.beforeBalanceWebsiteWithdraw}
-                              </p>
-                            )}
-                            {data.beforeBalanceWebsiteDeposit && (
-                              <p className="col fs-6 text-break">
-                                ₹&nbsp; {data.beforeBalanceWebsiteDeposit}
-                              </p>
-                            )}
-                          </p>
-                        ) : (
-                          "N.A"
-                        )}
-                      </td>
-                      <td>
-                        {data.beforeBalanceBankWithdraw ? (
+                        {/* {data.beforeBalanceBankWithdraw ? (
                           <p className="col fs-6">
                             {data.currentBalanceWebsiteWithdraw && (
                               <p className="col fs-6 text-break">
@@ -991,26 +912,10 @@ const DuplicateDashboard = () => {
                           </p>
                         ) : (
                           "N.A"
-                        )}
+                        )} */}
+                        {data.currentWebsiteBalance ? (data.currentWebsiteBalance) : ("N .A")}
                       </td>
-                      <td>
-                        {data.beforeBalance ? (
-                          <p className="col fs-6">
-                            {data.beforeBalance ? data.beforeBalance : "N.A"}
-                          </p>
-                        ) : (
-                          "N.A"
-                        )}
-                      </td>
-                      <td>
-                        {data.currentBalance ? (
-                          <p className="col fs-6">
-                            {data.currentBalance ? data.currentBalance : "N.A"}
-                          </p>
-                        ) : (
-                          "N.A"
-                        )}
-                      </td>
+
 
                       <td>{data.remarks}</td>
                       <td>
@@ -1020,17 +925,8 @@ const DuplicateDashboard = () => {
                           data-bs-toggle="modal"
                           data-bs-target="#edittransaction"
                           onClick={(e) => {
-                            handelnormaledit(
-                              e,
-                              data._id,
-                              data.amount,
-                              data.bankName,
-                              data.paymentMethod,
-                              data.subAdminName,
-                              data.transactionID,
-                              data.transactionType,
-                              data.websiteName,
-                            );
+                            console.log("id===>", data._id)
+                            handleId(e, data._id)
                           }}
                         >
                           <FontAwesomeIcon icon={faEdit} />
@@ -1041,6 +937,7 @@ const DuplicateDashboard = () => {
                           <FontAwesomeIcon
                             icon={faTrash}
                             onClick={(e) => {
+
                               handleDelete(e, data._id, data.transactionType);
                             }}
                           />
@@ -1056,7 +953,7 @@ const DuplicateDashboard = () => {
           </table>
         </small>
       )}
-      <EditTransaction Data={NormalEditData} />
+      <EditTransaction id={id} />
     </div>
   );
 };
