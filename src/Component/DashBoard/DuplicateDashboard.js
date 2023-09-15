@@ -65,14 +65,9 @@ const DuplicateDashboard = () => {
 
   const handleClick = (key, value) => {
     let nArr = [...documentView];
-    // const originalData = [...documentView];
-
     if (test.includes(key)) {
       nArr = nArr.filter((item) => item[key] === value);
     }
-    // if (nArr.length === 0) {
-    //   nArr = originalData;
-    // }
     setDocumentView(nArr);
   };
 
@@ -735,7 +730,6 @@ const DuplicateDashboard = () => {
                               data.subAdminName,
                               data.transactionID,
                               data.transactionType,
-                              data.userId,
                               data.websiteName,
                             );
                           }}
