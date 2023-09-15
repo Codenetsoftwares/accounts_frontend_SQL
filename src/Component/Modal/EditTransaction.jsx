@@ -3,61 +3,61 @@ import { useAuth } from "../../Utils/Auth";
 import TransactionSercvice from "../../Services/TransactionSercvice";
 
 const EditTransaction = ({ Data }) => {
+  console.log(Data)
   const auth = useAuth();
-  const [EditData, SetEditData] = useState({
-    amount: "",
-    bankName: "",
-    paymentMethod: "",
-    subAdminName: "",
-    transactionID: "",
-    transactionType: "",
-    userId: "",
-    websiteName: "",
-    depositAmount: "",
-    withdrawAmount: "",
-  });
-  
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedData, setEditedData] = useState({});
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    SetEditData({ ...EditData, [name]: value });
+    setEditedData({ ...editedData, [name]: value });
   };
-  const handleSubmit = (e, transactionType) => {
-   
-   
+
+  const handleToggleEdit = (e) => {
     e.preventDefault();
 
-    const flag = true;
+    setIsEditing(!isEditing);
+    setEditedData([]);
+  };
+  const handleClose = () => {
+    setIsEditing(false);
+  }
+  const handleSubmit = (e, transactionType, field) => {
+    e.preventDefault();
+    setIsEditing(false);
+    setEditedData({ ...editedData, [field]: "" });
+
     const data = {
-      transactionID: EditData.transactionID,
-      transactionType: EditData.transactionType,
-      amount: EditData.amount,
-      paymentMethod: EditData.paymentMethod,
-      userId: EditData.userId,
-      subAdminId: EditData.subAdminName,
-      bankName: EditData.Bank,
-      websiteName: EditData.Website,
-      isSubmit: flag,
+      transactionID: editedData.transactionID,
+      transactionType: editedData.transactionType,
+      amount: editedData.amount,
+      paymentMethod: editedData.paymentMethod,
+      userId: editedData.userId,
+      subAdminId: editedData.subAdminName,
+      bankName: editedData.Bank,
+      websiteName: editedData.Website,
+
     };
     const dataWithdraw = {
-      transactionID: EditData.transactionID,
-      transactionType: EditData.transactionType,
-      withdrawAmount: EditData.amount,
-      paymentMethod: EditData.paymentMethod,
-      userId: EditData.userId,
-      subAdminId: EditData.subAdminName,
-      bankName: EditData.Bank,
-      websiteName: EditData.Website,
+      transactionID: editedData.transactionID,
+      transactionType: editedData.transactionType,
+      withdrawAmount: editedData.amount,
+      paymentMethod: editedData.paymentMethod,
+      userId: editedData.userId,
+      subAdminId: editedData.subAdminName,
+      bankName: editedData.Bank,
+      websiteName: editedData.Website,
     };
 
     const dataDeposit = {
-      transactionID: EditData.transactionID,
-      transactionType: EditData.transactionType,
-      depositAmount: EditData.amount,
-      paymentMethod: EditData.paymentMethod,
-      userId: EditData.userId,
-      subAdminId: EditData.subAdminName,
-      bankName: EditData.Bank,
-      websiteName: EditData.Website,
+      transactionID: editedData.transactionID,
+      transactionType: editedData.transactionType,
+      depositAmount: editedData.amount,
+      paymentMethod: editedData.paymentMethod,
+      userId: editedData.userId,
+      subAdminId: editedData.subAdminName,
+      bankName: editedData.Bank,
+      websiteName: editedData.Website,
     };
 
     switch (transactionType) {
@@ -167,6 +167,7 @@ const EditTransaction = ({ Data }) => {
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
+                onClick={handleClose}
               ></button>
             </div>
 
@@ -186,20 +187,24 @@ const EditTransaction = ({ Data }) => {
                     style={{ fontSize: "10px" }}
                   />
                 </div>
-                <div>
+                {Data && (<div>
                   <input
                     type="text"
                     className="form-control mb-1"
                     placeholder="Amount"
                     name="amount"
-                    value={EditData.amount}
+                    value={isEditing
+                      ? editedData.amount
+                      : Data.amount}
                     onChange={handleChange}
                   />
                   <input
                     type="text"
                     className="form-control mb-1 "
                     placeholder="bankName"
-                    value={EditData.bankName}
+                    value={isEditing
+                      ? editedData.bankName
+                      : Data.bankName}
                     onChange={handleChange}
                     name="bankName"
                   />
@@ -207,7 +212,9 @@ const EditTransaction = ({ Data }) => {
                     type="text"
                     className="form-control mb-1"
                     placeholder="paymentMethod"
-                    value={EditData.paymentMethod}
+                    value={isEditing
+                      ? editedData.paymentMethod
+                      : Data.paymentMethod}
                     onChange={handleChange}
                     name="paymentMethod"
                   />
@@ -215,7 +222,9 @@ const EditTransaction = ({ Data }) => {
                     type="text"
                     className="form-control mb-1"
                     placeholder="subAdminName"
-                    value={EditData.subAdminName}
+                    value={isEditing
+                      ? editedData.subAdminName
+                      : Data.subAdminName}
                     onChange={handleChange}
                     name="subAdminName"
                   />
@@ -223,60 +232,30 @@ const EditTransaction = ({ Data }) => {
                     type="text"
                     className="form-control mb-1"
                     placeholder="transactionID"
-                    value={EditData.transactionID}
+                    value={isEditing
+                      ? editedData.transactionID
+                      : Data.transactionID}
                     onChange={handleChange}
                     name="transactionID"
                   />
                   <input
                     type="text"
                     className="form-control mb-1"
-                    placeholder="transactionID"
+                    placeholder="transactionType"
                     value={Data.transactionType}
                     onChange={handleChange}
                     name="transactionType"
                   />
-                  {/* <select
-                    className="form-control mb-1"
-                    value={Data.transactionType || ""}
-                    autoComplete="off"
-                    name="transactionType"
-                    onChange={handleChange}
-                  >
-                    <option className="d-flex" value="Deposit">
-                      <b>Deposit</b>
-                    </option>
-                    <option className="d-flex" value="Withdraw">
-                      <b>Withdraw</b>
-                    </option>
-                    <option className="d-flex" value="Manual-Bank-Deposit">
-                      <b>Manual Bank Deposit</b>
-                    </option>{" "}
-                    <option className="d-flex" value="Manual-Bank-Withdraw">
-                      <b>Manual Bank Withdraw</b>
-                    </option>
-                    <option className="d-flex" value="Manual-Website-Deposit">
-                      <b>Manual Website Deposit</b>
-                    </option>{" "}
-                    <option className="d-flex" value="Manual-Website-Withdraw">
-                      <b>Manual Website Withdraw</b>
-                    </option>
-                  </select> */}
-                  {/* <input
-                    type="text"
-                    className="form-control mb-1"
-                    placeholder="userId"
-                    value={EditData.userId}
-                    onChange={handleChange}
-                    name="userId"
-                  /> */}
                   <input
                     type="text"
                     className="form-control"
                     placeholder="websiteName"
-                    value={EditData.websiteName}
+                    value={isEditing
+                      ? editedData.websiteName
+                      : Data.websiteName}
                     name="websiteName"
                   />
-                </div>
+                </div>)}
               </form>
             </div>
             <div className="modal-footer">
@@ -284,17 +263,33 @@ const EditTransaction = ({ Data }) => {
                 type="button"
                 className="btn btn-secondary"
                 data-bs-dismiss="modal"
+                onClick={handleClose}
               >
                 Close
               </button>
-              <button
-                type="button"
-                className="btn btn-primary"
-                data-bs-dismiss="modal"
-                onClick={(e) => handleSubmit(e, Data.transactionType)}
-              >
-                Save changes
-              </button>
+              {isEditing ? (
+
+                <button
+                  className="btn btn-success mx-1"
+                  data-bs-dismiss="modal"
+                  onClick={(e) => handleSubmit(e, Data.transactionType)}
+                >
+                  Save
+                </button>
+
+
+
+              ) : (
+                <>
+                  <button
+                    className="btn btn-info mx-1"
+                    onClick={handleToggleEdit}
+                  >
+                    Edit
+                  </button>
+
+                </>
+              )}
             </div>
           </div>
         </div>
