@@ -58,7 +58,7 @@ const CreateIntroducer = () => {
       .then((response) => {
         console.log(response.data);
         toast.success(response.data.message);
-        // window.location.reload();
+        window.location.reload();
       })
       .catch((error) => {
         console.error(error);
@@ -69,7 +69,6 @@ const CreateIntroducer = () => {
   const styles = {
     position: "fixed",
     top: 0,
-
     left: 0,
     width: "100%",
     height: "100%",

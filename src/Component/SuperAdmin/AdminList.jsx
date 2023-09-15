@@ -62,7 +62,7 @@ const AdminList = () => {
                                     <h5 className="fs-6 ">{i + 1}.</h5>
                                 </div>
                                 <div className="">
-                                    <h5 className="fs-5 text-nowrap">{data.firstname} {data.lastname}</h5>
+                                    <h5 className="fs-5 text-nowrap">{data.userName} </h5>
                                 </div>
                                 <div className="">
                                     <button className='' style={{ height: "30px", backgroundColor: "#0275d8", border: "none", borderRadius: "5px" }}><p><Link to={`/subadminedit/${data._id

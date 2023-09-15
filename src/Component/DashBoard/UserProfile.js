@@ -46,10 +46,9 @@ const UserProfile = () => {
             <div className="card-body">
               <Link
                 to={`/innerprofile/${users._id}`}
-                style={{ cursor: "pointer" }}
               >
 
-                {users.firstname}&nbsp;{users.lastname}
+                {users.userName}
 
               </Link>
             </div>
