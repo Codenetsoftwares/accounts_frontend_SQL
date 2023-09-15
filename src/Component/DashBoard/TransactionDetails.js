@@ -31,7 +31,13 @@ const TransactionDetails = () => {
 
   const auth = useAuth();
 
-  const test = ["transactionType", "subAdminName", "websiteName", "bankName", "introducerId"];
+  const test = [
+    "transactionType",
+    "subAdminName",
+    "websiteName",
+    "bankName",
+    "introducerId",
+  ];
 
   const handleClick = (key, value) => {
     let nArr = [...documentView];
@@ -109,9 +115,11 @@ const TransactionDetails = () => {
   }, [auth]);
 
   useEffect(() => {
-    AccountService.introducerId(auth.user).then((res) => setIntroducerList(res.data));
+    AccountService.introducerId(auth.user).then((res) =>
+      setIntroducerList(res.data)
+    );
   }, [auth]);
-  console.log(introducerList)
+  console.log(introducerList);
   const handleChange = (e) => {
     const value = e.target.value;
     setSelect(value);
@@ -145,10 +153,7 @@ const TransactionDetails = () => {
     <div className="container-fuid">
       <div className="container mt-5">
         <div className="d-flex mt-5 mt-5 ml-5 pt-5 justify-content-center">
-          <h6 className="fw-bold text-nowrap pt-2">
-            {" "}
-            View
-          </h6>
+          <h6 className="fw-bold text-nowrap pt-2"> View</h6>
           <select
             className="form-control mx-3 w-25"
             value={select || ""}
@@ -339,7 +344,6 @@ const TransactionDetails = () => {
           </div>
         </div>
 
-
         {toggle ? (
           <small>
             {/* Normal View */}
@@ -356,22 +360,22 @@ const TransactionDetails = () => {
               <thead className="table-success">
                 <tr align="center" bgcolor="green" className="fs-6">
                   <th scope="col fs-6" className="text-primary">
-                    Date <br />&<br /> Time
+                    Date & Time
                   </th>
                   <th scope="col text-break fs-6" className="text-primary">
                     Amount
                   </th>
                   <th scope="col text-break fs-6" className="text-primary">
-                    Transaction Id
+                    Txn Id
                   </th>
                   <th scope="col text-break fs-6" className="text-primary">
-                    Transaction Type
+                    Txn Type
                   </th>
                   <th scope="col fs-6" className="text-primary">
                     Gateway
                   </th>
                   <th scope="col fs-6" className="text-primary">
-                    CreatedBy
+                    Entry by
                   </th>
                   <th scope="col fs-6" className="text-primary">
                     Introducer Name
@@ -385,7 +389,6 @@ const TransactionDetails = () => {
                   <th scope="col text-break" className="text-primary">
                     Remarks
                   </th>
-
                 </tr>
               </thead>
               {/* </div> */}
@@ -400,19 +403,15 @@ const TransactionDetails = () => {
                             "default"
                           )}{" "}
                         </td>
-                        <td className="text-break">
+                        <td>
                           {data.amount && (
-                            <p className="col fs-6">₹&nbsp;{data.amount}</p>
+                            <p className="col fs-6">{data.amount}</p>
                           )}
                           {data.depositAmount && (
-                            <p className="col fs-6">
-                              ₹&nbsp;{data.depositAmount}
-                            </p>
+                            <p className="col fs-6">{data.depositAmount}</p>
                           )}
                           {data.withdrawAmount && (
-                            <p className="col fs-6">
-                              ₹&nbsp;{data.withdrawAmount}
-                            </p>
+                            <p className="col fs-6">{data.withdrawAmount}</p>
                           )}
                         </td>
                         <td>
@@ -449,7 +448,9 @@ const TransactionDetails = () => {
                         <td>{data.subAdminName}</td>
                         <td>
                           {data.paymentMethod && (
-                            <p className="col fs-6">{data.introducerUserName}</p>
+                            <p className="col fs-6">
+                              {data.introducerUserName}
+                            </p>
                           )}
                           {data.depositAmount && (
                             <p className="col fs-6 text-break">N.A</p>
@@ -469,7 +470,6 @@ const TransactionDetails = () => {
                           </p>
                         </td>
                         <td>{data.remarks}</td>
-
                       </tr>
                     );
                   })
@@ -482,6 +482,7 @@ const TransactionDetails = () => {
         ) : (
           //Filter View
           <small>
+            {/* Normal View */}
             <table class="table table-bordered  table-sm table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl w-auto">
               {/* This is for Deposit Card Normal View */}
               {/* <div
@@ -495,22 +496,22 @@ const TransactionDetails = () => {
               <thead className="table-success">
                 <tr align="center" bgcolor="green" className="fs-6">
                   <th scope="col fs-6" className="text-primary">
-                    Date <br />&<br /> Time
+                    Date & Time
                   </th>
                   <th scope="col text-break fs-6" className="text-primary">
                     Amount
                   </th>
                   <th scope="col text-break fs-6" className="text-primary">
-                    Transaction Id
+                    Txn Id
                   </th>
                   <th scope="col text-break fs-6" className="text-primary">
-                    Transaction Type
+                    Txn Type
                   </th>
                   <th scope="col fs-6" className="text-primary">
                     Gateway
                   </th>
                   <th scope="col fs-6" className="text-primary">
-                    CreatedBy
+                    Entry by
                   </th>
                   <th scope="col fs-6" className="text-primary">
                     Introducer Name
@@ -520,18 +521,6 @@ const TransactionDetails = () => {
                   </th>
                   <th scope="col" className="text-primary">
                     Website
-                  </th>
-                  <th scope="col text-break fs-6" className="text-primary">
-                    Before Bank Balance
-                  </th>
-                  <th scope="col text-break fs-6" className="text-primary">
-                    Current Bank Balance
-                  </th>
-                  <th scope="col text-break fs-6" className="text-primary">
-                    Before Website Balance
-                  </th>
-                  <th scope="col text-break fs-6" className="text-primary">
-                    Current Website Balance
                   </th>
                   <th scope="col text-break" className="text-primary">
                     Remarks
@@ -550,19 +539,15 @@ const TransactionDetails = () => {
                             "default"
                           )}{" "}
                         </td>
-                        <td className="text-break">
+                        <td>
                           {data.amount && (
-                            <p className="col fs-6">₹&nbsp;{data.amount}</p>
+                            <p className="col fs-6">{data.amount}</p>
                           )}
                           {data.depositAmount && (
-                            <p className="col fs-6">
-                              ₹&nbsp;{data.depositAmount}
-                            </p>
+                            <p className="col fs-6">{data.depositAmount}</p>
                           )}
                           {data.withdrawAmount && (
-                            <p className="col fs-6">
-                              ₹&nbsp;{data.withdrawAmount}
-                            </p>
+                            <p className="col fs-6">{data.withdrawAmount}</p>
                           )}
                         </td>
                         <td>
@@ -599,7 +584,9 @@ const TransactionDetails = () => {
                         <td>{data.subAdminName}</td>
                         <td>
                           {data.paymentMethod && (
-                            <p className="col fs-6">{data.introducerUserName}</p>
+                            <p className="col fs-6">
+                              {data.introducerUserName}
+                            </p>
                           )}
                           {data.depositAmount && (
                             <p className="col fs-6 text-break">N.A</p>
@@ -629,7 +616,6 @@ const TransactionDetails = () => {
             </table>
           </small>
         )}
-
       </div>
     </div>
   );

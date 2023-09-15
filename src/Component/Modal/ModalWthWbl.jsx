@@ -28,12 +28,12 @@ const ModalWthWbl = ({ ID }) => {
       .then((res) => {
         // console.log(response.data);
         if (res.status === 200) {
-          alert("Transaction Succesfull");
+          alert(res.data.message);
           window.location.reload();
         }
       })
       .catch((error) => {
-        console.error(error);
+        alert(error.response.data.message);
         // alert.error("e.message");
       });
   };

@@ -45,18 +45,13 @@ const WebsiteDetails = () => {
       .then((res) => {
         console.log("res", res);
         if (res.status === 200) {
-          alert("Website registered successfully!");
+          alert(res.data.message);
           window.location.reload();
-        } else {
-          toast.error("Please give a website name to add");
-        }
+        } 
       })
-
       .catch((err) => {
-        if (!err.response) {
-          toast.error(err.message);
-          return;
-        }
+        alert(err.response.data.message);
+        console.log(err);
       });
     // window.location.reload();
   };
@@ -123,7 +118,9 @@ const WebsiteDetails = () => {
               return (
                 <div class="card d-flex justify-content-between">
                   <div class="card-body ">
-                    <p className="col">{data.websiteName}</p>
+                    <p className="col font-weight-bold">
+                     {data.websiteName}
+                    </p>
                     <div className=" d-flex justify-content-center gap-1">
                       <button
                         type="button"

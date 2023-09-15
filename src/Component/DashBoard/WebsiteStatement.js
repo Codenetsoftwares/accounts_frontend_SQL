@@ -83,7 +83,6 @@ const WebsiteStatement = () => {
     handleClick("websiteName", value);
   };
 
-
   useEffect(() => {
     const fetchManualStatement = async () => {
       try {
@@ -118,7 +117,9 @@ const WebsiteStatement = () => {
   }, [auth]);
 
   useEffect(() => {
-    AccountService.introducerId(auth.user).then((res) => setIntroducerList(res.data));
+    AccountService.introducerId(auth.user).then((res) =>
+      setIntroducerList(res.data)
+    );
   }, [auth]);
 
   console.log(documentView);
@@ -454,22 +455,22 @@ const WebsiteStatement = () => {
               <thead className="table-success">
                 <tr align="center" bgcolor="green" className="fs-6">
                   <th scope="col fs-6" className="text-primary">
-                    Date <br />&<br /> Time
+                    Date & Time
                   </th>
                   <th scope="col text-break fs-6" className="text-primary">
                     Amount
                   </th>
                   <th scope="col text-break fs-6" className="text-primary">
-                    Transaction Id
+                    Txn Id
                   </th>
                   <th scope="col text-break fs-6" className="text-primary">
-                    Transaction Type
+                    Txn Type
                   </th>
                   <th scope="col fs-6" className="text-primary">
                     Gateway
                   </th>
                   <th scope="col fs-6" className="text-primary">
-                    CreatedBy
+                    Entry by
                   </th>
                   <th scope="col fs-6" className="text-primary">
                     User Name
@@ -524,19 +525,15 @@ const WebsiteStatement = () => {
                             "default"
                           )}{" "}
                         </td>
-                        <td className="text-break">
+                        <td>
                           {data.amount && (
-                            <p className="col fs-6">₹&nbsp;{data.amount}</p>
+                            <p className="col fs-6">{data.amount}</p>
                           )}
                           {data.depositAmount && (
-                            <p className="col fs-6">
-                              ₹&nbsp;{data.depositAmount}
-                            </p>
+                            <p className="col fs-6">{data.depositAmount}</p>
                           )}
                           {data.withdrawAmount && (
-                            <p className="col fs-6">
-                              ₹&nbsp;{data.withdrawAmount}
-                            </p>
+                            <p className="col fs-6">{data.withdrawAmount}</p>
                           )}
                         </td>
                         <td>
@@ -648,11 +645,9 @@ const WebsiteStatement = () => {
                         </td> */}
                         <td>
                           {data.currentWebsiteBalance ? (
-                            (
-                              <p className="col fs-6 ">
-                                ₹&nbsp; {data.currentWebsiteBalance}
-                              </p>
-                            )
+                            <p className="col fs-6 ">
+                              {data.currentWebsiteBalance}
+                            </p>
                           ) : (
                             "N.A"
                           )}
@@ -723,25 +718,25 @@ const WebsiteStatement = () => {
               <thead className="table-success">
                 <tr align="center" bgcolor="green" className="fs-6">
                   <th scope="col fs-6" className="text-primary">
-                    Date <br />&<br /> Time
+                    Date & Time
                   </th>
                   <th scope="col text-break fs-6" className="text-primary">
                     Amount
                   </th>
                   <th scope="col text-break fs-6" className="text-primary">
-                    Transaction Id
+                    Txn Id
                   </th>
                   <th scope="col text-break fs-6" className="text-primary">
-                    Transaction Type
+                    Txn Type
                   </th>
                   <th scope="col fs-6" className="text-primary">
                     Gateway
                   </th>
                   <th scope="col fs-6" className="text-primary">
-                    CreatedBy
+                    Entry by
                   </th>
                   <th scope="col fs-6" className="text-primary">
-                    User Id
+                    User Name
                   </th>
                   {/* <th scope="col" className="text-primary">
                     Bank
@@ -767,9 +762,8 @@ const WebsiteStatement = () => {
                     (Manual)
                   </th> */}
                   {/* <th scope="col text-break fs-6" className="text-primary">
-                    Current Balance
-                    <br />
-                    (Manual)
+                    Bank Balance
+                    
                   </th> */}
                   <th scope="col text-break" className="text-primary">
                     Remarks
@@ -794,19 +788,15 @@ const WebsiteStatement = () => {
                             "default"
                           )}{" "}
                         </td>
-                        <td className="text-break">
+                        <td>
                           {data.amount && (
-                            <p className="col fs-6">₹&nbsp;{data.amount}</p>
+                            <p className="col fs-6">{data.amount}</p>
                           )}
                           {data.depositAmount && (
-                            <p className="col fs-6">
-                              ₹&nbsp;{data.depositAmount}
-                            </p>
+                            <p className="col fs-6">{data.depositAmount}</p>
                           )}
                           {data.withdrawAmount && (
-                            <p className="col fs-6">
-                              ₹&nbsp;{data.withdrawAmount}
-                            </p>
+                            <p className="col fs-6">{data.withdrawAmount}</p>
                           )}
                         </td>
                         <td>
@@ -918,11 +908,9 @@ const WebsiteStatement = () => {
                         </td> */}
                         <td>
                           {data.currentWebsiteBalance ? (
-                            (
-                              <p className="col fs-6 ">
-                                ₹&nbsp; {data.currentWebsiteBalance}
-                              </p>
-                            )
+                            <p className="col fs-6 ">
+                              {data.currentWebsiteBalance}
+                            </p>
                           ) : (
                             "N.A"
                           )}
