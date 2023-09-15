@@ -48,19 +48,13 @@ const CreateUser = () => {
     AccountService.createuser(data, auth.user)
       .then((res) => {
         console.log("res", res);
-        if (res.status === 200) {
-          toast.success("User Created Successfully");
+          toast.success(response.data.message);
           window.location.reload()
-        } else {
-          toast.error("Failed");
-        }
       })
-
       .catch((err) => {
-        if (!err.response) {
-          toast.error(err.message);
+          // console.log('error',err.response.data.message)
+          toast.error(err.response.data.message);
           return;
-        }
       });
     console.log(data);
   };
