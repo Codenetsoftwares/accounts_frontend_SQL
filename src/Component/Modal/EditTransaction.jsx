@@ -5,6 +5,7 @@ import TransactionSercvice from "../../Services/TransactionSercvice";
 const EditTransaction = ({ Data }) => {
   console.log(Data)
   const auth = useAuth();
+  console.log(auth)
   const [isEditing, setIsEditing] = useState(false);
   const [editedData, setEditedData] = useState({});
 
@@ -181,9 +182,9 @@ const EditTransaction = ({ Data }) => {
                   </div>
                   <input
                     type="text"
-                    className="form-control font-weight-bold"
+                    className="form-control font-weight-bold fs-6"
                     disabled
-                    value={auth.user.email}
+                    value={auth.user.userName}
                     style={{ fontSize: "10px" }}
                   />
                 </div>

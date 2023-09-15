@@ -62,7 +62,7 @@ const AdminDash = () => {
   const [startDatevalue, SetStartDatesetValue] = useState(new Date());
   const [endDatevalue, setEndDateValue] = useState(new Date());
 
-  const test = ["transactionType", "subAdminName", "websiteName", "bankName"];
+  const test = ["transactionType", "subAdminName", "websiteName", "bankName","introducerUserName"];
 
   const handleClick = (key, value) => {
     let nArr = [...documentView];

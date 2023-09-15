@@ -34,7 +34,7 @@ import { CSVLink } from "react-csv";
 const DuplicateDashboard = () => {
   const auth = useAuth();
   const nav = useNavigate();
-
+  console.log(auth)
   const [accountData, setAccountData] = useState([]);
   const [documentView, setDocumentView] = useState([]);
   const [documentFilter, setDocumentFilter] = useState([]);
@@ -61,7 +61,7 @@ const DuplicateDashboard = () => {
   const [startDatevalue, SetStartDatesetValue] = useState(new Date());
   const [endDatevalue, setEndDateValue] = useState(new Date());
 
-  const test = ["transactionType", "subAdminName", "websiteName", "bankName", "introducerId"];
+  const test = ["transactionType", "subAdminName", "websiteName", "bankName", "introducerUserName"];
 
   const handleClick = (key, value) => {
     let nArr = [...documentView];
@@ -274,7 +274,7 @@ const DuplicateDashboard = () => {
     setNormalEditData(data);
     console.log("====>>>>", NormalEditData);
   };
-
+  console.log(introducerList)
   return (
     <div className="main">
       {/* This is the Main Card */}
