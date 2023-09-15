@@ -255,13 +255,13 @@ const InnerUserProfile = () => {
                                         className="form-label"
                                       >
                                         Bank Name:
-                                        {editedData.bankDetail}
+                                        {/* {editedData.bankDetail} */}
                                       </label>
                                       <input
                                         type="text"
                                         id="bankName"
                                         className="form-control"
-                                        // value={isEditing ? editedData.bankName : foundObject.bankDetail.bankName}
+                                        value={isEditing ? editedData.bankName : foundObject.bankDetail.bankName}
                                         disabled={!isEditing}
                                       />
                                     </div>
@@ -276,7 +276,7 @@ const InnerUserProfile = () => {
                                         type="text"
                                         id="accountNumber"
                                         className="form-control"
-                                        // value={isEditing ? editedData.accountNumber : foundObject.bankDetail.accountNumber}
+                                        value={isEditing ? editedData.accountNumber : foundObject.bankDetail.accountNumber}
                                         disabled={!isEditing}
                                       />
                                     </div>
@@ -293,7 +293,7 @@ const InnerUserProfile = () => {
                                         type="text"
                                         id="ifscCode"
                                         className="form-control"
-                                        // value={isEditing ? editedData.ifscCode : foundObject.bankDetail.ifscCode}
+                                        value={isEditing ? editedData.ifscCode : foundObject.bankDetail.ifscCode}
                                         disabled={!isEditing}
                                       />
                                     </div>
@@ -308,7 +308,7 @@ const InnerUserProfile = () => {
                                         type="text"
                                         id="accountHolderName"
                                         className="form-control"
-                                        // value={isEditing ? editedData.accountHolderName : foundObject.bankDetail.accountHolderName}
+                                        value={isEditing ? editedData.accountHolderName : foundObject.bankDetail.accountHolderName}
                                         disabled={!isEditing}
                                       />
                                     </div>
