@@ -55,15 +55,16 @@ const CreateIntroducer = () => {
     };
 
     AccountService.createIntroducer(data, auth.user)
-      .then((response) => {
-        console.log(response.data);
+    .then((res) => {
+      console.log("res", res);
         toast.success(response.data.message);
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.error(error);
-        toast.error(error.data.message);
-      });
+        window.location.reload()
+    })
+    .catch((err) => {
+        // console.log('error',err.response.data.message)
+        toast.error(err.response.data.message);
+        return;
+    });
   };
 
   const styles = {
