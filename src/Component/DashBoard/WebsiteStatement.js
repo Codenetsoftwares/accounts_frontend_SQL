@@ -35,19 +35,7 @@ const WebsiteStatement = () => {
   const [introducer, setIntroducer] = useState("");
   const [websiteList, setWebsiteList] = useState([]);
   const [website, setWebsite] = useState("");
-  const [NormalEditData, setNormalEditData] = useState({
-    Id: "",
-    amount: "",
-    bankName: "",
-    paymentMethod: "",
-    subAdminName: "",
-    transactionID: "",
-    transactionType: "",
-    userId: "",
-    websiteName: "",
-    depositAmount: "",
-    withdrawAmount: "",
-  });
+  const [dataId, setDataId] = useState("");
 
   console.log("This is Website Name", id);
 
@@ -163,36 +151,6 @@ const WebsiteStatement = () => {
     SetStartDatesetValue(new Date());
     setEndDateValue(new Date());
   };
-  const handelnormaledit = (
-    e,
-    id,
-    amount,
-    bankName,
-    paymentMethod,
-    subAdminName,
-    transactionID,
-    transactionType,
-    userId,
-    websiteName,
-    depositAmount,
-    withdrawAmount
-  ) => {
-    const data = {
-      id,
-      amount,
-      bankName,
-      paymentMethod,
-      subAdminName,
-      transactionID,
-      transactionType,
-      userId,
-      websiteName,
-      depositAmount,
-      withdrawAmount,
-    };
-    setNormalEditData(data);
-    console.log("====>>>>", NormalEditData);
-  };
 
   const handleDelete = (e, id, transactionType) => {
     console.log(transactionType);
@@ -274,6 +232,11 @@ const WebsiteStatement = () => {
     }
   };
 
+  const handleId = (e, id) => {
+    e.preventDefault()
+    setDataId(id)
+  }
+
   // const handleDel = (id) => {
   //   TransactionSercvice.delWebTransactionData(id, auth.user)
   //     .then((response) => {
@@ -309,10 +272,10 @@ const WebsiteStatement = () => {
             <option className="d-flex" value="All">
               <b>All</b>
             </option>
-            <option className="d-flex" value="Manual-Deposit">
+            <option className="d-flex" value="Manual-Website-Deposit">
               <b>Manual Entry(Deposit)</b>
             </option>
-            <option className="d-flex" value="Manual-Withdraw">
+            <option className="d-flex" value="Manual-Website-Withdraw">
               <b>Manual Entry(Withdraw)</b>
             </option>
             <option className="d-flex" value="Deposit">
@@ -719,20 +682,7 @@ const WebsiteStatement = () => {
                             data-bs-toggle="modal"
                             data-bs-target="#edittransaction"
                             onClick={(e) => {
-                              handelnormaledit(
-                                e,
-                                data._id,
-                                data.amount,
-                                data.bankName,
-                                data.paymentMethod,
-                                data.subAdminName,
-                                data.transactionID,
-                                data.transactionType,
-                                data.userId,
-                                data.websiteName,
-                                data.depositAmount,
-                                data.withdrawAmount
-                              );
+                              handleId(e, data._id)
                             }}
                           >
                             <FontAwesomeIcon icon={faEdit} />
@@ -1002,20 +952,7 @@ const WebsiteStatement = () => {
                             data-bs-toggle="modal"
                             data-bs-target="#edittransaction"
                             onClick={(e) => {
-                              handelnormaledit(
-                                e,
-                                data._id,
-                                data.amount,
-                                data.bankName,
-                                data.paymentMethod,
-                                data.subAdminName,
-                                data.transactionID,
-                                data.transactionType,
-                                data.userId,
-                                data.websiteName,
-                                data.depositAmount,
-                                data.withdrawAmount
-                              );
+                              handleId(e, data._id)
                             }}
                           >
                             <FontAwesomeIcon icon={faEdit} />
@@ -1042,7 +979,7 @@ const WebsiteStatement = () => {
           </small>
         )}
       </div>
-      <EditTransaction Data={NormalEditData} />
+      <EditTransaction id={dataId} />
     </div>
   );
 };
