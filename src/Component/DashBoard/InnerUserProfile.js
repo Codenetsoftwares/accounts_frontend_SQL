@@ -63,10 +63,30 @@ const InnerUserProfile = () => {
       lastname: editedData.lastname,
       email: editedData.email,
       contactnumber: editedData.contactNumber,
-      // userName: editedData.userName,
+      userName: editedData.userName,
       introducerPercentage: editedData.introducerPercentage,
       websitedetail: editedData.websitedetail,
+      bankDetail: {}, // Initialize empty bankDetail
+      upiDetail: {}, // Initialize empty upiDetail
     };
+
+
+     // Check if bankDetail exists in editedData
+     if (editedData.hasOwnProperty("bankDetail")) {
+      // Iterate through properties of bankDetail
+      Object.keys(editedData.bankDetail).forEach((key) => {
+        data.bankDetail[key] = editedData.bankDetail[key];
+      });
+    }
+  
+    // Check if upiDetail exists in editedData
+    if (editedData.hasOwnProperty("upiDetail")) {
+      // Iterate through properties of upiDetail
+      Object.keys(editedData.upiDetail).forEach((key) => {
+        data.upiDetail[key] = editedData.upiDetail[key];
+      });
+    }
+  
     
     // put Api Fetching
     AccountService.inneruserprofile(id, data, auth.user)
@@ -125,11 +145,9 @@ const InnerUserProfile = () => {
                         <label className="form-label">First Name</label>
                         <input
                           name="firstname"
-                          value={
-                            isEditing
-                              ? editedData.firstname
-                              : foundObject.firstname
-                          }
+                          value={  isEditing ? editedData.firstname: foundObject.firstname}
+                          
+                           
                           onChange={handleInputChange}
                           className="form-control"
                           disabled={!isEditing}
@@ -261,10 +279,39 @@ const InnerUserProfile = () => {
                                         type="text"
                                         id="bankName"
                                         className="form-control"
-                                        value={isEditing ? editedData.bankName : foundObject.bankDetail.bankName}
+                                        value={  isEditing
+                                          ? editedData.bankDetail && editedData.bankDetail.bankName // Check if bankName exists in editedData.bankDetail
+                                          : foundObject.bankDetail && foundObject.bankDetail.bankName // Check if bankName exists in foundObject.bankDetail} 
+                                        }
                                         disabled={!isEditing}
                                       />
-                                    </div>
+                                         </div>
+                                         <input
+    type="text"
+    id="accountNumber"
+    className="form-control"
+    value={
+      isEditing
+        ? editedData.upiDetail && editedData.upiDetail.upiApp // Check if upiApp exists in editedData.upiDetail
+        : foundObject.upiDetail && foundObject.upiDetail.upiApp // Check if upiApp exists in foundObject.upiDetail
+    }
+    disabled={!isEditing}
+  />
+  
+                                         <input
+                                            type="text"
+                                             id="accountNumber"
+                                             className="form-control"
+                                             value={
+                                               isEditing
+                                                 ? editedData.upiDetail && editedData.upiDetail.upiApp // Check if upiApp exists in editedData.upiDetail
+                                                 : foundObject.upiDetail && foundObject.upiDetail.upiApp // Check if upiApp exists in foundObject.upiDetail
+                                             }
+                                             disabled={!isEditing}
+                                           />
+                      
+                                    
+                                
                                     <div className="form-group">
                                       <label
                                         htmlFor="accountNumber"
@@ -276,9 +323,14 @@ const InnerUserProfile = () => {
                                         type="text"
                                         id="accountNumber"
                                         className="form-control"
-                                        value={isEditing ? editedData.accountNumber : foundObject.bankDetail.accountNumber}
+                                        value={
+                                          isEditing
+                                            ? editedData.bankDetail && editedData.bankDetail.accountNumber // Check if accountNumber exists in editedData.bankDetail
+                                            : foundObject.bankDetail && foundObject.bankDetail.accountNumber // Check if accountNumber exists in foundObject.bankDetail
+                                        }
                                         disabled={!isEditing}
                                       />
+                                      
                                     </div>
                                     </div>
                                     <div className="col-md-6">
