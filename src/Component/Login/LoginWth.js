@@ -204,7 +204,7 @@ const LoginWth = () => {
                 aria-selected={activeTab === 3}
                 onClick={() => handleClick(3)}
               >
-                <b className="text-white">Happy Wave</b>
+                <b className="text-white">Obhisab/Admin</b>
                 <br />
               </a>
             </li>
@@ -334,12 +334,12 @@ const LoginWth = () => {
               onClick={handleSubmit}
             />
           </div>
-          <div className="d-flex justify-content-center">
+          {/* <div className="d-flex justify-content-center">
             <Link to="/forpas">
               {" "}
               <b>Forgot Password?</b>{" "}
             </Link>
-          </div>
+          </div> */}
         </form>
       </div>
     </div>
