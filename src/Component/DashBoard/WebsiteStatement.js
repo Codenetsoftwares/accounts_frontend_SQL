@@ -90,7 +90,7 @@ const WebsiteStatement = () => {
         setDocumentView(res.data);
         setAccountData(res.data);
       } catch (err) {
-        console.log(err);
+        toast.error(err.response.data.message)
       }
     };
 
@@ -164,7 +164,7 @@ const WebsiteStatement = () => {
             toast.success("Transaction delete request sent to Super Admin");
           })
           .catch((err) => {
-            console.log(err);
+            toast.error(err.response.data.message)
           });
         break;
       case "Withdraw":
@@ -174,7 +174,7 @@ const WebsiteStatement = () => {
             toast.success("Transaction delete request sent to Super Admin");
           })
           .catch((err) => {
-            console.log(err);
+            toast.error(err.response.data.message)
           });
         break;
 
@@ -188,7 +188,7 @@ const WebsiteStatement = () => {
             );
           })
           .catch((err) => {
-            console.log(err);
+            toast.error(err.response.data.message)
           });
         break;
 
@@ -202,7 +202,7 @@ const WebsiteStatement = () => {
             );
           })
           .catch((err) => {
-            console.log(err);
+            toast.error(err.response.data.message)
           });
         break;
 
@@ -215,7 +215,7 @@ const WebsiteStatement = () => {
             );
           })
           .catch((err) => {
-            console.log(err);
+            toast.error(err.response.data.message)
           });
         break;
       case "Manual-Website-Deposit":
@@ -225,7 +225,7 @@ const WebsiteStatement = () => {
             toast.success("Bank Transaction deleted");
           })
           .catch((err) => {
-            console.log(err);
+            toast.error(err.response.data.message)
           });
         break;
       default:
