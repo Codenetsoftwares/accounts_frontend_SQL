@@ -179,7 +179,7 @@ const DuplicateDashboard = () => {
             toast.success("Transaction delete request sent to Super Admin");
           })
           .catch((err) => {
-            console.log(err);
+            toast.error(err.response.data.message)
           });
         break;
       case "Withdraw":
@@ -189,7 +189,7 @@ const DuplicateDashboard = () => {
             toast.success("Transaction delete request sent to Super Admin");
           })
           .catch((err) => {
-            console.log(err);
+            toast.error(err.response.data.message)
           });
         break;
 
@@ -203,7 +203,7 @@ const DuplicateDashboard = () => {
             );
           })
           .catch((err) => {
-            console.log(err);
+            toast.error(err.response.data.message)
           });
         break;
 
@@ -217,7 +217,7 @@ const DuplicateDashboard = () => {
             );
           })
           .catch((err) => {
-            console.log(err);
+            toast.error(err.response.data.message)
           });
         break;
 
@@ -230,7 +230,7 @@ const DuplicateDashboard = () => {
             );
           })
           .catch((err) => {
-            console.log(err);
+            toast.error(err.response.data.message)
           });
         break;
       case "Manual-Website-Deposit":
@@ -240,7 +240,7 @@ const DuplicateDashboard = () => {
             toast.success("Bank Transaction deleted");
           })
           .catch((err) => {
-            console.log(err);
+            toast.error(err.response.data.message)
           });
         break;
       default:

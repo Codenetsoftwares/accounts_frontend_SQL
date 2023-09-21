@@ -155,7 +155,7 @@ const AdminBank = () => {
                           type="button"
                           class="btn btn-info btn-sm"
                           onClick={(e) => {
-                            handelstatement(e, data.accountNumber);
+                            handelstatement(e, data.bankName);
                           }}
                         >
                           <FontAwesomeIcon
