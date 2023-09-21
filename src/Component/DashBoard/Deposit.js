@@ -3,7 +3,8 @@ import { BsArrowLeftRight } from "react-icons/bs";
 import { useAuth } from "../../Utils/Auth";
 import AccountService from "../../Services/AccountService";
 import DashService from "../../Services/DashService";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function Deposit() {
   const auth = useAuth();
   const [Bank, setBank] = useState([]);
@@ -55,6 +56,7 @@ function Deposit() {
     // "bankName" : "Himanshu Bank of Testing",
     // "bonus" : 5,
     // "remarks" : "Amount Transfer From Website to Bank"
+
     const data = {
       transactionID: transactionId,
       transactionType: "Deposit",
@@ -71,7 +73,6 @@ function Deposit() {
     };
     console.log(data);
 
-
     DashService.CreateTransactionDeposit(data, auth.user)
       .then((response) => {
         // Handle successful response from the backend
@@ -82,25 +83,23 @@ function Deposit() {
       .catch((error) => {
         // Handle error from the backend
         console.error(error);
-        alert("Failed! Something went wrong");
+        alert(error.response.data.message);
       });
   };
 
-  
   const handleInputChange = (e) => {
     const value = e.target.value;
     setSearchTerm(value);
 
     // Filter the options based on the input value
-    
+
     const filtered = value
-    ? UId.filter((data) =>
-        data.userName.toLowerCase().includes(value.toLowerCase())
-      )
-    : [];
+      ? UId.filter((data) =>
+          data.userName.toLowerCase().includes(value.toLowerCase())
+        )
+      : [];
 
     setFilteredOptions(filtered);
-
   };
 
   const handleOptionSelect = (option) => {
@@ -108,8 +107,6 @@ function Deposit() {
     setSearchTerm(option.userName);
     setFilteredOptions([]); // Clear the filtered options when an option is selected
   };
-
-  
 
   return (
     <div
@@ -166,7 +163,6 @@ function Deposit() {
                   placeholder="Search by User Name"
                   value={searchTerm}
                   onChange={handleInputChange}
-                  
                 />
               </div>
               {filteredOptions.length > 0 && (
@@ -232,8 +228,13 @@ function Deposit() {
                 type="text"
                 className="form-control"
                 placeholder="Amount"
+                value={amount}
                 onChange={(e) => {
-                  setAmount(e.target.value);
+                  const inputValue = e.target.value;
+                  // Check if the input is a non-negative number or empty
+                  if (/^\d*\.?\d*$/.test(inputValue)) {
+                    setAmount(inputValue);
+                  }
                 }}
               />
             </div>
@@ -340,7 +341,7 @@ function Deposit() {
                 marginBottom: "10px",
               }}
             >
-              Submit
+              Deposit
             </button>
             <div
               className="message"

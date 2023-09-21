@@ -19,10 +19,14 @@ const ModalAdWbl = ({ ID }) => {
   };
 
   const handelsubmit = () => {
-     if (Amount === 0 || Remarks === "") {
-       toast.error("Amount and Remarks fields cannot be empty.");
-       return; 
-     }
+    if (Amount === 0 || Remarks === "" || Amount < 0) {
+      if (Amount < 0) {
+        toast.error("Amount can not be negetive");
+        return;
+      }
+      toast.error("Amount and Remarks fields cannot be empty.");
+      return;
+    }
     const data = {
       amount: Number(Amount),
       transactionType: "Manual-Website-Deposit",
@@ -88,6 +92,7 @@ const ModalAdWbl = ({ ID }) => {
                     className="form-control"
                     placeholder="Amount"
                     onChange={handelamtchange}
+                    // min={0}
                   />
                 </div>
                 <input

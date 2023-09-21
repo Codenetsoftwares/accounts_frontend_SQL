@@ -50,6 +50,7 @@ function Withdraw() {
   const handleSubmit = () => {
     // transactionID,transactionType,amount,paymentMethod,userName,subAdminUserName,accountNumber,websiteName,bankName,bankCharges,bonus,remarks,
     //     introducerUserName
+ 
     const data = {
       transactionID: transactionId,
       transactionType: "Withdraw",
@@ -76,7 +77,8 @@ function Withdraw() {
       .catch((error) => {
         // Handle error from the backend
         console.error(error);
-        alert("Failed! Transaction ID Does Not Exists");
+        alert(error.response.data.message);
+        //  alert("Failed! Transaction ID Does Not Exists");
       });
   };
   const handleInputChange = (e) => {
@@ -85,10 +87,10 @@ function Withdraw() {
 
     // Filter the options based on the input value
     const filtered = value
-    ? UId.filter((data) =>
-        data.userName.toLowerCase().includes(value.toLowerCase())
-      )
-    : [];
+      ? UId.filter((data) =>
+          data.userName.toLowerCase().includes(value.toLowerCase())
+        )
+      : [];
     setFilteredOptions(filtered);
   };
 
@@ -217,8 +219,13 @@ function Withdraw() {
                 type="text"
                 className="form-control"
                 placeholder="Amount"
+                value={amount}
                 onChange={(e) => {
-                  setAmount(e.target.value); // Parse the JSON string back to an array
+                  const inputValue = e.target.value;
+                  // Check if the input is a non-negative number or empty
+                  if (/^\d*\.?\d*$/.test(inputValue)) {
+                    setAmount(inputValue);
+                  }
                 }}
               />
             </div>
@@ -325,7 +332,7 @@ function Withdraw() {
                 marginBottom: "10px",
               }}
             >
-              SUBMIT
+              Withdraw
             </button>
             <div
               className="message"
