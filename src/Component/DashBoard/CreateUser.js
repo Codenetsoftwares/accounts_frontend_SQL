@@ -48,13 +48,13 @@ const CreateUser = () => {
     AccountService.createuser(data, auth.user)
       .then((res) => {
         console.log("res", res);
-          toast.success(res.data.message);
-          window.location.reload()
+        alert(res.data.message);
+        window.location.reload();
       })
       .catch((err) => {
-          console.log('error',err.response.data.message)
-          toast.error(err.response.data.message);
-          return;
+        console.log("error", err.response.data.message);
+        toast.error(err.response.data.message);
+        return;
       });
     console.log(data);
   };
@@ -72,13 +72,14 @@ const CreateUser = () => {
     <div
       style={{
         ...styles,
-        background: 'linear-gradient(90deg, rgba(23,183,184,1) 0%, rgba(23,184,155,0.9668242296918768) 100%)',
+        background:
+          "linear-gradient(90deg, rgba(23,183,184,1) 0%, rgba(23,184,155,0.9668242296918768) 100%)",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
       }}
-      className="d-flex align-items-center justify-content-center">
-
+      className="d-flex align-items-center justify-content-center"
+    >
       <div className="container pt-5">
         <div className="row justify-content-center">
           <div className="col-lg-9">
@@ -132,7 +133,7 @@ const CreateUser = () => {
                       </div>
                       <div className="col-md-6">
                         <label htmlFor="" className="form-label">
-                          <FaEnvelope />  User Name
+                          <FaEnvelope /> User Name
                           <span className="text-danger">*</span>
                         </label>
                         <input
@@ -197,7 +198,9 @@ const CreateUser = () => {
                               className="form-check-input"
                               type="checkbox"
                               value="Transaction-View"
-                              checked={checkedItems.includes("Transaction-View")}
+                              checked={checkedItems.includes(
+                                "Transaction-View"
+                              )}
                               onChange={handleCheckboxChange}
                             />
                             <label
@@ -212,7 +215,9 @@ const CreateUser = () => {
                               className="form-check-input"
                               type="checkbox"
                               value="Create-Transaction"
-                              checked={checkedItems.includes("Create-Transaction")}
+                              checked={checkedItems.includes(
+                                "Create-Transaction"
+                              )}
                               onChange={handleCheckboxChange}
                             />
                             <label
@@ -257,7 +262,9 @@ const CreateUser = () => {
                               className="form-check-input"
                               type="checkbox"
                               value="Introducer-Profile-View"
-                              checked={checkedItems.includes("Introducer-Profile-View")}
+                              checked={checkedItems.includes(
+                                "Introducer-Profile-View"
+                              )}
                               onChange={handleCheckboxChange}
                             />
                             <label
@@ -291,7 +298,9 @@ const CreateUser = () => {
                               className="form-check-input"
                               type="checkbox"
                               value="Transaction-Delete-Request"
-                              checked={checkedItems.includes("Transaction-Delete-Request")}
+                              checked={checkedItems.includes(
+                                "Transaction-Delete-Request"
+                              )}
                               onChange={handleCheckboxChange}
                             />
                             <label
@@ -306,7 +315,9 @@ const CreateUser = () => {
                               className="form-check-input"
                               type="checkbox"
                               value="User-Profile-View"
-                              checked={checkedItems.includes("User-Profile-View")}
+                              checked={checkedItems.includes(
+                                "User-Profile-View"
+                              )}
                               onChange={handleCheckboxChange}
                             />
                             <label
@@ -336,7 +347,9 @@ const CreateUser = () => {
                               className="form-check-input"
                               type="checkbox"
                               value="Create-Withdraw-Transaction"
-                              checked={checkedItems.includes("Create-Withdraw-Transaction")}
+                              checked={checkedItems.includes(
+                                "Create-Withdraw-Transaction"
+                              )}
                               onChange={handleCheckboxChange}
                             />
                             <label
@@ -351,7 +364,9 @@ const CreateUser = () => {
                               className="form-check-input"
                               type="checkbox"
                               value="Create-Deposit-Transaction"
-                              checked={checkedItems.includes("Create-Deposit-Transaction")}
+                              checked={checkedItems.includes(
+                                "Create-Deposit-Transaction"
+                              )}
                               onChange={handleCheckboxChange}
                             />
                             <label
@@ -385,7 +400,6 @@ const CreateUser = () => {
         </div>
       </div>
     </div>
-
   );
 };
 
