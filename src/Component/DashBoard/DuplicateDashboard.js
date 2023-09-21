@@ -168,8 +168,8 @@ const DuplicateDashboard = () => {
   }
 
   const handleDelete = (e, id, transactionType) => {
+    e.preventDefault();
     console.log(transactionType);
-    console.log(id);
     switch (transactionType) {
       case "Deposit":
         AccountService.SaveTransaction({ requestId: id }, auth.user)
@@ -208,11 +208,10 @@ const DuplicateDashboard = () => {
         break;
 
       case "Manual-Bank-Deposit":
-        AccountService.SaveWebsiteTransaction({ requestId: id }, auth.user)
+        AccountService.SaveBankTransaction({ requestId: id }, auth.user)
 
           .then((res) => {
             console.log(res.data);
-
             toast.success(
               "Website Transaction delete request sent to Super Admin"
             );
@@ -222,11 +221,10 @@ const DuplicateDashboard = () => {
           });
         break;
 
-      case "Manual-Website-withdraw":
-        AccountService.DeleteWebsiteTransaction(id, auth.user)
+      case "Manual-Website-Withdraw":
+        AccountService.SaveWebsiteTransaction({ requestId: id }, auth.user)
           .then((res) => {
             console.log(res.data);
-
             toast.success(
               "Website Transaction delete request sent to Super Admin"
             );
@@ -236,7 +234,7 @@ const DuplicateDashboard = () => {
           });
         break;
       case "Manual-Website-Deposit":
-        AccountService.DeleteTransaction({ requestId: id }, auth.user)
+        AccountService.SaveWebsiteTransaction({ requestId: id }, auth.user)
           .then((res) => {
             console.log(res.data);
             toast.success("Bank Transaction deleted");
@@ -260,7 +258,7 @@ const DuplicateDashboard = () => {
       {/* This is the Main Card */}
       <div
         className="card card-body rounded-1 main "
-        // style={{ backgroundImage: gradient }}
+      // style={{ backgroundImage: gradient }}
       >
         <div className="d-flex mt-5 mt-5 ml-5 pt-5 justify-content-center">
           <h6 className="fw-bold text-nowrap pt-2">
