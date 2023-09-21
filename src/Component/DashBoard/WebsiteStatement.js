@@ -206,8 +206,8 @@ const WebsiteStatement = () => {
           });
         break;
 
-      case "Manual-Website-withdraw":
-        AccountService.SaveWebsiteTransaction(id, auth.user)
+      case "Manual-Website-Withdraw":
+        AccountService.SaveWebsiteTransaction({ requestId: id }, auth.user)
           .then((res) => {
             console.log(res.data);
             toast.success(

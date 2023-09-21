@@ -140,6 +140,7 @@ const BankStatement = () => {
   };
 
   const handleDelete = (e, id, transactionType) => {
+
     console.log(transactionType);
     switch (transactionType) {
       case "Deposit":
@@ -147,6 +148,7 @@ const BankStatement = () => {
 
           .then((res) => {
             console.log(res.data);
+
             toast.success("Transaction delete request sent to Super Admin");
           })
           .catch((err) => {
@@ -156,6 +158,7 @@ const BankStatement = () => {
       case "Withdraw":
         AccountService.SaveTransaction({ requestId: id }, auth.user)
           .then((res) => {
+
             console.log(res.data);
             toast.success("Transaction delete request sent to Super Admin");
           })
@@ -168,6 +171,7 @@ const BankStatement = () => {
         AccountService.SaveBankTransaction({ requestId: id }, auth.user)
 
           .then((res) => {
+
             console.log(res.data);
             toast.success(
               "Bank Transaction delete request sent to Super Admin"
@@ -182,6 +186,7 @@ const BankStatement = () => {
         AccountService.SaveBankTransaction({ requestId: id }, auth.user)
 
           .then((res) => {
+
             console.log(res.data);
             toast.success(
               "Website Transaction delete request sent to Super Admin"
@@ -192,9 +197,10 @@ const BankStatement = () => {
           });
         break;
 
-      case "Manual-Website-withdraw":
-        AccountService.SaveWebsiteTransaction(id, auth.user)
+      case "Manual-Website-Withdraw":
+        AccountService.SaveWebsiteTransaction({ requestId: id }, auth.user)
           .then((res) => {
+
             console.log(res.data);
             toast.success(
               "Website Transaction delete request sent to Super Admin"
@@ -209,6 +215,7 @@ const BankStatement = () => {
           .then((res) => {
             console.log(res.data);
             toast.success("Bank Transaction deleted");
+
           })
           .catch((err) => {
             console.log(err);
@@ -217,6 +224,7 @@ const BankStatement = () => {
       default:
       // code block
     }
+
   };
 
 
@@ -673,6 +681,7 @@ const BankStatement = () => {
 
                         <td>{data.remarks}</td>
                         <td>
+
                           <button
                             type="button"
                             className="btn btn-primary"
@@ -686,6 +695,7 @@ const BankStatement = () => {
                           </button>
                         </td>
                         <td>
+
                           <button type="button" className="btn btn-danger">
                             <FontAwesomeIcon
                               icon={faTrash}
@@ -694,6 +704,7 @@ const BankStatement = () => {
                               }}
                             />
                           </button>
+
                         </td>
                       </tr>
                     );
