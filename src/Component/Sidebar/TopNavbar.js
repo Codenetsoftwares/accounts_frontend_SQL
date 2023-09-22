@@ -8,15 +8,16 @@ const TopNavbar = () => {
   const nav = useNavigate();
   const auth = useAuth();
 
-  const handleLogout = () => {
-    const response = true;
-    if (response) {
-      auth.logout();
-      window.confirm("You are going to Logout from this site");
-      toast.success("Logout successfully");
-      nav("/");
-    }
-  };
+ const handleLogout = () => {
+   const confirmed = window.confirm(
+     "Are you sure you want to log out of this site?"
+   );
+   if (confirmed) {
+     auth.logout();
+     toast.success("Logout successfully");
+     nav("/");
+   }
+ };
   return (
     <>
       <nav className="main-header navbar navbar-expand navbar-white navbar-light ">

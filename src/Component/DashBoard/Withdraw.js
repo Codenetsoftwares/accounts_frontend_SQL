@@ -50,7 +50,6 @@ function Withdraw() {
   const handleSubmit = () => {
     // transactionID,transactionType,amount,paymentMethod,userName,subAdminUserName,accountNumber,websiteName,bankName,bankCharges,bonus,remarks,
     //     introducerUserName
- 
     const data = {
       transactionID: transactionId,
       transactionType: "Withdraw",
@@ -67,19 +66,24 @@ function Withdraw() {
     };
     console.log(data);
     // Call the API service method to send the data to the backend
-    DashService.CreateTransactionWithdraw(data, auth.user)
-      .then((response) => {
-        // Handle successful response from the backend
-        console.log(response.data);
-        alert("Transaction Created Successfully!!");
-        window.location.reload();
-      })
-      .catch((error) => {
-        // Handle error from the backend
-        console.error(error);
-        alert(error.response.data.message);
-        //  alert("Failed! Transaction ID Does Not Exists");
-      });
+    const confirmed = window.confirm(
+      "Please double-check the form on obhisab.com before confirming, as changes or deletions won't be possible afterward."
+    );
+    if (confirmed) {
+      DashService.CreateTransactionWithdraw(data, auth.user)
+        .then((response) => {
+          // Handle successful response from the backend
+          console.log(response.data);
+          alert("Transaction Created Successfully!!");
+          window.location.reload();
+        })
+        .catch((error) => {
+          // Handle error from the backend
+          console.error(error);
+          alert(error.response.data.message);
+          //  alert("Failed! Transaction ID Does Not Exists");
+        });
+    }
   };
   const handleInputChange = (e) => {
     const value = e.target.value;
