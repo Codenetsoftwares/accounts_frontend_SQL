@@ -25,7 +25,7 @@ const NavSide = () => {
     setUserRole(auth.user.role);
   }, [auth]);
   // console.log(useremail);
-  console.log(userrole)
+  console.log(userrole);
   const handleToggle = () => {
     setIsToggle(!isToggle);
   };
@@ -386,14 +386,14 @@ const NavSide = () => {
                       {userrole.some((role) => role === "superAdmin") && (
                         <>
                           {IsToggleBank ? (
-                            <Link className="nav-link text-white">
+                            <Link
+                              className="nav-link text-white"
+                              onClick={handleToggleBank}
+                            >
                               <i className="far fa-circle nav-icon" />
                               <p>
                                 Bank
-                                <i
-                                  className="fas fa-angle-left right"
-                                  onClick={handleToggleBank}
-                                />
+                                <i className="fas fa-angle-left right" />
                               </p>
                             </Link>
                           ) : (
@@ -405,7 +405,7 @@ const NavSide = () => {
                               >
                                 <i className="nav-icon fas fa-copy" />
                                 <p>
-                                  bank
+                                  Bank
                                   <i class="fas fa-chevron-down right"></i>
                                 </p>
                               </Link>
@@ -430,21 +430,21 @@ const NavSide = () => {
                       {userrole.some((role) => role === "superAdmin") && (
                         <>
                           {IsToggleWebsite ? (
-                            <li className="nav-link text-white">
+                            <li
+                              className="nav-link text-white"
+                              onClick={handleToggleWebsite}
+                            >
                               <i className="far fa-circle nav-icon" />
                               <p>
                                 Website
-                                <i
-                                  className="fas fa-angle-left right"
-                                  onClick={handleToggleWebsite}
-                                />
+                                <i className="fas fa-angle-left right" />
                               </p>
                             </li>
                           ) : (
                             <li className="nav-item ">
                               <Link
                                 to="#"
-                                className="nav-link text-white"
+                                className="nav-link text-white "
                                 onClick={handleToggleWebsite}
                               >
                                 <i className="nav-icon fas fa-copy" />
