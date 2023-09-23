@@ -55,7 +55,10 @@ const CreateActualUser = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(checkedItems);
-
+    if (formData.yourIntroducerPercentage > 100) {
+      toast.error("percentage should not be more than 100");
+      return;
+    }
     const data = {
       firstname: formData.yourFirstName,
       lastname: formData.yourLastname,
@@ -226,6 +229,7 @@ const CreateActualUser = () => {
                           onChange={handleChange}
                           placeholder="Enter Introducer Percentage"
                           required
+                          max={100}
                         />
                       </div>
 

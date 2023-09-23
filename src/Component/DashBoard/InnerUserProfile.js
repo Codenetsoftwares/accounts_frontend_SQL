@@ -49,11 +49,11 @@ const InnerUserProfile = () => {
     const { name, value } = event.target;
     setEditedData({ ...editedData, [name]: value });
   };
- 
+
   const handleResetPassword = (e, username) => {
     setUsername(username)
   };
-  console.log("password ========>", username )
+  console.log("password ========>", username)
 
   const handleSave = (field) => {
     setIsEditing(false);
@@ -71,14 +71,14 @@ const InnerUserProfile = () => {
     };
 
 
-     // Check if bankDetail exists in editedData
-     if (editedData.hasOwnProperty("bankDetail")) {
+    // Check if bankDetail exists in editedData
+    if (editedData.hasOwnProperty("bankDetail")) {
       // Iterate through properties of bankDetail
       Object.keys(editedData.bankDetail).forEach((key) => {
         data.bankDetail[key] = editedData.bankDetail[key];
       });
     }
-  
+
     // Check if upiDetail exists in editedData
     if (editedData.hasOwnProperty("upiDetail")) {
       // Iterate through properties of upiDetail
@@ -86,8 +86,8 @@ const InnerUserProfile = () => {
         data.upiDetail[key] = editedData.upiDetail[key];
       });
     }
-  
-    
+
+
     // put Api Fetching
     AccountService.inneruserprofile(id, data, auth.user)
       .then((res) => {
@@ -106,7 +106,7 @@ const InnerUserProfile = () => {
         }
       });
   };
-  console.log("User Deatils",foundObject);
+  console.log("User Deatils", foundObject);
 
   return (
     <div
@@ -145,9 +145,9 @@ const InnerUserProfile = () => {
                         <label className="form-label">First Name</label>
                         <input
                           name="firstname"
-                          value={  isEditing ? editedData.firstname: foundObject.firstname}
-                          
-                           
+                          value={isEditing ? editedData.firstname : foundObject.firstname}
+
+
                           onChange={handleInputChange}
                           className="form-control"
                           disabled={!isEditing}
@@ -244,7 +244,7 @@ const InnerUserProfile = () => {
                       >
                         Payment Details
                       </button>
-                    
+
                       <Link
                         to={`/transactiondetails/${id}`}
                         className="btn btn-link"
@@ -279,39 +279,39 @@ const InnerUserProfile = () => {
                                         type="text"
                                         id="bankName"
                                         className="form-control"
-                                        value={  isEditing
+                                        value={isEditing
                                           ? editedData.bankDetail && editedData.bankDetail.bankName // Check if bankName exists in editedData.bankDetail
                                           : foundObject.bankDetail && foundObject.bankDetail.bankName // Check if bankName exists in foundObject.bankDetail} 
                                         }
                                         disabled={!isEditing}
                                       />
-                                         </div>
-                                         <input
-    type="text"
-    id="accountNumber"
-    className="form-control"
-    value={
-      isEditing
-        ? editedData.upiDetail && editedData.upiDetail.upiApp // Check if upiApp exists in editedData.upiDetail
-        : foundObject.upiDetail && foundObject.upiDetail.upiApp // Check if upiApp exists in foundObject.upiDetail
-    }
-    disabled={!isEditing}
-  />
-  
-                                         <input
-                                            type="text"
-                                             id="accountNumber"
-                                             className="form-control"
-                                             value={
-                                               isEditing
-                                                 ? editedData.upiDetail && editedData.upiDetail.upiApp // Check if upiApp exists in editedData.upiDetail
-                                                 : foundObject.upiDetail && foundObject.upiDetail.upiApp // Check if upiApp exists in foundObject.upiDetail
-                                             }
-                                             disabled={!isEditing}
-                                           />
-                      
-                                    
-                                
+                                    </div>
+                                    <input
+                                      type="text"
+                                      id="accountNumber"
+                                      className="form-control"
+                                      value={
+                                        isEditing
+                                          ? editedData.upiDetail && editedData.upiDetail.upiApp // Check if upiApp exists in editedData.upiDetail
+                                          : foundObject.upiDetail && foundObject.upiDetail.upiApp // Check if upiApp exists in foundObject.upiDetail
+                                      }
+                                      disabled={!isEditing}
+                                    />
+
+                                    <input
+                                      type="text"
+                                      id="accountNumber"
+                                      className="form-control"
+                                      value={
+                                        isEditing
+                                          ? editedData.upiDetail && editedData.upiDetail.upiApp // Check if upiApp exists in editedData.upiDetail
+                                          : foundObject.upiDetail && foundObject.upiDetail.upiApp // Check if upiApp exists in foundObject.upiDetail
+                                      }
+                                      disabled={!isEditing}
+                                    />
+
+
+
                                     <div className="form-group">
                                       <label
                                         htmlFor="accountNumber"
@@ -330,10 +330,10 @@ const InnerUserProfile = () => {
                                         }
                                         disabled={!isEditing}
                                       />
-                                      
+
                                     </div>
-                                    </div>
-                                    <div className="col-md-6">
+                                  </div>
+                                  <div className="col-md-6">
                                     <div className="form-group">
                                       <label
                                         htmlFor="ifscCode"
@@ -345,7 +345,8 @@ const InnerUserProfile = () => {
                                         type="text"
                                         id="ifscCode"
                                         className="form-control"
-                                        value={isEditing ? editedData.ifscCode : foundObject.bankDetail.ifscCode}
+                                        value={isEditing ? editedData.bankDetail && editedData.bankDetail.ifscCode // Check if ifscCode exists in editedData.bankDetail
+                                          : foundObject.bankDetail && foundObject.bankDetail.ifscCode}
                                         disabled={!isEditing}
                                       />
                                     </div>
@@ -360,7 +361,8 @@ const InnerUserProfile = () => {
                                         type="text"
                                         id="accountHolderName"
                                         className="form-control"
-                                        value={isEditing ? editedData.accountHolderName : foundObject.bankDetail.accountHolderName}
+                                        value={isEditing ? editedData.bankDetail && editedData.bankDetail.accountHolderName // Check if accountHolderName exists in editedData.bankDetail
+                                          : foundObject.bankDetail && foundObject.bankDetail.accountHolderName}
                                         disabled={!isEditing}
                                       />
                                     </div>
@@ -373,9 +375,10 @@ const InnerUserProfile = () => {
                                       </label>
                                       <input
                                         type="text"
-                                        id="accountNumber"
+                                        id="upiApp"
                                         className="form-control"
-                                        value={isEditing ? editedData.upiApp: foundObject.upiDetail.upiApp}
+                                        value={isEditing ? editedData.bankDetail && editedData.bankDetail.upiApp 
+                                          : foundObject.bankDetail && foundObject.bankDetail.upiApp}
                                         disabled={!isEditing}
                                       />
                                     </div>
@@ -388,9 +391,10 @@ const InnerUserProfile = () => {
                                       </label>
                                       <input
                                         type="text"
-                                        id="accountNumber"
+                                        id="upiId"
                                         className="form-control"
-                                        value={isEditing ? editedData.upiId: foundObject.upiDetail.upiId}
+                                        value={isEditing ? editedData.bankDetail && editedData.bankDetail.upiId
+                                          : foundObject.bankDetail && foundObject.bankDetail.upiId}
                                         disabled={!isEditing}
                                       />
                                     </div>
@@ -403,14 +407,15 @@ const InnerUserProfile = () => {
                                       </label>
                                       <input
                                         type="text"
-                                        id="accountNumber"
+                                        id="upiNumber"
                                         className="form-control"
-                                        value={isEditing ? editedData.upiNumber: foundObject.upiDetail.upiNumber}
+                                        value={isEditing ? editedData.bankDetail && editedData.bankDetail.upiNumber
+                                          : foundObject.bankDetail && foundObject.bankDetail.upiNumber}
                                         disabled={!isEditing}
                                       />
                                     </div>
 
-                        
+
                                   </div>
                                 </div>
                               </div>
@@ -419,35 +424,35 @@ const InnerUserProfile = () => {
                         </div>
                       )}
                       {isEditing ? (
-                       
+
                         <button
                           className="btn btn-success mx-1"
                           onClick={handleSave}
                         >
                           <FontAwesomeIcon icon={faSave} /> Save
                         </button>
-                       
-                     
-                        
+
+
+
                       ) : (
                         <>
-                        <button
-                          className="btn btn-info mx-1"
-                          onClick={handleToggleEdit}
-                        >
-                          <FontAwesomeIcon icon={faEdit} /> Edit
-                        </button>
-                        
+                          <button
+                            className="btn btn-info mx-1"
+                            onClick={handleToggleEdit}
+                          >
+                            <FontAwesomeIcon icon={faEdit} /> Edit
+                          </button>
+
                         </>
                       )}
                     </>
                   )}
                 </div>
-               
-                 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"  onClick={(e) => {
+
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" onClick={(e) => {
                   handleResetPassword(e, foundObject.userName);
                 }}>
-                      Reset password
+                  Reset password
                 </button>
 
 
@@ -455,9 +460,9 @@ const InnerUserProfile = () => {
             </div>
           </div>
         </div>
-        <UserResetPass UserName={username}/>
+        <UserResetPass UserName={username} />
       </div>
-      
+
     </div>
   );
 };
