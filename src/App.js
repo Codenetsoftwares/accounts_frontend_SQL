@@ -1,4 +1,4 @@
-// import './App.css';
+import './App.css';
 import LoginWth from "../src/Component/Login/LoginWth";
 import AdminDash from "../src/Component/DashBoard/AdminDash";
 import { BrowserRouter, Routes, Route } from "react-router-dom";

@@ -28,31 +28,28 @@ export const DashboardNavbar = () => {
 
 
   return (
-
-   
-
     <div>
-     <nav className="navbar navbar-light bg-light">
+      <nav className="navbar navbar-light bg-light">
         <div className="container-fluid">
-        <span className="navbar-brand" href="#">
+          <span className="navbar-brand" href="#">
             <b>
               Welcome
             </b>
           </span>
           <form className="d-flex">
-          <span
-      className="input-group-text"
-      style={{
-        backgroundColor: "transparent",
-        border: "0",
-        animationName: "spin",
-        animationDuration: "1s",
-        animationIterationCount: "infinite",
-        animationTimingFunction: "linear",
-      }}
-    >
-      <FontAwesomeIcon icon={faUser} />
-    </span>
+            <span
+              className="input-group-text"
+              style={{
+                backgroundColor: "transparent",
+                border: "0",
+                animationName: "spin",
+                animationDuration: "1s",
+                animationIterationCount: "infinite",
+                animationTimingFunction: "linear",
+              }}
+            >
+              <FontAwesomeIcon icon={faUser} />
+            </span>
             <span
               className="input-group-text mr-1"
               style={{ backgroundColor: "transparent", border: "0" }}
@@ -83,7 +80,7 @@ export const DashboardNavbar = () => {
 
 
     </div>
-   
-    
+
+
   );
 };

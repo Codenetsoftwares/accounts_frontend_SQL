@@ -25,11 +25,11 @@ const WebsiteDetails = () => {
   const [Id, setId] = useState("");
   const [WebId, setWebId] = useState("");
 
-  console.log("Auth", auth);
+  // console.log("Auth", auth);
   const handlewebsite = (event) => {
     setWebsite(event.target.value);
   };
-  console.log(website);
+  // console.log(website);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -47,7 +47,7 @@ const WebsiteDetails = () => {
         if (res.status === 200) {
           alert(res.data.message);
           window.location.reload();
-        } 
+        }
       })
       .catch((err) => {
         alert(err.response.data.message);
@@ -194,7 +194,7 @@ const WebsiteDetails = () => {
           <a href="#" class="btn btn-primary" onClick={handleSubmit}>
             Add Website
           </a>
-        
+
         </div>
         <ModalWthWbl ID={Id} />
         <ModalAdWbl ID={Id} />

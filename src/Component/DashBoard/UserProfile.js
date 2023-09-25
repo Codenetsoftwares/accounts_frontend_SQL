@@ -47,9 +47,7 @@ const UserProfile = () => {
               <Link
                 to={`/innerprofile/${users._id}`}
               >
-
                 {users.userName}
-
               </Link>
             </div>
           </div>

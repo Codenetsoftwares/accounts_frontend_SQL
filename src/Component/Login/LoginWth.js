@@ -148,8 +148,9 @@ const LoginWth = () => {
   return (
     // {Main Div}
     <div
-      className="bg-info d-flex justify-content-center  align-items-center vh-100"
-      style={{ backgroundImage: `url(${BodyBG})`, backgroundSize: "cover" }}
+      className=" d-flex justify-content-center  align-items-center vh-100"
+      style={{backgroundColor: "#fff4ec"}}
+      // style={{ backgroundImage: `url(${BodyBG})`, backgroundSize: "cover" }}
     >
       <div
         className=" card bg-transparent   p-5 rounded-3 justify-content-center kaushik"
@@ -169,7 +170,7 @@ const LoginWth = () => {
             role="tablist"
             style={{ width: "23rem", marginLeft: "-0.3rem", cursor: "pointer" }}
           >
-            {/* <li className="nav-item text-center" style={{ width: "33%" }}>
+             {/* <li className="nav-item text-center" style={{ width: "33%" }}>
               <a
                 className={`nav-link ${
                   activeTab === 1 ? "active" : ""
@@ -182,7 +183,7 @@ const LoginWth = () => {
                   Deposit
                 </b>
               </a>
-            </li>
+            </li>   
             <li className="nav-item text-center" style={{ width: "33%" }}>
               <a
                 className={`nav-link ${
@@ -194,7 +195,7 @@ const LoginWth = () => {
               >
                 <b className="text-white">Withdraw</b>
               </a>
-            </li> */}
+            </li>  */}
             <li className="nav-item text-center" style={{ width: "33%" }}>
               <a
                 className={`nav-link ${
@@ -204,7 +205,7 @@ const LoginWth = () => {
                 aria-selected={activeTab === 3}
                 onClick={() => handleClick(3)}
               >
-                <b className="text-white">Obhisab/Admin</b>
+                <b className="text-black">Obhisab/Admin</b>
                 <br />
               </a>
             </li>
