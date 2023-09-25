@@ -1,29 +1,14 @@
 import React, { useEffect, useState } from "react";
-// import DatePicker from "react-datepicker";
-// import "react-datepicker/dist/react-datepicker.css";
-import { Dropdown, DropdownButton } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { CardFd } from "./CardFd";
-import { CardFdT } from "./CardFdT";
 import { useAuth } from "../../Utils/Auth";
 import TransactionSercvice from "../../Services/TransactionSercvice";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import CalenderService from "../../Services/CalenderService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faDeleteLeft,
-  faDownLeftAndUpRightToCenter,
-  faTrash,
-  faUser,
-} from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
-import { FaFilter } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
-import { faCalendarAlt } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
 import "./AdminDash.css";
-import TopNavbar from "../Sidebar/TopNavbar";
 import AccountService from "../../Services/AccountService";
 import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
@@ -34,7 +19,6 @@ import { CSVLink } from "react-csv";
 const DuplicateDashboard = () => {
   const auth = useAuth();
   const nav = useNavigate();
-  console.log(auth)
   const [accountData, setAccountData] = useState([]);
   const [documentView, setDocumentView] = useState([]);
   const [documentFilter, setDocumentFilter] = useState([]);
@@ -69,7 +53,6 @@ const DuplicateDashboard = () => {
       (res) => (setDocumentView(res.data), setAccountData(res.data))
     );
   }, [auth]);
-  console.log(documentView);
 
   const handelDate = () => {
     const sdate = moment(startDatevalue, "DD-MM-YYYY HH:mm").toDate();
@@ -82,9 +65,7 @@ const DuplicateDashboard = () => {
     setDocumentFilter(filteredDocuments);
     setToggle(false);
   };
-  console.log(documentFilter);
-  console.log(startDatevalue);
-  console.log(endDatevalue);
+
   const handleReset = () => {
     setSelect("");
     setDocumentView(accountData);
@@ -160,7 +141,6 @@ const DuplicateDashboard = () => {
       setIntroducerList(res.data)
     );
   }, [auth]);
-  console.log(introducerList);
 
   const handleId = (e, id) => {
     e.preventDefault()
@@ -249,249 +229,214 @@ const DuplicateDashboard = () => {
   };
 
 
-
-
-  console.log(introducerList)
-
   return (
-    <div className="main">
+    <div className="container-fluid" style={{ backgroundColor: '#fff4ec' }}>
       {/* This is the Main Card */}
       <div
-        className="card card-body rounded-1 main "
-      // style={{ backgroundImage: gradient }}
+        className="card card-body rounded-1 "
+        style={{ backgroundColor: '#fff4ec' }}
       >
-        <div className="d-flex mt-5 mt-5 ml-5 pt-5 justify-content-center">
-          <h6 className="fw-bold text-nowrap pt-2">
-            {" "}
-            View <FaEye />
-          </h6>
-          <select
-            className="form-control mx-3 w-25"
-            value={select || ""}
-            autoComplete="off"
-            onChange={handleChange}
-            style={{
-              boxShadow: " 17px 15px 27px -9px rgba(0,0,0,0.41)",
-              border: "0.5px solid black",
-              borderRadius: "6px",
-            }}
-          >
-            <option className="d-flex" value="All">
-              <b>All</b>
-            </option>
-            <option className="d-flex" value="Deposit">
-              <b>Deposit</b>
-            </option>
-            <option className="d-flex" value="Withdraw">
-              <b>Withdraw</b>
-            </option>
-            <option className="d-flex" value="Manual-Bank-Deposit">
-              <b>Manual Bank Deposit</b>
-            </option>{" "}
-            <option className="d-flex" value="Manual-Bank-Withdraw">
-              <b>Manual Bank Withdraw</b>
-            </option>
-            <option className="d-flex" value="Manual-Website-Deposit">
-              <b>Manual Website Deposit</b>
-            </option>{" "}
-            <option className="d-flex" value="Manual-Website-Withdraw">
-              <b>Manual Website Withdraw</b>
-            </option>
-          </select>
-        </div>
+        <div className="row row-cols-2 row-cols-lg-3 g-2 g-lg-2" >
 
-        <div className="d-flex pt-3 justify-content-center">
-          <h6 className="fw-bold text-nowrap pt-2"> SubAdminlist</h6>
-          <select
-            className="form-control mx-3 w-25"
-            value={subAdmin || ""}
-            autoComplete="off"
-            onChange={handleSubAdmin}
-            style={{
-              boxShadow: " 17px 15px 27px -9px rgba(0,0,0,0.41)",
-              border: "0.5px solid black",
-              borderRadius: "6px",
-            }}
-            required
-          >
-            <option selected>Select subAdmin</option>
-            {subAdminlist.map((data) => {
-              return (
-                <option key={data._id} value={data.firstname}>
-                  {data.firstname}
-                </option>
-              );
-            })}
-          </select>
-        </div>
-        <div className="d-flex pt-3 justify-content-center">
-          <h6 className="fw-bold text-nowrap pt-2"> Introducerlist</h6>
-          <select
-            className="form-control mx-3 w-25"
-            value={introducer || ""}
-            autoComplete="off"
-            onChange={handleIntroducer}
-            style={{
-              boxShadow: " 17px 15px 27px -9px rgba(0,0,0,0.41)",
-              border: "0.5px solid black",
-              borderRadius: "6px",
-            }}
-            required
-          >
-            <option selected>Select Introducer</option>
-            {introducerList.map((data) => {
-              return (
-                <option key={data._id} value={data.userName}>
-                  {data.userName}
-                </option>
-              );
-            })}
-          </select>
-        </div>
-        <div className="d-flex pt-3 justify-content-center">
-          <h6 className="fw-bold text-nowrap pt-2"> BankNameList</h6>
-          <select
-            className="form-control mx-3 w-25"
-            value={bank || ""}
-            autoComplete="off"
-            onChange={handleBank}
-            style={{
-              boxShadow: " 17px 15px 27px -9px rgba(0,0,0,0.41)",
-              border: "0.5px solid black",
-              borderRadius: "6px",
-            }}
-            required
-          >
-            <option selected>Select Bank</option>
-            {bankList.map((data) => {
-              return (
-                <option key={data._id} value={data.bankName}>
-                  {data.bankName}
-                </option>
-              );
-            })}
-          </select>
-        </div>
-        <div className="d-flex pt-3 justify-content-center">
-          <h6 className="fw-bold text-nowrap pt-2"> WebsitesList</h6>
-          <select
-            className="form-control mx-3 w-25"
-            value={website || ""}
-            autoComplete="off"
-            onChange={handleWebsite}
-            style={{
-              boxShadow: " 17px 15px 27px -9px rgba(0,0,0,0.41)",
-              border: "0.5px solid black",
-              borderRadius: "6px",
-            }}
-            required
-          >
-            <option selected>Select website</option>
-            {websiteList.map((data) => {
-              return (
-                <option key={data._id} value={data.websiteName}>
-                  {data.websiteName}
-                </option>
-              );
-            })}
-          </select>
-        </div>
-        {/* <div className="d-flex mt-2 pl-5 justify-content-center">
-         
+          <div className="d-flex col pt-3 justify-content-center"  >
+            <h6 className="fw-bold text-nowrap pt-2" >
+              Transaction
+            </h6>
+            <select
+              className="form-control mx-3 w-50"
+              value={select || ""}
+              autoComplete="off"
+              onChange={handleChange}
+              style={{
+                // boxShadow: " 17px 15px 27px -9px rgba(0,0,0,0.41)",
+                border: "0.5px solid black",
+                borderRadius: "6px"
+              }}
 
-          <div className="d-flex gap-2 justify-content-between w-25 ms-4">
-            <label className="form-label">
-              Start date
-            </label>
-            <Datetime value={startDatevalue}
-              onChange={handleStartDatevalue}
-              dateFormat="DD-MM-YYYY"
-              timeFormat="mm:HH" />
-            <label className="form-label">
-              Date date
-            </label>
-            <Datetime value={endDatevalue}
-              onChange={handleEndDatevalue}
-              dateFormat="DD-MM-YYYY"
-              timeFormat="mm-HH" />
-            <div>
-              {" "}
-              <button
-                type="button"
-                className="btn btn-dark"
-                style={{ boxShadow: "17px 15px 27px -9px rgba(0, 0, 0, 0.41)" }}
-                onClick={handelDate}
-              >
-                Filter
-              </button>
-            </div>
-            <div>
-              <button
-                type="button"
-                className="btn btn-dark"
-                style={{ boxShadow: "17px 15px 27px -9px rgba(0, 0, 0, 0.41)" }}
-                onClick={handleReset}
-              >
-                Reset
-              </button>
-            </div>
-          </div>
-        </div> */}
-        <div className="d-flex pt-3 justify-content-center">
-          <h6 className="fw-bold text-nowrap pt-2"> Start Date</h6>
-          <Datetime
-            value={startDatevalue}
-            onChange={handleStartDatevalue}
-            dateFormat="DD-MM-YYYY"
-            timeFormat="HH:mm"
-          />
-        </div>
-        <div className="d-flex pt-3 justify-content-center">
-          <h6 className="fw-bold text-nowrap pt-2"> End Date</h6>
-          <Datetime
-            value={endDatevalue}
-            onChange={handleEndDatevalue}
-            dateFormat="DD-MM-YYYY"
-            timeFormat="HH:mm"
-          />
-        </div>
-        <div className="d-flex pt-3 justify-content-center">
-          <div className="mx-2">
-            <button
-              type="button"
-              className="btn btn-dark"
-              style={{ boxShadow: "17px 15px 27px -9px rgba(0, 0, 0, 0.41)" }}
-              onClick={handelDate}
             >
-              Filter
-            </button>
+              <option className="d-flex" value="All">
+                <b>All</b>
+              </option>
+              <option className="d-flex" value="Deposit">
+                <b>Deposit</b>
+              </option>
+              <option className="d-flex" value="Withdraw">
+                <b>Withdraw</b>
+              </option>
+              <option className="d-flex" value="Manual-Bank-Deposit">
+                <b>Manual Bank Deposit</b>
+              </option>{" "}
+              <option className="d-flex" value="Manual-Bank-Withdraw">
+                <b>Manual Bank Withdraw</b>
+              </option>
+              <option className="d-flex" value="Manual-Website-Deposit">
+                <b>Manual Website Deposit</b>
+              </option>{" "}
+              <option className="d-flex" value="Manual-Website-Withdraw">
+                <b>Manual Website Withdraw</b>
+              </option>
+            </select>
           </div>
-          <div className="mx-2">
-            <button
-              type="button"
-              className="btn btn-dark"
-              style={{ boxShadow: "17px 15px 27px -9px rgba(0, 0, 0, 0.41)" }}
-              onClick={handleReset}
+
+          <div className="d-flex col pt-3 justify-content-center" >
+            <h6 className="fw-bold text-nowrap pt-2"> SubAdminlist</h6>
+            <select
+              className="form-control mx-3 w-50"
+              value={subAdmin || ""}
+              autoComplete="off"
+              onChange={handleSubAdmin}
+              style={{
+                // boxShadow: " 17px 15px 27px -9px rgba(0,0,0,0.41)",
+                border: "0.5px solid black",
+                borderRadius: "6px",
+              }}
+              required
             >
-              Reset
-            </button>
+              <option selected>Select subAdmin</option>
+              {subAdminlist.map((data) => {
+                return (
+                  <option key={data._id} value={data.firstname}>
+                    {data.firstname}
+                  </option>
+                );
+              })}
+            </select>
           </div>
-          {toggle ? (
-            <div className="mx-2">
-              <CSVLink data={documentView} className="btn btn-success">
-                Download Data
-              </CSVLink>
+
+          <div className="d-flex col pt-3 justify-content-center" >
+            <h6 className="fw-bold text-nowrap pt-2"> Introducerlist</h6>
+            <select
+              className="form-control mx-3 w-50"
+              value={introducer || ""}
+              autoComplete="off"
+              onChange={handleIntroducer}
+              style={{
+                // boxShadow: "17px 15px 27px -9px rgba(0,0,0,0.41)",
+                border: "0.5px solid black",
+                borderRadius: "6px",
+              }}
+              required
+            >
+              <option selected>Select Introducer</option>
+              {introducerList.map((data) => {
+                return (
+                  <option key={data._id} value={data.userName}>
+                    {data.userName}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+
+          <div className="d-flex col pt-3 justify-content-center"  >
+            <h6 className="fw-bold text-nowrap pt-2"> BankNameList</h6>
+            <select
+              className="form-control mx-3 w-50"
+              value={bank || ""}
+              autoComplete="off"
+              onChange={handleBank}
+              style={{
+                // boxShadow: " 17px 15px 27px -9px rgba(0,0,0,0.41)",
+                border: "0.5px solid black",
+                borderRadius: "6px",
+              }}
+              required
+            >
+              <option selected>Select Bank</option>
+              {bankList.map((data) => {
+                return (
+                  <option key={data._id} value={data.bankName}>
+                    {data.bankName}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+
+          <div className="d-flex col pt-3 justify-content-center" >
+            <h6 className="fw-bold text-nowrap pt-2"> WebsitesList</h6>
+            <select
+              className="form-control mx-3 w-50"
+              value={website || ""}
+              autoComplete="off"
+              onChange={handleWebsite}
+              style={{
+                // boxShadow: " 17px 15px 27px -9px rgba(0,0,0,0.41)",
+                border: "0.5px solid black",
+                borderRadius: "6px",
+              }}
+              required
+            >
+              <option selected>Select website</option>
+              {websiteList.map((data) => {
+                return (
+                  <option key={data._id} value={data.websiteName}>
+                    {data.websiteName}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+
+
+
+          <div className="row row-cols-4 row-cols-lg-4 g-2 g-lg-3 w-100 " style={{paddingLeft: '5rem'}} >
+            <div className="d-flex col justify-content-center ">
+              <h6 className="fw-bold text-nowrap pt-2 pr-2"> Start Date</h6>
+              <Datetime
+                value={startDatevalue}
+                onChange={handleStartDatevalue}
+                dateFormat="DD-MM-YYYY"
+                timeFormat="HH:mm"
+              />
             </div>
-          ) : (
-            <div className="mx-2">
-              <CSVLink data={documentFilter} className="btn btn-success">
-                Download Filter Data
-              </CSVLink>
+            <div className="d-flex col  justify-content-center">
+              <h6 className="fw-bold text-nowrap pt-2 pr-2"> End Date</h6>
+              <Datetime
+                value={endDatevalue}
+                onChange={handleEndDatevalue}
+                dateFormat="DD-MM-YYYY"
+                timeFormat="HH:mm"
+              />
             </div>
-          )}
+            <div className="d-flex col justify-content-center">
+              <div className="mx-2">
+                <button
+                  type="button"
+                  className="btn btn-dark"
+                  // style={{ boxShadow: "17px 15px 27px -9px rgba(0, 0, 0, 0.41)" }}
+                  onClick={handelDate}
+                >
+                  Filter
+                </button>
+              </div>
+              <div className="mx-2">
+                <button
+                  type="button"
+                  className="btn btn-dark"
+                  // style={{ boxShadow: "17px 15px 27px -9px rgba(0, 0, 0, 0.41)" }}
+                  onClick={handleReset}
+                >
+                  Reset
+                </button>
+              </div>
+              {toggle ? (
+                <div className="mx-2">
+                  <CSVLink data={documentView} className="btn btn-success">
+                    Download Data
+                  </CSVLink>
+                </div>
+              ) : (
+                <div className="mx-2">
+                  <CSVLink data={documentFilter} className="btn btn-success">
+                    Download Filter Data
+                  </CSVLink>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
-
       {toggle ? (
         <small>
           {/* Normal View */}

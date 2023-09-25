@@ -14,8 +14,8 @@ const InnerBank = ({ getbankName }) => {
   // const [selectedBank, setSelectedBank] = useState(null);
 
   const auth = useAuth();
-  console.log("This is Auth==>>>", auth);
-  console.log("getbank", getbankName);
+  // console.log("This is Auth==>>>", auth);
+  // console.log("getbank", getbankName);
   const bnamechnage = (e) => {
     setBname(e.target.value);
   };
