@@ -112,6 +112,16 @@ class TransactionService {
       },
     });
   }
+  filterTransaction(data, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/admin/filter-data`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
 }
 
 export default new TransactionService();

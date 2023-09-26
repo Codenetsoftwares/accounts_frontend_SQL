@@ -152,7 +152,7 @@ const NavSide = () => {
                               role === "Transaction-Edit-Request" ||
                               role === "Transaction-Delete-Request"
                           ) && (
-                              <Link to="/Testing" className="nav-link text-white">
+                              <Link to="/maintransactionpage" className="nav-link text-white">
                                 <i className="far fa-circle nav-icon" />
                                 <p>Transaction Details</p>
                               </Link>
@@ -165,51 +165,51 @@ const NavSide = () => {
                               role === "Create-Withdraw-Transaction" ||
                               role === "Create-Transaction"
                           ) && (
-                              
-                               
-                                <>
-                                  {isToggleCreateTransaction ? (
-                                    <li
-                                      className="nav-link text-white"
+
+
+                              <>
+                                {isToggleCreateTransaction ? (
+                                  <li
+                                    className="nav-link text-white"
+                                    onClick={handleToggleCreateTransaction}
+                                  >
+                                    <i className="far fa-circle nav-icon" />
+                                    <p>
+                                      Create Transaction
+                                      <i className="fas fa-angle-left right" />
+                                    </p>
+                                  </li>
+                                ) : (
+                                  <li className="nav-item ">
+                                    <Link
+                                      to="#"
+                                      className="nav-link text-white "
                                       onClick={handleToggleCreateTransaction}
                                     >
-                                      <i className="far fa-circle nav-icon" />
+                                      <i className="nav-icon fas fa-copy" />
                                       <p>
                                         Create Transaction
-                                        <i className="fas fa-angle-left right" />
+                                        <i class="fas fa-chevron-down right"></i>
                                       </p>
-                                    </li>
-                                  ) : (
-                                    <li className="nav-item ">
-                                      <Link
-                                        to="#"
-                                        className="nav-link text-white "
-                                        onClick={handleToggleCreateTransaction}
-                                      >
-                                        <i className="nav-icon fas fa-copy" />
-                                        <p>
-                                          Create Transaction
-                                          <i class="fas fa-chevron-down right"></i>
-                                        </p>
-                                      </Link>
-                                      <Link
-                                        to="/deposit"
-                                        className="nav-link text-white"
-                                      >
-                                        <i className="far fa-circle nav-icon" />
-                                        <p>Deposit</p>
-                                      </Link>
-                                      <Link
-                                        to="/withdraw"
-                                        className="nav-link text-white"
-                                      >
-                                        <i className="far fa-circle nav-icon" />
-                                        <p>Withdraw</p>
-                                      </Link>
-                                    </li>
-                                  )}
-                                </>
-                           
+                                    </Link>
+                                    <Link
+                                      to="/deposit"
+                                      className="nav-link text-white"
+                                    >
+                                      <i className="far fa-circle nav-icon" />
+                                      <p>Deposit</p>
+                                    </Link>
+                                    <Link
+                                      to="/withdraw"
+                                      className="nav-link text-white"
+                                    >
+                                      <i className="far fa-circle nav-icon" />
+                                      <p>Withdraw</p>
+                                    </Link>
+                                  </li>
+                                )}
+                              </>
+
                             )}
                         </li>
                       )}
