@@ -7,7 +7,7 @@ import AccountService from '../Services/AccountService';
 import { toast } from 'react-toastify';
 import EditTransaction from './Modal/EditTransaction';
 
-const TableTransaction = ({ FilterData, purpose }) => {
+const TableTransaction = ({ FilterData, purpose, page, handlePage }) => {
     const auth = useAuth();
 
     const [id, setId] = useState("");
@@ -74,6 +74,7 @@ const TableTransaction = ({ FilterData, purpose }) => {
     };
     console.log(FilterData)
     return (
+
         <div>
             <table class="table table-bordered  table-sm table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl w-auto ">
                 <thead className="table-success">
@@ -278,6 +279,23 @@ const TableTransaction = ({ FilterData, purpose }) => {
                     )}
                 </tbody>
             </table>
+            {FilterData.length > 0 ? (
+                <div className='text-center'>
+                    <span
+                        className={`m-3 ${page === 1 ? 'disabled' : ''}`}
+                        onClick={() => { page > 1 && handlePage(page - 1) }}
+                    >
+                        <i className="fas fa-xl fa-solid fa-less-than" ></i>
+                    </span>
+                    <span className='fs-4'>{page}</span>
+                    <span
+                        className='m-3'
+                        onClick={() => { handlePage(page + 1) }}
+                    >
+                        <i className="fa-solid fas fa-xl fa-greater-than"></i>
+                    </span>
+                </div>
+            ) : null}
             <EditTransaction id={id} />
         </div>
     )

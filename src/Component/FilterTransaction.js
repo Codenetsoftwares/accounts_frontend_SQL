@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useAuth } from "../Utils/Auth"
 import TransactionSercvice from '../Services/TransactionSercvice'
 import Datetime from "react-datetime";
@@ -7,7 +7,7 @@ import moment from "moment";
 import { CSVLink } from "react-csv";
 import AccountService from '../Services/AccountService';
 
-const FilterTransaction = ({ purpose, handleData }) => {
+const FilterTransaction = ({ purpose, handleData, page }) => {
     const auth = useAuth();
     const [subAdminlist, setSubAdminlist] = useState([]);
     const [subAdmin, setSubAdmin] = useState("");
@@ -22,6 +22,7 @@ const FilterTransaction = ({ purpose, handleData }) => {
     const [endDatevalue, setEndDateValue] = useState(new Date());
     const [documentView, setDocumentView] = useState([]);
 
+
     const handleFilter = () => {
         const data = {
             transactionType: select,
@@ -30,10 +31,10 @@ const FilterTransaction = ({ purpose, handleData }) => {
             BankList: bank,
             WebsiteList: website
         }
-        TransactionSercvice.filterTransaction(data, auth.user).then((res) => {
+        TransactionSercvice.filterTransaction(data, page, auth.user).then((res) => {
             return (
-                setDocumentView(res.data.bankTransactions),
-                handleData(res.data.bankTransactions)
+                setDocumentView(res.data),
+                handleData(res.data)
             )
         }).catch((err) => console.log(err));
 
@@ -46,6 +47,8 @@ const FilterTransaction = ({ purpose, handleData }) => {
         SetStartDatesetValue(new Date());
         setEndDateValue(new Date());
         setIntroducer("");
+        // handleFilter();
+        // handlememo();
     };
     useEffect(() => {
         handleFilter();
@@ -53,7 +56,8 @@ const FilterTransaction = ({ purpose, handleData }) => {
 
     useEffect(() => {
         handleFilter();
-    }, [handleFilter]);
+    }, [page]);
+    // const handlememo = useMemo(() => { handleFilter() }, [handleFilter])
 
     useEffect(() => {
         if (auth.user) {
