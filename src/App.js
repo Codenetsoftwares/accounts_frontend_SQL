@@ -48,6 +48,7 @@ import BankDelete from "./Component/DashBoard/Request/Bank/BankDelete";
 import BankEdit from "./Component/DashBoard/Request/Bank/BankEdit";
 import WebsiteDelete from "./Component/DashBoard/Request/Website/WebsiteDelete";
 import WebsiteEdit from "./Component/DashBoard/Request/Website/WebsiteEdit";
+import Login from './Component/Login/Login';
 
 
 function App() {
@@ -68,7 +69,7 @@ function App() {
       <AuthProvider>
         <BrowserRouter>
           <Routes>
-            <Route index element={<LoginWth />} />
+            <Route index element={<Login/>} />
 
             <Route path="/" element={<AdminLayout />}>
               <Route
