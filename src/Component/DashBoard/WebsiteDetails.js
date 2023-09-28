@@ -119,7 +119,7 @@ const WebsiteDetails = () => {
                 <div class="card d-flex justify-content-between">
                   <div class="card-body ">
                     <p className="col font-weight-bold">
-                      {data.websiteName}<br /><p className="text-success">Balance:{data.walletBalance}</p>
+                      {data.websiteName}<br /><p className="text-success">Balance:{data.balance}</p>
                     </p>
                     <div className=" d-flex justify-content-center gap-1">
                       <button

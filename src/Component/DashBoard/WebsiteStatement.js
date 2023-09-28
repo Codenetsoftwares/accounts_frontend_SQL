@@ -644,9 +644,9 @@ const WebsiteStatement = () => {
                           )}
                         </td> */}
                         <td>
-                          {data.currentWebsiteBalance ? (
+                          {data.balance ? (
                             <p className="col fs-6 ">
-                              {data.currentWebsiteBalance}
+                              {data.balance}
                             </p>
                           ) : (
                             "N.A"
@@ -907,9 +907,9 @@ const WebsiteStatement = () => {
                           )}
                         </td> */}
                         <td>
-                          {data.currentWebsiteBalance ? (
+                          {data.balance  ? (
                             <p className="col fs-6 ">
-                              {data.currentWebsiteBalance}
+                              {data.balance}
                             </p>
                           ) : (
                             "N.A"

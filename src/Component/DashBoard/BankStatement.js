@@ -596,9 +596,9 @@ const BankStatement = () => {
                           </p>
                         </td> */}
                         <td>
-                          {data.currentBankBalance ? (
+                          {data.balance ? (
                             <p className="col fs-6 text-break">
-                              {data.currentBankBalance}
+                              {data.balance}
                             </p>
                           ) : (
                             "N.A"
@@ -866,9 +866,9 @@ const BankStatement = () => {
                           </p>
                         </td> */}
                         <td>
-                          {data.currentBankBalance ? (
+                          {data.balance ? (
                             <p className="col fs-6 text-break">
-                              {data.currentBankBalance}
+                              {data.balance}
                             </p>
                           ) : (
                             "N.A"
