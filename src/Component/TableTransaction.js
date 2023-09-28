@@ -11,6 +11,7 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage }) => {
     const auth = useAuth();
 
     const [id, setId] = useState("");
+    const [pge, setPge] = useState(1);
 
     const handleId = (e, id) => {
         e.preventDefault()
@@ -294,6 +295,9 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage }) => {
                     >
                         <i className="fa-solid fas fa-xl fa-greater-than"></i>
                     </span>
+                    {/* jump to: */}
+                    {/* <input type='number' className='m-1' width={8} onChange={(e) => { setPge(e.target.value) }} />
+                    <button type="button" class="btn btn-primary" onClick={handlePage(pge)}>Go</button> */}
                 </div>
             ) : null}
             <EditTransaction id={id} />
