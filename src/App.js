@@ -48,6 +48,7 @@ import BankDelete from "./Component/DashBoard/Request/Bank/BankDelete";
 import BankEdit from "./Component/DashBoard/Request/Bank/BankEdit";
 import WebsiteDelete from "./Component/DashBoard/Request/Website/WebsiteDelete";
 import WebsiteEdit from "./Component/DashBoard/Request/Website/WebsiteEdit";
+import MainTransactionPage from './pages/MainTransactionPage';
 
 
 function App() {
@@ -146,6 +147,7 @@ function App() {
                   </RequireAuth>
                 }
               />
+              <Route path="maintransactionpage" element={<RequireAuth><MainTransactionPage /></RequireAuth>} />
               <Route
                 path="withdraw"
                 element={

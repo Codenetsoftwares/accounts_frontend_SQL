@@ -38,8 +38,6 @@ const DuplicateDashboard = () => {
 
 
   const test = ["transactionType", "subAdminName", "websiteName", "bankName", "introducerUserName"];
-
-
   const handleClick = (key, value) => {
     let nArr = [...documentView];
     if (test.includes(key)) {
