@@ -124,7 +124,7 @@ const AdminBank = () => {
                 return (
                   <div class="card d-flex justify-content-between">
                     <div class="card-body ">
-                      <p className="font-weight-bold">{data.bankName}<br /><p className="text-success">Balance:{data.walletBalance}</p></p>
+                      <p className="font-weight-bold">{data.bankName}<br /><p className="text-success">Balance:{data.balance}</p></p>
                       <div className=" d-flex justify-content-center gap-1">
                         <button
                           type="button"

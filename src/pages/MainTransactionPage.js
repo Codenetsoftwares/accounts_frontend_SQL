@@ -15,7 +15,7 @@ const MainTransactionPage = () => {
     console.log(documentFilter)
     return (
         <div className="container-fluid" style={{ backgroundColor: '#fff4ec' }}>
-            <FilterTransaction purpose={"mainStatement"} handleData={handleData} page={page} />
+            <FilterTransaction purpose={"mainStatement"} handleData={handleData} page={page}  />
             <TableTransaction FilterData={documentFilter} purpose={"mainStatement"} handlePage={handlePage} page={page} />
         </div>
     )

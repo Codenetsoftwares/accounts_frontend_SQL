@@ -256,186 +256,159 @@ const WebsiteStatement = () => {
     <div>
       <div className="">
         {/* This is for Normal View */}
-        <div className="d-flex mt-5 mt-5 ml-5 pt-5 justify-content-center">
-          <h6 className="fw-bold text-nowrap pt-2">View</h6>
-          <select
-            className="form-control mx-3 w-25 mb-2"
-            value={select || ""}
-            autoComplete="off"
-            onChange={handleChange}
-            style={{
-              boxShadow: " 17px 15px 27px -9px rgba(0,0,0,0.41)",
-              border: "0.5px solid black",
-              borderRadius: "6px",
-            }}
-          >
-            {" "}
-            <option className="d-flex" value="All">
-              <b>All</b>
-            </option>
-            <option className="d-flex" value="Manual-Website-Deposit">
-              <b>Manual Entry(Deposit)</b>
-            </option>
-            <option className="d-flex" value="Manual-Website-Withdraw">
-              <b>Manual Entry(Withdraw)</b>
-            </option>
-            <option className="d-flex" value="Deposit">
-              <b>User Entry(Deposit)</b>
-            </option>
-            <option className="d-flex" value="Withdraw">
-              <b>User Entry(Withdraw)</b>
-            </option>
-          </select>
-        </div>
-        <div className="d-flex pt-3 justify-content-center">
-          <h6 className="fw-bold text-nowrap pt-2"> SubAdminlist</h6>
-          <select
-            className="form-control mx-3 w-25"
-            value={subAdmin || ""}
-            autoComplete="off"
-            onChange={handleSubAdmin}
-            style={{
-              boxShadow: " 17px 15px 27px -9px rgba(0,0,0,0.41)",
-              border: "0.5px solid black",
-              borderRadius: "6px",
-            }}
-            required
-          >
-            <option selected>Select subAdmin</option>
-            {subAdminlist.map((data) => {
-              return (
-                <option key={data._id} value={data.firstname}>
-                  {data.firstname}
+        <div
+          className="card card-body rounded-1 "
+          style={{ backgroundColor: '#fff4ec' }}
+        >
+          <div className="row row-cols-2 row-cols-lg-3 g-2 g-lg-2" >
+
+            <div className="d-flex col pt-3 justify-content-center"  >
+              <h6 className="fw-bold text-nowrap pt-2" >
+                Transaction
+              </h6>
+              <select
+                className="form-control mx-3 w-50"
+                value={select || ""}
+                autoComplete="off"
+                onChange={handleChange}
+                style={{
+                  // boxShadow: " 17px 15px 27px -9px rgba(0,0,0,0.41)",
+                  border: "0.5px solid black",
+                  borderRadius: "6px"
+                }}
+
+              >
+                <option className="d-flex" value="All">
+                  <b>All</b>
                 </option>
-              );
-            })}
-          </select>
-        </div>
-        {/* <div className="d-flex pt-3 justify-content-center">
-          <h6 className="fw-bold text-nowrap pt-2"> Introducerlist</h6>
-          <select
-            className="form-control mx-3 w-25"
-            value={introducer || ""}
-            autoComplete="off"
-            onChange={handleIntroducer}
-            style={{
-              boxShadow: " 17px 15px 27px -9px rgba(0,0,0,0.41)",
-              border: "0.5px solid black",
-              borderRadius: "6px",
-            }}
-            required
-          >
-            <option selected>Select Introducer</option>
-            {introducerList.map((data) => {
-              return (
-                <option key={data._id} value={data.userName}>
-                  {data.userName}
+                <option className="d-flex" value="Deposit">
+                  <b>Deposit</b>
                 </option>
-              );
-            })}
-          </select>
-        </div> */}
-        {/* <div className="d-flex pt-3 justify-content-center">
-          <h6 className="fw-bold text-nowrap pt-2"> BankNameList</h6>
-          <select
-            className="form-control mx-3 w-25"
-            value={bank || ""}
-            autoComplete="off"
-            onChange={handleBank}
-            style={{
-              boxShadow: " 17px 15px 27px -9px rgba(0,0,0,0.41)",
-              border: "0.5px solid black",
-              borderRadius: "6px",
-            }}
-            required
-          >
-            <option selected>Select Bank</option>
-            {bankList.map((data) => {
-              return (
-                <option key={data._id} value={data.bankName}>
-                  {data.bankName}
+                <option className="d-flex" value="Withdraw">
+                  <b>Withdraw</b>
                 </option>
-              );
-            })}
-          </select>
-        </div> */}
-        <div className="d-flex pt-3 justify-content-center">
-          <h6 className="fw-bold text-nowrap pt-2"> WebsitesList</h6>
-          <select
-            className="form-control mx-3 w-25"
-            value={website || ""}
-            autoComplete="off"
-            onChange={handleWebsite}
-            style={{
-              boxShadow: " 17px 15px 27px -9px rgba(0,0,0,0.41)",
-              border: "0.5px solid black",
-              borderRadius: "6px",
-            }}
-            required
-          >
-            <option selected>Select website</option>
-            {websiteList.map((data) => {
-              return (
-                <option key={data._id} value={data.websiteName}>
-                  {data.websiteName}
+                <option className="d-flex" value="Manual-Bank-Deposit">
+                  <b>Manual Bank Deposit</b>
+                </option>{" "}
+                <option className="d-flex" value="Manual-Bank-Withdraw">
+                  <b>Manual Bank Withdraw</b>
                 </option>
-              );
-            })}
-          </select>
-        </div>
-        <div className="d-flex pt-2 justify-content-center">
-          <h6 className="fw-bold text-nowrap pt-2"> Start Date</h6>
-          <Datetime
-            value={startDatevalue}
-            onChange={handleStartDatevalue}
-            dateFormat="DD-MM-YYYY"
-            timeFormat="HH:mm"
-          />
-        </div>
-        <div className="d-flex pt-2 justify-content-center mb-3">
-          <h6 className="fw-bold text-nowrap pt-2"> End Date</h6>
-          <Datetime
-            value={endDatevalue}
-            onChange={handleEndDatevalue}
-            dateFormat="DD-MM-YYYY"
-            timeFormat="HH:mm"
-          />
-        </div>
-        <div className="d-flex pt-3 justify-content-center mb-2">
-          <div className="mx-2">
-            <button
-              type="button"
-              className="btn btn-dark"
-              style={{ boxShadow: "17px 15px 27px -9px rgba(0, 0, 0, 0.41)" }}
-              onClick={handelDate}
-            >
-              Filter
-            </button>
-          </div>
-          <div className="mx-2">
-            <button
-              type="button"
-              className="btn btn-dark"
-              style={{ boxShadow: "17px 15px 27px -9px rgba(0, 0, 0, 0.41)" }}
-              onClick={handleReset}
-            >
-              Reset
-            </button>
-          </div>
-          <div className="mx-2">
-            {toggle ? (
-              <div className="mx-2">
-                <CSVLink data={documentView} className="btn btn-success">
-                  Download Data
-                </CSVLink>
+                <option className="d-flex" value="Manual-Website-Deposit">
+                  <b>Manual Website Deposit</b>
+                </option>{" "}
+                <option className="d-flex" value="Manual-Website-Withdraw">
+                  <b>Manual Website Withdraw</b>
+                </option>
+              </select>
+            </div>
+
+            <div className="d-flex col pt-3 justify-content-center" >
+              <h6 className="fw-bold text-nowrap pt-2"> SubAdminlist</h6>
+              <select
+                className="form-control mx-3 w-50"
+                value={subAdmin || ""}
+                autoComplete="off"
+                onChange={handleSubAdmin}
+                style={{
+                  // boxShadow: " 17px 15px 27px -9px rgba(0,0,0,0.41)",
+                  border: "0.5px solid black",
+                  borderRadius: "6px",
+                }}
+                required
+              >
+                <option selected>Select subAdmin</option>
+                {subAdminlist.map((data) => {
+                  return (
+                    <option key={data._id} value={data.firstname}>
+                      {data.firstname}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+
+            <div className="d-flex col pt-3 justify-content-center" >
+              <h6 className="fw-bold text-nowrap pt-2"> WebsitesList</h6>
+              <select
+                className="form-control mx-3 w-50"
+                value={website || ""}
+                autoComplete="off"
+                onChange={handleWebsite}
+                style={{
+                  // boxShadow: " 17px 15px 27px -9px rgba(0,0,0,0.41)",
+                  border: "0.5px solid black",
+                  borderRadius: "6px",
+                }}
+                required
+              >
+                <option selected>Select website</option>
+                {websiteList.map((data) => {
+                  return (
+                    <option key={data._id} value={data.websiteName}>
+                      {data.websiteName}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+
+
+
+            <div className="row row-cols-4 row-cols-lg-4 g-2 g-lg-3 w-100 " style={{ paddingLeft: '5rem' }} >
+              <div className="d-flex col justify-content-center ">
+                <h6 className="fw-bold text-nowrap pt-2 pr-2"> Start Date</h6>
+                <Datetime
+                  value={startDatevalue}
+                  onChange={handleStartDatevalue}
+                  dateFormat="DD-MM-YYYY"
+                  timeFormat="HH:mm"
+                />
               </div>
-            ) : (
-              <div className="mx-2">
-                <CSVLink data={documentFilter} className="btn btn-success">
-                  Download Filter Data
-                </CSVLink>
+              <div className="d-flex col  justify-content-center">
+                <h6 className="fw-bold text-nowrap pt-2 pr-2"> End Date</h6>
+                <Datetime
+                  value={endDatevalue}
+                  onChange={handleEndDatevalue}
+                  dateFormat="DD-MM-YYYY"
+                  timeFormat="HH:mm"
+                />
               </div>
-            )}
+              <div className="d-flex col justify-content-center">
+                <div className="mx-2">
+                  <button
+                    type="button"
+                    className="btn btn-dark"
+                    // style={{ boxShadow: "17px 15px 27px -9px rgba(0, 0, 0, 0.41)" }}
+                    onClick={handelDate}
+                  >
+                    Filter
+                  </button>
+                </div>
+                <div className="mx-2">
+                  <button
+                    type="button"
+                    className="btn btn-dark"
+                    // style={{ boxShadow: "17px 15px 27px -9px rgba(0, 0, 0, 0.41)" }}
+                    onClick={handleReset}
+                  >
+                    Reset
+                  </button>
+                </div>
+                {toggle ? (
+                  <div className="mx-2">
+                    <CSVLink data={documentView} className="btn btn-success">
+                      Download Data
+                    </CSVLink>
+                  </div>
+                ) : (
+                  <div className="mx-2">
+                    <CSVLink data={documentFilter} className="btn btn-success">
+                      Download Filter Data
+                    </CSVLink>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
 
@@ -644,9 +617,9 @@ const WebsiteStatement = () => {
                           )}
                         </td> */}
                         <td>
-                          {data.currentWebsiteBalance ? (
+                          {data.balance ? (
                             <p className="col fs-6 ">
-                              {data.currentWebsiteBalance}
+                              {data.balance}
                             </p>
                           ) : (
                             "N.A"
@@ -907,9 +880,9 @@ const WebsiteStatement = () => {
                           )}
                         </td> */}
                         <td>
-                          {data.currentWebsiteBalance ? (
+                          {data.balance  ? (
                             <p className="col fs-6 ">
-                              {data.currentWebsiteBalance}
+                              {data.balance}
                             </p>
                           ) : (
                             "N.A"

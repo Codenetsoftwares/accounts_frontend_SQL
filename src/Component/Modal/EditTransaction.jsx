@@ -19,11 +19,10 @@ const EditTransaction = ({ id }) => {
       (res) => {
         const userWithId = res.data.find((user) => user._id === id);
         setData(userWithId);
-        console.log(userWithId)
       }
     );
   }, [id]);
-  console.log(data)
+
   const handleToggleEdit = (e) => {
     e.preventDefault();
 

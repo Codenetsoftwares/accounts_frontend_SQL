@@ -6,8 +6,9 @@ import "react-datetime/css/react-datetime.css";
 import moment from "moment";
 import { CSVLink } from "react-csv";
 import AccountService from '../Services/AccountService';
+import { toast } from 'react-toastify';
 
-const FilterTransaction = ({ purpose, handleData, page }) => {
+const FilterTransaction = ({ purpose, handleData, page, Api }) => {
     const auth = useAuth();
     const [subAdminlist, setSubAdminlist] = useState([]);
     const [subAdmin, setSubAdmin] = useState("");
@@ -18,36 +19,44 @@ const FilterTransaction = ({ purpose, handleData, page }) => {
     const [websiteList, setWebsiteList] = useState([]);
     const [website, setWebsite] = useState("");
     const [select, setSelect] = useState("");
-    const [startDatevalue, SetStartDatesetValue] = useState(new Date());
+    const [startDatevalue, SetStartDatesetValue] = useState(new Date() - 1 * 24 * 60 * 60 * 1000);
     const [endDatevalue, setEndDateValue] = useState(new Date());
     const [documentView, setDocumentView] = useState([]);
-
-
+    console.log(moment(startDatevalue).toDate())
+    console.log(moment(endDatevalue).toDate())
     const handleFilter = () => {
         const data = {
             transactionType: select,
             introducerList: introducer,
             subAdminList: subAdmin,
             BankList: bank,
-            WebsiteList: website
+            WebsiteList: website,
+            sdate: moment(startDatevalue).toDate(),
+            edate: moment(endDatevalue).toDate(),
         }
         TransactionSercvice.filterTransaction(data, page, auth.user).then((res) => {
             return (
                 setDocumentView(res.data),
                 handleData(res.data)
             )
-        }).catch((err) => console.log(err));
+        }).catch((err) => {
+            return (
+                handleData(""),
+                toast.error(err.response.data.message)
+            )
+        });
 
     }
+    // const handlememo = useMemo(() => { handleFilter() }, [handleFilter])
     const handleReset = () => {
         setSelect("");
         setSubAdmin("");
         setBank("");
         setWebsite("");
-        SetStartDatesetValue(new Date());
+        SetStartDatesetValue(new Date() - 1 * 24 * 60 * 60 * 1000);
         setEndDateValue(new Date());
         setIntroducer("");
-        // handleFilter();
+        handleFilter();
         // handlememo();
     };
     useEffect(() => {
@@ -57,7 +66,6 @@ const FilterTransaction = ({ purpose, handleData, page }) => {
     useEffect(() => {
         handleFilter();
     }, [page]);
-    // const handlememo = useMemo(() => { handleFilter() }, [handleFilter])
 
     useEffect(() => {
         if (auth.user) {
@@ -75,11 +83,11 @@ const FilterTransaction = ({ purpose, handleData, page }) => {
     }, [auth]);
 
     const handleStartDatevalue = (e) => {
-        SetStartDatesetValue(moment(e).format("DD-MM-YYYY HH:mm"));
+        SetStartDatesetValue(moment(e));
     };
 
     const handleEndDatevalue = (e) => {
-        setEndDateValue(moment(e).format("DD-MM-YYYY HH:mm"));
+        setEndDateValue(moment(e));
     };
 
     const handleChange = (e) => {
