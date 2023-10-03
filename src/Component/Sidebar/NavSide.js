@@ -21,6 +21,9 @@ const NavSide = () => {
   const [IsToggleBank, setIsToggleBank] = useState(true);
   const [IsToggleWebsite, setIsToggleWebsite] = useState(true);
   const [isToggleCreateTransaction, setIsToggleCreateTransaction] = useState(true);
+  // const [isToggleCreateTransaction, setIsToggleCreateTransaction] = useState(true);
+
+
   useEffect(() => {
     setUserEmail(auth.user.userName);
     setUserRole(auth.user.role);
@@ -173,9 +176,9 @@ const NavSide = () => {
                                     className="nav-link text-white"
                                     onClick={handleToggleCreateTransaction}
                                   >
-                                    <i className="far fa-circle nav-icon" />
-                                    <p>
-                                      Create Transaction
+                                    <i className="" />
+                                     Transaction<p>
+                                      
                                       <i className="fas fa-angle-left right" />
                                     </p>
                                   </li>
@@ -188,7 +191,7 @@ const NavSide = () => {
                                     >
                                       <i className="nav-icon fas fa-copy" />
                                       <p>
-                                        Create Transaction
+                                     Transaction
                                         <i class="fas fa-chevron-down right"></i>
                                       </p>
                                     </Link>
