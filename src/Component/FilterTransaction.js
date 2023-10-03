@@ -8,7 +8,7 @@ import { CSVLink } from "react-csv";
 import AccountService from '../Services/AccountService';
 import { toast } from 'react-toastify';
 
-const FilterTransaction = ({ purpose, handleData, page, Api }) => {
+const FilterTransaction = ({ purpose, handleData, page, handlePage }) => {
     const auth = useAuth();
     const [subAdminlist, setSubAdminlist] = useState([]);
     const [subAdmin, setSubAdmin] = useState("");
@@ -58,6 +58,7 @@ const FilterTransaction = ({ purpose, handleData, page, Api }) => {
         setEndDateValue(new Date());
         setIntroducer("");
         handleFilter();
+        handlePage(1)
         // handlememo();
     };
     useEffect(() => {
