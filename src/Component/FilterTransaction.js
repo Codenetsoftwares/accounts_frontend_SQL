@@ -22,8 +22,7 @@ const FilterTransaction = ({ purpose, handleData, page, Api }) => {
     const [startDatevalue, SetStartDatesetValue] = useState(new Date() - 1 * 24 * 60 * 60 * 1000);
     const [endDatevalue, setEndDateValue] = useState(new Date());
     const [documentView, setDocumentView] = useState([]);
-    console.log(moment(startDatevalue).toDate())
-    console.log(moment(endDatevalue).toDate())
+
     const handleFilter = () => {
         const data = {
             transactionType: select,
@@ -36,8 +35,9 @@ const FilterTransaction = ({ purpose, handleData, page, Api }) => {
         }
         TransactionSercvice.filterTransaction(data, page, auth.user).then((res) => {
             return (
-                setDocumentView(res.data),
-                handleData(res.data)
+                setDocumentView(res.data.mainArray),
+                handleData(res.data.mainArray, res.data.mainArray[10]),
+                console.log(res.data.mainArray)
             )
         }).catch((err) => {
             return (
@@ -47,6 +47,7 @@ const FilterTransaction = ({ purpose, handleData, page, Api }) => {
         });
 
     }
+
     // const handlememo = useMemo(() => { handleFilter() }, [handleFilter])
     const handleReset = () => {
         setSelect("");
