@@ -7,7 +7,7 @@ import AccountService from '../Services/AccountService';
 import { toast } from 'react-toastify';
 import EditTransaction from './Modal/EditTransaction';
 
-const TableTransaction = ({ FilterData, purpose, page, handlePage }) => {
+const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage }) => {
     const auth = useAuth();
 
     const [id, setId] = useState("");
@@ -22,7 +22,7 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage }) => {
         e.preventDefault();
         console.log(transactionType);
         switch (transactionType) {
-            case ("Deposit" || "Withdraw"):
+            case "Deposit":
                 AccountService.SaveTransaction({ requestId: id }, auth.user)
 
                     .then((res) => {
@@ -30,11 +30,23 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage }) => {
                         toast.success("Transaction delete request sent to Super Admin");
                     })
                     .catch((err) => {
-                        toast.error(err.response.data.message)
+                        toast.error(err.response.data?.message)
                     });
                 break;
 
-            case ("Manual-Bank-Withdraw" || "Manual-Bank-Deposit"):
+            case "Withdraw":
+                AccountService.SaveTransaction({ requestId: id }, auth.user)
+
+                    .then((res) => {
+                        console.log(res.data);
+                        toast.success("Transaction delete request sent to Super Admin");
+                    })
+                    .catch((err) => {
+                        toast.error(err.response.data?.message)
+                    });
+                break;
+
+            case "Manual-Bank-Deposit":
                 AccountService.SaveBankTransaction({ requestId: id }, auth.user)
 
                     .then((res) => {
@@ -44,11 +56,25 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage }) => {
                         );
                     })
                     .catch((err) => {
-                        toast.error(err.response.data.message)
+                        toast.error(err.response.data?.message)
                     });
                 break;
 
-            case ("Manual-Website-Withdraw" || "Manual-Website-Deposit"):
+            case "Manual-Bank-Withdraw":
+                AccountService.SaveBankTransaction({ requestId: id }, auth.user)
+
+                    .then((res) => {
+                        console.log(res.data);
+                        toast.success(
+                            "Bank Transaction delete request sent to Super Admin"
+                        );
+                    })
+                    .catch((err) => {
+                        toast.error(err.response.data?.message)
+                    });
+                break;
+
+            case "Manual-Website-Deposit":
                 AccountService.SaveWebsiteTransaction({ requestId: id }, auth.user)
                     .then((res) => {
                         console.log(res.data);
@@ -57,19 +83,23 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage }) => {
                         );
                     })
                     .catch((err) => {
-                        toast.error(err.response.data.message)
+                        toast.error(err.response.data?.message)
                     });
                 break;
-            case "Manual-Website-Deposit":
+
+            case "Manual-Website-Withdraw":
                 AccountService.SaveWebsiteTransaction({ requestId: id }, auth.user)
                     .then((res) => {
                         console.log(res.data);
-                        toast.success("Website Transaction delete request sent to Super Admin");
+                        toast.success(
+                            "Website Transaction delete request sent to Super Admin"
+                        );
                     })
                     .catch((err) => {
-                        toast.error(err.response.data.message)
+                        toast.error(err.response.data?.message)
                     });
                 break;
+
             default:
         }
     };
@@ -112,9 +142,9 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage }) => {
                                 Website
                             </th>
                         </>}
-                        <th scope="col text-break fs-6" className="text-primary">
+                        {/* <th scope="col text-break fs-6" className="text-primary">
                             Balance
-                        </th>
+                        </th> */}
 
                         <th scope="col text-break" className="text-primary">
                             Remarks
@@ -135,63 +165,63 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage }) => {
                 </thead>
                 {/* </div> */}
                 <tbody>
-                    {FilterData.length > 0 ? (
-                        FilterData.map((data, i) => {
+                    {FilterData?.length > 0 ? (
+                        FilterData?.map((data, i) => {
                             return (
                                 <tr align="center" className="fs-6">
                                     <td>
                                         {" "}
-                                        {new Date(data.createdAt).toLocaleString(
+                                        {new Date(data?.createdAt).toLocaleString(
                                             "default"
                                         )}{" "}
                                     </td>
                                     <td>
-                                        {data.amount && (
-                                            <p className="col fs-6">{data.amount}</p>
+                                        {data?.amount && (
+                                            <p className="col fs-6">{data?.amount}</p>
                                         )}
-                                        {data.depositAmount && (
-                                            <p className="col fs-6">{data.depositAmount}</p>
+                                        {data?.depositAmount && (
+                                            <p className="col fs-6">{data?.depositAmount}</p>
                                         )}
-                                        {data.withdrawAmount && (
-                                            <p className="col fs-6">{data.withdrawAmount}</p>
+                                        {data?.withdrawAmount && (
+                                            <p className="col fs-6">{data?.withdrawAmount}</p>
                                         )}
                                     </td>
                                     <td>
-                                        {data.transactionID && (
-                                            <p className="col fs-6 ">{data.transactionID}</p>
+                                        {data?.transactionID && (
+                                            <p className="col fs-6 ">{data?.transactionID}</p>
                                         )}
-                                        {data.depositAmount && <p className="col fs-6 ">N.A</p>}
-                                        {data.withdrawAmount && (
+                                        {data?.depositAmount && <p className="col fs-6 ">N.A</p>}
+                                        {data?.withdrawAmount && (
                                             <p className="col fs-6 ">N.A</p>
                                         )}
                                     </td>
                                     <td>
-                                        {data.transactionType && (
+                                        {data?.transactionType && (
                                             <p className="col fs-6 text-break">
-                                                {data.transactionType}
+                                                {data?.transactionType}
                                             </p>
                                         )}
                                     </td>
                                     <td>
-                                        {data.paymentMethod && (
-                                            <p className="col fs-6">{data.paymentMethod}</p>
+                                        {data?.paymentMethod && (
+                                            <p className="col fs-6">{data?.paymentMethod}</p>
                                         )}
-                                        {data.depositAmount && (
+                                        {data?.depositAmount && (
                                             <p className="col fs-6 text-break">N.A</p>
                                         )}
-                                        {data.withdrawAmount && (
+                                        {data?.withdrawAmount && (
                                             <p className="col fs-6 text-break">N.A</p>
                                         )}
                                     </td>
-                                    <td>{data.subAdminName}</td>
+                                    <td>{data?.subAdminName}</td>
                                     <td>
-                                        {data.paymentMethod && (
-                                            <p className="col fs-6">{data.userName}</p>
+                                        {data?.paymentMethod && (
+                                            <p className="col fs-6">{data?.userName}</p>
                                         )}
-                                        {data.depositAmount && (
+                                        {data?.depositAmount && (
                                             <p className="col fs-6 text-break">N.A</p>
                                         )}
-                                        {data.withdrawAmount && (
+                                        {data?.withdrawAmount && (
                                             <p className="col fs-6 text-break">N.A</p>
                                         )}
                                     </td>
@@ -199,36 +229,36 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage }) => {
                                     {/* when props pass mainStatement from parent component*/}
                                     {purpose === ("mainStatement") && <>
                                         <td>
-                                            {data.paymentMethod && (
-                                                <p className="col fs-6">{data.introducerUserName}</p>
+                                            {data?.paymentMethod && (
+                                                <p className="col fs-6">{data?.introducerUserName}</p>
                                             )}
-                                            {data.depositAmount && (
+                                            {data?.depositAmount && (
                                                 <p className="col fs-6 text-break">N.A</p>
                                             )}
-                                            {data.withdrawAmount && (
+                                            {data?.withdrawAmount && (
                                                 <p className="col fs-6 text-break">N.A</p>
                                             )}
                                         </td>
                                         <td>
                                             <p className="col fs-6">
-                                                {data.bankName ? data.bankName : "N.A"}
+                                                {data?.bankName ? data?.bankName : "N.A"}
                                             </p>
                                         </td>
                                         <td>
                                             <p className="col fs-6">
-                                                {data.websiteName ? data.websiteName : "N.A"}
+                                                {data?.websiteName ? data?.websiteName : "N.A"}
                                             </p>
                                         </td>
                                     </>}
                                     {/* when props pass mainStatement from parent component*/}
 
-                                    <td>
+                                    {/* <td>
                                         {data.balance
                                             ? data.balance
                                             : "N .A"}
-                                    </td>
+                                    </td> */}
 
-                                    <td>{data.remarks}</td>
+                                    <td>{data?.remarks}</td>
 
                                     {/* when props pass mainStatement & bankStatement & websiteStatement from parent component*/}
                                     {purpose === ("mainStatement" || "bankStatement" || "websiteStatement") && <>
@@ -240,8 +270,8 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage }) => {
                                                 data-bs-target="#edittransaction"
                                                 onClick={(e) => {
 
-                                                    console.log("id===>", data._id)
-                                                    handleId(e, data._id)
+                                                    console.log("id===>", data?._id)
+                                                    handleId(e, data?._id)
 
                                                 }}
                                             >
@@ -254,7 +284,7 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage }) => {
                                                     icon={faTrash}
                                                     onClick={(e) => {
 
-                                                        handleDelete(e, data._id, data.transactionType);
+                                                        handleDelete(e, data?._id, data?.transactionType);
                                                     }}
                                                 />
                                             </button>
@@ -270,7 +300,7 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage }) => {
                     )}
                 </tbody>
             </table>
-            {FilterData.length > 0 ? (
+            {FilterData?.length > 0 ? (
                 <div className='text-center'>
                     <span
                         className={`m-3 ${page === 1 ? 'disabled' : ''}`}
@@ -280,7 +310,7 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage }) => {
                     </span>
                     <span className='fs-4'>{page}</span>
                     <span
-                        className='m-3'
+                        className={`m-3 ${page === totalPage ? 'disabled' : ''}`}
                         onClick={() => { handlePage(page + 1) }}
                     >
                         <i className="fa-solid fas fa-xl fa-greater-than"></i>

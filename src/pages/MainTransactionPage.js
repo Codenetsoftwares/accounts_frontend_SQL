@@ -5,8 +5,10 @@ import TableTransaction from '../Component/TableTransaction';
 const MainTransactionPage = () => {
     const [documentFilter, setDocumentFilter] = useState([]);
     const [page, setPage] = useState(1)
-    const handleData = (data) => {
+    const [totalPage, setTotalPage] = useState(1)
+    const handleData = (data, totalPage) => {
         setDocumentFilter(data);
+        setTotalPage(totalPage);
     }
 
     const handlePage = (page) => {
@@ -15,8 +17,8 @@ const MainTransactionPage = () => {
     console.log(documentFilter)
     return (
         <div className="container-fluid" style={{ backgroundColor: '#fff4ec' }}>
-            <FilterTransaction purpose={"mainStatement"} handleData={handleData} page={page}  />
-            <TableTransaction FilterData={documentFilter} purpose={"mainStatement"} handlePage={handlePage} page={page} />
+            <FilterTransaction purpose={"mainStatement"} handleData={handleData} page={page} />
+            <TableTransaction FilterData={documentFilter} purpose={"mainStatement"} handlePage={handlePage} page={page} totalPage={totalPage} />
         </div>
     )
 };
