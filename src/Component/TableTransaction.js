@@ -285,7 +285,7 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage }) => {
                     >
                         <i className="fa-solid fas fa-xl fa-greater-than"></i>
                     </span>
-                    jump to:
+                    {/* jump to: */}
                     {/* <input type='number' className='m-1' width={8} onChange={(e) => { setPge(e.target.value) }} />
                     <button type="button" class="btn btn-primary" onClick={handlePage(pge)}>Go</button> */}
                 </div>
