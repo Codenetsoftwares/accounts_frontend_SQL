@@ -7,7 +7,9 @@ const MainTransactionPage = () => {
     const [page, setPage] = useState(1)
     const [totalPage, setTotalPage] = useState(1)
     const handleData = (data, totalPage) => {
-        setDocumentFilter(data);
+        if (data !== undefined) {
+            setDocumentFilter(data);
+        }
         setTotalPage(totalPage);
     }
 

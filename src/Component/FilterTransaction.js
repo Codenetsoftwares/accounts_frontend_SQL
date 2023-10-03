@@ -37,7 +37,7 @@ const FilterTransaction = ({ purpose, handleData, page, Api }) => {
             return (
                 setDocumentView(res.data.SecondArray),
                 handleData(res.data.SecondArray, res.data.pageNumber),
-                console.log(res.data.SecondArray)
+                console.log(res.data)
             )
         }).catch((err) => {
             return (
@@ -399,9 +399,10 @@ const FilterTransaction = ({ purpose, handleData, page, Api }) => {
                             </button>
                         </div>
                         <div className="mx-2">
-                            <CSVLink data={documentView} className="btn btn-success">
+                            {documentView !== undefined && <CSVLink data={documentView} className="btn btn-success">
                                 Download Data
-                            </CSVLink>
+                            </CSVLink>}
+
                         </div>
                     </div>
                 </div>
