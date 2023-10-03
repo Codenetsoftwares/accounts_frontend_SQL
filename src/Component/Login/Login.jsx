@@ -1,64 +1,66 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Login.css";
 import AccountService from "../../Services/AccountService";
 import { useAuth } from "../../Utils/Auth";
-
-
 
 const Login = () => {
   const auth = useAuth();
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-    
-      const handleClickUserName = (e) => {
-        setUserName(e.target.value);
-      };
-      const handleClickPassword = (e) => {
-        setPassword(e.target.value);
-      };
+
+  const handleClickUserName = (e) => {
+    setUserName(e.target.value);
+  };
+  const handleClickPassword = (e) => {
+    setPassword(e.target.value);
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
-        AccountService.adminlogin({
-          userName: userName,
-          password: password,
-          // persist: persist,
-        })
-          .then((res) => {
-            console.log("res", res);
-            console.log("res", res.data.token.accessToken);
-            if (res.status === 200) {
-              localStorage.setItem("user", res.data.token.accessToken);
-              localStorage.setItem("role", res.data.role);
-              console.log("===>", auth);
-              console.log("admin");
-              toast.success("Login Successfully");
-              // alert("login successfull");
-              auth.login();
-              navigate("/welcome");
-            } else {
-              toast.error(res.data.message);
-              navigate("/");
-            }
-          })
-          .catch((err) => {
-            if (err.response) {
-              toast.error("Invalid User Id Or Password");
-              return;
-            }
-            if (err.response.status === 403) {
-              navigate("/admindash", {
-                state: { user: userName },
-                replace: false,
-              });
-              return;
-            }
-          });
+    if (!userName || !password) {
+      toast.error("Username and password cannot be empty");
+      return;
     }
-  
+    AccountService.adminlogin({
+      userName: userName,
+      password: password,
+      // persist: persist,
+    })
+      .then((res) => {
+        console.log("res", res);
+        console.log("res", res.data.token.accessToken);
+        if (res.status === 200) {
+          localStorage.setItem("user", res.data.token.accessToken);
+          localStorage.setItem("role", res.data.role);
+          console.log("===>", auth);
+          console.log("admin");
+          toast.success("Login Successfully");
+          // alert("login successfull");
+          auth.login();
+          navigate("/welcome");
+        } else {
+          toast.error(res.data.message);
+          navigate("/");
+        }
+      })
+      .catch((err) => {
+        if (err.response) {
+          toast.error("Invalid User Id Or Password");
+          return;
+        }
+        if (err.response.status === 403) {
+          navigate("/admindash", {
+            state: { user: userName },
+            replace: false,
+          });
+          return;
+        }
+      });
+  };
+
   return (
     <div>
       <section class="vh-100 gradient-custom">
