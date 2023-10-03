@@ -5,16 +5,17 @@ import { toast } from "react-toastify";
 
 const LiveBalanceIntroducer = ({ ID }) => {
   const auth = useAuth();
-  const [LiveBalance, SetLiveBalance] = useState([]);
+  const [LiveBalance, SetLiveBalance] = useState(0);
 
   useEffect(() => {
     AccountService.introducerLiveBalance(ID, auth.user)
       .then((res) => {
-        console.log("res", res.data);
-        SetLiveBalance(res.data);
+        // console.log("res", res.data.LiveBalance);
+        SetLiveBalance(res.data.LiveBalance);
       })
       .catch((error) => {
         toast.error(error.response.data.message)
+        SetLiveBalance(0)
       })
   }, [auth.user, ID]);
   console.log("Blance", LiveBalance);
@@ -43,16 +44,16 @@ const LiveBalanceIntroducer = ({ ID }) => {
             <div class="modal-body">
               <p className="text-muted">
                 Live Balance :{" "}
-                {LiveBalance.LiveBalance > 0 ? (
+                {LiveBalance > 0 ? (
                   <blink>
                     {" "}
                     <b className="blink_me" style={{ color: "green" }}>
-                      {LiveBalance.LiveBalance}
+                      {LiveBalance}
                     </b>
                   </blink>
                 ) : (
                   <b className="blink_me" style={{ color: "red" }}>
-                    <blink>{LiveBalance.LiveBalance}</blink>
+                    <blink>{LiveBalance}</blink>
                   </b>
                 )}
               </p>
