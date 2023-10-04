@@ -118,6 +118,7 @@ const NavSide = () => {
                   </p>
                 </a>
               </Link>
+              {/* transaction part */}
               {userrole.some(
                 (role) =>
                   role === "superAdmin" ||
@@ -188,8 +189,10 @@ const NavSide = () => {
                       </li>
                     )}
                   </>
-
                 )}
+              {/* transaction part */}
+
+              {/* bank part */}
               {userrole.some(
                 (role) => role === "superAdmin" || role === "Bank-View"
               ) && (
@@ -200,6 +203,9 @@ const NavSide = () => {
                     </Link>
                   </>
                 )}
+              {/* bank part */}
+
+              {/* website part */}
               {userrole.some(
                 (role) =>
                   role === "superAdmin" ||
@@ -212,7 +218,9 @@ const NavSide = () => {
                     </Link>
                   </>
                 )}
+              {/* website part */}
 
+              {/* create part */}
               {userrole.some(
                 (role) => role === "superAdmin" || role === ""
               ) && (
@@ -259,6 +267,9 @@ const NavSide = () => {
                     )}
                   </>
                 )}
+              {/* create part */}
+
+              {/* profile part */}
               {userrole.some(
                 (role) =>
                   role === "superAdmin" ||
@@ -324,6 +335,9 @@ const NavSide = () => {
                     )}
                   </>
                 )}
+              {/* profile part */}
+
+              {/* request part */}
               {userrole.some((role) => role === "superAdmin") && (
                 <>
                   {" "}
@@ -453,6 +467,9 @@ const NavSide = () => {
                   )}
                 </>
               )}
+              {/* request part */}
+
+              {/* report part */}
               {userrole.some(
                 (role) =>
                   role === "superAdmin" ||
@@ -500,6 +517,8 @@ const NavSide = () => {
                       </Link>
                     </li>
                   )}</>}
+              {/* report part */}
+
             </ul>
           </nav>
         </div>
