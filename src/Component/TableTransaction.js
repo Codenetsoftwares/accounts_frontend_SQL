@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import EditTransaction from './Modal/EditTransaction';
 
 const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage }) => {
-    console.log(FilterData)
+    console.log('totalPage', totalPage)
     const auth = useAuth();
 
     const [id, setId] = useState("");
@@ -303,18 +303,18 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage }) 
             </table>
             {FilterData?.length > 0 ? (
                 <div className='text-center'>
-                    <span
-                        className={`m-3 `}
-                    >
+
+                    <span className={`m-3 `}>
                         <button className={`btn btn-primary rounded-pill ${page === 1 ? 'disabled' : ''}`} onClick={() => { page > 1 && handlePage(page - 1) }}>Pre</button>
                     </span>
                     <span className='fs-4'>{page}</span>
                     <span
                         className={`m-3 `}
                     >
-                        <button className={`btn btn-primary rounded-pill ${page === totalPage ? 'disabled' : ''}`} onClick={() => { handlePage(page + 1) }}
-                        >Next</button>
+                        <button className={`btn btn-primary rounded-pill ${page === totalPage ? 'disabled' : ''}`} onClick={() => { handlePage(page + 1) }}>Next</button>
+
                     </span>
+
                     {/* jump to: */}
                     {/* <input type='number' className='m-1' width={8} onChange={(e) => { setPge(e.target.value) }} />
                     <button type="button" class="btn btn-primary" onClick={handlePage(pge)}>Go</button> */}
