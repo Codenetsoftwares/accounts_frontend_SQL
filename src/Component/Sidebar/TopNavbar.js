@@ -33,9 +33,9 @@ const TopNavbar = () => {
             </a>
           </li>
           <li className="nav-item d-none d-sm-inline-block">
-            <Link to="welcome" className="nav-link">
+            {/* <Link to="welcome" className="nav-link">
               Home
-            </Link>
+            </Link> */}
           </li>
         </ul>
 
