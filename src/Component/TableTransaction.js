@@ -303,22 +303,16 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage }) 
             </table>
             {FilterData?.length > 0 ? (
                 <div className='text-center'>
-                    <span className="m-3">
-                        <button
-                            className={`btn btn-primary ${page === 1 ? 'disabled' : ''}`}
-                            onClick={() => { page > 1 && handlePage(page - 1) }}
-                        >
-                            Previous
-                        </button>
+
+                    <span className={`m-3 `}>
+                        <button className={`btn btn-primary rounded-pill ${page === 1 ? 'disabled' : ''}`} onClick={() => { page > 1 && handlePage(page - 1) }}>Pre</button>
                     </span>
-                    <span className="fs-4">{page}</span>
-                    <span className="m-3">
-                        <button
-                            className={`btn btn-primary ${page === totalPage ? 'disabled' : ''}`}
-                            onClick={() => { page < totalPage && handlePage(page + 1) }}
-                        >
-                            Next
-                        </button>
+                    <span className='fs-4'>{page}</span>
+                    <span
+                        className={`m-3 `}
+                    >
+                        <button className={`btn btn-primary rounded-pill ${page === totalPage ? 'disabled' : ''}`} onClick={() => { handlePage(page + 1) }}>Next</button>
+
                     </span>
 
                     {/* jump to: */}

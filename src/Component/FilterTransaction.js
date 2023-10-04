@@ -67,7 +67,7 @@ const FilterTransaction = ({ purpose, handleData, page, handlePage }) => {
 
     useEffect(() => {
         handleFilter();
-    }, [page]);
+    }, [page, handleData]);
 
     useEffect(() => {
         if (auth.user) {
