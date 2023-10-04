@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import EditTransaction from './Modal/EditTransaction';
 
 const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage }) => {
-    console.log(FilterData)
+    console.log('totalPage', totalPage)
     const auth = useAuth();
 
     const [id, setId] = useState("");
@@ -303,21 +303,24 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage }) 
             </table>
             {FilterData?.length > 0 ? (
                 <div className='text-center'>
-                    <span
-                        className={`m-3 ${page === 1 ? 'disabled' : ''}`}
-                        onClick={() => { page > 1 && handlePage(page - 1) }}
-                    >
-                        {/* <i className="fas fa-xl fa-solid fa-less-than" ></i> */}
-                        <button className='btn btn-primary'>pre</button>
+                    <span className="m-3">
+                        <button
+                            className={`btn btn-primary ${page === 1 ? 'disabled' : ''}`}
+                            onClick={() => { page > 1 && handlePage(page - 1) }}
+                        >
+                            Previous
+                        </button>
                     </span>
-                    <span className='fs-4'>{page}</span>
-                    <span
-                        className={`m-3 ${page === totalPage ? 'disabled' : ''}`}
-                        onClick={() => { handlePage(page + 1) }}
-                    >
-                        {/* <i className="fa-solid fas fa-xl fa-greater-than"></i> */}
-                        <button className='btn btn-primary'>next</button>
+                    <span className="fs-4">{page}</span>
+                    <span className="m-3">
+                        <button
+                            className={`btn btn-primary ${page === totalPage ? 'disabled' : ''}`}
+                            onClick={() => { page < totalPage && handlePage(page + 1) }}
+                        >
+                            Next
+                        </button>
                     </span>
+
                     {/* jump to: */}
                     {/* <input type='number' className='m-1' width={8} onChange={(e) => { setPge(e.target.value) }} />
                     <button type="button" class="btn btn-primary" onClick={handlePage(pge)}>Go</button> */}
