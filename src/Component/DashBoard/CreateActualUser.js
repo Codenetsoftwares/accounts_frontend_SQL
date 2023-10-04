@@ -55,8 +55,11 @@ const CreateActualUser = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(checkedItems);
-    if (formData.yourIntroducerPercentage > 100) {
-      toast.error("percentage should not be more than 100");
+    if (
+      formData.yourIntroducerPercentage > 100 ||
+      formData.yourIntroducerPercentage < 0
+    ) {
+      toast.error("Percentage should not be more than 100 or Negetive");
       return;
     }
     const data = {

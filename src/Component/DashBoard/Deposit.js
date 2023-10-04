@@ -73,25 +73,23 @@ function Deposit() {
     };
     console.log(data);
 
-   const confirmed = window.confirm(
-     "Please double-check the form on obhisab.com before confirming, as changes or deletions won't be possible afterward."
-   );
-   if (confirmed) {
-     DashService.CreateTransactionDeposit(data, auth.user)
-       .then((response) => {
-         // Handle successful response from the backend
-         console.log(response.data);
-         alert("Transaction Created Successfully!!");
-         window.location.reload();
-       })
-       .catch((error) => {
-         // Handle error from the backend
-         console.error(error);
-         alert(error.response.data.message);
-       });
-   }
-
-    
+    const confirmed = window.confirm(
+      "Please double-check the form on obhisab.com before confirming, as changes or deletions won't be possible afterward."
+    );
+    if (confirmed) {
+      DashService.CreateTransactionDeposit(data, auth.user)
+        .then((response) => {
+          // Handle successful response from the backend
+          console.log(response.data);
+          alert("Transaction Created Successfully!!");
+          window.location.reload();
+        })
+        .catch((error) => {
+          // Handle error from the backend
+          console.error(error);
+          alert(error.response.data.message);
+        });
+    }
   };
 
   const handleInputChange = (e) => {
@@ -272,8 +270,13 @@ function Deposit() {
                 type="text"
                 className="form-control"
                 placeholder="Bonus"
+                value={bonus}
                 onChange={(e) => {
-                  setBonus(e.target.value);
+                  const BnousValue = e.target.value;
+                  // Check if the input is a non-negative number or empty
+                  if (/^\d*\.?\d*$/.test(BnousValue)) {
+                    setBonus(BnousValue);
+                  }
                 }}
               />
             </div>
