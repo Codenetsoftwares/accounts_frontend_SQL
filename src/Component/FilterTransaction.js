@@ -60,6 +60,7 @@ const FilterTransaction = ({ purpose, handleData, page, handlePage }) => {
         handleFilter();
         handlePage(1)
         // handlememo();
+        window.location.reload();
     };
     useEffect(() => {
         handleFilter();
