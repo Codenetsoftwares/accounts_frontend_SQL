@@ -260,8 +260,13 @@ function Withdraw() {
                 type="text"
                 className="form-control"
                 placeholder="Bank Charges"
+                value={bankCharges}
                 onChange={(e) => {
-                  setBankCharges(e.target.value); // Parse the JSON string back to an array
+                  const BkValue = e.target.value;
+                  // Check if the input is a non-negative number or empty
+                  if (/^\d*\.?\d*$/.test(BkValue)) {
+                    setBankCharges(BkValue);
+                  }
                 }}
               />
             </div>
