@@ -14,7 +14,8 @@ const Welcome = () => {
       <nav className="navbar navbar-dark bg-dark py-2 ">
         <div className="container d-flex justify-content-center">
           <a className="navbar-brand " href="#">
-            CRM Software
+            Obhisab
+            <br />
           </a>
         </div>
       </nav>
@@ -31,7 +32,7 @@ const Welcome = () => {
             <h1 className="display-5">Welcome to obhisab.com</h1>
 
             <p className="lead">
-              This is our central hub for managing accounts.
+              This is The central hub for managing accounts.
             </p>
             <div className="Guidance p-4 border rounded">
               <h2>Getting Started</h2>
@@ -46,30 +47,27 @@ const Welcome = () => {
                 }}
               >
                 <li className="list-group-item">
-                  Create an account or log in.
-                </li>
-                <li className="list-group-item">
-                  Add transactions to the database.
+                  Ask Admin to Create an account.
                 </li>
                 <li className="list-group-item">
                   Utilize essential menu items in the sidebar.
                 </li>
                 <li className="list-group-item">
-                  Access the dashboard page for insights.
+                  Checkout Transaction for Deposit/Withdraw .
                 </li>
                 <li className="list-group-item">
-                  Transactions created are automatically updated in the
-                  dashboard.
+                  Access the Bank option for Banking Related Functions.
                 </li>
                 <li className="list-group-item">
-                  The user can see the bank account details in the bank view
-                  menu as well the bank details can be edited in this particular
-                  page.
+                  Select the Website option for Website Related Functions.
+                  {/* Transactions created are automatically updated in the
+                  dashboard. */}
                 </li>
                 <li className="list-group-item">
-                  In the create user menu one can can give access to the
-                  provided selections as per the options provided in this
-                  particular menu item.
+                  Create Admin/User/Introducer From Create
+                </li>
+                <li className="list-group-item">
+                  See All Profiles From Profile
                 </li>
                 <li className="list-group-item">
                   Utilize analytics to gain insights.

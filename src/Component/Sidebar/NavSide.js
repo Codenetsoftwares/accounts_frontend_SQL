@@ -20,9 +20,9 @@ const NavSide = () => {
   const [IsToggleRequest, setIsToggleRequest] = useState(true);
   const [IsToggleBank, setIsToggleBank] = useState(true);
   const [IsToggleWebsite, setIsToggleWebsite] = useState(true);
-  const [isToggleCreateTransaction, setIsToggleCreateTransaction] = useState(true);
+  const [isToggleCreateTransaction, setIsToggleCreateTransaction] =
+    useState(true);
   // const [isToggleCreateTransaction, setIsToggleCreateTransaction] = useState(true);
-
 
   useEffect(() => {
     setUserEmail(auth.user.userName);
@@ -61,7 +61,7 @@ const NavSide = () => {
         className="main-sidebar elevation-4"
         style={{
           // backgroundImage: "linear-gradient(270deg, rgba(255,213,213,1) 0%, rgba(241,98,245,1) 100%)",
-          backgroundColor: "#343A40"
+          backgroundColor: "#343A40",
         }}
       >
         <div className="d-flex flex-row">
@@ -108,14 +108,9 @@ const NavSide = () => {
               data-accordion="false"
             >
               <Link className="nav-item " to="/welcome">
-                <a
-                  href="#"
-                  className="nav-link active"
-                >
+                <a href="#" className="nav-link active">
                   <i className="nav-icon fas fa-tachometer-alt"></i>
-                  <p>
-                    Dashboard
-                  </p>
+                  <p>Dashboard</p>
                 </a>
               </Link>
               {/* transaction part */}
@@ -127,146 +122,153 @@ const NavSide = () => {
                   role === "Create-Withdraw-Transaction" ||
                   role === "Create-Transaction"
               ) && (
-                  <>
-                    {IsToggleTransaction ? (
-                      <li className="nav-item ">
-                        <a
-                          className="nav-link "
-                          onClick={handleToggleTransaction}
-                        >
-                          &nbsp;{" "}
-                          <FontAwesomeIcon
-                            icon={faExchangeAlt}
-                            className="transaction-icon text-white"
-                          />
-                          <p className="text-white">
-                            &nbsp;Transaction
-                            <i className="fas fa-angle-left right" />
-                          </p>
-                        </a>
-                      </li>
-                    ) : (
-                      <li className="nav-item ">
-                        <a
-                          className="nav-link "
-                          onClick={handleToggleTransaction}
-                        >
-                          &nbsp;
-                          <FontAwesomeIcon
-                            icon={faExchangeAlt}
-                            className="transaction-icon text-white"
-                          />
-                          <p className="text-white">
-                            &nbsp; Transaction
-                            <i className="fas fa-chevron-down right"></i>
-                          </p>
-                        </a>
-                        {userrole.some(
-                          (role) => role === "superAdmin" || role === "Dashboard-View" ||
-                            role === "Create-Deposit-Transaction" ||
-                            role === "Create-Transaction"
-                        ) && (
-                            <>
-                              <Link to="/deposit" className="nav-link text-white">
-                                <i className="far fa-circle nav-icon" />
-                                <p>Deposit</p>
-                              </Link>
-                            </>
-                          )}
-                        {userrole.some(
-                          (role) =>
-                            role === "superAdmin" || role === "Dashboard-View" ||
-                            role === "Create-Withdraw-Transaction" ||
-                            role === "Create-Transaction"
-                        ) && (
-                            <>
-                              <Link to="/withdraw" className="nav-link text-white">
-                                <i className="far fa-circle nav-icon" />
-                                <p>Withdraw</p>
-                              </Link>
-                            </>
-                          )}
-                      </li>
-                    )}
-                  </>
-                )}
+                <>
+                  {IsToggleTransaction ? (
+                    <li className="nav-item ">
+                      <a
+                        className="nav-link "
+                        onClick={handleToggleTransaction}
+                      >
+                        &nbsp;{" "}
+                        <FontAwesomeIcon
+                          icon={faExchangeAlt}
+                          className="transaction-icon text-white"
+                        />
+                        <p className="text-white">
+                          &nbsp;Transaction
+                          <i className="fas fa-angle-left right" />
+                        </p>
+                      </a>
+                    </li>
+                  ) : (
+                    <li className="nav-item ">
+                      <a
+                        className="nav-link "
+                        onClick={handleToggleTransaction}
+                      >
+                        &nbsp;
+                        <FontAwesomeIcon
+                          icon={faExchangeAlt}
+                          className="transaction-icon text-white"
+                        />
+                        <p className="text-white">
+                          &nbsp; Transaction
+                          <i className="fas fa-chevron-down right"></i>
+                        </p>
+                      </a>
+                      {userrole.some(
+                        (role) =>
+                          role === "superAdmin" ||
+                          role === "Dashboard-View" ||
+                          role === "Create-Deposit-Transaction" ||
+                          role === "Create-Transaction"
+                      ) && (
+                        <>
+                          <Link to="/deposit" className="nav-link text-white">
+                            <i className="far fa-circle nav-icon" />
+                            <p>Deposit</p>
+                          </Link>
+                        </>
+                      )}
+                      {userrole.some(
+                        (role) =>
+                          role === "superAdmin" ||
+                          role === "Dashboard-View" ||
+                          role === "Create-Withdraw-Transaction" ||
+                          role === "Create-Transaction"
+                      ) && (
+                        <>
+                          <Link to="/withdraw" className="nav-link text-white">
+                            <i className="far fa-circle nav-icon" />
+                            <p>Withdraw</p>
+                          </Link>
+                        </>
+                      )}
+                    </li>
+                  )}
+                </>
+              )}
               {/* transaction part */}
 
               {/* bank part */}
               {userrole.some(
                 (role) => role === "superAdmin" || role === "Bank-View"
               ) && (
-                  <>
-                    <Link to="/bank" className="nav-link text-white">
-                      <i className="fas fa-university nav-icon m-2" />
-                      <p>Bank</p>
-                    </Link>
-                  </>
-                )}
+                <>
+                  <Link to="/bank" className="nav-link text-white">
+                    <i className="fas fa-university nav-icon m-2" />
+                    <p>Bank</p>
+                  </Link>
+                </>
+              )}
               {/* bank part */}
 
               {/* website part */}
               {userrole.some(
-                (role) =>
-                  role === "superAdmin" ||
-                  role === "Website-View"
+                (role) => role === "superAdmin" || role === "Website-View"
               ) && (
-                  <>
-                    <Link to="/website" className="nav-link text-white">
-                      <i className="fas fa-globe nav-icon m-2" />
-                      <p>Website</p>
-                    </Link>
-                  </>
-                )}
+                <>
+                  <Link to="/website" className="nav-link text-white">
+                    <i className="fas fa-globe nav-icon m-2" />
+                    <p>Website</p>
+                  </Link>
+                </>
+              )}
               {/* website part */}
 
               {/* create part */}
               {userrole.some(
                 (role) => role === "superAdmin" || role === ""
               ) && (
-                  <>
-                    {isToggleCreate ? (
-                      <li className="nav-item ">
-                        <a className="nav-link text-white" onClick={handleToggleCreate}>
-                          &nbsp; <FontAwesomeIcon icon={faSquarePlus} />
-                          <p className="text-white">
-                            &nbsp; Create
-                            <i className="fas fa-angle-left right" />
-                          </p>
-                        </a>
-                      </li>
-                    ) : (
-                      <li className="nav-item ">
-                        <a className="nav-link " onClick={handleToggleCreate}>
-                          &nbsp;
-                          <FontAwesomeIcon icon={faSquarePlus} />
-                          <p>
-                            &nbsp; Create
-                            <i className="fas fa-chevron-down right"></i>
-                          </p>
-                        </a>
-                        <Link to="/createuser" className="nav-link text-white">
-                          <i className="far fa-circle nav-icon" />
-                          <p>Create SubAdmin</p>
-                        </Link>
-                        <Link
-                          to="/createactualuser"
-                          className="nav-link text-white"
-                        >
-                          <i className="far fa-circle nav-icon" />
-                          <p>Create User</p>
-                        </Link>
-                        <Link
-                          to="/createintroducer"
-                          className="nav-link text-white"
-                        >
-                          <i className="far fa-circle nav-icon" />
-                          <p>Create Introducer</p>
-                        </Link>
-                      </li>
-                    )}
-                  </>
-                )}
+                <>
+                  {isToggleCreate ? (
+                    <li className="nav-item ">
+                      <a
+                        className="nav-link text-white"
+                        onClick={handleToggleCreate}
+                      >
+                        &nbsp; <FontAwesomeIcon icon={faSquarePlus} />
+                        <p className="text-white">
+                          &nbsp; Create
+                          <i className="fas fa-angle-left right" />
+                        </p>
+                      </a>
+                    </li>
+                  ) : (
+                    <li className="nav-item ">
+                      <a
+                        className="nav-link text-white"
+                        onClick={handleToggleCreate}
+                      >
+                        &nbsp;
+                        <FontAwesomeIcon icon={faSquarePlus} />
+                        <p>
+                          &nbsp; Create
+                          <i className="fas fa-chevron-down right"></i>
+                        </p>
+                      </a>
+                      <Link to="/createuser" className="nav-link text-white">
+                        <i className="far fa-circle nav-icon" />
+                        <p>Create SubAdmin</p>
+                      </Link>
+                      <Link
+                        to="/createactualuser"
+                        className="nav-link text-white"
+                      >
+                        <i className="far fa-circle nav-icon" />
+                        <p>Create User</p>
+                      </Link>
+                      <Link
+                        to="/createintroducer"
+                        className="nav-link text-white"
+                      >
+                        <i className="far fa-circle nav-icon" />
+                        <p>Create Introducer</p>
+                      </Link>
+                    </li>
+                  )}
+                </>
+              )}
               {/* create part */}
 
               {/* profile part */}
@@ -277,64 +279,64 @@ const NavSide = () => {
                   role === "Introducer-Profile-View" ||
                   role === "User-Profile-View"
               ) && (
-                  <>
-                    {isToggle ? (
-                      <li className="nav-item ">
-                        <a className="nav-link text-white" onClick={handleToggle}>
-                          &nbsp; <i className="fa-solid fas fa-user" />
-                          <p>
-                            &nbsp;Profile
-                            <i className="fas fa-angle-left right" />
-                          </p>
-                        </a>
-                      </li>
-                    ) : (
-                      <li className="nav-item ">
-                        <a className="nav-link text-white" onClick={handleToggle}>
-                          &nbsp;
-                          <i className="fa-solid fas fa-user" />
-                          <p>
-                            &nbsp; Profile
-                            <i className="fas fa-chevron-down right"></i>
-                          </p>
-                        </a>
-                        {userrole.some(
-                          (role) =>
-                            role === "superAdmin" ||
-                            role === "Profile-View" ||
-                            role === "User-Profile-View"
-                        ) && (
-                            <Link to="userprofile" className="nav-link text-white">
-                              <i className="far fa-circle nav-icon" />
-                              <p>User Profile</p>
-                            </Link>
-                          )}
-                        {userrole.some(
-                          (role) =>
-                            role === "superAdmin" ||
-                            role === "Profile-View" ||
-                            role === "Introducer-Profile-View"
-                        ) && (
-                            <Link
-                              to="/introducerprofile"
-                              className="nav-link text-white"
-                            >
-                              <i className="far fa-circle nav-icon" />
-                              <p>Introducer</p>
-                            </Link>
-                          )}
-                        {userrole.some(
-                          (role) => role === "superAdmin" || role === ""
-                        ) && (
-                            <Link to="/adminlist" className="nav-link text-white">
-                              <i className="far fa-circle nav-icon" />
-                              <p>SubAdmin</p>
-                            </Link>
-                          )}
-                      </li>
-                    )}
-                  </>
-                )}
+                <>
+                  {isToggle ? (
+                    <li className="nav-item ">
+                      <a className="nav-link text-white" onClick={handleToggle}>
+                        &nbsp; <i className="fa-solid fas fa-user" />
+                        <p>
+                          &nbsp;Profile
+                          <i className="fas fa-angle-left right" />
+                        </p>
+                      </a>
+                    </li>
+                  ) : (
+                    <li className="nav-item ">
+                      <a className="nav-link text-white" onClick={handleToggle}>
+                        &nbsp;
+                        <i className="fa-solid fas fa-user" />
+                        <p>
+                          &nbsp; Profile
+                          <i className="fas fa-chevron-down right"></i>
+                        </p>
+                      </a>
+                      {userrole.some(
+                        (role) =>
+                          role === "superAdmin" ||
+                          role === "Profile-View" ||
+                          role === "User-Profile-View"
+                      ) && (
+                        <Link to="userprofile" className="nav-link text-white">
+                          <i className="far fa-circle nav-icon" />
+                          <p>User Profile</p>
+                        </Link>
+                      )}
+                      {userrole.some(
+                        (role) =>
+                          role === "superAdmin" ||
+                          role === "Profile-View" ||
+                          role === "Introducer-Profile-View"
+                      ) && (
+                        <Link
+                          to="/introducerprofile"
+                          className="nav-link text-white"
+                        >
+                          <i className="far fa-circle nav-icon" />
+                          <p>Introducer</p>
+                        </Link>
+                      )}
+                      {userrole.some(
+                        (role) => role === "superAdmin" || role === ""
+                      ) && (
+                        <Link to="/adminlist" className="nav-link text-white">
+                          <i className="far fa-circle nav-icon" />
+                          <p>SubAdmin</p>
+                        </Link>
+                      )}
+                    </li>
+                  )}
+                </>
+              )}
               {/* profile part */}
 
               {/* request part */}
@@ -463,7 +465,6 @@ const NavSide = () => {
                         </>
                       )}
                     </li>
-
                   )}
                 </>
               )}
@@ -477,13 +478,11 @@ const NavSide = () => {
                   role === "Transaction-View" ||
                   role === "Transaction-Edit-Request" ||
                   role === "Transaction-Delete-Request"
-              ) && <>
+              ) && (
+                <>
                   {isToggleDash ? (
                     <li className="nav-item ">
-                      <a
-                        className="nav-link "
-                        onClick={handleToggleDash}
-                      >
+                      <a className="nav-link " onClick={handleToggleDash}>
                         &nbsp;{" "}
                         <FontAwesomeIcon
                           icon={faExchangeAlt}
@@ -497,10 +496,7 @@ const NavSide = () => {
                     </li>
                   ) : (
                     <li className="nav-item ">
-                      <a
-                        className="nav-link "
-                        onClick={handleToggleDash}
-                      >
+                      <a className="nav-link " onClick={handleToggleDash}>
                         &nbsp;
                         <FontAwesomeIcon
                           icon={faExchangeAlt}
@@ -511,14 +507,18 @@ const NavSide = () => {
                           <i className="fas fa-chevron-down right"></i>
                         </p>
                       </a>
-                      <Link to="/maintransactionpage" className="nav-link text-white">
+                      <Link
+                        to="/maintransactionpage"
+                        className="nav-link text-white"
+                      >
                         <i className="far fa-circle nav-icon" />
                         <p>Transaction Details</p>
                       </Link>
                     </li>
-                  )}</>}
+                  )}
+                </>
+              )}
               {/* report part */}
-
             </ul>
           </nav>
         </div>
