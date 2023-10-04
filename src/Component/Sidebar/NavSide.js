@@ -198,7 +198,7 @@ const NavSide = () => {
               ) && (
                   <>
                     <Link to="/bank" className="nav-link text-white">
-                      <i className="far fa-circle nav-icon m-2" />
+                      <i className="fas fa-university nav-icon m-2" />
                       <p>Bank</p>
                     </Link>
                   </>
@@ -213,7 +213,7 @@ const NavSide = () => {
               ) && (
                   <>
                     <Link to="/website" className="nav-link text-white">
-                      <i className="far fa-circle nav-icon m-2" />
+                      <i className="fas fa-globe nav-icon m-2" />
                       <p>Website</p>
                     </Link>
                   </>
