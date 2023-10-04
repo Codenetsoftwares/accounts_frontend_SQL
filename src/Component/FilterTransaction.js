@@ -36,8 +36,8 @@ const FilterTransaction = ({ purpose, handleData, page, handlePage }) => {
         TransactionSercvice.filterTransaction(data, page, auth.user).then((res) => {
             return (
                 setDocumentView(res.data.SecondArray),
-                handleData(res.data.SecondArray, res.data.pageNumber),
-                console.log(res.data)
+                console.log(documentView),
+                handleData(res.data.SecondArray, res.data.pageNumber)
             )
         }).catch((err) => {
             return (
