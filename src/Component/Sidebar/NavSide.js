@@ -107,123 +107,24 @@ const NavSide = () => {
               role="menu"
               data-accordion="false"
             >
-              <li className="nav-item menu-open">
-                {userrole.some(
-                  (role) =>
-                    role === "superAdmin" ||
-                    role === "Dashboard-View" ||
-                    role === "Transaction-View" ||
-                    role === "Transaction-Edit-Request" ||
-                    role === "Transaction-Delete-Request" ||
-                    role === "Create-Deposit-Transaction" ||
-                    role === "Create-Withdraw-Transaction" ||
-                    role === "Create-Transaction"
-                ) && (
-                    <>
-                      {isToggleDash ? (
-                        <li className="nav-item ">
-                          <a
-                            href="#"
-                            className="nav-link active"
-                            onClick={handleToggleDash}
-                          >
-                            <i className="nav-icon fas fa-tachometer-alt"></i>
-                            <p>
-                              Dashboard
-                              <i className="right fas fa-angle-down"></i>
-                            </p>
-                          </a>
-                        </li>
-                      ) : (
-                        <li className="nav-item ">
-                          <a
-                            href="#"
-                            className="nav-link active"
-                            onClick={handleToggleDash}
-                          >
-                            <i className="nav-icon fas fa-tachometer-alt"></i>
-                            <p>
-                              Dashboard
-                              <i className="right fas fa-angle-up"></i>
-                            </p>
-                          </a>
-                          {userrole.some(
-                            (role) =>
-                              role === "superAdmin" ||
-                              role === "Dashboard-View" ||
-                              role === "Transaction-View" ||
-                              role === "Transaction-Edit-Request" ||
-                              role === "Transaction-Delete-Request"
-                          ) && (
-                              <Link to="/maintransactionpage" className="nav-link text-white">
-                                <i className="far fa-circle nav-icon" />
-                                <p>Transaction Details</p>
-                              </Link>
-                            )}
-                          {userrole.some(
-                            (role) =>
-                              role === "superAdmin" ||
-                              role === "Dashboard-View" ||
-                              role === "Create-Deposit-Transaction" ||
-                              role === "Create-Withdraw-Transaction" ||
-                              role === "Create-Transaction"
-                          ) && (
-
-
-                              <>
-                                {isToggleCreateTransaction ? (
-                                  <li
-                                    className="nav-link text-white"
-                                    onClick={handleToggleCreateTransaction}
-                                  >
-                                    <i className="" />
-                                     Transaction<p>
-                                      
-                                      <i className="fas fa-angle-left right" />
-                                    </p>
-                                  </li>
-                                ) : (
-                                  <li className="nav-item ">
-                                    <Link
-                                      to="#"
-                                      className="nav-link text-white "
-                                      onClick={handleToggleCreateTransaction}
-                                    >
-                                      <i className="nav-icon fas fa-copy" />
-                                      <p>
-                                     Transaction
-                                        <i class="fas fa-chevron-down right"></i>
-                                      </p>
-                                    </Link>
-                                    <Link
-                                      to="/deposit"
-                                      className="nav-link text-white"
-                                    >
-                                      <i className="far fa-circle nav-icon" />
-                                      <p>Deposit</p>
-                                    </Link>
-                                    <Link
-                                      to="/withdraw"
-                                      className="nav-link text-white"
-                                    >
-                                      <i className="far fa-circle nav-icon" />
-                                      <p>Withdraw</p>
-                                    </Link>
-                                  </li>
-                                )}
-                              </>
-
-                            )}
-                        </li>
-                      )}
-                    </>
-                  )}
-              </li>
+              <Link className="nav-item " to="/welcome">
+                <a
+                  href="#"
+                  className="nav-link active"
+                >
+                  <i className="nav-icon fas fa-tachometer-alt"></i>
+                  <p>
+                    Dashboard
+                  </p>
+                </a>
+              </Link>
               {userrole.some(
                 (role) =>
                   role === "superAdmin" ||
-                  role === "Bank-View" ||
-                  role === "Website-View"
+                  role === "Dashboard-View" ||
+                  role === "Create-Deposit-Transaction" ||
+                  role === "Create-Withdraw-Transaction" ||
+                  role === "Create-Transaction"
               ) && (
                   <>
                     {IsToggleTransaction ? (
@@ -252,38 +153,66 @@ const NavSide = () => {
                           &nbsp;
                           <FontAwesomeIcon
                             icon={faExchangeAlt}
-                            className="transaction-icon"
+                            className="transaction-icon text-white"
                           />
-                          <p>
+                          <p className="text-white">
                             &nbsp; Transaction
                             <i className="fas fa-chevron-down right"></i>
                           </p>
                         </a>
                         {userrole.some(
-                          (role) => role === "superAdmin" || role === "Bank-View"
+                          (role) => role === "superAdmin" || role === "Dashboard-View" ||
+                            role === "Create-Deposit-Transaction" ||
+                            role === "Create-Transaction"
                         ) && (
                             <>
-                              <Link to="/bank" className="nav-link text-white">
+                              <Link to="/deposit" className="nav-link text-white">
                                 <i className="far fa-circle nav-icon" />
-                                <p>Bank</p>
+                                <p>Deposit</p>
                               </Link>
                             </>
                           )}
                         {userrole.some(
                           (role) =>
-                            role === "superAdmin" || role === "Website-View"
+                            role === "superAdmin" || role === "Dashboard-View" ||
+                            role === "Create-Withdraw-Transaction" ||
+                            role === "Create-Transaction"
                         ) && (
                             <>
-                              <Link to="/website" className="nav-link text-white">
+                              <Link to="/withdraw" className="nav-link text-white">
                                 <i className="far fa-circle nav-icon" />
-                                <p>Website</p>
+                                <p>Withdraw</p>
                               </Link>
                             </>
                           )}
                       </li>
                     )}
                   </>
+
                 )}
+              {userrole.some(
+                (role) => role === "superAdmin" || role === "Bank-View"
+              ) && (
+                  <>
+                    <Link to="/bank" className="nav-link text-white">
+                      <i className="far fa-circle nav-icon m-2" />
+                      <p>Bank</p>
+                    </Link>
+                  </>
+                )}
+              {userrole.some(
+                (role) =>
+                  role === "superAdmin" ||
+                  role === "Website-View"
+              ) && (
+                  <>
+                    <Link to="/website" className="nav-link text-white">
+                      <i className="far fa-circle nav-icon m-2" />
+                      <p>Website</p>
+                    </Link>
+                  </>
+                )}
+
               {userrole.some(
                 (role) => role === "superAdmin" || role === ""
               ) && (
@@ -520,9 +449,57 @@ const NavSide = () => {
                         </>
                       )}
                     </li>
+
                   )}
                 </>
               )}
+              {userrole.some(
+                (role) =>
+                  role === "superAdmin" ||
+                  role === "Dashboard-View" ||
+                  role === "Transaction-View" ||
+                  role === "Transaction-Edit-Request" ||
+                  role === "Transaction-Delete-Request"
+              ) && <>
+                  {isToggleDash ? (
+                    <li className="nav-item ">
+                      <a
+                        className="nav-link "
+                        onClick={handleToggleDash}
+                      >
+                        &nbsp;{" "}
+                        <FontAwesomeIcon
+                          icon={faExchangeAlt}
+                          className="transaction-icon text-white"
+                        />
+                        <p className="text-white">
+                          &nbsp;Report
+                          <i className="fas fa-angle-left right" />
+                        </p>
+                      </a>
+                    </li>
+                  ) : (
+                    <li className="nav-item ">
+                      <a
+                        className="nav-link "
+                        onClick={handleToggleDash}
+                      >
+                        &nbsp;
+                        <FontAwesomeIcon
+                          icon={faExchangeAlt}
+                          className="transaction-icon text-white"
+                        />
+                        <p className="text-white">
+                          &nbsp; Report
+                          <i className="fas fa-chevron-down right"></i>
+                        </p>
+                      </a>
+                      <Link to="/maintransactionpage" className="nav-link text-white">
+                        <i className="far fa-circle nav-icon" />
+                        <p>Transaction Details</p>
+                      </Link>
+                    </li>
+                  )}</>}
             </ul>
           </nav>
         </div>
