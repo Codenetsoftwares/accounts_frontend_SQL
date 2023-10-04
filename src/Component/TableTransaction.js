@@ -304,19 +304,16 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage }) 
             {FilterData?.length > 0 ? (
                 <div className='text-center'>
                     <span
-                        className={`m-3 ${page === 1 ? 'disabled' : ''}`}
-                        onClick={() => { page > 1 && handlePage(page - 1) }}
+                        className={`m-3 `}
                     >
-                        {/* <i className="fas fa-xl fa-solid fa-less-than" ></i> */}
-                        <button className='btn btn-primary'>pre</button>
+                        <button className={`btn btn-primary ${page === 1 ? 'disabled' : ''}`} onClick={() => { page > 1 && handlePage(page - 1) }}>Pre</button>
                     </span>
                     <span className='fs-4'>{page}</span>
                     <span
-                        className={`m-3 ${page === totalPage ? 'disabled' : ''}`}
-                        onClick={() => { handlePage(page + 1) }}
+                        className={`m-3 `}
                     >
-                        {/* <i className="fa-solid fas fa-xl fa-greater-than"></i> */}
-                        <button className='btn btn-primary'>next</button>
+                        <button className={`btn btn-primary ${page === totalPage ? 'disabled' : ''}`} onClick={() => { handlePage(page + 1) }}
+                        >Next</button>
                     </span>
                     {/* jump to: */}
                     {/* <input type='number' className='m-1' width={8} onChange={(e) => { setPge(e.target.value) }} />
