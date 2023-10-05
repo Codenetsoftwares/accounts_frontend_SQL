@@ -368,34 +368,6 @@ const InnerUserProfile = () => {
                                         disabled={!isEditing}
                                       />
                                     </div>
-                                    <input
-                                      type="text"
-                                      id="accountNumber"
-                                      className="form-control"
-                                      value={
-                                        isEditing
-                                          ? editedData.upiDetail &&
-                                            editedData.upiDetail.upiApp // Check if upiApp exists in editedData.upiDetail
-                                          : foundObject.upiDetail &&
-                                            foundObject.upiDetail.upiApp // Check if upiApp exists in foundObject.upiDetail
-                                      }
-                                      disabled={!isEditing}
-                                    />
-
-                                    <input
-                                      type="text"
-                                      id="accountNumber"
-                                      className="form-control"
-                                      value={
-                                        isEditing
-                                          ? editedData.upiDetail &&
-                                            editedData.upiDetail.upiApp // Check if upiApp exists in editedData.upiDetail
-                                          : foundObject.upiDetail &&
-                                            foundObject.upiDetail.upiApp // Check if upiApp exists in foundObject.upiDetail
-                                      }
-                                      disabled={!isEditing}
-                                    />
-
                                     <div className="form-group">
                                       <label
                                         htmlFor="accountNumber"
