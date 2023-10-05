@@ -260,6 +260,9 @@ const InnerUserProfile = () => {
                       {/* Show Intro Name disabled Always and Change Intro */}
                       {isEditing ? (
                         <div>
+                          <label className="form-label">
+                            Change Introducer
+                          </label>
                           <div className="input-group mb-3">
                             <div className="input-group-prepend">
                               <span className="input-group-text">
