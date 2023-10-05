@@ -29,6 +29,10 @@ const CreateActualUser = () => {
   });
   const [checkedItems, setCheckedItems] = useState([]);
   const [IntroducerId, setIntroducerId] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredOptions, setFilteredOptions] = useState([]);
+  const [selectedOption, setSelectedOption] = useState(null);
+
   console.log("This is FromData=>>>", formData);
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,11 +49,13 @@ const CreateActualUser = () => {
       );
     }
   };
+
   useEffect(() => {
     AccountService.IntroducerUserId(auth.user).then((res) =>
       setIntroducerId(res.data)
     );
   }, [auth]);
+
   // console.log("Introducer Id", IntroducerId);
 
   const handleSubmit = (e) => {
@@ -68,7 +74,7 @@ const CreateActualUser = () => {
       userName: formData.yourUserName,
       password: formData.yourEnterPassword,
       contactNumber: formData.yourContact,
-      introducersUserName: formData.yourIntroducerName,
+      introducersUserName: searchTerm,
       introducerPercentage: formData.yourIntroducerPercentage,
       // userId: formData.yourUserId,
     };
@@ -96,6 +102,26 @@ const CreateActualUser = () => {
     overflow: "hidden",
   };
   // console.log("====>>>>", formData.yourIntroducerId);
+
+  const handleIntroducerChange = (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+
+    // Filter the options based on the input value
+
+    const filtered = value
+      ? IntroducerId.filter((data) =>
+          data.userName.toLowerCase().includes(value.toLowerCase())
+        )
+      : [];
+
+    setFilteredOptions(filtered);
+  };
+  const handleOptionSelect = (option) => {
+    setSelectedOption(option);
+    setSearchTerm(option.userName);
+    setFilteredOptions([]); // Clear the filtered options when an option is selected
+  };
 
   return (
     <div
@@ -185,27 +211,34 @@ const CreateActualUser = () => {
                           <FaIdCard /> Introducer Name
                           <span className="text-danger">*</span>
                         </label>
-                        <div className="input-group mb-3">
-                          <div className="input-group-prepend">
-                            <span className="input-group-text">
-                              <i class="fa fa-user id"></i>
-                            </span>
+                        <div>
+                          <div className="input-group mb-3">
+                            <div className="input-group-prepend">
+                              <span className="input-group-text">
+                                <i className="fa fa-user id"></i>
+                              </span>
+                            </div>
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Search by Introducer Name"
+                              value={searchTerm}
+                              onChange={handleIntroducerChange}
+                            />
                           </div>
-                          <select
-                            type="text"
-                            className="form-select"
-                            id="text"
-                            name="yourIntroducerName"
-                            value={formData.yourIntroducerName}
-                            onChange={handleChange}
-                          >
-                            <option selected>Select Introducer</option>
-                            {IntroducerId.map((data, index) => (
-                              <option key={index} value={data.userName}>
-                                {data.userName}
-                              </option>
-                            ))}
-                          </select>
+                          {filteredOptions.length > 0 && (
+                            <div className="list-group">
+                              {filteredOptions.map((option, index) => (
+                                <button
+                                  key={index}
+                                  className="list-group-item list-group-item-action"
+                                  onClick={() => handleOptionSelect(option)}
+                                >
+                                  {option.userName}
+                                </button>
+                              ))}
+                            </div>
+                          )}
                         </div>
                         {/* <input
                           type="text"
