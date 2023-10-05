@@ -7,8 +7,7 @@ import { useAuth } from "../../Utils/Auth";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import UserResetPass from "../Modal/UserResetPass";
-
-
+import { Alert } from "react-bootstrap";
 
 const InnerUserProfile = () => {
   const { id } = useParams();
@@ -20,6 +19,18 @@ const InnerUserProfile = () => {
   const [isEditing, setIsEditing] = useState(false); // Track which field is being edited
   const [editedData, setEditedData] = useState({}); // Store edited data
   const [username, setUsername] = useState([]);
+  const [IntroducerName, setIntroducerName] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredOptions, setFilteredOptions] = useState([]);
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  // Calling Single Introducer Name API
+  useEffect(() => {
+    AccountService.IntroducerUserId(auth.user).then((res) =>
+      setIntroducerName(res.data)
+    );
+  }, [auth]);
+  console.log("=>>>Introname", IntroducerName);
 
   useEffect(() => {
     AccountService.userprofile(auth.user)
@@ -51,9 +62,9 @@ const InnerUserProfile = () => {
   };
 
   const handleResetPassword = (e, username) => {
-    setUsername(username)
+    setUsername(username);
   };
-  console.log("password ========>", username)
+  console.log("password ========>", username);
 
   const handleSave = (field) => {
     setIsEditing(false);
@@ -65,11 +76,11 @@ const InnerUserProfile = () => {
       contactnumber: editedData.contactNumber,
       userName: editedData.userName,
       introducerPercentage: editedData.introducerPercentage,
+      introducersUserName: searchTerm,
       websitedetail: editedData.websitedetail,
       bankDetail: {}, // Initialize empty bankDetail
       upiDetail: {}, // Initialize empty upiDetail
     };
-
 
     // Check if bankDetail exists in editedData
     if (editedData.hasOwnProperty("bankDetail")) {
@@ -87,13 +98,13 @@ const InnerUserProfile = () => {
       });
     }
 
-
     // put Api Fetching
     AccountService.inneruserprofile(id, data, auth.user)
       .then((res) => {
         console.log("res", res);
         if (res.status === 201) {
-          toast.success("Profile updated");
+          window.location.reload();
+          alert("Profile updated");
         } else {
           toast.error("Failed");
         }
@@ -108,21 +119,40 @@ const InnerUserProfile = () => {
   };
   console.log("User Deatils", foundObject);
 
+  const handleIntroducerChange = (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+
+    // Filter the options based on the input value
+
+    const filtered = value
+      ? IntroducerName.filter((data) =>
+          data.userName.toLowerCase().includes(value.toLowerCase())
+        )
+      : [];
+
+    setFilteredOptions(filtered);
+  };
+  const handleOptionSelect = (option) => {
+    setSelectedOption(option);
+    setSearchTerm(option.userName);
+    setFilteredOptions([]); // Clear the filtered options when an option is selected
+  };
   return (
     <div
       className="d-flex align-items-center justify-content-center"
       style={{
         background:
           "linear-gradient(90deg, rgba(23,183,184,1) 0%, rgba(23,184,155,0.9668242296918768) 100%)",
-        position: "fixed",
         top: 0,
         left: 0,
         width: "100%",
         height: "100%",
         overflow: "hidden",
+        position: "relative",
       }}
     >
-      <div className="container pt-5">
+      <div className="container">
         <div className="row justify-content-center">
           <div className="col-lg-9">
             <h1
@@ -134,7 +164,7 @@ const InnerUserProfile = () => {
                 color: "black",
               }}
             >
-              User Data
+              User Profile
             </h1>
             <div className="row justify-content-center">
               <div className="card">
@@ -145,9 +175,11 @@ const InnerUserProfile = () => {
                         <label className="form-label">First Name</label>
                         <input
                           name="firstname"
-                          value={isEditing ? editedData.firstname : foundObject.firstname}
-
-
+                          value={
+                            isEditing
+                              ? editedData.firstname
+                              : foundObject.firstname
+                          }
                           onChange={handleInputChange}
                           className="form-control"
                           disabled={!isEditing}
@@ -224,6 +256,50 @@ const InnerUserProfile = () => {
                           disabled={!isEditing}
                         />
                       </div>
+
+                      {/* Show Intro Name disabled Always and Change Intro */}
+                      {isEditing ? (
+                        <div>
+                          <div className="input-group mb-3">
+                            <div className="input-group-prepend">
+                              <span className="input-group-text">
+                                <i className="fa fa-user id"></i>
+                              </span>
+                            </div>
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Search by Introducer Name"
+                              value={searchTerm}
+                              onChange={handleIntroducerChange}
+                            />
+                          </div>
+                          {filteredOptions.length > 0 && (
+                            <div className="list-group">
+                              {filteredOptions.map((option, index) => (
+                                <button
+                                  key={index}
+                                  className="list-group-item list-group-item-action"
+                                  onClick={() => handleOptionSelect(option)}
+                                >
+                                  {option.userName}
+                                </button>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        <div className="mb-3">
+                          <label className="form-label">Introducer Name </label>
+                          <input
+                            name="introducerPercentage"
+                            value={foundObject.introducersUserName}
+                            className="form-control"
+                            disabled
+                          />
+                        </div>
+                      )}
+
                       <div className="mb-3">
                         <label className="form-label">website Details</label>
                         <input
@@ -279,9 +355,12 @@ const InnerUserProfile = () => {
                                         type="text"
                                         id="bankName"
                                         className="form-control"
-                                        value={isEditing
-                                          ? editedData.bankDetail && editedData.bankDetail.bankName // Check if bankName exists in editedData.bankDetail
-                                          : foundObject.bankDetail && foundObject.bankDetail.bankName // Check if bankName exists in foundObject.bankDetail} 
+                                        value={
+                                          isEditing
+                                            ? editedData.bankDetail &&
+                                              editedData.bankDetail.bankName // Check if bankName exists in editedData.bankDetail
+                                            : foundObject.bankDetail &&
+                                              foundObject.bankDetail.bankName // Check if bankName exists in foundObject.bankDetail}
                                         }
                                         disabled={!isEditing}
                                       />
@@ -292,8 +371,10 @@ const InnerUserProfile = () => {
                                       className="form-control"
                                       value={
                                         isEditing
-                                          ? editedData.upiDetail && editedData.upiDetail.upiApp // Check if upiApp exists in editedData.upiDetail
-                                          : foundObject.upiDetail && foundObject.upiDetail.upiApp // Check if upiApp exists in foundObject.upiDetail
+                                          ? editedData.upiDetail &&
+                                            editedData.upiDetail.upiApp // Check if upiApp exists in editedData.upiDetail
+                                          : foundObject.upiDetail &&
+                                            foundObject.upiDetail.upiApp // Check if upiApp exists in foundObject.upiDetail
                                       }
                                       disabled={!isEditing}
                                     />
@@ -304,13 +385,13 @@ const InnerUserProfile = () => {
                                       className="form-control"
                                       value={
                                         isEditing
-                                          ? editedData.upiDetail && editedData.upiDetail.upiApp // Check if upiApp exists in editedData.upiDetail
-                                          : foundObject.upiDetail && foundObject.upiDetail.upiApp // Check if upiApp exists in foundObject.upiDetail
+                                          ? editedData.upiDetail &&
+                                            editedData.upiDetail.upiApp // Check if upiApp exists in editedData.upiDetail
+                                          : foundObject.upiDetail &&
+                                            foundObject.upiDetail.upiApp // Check if upiApp exists in foundObject.upiDetail
                                       }
                                       disabled={!isEditing}
                                     />
-
-
 
                                     <div className="form-group">
                                       <label
@@ -325,12 +406,15 @@ const InnerUserProfile = () => {
                                         className="form-control"
                                         value={
                                           isEditing
-                                            ? editedData.bankDetail && editedData.bankDetail.accountNumber // Check if accountNumber exists in editedData.bankDetail
-                                            : foundObject.bankDetail && foundObject.bankDetail.accountNumber // Check if accountNumber exists in foundObject.bankDetail
+                                            ? editedData.bankDetail &&
+                                              editedData.bankDetail
+                                                .accountNumber // Check if accountNumber exists in editedData.bankDetail
+                                            : foundObject.bankDetail &&
+                                              foundObject.bankDetail
+                                                .accountNumber // Check if accountNumber exists in foundObject.bankDetail
                                         }
                                         disabled={!isEditing}
                                       />
-
                                     </div>
                                   </div>
                                   <div className="col-md-6">
@@ -345,8 +429,13 @@ const InnerUserProfile = () => {
                                         type="text"
                                         id="ifscCode"
                                         className="form-control"
-                                        value={isEditing ? editedData.bankDetail && editedData.bankDetail.ifscCode // Check if ifscCode exists in editedData.bankDetail
-                                          : foundObject.bankDetail && foundObject.bankDetail.ifscCode}
+                                        value={
+                                          isEditing
+                                            ? editedData.bankDetail &&
+                                              editedData.bankDetail.ifscCode // Check if ifscCode exists in editedData.bankDetail
+                                            : foundObject.bankDetail &&
+                                              foundObject.bankDetail.ifscCode
+                                        }
                                         disabled={!isEditing}
                                       />
                                     </div>
@@ -361,8 +450,15 @@ const InnerUserProfile = () => {
                                         type="text"
                                         id="accountHolderName"
                                         className="form-control"
-                                        value={isEditing ? editedData.bankDetail && editedData.bankDetail.accountHolderName // Check if accountHolderName exists in editedData.bankDetail
-                                          : foundObject.bankDetail && foundObject.bankDetail.accountHolderName}
+                                        value={
+                                          isEditing
+                                            ? editedData.bankDetail &&
+                                              editedData.bankDetail
+                                                .accountHolderName // Check if accountHolderName exists in editedData.bankDetail
+                                            : foundObject.bankDetail &&
+                                              foundObject.bankDetail
+                                                .accountHolderName
+                                        }
                                         disabled={!isEditing}
                                       />
                                     </div>
@@ -377,8 +473,13 @@ const InnerUserProfile = () => {
                                         type="text"
                                         id="upiApp"
                                         className="form-control"
-                                        value={isEditing ? editedData.bankDetail && editedData.bankDetail.upiApp 
-                                          : foundObject.bankDetail && foundObject.bankDetail.upiApp}
+                                        value={
+                                          isEditing
+                                            ? editedData.bankDetail &&
+                                              editedData.bankDetail.upiApp
+                                            : foundObject.bankDetail &&
+                                              foundObject.bankDetail.upiApp
+                                        }
                                         disabled={!isEditing}
                                       />
                                     </div>
@@ -393,8 +494,13 @@ const InnerUserProfile = () => {
                                         type="text"
                                         id="upiId"
                                         className="form-control"
-                                        value={isEditing ? editedData.bankDetail && editedData.bankDetail.upiId
-                                          : foundObject.bankDetail && foundObject.bankDetail.upiId}
+                                        value={
+                                          isEditing
+                                            ? editedData.bankDetail &&
+                                              editedData.bankDetail.upiId
+                                            : foundObject.bankDetail &&
+                                              foundObject.bankDetail.upiId
+                                        }
                                         disabled={!isEditing}
                                       />
                                     </div>
@@ -409,13 +515,16 @@ const InnerUserProfile = () => {
                                         type="text"
                                         id="upiNumber"
                                         className="form-control"
-                                        value={isEditing ? editedData.bankDetail && editedData.bankDetail.upiNumber
-                                          : foundObject.bankDetail && foundObject.bankDetail.upiNumber}
+                                        value={
+                                          isEditing
+                                            ? editedData.bankDetail &&
+                                              editedData.bankDetail.upiNumber
+                                            : foundObject.bankDetail &&
+                                              foundObject.bankDetail.upiNumber
+                                        }
                                         disabled={!isEditing}
                                       />
                                     </div>
-
-
                                   </div>
                                 </div>
                               </div>
@@ -424,16 +533,12 @@ const InnerUserProfile = () => {
                         </div>
                       )}
                       {isEditing ? (
-
                         <button
                           className="btn btn-success mx-1"
                           onClick={handleSave}
                         >
                           <FontAwesomeIcon icon={faSave} /> Save
                         </button>
-
-
-
                       ) : (
                         <>
                           <button
@@ -442,27 +547,31 @@ const InnerUserProfile = () => {
                           >
                             <FontAwesomeIcon icon={faEdit} /> Edit
                           </button>
-
                         </>
                       )}
                     </>
                   )}
                 </div>
 
-                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" onClick={(e) => {
-                  handleResetPassword(e, foundObject.userName);
-                }}>
+                <button
+                  class="btn btn-primary"
+                  type="button"
+                  data-toggle="collapse"
+                  data-target="#collapseExample"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
+                  onClick={(e) => {
+                    handleResetPassword(e, foundObject.userName);
+                  }}
+                >
                   Reset password
                 </button>
-
-
               </div>
             </div>
           </div>
         </div>
         <UserResetPass UserName={username} />
       </div>
-
     </div>
   );
 };
