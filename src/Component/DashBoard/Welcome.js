@@ -84,7 +84,7 @@ const Welcome = () => {
               zIndex: "10",
             }}
           >
-            &copy; 2023 CODENET Software. All rights reserved.
+            &copy; 2023 CODEGENTE. All rights reserved.
           </footer>
         </div>
       </div>
