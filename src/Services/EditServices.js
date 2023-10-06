@@ -212,6 +212,26 @@ class EditServices {
       },
     });
   }
+  IsEditIntroducerApprove(_id, data, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/admin/approve-introducer-edit-request/${_id}`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+  IsDeleteIntroducerApprove(_id, user) {
+    console.log(user);
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/delete-introducer-transaction/${_id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
 }
 
 export default new EditServices();

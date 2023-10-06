@@ -8,13 +8,14 @@ import {
   faUser,
   faNetworkWired,
   faEdit,
-  faBalanceScale
+  faBalanceScale,
 } from "@fortawesome/free-solid-svg-icons";
 import LiveBalanceIntroducer from "../Modal/LiveBalanceIntroducer";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-bootstrap";
-
-
+import TransactionSercvice from "../../Services/TransactionSercvice";
+import IntroducerTransaction from "../Modal/IntroducerTransaction";
+import IntroducerPayment from "./IntroducerPayment";
 
 const IntroducerProfile = () => {
   const auth = useAuth();
@@ -22,6 +23,8 @@ const IntroducerProfile = () => {
   const [ID, setID] = useState([]);
   const [q, setQ] = useState("");
   const navigate = useNavigate();
+  const [introducerName, setIntroducerName] = useState("");
+  const [txType, setTxType] = useState("");
 
   // const handelinnerprofile =()=>{
   //   navigate(`/innerprofile/${users._id}`);
@@ -30,8 +33,7 @@ const IntroducerProfile = () => {
   useEffect(() => {
     AccountService.Introducerprofile(auth.user).then((res) =>
       setUsers(res.data)
-    )
-
+    );
   }, [auth]);
   console.log("users", users);
 
@@ -41,9 +43,7 @@ const IntroducerProfile = () => {
   });
   const handleLiveBl = (e, ID) => {
     setID(ID);
-
-
-  }
+  };
   console.log("Live Bl", ID);
 
   return (
@@ -69,10 +69,13 @@ const IntroducerProfile = () => {
         {filteredUsers.map((users) => (
           <div className="card container-fluid w-75">
             <div className="card-body">
-              <p>
-                {users.userName}  
-              </p>
-
+              <p className="text-bold">{users.userName}</p>
+              <IntroducerPayment
+                IntroducerName={users.userName}
+                balance={users.balance.balance}
+                duebalance={users.balance.currentDue}
+                id={users._id}
+              />
               <Link
                 to={`/innerintroducer/${users._id}`}
                 style={{ cursor: "pointer" }}
@@ -87,12 +90,40 @@ const IntroducerProfile = () => {
                 to={`/singleintroducer/${users._id}`}
                 style={{ cursor: "pointer" }}
               >
-                <button type="button" class="btn btn-danger mt-2">
+                <button type="button" class="btn btn-info mt-2">
                   Edit Profile &nbsp;
                   <FontAwesomeIcon icon={faEdit} />
                 </button>
               </Link>
               <br />
+              {/* Deposit and Withdraw Part Start */}
+              {/* <div>
+                <button
+                  type="button"
+                  class="btn btn-success mt-2"
+                  data-toggle="modal"
+                  data-target="#IntroTx"
+                  onClick={(e) => {
+                    handleIntroducerTx(e, users.userName, "Deposit");
+                  }}
+                >
+                  Deposit
+                </button>
+                &nbsp;&nbsp;
+                <button
+                  type="button"
+                  class="btn btn-danger mt-2"
+                  data-toggle="modal"
+                  data-target="#IntroTx"
+                  onClick={(e) => {
+                    handleIntroducerTx(e, users.userName, "Withdraw");
+                  }}
+                >
+                  Withdraw
+                </button>
+              </div> */}
+              {/* Deposit and Withdraw Part End */}
+
               <button
                 type="button"
                 class="btn btn-warning mt-2"
@@ -102,7 +133,7 @@ const IntroducerProfile = () => {
                   handleLiveBl(e, users._id);
                 }}
               >
-                Check Live Balance &nbsp;
+                Total Profit Lifetime &nbsp;
                 <FontAwesomeIcon icon={faBalanceScale} />
               </button>
             </div>
@@ -110,6 +141,7 @@ const IntroducerProfile = () => {
         ))}
       </ul>
       <LiveBalanceIntroducer ID={ID} />
+      <IntroducerTransaction TxType={txType} IntroducerName={introducerName} />
     </div>
   );
 };

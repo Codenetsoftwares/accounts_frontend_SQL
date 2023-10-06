@@ -122,6 +122,47 @@ class TransactionService {
       },
     });
   }
+
+  IntroducerTransaction(data, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/admin/create/introducer/transaction`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+  IntroducerStatement(id, user) {
+    return axios({
+      method: "get",
+      url: `${API_HOST}/api/admin/introducer-account-summary/${id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  editIntroducerTransactionData(id, data, user) {
+    return axios({
+      method: "put",
+      url: `${API_HOST}/api/admin/edit-introducer-transaction-request/${id}`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  IntroducerAlertTransaction(user) {
+    return axios({
+      method: "get",
+      url: `${API_HOST}/api/superadmin/view-edit-introducer-transaction-requests`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
 }
 
 export default new TransactionService();

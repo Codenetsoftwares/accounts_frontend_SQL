@@ -1,26 +1,31 @@
 import React, { useState, useEffect } from "react";
-import EditServices from "../../Services/EditServices";
-import { useAuth } from "../../Utils/Auth";
-import InnerAlert from "../../Modal/InnerAlert";
+import InnerAlert from "../Modal/InnerAlert";
+import EditServices from "../Services/EditServices";
+import TransactionSercvice from "../Services/TransactionSercvice";
+import { useAuth } from "../Utils/Auth";
 
-const Alert = () => {
+const IntroducerAlert = () => {
   const auth = useAuth();
-
+  console.log(auth);
   const [alert, setAlert] = useState([]);
   const [isApproved, setIsApproved] = useState();
   var EditData = [];
 
   useEffect(() => {
     if (auth.user) {
-      EditServices.ViewAlert(auth.user).then((res) => setAlert(res.data));
+      TransactionSercvice.IntroducerAlertTransaction(auth.user).then((res) =>
+        setAlert(res.data)
+      );
     }
   }, [auth]);
 
   for (let i = 0; i < alert.length; i++) {
     EditData[i] = alert[i].changedFields;
   }
+  console.log(auth.user);
 
-  const handleEditApprove = (e, id, transactionType, message) => {
+  const handleEditApprove = (e, id, transactionType) => {
+    console.log(transactionType);
     e.preventDefault();
     const flag = true;
 
@@ -29,7 +34,7 @@ const Alert = () => {
     };
     switch (transactionType) {
       case "Deposit":
-        EditServices.IsApprove(id, data, auth.user)
+        EditServices.IsEditIntroducerApprove(id, data, auth.user)
           .then((response) => {
             window.location.reload();
             console.log(response.data);
@@ -39,51 +44,7 @@ const Alert = () => {
           });
         break;
       case "Withdraw":
-        EditServices.IsApprove(id, data, auth.user)
-          .then((response) => {
-            window.location.reload();
-            console.log(response.data);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-        break;
-
-      case "Manual-Bank-Withdraw":
-        EditServices.IsBankApprove(id, data, auth.user)
-          .then((response) => {
-            window.location.reload();
-            console.log(response.data);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-        break;
-
-      case "Manual-Bank-Deposit":
-        EditServices.IsBankApprove(id, data, auth.user)
-          .then((response) => {
-            window.location.reload();
-            console.log(response.data);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-        break;
-
-      case "Manual-Website-Withdraw":
-        EditServices.IsWebsiteApprove(id, data, auth.user)
-          .then((response) => {
-            window.location.reload();
-            console.log(response.data);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-        break;
-
-      case "Manual-Website-Deposit":
-        EditServices.IsWebsiteApprove(id, data, auth.user)
+        EditServices.IsEditIntroducerApprove(id, data, auth.user)
           .then((response) => {
             window.location.reload();
             console.log(response.data);
@@ -120,56 +81,13 @@ const Alert = () => {
           });
         break;
 
-      case "Manual-Bank-Withdraw":
-        EditServices.IsReject(id, auth.user)
-          .then((response) => {
-            window.location.reload();
-            console.log(response.data);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-        break;
-
-      case "Manual-Bank-Deposit":
-        EditServices.IsReject(id, auth.user)
-          .then((response) => {
-            window.location.reload();
-            console.log(response.data);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-        break;
-
-      case "Manual-Website-Withdraw":
-        EditServices.IsReject(id, auth.user)
-          .then((response) => {
-            window.location.reload();
-            console.log(response.data);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-        break;
-
-      case "Manual-Website-Deposit":
-        EditServices.IsReject(id, auth.user)
-          .then((response) => {
-            window.location.reload();
-            console.log(response.data);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-        break;
-
       default:
       // code block
     }
   };
 
   const handleDeleteApprove = (e, id, transactionType) => {
+    console.log(auth.user);
     e.preventDefault();
     const flag = true;
 
@@ -178,7 +96,7 @@ const Alert = () => {
     };
     switch (transactionType) {
       case "Deposit":
-        EditServices.IsTransactionDeleteApprove(id, auth.user)
+        EditServices.IsDeleteIntroducerApprove(id, auth.user)
           .then((response) => {
             window.location.reload();
             console.log(response.data);
@@ -188,51 +106,7 @@ const Alert = () => {
           });
         break;
       case "Withdraw":
-        EditServices.IsTransactionDeleteApprove(id, auth.user)
-          .then((response) => {
-            window.location.reload();
-            console.log(response.data);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-        break;
-
-      case "Manual-Bank-Withdraw":
-        EditServices.IsManualBankTransactionDeleteApprove(id, auth.user)
-          .then((response) => {
-            window.location.reload();
-            console.log(response.data);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-        break;
-
-      case "Manual-Bank-Deposit":
-        EditServices.IsManualBankTransactionDeleteApprove(id, auth.user)
-          .then((response) => {
-            window.location.reload();
-            console.log(response.data);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-        break;
-
-      case "Manual-Website-Withdraw":
-        EditServices.IsManualWebsiteTransactionDeleteApprove(id, auth.user)
-          .then((response) => {
-            window.location.reload();
-            console.log(response.data);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-        break;
-
-      case "Manual-Website-Deposit":
-        EditServices.IsManualWebsiteTransactionDeleteApprove(id, auth.user)
+        EditServices.IsDeleteIntroducerApprove(id, auth.user)
           .then((response) => {
             window.location.reload();
             console.log(response.data);
@@ -260,50 +134,6 @@ const Alert = () => {
         break;
       case "Withdraw":
         EditServices.IsTransactionDeleteReject(id, auth.user)
-          .then((response) => {
-            window.location.reload();
-            console.log(response.data);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-        break;
-
-      case "Manual-Bank-Withdraw":
-        EditServices.IsManualBankTransactionDeleteReject(id, auth.user)
-          .then((response) => {
-            window.location.reload();
-            console.log(response.data);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-        break;
-
-      case "Manual-Bank-Deposit":
-        EditServices.IsManualBankTransactionDeleteReject(id, auth.user)
-          .then((response) => {
-            window.location.reload();
-            console.log(response.data);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-        break;
-
-      case "Manual-Website-Withdraw":
-        EditServices.IsManualWebsiteTransactionDeleteReject(id, auth.user)
-          .then((response) => {
-            window.location.reload();
-            console.log(response.data);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-        break;
-
-      case "Manual-Website-Deposit":
-        EditServices.IsManualWebsiteTransactionDeleteReject(id, auth.user)
           .then((response) => {
             window.location.reload();
             console.log(response.data);
@@ -449,12 +279,7 @@ const Alert = () => {
                         <button
                           class="btn btn-primary"
                           onClick={(e) =>
-                            handleEditApprove(
-                              e,
-                              data._id,
-                              data.transactionType,
-                              data.message
-                            )
+                            handleEditApprove(e, data._id, data.transactionType)
                           }
                         >
                           Approve
@@ -620,4 +445,4 @@ const Alert = () => {
   );
 };
 
-export default Alert;
+export default IntroducerAlert;
