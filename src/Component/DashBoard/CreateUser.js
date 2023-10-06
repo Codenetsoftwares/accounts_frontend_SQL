@@ -274,6 +274,22 @@ const CreateUser = () => {
                               Introducer Profile View
                             </label>
                           </div>
+
+                          <div className="form-check form-switch">
+                            <input
+                              className="form-check-input"
+                              type="checkbox"
+                              value="RequestAdmin"
+                              checked={checkedItems.includes("RequestAdmin")}
+                              onChange={handleCheckboxChange}
+                            />
+                            <label
+                              className="form-check-label"
+                              for="flexSwitchCheckDefault"
+                            >
+                              Request
+                            </label>
+                          </div>
                         </div>
                         <div className="col-md-6 align-items-end">
                           <div className="form-check form-switch">
