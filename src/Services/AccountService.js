@@ -475,8 +475,6 @@ class AccountService {
     });
   }
 
-
-
   UserResetPassword(data, user) {
     return axios({
       method: "post",
@@ -503,6 +501,17 @@ class AccountService {
     return axios({
       method: "post",
       url: API_HOST + "/api/admin/reset-password",
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  DeleteIntroducerTransaction(data, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/admin/save-introducer-transaction-request`,
       data: data,
       headers: {
         Authorization: `Bearer ${user.token}`,

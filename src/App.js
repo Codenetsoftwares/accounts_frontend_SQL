@@ -1,4 +1,4 @@
-import './App.css';
+import "./App.css";
 import LoginWth from "../src/Component/Login/LoginWth";
 import AdminDash from "../src/Component/DashBoard/AdminDash";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -49,11 +49,11 @@ import BankEdit from "./Component/DashBoard/Request/Bank/BankEdit";
 import WebsiteDelete from "./Component/DashBoard/Request/Website/WebsiteDelete";
 import WebsiteEdit from "./Component/DashBoard/Request/Website/WebsiteEdit";
 
-import Login from './Component/Login/Login';
+import Login from "./Component/Login/Login";
 
-import MainTransactionPage from './pages/MainTransactionPage';
-
-
+import MainTransactionPage from "./pages/MainTransactionPage";
+import IntroducerStatement from "./Component/DashBoard/IntroducerStatement";
+import IntroducerAlert from "./Component/IntroducerAlert";
 
 function App() {
   return (
@@ -73,7 +73,7 @@ function App() {
       <AuthProvider>
         <BrowserRouter>
           <Routes>
-            <Route index element={<Login/>} />
+            <Route index element={<Login />} />
 
             <Route path="/" element={<AdminLayout />}>
               <Route
@@ -109,7 +109,14 @@ function App() {
                   </RequireAuth>
                 }
               />
-
+              <Route
+                path="introducerstatement/:id"
+                element={
+                  <RequireAuth>
+                    <IntroducerStatement />
+                  </RequireAuth>
+                }
+              />
               <Route
                 path="websitestatement/:id"
                 element={
@@ -151,7 +158,14 @@ function App() {
                   </RequireAuth>
                 }
               />
-              <Route path="maintransactionpage" element={<RequireAuth><MainTransactionPage /></RequireAuth>} />
+              <Route
+                path="maintransactionpage"
+                element={
+                  <RequireAuth>
+                    <MainTransactionPage />
+                  </RequireAuth>
+                }
+              />
               <Route
                 path="withdraw"
                 element={
@@ -277,6 +291,14 @@ function App() {
                 }
               />
               <Route
+                path="introduceralert"
+                element={
+                  <RequireAuth>
+                    <IntroducerAlert />
+                  </RequireAuth>
+                }
+              />
+              <Route
                 path="bankDelete"
                 element={
                   <RequireAuth>
@@ -296,7 +318,7 @@ function App() {
                 path="websiteEdit"
                 element={
                   <RequireAuth>
-                    < WebsiteEdit />
+                    <WebsiteEdit />
                   </RequireAuth>
                 }
               />

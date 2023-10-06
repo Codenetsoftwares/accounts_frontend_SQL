@@ -14,9 +14,9 @@ const LiveBalanceIntroducer = ({ ID }) => {
         SetLiveBalance(res.data.LiveBalance);
       })
       .catch((error) => {
-        toast.error(error.response.data.message)
-        SetLiveBalance(0)
-      })
+        toast.error(error.response.data.message);
+        SetLiveBalance(0);
+      });
   }, [auth.user, ID]);
   console.log("Blance", LiveBalance);
   return (
@@ -43,7 +43,7 @@ const LiveBalanceIntroducer = ({ ID }) => {
             </div>
             <div class="modal-body">
               <p className="text-muted">
-                Live Balance :{" "}
+                Profit :{" "}
                 {LiveBalance > 0 ? (
                   <blink>
                     {" "}

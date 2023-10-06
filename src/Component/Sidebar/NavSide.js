@@ -427,6 +427,13 @@ const NavSide = () => {
                         <i className="far fa-circle nav-icon" />
                         <p>All transaction</p>
                       </Link>
+                      <Link
+                        to="/introduceralert"
+                        className="nav-link text-white"
+                      >
+                        <i className="far fa-circle nav-icon" />
+                        <p>Introducer transaction</p>
+                      </Link>
                       {userrole.some((role) => role === "superAdmin") && (
                         <>
                           {IsToggleBank ? (
