@@ -338,9 +338,60 @@ const NavSide = () => {
                 </>
               )}
               {/* profile part */}
+              {/* report part */}
+              {userrole.some(
+                (role) =>
+                  role === "superAdmin" ||
+                  role === "Dashboard-View" ||
+                  role === "Transaction-View" ||
+                  role === "Transaction-Edit-Request" ||
+                  role === "Transaction-Delete-Request"
+              ) && (
+                <>
+                  {isToggleDash ? (
+                    <li className="nav-item ">
+                      <a className="nav-link " onClick={handleToggleDash}>
+                        &nbsp;{" "}
+                        <FontAwesomeIcon
+                          icon={faExchangeAlt}
+                          className="transaction-icon text-white"
+                        />
+                        <p className="text-white">
+                          &nbsp;Report
+                          <i className="fas fa-angle-left right" />
+                        </p>
+                      </a>
+                    </li>
+                  ) : (
+                    <li className="nav-item ">
+                      <a className="nav-link " onClick={handleToggleDash}>
+                        &nbsp;
+                        <FontAwesomeIcon
+                          icon={faExchangeAlt}
+                          className="transaction-icon text-white"
+                        />
+                        <p className="text-white">
+                          &nbsp; Report
+                          <i className="fas fa-chevron-down right"></i>
+                        </p>
+                      </a>
+                      <Link
+                        to="/maintransactionpage"
+                        className="nav-link text-white"
+                      >
+                        <i className="far fa-circle nav-icon" />
+                        <p>Transaction Details</p>
+                      </Link>
+                    </li>
+                  )}
+                </>
+              )}
+              {/* report part */}
 
               {/* request part */}
-              {userrole.some((role) => role === "superAdmin") && (
+              {userrole.some(
+                (role) => role === "superAdmin" || role === "RequestAdmin"
+              ) && (
                 <>
                   {" "}
                   {IsToggleRequest ? (
@@ -469,56 +520,6 @@ const NavSide = () => {
                 </>
               )}
               {/* request part */}
-
-              {/* report part */}
-              {userrole.some(
-                (role) =>
-                  role === "superAdmin" ||
-                  role === "Dashboard-View" ||
-                  role === "Transaction-View" ||
-                  role === "Transaction-Edit-Request" ||
-                  role === "Transaction-Delete-Request"
-              ) && (
-                <>
-                  {isToggleDash ? (
-                    <li className="nav-item ">
-                      <a className="nav-link " onClick={handleToggleDash}>
-                        &nbsp;{" "}
-                        <FontAwesomeIcon
-                          icon={faExchangeAlt}
-                          className="transaction-icon text-white"
-                        />
-                        <p className="text-white">
-                          &nbsp;Report
-                          <i className="fas fa-angle-left right" />
-                        </p>
-                      </a>
-                    </li>
-                  ) : (
-                    <li className="nav-item ">
-                      <a className="nav-link " onClick={handleToggleDash}>
-                        &nbsp;
-                        <FontAwesomeIcon
-                          icon={faExchangeAlt}
-                          className="transaction-icon text-white"
-                        />
-                        <p className="text-white">
-                          &nbsp; Report
-                          <i className="fas fa-chevron-down right"></i>
-                        </p>
-                      </a>
-                      <Link
-                        to="/maintransactionpage"
-                        className="nav-link text-white"
-                      >
-                        <i className="far fa-circle nav-icon" />
-                        <p>Transaction Details</p>
-                      </Link>
-                    </li>
-                  )}
-                </>
-              )}
-              {/* report part */}
             </ul>
           </nav>
         </div>

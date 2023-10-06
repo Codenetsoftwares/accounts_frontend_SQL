@@ -70,217 +70,239 @@ const AdminEditrole = () => {
 
 
     return (
-        <>
-            {displayEdit === false ? (
-                <div>
-                    <div className="card">
-                        <h5 className="card-header">Sub Admin Data</h5>
-                        <div className="card-body">
-                            <h5 className="card-title">Name</h5>
-                            <p className="card-text">{adminData.firstname} {adminData.lastname}</p>
-                            <h5 className="card-title">User Name</h5>
-                            <p className="card-text">
-                                {adminData.userName}
-                            </p>
-                            <h5 className="card-title">Current Permissions</h5>
-                            {rolesArray.length > 0 ? (
-                                <ul className='card-text'>
-                                    {rolesArray.map((role, index) => (
-                                        <li key={index}>{role}</li>
-                                    ))}
-                                </ul>
-                            ) : (
-                                <p className='card-text'>No roles found</p>
-                            )}
-                            <div>
-
-                            </div>
-                            <button onClick={handleUpdate} className="btn btn-primary mb-0">
-                                {""}
-                                Renew the permissions
-                            </button>
-                            <Link
-                to={`/editsubadmin/${adminData._id}`}
-                style={{ cursor: "pointer" }}
-              >
-                <button
-                  type="button"
-                  class="btn btn-warning ml-2"
-                  
+      <>
+        {displayEdit === false ? (
+          <div>
+            <div className="card">
+              <h5 className="card-header">Sub Admin Data</h5>
+              <div className="card-body">
+                <h5 className="card-title">Name</h5>
+                <p className="card-text">
+                  {adminData.firstname} {adminData.lastname}
+                </p>
+                <h5 className="card-title">User Name</h5>
+                <p className="card-text">{adminData.userName}</p>
+                <h5 className="card-title">Current Permissions</h5>
+                {rolesArray.length > 0 ? (
+                  <ul className="card-text">
+                    {rolesArray.map((role, index) => (
+                      <li key={index}>{role}</li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="card-text">No roles found</p>
+                )}
+                <div></div>
+                <button onClick={handleUpdate} className="btn btn-primary mb-0">
+                  {""}
+                  Renew the permissions
+                </button>
+                <Link
+                  to={`/editsubadmin/${adminData._id}`}
+                  style={{ cursor: "pointer" }}
                 >
-                  Edit Profile
+                  <button type="button" class="btn btn-warning ml-2">
+                    Edit Profile
+                  </button>
+                </Link>
+              </div>
+              <>
+                <button
+                  class="btn btn-primary"
+                  type="button"
+                  data-toggle="collapse"
+                  data-target="#collapseExample"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
+                  onClick={(e) => {
+                    handleResetPassword(e, adminData.userName);
+                  }}
+                >
+                  Reset password
                 </button>
-              </Link>
-             
-                        </div>
-                        <>
-                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"  onClick={(e) => {
-                  handleResetPassword(e, adminData.userName);
-                }}>
-                      Reset password
-                </button>
-                </>
-                    </div>
-                    <SubAdResetPassword UserName={username} />
+              </>
+            </div>
+            <SubAdResetPassword UserName={username} />
+          </div>
+        ) : (
+          <div>
+            <form>
+              <div className="card" style={{ backgroundColor: "#d9cece" }}>
+                <div className="card-header">
+                  <h1 className="h4 card-title mb-0">Renew the permissions</h1>
                 </div>
-            ) : (
-                <div>
-                    <form>
-                        <div className="card" style={{ backgroundColor: '#d9cece' }}>
-                            <div className="card-header">
-                                <h1 className="h4 card-title mb-0">Renew the permissions</h1>
-                            </div>
-                            <div className="card-body">
-                                <div className='mb-1 input-group-lg'>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            value="Dashboard-View"
-                                            checked={checkedItems.includes('Dashboard-View')}
-                                            onChange={handleCheckboxChange}
-                                        />
-                                        <span className='my-1'> Dashboard View</span>
-                                    </label>
-                                </div>
-                                <div>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            value="Transaction-View"
-                                            checked={checkedItems.includes('Transaction-View')}
-                                            onChange={handleCheckboxChange}
-                                        />
-                                        <span>  Transaction View</span>
-                                    </label>
-                                </div>
-                                <div>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            value="Bank-View"
-                                            checked={checkedItems.includes('Bank-View')}
-                                            onChange={handleCheckboxChange}
-                                        />
-                                        <span>Bank View</span>
-                                    </label>
-                                </div>
-                                <div>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            value=" Website-View"
-                                            checked={checkedItems.includes(' Website-View')}
-                                            onChange={handleCheckboxChange}
-                                        />
-                                        <span> Website View</span>
-                                    </label>
-                                </div>
-                                <div>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            value=" Create-Deposit-Transaction"
-                                            checked={checkedItems.includes('Create-Deposit-Transaction')}
-                                            onChange={handleCheckboxChange}
-                                        />
-                                        <span>Create Deposit Transaction</span>
-                                    </label>
-                                </div>
-                                <div>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            value=" Create-Withdraw-Transaction"
-                                            checked={checkedItems.includes(' Create-Withdraw-Transaction')}
-                                            onChange={handleCheckboxChange}
-                                        />
-                                        <span> Create Withdraw Transaction</span>
-                                    </label>
-                                </div>
-                                <div>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            value="Create-Transaction"
-                                            checked={checkedItems.includes('Create-Transaction')}
-                                            onChange={handleCheckboxChange}
-                                        />
-                                        <span>Create Transaction</span>
-                                    </label>
-                                </div>
-                                <div>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            value="Profile-View"
-                                            checked={checkedItems.includes('Profile-View')}
-                                            onChange={handleCheckboxChange}
-                                        />
-                                        <span>Profile View</span>
-                                    </label>
-                                </div>
-                                <div>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            value="User-Profile-View"
-                                            checked={checkedItems.includes('User-Profile-View')}
-                                            onChange={handleCheckboxChange}
-                                        />
-                                        <span> User-Profile-View</span>
-                                    </label>
-                                </div>
-                                <div>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            value="Introducer-Profile-View"
-                                            checked={checkedItems.includes('Introducer-Profile-View')}
-                                            onChange={handleCheckboxChange}
-                                        />
-                                        <span> Introducer Profile View</span>
-                                    </label>
-                                </div>
-                                <div>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            value="Transaction-Edit-Request"
-                                            checked={checkedItems.includes('Transaction-Edit-Request')}
-                                            onChange={handleCheckboxChange}
-                                        />
-                                        <span> Transaction Edit Request</span>
-                                    </label>
-                                </div>
-                                <div>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            value=" Transaction-Delete-Request"
-                                            checked={checkedItems.includes(' Transaction-Delete-Request')}
-                                            onChange={handleCheckboxChange}
-                                        />
-                                        <span> Transaction Delete Request</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div className="card-footer">
-                                <div className="col-12 text-end">
-                                    <button
-                                        onClick={handleSubmit}
-                                        className="btn btn-primary mb-0"
-                                    >
-                                        Save
-                                    </button>
-                  
-                                </div>
-                
-                            </div>
-                        </div>
-                    </form>
+                <div className="card-body">
+                  <div className="mb-1 input-group-lg">
+                    <label>
+                      <input
+                        type="checkbox"
+                        value="Dashboard-View"
+                        checked={checkedItems.includes("Dashboard-View")}
+                        onChange={handleCheckboxChange}
+                      />
+                      <span className="my-1"> Dashboard View</span>
+                    </label>
+                  </div>
+                  <div>
+                    <label>
+                      <input
+                        type="checkbox"
+                        value="Transaction-View"
+                        checked={checkedItems.includes("Transaction-View")}
+                        onChange={handleCheckboxChange}
+                      />
+                      <span> Transaction View</span>
+                    </label>
+                  </div>
+                  <div>
+                    <label>
+                      <input
+                        type="checkbox"
+                        value="Bank-View"
+                        checked={checkedItems.includes("Bank-View")}
+                        onChange={handleCheckboxChange}
+                      />
+                      <span>Bank View</span>
+                    </label>
+                  </div>
+                  <div>
+                    <label>
+                      <input
+                        type="checkbox"
+                        value=" Website-View"
+                        checked={checkedItems.includes(" Website-View")}
+                        onChange={handleCheckboxChange}
+                      />
+                      <span> Website View</span>
+                    </label>
+                  </div>
+                  <div>
+                    <label>
+                      <input
+                        type="checkbox"
+                        value=" Create-Deposit-Transaction"
+                        checked={checkedItems.includes(
+                          "Create-Deposit-Transaction"
+                        )}
+                        onChange={handleCheckboxChange}
+                      />
+                      <span>Create Deposit Transaction</span>
+                    </label>
+                  </div>
+                  <div>
+                    <label>
+                      <input
+                        type="checkbox"
+                        value=" Create-Withdraw-Transaction"
+                        checked={checkedItems.includes(
+                          " Create-Withdraw-Transaction"
+                        )}
+                        onChange={handleCheckboxChange}
+                      />
+                      <span> Create Withdraw Transaction</span>
+                    </label>
+                  </div>
+                  <div>
+                    <label>
+                      <input
+                        type="checkbox"
+                        value="Create-Transaction"
+                        checked={checkedItems.includes("Create-Transaction")}
+                        onChange={handleCheckboxChange}
+                      />
+                      <span>Create Transaction</span>
+                    </label>
+                  </div>
+                  <div>
+                    <label>
+                      <input
+                        type="checkbox"
+                        value="Profile-View"
+                        checked={checkedItems.includes("Profile-View")}
+                        onChange={handleCheckboxChange}
+                      />
+                      <span>Profile View</span>
+                    </label>
+                  </div>
+                  <div>
+                    <label>
+                      <input
+                        type="checkbox"
+                        value="User-Profile-View"
+                        checked={checkedItems.includes("User-Profile-View")}
+                        onChange={handleCheckboxChange}
+                      />
+                      <span> User-Profile-View</span>
+                    </label>
+                  </div>
+                  <div>
+                    <label>
+                      <input
+                        type="checkbox"
+                        value="Introducer-Profile-View"
+                        checked={checkedItems.includes(
+                          "Introducer-Profile-View"
+                        )}
+                        onChange={handleCheckboxChange}
+                      />
+                      <span> Introducer Profile View</span>
+                    </label>
+                  </div>
+                  <div>
+                    <label>
+                      <input
+                        type="checkbox"
+                        value="Transaction-Edit-Request"
+                        checked={checkedItems.includes(
+                          "Transaction-Edit-Request"
+                        )}
+                        onChange={handleCheckboxChange}
+                      />
+                      <span> Transaction Edit Request</span>
+                    </label>
+                  </div>
+
+                  <div>
+                    <label>
+                      <input
+                        type="checkbox"
+                        value="RequestAdmin"
+                        checked={checkedItems.includes("RequestAdmin")}
+                        onChange={handleCheckboxChange}
+                      />
+                      <span>Request </span>
+                    </label>
+                  </div>
+
+                  <div>
+                    <label>
+                      <input
+                        type="checkbox"
+                        value=" Transaction-Delete-Request"
+                        checked={checkedItems.includes(
+                          " Transaction-Delete-Request"
+                        )}
+                        onChange={handleCheckboxChange}
+                      />
+                      <span> Transaction Delete Request</span>
+                    </label>
+                  </div>
                 </div>
-            )}
-        </>
+                <div className="card-footer">
+                  <div className="col-12 text-end">
+                    <button
+                      onClick={handleSubmit}
+                      className="btn btn-primary mb-0"
+                    >
+                      Save
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        )}
+      </>
     );
 };
 
