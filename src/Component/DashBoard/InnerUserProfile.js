@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faSave } from "@fortawesome/free-solid-svg-icons";
 import AccountService from "../../Services/AccountService";
@@ -10,9 +10,10 @@ import UserResetPass from "../Modal/UserResetPass";
 import { Alert } from "react-bootstrap";
 
 const InnerUserProfile = () => {
-  const { id } = useParams();
+  // const { id } = useParams();
   const auth = useAuth();
-  console.log("User ID==>>", id);
+  const navigate = useNavigate();
+  // console.log("User ID==>>", id);
   const [users, setUsers] = useState([]);
   const [foundObject, setFoundObject] = useState([]);
   const [isAccordionOpen, setIsAccordionOpen] = useState(false); // State for accordion open/close
@@ -23,20 +24,30 @@ const InnerUserProfile = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredOptions, setFilteredOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
-
+  const location = useLocation();
+  console.log('location', location)
   // Calling Single Introducer Name API
   useEffect(() => {
     AccountService.IntroducerUserId(auth.user).then((res) =>
       setIntroducerName(res.data)
     );
   }, [auth]);
-  console.log("=>>>Introname", IntroducerName);
+
   console.log(auth)
+  const { page, id } = location.state || {}
+  console.log('page', page)
+  console.log('id', id)
+
+  const Handletransaction = () => {
+    console.log("first")
+    navigate("/transactiondetails", { state: { page: page, id: id } });
+  }
+
   useEffect(() => {
-    AccountService.userprofile(auth.user)
+    AccountService.userprofile(page, auth.user)
       .then((res) => {
         setUsers(res.data);
-        const userWithId = res.data.find((user) => user._id === id);
+        const userWithId = res.data.SecondArray.find((user) => user._id === id);
         setFoundObject(userWithId);
       })
       .catch((error) => {
@@ -44,7 +55,7 @@ const InnerUserProfile = () => {
         console.error("Error fetching user data:", error);
       });
   }, [auth, id]);
-  // console.log("This is User Deatils===>>",foundObject);
+  console.log("This is User Deatils===>>", users);
 
   const toggleAccordion = () => {
     setIsAccordionOpen(!isAccordionOpen);
@@ -324,12 +335,11 @@ const InnerUserProfile = () => {
                         Payment Details
                       </button>
 
-                      <Link
-                        to={`/transactiondetails/${id}`}
-                        className="btn btn-link"
+                      <p className="btn btn-link pt-4"
+                        onClick={Handletransaction}
                       >
                         Transaction Details
-                      </Link>
+                      </p>
                       {isAccordionOpen && (
                         <div className="accordion">
                           <div className="accordion-item">

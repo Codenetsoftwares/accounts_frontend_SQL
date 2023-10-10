@@ -22,7 +22,7 @@ const NavSide = () => {
   const [IsToggleWebsite, setIsToggleWebsite] = useState(true);
   const [isToggleCreateTransaction, setIsToggleCreateTransaction] =
     useState(true);
- 
+
   useEffect(() => {
     setUserEmail(auth.user.userName);
     setUserRole(auth.user.role);
@@ -56,7 +56,7 @@ const NavSide = () => {
       <aside
         className="main-sidebar elevation-4"
         style={{
-        
+
           backgroundColor: "#343A40",
         }}
       >
@@ -438,7 +438,7 @@ const NavSide = () => {
                           <i className="far fa-circle nav-icon" />
                           <p>Introducer transaction</p>
                         </Link>
-                        {userrole.some((role) => role === "superAdmin") && (
+                        {userrole.some((role) => role === "superAdmin" || role === "RequestAdmin") && (
                           <>
                             {IsToggleBank ? (
                               <Link
@@ -482,7 +482,7 @@ const NavSide = () => {
                             )}
                           </>
                         )}
-                        {userrole.some((role) => role === "superAdmin") && (
+                        {userrole.some((role) => role === "superAdmin" || role === "RequestAdmin") && (
                           <>
                             {IsToggleWebsite ? (
                               <li
