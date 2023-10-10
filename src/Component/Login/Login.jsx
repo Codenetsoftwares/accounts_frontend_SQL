@@ -51,13 +51,6 @@ const Login = () => {
           toast.error("Invalid User Id Or Password");
           return;
         }
-        if (err.response.status === 403) {
-          navigate("/admindash", {
-            state: { user: userName },
-            replace: false,
-          });
-          return;
-        }
       });
   };
 

@@ -54,6 +54,7 @@ import Login from "./Component/Login/Login";
 import MainTransactionPage from "./pages/MainTransactionPage";
 import IntroducerStatement from "./Component/DashBoard/IntroducerStatement";
 import IntroducerAlert from "./Component/IntroducerAlert";
+import ResetPassword from "./Component/DashBoard/ResetPassword";
 
 function App() {
   return (
@@ -382,7 +383,14 @@ function App() {
                 </RequireAuth>
               }
             />
-            <Route path="forpas" element={<ForPas />} />
+            <Route
+              path="resetpassword"
+              element={
+                <RequireAuth>
+                  <ResetPassword />
+                </RequireAuth>
+              }
+            />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
