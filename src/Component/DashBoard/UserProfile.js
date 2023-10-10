@@ -10,9 +10,12 @@ const UserProfile = () => {
   const [page, setPage] = useState(1)
   const [pageNumber, setPageNumber] = useState("")
   const navigate = useNavigate();
-  // const handelinnerprofile =()=>{
-  //   navigate(`/innerprofile/${users._id}`);
-  // }
+  console.log('page', page)
+  console.log('user', users)
+  
+  const Handelinnerprofile = (id) => {
+    navigate(`/innerprofile`, { state: { page: page, id: id } });
+  }
 
   useEffect(() => {
     AccountService.userprofile(page, auth.user).then((res) => (setUsers(res.data.SecondArray), setPageNumber(res.data.pageNumber)));
@@ -50,11 +53,9 @@ const UserProfile = () => {
         {filteredUsers.map((users) => (
           <div className="card container-fluid w-75">
             <div className="card-body">
-              <Link
-                to={`/innerprofile/${users._id}`}
-              >
+              <p onClick={() => { Handelinnerprofile(users._id) }}>
                 {users.userName}
-              </Link>
+              </p>
             </div>
           </div>
         ))}

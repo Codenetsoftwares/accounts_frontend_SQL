@@ -36,8 +36,8 @@ const IntroducerProfile = () => {
   }
 
   useEffect(() => {
-    AccountService.Introducerprofile(page, auth.user).then((res) => (setUsers(res.data.SecondArray), setPageNumber(res.data.pageNumber))
-    );
+    AccountService.Introducerprofile(page, auth.user)
+      .then((res) => (setUsers(res.data.SecondArray), setPageNumber(res.data.pageNumber)));
   }, [auth, page]);
   console.log("users", users);
 

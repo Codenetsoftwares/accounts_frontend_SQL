@@ -233,7 +233,7 @@ function App() {
                 }
               />
               <Route
-                path="innerprofile/:id"
+                path="innerprofile"
                 element={
                   <RequireAuth>
                     <InnerUserProfile />
@@ -267,7 +267,7 @@ function App() {
                 }
               />
               <Route
-                path="transactiondetails/:id"
+                path="transactiondetails"
                 element={
                   <RequireAuth>
                     <TransactionDetails />

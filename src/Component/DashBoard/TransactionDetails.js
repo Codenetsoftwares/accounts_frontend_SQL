@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import AccountService from "../../Services/AccountService";
 import { useAuth } from "../../Utils/Auth";
-import { useParams } from "react-router";
+import { useLocation, useParams } from "react-router";
 import "react-datepicker/dist/react-datepicker.css";
 import { FaFilter } from "react-icons/fa";
 import { CSVLink } from "react-csv";
@@ -27,10 +27,11 @@ const TransactionDetails = () => {
   const [website, setWebsite] = useState("");
   const [select, setSelect] = useState("All");
 
-  const { id } = useParams();
-
+  const location = useLocation();
+  console.log('loc',location)
+  const { page, id } = location.state || {}
+  console.log("first", page)
   const auth = useAuth();
-
   const test = [
     "transactionType",
     "subAdminName",
@@ -81,11 +82,12 @@ const TransactionDetails = () => {
   const handleEndDatevalue = (e) => {
     setEndDateValue(moment(e).format("DD-MM-YYYY HH:mm"));
   };
-
+console.log('id',id)
   useEffect(() => {
-    AccountService.userprofile(auth.user)
+    AccountService.userprofile(page, auth.user)
       .then((res) => {
-        const userWithId = res.data.find((user) => user._id === id);
+        console.log('res', res.data.SecondArray)
+        const userWithId = res.data.SecondArray.find((user) => user._id === id);
         setDocumentView(userWithId.transactionDetail);
         setAccountData(userWithId.transactionDetail);
       })
