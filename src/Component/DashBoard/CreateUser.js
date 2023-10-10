@@ -246,6 +246,21 @@ const CreateUser = () => {
                             <input
                               className="form-check-input"
                               type="checkbox"
+                              value="Create-User"
+                              checked={checkedItems.includes("Create-User")}
+                              onChange={handleCheckboxChange}
+                            />
+                            <label
+                              className="form-check-label"
+                              for="flexSwitchCheckDefault"
+                            >
+                              Create User
+                            </label>
+                          </div>
+                          <div className="form-check form-switch">
+                            <input
+                              className="form-check-input"
+                              type="checkbox"
                               value="Website-View"
                               checked={checkedItems.includes("Website-View")}
                               onChange={handleCheckboxChange}
@@ -390,6 +405,23 @@ const CreateUser = () => {
                               for="flexSwitchCheckDefault"
                             >
                               Create Deposit Transaction
+                            </label>
+                          </div>
+                          <div className="form-check form-switch">
+                            <input
+                              className="form-check-input"
+                              type="checkbox"
+                              value="Create-Introducer"
+                              checked={checkedItems.includes(
+                                "Create-Introducer"
+                              )}
+                              onChange={handleCheckboxChange}
+                            />
+                            <label
+                              className="form-check-label"
+                              for="flexSwitchCheckDefault"
+                            >
+                              Create Introducer
                             </label>
                           </div>
                         </div>

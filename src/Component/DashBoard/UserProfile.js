@@ -7,15 +7,21 @@ const UserProfile = () => {
   const auth = useAuth();
   const [users, setUsers] = useState([]);
   const [q, setQ] = useState("");
+  const [page, setPage] = useState(1)
+  const [pageNumber, setPageNumber] = useState("")
   const navigate = useNavigate();
   // const handelinnerprofile =()=>{
   //   navigate(`/innerprofile/${users._id}`);
   // }
 
   useEffect(() => {
-    AccountService.userprofile(auth.user).then((res) => setUsers(res.data));
+    AccountService.userprofile(page, auth.user).then((res) => (setUsers(res.data.SecondArray), setPageNumber(res.data.pageNumber)));
   }, [auth]);
   console.log("users", users);
+
+  const handlePage = (page) => {
+    setPage(page);
+  }
 
   const filteredUsers = users.filter((affiliate) => {
     const fullName = affiliate.firstname.toLowerCase();
@@ -53,6 +59,31 @@ const UserProfile = () => {
           </div>
         ))}
       </ul>
+      <div className="text-center">
+        <span className={`m-3 `}>
+          <button
+            className={`btn btn-primary rounded-pill ${page === 1 ? "disabled" : ""
+              }`}
+            onClick={() => {
+              page > 1 && handlePage(page - 1);
+            }}
+          >
+            Pre
+          </button>
+        </span>
+        <span className="fs-4">{page}</span>
+        <span className={`m-3 `}>
+          <button
+            className={`btn btn-primary rounded-pill ${page === pageNumber ? "disabled" : ""
+              }`}
+            onClick={() => {
+              handlePage(page + 1);
+            }}
+          >
+            Next
+          </button>
+        </span>
+      </div>
     </div>
   );
 };
