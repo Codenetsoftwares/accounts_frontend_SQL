@@ -177,7 +177,7 @@ class AccountService {
     });
   }
   userprofile(page, user) {
-    console.log(user)
+    console.log(user);
     return axios({
       method: "get",
       url: `${API_HOST}/api/user-profile/${page}`,
@@ -519,6 +519,18 @@ class AccountService {
       },
     });
   }
+
+  ResetPassword(data, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/super-admin/reset-password`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
 }
 
 export default new AccountService();
