@@ -10,11 +10,16 @@ const AdminList = () => {
     const [erorrData, setErorrData] = useState("");
     const auth = useAuth();
     const [q, setQ] = useState('');
+    const [page, setPage] = useState(1)
+    const [pageNumber, setPageNumber] = useState("")
 
+    const handlePage = (page) => {
+        setPage(page);
+    }
 
     useEffect(() => {
         if (auth.user) {
-            AccountService.getAdminList(auth.user)
+            AccountService.getAdminList(page, auth.user)
                 .then(res => {
                     console.log(res.data);
                     if (res.data === "No sub-admins") {
@@ -23,7 +28,8 @@ const AdminList = () => {
 
                     }
                     else {
-                        setAdminList(res.data);
+                        setAdminList(res.data.SecondArray);
+                        setPageNumber(res.data.pageNumber)
                     }
                 });
         }
@@ -73,7 +79,31 @@ const AdminList = () => {
                     </div >
                 )
             }))}</>)}</>
-
+            <div className="text-center">
+                <span className={`m-3 `}>
+                    <button
+                        className={`btn btn-primary rounded-pill ${page === 1 ? "disabled" : ""
+                            }`}
+                        onClick={() => {
+                            page > 1 && handlePage(page - 1);
+                        }}
+                    >
+                        Pre
+                    </button>
+                </span>
+                <span className="fs-4">{page}</span>
+                <span className={`m-3 `}>
+                    <button
+                        className={`btn btn-primary rounded-pill ${page === pageNumber ? "disabled" : ""
+                            }`}
+                        onClick={() => {
+                            handlePage(page + 1);
+                        }}
+                    >
+                        Next
+                    </button>
+                </span>
+            </div>
         </div >
     );
 };

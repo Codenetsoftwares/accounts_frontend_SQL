@@ -96,7 +96,7 @@ class AccountService {
   IntroducerUserId(user) {
     return axios({
       method: "get",
-      url: API_HOST + "/api/superadmin/Introducer-id",
+      url: `${API_HOST}/api/superadmin/Introducer-id`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -176,10 +176,11 @@ class AccountService {
       },
     });
   }
-  userprofile(user) {
+  userprofile(page, user) {
+    console.log(user)
     return axios({
       method: "get",
-      url: API_HOST + "/api/user-profile",
+      url: `${API_HOST}/api/user-profile/${page}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -205,10 +206,10 @@ class AccountService {
     });
   }
 
-  Introducerprofile(user) {
+  Introducerprofile(page, user) {
     return axios({
       method: "get",
-      url: API_HOST + "/api/intoducer-profile",
+      url: `${API_HOST}/api/intoducer-profile/${page}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -362,10 +363,10 @@ class AccountService {
       },
     });
   }
-  getAdminList(user) {
+  getAdminList(page, user) {
     return axios({
       method: "get",
-      url: `${API_HOST}/api/admin/view-sub-admins`,
+      url: `${API_HOST}/api/admin/view-sub-admins/${page}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },

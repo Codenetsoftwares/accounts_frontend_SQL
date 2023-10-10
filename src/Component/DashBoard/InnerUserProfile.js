@@ -31,7 +31,7 @@ const InnerUserProfile = () => {
     );
   }, [auth]);
   console.log("=>>>Introname", IntroducerName);
-
+  console.log(auth)
   useEffect(() => {
     AccountService.userprofile(auth.user)
       .then((res) => {
@@ -127,8 +127,8 @@ const InnerUserProfile = () => {
 
     const filtered = value
       ? IntroducerName.filter((data) =>
-          data.userName.toLowerCase().includes(value.toLowerCase())
-        )
+        data.userName.toLowerCase().includes(value.toLowerCase())
+      )
       : [];
 
     setFilteredOptions(filtered);
@@ -361,9 +361,9 @@ const InnerUserProfile = () => {
                                         value={
                                           isEditing
                                             ? editedData.bankDetail &&
-                                              editedData.bankDetail.bankName // Check if bankName exists in editedData.bankDetail
+                                            editedData.bankDetail.bankName // Check if bankName exists in editedData.bankDetail
                                             : foundObject.bankDetail &&
-                                              foundObject.bankDetail.bankName // Check if bankName exists in foundObject.bankDetail}
+                                            foundObject.bankDetail.bankName // Check if bankName exists in foundObject.bankDetail}
                                         }
                                         disabled={!isEditing}
                                       />
@@ -382,11 +382,11 @@ const InnerUserProfile = () => {
                                         value={
                                           isEditing
                                             ? editedData.bankDetail &&
-                                              editedData.bankDetail
-                                                .accountNumber // Check if accountNumber exists in editedData.bankDetail
+                                            editedData.bankDetail
+                                              .accountNumber // Check if accountNumber exists in editedData.bankDetail
                                             : foundObject.bankDetail &&
-                                              foundObject.bankDetail
-                                                .accountNumber // Check if accountNumber exists in foundObject.bankDetail
+                                            foundObject.bankDetail
+                                              .accountNumber // Check if accountNumber exists in foundObject.bankDetail
                                         }
                                         disabled={!isEditing}
                                       />
@@ -407,9 +407,9 @@ const InnerUserProfile = () => {
                                         value={
                                           isEditing
                                             ? editedData.bankDetail &&
-                                              editedData.bankDetail.ifscCode // Check if ifscCode exists in editedData.bankDetail
+                                            editedData.bankDetail.ifscCode // Check if ifscCode exists in editedData.bankDetail
                                             : foundObject.bankDetail &&
-                                              foundObject.bankDetail.ifscCode
+                                            foundObject.bankDetail.ifscCode
                                         }
                                         disabled={!isEditing}
                                       />
@@ -428,11 +428,11 @@ const InnerUserProfile = () => {
                                         value={
                                           isEditing
                                             ? editedData.bankDetail &&
-                                              editedData.bankDetail
-                                                .accountHolderName // Check if accountHolderName exists in editedData.bankDetail
+                                            editedData.bankDetail
+                                              .accountHolderName // Check if accountHolderName exists in editedData.bankDetail
                                             : foundObject.bankDetail &&
-                                              foundObject.bankDetail
-                                                .accountHolderName
+                                            foundObject.bankDetail
+                                              .accountHolderName
                                         }
                                         disabled={!isEditing}
                                       />
@@ -451,9 +451,9 @@ const InnerUserProfile = () => {
                                         value={
                                           isEditing
                                             ? editedData.bankDetail &&
-                                              editedData.bankDetail.upiApp
+                                            editedData.bankDetail.upiApp
                                             : foundObject.bankDetail &&
-                                              foundObject.bankDetail.upiApp
+                                            foundObject.bankDetail.upiApp
                                         }
                                         disabled={!isEditing}
                                       />
@@ -472,9 +472,9 @@ const InnerUserProfile = () => {
                                         value={
                                           isEditing
                                             ? editedData.bankDetail &&
-                                              editedData.bankDetail.upiId
+                                            editedData.bankDetail.upiId
                                             : foundObject.bankDetail &&
-                                              foundObject.bankDetail.upiId
+                                            foundObject.bankDetail.upiId
                                         }
                                         disabled={!isEditing}
                                       />
@@ -493,9 +493,9 @@ const InnerUserProfile = () => {
                                         value={
                                           isEditing
                                             ? editedData.bankDetail &&
-                                              editedData.bankDetail.upiNumber
+                                            editedData.bankDetail.upiNumber
                                             : foundObject.bankDetail &&
-                                              foundObject.bankDetail.upiNumber
+                                            foundObject.bankDetail.upiNumber
                                         }
                                         disabled={!isEditing}
                                       />

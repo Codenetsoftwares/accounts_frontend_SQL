@@ -25,16 +25,20 @@ const IntroducerProfile = () => {
   const navigate = useNavigate();
   const [introducerName, setIntroducerName] = useState("");
   const [txType, setTxType] = useState("");
-
+  const [page, setPage] = useState(1)
+  const [pageNumber, setPageNumber] = useState("")
   // const handelinnerprofile =()=>{
   //   navigate(`/innerprofile/${users._id}`);
   // }
 
+  const handlePage = (page) => {
+    setPage(page);
+  }
+
   useEffect(() => {
-    AccountService.Introducerprofile(auth.user).then((res) =>
-      setUsers(res.data)
+    AccountService.Introducerprofile(page, auth.user).then((res) => (setUsers(res.data.SecondArray), setPageNumber(res.data.pageNumber))
     );
-  }, [auth]);
+  }, [auth, page]);
   console.log("users", users);
 
   const filteredUsers = users.filter((affiliate) => {
@@ -142,6 +146,33 @@ const IntroducerProfile = () => {
       </ul>
       <LiveBalanceIntroducer ID={ID} />
       <IntroducerTransaction TxType={txType} IntroducerName={introducerName} />
+
+      <div className="text-center">
+        <span className={`m-3 `}>
+          <button
+            className={`btn btn-primary rounded-pill ${page === 1 ? "disabled" : ""
+              }`}
+            onClick={() => {
+              page > 1 && handlePage(page - 1);
+            }}
+          >
+            Pre
+          </button>
+        </span>
+        <span className="fs-4">{page}</span>
+        <span className={`m-3 `}>
+          <button
+            className={`btn btn-primary rounded-pill ${page === pageNumber ? "disabled" : ""
+              }`}
+            onClick={() => {
+              handlePage(page + 1);
+            }}
+          >
+            Next
+          </button>
+        </span>
+      </div>
+
     </div>
   );
 };
