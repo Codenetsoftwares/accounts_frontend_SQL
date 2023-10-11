@@ -12,14 +12,14 @@ const UserProfile = () => {
   const navigate = useNavigate();
   console.log('page', page)
   console.log('user', users)
-  
+
   const Handelinnerprofile = (id) => {
     navigate(`/innerprofile`, { state: { page: page, id: id } });
   }
 
   useEffect(() => {
     AccountService.userprofile(page, auth.user).then((res) => (setUsers(res.data.SecondArray), setPageNumber(res.data.pageNumber)));
-  }, [auth]);
+  }, [auth, page]);
   console.log("users", users);
 
   const handlePage = (page) => {
