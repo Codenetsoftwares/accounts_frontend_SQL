@@ -101,7 +101,7 @@ const WebsiteStatement = () => {
     };
 
     fetchManualStatement();
-  }, [id, auth]);
+  }, [id, auth, page]);
   useEffect(() => {
     if (auth.user) {
       TransactionSercvice.subAdminList(auth.user).then((res) => {
