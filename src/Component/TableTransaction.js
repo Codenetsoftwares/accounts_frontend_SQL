@@ -8,8 +8,8 @@ import { toast } from 'react-toastify';
 import EditTransaction from './Modal/EditTransaction';
 import Pagination from './Pagination';
 
-const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage }) => {
-  console.log('totalPage', totalPage)
+const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage, totalData }) => {
+  console.log('totalData', totalData)
   const auth = useAuth();
 
   const [id, setId] = useState("");
@@ -374,7 +374,7 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage }) 
         //   {/* <input type='number' className='m-1' width={8} onChange={(e) => { setPge(e.target.value) }} />
         //           <button type="button" class="btn btn-primary" onClick={handlePage(pge)}>Go</button> */}
         // </div>
-        <Pagination handlePage={handlePage} page={page} totalPage={totalPage} />
+        <Pagination handlePage={handlePage} page={page} totalPage={totalPage} totalData={totalData} />
       ) : null}
       <EditTransaction id={id} />
     </div>

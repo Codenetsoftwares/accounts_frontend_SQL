@@ -8,7 +8,7 @@ import { CSVLink } from "react-csv";
 import AccountService from '../Services/AccountService';
 import { toast } from 'react-toastify';
 
-const FilterTransaction = ({ purpose, handleData, page, handlePage }) => {
+const FilterTransaction = ({ purpose, handleData, page, handlePage, handleTotalData }) => {
     const auth = useAuth();
     const [subAdminlist, setSubAdminlist] = useState([]);
     const [subAdmin, setSubAdmin] = useState("");
@@ -37,7 +37,8 @@ const FilterTransaction = ({ purpose, handleData, page, handlePage }) => {
             return (
                 setDocumentView(res.data.SecondArray),
                 console.log(documentView),
-                handleData(res.data.SecondArray, res.data.pageNumber)
+                handleData(res.data.SecondArray, res.data.pageNumber),
+                handleTotalData(res.data.ArrayLength)
             )
         }).catch((err) => {
             return (
