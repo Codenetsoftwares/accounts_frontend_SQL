@@ -258,10 +258,10 @@ class AccountService {
     });
   }
 
-  GetBankStMent(id, user) {
+  GetBankStMent(id, page, user) {
     return axios({
       method: "get",
-      url: `${API_HOST}/api/admin/manual-user-bank-account-summary/${id}`,
+      url: `${API_HOST}/api/admin/manual-user-bank-account-summary/${id}/${page}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -299,10 +299,10 @@ class AccountService {
     });
   }
 
-  GetWebsiteStateMent(id, user) {
+  GetWebsiteStateMent(id, page, user) {
     return axios({
       method: "get",
-      url: `${API_HOST}/api/admin/manual-user-website-account-summary/${id}`,
+      url: `${API_HOST}/api/admin/manual-user-website-account-summary/${id}/${page}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
