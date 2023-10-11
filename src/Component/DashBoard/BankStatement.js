@@ -71,7 +71,7 @@ const BankStatement = () => {
       .catch((err) => {
         console.error(err, "object");
       });
-  }, [id, auth]);
+  }, [id, auth,page]);
 
   useEffect(() => {
     if (auth.user) {
