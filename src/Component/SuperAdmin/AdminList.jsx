@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import AccountService from '../../Services/AccountService';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../Utils/Auth';
+import Pagination from '../Pagination';
 
 
 const AdminList = () => {
@@ -12,6 +13,7 @@ const AdminList = () => {
     const [q, setQ] = useState('');
     const [page, setPage] = useState(1)
     const [pageNumber, setPageNumber] = useState("")
+    const [totalData, setTotalData] = useState(0)
 
     const handlePage = (page) => {
         setPage(page);
@@ -29,7 +31,8 @@ const AdminList = () => {
                     }
                     else {
                         setAdminList(res.data.SecondArray);
-                        setPageNumber(res.data.pageNumber)
+                        setPageNumber(res.data.pageNumber);
+                        setTotalData(res.data.allIntroDataLength);
                     }
                 });
         }
@@ -79,7 +82,7 @@ const AdminList = () => {
                     </div >
                 )
             }))}</>)}</>
-            <div className="text-center">
+            {/* <div className="text-center">
                 <span className={`m-3 `}>
                     <button
                         className={`btn btn-primary rounded-pill ${page === 1 ? "disabled" : ""
@@ -103,7 +106,8 @@ const AdminList = () => {
                         Next
                     </button>
                 </span>
-            </div>
+            </div> */}
+            <Pagination handlePage={handlePage} page={page} totalPage={pageNumber} totalData={totalData} />
         </div >
     );
 };

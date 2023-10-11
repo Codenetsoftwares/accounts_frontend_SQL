@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../../Utils/Auth";
 import AccountService from "../../Services/AccountService";
 import { useNavigate, Link } from "react-router-dom";
+import Pagination from "../Pagination";
 
 const UserProfile = () => {
   const auth = useAuth();
@@ -9,6 +10,7 @@ const UserProfile = () => {
   const [q, setQ] = useState("");
   const [page, setPage] = useState(1)
   const [pageNumber, setPageNumber] = useState("")
+  const [totalData, setTotalData] = useState(0)
   const navigate = useNavigate();
   console.log('page', page)
   console.log('user', users)
@@ -18,7 +20,7 @@ const UserProfile = () => {
   }
 
   useEffect(() => {
-    AccountService.userprofile(page, auth.user).then((res) => (setUsers(res.data.SecondArray), setPageNumber(res.data.pageNumber)));
+    AccountService.userprofile(page, auth.user).then((res) => (setUsers(res.data.SecondArray), setPageNumber(res.data.pageNumber), setTotalData(res.data.allIntroDataLength)));
   }, [auth, page]);
   console.log("users", users);
 
@@ -60,7 +62,7 @@ const UserProfile = () => {
           </div>
         ))}
       </ul>
-      <div className="text-center">
+      {/* <div className="text-center">
         <span className={`m-3 `}>
           <button
             className={`btn btn-primary rounded-pill ${page === 1 ? "disabled" : ""
@@ -84,7 +86,8 @@ const UserProfile = () => {
             Next
           </button>
         </span>
-      </div>
+      </div> */}
+      <Pagination handlePage={handlePage} page={page} totalPage={pageNumber} totalData={totalData} />
     </div>
   );
 };
