@@ -16,6 +16,7 @@ import { ToastContainer } from "react-bootstrap";
 import TransactionSercvice from "../../Services/TransactionSercvice";
 import IntroducerTransaction from "../Modal/IntroducerTransaction";
 import IntroducerPayment from "./IntroducerPayment";
+import Pagination from "../Pagination";
 
 const IntroducerProfile = () => {
   const auth = useAuth();
@@ -27,6 +28,7 @@ const IntroducerProfile = () => {
   const [txType, setTxType] = useState("");
   const [page, setPage] = useState(1)
   const [pageNumber, setPageNumber] = useState("")
+  const [totalData, setTotalData] = useState(0)
   // const handelinnerprofile =()=>{
   //   navigate(`/innerprofile/${users._id}`);
   // }
@@ -37,7 +39,7 @@ const IntroducerProfile = () => {
 
   useEffect(() => {
     AccountService.Introducerprofile(page, auth.user)
-      .then((res) => (setUsers(res.data.SecondArray), setPageNumber(res.data.pageNumber)));
+      .then((res) => (setUsers(res.data.SecondArray), setPageNumber(res.data.pageNumber), setTotalData(res.data.allIntroDataLength)));
   }, [auth, page]);
   console.log("users", users);
 
@@ -147,7 +149,7 @@ const IntroducerProfile = () => {
       <LiveBalanceIntroducer ID={ID} />
       <IntroducerTransaction TxType={txType} IntroducerName={introducerName} />
 
-      <div className="text-center">
+      {/* <div className="text-center">
         <span className={`m-3 `}>
           <button
             className={`btn btn-primary rounded-pill ${page === 1 ? "disabled" : ""
@@ -171,7 +173,8 @@ const IntroducerProfile = () => {
             Next
           </button>
         </span>
-      </div>
+      </div> */}
+      <Pagination handlePage={handlePage} page={page} totalPage={pageNumber} totalData={totalData} />
 
     </div>
   );
