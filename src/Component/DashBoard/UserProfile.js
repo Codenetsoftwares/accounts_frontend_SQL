@@ -7,31 +7,57 @@ import Pagination from "../Pagination";
 const UserProfile = () => {
   const auth = useAuth();
   const [users, setUsers] = useState([]);
+
   const [q, setQ] = useState("");
-  const [page, setPage] = useState(1)
-  const [pageNumber, setPageNumber] = useState("")
-  const [totalData, setTotalData] = useState(0)
+  const [page, setPage] = useState(1);
+  const [pageNumber, setPageNumber] = useState("");
+  const [totalData, setTotalData] = useState(0);
+  const RawFilterData = [];
   const navigate = useNavigate();
-  console.log('page', page)
-  console.log('user', users)
+  console.log("page", page);
+  console.log("user", users);
 
   const Handelinnerprofile = (id) => {
     navigate(`/innerprofile`, { state: { page: page, id: id } });
-  }
+  };
 
   useEffect(() => {
-    AccountService.userprofile(page, auth.user).then((res) => (setUsers(res.data.SecondArray), setPageNumber(res.data.pageNumber), setTotalData(res.data.allIntroDataLength)));
+    AccountService.userprofile(page, auth.user).then(
+      (res) => (
+        setUsers(res.data.SecondArray),
+        setPageNumber(res.data.pageNumber),
+        setTotalData(res.data.allIntroDataLength)
+      )
+    );
   }, [auth, page]);
   console.log("users", users);
 
-  const handlePage = (page) => {
-    setPage(page);
+  // Data for Filter
+  for (let i = 0; i < users.length; i++) {
+    RawFilterData.push({
+      userName: users[i].userName,
+      _id: users[i]._id,
+    });
   }
 
-  const filteredUsers = users.filter((affiliate) => {
-    const fullName = affiliate.firstname.toLowerCase();
-    return fullName.includes(q.toLowerCase());
+  console.log(RawFilterData.userName);
+
+  const handlePage = (page) => {
+    setPage(page);
+  };
+
+  // const filteredUsers = RawFilterData.filter((users) => {
+  //   const fullName = users.firstname.toLowerCase();
+  //   return fullName.includes(q.toLowerCase());
+  // });
+
+  const filteredUsers = RawFilterData.filter((user) => {
+    const lowerCaseUserName = user.userName.toLowerCase();
+    const lowerCaseQuery = q.toLowerCase();
+    return lowerCaseUserName.includes(lowerCaseQuery);
   });
+
+  console.log(filteredUsers);
 
   return (
     <div className="m-3">
@@ -52,11 +78,15 @@ const UserProfile = () => {
       </div>
 
       <ul>
-        {filteredUsers.map((users) => (
-          <div className="card container-fluid w-75">
+        {filteredUsers.map((user, index) => (
+          <div className="card container-fluid w-75" key={index}>
             <div className="card-body">
-              <p onClick={() => { Handelinnerprofile(users._id) }}>
-                {users.userName}
+              <p
+                onClick={() => {
+                  Handelinnerprofile(user._id);
+                }}
+              >
+                {filteredUsers[index].userName}
               </p>
             </div>
           </div>
@@ -87,7 +117,12 @@ const UserProfile = () => {
           </button>
         </span>
       </div> */}
-      <Pagination handlePage={handlePage} page={page} totalPage={pageNumber} totalData={totalData} />
+      <Pagination
+        handlePage={handlePage}
+        page={page}
+        totalPage={pageNumber}
+        totalData={totalData}
+      />
     </div>
   );
 };
