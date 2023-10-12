@@ -41,28 +41,11 @@ const IntroducerProfile = () => {
   }
 
   useEffect(() => {
-    AccountService.Introducerprofile(page, auth.user)
+    AccountService.Introducerprofile(page,q, auth.user)
       .then((res) => (setUsers(res.data.SecondArray), setPageNumber(res.data.pageNumber), setTotalData(res.data.allIntroDataLength)));
-  }, [auth, page]);
+  }, [auth, page,q]);
   console.log("users", users);
 
-  //For loop for filter
-    for (let i = 0; i < users.length; i++) {
-      RawFilterData.push({
-        userName: users[i].userName,
-        _id: users[i]._id,
-        balance: users[i].balance.balance,
-        currentDue: users[i].balance.currentDue,
-      });
-  }
-  console.log("after filter",RawFilterData);
-  
-  //Filter
-  const filteredUsers = RawFilterData.filter((user) => {
-    const lowerCaseUserName = user.userName.toLowerCase();
-    const lowerCaseQuery = q.toLowerCase();
-    return lowerCaseUserName.includes(lowerCaseQuery);
-  });
 
   const handleLiveBl = (e, ID) => {
     setID(ID);
@@ -89,14 +72,14 @@ const IntroducerProfile = () => {
       </div>
 
       <ul>
-        {filteredUsers.map((users) => (
+        {users.map((users) => (
           <div className="card container-fluid w-75">
             <div className="card-body">
               <p className="text-bold">{users.userName}</p>
               <IntroducerPayment
                 IntroducerName={users.userName}
-                balance={users.balance}
-                duebalance={users.currentDue}
+                balance={users.balance.balance}
+                duebalance={users.balance.currentDue}
                 id={users._id}
               />
               <Link

@@ -12,7 +12,7 @@ const UserProfile = () => {
   const [page, setPage] = useState(1);
   const [pageNumber, setPageNumber] = useState("");
   const [totalData, setTotalData] = useState(0);
-  const RawFilterData = [];
+
   const navigate = useNavigate();
   console.log("page", page);
   console.log("user", users);
@@ -21,43 +21,26 @@ const UserProfile = () => {
     navigate(`/innerprofile`, { state: { page: page, id: id } });
   };
 
+  
+
   useEffect(() => {
-    AccountService.userprofile(page, auth.user).then(
+    AccountService.userprofile(page, q, auth.user).then(
       (res) => (
         setUsers(res.data.SecondArray),
         setPageNumber(res.data.pageNumber),
         setTotalData(res.data.allIntroDataLength)
       )
     );
-  }, [auth, page]);
+  }, [auth, page, q]);
   console.log("users", users);
 
-  // Data for Filter
-  for (let i = 0; i < users.length; i++) {
-    RawFilterData.push({
-      userName: users[i].userName,
-      _id: users[i]._id,
-    });
-  }
-
-  console.log(RawFilterData.userName);
-
+  
   const handlePage = (page) => {
     setPage(page);
   };
 
-  // const filteredUsers = RawFilterData.filter((users) => {
-  //   const fullName = users.firstname.toLowerCase();
-  //   return fullName.includes(q.toLowerCase());
-  // });
+ 
 
-  const filteredUsers = RawFilterData.filter((user) => {
-    const lowerCaseUserName = user.userName.toLowerCase();
-    const lowerCaseQuery = q.toLowerCase();
-    return lowerCaseUserName.includes(lowerCaseQuery);
-  });
-
-  console.log(filteredUsers);
 
   return (
     <div className="m-3">
@@ -78,7 +61,7 @@ const UserProfile = () => {
       </div>
 
       <ul>
-        {filteredUsers.map((user, index) => (
+        {users.map((user, index) => (
           <div className="card container-fluid w-75" key={index}>
             <div className="card-body">
               <p
@@ -86,37 +69,13 @@ const UserProfile = () => {
                   Handelinnerprofile(user._id);
                 }}
               >
-                {filteredUsers[index].userName}
+                {users[index].userName}
               </p>
             </div>
           </div>
         ))}
       </ul>
-      {/* <div className="text-center">
-        <span className={`m-3 `}>
-          <button
-            className={`btn btn-primary rounded-pill ${page === 1 ? "disabled" : ""
-              }`}
-            onClick={() => {
-              page > 1 && handlePage(page - 1);
-            }}
-          >
-            Pre
-          </button>
-        </span>
-        <span className="fs-4">{page}</span>
-        <span className={`m-3 `}>
-          <button
-            className={`btn btn-primary rounded-pill ${page === pageNumber ? "disabled" : ""
-              }`}
-            onClick={() => {
-              handlePage(page + 1);
-            }}
-          >
-            Next
-          </button>
-        </span>
-      </div> */}
+     
       <Pagination
         handlePage={handlePage}
         page={page}
