@@ -40,7 +40,7 @@ const BankStatement = () => {
   const [page, setPage] = useState(1)
   const [pageNumber, setPageNumber] = useState("")
   const [totalData, setTotalData] = useState(0)
-
+  console.log(startDatevalue, endDatevalue)
   console.log("==>>>", id);
   console.log("data===>", documentView)
   const test = ["transactionType", "subAdminName", "websiteName", "bankName"];
@@ -71,7 +71,7 @@ const BankStatement = () => {
       .catch((err) => {
         console.error(err, "object");
       });
-  }, [id, auth,page]);
+  }, [id, auth, page]);
 
   useEffect(() => {
     if (auth.user) {
@@ -549,7 +549,7 @@ const BankStatement = () => {
           </tbody>
         </table>
       </div>
-      
+
       <Pagination handlePage={handlePage} page={page} totalPage={pageNumber} totalData={totalData} />
 
       <EditTransaction id={dataId} />
