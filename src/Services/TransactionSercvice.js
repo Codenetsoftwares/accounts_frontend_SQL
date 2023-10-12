@@ -112,10 +112,11 @@ class TransactionService {
       },
     });
   }
-  filterTransaction(data, id, user) {
+  filterTransaction(data, page, user) {
+    console.log(data);
     return axios({
-      method: "post",
-      url: `${API_HOST}/api/admin/filter-data/${id}`,
+      method: "get",
+      url: `${API_HOST}/api/admin/filter-data?page=${page}&itemsPerPage=10`,
       data: data,
       headers: {
         Authorization: `Bearer ${user.token}`,
