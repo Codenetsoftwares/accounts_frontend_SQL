@@ -29,6 +29,9 @@ const IntroducerProfile = () => {
   const [page, setPage] = useState(1)
   const [pageNumber, setPageNumber] = useState("")
   const [totalData, setTotalData] = useState(0)
+  const RawFilterData = [];
+  
+
   // const handelinnerprofile =()=>{
   //   navigate(`/innerprofile/${users._id}`);
   // }
@@ -43,10 +46,24 @@ const IntroducerProfile = () => {
   }, [auth, page]);
   console.log("users", users);
 
-  const filteredUsers = users.filter((affiliate) => {
-    const fullName = affiliate.firstname.toLowerCase();
-    return fullName.includes(q.toLowerCase());
+  //For loop for filter
+    for (let i = 0; i < users.length; i++) {
+      RawFilterData.push({
+        userName: users[i].userName,
+        _id: users[i]._id,
+        balance: users[i].balance.balance,
+        currentDue: users[i].balance.currentDue,
+      });
+  }
+  console.log("after filter",RawFilterData);
+  
+  //Filter
+  const filteredUsers = RawFilterData.filter((user) => {
+    const lowerCaseUserName = user.userName.toLowerCase();
+    const lowerCaseQuery = q.toLowerCase();
+    return lowerCaseUserName.includes(lowerCaseQuery);
   });
+
   const handleLiveBl = (e, ID) => {
     setID(ID);
   };
@@ -78,8 +95,8 @@ const IntroducerProfile = () => {
               <p className="text-bold">{users.userName}</p>
               <IntroducerPayment
                 IntroducerName={users.userName}
-                balance={users.balance.balance}
-                duebalance={users.balance.currentDue}
+                balance={users.balance}
+                duebalance={users.currentDue}
                 id={users._id}
               />
               <Link
