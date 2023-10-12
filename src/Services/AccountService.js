@@ -176,11 +176,11 @@ class AccountService {
       },
     });
   }
-  userprofile(page, user) {
+  userprofile(page, search, user) {
     console.log(user);
     return axios({
       method: "get",
-      url: `${API_HOST}/api/user-profile/${page}`,
+      url: `${API_HOST}/api/user-profile/${page}?search=${search}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -206,10 +206,10 @@ class AccountService {
     });
   }
 
-  Introducerprofile(page, user) {
+  Introducerprofile(page, search, user) {
     return axios({
       method: "get",
-      url: `${API_HOST}/api/intoducer-profile/${page}`,
+      url: `${API_HOST}/api/introducer-profile/${page}?search=${search}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -363,10 +363,10 @@ class AccountService {
       },
     });
   }
-  getAdminList(page, user) {
+  getAdminList(page, search, user) {
     return axios({
       method: "get",
-      url: `${API_HOST}/api/admin/view-sub-admins/${page}`,
+      url: `${API_HOST}/api/admin/view-sub-admins/${page}?search=${search}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },

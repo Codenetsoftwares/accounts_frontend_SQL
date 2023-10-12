@@ -21,7 +21,7 @@ const AdminList = () => {
 
   useEffect(() => {
     if (auth.user) {
-      AccountService.getAdminList(page, auth.user).then((res) => {
+      AccountService.getAdminList(page, q, auth.user).then((res) => {
         console.log(res.data);
         if (res.data === "No sub-admins") {
           setErorrData(res.data);
@@ -33,23 +33,23 @@ const AdminList = () => {
         }
       });
     }
-  }, [auth]);
+  }, [auth, q, page]);
   console.log("=>>>>>>>>>", adminList);
 
   // Data for Filter
-  for (let i = 0; i < adminList.length; i++) {
-    RawFilterData.push({
-      userName: adminList[i].userName,
-      _id: adminList[i]._id,
-    });
-  }
+  // for (let i = 0; i < adminList.length; i++) {
+  //   RawFilterData.push({
+  //     userName: adminList[i].userName,
+  //     _id: adminList[i]._id,
+  //   });
+  // }
 
-  const filteredUsers = RawFilterData.filter((user) => {
-    const lowerCaseUserName = user.userName.toLowerCase();
-    const lowerCaseQuery = q.toLowerCase();
-    return lowerCaseUserName.includes(lowerCaseQuery);
-  });
-  console.log(auth.user);
+  // const filteredUsers = RawFilterData.filter((user) => {
+  //   const lowerCaseUserName = user.userName.toLowerCase();
+  //   const lowerCaseQuery = q.toLowerCase();
+  //   return lowerCaseUserName.includes(lowerCaseQuery);
+  // });
+  // console.log(auth.user);
 
   return (
     <div className="card container">
@@ -75,16 +75,16 @@ const AdminList = () => {
           <h3 className="text-center">{erorrData}</h3>
         ) : (
           <>
-            {filteredUsers.map((data, i) => {
+            {adminList.map((data, i) => {
               return (
-                <div className="card container" key={data._id}>
+                <div className="card container" key={data?._id}>
                   <div className="card-body ">
                     <div className="d-flex justify-content-between">
                       <div className=" text-left ">
                         <h5 className="fs-6 ">{i + 1}.</h5>
                       </div>
                       <div className="">
-                        <h5 className="fs-5 text-nowrap">{data.userName} </h5>
+                        <h5 className="fs-5 text-nowrap">{data?.userName} </h5>
                       </div>
                       <div className="">
                         <button
@@ -97,7 +97,7 @@ const AdminList = () => {
                           }}
                         >
                           <p>
-                            <Link to={`/subadminedit/${data._id}`}>
+                            <Link to={`/subadminedit/${data?._id}`}>
                               <span className="text-white">Details</span>
                             </Link>
                           </p>
