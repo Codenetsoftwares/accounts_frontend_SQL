@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import FilterTransaction from '../Component/FilterTransaction';
 import TableTransaction from '../Component/TableTransaction';
+import TransactionSercvice from '../Services/TransactionSercvice';
 
 const MainTransactionPage = () => {
     const [documentFilter, setDocumentFilter] = useState([]);
@@ -24,11 +25,25 @@ const MainTransactionPage = () => {
     }
     console.log(documentFilter)
     return (
-        <div className="container-fluid" style={{ backgroundColor: '#fff4ec' }}>
-            <FilterTransaction purpose={"mainStatement"} handleData={handleData} page={page} handlePage={handlePage} handleTotalData={handleTotalData} />
-            <TableTransaction FilterData={documentFilter} purpose={"mainStatement"} handlePage={handlePage} page={page} totalPage={totalPage} totalData={totalData} />
-        </div>
-    )
+      <div className="container-fluid" style={{ backgroundColor: "#fff4ec" }}>
+        <FilterTransaction
+          purpose={"mainStatement"}
+          handleData={handleData}
+          page={page}
+          handlePage={handlePage}
+          handleTotalData={handleTotalData}
+          api={TransactionSercvice.filterTransaction}
+        />
+        <TableTransaction
+          FilterData={documentFilter}
+          purpose={"mainStatement"}
+          handlePage={handlePage}
+          page={page}
+          totalPage={totalPage}
+          totalData={totalData}
+        />
+      </div>
+    );
 };
 
 export default MainTransactionPage;

@@ -48,13 +48,15 @@ import BankDelete from "./Component/DashBoard/Request/Bank/BankDelete";
 import BankEdit from "./Component/DashBoard/Request/Bank/BankEdit";
 import WebsiteDelete from "./Component/DashBoard/Request/Website/WebsiteDelete";
 import WebsiteEdit from "./Component/DashBoard/Request/Website/WebsiteEdit";
-import ErrorPage from "./pages/ErrorPage"
+import ErrorPage from "./pages/ErrorPage";
 import Login from "./Component/Login/Login";
 
 import MainTransactionPage from "./pages/MainTransactionPage";
 import IntroducerStatement from "./Component/DashBoard/IntroducerStatement";
 import IntroducerAlert from "./Component/IntroducerAlert";
 import ResetPassword from "./Component/DashBoard/ResetPassword";
+import WebsiteTransactionPage from "./pages/WebsiteTransactionPage";
+import BankTransactionPage from "./pages/BankTransactionPage";
 
 function App() {
   return (
@@ -75,7 +77,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route index element={<Login />} />
-            <Route path="*" element={ <ErrorPage/>} />
+            <Route path="*" element={<ErrorPage />} />
             <Route path="/" element={<AdminLayout />}>
               <Route
                 path="welcome"
@@ -164,6 +166,22 @@ function App() {
                 element={
                   <RequireAuth>
                     <MainTransactionPage />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="banktransactionpage/:id"
+                element={
+                  <RequireAuth>
+                    <BankTransactionPage />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="websitetransactionpage/:id"
+                element={
+                  <RequireAuth>
+                    <WebsiteTransactionPage />
                   </RequireAuth>
                 }
               />
