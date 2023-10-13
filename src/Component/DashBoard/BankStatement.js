@@ -37,12 +37,12 @@ const BankStatement = () => {
   const [websiteList, setWebsiteList] = useState([]);
   const [website, setWebsite] = useState("");
   const [dataId, setDataId] = useState("");
-  const [page, setPage] = useState(1)
-  const [pageNumber, setPageNumber] = useState("")
-  const [totalData, setTotalData] = useState(0)
-  console.log(startDatevalue, endDatevalue)
+  const [page, setPage] = useState(1);
+  const [pageNumber, setPageNumber] = useState("");
+  const [totalData, setTotalData] = useState(0);
+  console.log(startDatevalue, endDatevalue);
   console.log("==>>>", id);
-  console.log("data===>", documentView)
+  console.log("data===>", documentView);
   const test = ["transactionType", "subAdminName", "websiteName", "bankName"];
 
   const handleClick = (key, value) => {
@@ -56,18 +56,24 @@ const BankStatement = () => {
   };
 
   const handleId = (e, id) => {
-    e.preventDefault()
-    setDataId(id)
-  }
+    e.preventDefault();
+    setDataId(id);
+  };
 
   const handlePage = (page) => {
     setPage(page);
-  }
+  };
 
   useEffect(() => {
     AccountService.GetBankStMent(id, page, auth.user)
-      .then((res) => (setDocumentView(res.data.SecondArray), setAccountData(res.data.SecondArray), setPageNumber(res.data.pageNumber),
-        setTotalData(res.data.ArrayLength)))
+      .then(
+        (res) => (
+          setDocumentView(res.data.SecondArray),
+          setAccountData(res.data.SecondArray),
+          setPageNumber(res.data.pageNumber),
+          setTotalData(res.data.ArrayLength)
+        )
+      )
       .catch((err) => {
         console.error(err, "object");
       });
@@ -144,7 +150,6 @@ const BankStatement = () => {
   };
 
   const handleDelete = (e, id, transactionType) => {
-
     console.log(transactionType);
     switch (transactionType) {
       case "Deposit":
@@ -156,18 +161,17 @@ const BankStatement = () => {
             toast.success("Transaction delete request sent to Super Admin");
           })
           .catch((err) => {
-            toast.error(err.response.data.message)
+            toast.error(err.response.data.message);
           });
         break;
       case "Withdraw":
         AccountService.SaveTransaction({ requestId: id }, auth.user)
           .then((res) => {
-
             console.log(res.data);
             toast.success("Transaction delete request sent to Super Admin");
           })
           .catch((err) => {
-            toast.error(err.response.data.message)
+            toast.error(err.response.data.message);
           });
         break;
 
@@ -175,14 +179,13 @@ const BankStatement = () => {
         AccountService.SaveBankTransaction({ requestId: id }, auth.user)
 
           .then((res) => {
-
             console.log(res.data);
             toast.success(
               "Bank Transaction delete request sent to Super Admin"
             );
           })
           .catch((err) => {
-            toast.error(err.response.data.message)
+            toast.error(err.response.data.message);
           });
         break;
 
@@ -190,28 +193,26 @@ const BankStatement = () => {
         AccountService.SaveBankTransaction({ requestId: id }, auth.user)
 
           .then((res) => {
-
             console.log(res.data);
             toast.success(
               "Website Transaction delete request sent to Super Admin"
             );
           })
           .catch((err) => {
-            toast.error(err.response.data.message)
+            toast.error(err.response.data.message);
           });
         break;
 
       case "Manual-Website-Withdraw":
         AccountService.SaveWebsiteTransaction({ requestId: id }, auth.user)
           .then((res) => {
-
             console.log(res.data);
             toast.success(
               "Website Transaction delete request sent to Super Admin"
             );
           })
           .catch((err) => {
-            toast.error(err.response.data.message)
+            toast.error(err.response.data.message);
           });
         break;
       case "Manual-Website-Deposit":
@@ -219,16 +220,14 @@ const BankStatement = () => {
           .then((res) => {
             console.log(res.data);
             toast.success("Bank Transaction deleted");
-
           })
           .catch((err) => {
-            toast.error(err.response.data.message)
+            toast.error(err.response.data.message);
           });
         break;
       default:
       // code block
     }
-
   };
 
   const handleReset = () => {
@@ -256,14 +255,11 @@ const BankStatement = () => {
         {/* This is for Normal View */}
         <div
           className="card card-body rounded-1 "
-          style={{ backgroundColor: '#fff4ec' }}
+          style={{ backgroundColor: "#fff4ec" }}
         >
-          <div className="row row-cols-2 row-cols-lg-3 g-2 g-lg-2" >
-
-            <div className="d-flex col pt-3 justify-content-center"  >
-              <h6 className="fw-bold text-nowrap pt-2" >
-                Transaction
-              </h6>
+          <div className="row row-cols-2 row-cols-lg-3 g-2 g-lg-2">
+            <div className="d-flex col pt-3 justify-content-center">
+              <h6 className="fw-bold text-nowrap pt-2">Transaction</h6>
               <select
                 className="form-control mx-3 w-50"
                 value={select || ""}
@@ -272,9 +268,8 @@ const BankStatement = () => {
                 style={{
                   // boxShadow: " 17px 15px 27px -9px rgba(0,0,0,0.41)",
                   border: "0.5px solid black",
-                  borderRadius: "6px"
+                  borderRadius: "6px",
                 }}
-
               >
                 <option className="d-flex" value="All">
                   <b>All</b>
@@ -300,7 +295,7 @@ const BankStatement = () => {
               </select>
             </div>
 
-            <div className="d-flex col pt-3 justify-content-center" >
+            <div className="d-flex col pt-3 justify-content-center">
               <h6 className="fw-bold text-nowrap pt-2"> SubAdminlist</h6>
               <select
                 className="form-control mx-3 w-50"
@@ -325,7 +320,7 @@ const BankStatement = () => {
               </select>
             </div>
 
-            <div className="d-flex col pt-3 justify-content-center"  >
+            <div className="d-flex col pt-3 justify-content-center">
               <h6 className="fw-bold text-nowrap pt-2"> BankNameList</h6>
               <select
                 className="form-control mx-3 w-50"
@@ -350,8 +345,10 @@ const BankStatement = () => {
               </select>
             </div>
 
-
-            <div className="row row-cols-4 row-cols-lg-4 g-2 g-lg-3 w-100 " style={{ paddingLeft: '5rem' }} >
+            <div
+              className="row row-cols-4 row-cols-lg-4 g-2 g-lg-3 w-100 "
+              style={{ paddingLeft: "5rem" }}
+            >
               <div className="d-flex col justify-content-center ">
                 <h6 className="fw-bold text-nowrap pt-2 pr-2"> Start Date</h6>
                 <Datetime
@@ -446,14 +443,10 @@ const BankStatement = () => {
                   <tr align="center" className="fs-6">
                     <td>
                       {" "}
-                      {new Date(data.createdAt).toLocaleString(
-                        "default"
-                      )}{" "}
+                      {new Date(data.createdAt).toLocaleString("default")}{" "}
                     </td>
                     <td>
-                      {data.amount && (
-                        <p className="col fs-6">{data.amount}</p>
-                      )}
+                      {data.amount && <p className="col fs-6">{data.amount}</p>}
                       {data.depositAmount && (
                         <p className="col fs-6">{data.depositAmount}</p>
                       )}
@@ -506,30 +499,26 @@ const BankStatement = () => {
                     </td>
                     <td>
                       {data.balance ? (
-                        <p className="col fs-6 text-break">
-                          {data.balance}
-                        </p>
+                        <p className="col fs-6 text-break">{data.balance}</p>
                       ) : (
                         "N.A"
                       )}
                     </td>
                     <td>{data.remarks}</td>
                     <td>
-
                       <button
                         type="button"
                         className="btn btn-primary"
                         data-bs-toggle="modal"
                         data-bs-target="#edittransaction"
                         onClick={(e) => {
-                          handleId(e, data._id)
+                          handleId(e, data._id);
                         }}
                       >
                         <FontAwesomeIcon icon={faEdit} />
                       </button>
                     </td>
                     <td>
-
                       <button type="button" className="btn btn-danger">
                         <FontAwesomeIcon
                           icon={faTrash}
@@ -538,7 +527,6 @@ const BankStatement = () => {
                           }}
                         />
                       </button>
-
                     </td>
                   </tr>
                 );
@@ -550,7 +538,12 @@ const BankStatement = () => {
         </table>
       </div>
 
-      <Pagination handlePage={handlePage} page={page} totalPage={pageNumber} totalData={totalData} />
+      <Pagination
+        handlePage={handlePage}
+        page={page}
+        totalPage={pageNumber}
+        totalData={totalData}
+      />
 
       <EditTransaction id={dataId} />
     </>

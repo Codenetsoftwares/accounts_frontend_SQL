@@ -14,6 +14,8 @@ const FilterTransaction = ({
   page,
   handlePage,
   handleTotalData,
+  api,
+  id,
 }) => {
   const auth = useAuth();
   const [subAdminlist, setSubAdminlist] = useState([]);
@@ -25,8 +27,10 @@ const FilterTransaction = ({
   const [websiteList, setWebsiteList] = useState([]);
   const [website, setWebsite] = useState("");
   const [select, setSelect] = useState("");
-  const [startDatevalue, SetStartDatesetValue] = useState();
-  const [endDatevalue, setEndDateValue] = useState();
+  const [startDatevalue, SetStartDatesetValue] = useState(
+    new Date() - 1 * 24 * 60 * 60 * 1000
+  );
+  const [endDatevalue, setEndDateValue] = useState(new Date());
   const [documentView, setDocumentView] = useState([]);
 
   const handleFilter = () => {
@@ -36,10 +40,10 @@ const FilterTransaction = ({
       subAdminList: subAdmin,
       BankList: bank,
       WebsiteList: website,
-      sdate: moment(startDatevalue).date(),
-      edate: moment(endDatevalue).date(),
+      sdate: moment(startDatevalue).toDate(),
+      edate: moment(endDatevalue).toDate(),
     };
-    TransactionSercvice.filterTransaction(data, page, auth.user)
+    api(data, page, auth.user, id)
       .then((res) => {
         return (
           setDocumentView(res.data.paginatedResults),
@@ -59,7 +63,7 @@ const FilterTransaction = ({
     setSubAdmin("");
     setBank("");
     setWebsite("");
-    SetStartDatesetValue(new Date());
+    SetStartDatesetValue(new Date() - 1 * 24 * 60 * 60 * 1000);
     setEndDateValue(new Date());
     setIntroducer("");
     handleFilter();

@@ -102,7 +102,7 @@ const WebsiteDetails = () => {
   console.log("Website", getWebsite);
 
   const handelstatement = (e, name) => {
-    navigate(`/websitestatement/${name}`);
+    navigate(`/websitetransactionpage/${name}`);
   };
   return (
     <>
