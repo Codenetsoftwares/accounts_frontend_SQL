@@ -30,7 +30,7 @@ const BankTransactionPage = () => {
   return (
     <div>
       <FilterTransaction
-        purpose={"mainStatement"}
+        purpose={"bankStatement"}
         handleData={handleData}
         page={page}
         handlePage={handlePage}
@@ -40,7 +40,7 @@ const BankTransactionPage = () => {
       />
       <TableTransaction
         FilterData={documentFilter}
-        purpose={"mainStatement"}
+        purpose={"bankStatement"}
         handlePage={handlePage}
         page={page}
         totalPage={totalPage}
