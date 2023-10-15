@@ -30,7 +30,7 @@ const WebsiteTransactionPage = () => {
   return (
     <div>
       <FilterTransaction
-        purpose={"mainStatement"}
+        purpose={"websiteStatement"}
         handleData={handleData}
         page={page}
         handlePage={handlePage}
@@ -40,7 +40,7 @@ const WebsiteTransactionPage = () => {
       />
       <TableTransaction
         FilterData={documentFilter}
-        purpose={"mainStatement"}
+        purpose={"websiteStatement"}
         handlePage={handlePage}
         page={page}
         totalPage={totalPage}
