@@ -32,6 +32,7 @@ const UserProfile = () => {
       )
     );
   }, [auth, page, q]);
+  
   console.log("users", users);
 
 
