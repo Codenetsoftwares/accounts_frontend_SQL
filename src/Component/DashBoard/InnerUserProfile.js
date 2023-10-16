@@ -43,19 +43,26 @@ const InnerUserProfile = () => {
     navigate("/transactiondetails", { state: { page: page, id: id } });
   }
 
-  useEffect(() => {
-    AccountService.userprofile(page, auth.user)
-      .then((res) => {
-        setUsers(res.data);
-        const userWithId = res.data.SecondArray.find((user) => user._id === id);
-        setFoundObject(userWithId);
-      })
-      .catch((error) => {
-        // Handle error
-        console.error("Error fetching user data:", error);
-      });
-  }, [auth, id]);
-  console.log("This is User Deatils===>>", users);
+  // useEffect(() => {
+  //   AccountService.userprofile(page, auth.user)
+  //     .then((res) => {
+  //       setUsers(res.data);
+  //       const userWithId = res.data.SecondArray.find((user) => user._id === id);
+  //       setFoundObject(userWithId);
+  //     })
+  //     .catch((error) => {
+  //       // Handle error
+  //       console.error("Error fetching user data:", error);
+  //     });
+  // }, [auth, id]);
+  // console.log("This is User Deatils===>>", users);
+
+    useEffect(() => {
+      AccountService.singleuserprofile(auth.user , id).then((res) =>
+        setFoundObject(res.data[0])
+      );
+    }, [id, auth]);
+  console.log("This is single user", foundObject);
 
   const toggleAccordion = () => {
     setIsAccordionOpen(!isAccordionOpen);

@@ -176,6 +176,7 @@ class AccountService {
       },
     });
   }
+
   userprofile(page, search, user) {
     console.log(user);
     return axios({
@@ -186,6 +187,18 @@ class AccountService {
       },
     });
   }
+
+  singleuserprofile(user, id) {
+    console.log("from service =>>>>", user);
+    return axios({
+      method: "get",
+      url: `${API_HOST}/api/single-user-profile/${id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
   introducerUsersingleProfile(id, user) {
     return axios({
       method: "get",
