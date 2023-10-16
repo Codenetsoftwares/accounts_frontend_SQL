@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../Utils/Auth";
 import TransactionSercvice from "../../Services/TransactionSercvice";
+import AccountService from "../../Services/AccountService";
 
 const EditTransaction = ({ id }) => {
   const auth = useAuth();
@@ -8,6 +9,8 @@ const EditTransaction = ({ id }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedData, setEditedData] = useState({});
   const [data, setData] = useState([]);
+  const [bank, setBank] = useState([]);
+  const [website, setWebsite] = useState([]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,6 +25,16 @@ const EditTransaction = ({ id }) => {
       }
     );
   }, [id]);
+
+  useEffect(() => {
+    AccountService.getbank(auth.user).then((res) => setBank(res.data));
+  }, [auth]);
+  console.log("bank names", bank);
+
+  useEffect(() => {
+    AccountService.website(auth.user).then((res) => setWebsite(res.data));
+  }, [auth]);
+  console.log("Website Names", website);
 
   const handleToggleEdit = (e) => {
     e.preventDefault();
@@ -229,7 +242,7 @@ const EditTransaction = ({ id }) => {
                     onChange={handleChange}
                   />}
 
-                  <input
+                  {/* <input
                     type="text"
                     className="form-control mb-1 "
                     placeholder="bankName"
@@ -238,7 +251,35 @@ const EditTransaction = ({ id }) => {
                       : data.bankName ? data.bankName : "N.A"}
                     onChange={handleChange}
                     name="bankName"
-                  />
+                  /> */}
+                  {isEditing ? (<>{data.bankName ? <select
+                    className="form-control"
+                    name="bankName"
+                    value={isEditing.Bank}
+                    required
+                    onChange={handleChange}
+                  >
+                    <option selected>Select Bank</option>
+                    {bank.map((bank, i) => {
+                      return (
+                        <option key={i}>{bank.bankName}</option>
+                      );
+                    })}
+                  </select> : <input
+                    type="text"
+                    className="form-control mb-1 "
+                    placeholder="bankName"
+                    value={data.bankName ? data.bankName : "N.A"}
+                    onChange={handleChange}
+                    name="bankName"
+                  />}</>) : (<input
+                    type="text"
+                    className="form-control mb-1 "
+                    placeholder="bankName"
+                    value={data.bankName ? data.bankName : "N.A"}
+                    onChange={handleChange}
+                    name="bankName"
+                  />)}
                   <input
                     type="text"
                     className="form-control mb-1"
@@ -277,7 +318,7 @@ const EditTransaction = ({ id }) => {
                     onChange={handleChange}
                     name="transactionType"
                   />
-                  <input
+                  {/* <input
                     type="text"
                     className="form-control"
                     placeholder="websiteName"
@@ -285,7 +326,38 @@ const EditTransaction = ({ id }) => {
                       ? editedData.websiteName
                       : data.websiteName ? data.websiteName : "N.A"}
                     name="websiteName"
-                  />
+                  /> */}
+                  {isEditing ? (
+
+                    <>{data.websiteName ? <select
+                      className="form-control"
+                      name="websiteName"
+                      value={isEditing.website}
+                      required
+                      onChange={handleChange}
+                    >
+                      <option selected>Select Website</option>
+                      {website.map((website, i) => {
+                        return (
+                          <option key={i}>{website.websiteName}</option>
+                        );
+                      })}
+                    </select> : <input
+                      type="text"
+                      className="form-control mb-1 "
+                      placeholder="bankName"
+                      value={data.websiteName ? data.websiteName : "N.A"}
+                      onChange={handleChange}
+                      name="websiteName"
+                    />}</>
+                  ) : (<input
+                    type="text"
+                    className="form-control mb-1 "
+                    placeholder="bankName"
+                    value={data.websiteName ? data.websiteName : "N.A"}
+                    onChange={handleChange}
+                    name="websiteName"
+                  />)}
                 </div>)}
               </form>
             </div>
