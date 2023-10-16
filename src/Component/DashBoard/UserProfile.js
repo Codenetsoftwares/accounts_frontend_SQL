@@ -21,8 +21,6 @@ const UserProfile = () => {
     navigate(`/innerprofile`, { state: { page: page, id: id, q: q } });
   };
 
-
-
   useEffect(() => {
     AccountService.userprofile(page, q, auth.user).then(
       (res) => (
@@ -32,16 +30,12 @@ const UserProfile = () => {
       )
     );
   }, [auth, page, q]);
-  
-  console.log("users", users);
 
+  console.log("users", users);
 
   const handlePage = (page) => {
     setPage(page);
   };
-
-
-
 
   return (
     <div className="m-3">
@@ -63,14 +57,17 @@ const UserProfile = () => {
 
       <ul>
         {users.map((user, index) => (
-          <div className="card container-fluid w-75" key={index}>
+          <div className="card container-fluid w-75 mt-2" key={index}>
             <div className="card-body">
               <p
                 onClick={() => {
                   Handelinnerprofile(user._id);
                 }}
+                style={{ color: "blue", cursor: "pointer" }}
               >
-                {users[index].userName}
+                <u title="Click here to know User details ">
+                  {users[index].userName}
+                </u>
               </p>
             </div>
           </div>

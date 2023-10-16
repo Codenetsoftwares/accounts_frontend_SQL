@@ -40,7 +40,9 @@ const InnerUserProfile = () => {
 
   const Handletransaction = () => {
     console.log("first")
-    navigate("/transactiondetails", { state: { page: page, id: id } });
+    navigate("/transactiondetails", {
+      state: { txndetails: foundObject.transactionDetail },
+    });
   }
 
   // useEffect(() => {

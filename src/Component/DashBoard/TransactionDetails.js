@@ -28,9 +28,10 @@ const TransactionDetails = () => {
   const [select, setSelect] = useState("All");
 
   const location = useLocation();
-  console.log('loc',location)
-  const { page, id } = location.state || {}
-  console.log("first", page)
+  console.log("loc", location);
+  const { txndetails } = location.state || {};
+  console.log("Txn D=>>>>", txndetails);
+
   const auth = useAuth();
   const test = [
     "transactionType",
@@ -82,19 +83,11 @@ const TransactionDetails = () => {
   const handleEndDatevalue = (e) => {
     setEndDateValue(moment(e).format("DD-MM-YYYY HH:mm"));
   };
-console.log('id',id)
+
   useEffect(() => {
-    AccountService.userprofile(page, auth.user)
-      .then((res) => {
-        console.log('res', res.data.SecondArray)
-        const userWithId = res.data.SecondArray.find((user) => user._id === id);
-        setDocumentView(userWithId.transactionDetail);
-        setAccountData(userWithId.transactionDetail);
-      })
-      .catch((error) => {
-        console.error("Error fetching user data:", error);
-      });
-  }, [auth, id]);
+        setDocumentView(txndetails);
+        setAccountData(txndetails);
+  }, []);
 
   useEffect(() => {
     if (auth.user) {
@@ -156,14 +149,11 @@ console.log('id',id)
       <div className="container mt-5">
         <div
           className="card card-body rounded-1 "
-          style={{ backgroundColor: '#fff4ec' }}
+          style={{ backgroundColor: "#fff4ec" }}
         >
-          <div className="row row-cols-2 row-cols-lg-3 g-2 g-lg-2" >
-
-            <div className="d-flex col pt-3 justify-content-center"  >
-              <h6 className="fw-bold text-nowrap pt-2" >
-                Transaction
-              </h6>
+          <div className="row row-cols-2 row-cols-lg-3 g-2 g-lg-2">
+            <div className="d-flex col pt-3 justify-content-center">
+              <h6 className="fw-bold text-nowrap pt-2">Transaction</h6>
               <select
                 className="form-control mx-3 w-50"
                 value={select || ""}
@@ -172,9 +162,8 @@ console.log('id',id)
                 style={{
                   // boxShadow: " 17px 15px 27px -9px rgba(0,0,0,0.41)",
                   border: "0.5px solid black",
-                  borderRadius: "6px"
+                  borderRadius: "6px",
                 }}
-
               >
                 <option className="d-flex" value="All">
                   <b>All</b>
@@ -200,7 +189,7 @@ console.log('id',id)
               </select>
             </div>
 
-            <div className="d-flex col pt-3 justify-content-center" >
+            <div className="d-flex col pt-3 justify-content-center">
               <h6 className="fw-bold text-nowrap pt-2"> SubAdminlist</h6>
               <select
                 className="form-control mx-3 w-50"
@@ -225,7 +214,7 @@ console.log('id',id)
               </select>
             </div>
 
-            <div className="d-flex col pt-3 justify-content-center"  >
+            <div className="d-flex col pt-3 justify-content-center">
               <h6 className="fw-bold text-nowrap pt-2"> BankNameList</h6>
               <select
                 className="form-control mx-3 w-50"
@@ -250,7 +239,7 @@ console.log('id',id)
               </select>
             </div>
 
-            <div className="d-flex col pt-3 justify-content-center" >
+            <div className="d-flex col pt-3 justify-content-center">
               <h6 className="fw-bold text-nowrap pt-2"> WebsitesList</h6>
               <select
                 className="form-control mx-3 w-50"
@@ -275,9 +264,10 @@ console.log('id',id)
               </select>
             </div>
 
-
-
-            <div className="row row-cols-4 row-cols-lg-4 g-2 g-lg-3 w-100 " style={{ paddingLeft: '5rem' }} >
+            <div
+              className="row row-cols-4 row-cols-lg-4 g-2 g-lg-3 w-100 "
+              style={{ paddingLeft: "5rem" }}
+            >
               <div className="d-flex col justify-content-center ">
                 <h6 className="fw-bold text-nowrap pt-2 pr-2"> Start Date</h6>
                 <Datetime
