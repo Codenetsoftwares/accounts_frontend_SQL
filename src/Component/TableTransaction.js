@@ -145,27 +145,34 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage, to
                 </th>
               </>
             )}
-            {/* <th scope="col text-break fs-6" className="text-primary">
-                            Balance
-                        </th> */}
+
+            {purpose === "bankStatement" && (
+
+              <th scope="col text-break fs-6" className="text-primary">
+                Balance
+              </th>
+            )}
+            {purpose === "websiteStatement" && (
+
+              <th scope="col text-break fs-6" className="text-primary">
+                Balance
+              </th>
+            )}
 
             <th scope="col text-break" className="text-primary">
               Remarks
             </th>
 
-            {/* when props pass mainStatement & bankStatement & websiteStatement from parent component*/}
-            {purpose ===
-              ("mainStatement" || "bankStatement" || "websiteStatement") && (
-                <>
-                  <th scope="col text-break" className="text-primary">
-                    Edit
-                  </th>
-                  <th scope="col text-break" className="text-primary">
-                    Delete
-                  </th>
-                </>
-              )}
-            {/* when props pass mainStatement & bankStatement & websiteStatement from parent component*/}
+
+
+            <th scope="col text-break" className="text-primary">
+              Edit
+            </th>
+            <th scope="col text-break" className="text-primary">
+              Delete
+            </th>
+
+
           </tr>
         </thead>
         {/* </div> */}
@@ -256,52 +263,51 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage, to
                     </>
                   )}
                   {/* when props pass mainStatement from parent component*/}
+                  {purpose === "bankStatement" && (
 
-                  {/* <td>
-                                        {data.balance
-                                            ? data.balance
-                                            : "N .A"}
-                                    </td> */}
+                    <td>
+                      {data.balance
+                        ? data.balance
+                        : "N .A"}
+                    </td>
+                  )}
+                  {purpose === "websiteStatement" && (
 
+                    <td>
+                      {data.balance
+                        ? data.balance
+                        : "N .A"}
+                    </td>
+                  )}
                   <td>{data?.remarks}</td>
-
-                  {/* when props pass mainStatement & bankStatement & websiteStatement from parent component*/}
-                  {purpose ===
-                    ("mainStatement" ||
-                      "bankStatement" ||
-                      "websiteStatement") && (
-                      <>
-                        <td>
-                          <button
-                            type="button"
-                            className="btn btn-primary"
-                            data-bs-toggle="modal"
-                            data-bs-target="#edittransaction"
-                            onClick={(e) => {
-                              console.log("id===>", data?._id);
-                              handleId(e, data?._id);
-                            }}
-                          >
-                            <FontAwesomeIcon icon={faEdit} />
-                          </button>
-                        </td>
-                        <td>
-                          <button type="button" className="btn btn-danger">
-                            <FontAwesomeIcon
-                              icon={faTrash}
-                              onClick={(e) => {
-                                handleDelete(
-                                  e,
-                                  data?._id,
-                                  data?.transactionType
-                                );
-                              }}
-                            />
-                          </button>
-                        </td>
-                      </>
-                    )}
-                  {/* when props pass mainStatement & bankStatement & websiteStatement from parent component*/}
+                  <td>
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      data-bs-toggle="modal"
+                      data-bs-target="#edittransaction"
+                      onClick={(e) => {
+                        console.log("id===>", data?._id);
+                        handleId(e, data?._id);
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faEdit} />
+                    </button>
+                  </td>
+                  <td>
+                    <button type="button" className="btn btn-danger">
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        onClick={(e) => {
+                          handleDelete(
+                            e,
+                            data?._id,
+                            data?.transactionType
+                          );
+                        }}
+                      />
+                    </button>
+                  </td>
                 </tr>
               );
             })

@@ -18,10 +18,10 @@ const UserProfile = () => {
   console.log("user", users);
 
   const Handelinnerprofile = (id) => {
-    navigate(`/innerprofile`, { state: { page: page, id: id } });
+    navigate(`/innerprofile`, { state: { page: page, id: id, q: q } });
   };
 
-  
+
 
   useEffect(() => {
     AccountService.userprofile(page, q, auth.user).then(
@@ -34,12 +34,12 @@ const UserProfile = () => {
   }, [auth, page, q]);
   console.log("users", users);
 
-  
+
   const handlePage = (page) => {
     setPage(page);
   };
 
- 
+
 
 
   return (
@@ -75,7 +75,7 @@ const UserProfile = () => {
           </div>
         ))}
       </ul>
-     
+
       <Pagination
         handlePage={handlePage}
         page={page}

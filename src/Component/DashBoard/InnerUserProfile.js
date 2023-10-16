@@ -36,7 +36,6 @@ const InnerUserProfile = () => {
   console.log(auth)
   const { page, id } = location.state || {}
   console.log('page', page)
-  console.log('id', id)
 
   const Handletransaction = () => {
     console.log("first")
@@ -44,7 +43,7 @@ const InnerUserProfile = () => {
   }
 
   useEffect(() => {
-    AccountService.userprofile(page, auth.user)
+    AccountService.userprofile(page,  auth.user)
       .then((res) => {
         setUsers(res.data);
         const userWithId = res.data.SecondArray.find((user) => user._id === id);

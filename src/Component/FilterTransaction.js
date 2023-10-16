@@ -1,22 +1,14 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useAuth } from "../Utils/Auth";
-import TransactionSercvice from "../Services/TransactionSercvice";
+import React, { useEffect, useMemo, useState } from 'react'
+import { useAuth } from "../Utils/Auth"
+import TransactionSercvice from '../Services/TransactionSercvice'
 import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
 import moment from "moment";
 import { CSVLink } from "react-csv";
-import AccountService from "../Services/AccountService";
-import { toast } from "react-toastify";
+import AccountService from '../Services/AccountService';
+import { toast } from 'react-toastify';
 
-const FilterTransaction = ({
-  purpose,
-  handleData,
-  page,
-  handlePage,
-  handleTotalData,
-  api,
-  id,
-}) => {
+const FilterTransaction = ({ purpose, handleData, page, handlePage, handleTotalData }) => {
   const auth = useAuth();
   const [subAdminlist, setSubAdminlist] = useState([]);
   const [subAdmin, setSubAdmin] = useState("");
@@ -27,9 +19,7 @@ const FilterTransaction = ({
   const [websiteList, setWebsiteList] = useState([]);
   const [website, setWebsite] = useState("");
   const [select, setSelect] = useState("");
-  const [startDatevalue, SetStartDatesetValue] = useState(
-    new Date() - 1 * 24 * 60 * 60 * 1000
-  );
+  const [startDatevalue, SetStartDatesetValue] = useState(new Date() - 1 * 24 * 60 * 60 * 1000);
   const [endDatevalue, setEndDateValue] = useState(new Date());
   const [documentView, setDocumentView] = useState([]);
 
@@ -42,20 +32,22 @@ const FilterTransaction = ({
       WebsiteList: website,
       sdate: moment(startDatevalue).toDate(),
       edate: moment(endDatevalue).toDate(),
-    };
-    api(data, page, auth.user, id)
-      .then((res) => {
-        return (
-          setDocumentView(res.data.paginatedResults),
-          console.log(documentView),
-          handleData(res.data.paginatedResults, res.data.pageNumber),
-          handleTotalData(res.data.allIntroDataLength)
-        );
-      })
-      .catch((err) => {
-        toast.error(err.response.data.message);
-      });
-  };
+    }
+    TransactionSercvice.filterTransaction(data, page, auth.user).then((res) => {
+      return (
+        setDocumentView(res.data.SecondArray),
+        console.log(documentView),
+        handleData(res.data.SecondArray, res.data.pageNumber),
+        handleTotalData(res.data.ArrayLength)
+      )
+    }).catch((err) => {
+      return (
+        handleData(""),
+        toast.error(err.response.data.message)
+      )
+    });
+
+  }
 
   // const handlememo = useMemo(() => { handleFilter() }, [handleFilter])
   const handleReset = () => {
@@ -67,7 +59,7 @@ const FilterTransaction = ({
     setEndDateValue(new Date());
     setIntroducer("");
     handleFilter();
-    handlePage(1);
+    handlePage(1)
     // handlememo();
     window.location.reload();
   };
@@ -130,11 +122,14 @@ const FilterTransaction = ({
   return (
     <div
       className="card card-body rounded-1 "
-      style={{ backgroundColor: "#fff4ec" }}
+      style={{ backgroundColor: '#fff4ec' }}
     >
-      <div className="row row-cols-2 row-cols-lg-3 g-2 g-lg-2">
-        <div className="d-flex col pt-3 justify-content-center">
-          <h6 className="fw-bold text-nowrap pt-2">Transaction</h6>
+      <div className="row row-cols-2 row-cols-lg-3 g-2 g-lg-2" >
+
+        <div className="d-flex col pt-3 justify-content-center"  >
+          <h6 className="fw-bold text-nowrap pt-2" >
+            Transaction
+          </h6>
           <select
             className="form-control mx-3 w-50"
             value={select || ""}
@@ -142,7 +137,7 @@ const FilterTransaction = ({
             onChange={handleChange}
             style={{
               border: "0.5px solid black",
-              borderRadius: "6px",
+              borderRadius: "6px"
             }}
           >
             <option className="d-flex" value="All">
@@ -169,7 +164,7 @@ const FilterTransaction = ({
           </select>
         </div>
 
-        <div className="d-flex col pt-3 justify-content-center">
+        <div className="d-flex col pt-3 justify-content-center" >
           <h6 className="fw-bold text-nowrap pt-2"> SubAdminlist</h6>
           <select
             className="form-control mx-3 w-50"
@@ -194,84 +189,30 @@ const FilterTransaction = ({
         </div>
 
         {/* when props pass mainstatement from parent component*/}
-        {purpose === "mainStatement" && (
-          <>
-            <div className="d-flex col pt-3 justify-content-center">
-              <h6 className="fw-bold text-nowrap pt-2"> Introducerlist</h6>
-              <select
-                className="form-control mx-3 w-50"
-                value={introducer || ""}
-                autoComplete="off"
-                onChange={handleIntroducer}
-                style={{
-                  border: "0.5px solid black",
-                  borderRadius: "6px",
-                }}
-                required
-              >
-                <option selected>Select Introducer</option>
-                {introducerList.map((data) => {
-                  return (
-                    <option key={data._id} value={data.userName}>
-                      {data.userName}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-            <div className="d-flex col pt-3 justify-content-center">
-              <h6 className="fw-bold text-nowrap pt-2"> BankNameList</h6>
-              <select
-                className="form-control mx-3 w-50"
-                value={bank || ""}
-                autoComplete="off"
-                onChange={handleBank}
-                style={{
-                  border: "0.5px solid black",
-                  borderRadius: "6px",
-                }}
-                required
-              >
-                <option selected>Select Bank</option>
-                {bankList.map((data) => {
-                  return (
-                    <option key={data._id} value={data.bankName}>
-                      {data.bankName}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-            <div className="d-flex col pt-3 justify-content-center">
-              <h6 className="fw-bold text-nowrap pt-2"> WebsitesList</h6>
-              <select
-                className="form-control mx-3 w-50"
-                value={website || ""}
-                autoComplete="off"
-                onChange={handleWebsite}
-                style={{
-                  border: "0.5px solid black",
-                  borderRadius: "6px",
-                }}
-                required
-              >
-                <option selected>Select website</option>
-                {websiteList.map((data) => {
-                  return (
-                    <option key={data._id} value={data.websiteName}>
-                      {data.websiteName}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-          </>
-        )}
-        {/* when props pass mainstatement  from parent component*/}
-
-        {/* when props pass bankstatement from parent component*/}
-        {purpose === "bankStatement" && (
-          <div className="d-flex col pt-3 justify-content-center">
+        {purpose === "mainStatement" && <><div className="d-flex col pt-3 justify-content-center" >
+          <h6 className="fw-bold text-nowrap pt-2"> Introducerlist</h6>
+          <select
+            className="form-control mx-3 w-50"
+            value={introducer || ""}
+            autoComplete="off"
+            onChange={handleIntroducer}
+            style={{
+              border: "0.5px solid black",
+              borderRadius: "6px",
+            }}
+            required
+          >
+            <option selected>Select Introducer</option>
+            {introducerList.map((data) => {
+              return (
+                <option key={data._id} value={data.userName}>
+                  {data.userName}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+          <div className="d-flex col pt-3 justify-content-center"  >
             <h6 className="fw-bold text-nowrap pt-2"> BankNameList</h6>
             <select
               className="form-control mx-3 w-50"
@@ -294,12 +235,7 @@ const FilterTransaction = ({
               })}
             </select>
           </div>
-        )}
-        {/* when props pass bankstatement from parent component*/}
-
-        {/* when props pass websitestatement from parent component*/}
-        {purpose === "websiteStatement" && (
-          <div className="d-flex col pt-3 justify-content-center">
+          <div className="d-flex col pt-3 justify-content-center" >
             <h6 className="fw-bold text-nowrap pt-2"> WebsitesList</h6>
             <select
               className="form-control mx-3 w-50"
@@ -321,68 +257,113 @@ const FilterTransaction = ({
                 );
               })}
             </select>
-          </div>
-        )}
+          </div></>}
+        {/* when props pass mainstatement  from parent component*/}
+
+        {/* when props pass bankstatement from parent component*/}
+        {/* {purpose === "bankStatement" && <div className="d-flex col pt-3 justify-content-center"  >
+                    <h6 className="fw-bold text-nowrap pt-2"> BankNameList</h6>
+                    <select
+                        className="form-control mx-3 w-50"
+                        value={bank || ""}
+                        autoComplete="off"
+                        onChange={handleBank}
+                        style={{
+                            border: "0.5px solid black",
+                            borderRadius: "6px",
+                        }}
+                        required
+                    >
+                        <option selected>Select Bank</option>
+                        {bankList.map((data) => {
+                            return (
+                                <option key={data._id} value={data.bankName}>
+                                    {data.bankName}
+                                </option>
+                            );
+                        })}
+                    </select>
+                </div>} */}
+        {/* when props pass bankstatement from parent component*/}
+
+        {/* when props pass websitestatement from parent component*/}
+        {/* {purpose === "websiteStatement" && <div className="d-flex col pt-3 justify-content-center" >
+                    <h6 className="fw-bold text-nowrap pt-2"> WebsitesList</h6>
+                    <select
+                        className="form-control mx-3 w-50"
+                        value={website || ""}
+                        autoComplete="off"
+                        onChange={handleWebsite}
+                        style={{
+                            border: "0.5px solid black",
+                            borderRadius: "6px",
+                        }}
+                        required
+                    >
+                        <option selected>Select website</option>
+                        {websiteList.map((data) => {
+                            return (
+                                <option key={data._id} value={data.websiteName}>
+                                    {data.websiteName}
+                                </option>
+                            );
+                        })}
+                    </select>
+                </div>} */}
         {/* when props pass websitestatement from parent component*/}
 
+
         {/* when props pass introducerTransactionStatement & userTransactionStatement from parent component*/}
-        {purpose ===
-          ("introducerTransactionStatement" || "userTransactionStatement") && (
-          <>
-            <div className="d-flex col pt-3 justify-content-center">
-              <h6 className="fw-bold text-nowrap pt-2"> BankNameList</h6>
-              <select
-                className="form-control mx-3 w-50"
-                value={bank || ""}
-                autoComplete="off"
-                onChange={handleBank}
-                style={{
-                  border: "0.5px solid black",
-                  borderRadius: "6px",
-                }}
-                required
-              >
-                <option selected>Select Bank</option>
-                {bankList.map((data) => {
-                  return (
-                    <option key={data._id} value={data.bankName}>
-                      {data.bankName}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-            <div className="d-flex col pt-3 justify-content-center">
-              <h6 className="fw-bold text-nowrap pt-2"> WebsitesList</h6>
-              <select
-                className="form-control mx-3 w-50"
-                value={website || ""}
-                autoComplete="off"
-                onChange={handleWebsite}
-                style={{
-                  border: "0.5px solid black",
-                  borderRadius: "6px",
-                }}
-                required
-              >
-                <option selected>Select website</option>
-                {websiteList.map((data) => {
-                  return (
-                    <option key={data._id} value={data.websiteName}>
-                      {data.websiteName}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-          </>
-        )}
+        {purpose === ("introducerTransactionStatement" || "userTransactionStatement") && <>
+          <div className="d-flex col pt-3 justify-content-center"  >
+            <h6 className="fw-bold text-nowrap pt-2"> BankNameList</h6>
+            <select
+              className="form-control mx-3 w-50"
+              value={bank || ""}
+              autoComplete="off"
+              onChange={handleBank}
+              style={{
+                border: "0.5px solid black",
+                borderRadius: "6px",
+              }}
+              required
+            >
+              <option selected>Select Bank</option>
+              {bankList.map((data) => {
+                return (
+                  <option key={data._id} value={data.bankName}>
+                    {data.bankName}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+          <div className="d-flex col pt-3 justify-content-center" >
+            <h6 className="fw-bold text-nowrap pt-2"> WebsitesList</h6>
+            <select
+              className="form-control mx-3 w-50"
+              value={website || ""}
+              autoComplete="off"
+              onChange={handleWebsite}
+              style={{
+                border: "0.5px solid black",
+                borderRadius: "6px",
+              }}
+              required
+            >
+              <option selected>Select website</option>
+              {websiteList.map((data) => {
+                return (
+                  <option key={data._id} value={data.websiteName}>
+                    {data.websiteName}
+                  </option>
+                );
+              })}
+            </select>
+          </div></>}
         {/* when props pass introducerTransactionStatement & userTransactionStatement from parent component*/}
 
-        <div
-          className="row row-cols-4 row-cols-lg-4 g-2 g-lg-3 w-100 "
-          style={{ paddingLeft: "5rem" }}
-        >
+        <div className="row row-cols-4 row-cols-lg-4 g-2 g-lg-3 w-100 " style={{ paddingLeft: '5rem' }} >
           <div className="d-flex col justify-content-center ">
             <h6 className="fw-bold text-nowrap pt-2 pr-2"> Start Date</h6>
             <Datetime
@@ -421,17 +402,16 @@ const FilterTransaction = ({
               </button>
             </div>
             <div className="mx-2">
-              {documentView !== undefined && (
-                <CSVLink data={documentView} className="btn btn-success">
-                  Download Data
-                </CSVLink>
-              )}
+              {documentView !== undefined && <CSVLink data={documentView} className="btn btn-success">
+                Download Data
+              </CSVLink>}
+
             </div>
           </div>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default FilterTransaction;
+export default FilterTransaction
