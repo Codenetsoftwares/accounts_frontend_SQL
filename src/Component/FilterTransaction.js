@@ -37,8 +37,8 @@ const FilterTransaction = ({ purpose, handleData, page, handlePage, handleTotalD
       return (
         setDocumentView(res.data.SecondArray),
         console.log(documentView),
-        handleData(res.data.SecondArray, res.data.pageNumber),
-        handleTotalData(res.data.ArrayLength)
+        handleData(res.data.paginatedResults, res.data.pageNumber),
+        handleTotalData(res.data.allIntroDataLength)
       )
     }).catch((err) => {
       return (
