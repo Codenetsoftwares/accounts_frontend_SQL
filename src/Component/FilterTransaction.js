@@ -7,8 +7,10 @@ import moment from "moment";
 import { CSVLink } from "react-csv";
 import AccountService from '../Services/AccountService';
 import { toast } from 'react-toastify';
+import { useParams } from 'react-router';
 
-const FilterTransaction = ({ purpose, handleData, page, handlePage, handleTotalData }) => {
+const FilterTransaction = ({ purpose, handleData, page, handlePage, handleTotalData, api }) => {
+  const { id } = useParams();
   const auth = useAuth();
   const [subAdminlist, setSubAdminlist] = useState([]);
   const [subAdmin, setSubAdmin] = useState("");
@@ -24,6 +26,7 @@ const FilterTransaction = ({ purpose, handleData, page, handlePage, handleTotalD
   const [documentView, setDocumentView] = useState([]);
 
   const handleFilter = () => {
+
     const data = {
       transactionType: select,
       introducerList: introducer,
@@ -33,7 +36,7 @@ const FilterTransaction = ({ purpose, handleData, page, handlePage, handleTotalD
       sdate: moment(startDatevalue).toDate(),
       edate: moment(endDatevalue).toDate(),
     }
-    TransactionSercvice.filterTransaction(data, page, auth.user).then((res) => {
+    api(data, page, auth.user, id).then((res) => {
       return (
         setDocumentView(res.data.SecondArray),
         console.log(documentView),
