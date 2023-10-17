@@ -30,7 +30,7 @@ const IntroducerProfile = () => {
   const [pageNumber, setPageNumber] = useState("")
   const [totalData, setTotalData] = useState(0)
   const RawFilterData = [];
-  
+
 
   // const handelinnerprofile =()=>{
   //   navigate(`/innerprofile/${users._id}`);
@@ -41,15 +41,16 @@ const IntroducerProfile = () => {
   }
 
   useEffect(() => {
-    AccountService.Introducerprofile(page,q, auth.user)
+    AccountService.Introducerprofile(page, q, auth.user)
       .then((res) => (setUsers(res.data.SecondArray), setPageNumber(res.data.pageNumber), setTotalData(res.data.allIntroDataLength)));
-  }, [auth, page,q]);
+  }, [auth, page, q]);
   console.log("users", users);
 
-
   const handleLiveBl = (e, ID) => {
+    e.preventDefault()
     setID(ID);
   };
+
   console.log("Live Bl", ID);
 
   return (
@@ -146,7 +147,8 @@ const IntroducerProfile = () => {
           </div>
         ))}
       </ul>
-      <LiveBalanceIntroducer ID={ID} />
+      {ID !== undefined && <LiveBalanceIntroducer ID={ID} />}
+
       <IntroducerTransaction TxType={txType} IntroducerName={introducerName} />
 
       {/* <div className="text-center">
