@@ -326,9 +326,7 @@ const IntroducerStatement = () => {
                   <th scope="col text-break fs-6" className="text-primary">
                     Txn Type
                   </th>
-                  <th scope="col fs-6" className="text-primary">
-                    Entry by
-                  </th>
+
                   {/* <th scope="col" className="text-primary">
                     Bank
                   </th> */}
@@ -397,7 +395,6 @@ const IntroducerStatement = () => {
                             </p>
                           )}
                         </td>
-                        <td>{data.subAdminName}</td>
 
                         {/* <td>
                           <p className="col fs-6">
@@ -554,11 +551,9 @@ const IntroducerStatement = () => {
                     Amount
                   </th>
                   <th scope="col text-break fs-6" className="text-primary">
-                    Txn Id
+                    Txn Type
                   </th>
-                  <th scope="col fs-6" className="text-primary">
-                    Gateway
-                  </th>
+
                   {/* <th scope="col" className="text-primary">
                     Bank
                   </th> */}
@@ -621,19 +616,12 @@ const IntroducerStatement = () => {
                           )}
                         </td>
                         <td>
-                          {data.transactionID && (
+                          {data.transactionType && (
                             <p className="col fs-6 text-break">
-                              {data.transactionID}
+                              {data.transactionType}
                             </p>
                           )}
-                          {data.depositAmount && (
-                            <p className="col fs-6 text-break">N.A</p>
-                          )}
-                          {data.withdrawAmount && (
-                            <p className="col fs-6 text-break">N.A</p>
-                          )}
                         </td>
-                        <td>{data.subAdminName}</td>
 
                         {/* <td>
                           <p className="col fs-6">

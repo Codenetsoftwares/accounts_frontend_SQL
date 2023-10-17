@@ -38,14 +38,16 @@ const BankTransactionPage = () => {
         api={AccountService.GetBankStMent}
         id={id}
       />
-      <TableTransaction
-        FilterData={documentFilter}
-        purpose={"bankStatement"}
-        handlePage={handlePage}
-        page={page}
-        totalPage={totalPage}
-        totalData={totalData}
-      />
+      <div className="d-flex justify-content-center">
+        <TableTransaction
+          FilterData={documentFilter}
+          purpose={"bankStatement"}
+          handlePage={handlePage}
+          page={page}
+          totalPage={totalPage}
+          totalData={totalData}
+        />
+      </div>
     </div>
   );
 };

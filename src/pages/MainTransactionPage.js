@@ -34,14 +34,16 @@ const MainTransactionPage = () => {
           handleTotalData={handleTotalData}
           api={TransactionSercvice.filterTransaction}
         />
-        <TableTransaction
-          FilterData={documentFilter}
-          purpose={"mainStatement"}
-          handlePage={handlePage}
-          page={page}
-          totalPage={totalPage}
-          totalData={totalData}
-        />
+        <div className="d-flex justify-content-center">
+          <TableTransaction
+            FilterData={documentFilter}
+            purpose={"mainStatement"}
+            handlePage={handlePage}
+            page={page}
+            totalPage={totalPage}
+            totalData={totalData}
+          />
+        </div>
       </div>
     );
 };
