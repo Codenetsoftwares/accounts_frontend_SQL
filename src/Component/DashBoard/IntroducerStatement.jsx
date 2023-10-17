@@ -378,15 +378,35 @@ const IntroducerStatement = () => {
                           )}{" "}
                         </td>
                         <td>
-                          {data.amount && (
-                            <p className="col fs-6">{data.amount}</p>
-                          )}
-                          {data.depositAmount && (
-                            <p className="col fs-6">{data.depositAmount}</p>
-                          )}
-                          {data.withdrawAmount && (
-                            <p className="col fs-6">{data.withdrawAmount}</p>
-                          )}
+                          <p
+                            className={`col fs-6 text-break ${
+                              data.transactionType.includes(
+                                "Manual-Website-Withdraw"
+                              ) ||
+                              data.transactionType.includes(
+                                "Manual-Bank-Withdraw"
+                              ) ||
+                              data.transactionType === "Withdraw"
+                                ? "text-red"
+                                : "text-green"
+                            }`}
+                          >
+                            {data.amount && (
+                              <p className="col fs-6 font-weight-bold">
+                                {data.amount}
+                              </p>
+                            )}
+                            {data.depositAmount && (
+                              <p className="col fs-6 font-weight-bold">
+                                {data.depositAmount}
+                              </p>
+                            )}
+                            {data.withdrawAmount && (
+                              <p className="col fs-6 font-weight-bold">
+                                {data.withdrawAmount}
+                              </p>
+                            )}
+                          </p>
                         </td>
                         <td>
                           {data?.transactionType && (
@@ -418,6 +438,7 @@ const IntroducerStatement = () => {
                             {data.websiteName ? data.websiteName : "N.A"}
                           </p>
                         </td> */}
+
                         <td>
                           {data.balance ? (
                             <p className="col fs-6 text-break">
@@ -617,15 +638,35 @@ const IntroducerStatement = () => {
                           )}{" "}
                         </td>
                         <td>
-                          {data.amount && (
-                            <p className="col fs-6">{data.amount}</p>
-                          )}
-                          {data.depositAmount && (
-                            <p className="col fs-6">{data.depositAmount}</p>
-                          )}
-                          {data.withdrawAmount && (
-                            <p className="col fs-6">{data.withdrawAmount}</p>
-                          )}
+                          <p
+                            className={`col fs-6 text-break ${
+                              data.transactionType.includes(
+                                "Manual-Website-Withdraw"
+                              ) ||
+                              data.transactionType.includes(
+                                "Manual-Bank-Withdraw"
+                              ) ||
+                              data.transactionType === "Withdraw"
+                                ? "text-red"
+                                : "text-green"
+                            }`}
+                          >
+                            {data.amount && (
+                              <p className="col fs-6 font-weight-bold">
+                                {data.amount}
+                              </p>
+                            )}
+                            {data.depositAmount && (
+                              <p className="col fs-6 font-weight-bold">
+                                {data.depositAmount}
+                              </p>
+                            )}
+                            {data.withdrawAmount && (
+                              <p className="col fs-6 font-weight-bold">
+                                {data.withdrawAmount}
+                              </p>
+                            )}
+                          </p>
                         </td>
                         <td>
                           {data?.transactionType && (
@@ -657,6 +698,7 @@ const IntroducerStatement = () => {
                             {data.websiteName ? data.websiteName : "N.A"}
                           </p>
                         </td> */}
+
                         <td>
                           {data.balance ? (
                             <p className="col fs-6 text-break">
