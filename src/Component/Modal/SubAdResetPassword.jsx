@@ -27,6 +27,7 @@ const SubAdResetPassword = ({ UserName }) => {
     
         if (res.status === 200) {
           alert('Password reset successful!');
+          window.location.reload();
         } else {
           alert('Failed to reset password'); 
         }
