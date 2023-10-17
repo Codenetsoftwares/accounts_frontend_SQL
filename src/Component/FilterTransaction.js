@@ -239,7 +239,7 @@ const FilterTransaction = ({ purpose, handleData, page, handlePage, handleTotalD
             </select>
           </div>
           <div className="d-flex col pt-3 justify-content-center" >
-            <h6 className="fw-bold text-nowrap pt-2"> WebsitesList</h6>
+            <h6 className="fw-bold text-nowrap pt-2">WebsitesList</h6>
             <select
               className="form-control mx-3 w-50"
               value={website || ""}

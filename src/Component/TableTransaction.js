@@ -186,9 +186,7 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage, to
                     {new Date(data?.createdAt).toLocaleString("default")}{" "}
                   </td>
                   <td>
-                    {data?.amount && (
-                      <p className="col fs-6">{data?.amount}</p>
-                    )}
+                    {data?.amount && <p className="col fs-6">{data?.amount}</p>}
                     {data?.depositAmount && (
                       <p className="col fs-6">{data?.depositAmount}</p>
                     )}
@@ -203,13 +201,27 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage, to
                     {data?.depositAmount && <p className="col fs-6 ">N.A</p>}
                     {data?.withdrawAmount && <p className="col fs-6 ">N.A</p>}
                   </td>
+
                   <td>
                     {data?.transactionType && (
-                      <p className="col fs-6 text-break">
-                        {data?.transactionType}
+                      <p
+                        className={`col fs-6 text-break ${
+                          data.transactionType.includes(
+                            "Manual-Website-Withdraw"
+                          ) ||
+                          data.transactionType.includes(
+                            "Manual-Bank-Withdraw"
+                          ) ||
+                          data.transactionType === "Withdraw"
+                            ? "text-red"
+                            : "text-green"
+                        }`}
+                      >
+                        {data.transactionType}
                       </p>
                     )}
                   </td>
+
                   <td>
                     {data?.paymentMethod && (
                       <p className="col fs-6">{data?.paymentMethod}</p>
@@ -239,9 +251,7 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage, to
                     <>
                       <td>
                         {data?.paymentMethod && (
-                          <p className="col fs-6">
-                            {data?.introducerUserName}
-                          </p>
+                          <p className="col fs-6">{data?.introducerUserName}</p>
                         )}
                         {data?.depositAmount && (
                           <p className="col fs-6 text-break">N.A</p>
@@ -264,20 +274,10 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage, to
                   )}
                   {/* when props pass mainStatement from parent component*/}
                   {purpose === "bankStatement" && (
-
-                    <td>
-                      {data.balance
-                        ? data.balance
-                        : "N .A"}
-                    </td>
+                    <td>{data.balance ? data.balance : "N .A"}</td>
                   )}
                   {purpose === "websiteStatement" && (
-
-                    <td>
-                      {data.balance
-                        ? data.balance
-                        : "N .A"}
-                    </td>
+                    <td>{data.balance ? data.balance : "N .A"}</td>
                   )}
                   <td>{data?.remarks}</td>
                   <td>
@@ -299,11 +299,7 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage, to
                       <FontAwesomeIcon
                         icon={faTrash}
                         onClick={(e) => {
-                          handleDelete(
-                            e,
-                            data?._id,
-                            data?.transactionType
-                          );
+                          handleDelete(e, data?._id, data?.transactionType);
                         }}
                       />
                     </button>

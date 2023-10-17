@@ -389,8 +389,20 @@ const IntroducerStatement = () => {
                           )}
                         </td>
                         <td>
-                          {data.transactionType && (
-                            <p className="col fs-6 text-break">
+                          {data?.transactionType && (
+                            <p
+                              className={`col fs-6 text-break ${
+                                data.transactionType.includes(
+                                  "Manual-Website-Withdraw"
+                                ) ||
+                                data.transactionType.includes(
+                                  "Manual-Bank-Withdraw"
+                                ) ||
+                                data.transactionType === "Withdraw"
+                                  ? "text-red"
+                                  : "text-green"
+                              }`}
+                            >
                               {data.transactionType}
                             </p>
                           )}
@@ -616,8 +628,20 @@ const IntroducerStatement = () => {
                           )}
                         </td>
                         <td>
-                          {data.transactionType && (
-                            <p className="col fs-6 text-break">
+                          {data?.transactionType && (
+                            <p
+                              className={`col fs-6 text-break ${
+                                data.transactionType.includes(
+                                  "Manual-Website-Withdraw"
+                                ) ||
+                                data.transactionType.includes(
+                                  "Manual-Bank-Withdraw"
+                                ) ||
+                                data.transactionType === "Withdraw"
+                                  ? "text-red"
+                                  : "text-green"
+                              }`}
+                            >
                               {data.transactionType}
                             </p>
                           )}
