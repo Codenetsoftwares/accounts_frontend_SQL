@@ -1,6 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import TransactionSercvice from "../../Services/TransactionSercvice";
+import { useAuth } from "../../Utils/Auth";
 
 const SubAdminBank = () => {
+  const [subAdminlist, setSubAdminlist] = useState([]);
+  const auth = useAuth();
+
+    useEffect(() => {
+      if (auth.user) {
+        TransactionSercvice.subAdminList(auth.user).then((res) => {
+          setSubAdminlist(res.data);
+        });
+
+      }
+    }, [auth]);
+  const handelsave = () => {
+    console.log("Res=>>>>", subAdminlist);
+  }
   return (
     <div>
       <div
@@ -35,7 +51,11 @@ const SubAdminBank = () => {
               >
                 Close
               </button>
-              <button type="button" class="btn btn-primary">
+              <button
+                type="button"
+                class="btn btn-primary"
+                onClick={handelsave}
+              >
                 Save changes
               </button>
             </div>

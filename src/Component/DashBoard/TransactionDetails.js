@@ -408,13 +408,27 @@ const TransactionDetails = () => {
                             <p className="col fs-6 text-break">N.A</p>
                           )}
                         </td>
+
                         <td>
-                          {data.transactionType && (
-                            <p className="col fs-6 text-break">
+                          {data?.transactionType && (
+                            <p
+                              className={`col fs-6 text-break ${
+                                data.transactionType.includes(
+                                  "Manual-Website-Withdraw"
+                                ) ||
+                                data.transactionType.includes(
+                                  "Manual-Bank-Withdraw"
+                                ) ||
+                                data.transactionType === "Withdraw"
+                                  ? "text-red"
+                                  : "text-green"
+                              }`}
+                            >
                               {data.transactionType}
                             </p>
                           )}
                         </td>
+
                         <td>
                           {data.paymentMethod && (
                             <p className="col fs-6">{data.paymentMethod}</p>
@@ -545,8 +559,20 @@ const TransactionDetails = () => {
                           )}
                         </td>
                         <td>
-                          {data.transactionType && (
-                            <p className="col fs-6 text-break">
+                          {data?.transactionType && (
+                            <p
+                              className={`col fs-6 text-break ${
+                                data.transactionType.includes(
+                                  "Manual-Website-Withdraw"
+                                ) ||
+                                data.transactionType.includes(
+                                  "Manual-Bank-Withdraw"
+                                ) ||
+                                data.transactionType === "Withdraw"
+                                  ? "text-red"
+                                  : "text-green"
+                              }`}
+                            >
                               {data.transactionType}
                             </p>
                           )}
