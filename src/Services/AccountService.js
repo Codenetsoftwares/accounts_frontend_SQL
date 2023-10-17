@@ -210,13 +210,17 @@ class AccountService {
   }
 
   introducerLiveBalance(id, user) {
-    return axios({
-      method: "get",
-      url: `${API_HOST}/api/admin/introducer-live-balance/${id}`,
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
+    console.log(id)
+    if (id !== undefined) {
+      return axios({
+        method: "get",
+        url: `${API_HOST}/api/admin/introducer-live-balance/${id}`,
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+    }
+
   }
 
   Introducerprofile(page, search, user) {

@@ -38,7 +38,7 @@ const FilterTransaction = ({ purpose, handleData, page, handlePage, handleTotalD
     }
     api(data, page, auth.user, id).then((res) => {
       return (
-        setDocumentView(res.data.SecondArray),
+        setDocumentView(res.data.paginatedResults),
         console.log(documentView),
         handleData(res.data.paginatedResults, res.data.pageNumber),
         handleTotalData(res.data.allIntroDataLength)

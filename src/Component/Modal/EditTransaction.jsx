@@ -47,6 +47,9 @@ const EditTransaction = ({ id }) => {
   }
   const handleSubmit = (e, transactionType, field) => {
     e.preventDefault();
+    console.log(editedData.bankName)
+    console.log(editedData.websiteName)
+
     setIsEditing(false);
     setEditedData({ ...editedData, [field]: "" });
 
@@ -57,8 +60,8 @@ const EditTransaction = ({ id }) => {
       paymentMethod: editedData.paymentMethod,
       userId: editedData.userId,
       subAdminId: editedData.subAdminName,
-      bankName: editedData.Bank,
-      websiteName: editedData.Website,
+      bankName: editedData.bankName,
+      websiteName: editedData.websiteName,
 
     };
     const dataWithdraw = {
@@ -68,8 +71,8 @@ const EditTransaction = ({ id }) => {
       paymentMethod: editedData.paymentMethod,
       userId: editedData.userId,
       subAdminId: editedData.subAdminName,
-      bankName: editedData.Bank,
-      websiteName: editedData.Website,
+      bankName: editedData.bankName,
+      websiteName: editedData.websiteName,
     };
 
     const dataDeposit = {
@@ -79,8 +82,8 @@ const EditTransaction = ({ id }) => {
       paymentMethod: editedData.paymentMethod,
       userId: editedData.userId,
       subAdminId: editedData.subAdminName,
-      bankName: editedData.Bank,
-      websiteName: editedData.Website,
+      bankName: editedData.bankName,
+      websiteName: editedData.websiteName,
     };
 
     switch (transactionType) {
@@ -88,7 +91,7 @@ const EditTransaction = ({ id }) => {
         TransactionSercvice.editTransactionData(id, data1, auth.user)
           .then((res) => {
             alert(res.data);
-            window.location.reload();
+            // window.location.reload();
           })
           .catch((err) => {
             alert(err.response.data.message);
@@ -97,8 +100,8 @@ const EditTransaction = ({ id }) => {
       case "Withdraw":
         TransactionSercvice.editTransactionData(id, data1, auth.user)
           .then((res) => {
-            alert('withdraw', res.data);
-            window.location.reload();
+            alert(res.data);
+            // window.location.reload();
           })
           .catch((err) => {
             alert(err.response.data.message);
@@ -113,7 +116,7 @@ const EditTransaction = ({ id }) => {
         )
           .then((res) => {
             alert(res.data);
-            window.location.reload();
+            // window.location.reload();
           })
           .catch((err) => {
             alert(err.response.data.message);
@@ -128,7 +131,7 @@ const EditTransaction = ({ id }) => {
         )
           .then((res) => {
             alert(res.data);
-            window.location.reload();
+            // window.location.reload();
           })
           .catch((err) => {
             alert(err.response.data.message);
@@ -143,7 +146,7 @@ const EditTransaction = ({ id }) => {
         )
           .then((res) => {
             alert(res.data);
-            window.location.reload();
+            // window.location.reload();
           })
           .catch((err) => {
             alert(err.response.data.message);
@@ -158,7 +161,7 @@ const EditTransaction = ({ id }) => {
         )
           .then((res) => {
             alert(res.data);
-            window.location.reload();
+            // window.location.reload();
           })
           .catch((err) => {
             alert(err.response.data.message);
@@ -255,14 +258,14 @@ const EditTransaction = ({ id }) => {
                   {isEditing ? (<>{data.bankName ? <select
                     className="form-control"
                     name="bankName"
-                    value={isEditing.Bank}
+                    value={editedData.bankName}
                     required
                     onChange={handleChange}
                   >
                     <option selected>Select Bank</option>
                     {bank.map((bank, i) => {
                       return (
-                        <option key={i}>{bank.bankName}</option>
+                        <option value={bank.bankName} key={i}>{bank.bankName}</option>
                       );
                     })}
                   </select> : <input
@@ -332,14 +335,14 @@ const EditTransaction = ({ id }) => {
                     <>{data.websiteName ? <select
                       className="form-control"
                       name="websiteName"
-                      value={isEditing.website}
+                      value={editedData.website}
                       required
                       onChange={handleChange}
                     >
                       <option selected>Select Website</option>
                       {website.map((website, i) => {
                         return (
-                          <option key={i}>{website.websiteName}</option>
+                          <option key={i} value={website.websiteName}>{website.websiteName}</option>
                         );
                       })}
                     </select> : <input
