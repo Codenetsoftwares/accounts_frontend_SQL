@@ -318,13 +318,13 @@ const Alert = () => {
     }
   };
 
-  console.log(alert);
+  console.log("=>>>",alert);
   return (
     <>
       <div className="container d-flex justify-content-center  ">
         <br />
         <div
-          className="card  rounded-2 mb-2"
+          className="card  rounded-2 "
           style={{
             boxShadow: "26px -13px 32px -15px rgba(29,29,31,0.68)",
             backgroundImage:
@@ -338,138 +338,107 @@ const Alert = () => {
                 <>
                   {data.type === "Edit" && (
                     <div className="card">
-                      <h5 class="card-title text-center text-danger">
-                        {data.message}
-                      </h5>
                       <div className="card-body">
-                        <div className="row">
-                          <div className="row">
-                            <div className="row">
-                              <p className="col fs-6">
-                                Transaction Type:
-                                <br />
-                                <p className="text-success">
-                                  {data.transactionType}
-                                </p>
-                              </p>
-                              <p className="col fs-6 ">
-                                Transaction Id:
-                                <br />
-                                <p
-                                  className={
-                                    data.changedFields?.transactionID
-                                      ? "text-danger"
-                                      : "text-success"
+                        <table className="table table-striped">
+                          <thead>
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">Old Value</th>
+                              <th scope="col">New Value</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th scope="row">Txn Id </th>
+                              <td>
+                                {data.originalData?.transactionID?.oldValue}
+                              </td>
+                              <td>
+                                {data.originalData?.transactionID?.newValue}
+                              </td>
+                            </tr>
+                            {/* <tr>
+                              <th scope="row">Txn Type</th>
+                              <td>
+                                {data.originalData?.transactionType?.oldValue}
+                              </td>
+                              <td>
+                                {data.originalData?.transactionType?.newValue}
+                              </td>
+                            </tr> */}
+                            <tr>
+                              <th scope="row">Amount</th>
+                              <td>{data.originalData?.amount?.oldValue}</td>
+
+                              <td>{data.originalData?.amount?.newValue}</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">Bank</th>
+                              <td>{data.originalData?.bankName?.oldValue}</td>
+                              <td>{data.originalData?.bankName?.newValue}</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">Website</th>
+                              <td>
+                                {data.originalData?.websiteName?.oldValue}
+                              </td>
+                              <td>
+                                {data.originalData?.websiteName?.newValue}
+                              </td>
+                            </tr>
+                            <tr>
+                              <th scope="row">Gateway</th>
+                              <td>
+                                {data.originalData?.paymentMethod?.oldValue}
+                              </td>
+                              <td>
+                                {data.originalData?.paymentMethod?.newValue}
+                              </td>
+                            </tr>
+                            {/* <tr>
+                              <th scope="row">Entry by</th>
+                              <td>{data.originalData?.subAdminId?.oldValue}</td>
+                              <td>{data.originalData?.subAdminId?.newValue}</td>
+                            </tr> */}
+                            <tr>
+                              <td>
+                                <button
+                                  type="button"
+                                  className="btn btn-success"
+                                  onClick={(e) =>
+                                    handleEditApprove(
+                                      e,
+                                      data._id,
+                                      data.transactionType,
+                                      data.message
+                                    )
                                   }
                                 >
-                                  {data.changedFields?.transactionID ||
-                                    data.transactionID}
-                                </p>
-                              </p>
-                              <p className="col fs-6 ">
-                                Gateway:
-                                <br />
-                                <p
-                                  className={
-                                    data.changedFields?.paymentMethod
-                                      ? "text-danger"
-                                      : "text-success"
+                                  Approve
+                                </button>
+                              </td>
+                              <td>
+                                <button
+                                  type="button"
+                                  className="btn btn-danger"
+                                  onClick={(e) =>
+                                    handleEditReject(
+                                      e,
+                                      data._id,
+                                      data.transactionType
+                                    )
                                   }
                                 >
-                                  {data.changedFields?.paymentMethod ||
-                                    data.paymentMethod}
-                                </p>
-                              </p>
-                              <p className="col fs-6 ">
-                                User Id:
-                                <br />
-                                <p
-                                  className={
-                                    data.changedFields?.userId
-                                      ? "text-danger"
-                                      : "text-success"
-                                  }
-                                >
-                                  {data.changedFields?.userId || data.userId}
-                                </p>
-                              </p>
-                              <p className="col fs-6 ">
-                                Website:
-                                <br />
-                                <p
-                                  className={
-                                    data.changedFields?.websiteName
-                                      ? "text-danger"
-                                      : "text-success"
-                                  }
-                                >
-                                  {data.changedFields?.websiteName ||
-                                    data.websiteName}
-                                </p>
-                              </p>
-                              <p className="col fs-6 ">
-                                Amount:
-                                <br />
-                                <p
-                                  className={
-                                    data.changedFields?.withdrawAmount ||
-                                    data.changedFields?.amount ||
-                                    data.changedFields?.depositAmount
-                                      ? "text-danger"
-                                      : "text-success"
-                                  }
-                                >
-                                  {data.changedFields?.withdrawAmount ||
-                                    data.changedFields?.amount ||
-                                    data.changedFields?.depositAmount ||
-                                    data.withdrawAmount ||
-                                    data.amount ||
-                                    data.depositAmount}
-                                </p>
-                              </p>
-                              <p className="col fs-6 ">
-                                Bank:
-                                <br />
-                                <p
-                                  className={
-                                    data.changedFields?.bankName
-                                      ? "text-danger"
-                                      : "text-success"
-                                  }
-                                >
-                                  {data.changedFields?.bankName ||
-                                    data.bankName}
-                                </p>
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col d-flex justify-content-center gap-2 mb-2">
-                        <button
-                          class="btn btn-primary"
-                          onClick={(e) =>
-                            handleEditApprove(
-                              e,
-                              data._id,
-                              data.transactionType,
-                              data.message
-                            )
-                          }
-                        >
-                          Approve
-                        </button>
-                        <button
-                          class="btn btn-danger"
-                          onClick={(e) =>
-                            handleEditReject(e, data._id, data.transactionType)
-                          }
-                        >
-                          Reject
-                        </button>
+                                  Reject
+                                </button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </div>
                   )}
+
                   {data.type === "Delete" && (
                     <div className="card">
                       <h5 class="card-title text-center text-danger">
