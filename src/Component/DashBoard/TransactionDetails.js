@@ -326,7 +326,7 @@ const TransactionDetails = () => {
         </div>
 
         {toggle ? (
-          <small>
+          <small className="d-flex justify-content-center">
             {/* Normal View */}
             <table class="table table-bordered  table-sm table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl w-auto">
               {/* This is for Deposit Card Normal View */}
@@ -462,7 +462,7 @@ const TransactionDetails = () => {
           </small>
         ) : (
           //Filter View
-          <small>
+          <small className="d-flex justify-content-center">
             {/* Normal View */}
             <table class="table table-bordered  table-sm table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl w-auto">
               {/* This is for Deposit Card Normal View */}

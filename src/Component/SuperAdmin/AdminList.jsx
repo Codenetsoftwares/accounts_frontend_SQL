@@ -98,7 +98,9 @@ const AdminList = () => {
                         >
                           <p>
                             <Link to={`/subadminedit/${data?._id}`}>
-                              <span className="text-white">Details</span>
+                              <button type="button" class="btn btn-info">
+                                Details
+                              </button>
                             </Link>
                           </p>
                         </button>

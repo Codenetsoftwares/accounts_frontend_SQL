@@ -8,6 +8,7 @@ import {
   faPlus,
   faFileAlt,
   faMinus,
+  faEye,
 } from "@fortawesome/free-solid-svg-icons";
 import InnerBank from "../InnerBank";
 import { Link, useNavigate } from "react-router-dom";
@@ -16,6 +17,7 @@ import ModalWthBl from "../Modal/ModalWthBl";
 import ModalBkdl from "../Modal/ModalBkdl";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import SubAdminBank from "../Modal/SubAdminBank";
 // import { useParams } from "react-router";
 const AdminBank = () => {
   const navigate = useNavigate();
@@ -24,6 +26,7 @@ const AdminBank = () => {
   const [getbankName, setGetBankName] = useState([{}]);
   const [Id, setId] = useState();
   const [IdWithdraw, setIdWithdraw] = useState();
+  const [AI, setAI] = useState(false);
 
   // const { id } = useParams();
   const handleSubmit = (e) => {
@@ -105,6 +108,10 @@ const AdminBank = () => {
   // const handelWithdrawId = (id) => {
   //   setIdWithdraw(id);
   // };
+
+  const handelActiveInactive = () => {
+    setAI(true);
+  };
 
   console.log(Id);
   return (
@@ -190,7 +197,36 @@ const AdminBank = () => {
                             }}
                           />
                         </button>
+
+                        {/* <button
+                          type="button"
+                          class="btn btn-primary  btn-sm"
+                          data-toggle="modal"
+                          data-target="#exampleModal"
+                        >
+                          <FontAwesomeIcon
+                            icon={faEye}
+                            className="delete-icon"
+                            
+                          />
+                        </button> */}
                       </div>
+                      {/* Active,Inactive */}
+                      {/* <div className="form-check form-switch mt-1">
+                        <input
+                          className="form-check-input"
+                          type="checkbox"
+                          value="Introducer-Profile-View"
+                        />
+
+                        <label
+                          className="form-check-label"
+                          for="flexSwitchCheckDefault"
+                        >
+                          Active
+                        </label>
+                      </div> */}
+                      {/* End of Active,Inactive Part */}
                     </div>
                   </div>
                 );
@@ -271,6 +307,7 @@ const AdminBank = () => {
         <ModalAddBl ID={Id} />
         <ModalWthBl ID={Id} />
         <InnerBank />
+        <SubAdminBank />
       </div>
     </div>
   );
