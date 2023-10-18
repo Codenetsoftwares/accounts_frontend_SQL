@@ -49,7 +49,7 @@ const IntroducerPayment = ({ IntroducerName, balance, id, duebalance }) => {
                 type="button"
                 class="btn btn-danger btn-sm"
                 data-toggle="modal"
-                data-target="#IntroTx"
+                data-target="#withdrawModal"
                 onClick={(e) => {
                   handleIntroducerTx(e, "Withdraw");
                 }}
@@ -60,7 +60,7 @@ const IntroducerPayment = ({ IntroducerName, balance, id, duebalance }) => {
                 type="button"
                 class="btn btn-success btn-sm"
                 data-toggle="modal"
-                data-target="#IntroTx"
+                data-target="#depositModal"
                 onClick={(e) => {
                   handleIntroducerTx(e, "Deposit");
                 }}
@@ -91,9 +91,13 @@ const IntroducerPayment = ({ IntroducerName, balance, id, duebalance }) => {
           </div>
         </div>
       </div>
-      <IntroducerTransaction TxType={txType} IntroducerName={IntroducerName} />
-      {/* {txType === "Deposit" && <IntroducerDepositTransaction />}
-      {txType === "Withdraw" && <IntroducerWithdrawTransaction />} */}
+      {/* <IntroducerTransaction TxType={txType} IntroducerName={IntroducerName} /> */}
+      {txType === "Deposit" && (
+        <IntroducerDepositTransaction IntroducerName={IntroducerName} />
+      )}
+      {txType === "Withdraw" && (
+        <IntroducerWithdrawTransaction IntroducerName={IntroducerName} />
+      )}
     </div>
   );
 };

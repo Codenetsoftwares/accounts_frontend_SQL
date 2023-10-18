@@ -4,8 +4,7 @@ import AccountService from "../../Services/AccountService";
 import { toast } from "react-toastify";
 import TransactionSercvice from "../../Services/TransactionSercvice";
 
-const IntroducerWithdrawTransaction = ({ TxType, IntroducerName }) => {
-  console.log(TxType);
+const IntroducerWithdrawTransaction = ({ IntroducerName }) => {
   const auth = useAuth();
   const [Amount, SetAmount] = useState(0);
   const [Remarks, SetRemarks] = useState("");
@@ -21,53 +20,30 @@ const IntroducerWithdrawTransaction = ({ TxType, IntroducerName }) => {
   const handleSubmit = () => {
     const data = {
       amount: Number(Amount),
-      transactionType: TxType,
+      transactionType: "Withdraw",
       remarks: Remarks,
       introducerUserName: IntroducerName,
     };
 
-    switch (TxType) {
-      case "Deposit":
-        TransactionSercvice.IntroducerTransaction(data, auth.user)
-          .then((res) => {
-            // console.log(response.data);
-            if (res.status === 200) {
-              alert(res.data.message);
-              window.location.reload();
-            }
-          })
-          .catch((error) => {
-            alert(error.response.data.message);
-            console.log(error);
-            // alert.error("e.message");
-          });
-        break;
-
-      case "Withdraw":
-        TransactionSercvice.IntroducerTransaction(data, auth.user)
-          .then((res) => {
-            // console.log(response.data);
-            if (res.status === 200) {
-              alert(res.data.message);
-              window.location.reload();
-            }
-          })
-          .catch((error) => {
-            alert(error.response.data.message);
-            console.log(error);
-            // alert.error("e.message");
-          });
-        break;
-
-      default:
-    }
+    TransactionSercvice.IntroducerWithdrawTransaction(data, auth.user)
+      .then((res) => {
+        // console.log(response.data);
+        if (res.status === 200) {
+          alert(res.data.message);
+          window.location.reload();
+        }
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
+        console.log(error);
+        // alert.error("e.message");
+      });
   };
-
   return (
     <div>
       <div
         class="modal fade"
-        id="IntroTx"
+        id="withdrawModal"
         tabindex="-1"
         role="dialog"
         aria-labelledby="exampleModalCenterTitle"
@@ -77,7 +53,7 @@ const IntroducerWithdrawTransaction = ({ TxType, IntroducerName }) => {
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLongTitle">
-                Introducer Transaction
+                Introducer Withdraw Transaction
               </h5>
               <button
                 type="button"
