@@ -388,7 +388,7 @@ const IntroducerStatement = () => {
                               ) ||
                               data.transactionType === "Withdraw"
                                 ? "text-red"
-                                : "text-green"
+                                : "text-black"
                             }`}
                           >
                             {data.amount && (
@@ -420,7 +420,7 @@ const IntroducerStatement = () => {
                                 ) ||
                                 data.transactionType === "Withdraw"
                                   ? "text-red"
-                                  : "text-green"
+                                  : "text-black"
                               }`}
                             >
                               {data.transactionType}
@@ -648,7 +648,7 @@ const IntroducerStatement = () => {
                               ) ||
                               data.transactionType === "Withdraw"
                                 ? "text-red"
-                                : "text-green"
+                                : "text-black"
                             }`}
                           >
                             {data.amount && (
@@ -680,7 +680,7 @@ const IntroducerStatement = () => {
                                 ) ||
                                 data.transactionType === "Withdraw"
                                   ? "text-red"
-                                  : "text-green"
+                                  : "text-black"
                               }`}
                             >
                               {data.transactionType}

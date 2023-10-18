@@ -195,7 +195,7 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage, to
                         data.transactionType.includes("Manual-Bank-Withdraw") ||
                         data.transactionType === "Withdraw"
                           ? "text-red"
-                          : "text-green"
+                          : "text-black"
                       }`}
                     >
                       {data?.amount && (
@@ -236,7 +236,7 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage, to
                           ) ||
                           data.transactionType === "Withdraw"
                             ? "text-red"
-                            : "text-green"
+                            : "text-black"
                         }`}
                       >
                         {data.transactionType}

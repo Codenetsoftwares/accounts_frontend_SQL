@@ -110,8 +110,8 @@ function Withdraw() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
-        background: "linear-gradient(to left, green, white)",
+        height: "90vh",
+        // background: "linear-gradient(to left, green, white)",
         margin: 0,
         padding: 12,
         boxSizing: "border-box",
@@ -128,7 +128,7 @@ function Withdraw() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-start",
-          opacity: 0.5,
+          opacity: 1,
           borderRadius: "2%",
         }}
       >
@@ -138,8 +138,9 @@ function Withdraw() {
             marginBottom: "15px",
           }}
         >
-          <h4 className="text-primary text-center">
-            <i className="fa fa-user-circle" style={{ fontSize: "110px" }}></i>
+          <h4 className="text-danger text-center">
+            {/* <i className="fa fa-user-circle" style={{ fontSize: "110px" }}></i> */}
+            <span style={{ fontSize: "50px" }}>Withdraw</span>
           </h4>
           <div className="image"></div>
         </div>
@@ -334,7 +335,7 @@ function Withdraw() {
 
             <button
               type="button"
-              className="btn btn-secondary btn-block"
+              className="btn btn-outline-danger btn-block"
               onClick={handleSubmit}
               style={{
                 marginTop: "40px",
