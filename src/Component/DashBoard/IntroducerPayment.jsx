@@ -9,6 +9,8 @@ import {
   faMinus,
 } from "@fortawesome/free-solid-svg-icons";
 import IntroducerTransaction from "../Modal/IntroducerTransaction";
+import IntroducerDepositTransaction from "../Modal/IntroducerDepositTransaction";
+import IntroducerWithdrawTransaction from "../Modal/IntroducerWithdrawTransaction";
 
 const IntroducerPayment = ({ IntroducerName, balance, id, duebalance }) => {
   const navigate = useNavigate();
@@ -90,6 +92,8 @@ const IntroducerPayment = ({ IntroducerName, balance, id, duebalance }) => {
         </div>
       </div>
       <IntroducerTransaction TxType={txType} IntroducerName={IntroducerName} />
+      {/* {txType === "Deposit" && <IntroducerDepositTransaction />}
+      {txType === "Withdraw" && <IntroducerWithdrawTransaction />} */}
     </div>
   );
 };
