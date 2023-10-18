@@ -18,6 +18,12 @@ const Login = () => {
   const handleClickPassword = (e) => {
     setPassword(e.target.value);
   };
+  const handleKeyDown = (e) => {
+    // If Enter key is pressed, trigger form submission
+    if (e.key === "Enter") {
+      handleSubmit(e);
+    }
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!userName || !password) {
@@ -87,6 +93,7 @@ const Login = () => {
                         type="password"
                         class="form-control form-control-lg"
                         onChange={handleClickPassword}
+                        onKeyDown={handleKeyDown}
                       />
                       <label class="form-label" for="typePasswordX">
                         Password

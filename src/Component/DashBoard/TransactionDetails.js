@@ -396,7 +396,7 @@ const TransactionDetails = () => {
                               ) ||
                               data.transactionType === "Withdraw"
                                 ? "text-red"
-                                : "text-green"
+                                : "text-black"
                             }`}
                           >
                             {data.amount && (
@@ -443,7 +443,7 @@ const TransactionDetails = () => {
                                 ) ||
                                 data.transactionType === "Withdraw"
                                   ? "text-red"
-                                  : "text-green"
+                                  : "text-black"
                               }`}
                             >
                               {data.transactionType}
@@ -568,7 +568,7 @@ const TransactionDetails = () => {
                               ) ||
                               data.transactionType === "Withdraw"
                                 ? "text-red"
-                                : "text-green"
+                                : "text-black"
                             }`}
                           >
                             {data.amount && (
@@ -615,7 +615,7 @@ const TransactionDetails = () => {
                                 ) ||
                                 data.transactionType === "Withdraw"
                                   ? "text-red"
-                                  : "text-green"
+                                  : "text-black"
                               }`}
                             >
                               {data.transactionType}

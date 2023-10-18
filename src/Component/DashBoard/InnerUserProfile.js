@@ -162,8 +162,8 @@ const InnerUserProfile = () => {
     <div
       className="d-flex align-items-center justify-content-center"
       style={{
-        background:
-          "linear-gradient(90deg, rgba(23,183,184,1) 0%, rgba(23,184,155,0.9668242296918768) 100%)",
+        // background:
+        //   "linear-gradient(90deg, rgba(23,183,184,1) 0%, rgba(23,184,155,0.9668242296918768) 100%)",
         top: 0,
         left: 0,
         width: "100%",
@@ -188,11 +188,13 @@ const InnerUserProfile = () => {
             </h1>
             <div className="row justify-content-center">
               <div className="card">
-                <div className="card-body">
+                <div className="card-body" style={{ background: "black" }}>
                   {foundObject && (
                     <>
                       <div className="mb-3">
-                        <label className="form-label">First Name</label>
+                        <label className="form-label text-primary">
+                          First Name
+                        </label>
                         <input
                           name="firstname"
                           value={
@@ -207,7 +209,9 @@ const InnerUserProfile = () => {
                       </div>
 
                       <div className="mb-3">
-                        <label className="form-label">Last Name</label>
+                        <label className="form-label text-primary">
+                          Last Name
+                        </label>
                         <input
                           name="lastname"
                           value={
@@ -221,7 +225,9 @@ const InnerUserProfile = () => {
                         />
                       </div>
                       <div className="mb-3">
-                        <label className="form-label">Contact Number</label>
+                        <label className="form-label text-primary">
+                          Contact Number
+                        </label>
                         <input
                           name="contactNumber"
                           value={
@@ -261,7 +267,7 @@ const InnerUserProfile = () => {
                         />
                       </div> */}
                       <div className="mb-3">
-                        <label className="form-label">
+                        <label className="form-label text-primary">
                           Introducer Percentage{" "}
                         </label>
                         <input
@@ -280,7 +286,7 @@ const InnerUserProfile = () => {
                       {/* Show Intro Name disabled Always and Change Intro */}
                       {isEditing ? (
                         <div>
-                          <label className="form-label">
+                          <label className="form-label text-primary">
                             Change Introducer
                           </label>
                           <div className="input-group mb-3">
@@ -313,7 +319,9 @@ const InnerUserProfile = () => {
                         </div>
                       ) : (
                         <div className="mb-3">
-                          <label className="form-label">Introducer Name </label>
+                          <label className="form-label text-primary">
+                            Introducer Name{" "}
+                          </label>
                           <input
                             name="introducerPercentage"
                             value={foundObject.introducersUserName}
@@ -324,7 +332,9 @@ const InnerUserProfile = () => {
                       )}
 
                       <div className="mb-3">
-                        <label className="form-label">website Details</label>
+                        <label className="form-label text-primary">
+                          Website Details
+                        </label>
                         <input
                           name="WebsiteDetails"
                           value={
@@ -344,7 +354,8 @@ const InnerUserProfile = () => {
                         Payment Details
                       </button>
 
-                      <p className="btn btn-link pt-4"
+                      <p
+                        className="btn btn-link pt-4"
                         onClick={Handletransaction}
                       >
                         Transaction Details
@@ -380,9 +391,9 @@ const InnerUserProfile = () => {
                                         value={
                                           isEditing
                                             ? editedData.bankDetail &&
-                                            editedData.bankDetail.bankName // Check if bankName exists in editedData.bankDetail
+                                              editedData.bankDetail.bankName // Check if bankName exists in editedData.bankDetail
                                             : foundObject.bankDetail &&
-                                            foundObject.bankDetail.bankName // Check if bankName exists in foundObject.bankDetail}
+                                              foundObject.bankDetail.bankName // Check if bankName exists in foundObject.bankDetail}
                                         }
                                         disabled={!isEditing}
                                       />
@@ -401,11 +412,11 @@ const InnerUserProfile = () => {
                                         value={
                                           isEditing
                                             ? editedData.bankDetail &&
-                                            editedData.bankDetail
-                                              .accountNumber // Check if accountNumber exists in editedData.bankDetail
+                                              editedData.bankDetail
+                                                .accountNumber // Check if accountNumber exists in editedData.bankDetail
                                             : foundObject.bankDetail &&
-                                            foundObject.bankDetail
-                                              .accountNumber // Check if accountNumber exists in foundObject.bankDetail
+                                              foundObject.bankDetail
+                                                .accountNumber // Check if accountNumber exists in foundObject.bankDetail
                                         }
                                         disabled={!isEditing}
                                       />
@@ -426,9 +437,9 @@ const InnerUserProfile = () => {
                                         value={
                                           isEditing
                                             ? editedData.bankDetail &&
-                                            editedData.bankDetail.ifscCode // Check if ifscCode exists in editedData.bankDetail
+                                              editedData.bankDetail.ifscCode // Check if ifscCode exists in editedData.bankDetail
                                             : foundObject.bankDetail &&
-                                            foundObject.bankDetail.ifscCode
+                                              foundObject.bankDetail.ifscCode
                                         }
                                         disabled={!isEditing}
                                       />
@@ -447,11 +458,11 @@ const InnerUserProfile = () => {
                                         value={
                                           isEditing
                                             ? editedData.bankDetail &&
-                                            editedData.bankDetail
-                                              .accountHolderName // Check if accountHolderName exists in editedData.bankDetail
+                                              editedData.bankDetail
+                                                .accountHolderName // Check if accountHolderName exists in editedData.bankDetail
                                             : foundObject.bankDetail &&
-                                            foundObject.bankDetail
-                                              .accountHolderName
+                                              foundObject.bankDetail
+                                                .accountHolderName
                                         }
                                         disabled={!isEditing}
                                       />
@@ -470,9 +481,9 @@ const InnerUserProfile = () => {
                                         value={
                                           isEditing
                                             ? editedData.bankDetail &&
-                                            editedData.bankDetail.upiApp
+                                              editedData.bankDetail.upiApp
                                             : foundObject.bankDetail &&
-                                            foundObject.bankDetail.upiApp
+                                              foundObject.bankDetail.upiApp
                                         }
                                         disabled={!isEditing}
                                       />
@@ -491,9 +502,9 @@ const InnerUserProfile = () => {
                                         value={
                                           isEditing
                                             ? editedData.bankDetail &&
-                                            editedData.bankDetail.upiId
+                                              editedData.bankDetail.upiId
                                             : foundObject.bankDetail &&
-                                            foundObject.bankDetail.upiId
+                                              foundObject.bankDetail.upiId
                                         }
                                         disabled={!isEditing}
                                       />
@@ -512,9 +523,9 @@ const InnerUserProfile = () => {
                                         value={
                                           isEditing
                                             ? editedData.bankDetail &&
-                                            editedData.bankDetail.upiNumber
+                                              editedData.bankDetail.upiNumber
                                             : foundObject.bankDetail &&
-                                            foundObject.bankDetail.upiNumber
+                                              foundObject.bankDetail.upiNumber
                                         }
                                         disabled={!isEditing}
                                       />

@@ -3,7 +3,7 @@ import { useAuth } from "../../Utils/Auth";
 import AccountService from "../../Services/AccountService";
 import { useNavigate, Link } from "react-router-dom";
 import Pagination from "../Pagination";
-
+import "./UserProfile.css";
 const UserProfile = () => {
   const auth = useAuth();
   const [users, setUsers] = useState([]);
@@ -22,13 +22,15 @@ const UserProfile = () => {
   };
 
   useEffect(() => {
-    AccountService.userprofile(page, q, auth.user).then(
-      (res) => (
-        setUsers(res.data.SecondArray),
-        setPageNumber(res.data.pageNumber),
-        setTotalData(res.data.allIntroDataLength)
-      )
-    );
+    AccountService.userprofile(page, q, auth.user).then((res) => {
+      console.log("res", res.data.SecondArray);
+
+      // Filter out null values from the array
+      const filteredData = res.data.SecondArray.filter((item) => item !== null);
+      setUsers(filteredData);
+      setPageNumber(res.data.pageNumber);
+      setTotalData(res.data.allIntroDataLength);
+    });
   }, [auth, page, q]);
 
   console.log("users", users);
@@ -41,6 +43,9 @@ const UserProfile = () => {
     <div className="m-3">
       <h1 className="d-flex justify-content-center">User Profile</h1>
       <div class="input-group input-group-sm ">
+        <button type="button" class="btn btn-primary">
+          <i class="fas fa-search"></i>
+        </button>
         <input
           type="search"
           name="search-form"
@@ -57,7 +62,10 @@ const UserProfile = () => {
 
       <ul>
         {users.map((user, index) => (
-          <div className="card container-fluid w-75 mt-2" key={index}>
+          <div
+            className="card container-fluid w-75 mt-2 border-dark"
+            key={index}
+          >
             <div className="card-body">
               <p
                 onClick={() => {
@@ -65,9 +73,21 @@ const UserProfile = () => {
                 }}
                 style={{ color: "blue", cursor: "pointer" }}
               >
-                <u title="Click here to know User details ">
-                  {users[index].userName}
-                </u>
+                <span
+                  className="d-flex justify-content-center"
+                  title="Click here to know User details "
+                >
+                  <b>{users[index].userName}</b>
+                </span>
+                <span
+                  className="d-flex justify-content-center text-warning "
+                  style={{ fontSize: "25px" }}
+                >
+                  &#8679;
+                </span>
+                <span className="d-flex justify-content-center text-success blinking-text">
+                  Click UserName to know User details
+                </span>
               </p>
             </div>
           </div>
