@@ -57,6 +57,7 @@ import IntroducerAlert from "./Component/IntroducerAlert";
 import ResetPassword from "./Component/DashBoard/ResetPassword";
 import WebsiteTransactionPage from "./pages/WebsiteTransactionPage";
 import BankTransactionPage from "./pages/BankTransactionPage";
+import MyTxn from "./Component/DashBoard/MyTxn";
 
 function App() {
   return (
@@ -290,6 +291,14 @@ function App() {
                 element={
                   <RequireAuth>
                     <TransactionDetails />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="mytxn"
+                element={
+                  <RequireAuth>
+                    <MyTxn />
                   </RequireAuth>
                 }
               />
