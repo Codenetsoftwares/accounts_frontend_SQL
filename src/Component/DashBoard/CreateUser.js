@@ -197,17 +197,30 @@ const CreateUser = () => {
                             <input
                               className="form-check-input"
                               type="checkbox"
-                              value="Transaction-View"
-                              checked={checkedItems.includes(
-                                "Transaction-View"
-                              )}
+                              value="report-all-txn"
+                              checked={checkedItems.includes("report-all-txn")}
                               onChange={handleCheckboxChange}
                             />
                             <label
                               className="form-check-label"
                               for="flexSwitchCheckDefault"
                             >
-                              Transaction View
+                              Report-All Transaction
+                            </label>
+                          </div>
+                          <div className="form-check form-switch">
+                            <input
+                              className="form-check-input"
+                              type="checkbox"
+                              value="report-my-txn"
+                              checked={checkedItems.includes("report-my-txn")}
+                              onChange={handleCheckboxChange}
+                            />
+                            <label
+                              className="form-check-label"
+                              for="flexSwitchCheckDefault"
+                            >
+                              Report-My Transaction
                             </label>
                           </div>
                           <div className="form-check form-switch">
