@@ -312,12 +312,12 @@ const BankStatement = () => {
                 <option className="d-flex" value="Manual-Bank-Withdraw">
                   <b>Manual Bank Withdraw</b>
                 </option>
-                <option className="d-flex" value="Manual-Website-Deposit">
+                {/* <option className="d-flex" value="Manual-Website-Deposit">
                   <b>Manual Website Deposit</b>
                 </option>{" "}
                 <option className="d-flex" value="Manual-Website-Withdraw">
                   <b>Manual Website Withdraw</b>
-                </option>
+                </option> */}
               </select>
             </div>
 
