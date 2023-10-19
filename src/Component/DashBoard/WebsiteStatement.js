@@ -59,8 +59,8 @@ const WebsiteStatement = () => {
     //   nArr = originalData;
     // }
     setDocumentView(nArr);
-    setTotalPage(Math.ceil(documentView.length / 10));
-    setLength(documentView.length);
+    // setTotalPage(Math.ceil(documentView.length / 10));
+    // setLength(documentView.length);
   };
 
   const handleChange = (e) => {
@@ -155,8 +155,8 @@ const WebsiteStatement = () => {
     setDocumentFilter(filteredDocuments);
     setToggle(false);
     setPage(1);
-    setTotalPage(Math.ceil(documentFilter.length / 10));
-    setLength(documentFilter.length);
+    // setTotalPage(Math.ceil(documentFilter.length / 10));
+    // setLength(documentFilter.length);
   };
 
   const handleStartDatevalue = (e) => {
@@ -470,7 +470,14 @@ const WebsiteStatement = () => {
                                 </td>
                                 <td>
                                   {data.amount && (
-                                    <p className="col fs-6">{data.amount}</p>
+                                    <p className={`col fs-6 text-break ${data.transactionType.includes(
+                                      "Manual-Website-Withdraw"
+                                    ) ||
+                                        data.transactionType.includes("Manual-Bank-Withdraw") ||
+                                        data.transactionType === "Withdraw"
+                                        ? "text-red"
+                                        : "text-black"
+                                      }`}>{data.amount}</p>
                                   )}
                                   {data.depositAmount && (
                                     <p className="col fs-6">
@@ -498,7 +505,16 @@ const WebsiteStatement = () => {
                                 </td>
                                 <td>
                                   {data.transactionType && (
-                                    <p className="col fs-6 text-break">
+                                    <p className={`col fs-6 text-break text-bold ${data.transactionType.includes(
+                                      "Manual-Website-Withdraw"
+                                    ) ||
+                                      data.transactionType.includes(
+                                        "Manual-Bank-Withdraw"
+                                      ) ||
+                                      data.transactionType === "Withdraw"
+                                      ? "text-red"
+                                      : "text-black"
+                                      }`}>
                                       {data.transactionType}
                                     </p>
                                   )}
@@ -530,9 +546,9 @@ const WebsiteStatement = () => {
                                 </td>
 
                                 <td>
-                                  {data.currentBankBalance ? (
+                                  {data.balance ? (
                                     <p className="col fs-6 text-break">
-                                      {data.currentBankBalance}
+                                      {data.balance}
                                     </p>
                                   ) : (
                                     "N.A"
@@ -589,7 +605,14 @@ const WebsiteStatement = () => {
                                 </td>
                                 <td>
                                   {data.amount && (
-                                    <p className="col fs-6">{data.amount}</p>
+                                    <p className={`col fs-6 text-break ${data.transactionType.includes(
+                                      "Manual-Website-Withdraw"
+                                    ) ||
+                                        data.transactionType.includes("Manual-Bank-Withdraw") ||
+                                        data.transactionType === "Withdraw"
+                                        ? "text-red"
+                                        : "text-black"
+                                      }`}>{data.amount}</p>
                                   )}
                                   {data.depositAmount && (
                                     <p className="col fs-6">
@@ -617,7 +640,16 @@ const WebsiteStatement = () => {
                                 </td>
                                 <td>
                                   {data.transactionType && (
-                                    <p className="col fs-6 text-break">
+                                    <p className={`col fs-6 text-break text-bold ${data.transactionType.includes(
+                                      "Manual-Website-Withdraw"
+                                    ) ||
+                                      data.transactionType.includes(
+                                        "Manual-Bank-Withdraw"
+                                      ) ||
+                                      data.transactionType === "Withdraw"
+                                      ? "text-red"
+                                      : "text-black"
+                                      }`}>
                                       {data.transactionType}
                                     </p>
                                   )}
@@ -649,9 +681,9 @@ const WebsiteStatement = () => {
                                 </td>
 
                                 <td>
-                                  {data.currentBankBalance ? (
+                                  {data.balance ? (
                                     <p className="col fs-6 text-break">
-                                      {data.currentBankBalance}
+                                      {data.balance}
                                     </p>
                                   ) : (
                                     "N.A"
@@ -701,32 +733,9 @@ const WebsiteStatement = () => {
               </tbody>
             </table>
             {documentView.length > 0 && (
-              // <div className="d-flex justify-content-center">
-              //   <button
-              //     onClick={() => selectPageHandler(page - 1)}
-              //     className={`${
-              //       page > 1 ? "" : "pagination__disable"
-              //     } btn btn-primary`}
-              //   >
-              //     Prev
-              //   </button>
-              //   <span className="mx-3">{page}</span>
+              
+              <Pagination handlePage={selectPageHandler} page={page} totalPage={lastPage} totalData={documentView.length} />
 
-              //   <button
-              //     onClick={() => selectPageHandler(page + 1)}
-              //     className={`${
-              //       page === filterLastPage ? "" : "pagination__disable"
-              //     } btn btn-primary`}
-              //   >
-              //     Next
-              //   </button>
-              // </div>
-              <Pagination
-                handlePage={selectPageHandler}
-                page={page}
-                totalPage={totalPage}
-                totalData={length}
-              />
             )}
           </div>
         ) : (
@@ -794,7 +803,14 @@ const WebsiteStatement = () => {
                                 </td>
                                 <td>
                                   {data.amount && (
-                                    <p className="col fs-6">{data.amount}</p>
+                                    <p className={`col fs-6 text-break ${data.transactionType.includes(
+                                      "Manual-Website-Withdraw"
+                                    ) ||
+                                        data.transactionType.includes("Manual-Bank-Withdraw") ||
+                                        data.transactionType === "Withdraw"
+                                        ? "text-red"
+                                        : "text-black"
+                                      }`}>{data.amount}</p>
                                   )}
                                   {data.depositAmount && (
                                     <p className="col fs-6">
@@ -822,7 +838,16 @@ const WebsiteStatement = () => {
                                 </td>
                                 <td>
                                   {data.transactionType && (
-                                    <p className="col fs-6 text-break">
+                                    <p className={`col fs-6 text-break text-bold ${data.transactionType.includes(
+                                      "Manual-Website-Withdraw"
+                                    ) ||
+                                      data.transactionType.includes(
+                                        "Manual-Bank-Withdraw"
+                                      ) ||
+                                      data.transactionType === "Withdraw"
+                                      ? "text-red"
+                                      : "text-black"
+                                      }`}>
                                       {data.transactionType}
                                     </p>
                                   )}
@@ -852,99 +877,17 @@ const WebsiteStatement = () => {
                                     <p className="col fs-6 text-break">N.A</p>
                                   )}
                                 </td>
-                                {/* <td>
-                          <p className="col fs-6">
-                            {data.bankName ? data.bankName : "N.A"}
-                          </p>
-                        </td> */}
-                                {/* <td>
-                          <p className="col fs-6">
-                            {data.websiteName ? data.websiteName : "N.A"}
-                          </p>
-                        </td> */}
+                              
                                 <td>
-                                  {data.currentBankBalance ? (
+                                  {data.balance ? (
                                     <p className="col fs-6 text-break">
-                                      {data.currentBankBalance}
+                                      {data.balance}
                                     </p>
                                   ) : (
                                     "N.A"
                                   )}
                                 </td>
-                                {/* <td>
-                          {data.beforeBalanceBankWithdraw ? (
-                            <p className="col fs-6">
-                              {data.currentBalanceBankWithdraw && (
-                                <p className="col fs-6 text-break">
-                                  ₹&nbsp; {data.currentBalanceBankWithdraw}
-                                </p>
-                              )}
-                              {data.currentBalanceBankDeposit && (
-                                <p className="col fs-6 text-break">
-                                  ₹&nbsp; {data.currentBalanceBankDeposit}
-                                </p>
-                              )}
-                            </p>
-                          ) : (
-                            "N.A"
-                          )}
-                        </td> */}
-                                {/* <td>
-                          {data.beforeBalanceBankWithdraw ? (
-                            <p className="col fs-6">
-                              {data.beforeBalanceWebsiteWithdraw && (
-                                <p className="col fs-6 text-break">
-                                  ₹&nbsp; {data.beforeBalanceWebsiteWithdraw}
-                                </p>
-                              )}
-                              {data.beforeBalanceWebsiteDeposit && (
-                                <p className="col fs-6 text-break">
-                                  ₹&nbsp; {data.beforeBalanceWebsiteDeposit}
-                                </p>
-                              )}
-                            </p>
-                          ) : (
-                            "N.A"
-                          )}
-                        </td> */}
-                                {/* <td>
-                          {data.beforeBalanceBankWithdraw ? (
-                            <p className="col fs-6">
-                              {data.currentBalanceWebsiteWithdraw && (
-                                <p className="col fs-6 text-break">
-                                  ₹&nbsp; {data.currentBalanceWebsiteWithdraw}
-                                </p>
-                              )}
-                              {data.currentBalanceWebsiteDeposit && (
-                                <p className="col fs-6 text-break">
-                                  ₹&nbsp; {data.currentBalanceWebsiteDeposit}
-                                </p>
-                              )}
-                            </p>
-                          ) : (
-                            "N.A"
-                          )}
-                        </td> */}
-                                {/* <td>
-                          {data.beforeBalance ? (
-                            <p className="col fs-6">
-                              {data.beforeBalance ? data.beforeBalance : "N.A"}
-                            </p>
-                          ) : (
-                            "N.A"
-                          )}
-                        </td> */}
-                                {/* <td>
-                          {data.currentWebsiteBalance ? (
-                            <p className="col fs-6">
-                              {data.currentWebsiteBalance
-                                ? data.currentWebsiteBalance
-                                : "N.A"}
-                            </p>
-                          ) : (
-                            "N.A"
-                          )}
-                        </td> */}
+                                
 
                                 <td>{data.remarks}</td>
                                 <td>
@@ -996,7 +939,14 @@ const WebsiteStatement = () => {
                                 </td>
                                 <td>
                                   {data.amount && (
-                                    <p className="col fs-6">{data.amount}</p>
+                                    <p className={`col fs-6 text-break ${data.transactionType.includes(
+                                      "Manual-Website-Withdraw"
+                                    ) ||
+                                        data.transactionType.includes("Manual-Bank-Withdraw") ||
+                                        data.transactionType === "Withdraw"
+                                        ? "text-red"
+                                        : "text-black"
+                                      }`}>{data.amount}</p>
                                   )}
                                   {data.depositAmount && (
                                     <p className="col fs-6">
@@ -1024,7 +974,16 @@ const WebsiteStatement = () => {
                                 </td>
                                 <td>
                                   {data.transactionType && (
-                                    <p className="col fs-6 text-break">
+                                    <p className={`col fs-6 text-break text-bold ${data.transactionType.includes(
+                                      "Manual-Website-Withdraw"
+                                    ) ||
+                                      data.transactionType.includes(
+                                        "Manual-Bank-Withdraw"
+                                      ) ||
+                                      data.transactionType === "Withdraw"
+                                      ? "text-red"
+                                      : "text-black"
+                                      }`}>
                                       {data.transactionType}
                                     </p>
                                   )}
@@ -1055,9 +1014,9 @@ const WebsiteStatement = () => {
                                   )}
                                 </td>
                                 <td>
-                                  {data.currentBankBalance ? (
+                                  {data.balance ? (
                                     <p className="col fs-6 text-break">
-                                      {data.currentBankBalance}
+                                      {data.balance}
                                     </p>
                                   ) : (
                                     "N.A"
@@ -1106,31 +1065,9 @@ const WebsiteStatement = () => {
               </tbody>
             </table>
             {documentFilter.length > 0 && (
-              // <div className="d-flex justify-content-center">
-              //   <button
-              //     onClick={() => selectPageHandler(page - 1)}
-              //     className={`${
-              //       page > 1 ? "" : "pagination__disable"
-              //     } btn btn-primary`}
-              //   >
-              //     Prev
-              //   </button>
-              //   <span className="mx-3">{page}</span>
-              //   <button
-              //     onClick={() => selectPageHandler(page + 1)}
-              //     className={`${
-              //       page === filterLastPage ? "" : "pagination__disable"
-              //     } btn btn-primary`}
-              //   >
-              //     Next
-              //   </button>
-              // </div>
-              <Pagination
-                handlePage={selectPageHandler}
-                page={page}
-                totalPage={totalPage}
-                totalData={length}
-              />
+             
+              <Pagination handlePage={selectPageHandler} page={page} totalPage={filterLastPage} totalData={documentFilter.length} />
+
             )}
           </div>
         )}
