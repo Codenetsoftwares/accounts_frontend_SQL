@@ -147,11 +147,22 @@ const AdminEditrole = () => {
                   <label>
                     <input
                       type="checkbox"
-                      value="Transaction-View"
-                      checked={checkedItems.includes("Transaction-View")}
+                      value="report-all-txn"
+                      checked={checkedItems.includes("report-all-txn")}
                       onChange={handleCheckboxChange}
                     />
-                    <span> Transaction View</span>
+                    <span>Report-All Transaction</span>
+                  </label>
+                </div>
+                <div>
+                  <label>
+                    <input
+                      type="checkbox"
+                      value="report-my-txn"
+                      checked={checkedItems.includes("report-my-txn")}
+                      onChange={handleCheckboxChange}
+                    />
+                    <span>Report-My Transaction</span>
                   </label>
                 </div>
                 <div>
@@ -251,9 +262,7 @@ const AdminEditrole = () => {
                     <input
                       type="checkbox"
                       value="Introducer-Profile-View"
-                      checked={checkedItems.includes(
-                        "Introducer-Profile-View"
-                      )}
+                      checked={checkedItems.includes("Introducer-Profile-View")}
                       onChange={handleCheckboxChange}
                     />
                     <span> Introducer Profile View</span>
@@ -264,9 +273,7 @@ const AdminEditrole = () => {
                     <input
                       type="checkbox"
                       value="Create-User"
-                      checked={checkedItems.includes(
-                        "Create-User"
-                      )}
+                      checked={checkedItems.includes("Create-User")}
                       onChange={handleCheckboxChange}
                     />
                     <span>Create User</span>
@@ -309,7 +316,6 @@ const AdminEditrole = () => {
                     <span> Transaction Delete Request</span>
                   </label>
                 </div>
-
               </div>
               <div className="card-footer">
                 <div className="col-12 text-end">

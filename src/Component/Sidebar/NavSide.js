@@ -386,17 +386,27 @@ const NavSide = () => {
                           <i className="fas fa-chevron-down right"></i>
                         </p>
                       </a>
-                      <Link
-                        to="/maintransactionpage"
-                        className="nav-link text-white"
-                      >
-                        <i className="far fa-circle nav-icon" />
-                        <p>All Transaction Details</p>
-                      </Link>
-                      <Link to="/mytxn" className="nav-link text-white">
-                        <i className="far fa-circle nav-icon" />
-                        <p>My Transactions</p>
-                      </Link>
+                      {userrole.some(
+                        (role) =>
+                          role === "superAdmin" || role === "report-all-txn"
+                      ) && (
+                        <Link
+                          to="/maintransactionpage"
+                          className="nav-link text-white"
+                        >
+                          <i className="far fa-circle nav-icon" />
+                          <p>All Transaction Details</p>
+                        </Link>
+                      )}
+                      {userrole.some(
+                        (role) =>
+                          role === "superAdmin" || role === "report-my-txn"
+                      ) && (
+                        <Link to="/mytxn" className="nav-link text-white">
+                          <i className="far fa-circle nav-icon" />
+                          <p>My Transactions</p>
+                        </Link>
+                      )}
                     </li>
                   )}
                 </>
