@@ -308,12 +308,12 @@ const WebsiteStatement = () => {
                 <option className="d-flex" value="Withdraw">
                   <b>Withdraw</b>
                 </option>
-                <option className="d-flex" value="Manual-Bank-Deposit">
+                {/* <option className="d-flex" value="Manual-Bank-Deposit">
                   <b>Manual Bank Deposit</b>
                 </option>{" "}
                 <option className="d-flex" value="Manual-Bank-Withdraw">
                   <b>Manual Bank Withdraw</b>
-                </option>
+                </option> */}
                 <option className="d-flex" value="Manual-Website-Deposit">
                   <b>Manual Website Deposit</b>
                 </option>{" "}
