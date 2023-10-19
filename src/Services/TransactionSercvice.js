@@ -169,6 +169,16 @@ class TransactionService {
     });
   }
 
+  subadminWiseTxn(username, user) {
+    return axios({
+      method: "get",
+      url: `${API_HOST}/api/view-subadmin-transaction/${username}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
   editIntroducerTransactionData(id, data, user) {
     return axios({
       method: "put",
