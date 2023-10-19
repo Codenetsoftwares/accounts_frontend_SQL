@@ -348,17 +348,17 @@ class AccountService {
     });
   }
 
-  // Stress(data, user) {
-  //   console.log("user", user);
-  //   return axios({
-  //     method: "post",
-  //     url: `${API_HOST}/`,
-  //     data: data,
-  //     headers: {
-  //       Authorization: `Bearer ${user.token}`,
-  //     },
-  //   });
-  // }
+  introducerProfileEdit(data, id, user) {
+    console.log("user", user);
+    return axios({
+      method: "put",
+      url: `${API_HOST}/api/intoducer-name-edit/${id}`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
 
   createActualuser(data, user) {
     return axios({

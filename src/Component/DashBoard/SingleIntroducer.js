@@ -54,11 +54,11 @@ const SingleIntroducer = () => {
       firstname: editedData.firstname,
       lastname: editedData.lastname,
       // userName: editedData.userName,
-      
+
     };
 
     // put Api Fetching
-    AccountService.IntoducerResetPassword(id, data, auth.user)
+    AccountService.introducerProfileEdit(data, id, auth.user)
       .then((res) => {
         console.log("res", res);
         if (res.status === 201) {
@@ -243,22 +243,22 @@ const SingleIntroducer = () => {
                         >
                           <FontAwesomeIcon icon={faEdit} /> Edit
                         </button>
-                       
-  
 
-                        
+
+
+
                       )}
                     </>
                   )}
                 </div>
-                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"  onClick={(e) => {
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" onClick={(e) => {
                   handleResetPassword(e, foundObject.userName);
                 }}>
-                      Reset password
+                  Reset password
                 </button>
 
               </div>
-              <IntroResetpassword UserName={username}/>
+              <IntroResetpassword UserName={username} />
             </div>
           </div>
         </div>
