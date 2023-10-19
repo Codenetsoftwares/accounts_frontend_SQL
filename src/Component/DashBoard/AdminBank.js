@@ -66,7 +66,7 @@ const AdminBank = () => {
   };
 
   const handelstatement = (e, accountNumber) => {
-    navigate(`/banktransactionpage/${accountNumber}`);
+    navigate(`/bankstatement/${accountNumber}`);
   };
 
   const handleDeleteBank = (e, id) => {

@@ -134,6 +134,31 @@ class TransactionService {
       },
     });
   }
+
+  IntroducerDepositTransaction(data, user) {
+    console.log(data);
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/admin/create/introducer/deposit-transaction`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  IntroducerWithdrawTransaction(data, user) {
+    console.log(data);
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/admin/create/introducer/withdraw-transaction`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
   IntroducerStatement(id, user) {
     return axios({
       method: "get",

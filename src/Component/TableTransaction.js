@@ -296,7 +296,7 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage, to
                   )}
                   {/* when props pass mainStatement from parent component*/}
                   {purpose === "bankStatement" && (
-                    <td>{data.balance ? data.balance : "N .A"}</td>
+                    <td >{data.balance ? data.balance : "N .A"}</td>
                   )}
                   {purpose === "websiteStatement" && (
                     <td>{data.balance ? data.balance : "N .A"}</td>
