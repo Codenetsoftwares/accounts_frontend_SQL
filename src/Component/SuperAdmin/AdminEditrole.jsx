@@ -140,7 +140,7 @@ const AdminEditrole = () => {
                       checked={checkedItems.includes("Dashboard-View")}
                       onChange={handleCheckboxChange}
                     />
-                    <span className="my-1"> Dashboard View</span>
+                    <span className="my-1">Dashboard View</span>
                   </label>
                 </div>
                 <div>

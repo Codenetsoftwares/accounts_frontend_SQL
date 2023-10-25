@@ -4,56 +4,104 @@ import { useAuth } from "../../Utils/Auth";
 
 const SubAdminBank = () => {
   const [subAdminlist, setSubAdminlist] = useState([]);
+  const [checkboxStates, setCheckboxStates] = useState([]); // State for checkbox data
   const auth = useAuth();
 
-    useEffect(() => {
-      if (auth.user) {
-        TransactionSercvice.subAdminList(auth.user).then((res) => {
-          setSubAdminlist(res.data);
-        });
+  useEffect(() => {
+    if (auth.user) {
+      TransactionSercvice.subAdminList(auth.user).then((res) => {
+        setSubAdminlist(res.data);
+        setCheckboxStates(res.data.map(() => false)); // Initialize checkbox states
+      });
+    }
+  }, [auth]);
 
-      }
-    }, [auth]);
+  const handleCheckboxChange = (index) => {
+    const newCheckboxStates = [...checkboxStates];
+    newCheckboxStates[index] = !newCheckboxStates[index];
+    setCheckboxStates(newCheckboxStates);
+  };
+
   const handelsave = () => {
-    console.log("Res=>>>>", subAdminlist);
-  }
+    const selectedNames = subAdminlist
+      .filter((_, index) => checkboxStates[index])
+      .map((subAdmin) => subAdmin.firstname);
+    console.log("Selected Names =>", selectedNames);
+  };
+
   return (
     <div>
       <div
-        class="modal fade"
+        className="modal fade"
         id="exampleModal"
-        tabindex="-1"
+        tabIndex="-1"
         role="dialog"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">
+        <div className="modal-dialog" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalLabel">
                 Give the Permission SubAdmin Wise
               </h5>
               <button
                 type="button"
-                class="close"
+                className="close"
                 data-dismiss="modal"
                 aria-label="Close"
               >
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div class="modal-body">...</div>
-            <div class="modal-footer">
+            <div className="modal-body">
+              <form>
+                {subAdminlist.length > 0 ? (
+                  subAdminlist.map((subAdmin, index) => (
+                    <div
+                      key={index}
+                      className="form-check"
+                      style={{ margin: "5px" }}
+                    >
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        <input
+                          type="checkbox"
+                          className="form-check-input"
+                          id={`checkbox${index}`}
+                          style={{ marginRight: "5px" }}
+                          checked={checkboxStates[index]}
+                          onChange={() => handleCheckboxChange(index)}
+                          value={subAdmin.firstname}
+                        />
+                        <label
+                          className="form-check-label"
+                          htmlFor={`checkbox${index}`}
+                          style={{ fontWeight: "bold" }}
+                        >
+                          {subAdmin.firstname}
+                        </label>
+                      </div>
+                      {index < subAdminlist.length - 1 && (
+                        <hr style={{ margin: "5px 0", borderColor: "black" }} />
+                      )}
+                    </div>
+                  ))
+                ) : (
+                  <p>No sub-admins found.</p>
+                )}
+              </form>
+            </div>
+            <div className="modal-footer">
               <button
                 type="button"
-                class="btn btn-secondary"
+                className="btn btn-secondary"
                 data-dismiss="modal"
               >
                 Close
               </button>
               <button
                 type="button"
-                class="btn btn-primary"
+                className="btn btn-primary"
                 onClick={handelsave}
               >
                 Save changes

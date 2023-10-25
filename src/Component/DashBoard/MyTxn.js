@@ -421,13 +421,13 @@ const BankStatement = () => {
                   <th scope="col fs-6" className="text-primary">
                     Date & Time
                   </th>
-                  <th scope="col text-break fs-6" className="text-primary">
+                  <th scope="col  fs-6" className="text-primary">
                     Amount
                   </th>
-                  <th scope="col text-break fs-6" className="text-primary">
+                  <th scope="col  fs-6" className="text-primary">
                     Txn Id
                   </th>
-                  <th scope="col text-break fs-6" className="text-primary">
+                  <th scope="col  fs-6" className="text-primary">
                     Txn Type
                   </th>
                   <th scope="col fs-6" className="text-primary">
@@ -439,16 +439,19 @@ const BankStatement = () => {
                   <th scope="col fs-6" className="text-primary">
                     User Name
                   </th>
-                  {/* <th scope="col text-break fs-6" className="text-primary">
-                    Balance
-                  </th> */}
-                  <th scope="col text-break" className="text-primary">
+                  <th scope="col  fs-6" className="text-primary">
+                    Bank
+                  </th>
+                  <th scope="col  fs-6" className="text-primary">
+                    Website
+                  </th>
+                  <th scope="col " className="text-primary">
                     Remarks
                   </th>
-                  <th scope="col text-break" className="text-primary">
+                  <th scope="col " className="text-primary">
                     Edit
                   </th>
-                  <th scope="col text-break" className="text-primary">
+                  <th scope="col " className="text-primary">
                     Delete
                   </th>
                 </tr>
@@ -473,7 +476,7 @@ const BankStatement = () => {
                                 <td>
                                   {data.amount && (
                                     <p
-                                      className={`col fs-6 text-break ${
+                                      className={`col fs-6  ${
                                         data.transactionType.includes(
                                           "Manual-Website-Withdraw"
                                         ) ||
@@ -501,21 +504,21 @@ const BankStatement = () => {
                                 </td>
                                 <td>
                                   {data.transactionID && (
-                                    <p className="col fs-6 text-break">
+                                    <p className="col fs-6 ">
                                       {data.transactionID}
                                     </p>
                                   )}
                                   {data.depositAmount && (
-                                    <p className="col fs-6 text-break">N.A</p>
+                                    <p className="col fs-6 ">N.A</p>
                                   )}
                                   {data.withdrawAmount && (
-                                    <p className="col fs-6 text-break">N.A</p>
+                                    <p className="col fs-6 ">N.A</p>
                                   )}
                                 </td>
                                 <td>
                                   {data.transactionType && (
                                     <p
-                                      className={`col fs-6 text-bold text-break ${
+                                      className={`col fs-6 text-bold  ${
                                         data.transactionType.includes(
                                           "Manual-Website-Withdraw"
                                         ) ||
@@ -538,10 +541,10 @@ const BankStatement = () => {
                                     </p>
                                   )}
                                   {data.depositAmount && (
-                                    <p className="col fs-6 text-break">N.A</p>
+                                    <p className="col fs-6 ">N.A</p>
                                   )}
                                   {data.withdrawAmount && (
-                                    <p className="col fs-6 text-break">N.A</p>
+                                    <p className="col fs-6 ">N.A</p>
                                   )}
                                 </td>
                                 <td>{data.subAdminName}</td>
@@ -550,21 +553,29 @@ const BankStatement = () => {
                                     <p className="col fs-6">{data.userName}</p>
                                   )}
                                   {data.depositAmount && (
-                                    <p className="col fs-6 text-break">N.A</p>
+                                    <p className="col fs-6 ">N.A</p>
                                   )}
                                   {data.withdrawAmount && (
-                                    <p className="col fs-6 text-break">N.A</p>
+                                    <p className="col fs-6 ">N.A</p>
                                   )}
                                 </td>
-                                {/* <td>
-                                  {data.balance ? (
-                                    <p className="col fs-6 text-break">
-                                      {data.balance}
+
+                                <td>
+                                  {data.bankName ? (
+                                    <p className="col fs-6 ">{data.bankName}</p>
+                                  ) : (
+                                    "N.A"
+                                  )}
+                                </td>
+                                <td>
+                                  {data.websiteName ? (
+                                    <p className="col fs-6 ">
+                                      {data.websiteName}
                                     </p>
                                   ) : (
                                     "N.A"
                                   )}
-                                </td> */}
+                                </td>
 
                                 <td>{data.remarks}</td>
                                 <td>
@@ -617,7 +628,7 @@ const BankStatement = () => {
                                 <td>
                                   {data.amount && (
                                     <p
-                                      className={`col fs-6 text-break ${
+                                      className={`col fs-6  ${
                                         data.transactionType.includes(
                                           "Manual-Website-Withdraw"
                                         ) ||
@@ -645,21 +656,21 @@ const BankStatement = () => {
                                 </td>
                                 <td>
                                   {data.transactionID && (
-                                    <p className="col fs-6 text-break">
+                                    <p className="col fs-6 ">
                                       {data.transactionID}
                                     </p>
                                   )}
                                   {data.depositAmount && (
-                                    <p className="col fs-6 text-break">N.A</p>
+                                    <p className="col fs-6 ">N.A</p>
                                   )}
                                   {data.withdrawAmount && (
-                                    <p className="col fs-6 text-break">N.A</p>
+                                    <p className="col fs-6 ">N.A</p>
                                   )}
                                 </td>
                                 <td>
                                   {data.transactionType && (
                                     <p
-                                      className={`col fs-6 text-break text-bold ${
+                                      className={`col fs-6  text-bold ${
                                         data.transactionType.includes(
                                           "Manual-Website-Withdraw"
                                         ) ||
@@ -682,10 +693,10 @@ const BankStatement = () => {
                                     </p>
                                   )}
                                   {data.depositAmount && (
-                                    <p className="col fs-6 text-break">N.A</p>
+                                    <p className="col fs-6 ">N.A</p>
                                   )}
                                   {data.withdrawAmount && (
-                                    <p className="col fs-6 text-break">N.A</p>
+                                    <p className="col fs-6 ">N.A</p>
                                   )}
                                 </td>
                                 <td>{data.subAdminName}</td>
@@ -694,22 +705,29 @@ const BankStatement = () => {
                                     <p className="col fs-6">{data.userName}</p>
                                   )}
                                   {data.depositAmount && (
-                                    <p className="col fs-6 text-break">N.A</p>
+                                    <p className="col fs-6 ">N.A</p>
                                   )}
                                   {data.withdrawAmount && (
-                                    <p className="col fs-6 text-break">N.A</p>
+                                    <p className="col fs-6 ">N.A</p>
                                   )}
                                 </td>
 
-                                {/* <td>
-                                  {data.balance ? (
-                                    <p className="col fs-6 text-break">
-                                      {data.balance}
+                                <td>
+                                  {data.bankName ? (
+                                    <p className="col fs-6 ">{data.bankName}</p>
+                                  ) : (
+                                    "N.A"
+                                  )}
+                                </td>
+                                <td>
+                                  {data.websiteName ? (
+                                    <p className="col fs-6 ">
+                                      {data.websiteName}
                                     </p>
                                   ) : (
                                     "N.A"
                                   )}
-                                </td> */}
+                                </td>
 
                                 <td>{data.remarks}</td>
                                 <td>
@@ -771,13 +789,13 @@ const BankStatement = () => {
                   <th scope="col fs-6" className="text-primary">
                     Date & Time
                   </th>
-                  <th scope="col text-break fs-6" className="text-primary">
+                  <th scope="col  fs-6" className="text-primary">
                     Amount
                   </th>
-                  <th scope="col text-break fs-6" className="text-primary">
+                  <th scope="col  fs-6" className="text-primary">
                     Txn Id
                   </th>
-                  <th scope="col text-break fs-6" className="text-primary">
+                  <th scope="col  fs-6" className="text-primary">
                     Txn Type
                   </th>
                   <th scope="col fs-6" className="text-primary">
@@ -790,17 +808,21 @@ const BankStatement = () => {
                     User Name
                   </th>
 
-                  {/* <th scope="col text-break fs-6" className="text-primary">
-                    Balance
-                  </th> */}
+                  <th scope="col  fs-6" className="text-primary">
+                    Bank
+                  </th>
 
-                  <th scope="col text-break" className="text-primary">
+                  <th scope="col  fs-6" className="text-primary">
+                    Website
+                  </th>
+
+                  <th scope="col " className="text-primary">
                     Remarks
                   </th>
-                  <th scope="col text-break" className="text-primary">
+                  <th scope="col " className="text-primary">
                     Edit
                   </th>
-                  <th scope="col text-break" className="text-primary">
+                  <th scope="col " className="text-primary">
                     Delete
                   </th>
                 </tr>
@@ -828,7 +850,7 @@ const BankStatement = () => {
                                 <td>
                                   {data.amount && (
                                     <p
-                                      className={`col fs-6 text-break ${
+                                      className={`col fs-6  ${
                                         data.transactionType.includes(
                                           "Manual-Website-Withdraw"
                                         ) ||
@@ -846,21 +868,21 @@ const BankStatement = () => {
                                 </td>
                                 <td>
                                   {data.transactionID && (
-                                    <p className="col fs-6 text-break">
+                                    <p className="col fs-6 ">
                                       {data.transactionID}
                                     </p>
                                   )}
                                   {data.depositAmount && (
-                                    <p className="col fs-6 text-break">N.A</p>
+                                    <p className="col fs-6 ">N.A</p>
                                   )}
                                   {data.withdrawAmount && (
-                                    <p className="col fs-6 text-break">N.A</p>
+                                    <p className="col fs-6 ">N.A</p>
                                   )}
                                 </td>
                                 <td>
                                   {data.transactionType && (
                                     <p
-                                      className={`col fs-6 text-break text-bold ${
+                                      className={`col fs-6  text-bold ${
                                         data.transactionType.includes(
                                           "Manual-Website-Withdraw"
                                         ) ||
@@ -883,10 +905,10 @@ const BankStatement = () => {
                                     </p>
                                   )}
                                   {data.depositAmount && (
-                                    <p className="col fs-6 text-break">N.A</p>
+                                    <p className="col fs-6 ">N.A</p>
                                   )}
                                   {data.withdrawAmount && (
-                                    <p className="col fs-6 text-break">N.A</p>
+                                    <p className="col fs-6 ">N.A</p>
                                   )}
                                 </td>
                                 <td>{data.subAdminName}</td>
@@ -895,22 +917,29 @@ const BankStatement = () => {
                                     <p className="col fs-6">{data.userName}</p>
                                   )}
                                   {data.depositAmount && (
-                                    <p className="col fs-6 text-break">N.A</p>
+                                    <p className="col fs-6 ">N.A</p>
                                   )}
                                   {data.withdrawAmount && (
-                                    <p className="col fs-6 text-break">N.A</p>
+                                    <p className="col fs-6 ">N.A</p>
                                   )}
                                 </td>
 
-                                {/* <td>
-                                  {data.balance ? (
-                                    <p className="col fs-6 text-break">
-                                      {data.balance}
+                                <td>
+                                  {data.bankName ? (
+                                    <p className="col fs-6 ">{data.bankName}</p>
+                                  ) : (
+                                    "N.A"
+                                  )}
+                                </td>
+                                <td>
+                                  {data.websiteName ? (
+                                    <p className="col fs-6 ">
+                                      {data.websiteName}
                                     </p>
                                   ) : (
                                     "N.A"
                                   )}
-                                </td> */}
+                                </td>
 
                                 <td>{data.remarks}</td>
                                 <td>
@@ -963,7 +992,7 @@ const BankStatement = () => {
                                 <td>
                                   {data.amount && (
                                     <p
-                                      className={`col fs-6 text-break ${
+                                      className={`col fs-6  ${
                                         data.transactionType.includes(
                                           "Manual-Website-Withdraw"
                                         ) ||
@@ -991,21 +1020,21 @@ const BankStatement = () => {
                                 </td>
                                 <td>
                                   {data.transactionID && (
-                                    <p className="col fs-6 text-break">
+                                    <p className="col fs-6 ">
                                       {data.transactionID}
                                     </p>
                                   )}
                                   {data.depositAmount && (
-                                    <p className="col fs-6 text-break">N.A</p>
+                                    <p className="col fs-6 ">N.A</p>
                                   )}
                                   {data.withdrawAmount && (
-                                    <p className="col fs-6 text-break">N.A</p>
+                                    <p className="col fs-6 ">N.A</p>
                                   )}
                                 </td>
                                 <td>
                                   {data.transactionType && (
                                     <p
-                                      className={`col fs-6 text-break text-bold ${
+                                      className={`col fs-6  text-bold ${
                                         data.transactionType.includes(
                                           "Manual-Website-Withdraw"
                                         ) ||
@@ -1028,10 +1057,10 @@ const BankStatement = () => {
                                     </p>
                                   )}
                                   {data.depositAmount && (
-                                    <p className="col fs-6 text-break">N.A</p>
+                                    <p className="col fs-6 ">N.A</p>
                                   )}
                                   {data.withdrawAmount && (
-                                    <p className="col fs-6 text-break">N.A</p>
+                                    <p className="col fs-6 ">N.A</p>
                                   )}
                                 </td>
                                 <td>{data.subAdminName}</td>
@@ -1040,21 +1069,28 @@ const BankStatement = () => {
                                     <p className="col fs-6">{data.userName}</p>
                                   )}
                                   {data.depositAmount && (
-                                    <p className="col fs-6 text-break">N.A</p>
+                                    <p className="col fs-6 ">N.A</p>
                                   )}
                                   {data.withdrawAmount && (
-                                    <p className="col fs-6 text-break">N.A</p>
+                                    <p className="col fs-6 ">N.A</p>
                                   )}
                                 </td>
-                                {/* <td>
-                                  {data.balance ? (
-                                    <p className="col fs-6 text-break">
-                                      {data.balance}
+                                <td>
+                                  {data.bankName ? (
+                                    <p className="col fs-6 ">{data.bankName}</p>
+                                  ) : (
+                                    "N.A"
+                                  )}
+                                </td>
+                                <td>
+                                  {data.websiteName ? (
+                                    <p className="col fs-6 ">
+                                      {data.websiteName}
                                     </p>
                                   ) : (
                                     "N.A"
                                   )}
-                                </td> */}
+                                </td>
                                 <td>{data.remarks}</td>
                                 <td>
                                   <button

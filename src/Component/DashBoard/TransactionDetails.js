@@ -343,13 +343,13 @@ const TransactionDetails = () => {
                   <th scope="col fs-6" className="text-primary">
                     Date & Time
                   </th>
-                  <th scope="col text-break fs-6" className="text-primary">
+                  <th scope="col  fs-6" className="text-primary">
                     Amount
                   </th>
-                  <th scope="col text-break fs-6" className="text-primary">
+                  <th scope="col  fs-6" className="text-primary">
                     Txn Id
                   </th>
-                  <th scope="col text-break fs-6" className="text-primary">
+                  <th scope="col  fs-6" className="text-primary">
                     Txn Type
                   </th>
                   <th scope="col fs-6" className="text-primary">
@@ -367,7 +367,7 @@ const TransactionDetails = () => {
                   <th scope="col" className="text-primary">
                     Website
                   </th>
-                  <th scope="col text-break" className="text-primary">
+                  <th scope="col " className="text-primary">
                     Remarks
                   </th>
                 </tr>
@@ -387,7 +387,7 @@ const TransactionDetails = () => {
 
                         <td>
                           <p
-                            className={`col fs-6 text-break ${
+                            className={`col fs-6  ${
                               data.transactionType.includes(
                                 "Manual-Website-Withdraw"
                               ) ||
@@ -419,22 +419,22 @@ const TransactionDetails = () => {
 
                         <td>
                           {data.transactionID && (
-                            <p className="col fs-6 text-break">
+                            <p className="col fs-6 ">
                               {data.transactionID}
                             </p>
                           )}
                           {data.depositAmount && (
-                            <p className="col fs-6 text-break">N.A</p>
+                            <p className="col fs-6 ">N.A</p>
                           )}
                           {data.withdrawAmount && (
-                            <p className="col fs-6 text-break">N.A</p>
+                            <p className="col fs-6 ">N.A</p>
                           )}
                         </td>
 
                         <td>
                           {data?.transactionType && (
                             <p
-                              className={`col fs-6 text-break ${
+                              className={`col fs-6  ${
                                 data.transactionType.includes(
                                   "Manual-Website-Withdraw"
                                 ) ||
@@ -456,10 +456,10 @@ const TransactionDetails = () => {
                             <p className="col fs-6">{data.paymentMethod}</p>
                           )}
                           {data.depositAmount && (
-                            <p className="col fs-6 text-break">N.A</p>
+                            <p className="col fs-6 ">N.A</p>
                           )}
                           {data.withdrawAmount && (
-                            <p className="col fs-6 text-break">N.A</p>
+                            <p className="col fs-6 ">N.A</p>
                           )}
                         </td>
                         <td>{data.subAdminName}</td>
@@ -470,10 +470,10 @@ const TransactionDetails = () => {
                             </p>
                           )}
                           {data.depositAmount && (
-                            <p className="col fs-6 text-break">N.A</p>
+                            <p className="col fs-6 ">N.A</p>
                           )}
                           {data.withdrawAmount && (
-                            <p className="col fs-6 text-break">N.A</p>
+                            <p className="col fs-6 ">N.A</p>
                           )}
                         </td>
                         <td>
@@ -515,13 +515,13 @@ const TransactionDetails = () => {
                   <th scope="col fs-6" className="text-primary">
                     Date & Time
                   </th>
-                  <th scope="col text-break fs-6" className="text-primary">
+                  <th scope="col  fs-6" className="text-primary">
                     Amount
                   </th>
-                  <th scope="col text-break fs-6" className="text-primary">
+                  <th scope="col  fs-6" className="text-primary">
                     Txn Id
                   </th>
-                  <th scope="col text-break fs-6" className="text-primary">
+                  <th scope="col  fs-6" className="text-primary">
                     Txn Type
                   </th>
                   <th scope="col fs-6" className="text-primary">
@@ -539,7 +539,7 @@ const TransactionDetails = () => {
                   <th scope="col" className="text-primary">
                     Website
                   </th>
-                  <th scope="col text-break" className="text-primary">
+                  <th scope="col " className="text-primary">
                     Remarks
                   </th>
                 </tr>
@@ -559,7 +559,7 @@ const TransactionDetails = () => {
 
                         <td>
                           <p
-                            className={`col fs-6 text-break ${
+                            className={`col fs-6  ${
                               data.transactionType.includes(
                                 "Manual-Website-Withdraw"
                               ) ||
@@ -591,22 +591,22 @@ const TransactionDetails = () => {
 
                         <td>
                           {data.transactionID && (
-                            <p className="col fs-6 text-break">
+                            <p className="col fs-6 ">
                               {data.transactionID}
                             </p>
                           )}
                           {data.depositAmount && (
-                            <p className="col fs-6 text-break">N.A</p>
+                            <p className="col fs-6 ">N.A</p>
                           )}
                           {data.withdrawAmount && (
-                            <p className="col fs-6 text-break">N.A</p>
+                            <p className="col fs-6 ">N.A</p>
                           )}
                         </td>
 
                         <td>
                           {data?.transactionType && (
                             <p
-                              className={`col fs-6 text-break ${
+                              className={`col fs-6  ${
                                 data.transactionType.includes(
                                   "Manual-Website-Withdraw"
                                 ) ||
@@ -628,10 +628,10 @@ const TransactionDetails = () => {
                             <p className="col fs-6">{data.paymentMethod}</p>
                           )}
                           {data.depositAmount && (
-                            <p className="col fs-6 text-break">N.A</p>
+                            <p className="col fs-6 ">N.A</p>
                           )}
                           {data.withdrawAmount && (
-                            <p className="col fs-6 text-break">N.A</p>
+                            <p className="col fs-6 ">N.A</p>
                           )}
                         </td>
                         <td>{data.subAdminName}</td>
@@ -642,10 +642,10 @@ const TransactionDetails = () => {
                             </p>
                           )}
                           {data.depositAmount && (
-                            <p className="col fs-6 text-break">N.A</p>
+                            <p className="col fs-6 ">N.A</p>
                           )}
                           {data.withdrawAmount && (
-                            <p className="col fs-6 text-break">N.A</p>
+                            <p className="col fs-6 ">N.A</p>
                           )}
                         </td>
                         <td>

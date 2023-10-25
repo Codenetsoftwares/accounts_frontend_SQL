@@ -27,6 +27,7 @@ const AdminBank = () => {
   const [Id, setId] = useState();
   const [IdWithdraw, setIdWithdraw] = useState();
   const [AI, setAI] = useState(false);
+  const [documentView, setDocumentView] = useState([]);
 
   // const { id } = useParams();
   const handleSubmit = (e) => {
@@ -198,7 +199,7 @@ const AdminBank = () => {
                           />
                         </button>
 
-                        {/* <button
+                        <button
                           type="button"
                           class="btn btn-primary  btn-sm"
                           data-toggle="modal"
@@ -209,10 +210,10 @@ const AdminBank = () => {
                             className="delete-icon"
                             
                           />
-                        </button> */}
+                        </button>
                       </div>
                       {/* Active,Inactive */}
-                      {/* <div className="form-check form-switch mt-1">
+                      <div className="form-check form-switch mt-1">
                         <input
                           className="form-check-input"
                           type="checkbox"
@@ -225,7 +226,7 @@ const AdminBank = () => {
                         >
                           Active
                         </label>
-                      </div> */}
+                      </div>
                       {/* End of Active,Inactive Part */}
                     </div>
                   </div>
