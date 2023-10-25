@@ -320,10 +320,10 @@ const IntroducerStatement = () => {
                   <th scope="col fs-6" className="text-primary">
                     Date & Time
                   </th>
-                  <th scope="col text-break fs-6" className="text-primary">
+                  <th scope="col  fs-6" className="text-primary">
                     Amount
                   </th>
-                  <th scope="col text-break fs-6" className="text-primary">
+                  <th scope="col  fs-6" className="text-primary">
                     Txn Type
                   </th>
 
@@ -333,34 +333,34 @@ const IntroducerStatement = () => {
                   {/* <th scope="col" className="text-primary">
                     Website
                   </th> */}
-                  {/* <th scope="col text-break fs-6" className="text-primary">
+                  {/* <th scope="col  fs-6" className="text-primary">
                     Before Balance
                   </th> */}
-                  <th scope="col text-break fs-6" className="text-primary">
+                  <th scope="col  fs-6" className="text-primary">
                     Balance
                   </th>
-                  {/* <th scope="col text-break fs-6" className="text-primary">
+                  {/* <th scope="col  fs-6" className="text-primary">
                     Before Website Balance
                   </th>
-                  <th scope="col text-break fs-6" className="text-primary">
+                  <th scope="col  fs-6" className="text-primary">
                     Current Website Balance
                   </th> */}
-                  {/* <th scope="col text-break fs-6" className="text-primary">
+                  {/* <th scope="col  fs-6" className="text-primary">
                     Before Balance
                     <br />
                     (Manual)
                   </th> */}
-                  {/* <th scope="col text-break fs-6" className="text-primary">
+                  {/* <th scope="col  fs-6" className="text-primary">
                     Website Balance
 
                   </th> */}
-                  <th scope="col text-break" className="text-primary">
+                  <th scope="col " className="text-primary">
                     Remarks
                   </th>
-                  <th scope="col text-break" className="text-primary">
+                  <th scope="col " className="text-primary">
                     Edit
                   </th>
-                  <th scope="col text-break" className="text-primary">
+                  <th scope="col " className="text-primary">
                     Delete
                   </th>
                 </tr>
@@ -379,7 +379,7 @@ const IntroducerStatement = () => {
                         </td>
                         <td>
                           <p
-                            className={`col fs-6 text-break ${
+                            className={`col fs-6  ${
                               data.transactionType.includes(
                                 "Manual-Website-Withdraw"
                               ) ||
@@ -411,7 +411,7 @@ const IntroducerStatement = () => {
                         <td>
                           {data?.transactionType && (
                             <p
-                              className={`col fs-6 text-break ${
+                              className={`col fs-6  ${
                                 data.transactionType.includes(
                                   "Manual-Website-Withdraw"
                                 ) ||
@@ -441,7 +441,7 @@ const IntroducerStatement = () => {
 
                         <td>
                           {data.balance ? (
-                            <p className="col fs-6 text-break">
+                            <p className="col fs-6 ">
                               {data.balance}
                             </p>
                           ) : (
@@ -452,12 +452,12 @@ const IntroducerStatement = () => {
                           {data.beforeBalanceBankWithdraw ? (
                             <p className="col fs-6">
                               {data.currentBalanceBankWithdraw && (
-                                <p className="col fs-6 text-break">
+                                <p className="col fs-6 ">
                                   ₹&nbsp; {data.currentBalanceBankWithdraw}
                                 </p>
                               )}
                               {data.currentBalanceBankDeposit && (
-                                <p className="col fs-6 text-break">
+                                <p className="col fs-6 ">
                                   ₹&nbsp; {data.currentBalanceBankDeposit}
                                 </p>
                               )}
@@ -470,12 +470,12 @@ const IntroducerStatement = () => {
                           {data.beforeBalanceBankWithdraw ? (
                             <p className="col fs-6">
                               {data.beforeBalanceWebsiteWithdraw && (
-                                <p className="col fs-6 text-break">
+                                <p className="col fs-6 ">
                                   ₹&nbsp; {data.beforeBalanceWebsiteWithdraw}
                                 </p>
                               )}
                               {data.beforeBalanceWebsiteDeposit && (
-                                <p className="col fs-6 text-break">
+                                <p className="col fs-6 ">
                                   ₹&nbsp; {data.beforeBalanceWebsiteDeposit}
                                 </p>
                               )}
@@ -488,12 +488,12 @@ const IntroducerStatement = () => {
                           {data.beforeBalanceBankWithdraw ? (
                             <p className="col fs-6">
                               {data.currentBalanceWebsiteWithdraw && (
-                                <p className="col fs-6 text-break">
+                                <p className="col fs-6 ">
                                   ₹&nbsp; {data.currentBalanceWebsiteWithdraw}
                                 </p>
                               )}
                               {data.currentBalanceWebsiteDeposit && (
-                                <p className="col fs-6 text-break">
+                                <p className="col fs-6 ">
                                   ₹&nbsp; {data.currentBalanceWebsiteDeposit}
                                 </p>
                               )}
@@ -580,10 +580,10 @@ const IntroducerStatement = () => {
                   <th scope="col fs-6" className="text-primary">
                     Date & Time
                   </th>
-                  <th scope="col text-break fs-6" className="text-primary">
+                  <th scope="col  fs-6" className="text-primary">
                     Amount
                   </th>
-                  <th scope="col text-break fs-6" className="text-primary">
+                  <th scope="col  fs-6" className="text-primary">
                     Txn Type
                   </th>
 
@@ -593,34 +593,34 @@ const IntroducerStatement = () => {
                   {/* <th scope="col" className="text-primary">
                     Website
                   </th> */}
-                  {/* <th scope="col text-break fs-6" className="text-primary">
+                  {/* <th scope="col  fs-6" className="text-primary">
                     Before Balance
                   </th> */}
-                  <th scope="col text-break fs-6" className="text-primary">
+                  <th scope="col  fs-6" className="text-primary">
                     Balance
                   </th>
-                  {/* <th scope="col text-break fs-6" className="text-primary">
+                  {/* <th scope="col  fs-6" className="text-primary">
                     Before Website Balance
                   </th>
-                  <th scope="col text-break fs-6" className="text-primary">
+                  <th scope="col  fs-6" className="text-primary">
                     Current Website Balance
                   </th> */}
-                  {/* <th scope="col text-break fs-6" className="text-primary">
+                  {/* <th scope="col  fs-6" className="text-primary">
                     Before Balance
                     <br />
                     (Manual)
                   </th> */}
-                  {/* <th scope="col text-break fs-6" className="text-primary">
+                  {/* <th scope="col  fs-6" className="text-primary">
                     Website Balance
 
                   </th> */}
-                  <th scope="col text-break" className="text-primary">
+                  <th scope="col " className="text-primary">
                     Remarks
                   </th>
-                  <th scope="col text-break" className="text-primary">
+                  <th scope="col " className="text-primary">
                     Edit
                   </th>
-                  <th scope="col text-break" className="text-primary">
+                  <th scope="col " className="text-primary">
                     Delete
                   </th>
                 </tr>
@@ -639,7 +639,7 @@ const IntroducerStatement = () => {
                         </td>
                         <td>
                           <p
-                            className={`col fs-6 text-break ${
+                            className={`col fs-6  ${
                               data.transactionType.includes(
                                 "Manual-Website-Withdraw"
                               ) ||
@@ -671,7 +671,7 @@ const IntroducerStatement = () => {
                         <td>
                           {data?.transactionType && (
                             <p
-                              className={`col fs-6 text-break ${
+                              className={`col fs-6  ${
                                 data.transactionType.includes(
                                   "Manual-Website-Withdraw"
                                 ) ||
@@ -701,7 +701,7 @@ const IntroducerStatement = () => {
 
                         <td>
                           {data.balance ? (
-                            <p className="col fs-6 text-break">
+                            <p className="col fs-6 ">
                               {data.balance}
                             </p>
                           ) : (
@@ -712,12 +712,12 @@ const IntroducerStatement = () => {
                           {data.beforeBalanceBankWithdraw ? (
                             <p className="col fs-6">
                               {data.currentBalanceBankWithdraw && (
-                                <p className="col fs-6 text-break">
+                                <p className="col fs-6 ">
                                   ₹&nbsp; {data.currentBalanceBankWithdraw}
                                 </p>
                               )}
                               {data.currentBalanceBankDeposit && (
-                                <p className="col fs-6 text-break">
+                                <p className="col fs-6 ">
                                   ₹&nbsp; {data.currentBalanceBankDeposit}
                                 </p>
                               )}
@@ -730,12 +730,12 @@ const IntroducerStatement = () => {
                           {data.beforeBalanceBankWithdraw ? (
                             <p className="col fs-6">
                               {data.beforeBalanceWebsiteWithdraw && (
-                                <p className="col fs-6 text-break">
+                                <p className="col fs-6 ">
                                   ₹&nbsp; {data.beforeBalanceWebsiteWithdraw}
                                 </p>
                               )}
                               {data.beforeBalanceWebsiteDeposit && (
-                                <p className="col fs-6 text-break">
+                                <p className="col fs-6 ">
                                   ₹&nbsp; {data.beforeBalanceWebsiteDeposit}
                                 </p>
                               )}
@@ -748,12 +748,12 @@ const IntroducerStatement = () => {
                           {data.beforeBalanceBankWithdraw ? (
                             <p className="col fs-6">
                               {data.currentBalanceWebsiteWithdraw && (
-                                <p className="col fs-6 text-break">
+                                <p className="col fs-6 ">
                                   ₹&nbsp; {data.currentBalanceWebsiteWithdraw}
                                 </p>
                               )}
                               {data.currentBalanceWebsiteDeposit && (
-                                <p className="col fs-6 text-break">
+                                <p className="col fs-6 ">
                                   ₹&nbsp; {data.currentBalanceWebsiteDeposit}
                                 </p>
                               )}

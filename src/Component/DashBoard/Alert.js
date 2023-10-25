@@ -318,7 +318,7 @@ const Alert = () => {
     }
   };
 
-  console.log("=>>>",alert);
+  console.log("=>>>", alert);
   return (
     <>
       <div className="container d-flex justify-content-center  ">
@@ -484,16 +484,17 @@ const Alert = () => {
                                 </p>
                               </p>
                               <p className="col fs-6 ">
-                                User Id:
+                                UserName:
                                 <br />
                                 <p
                                   className={
-                                    data.changedFields?.userId
+                                    data.changedFields?.userName
                                       ? "text-danger"
                                       : "text-success"
                                   }
                                 >
-                                  {data.changedFields?.userId || data.userId}
+                                  {data.changedFields?.userName ||
+                                    data.userName}
                                 </p>
                               </p>
                               <p className="col fs-6 ">

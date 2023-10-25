@@ -114,13 +114,13 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage, to
             <th scope="col fs-6" className="text-primary">
               Date & Time
             </th>
-            <th scope="col text-break fs-6" className="text-primary">
+            <th scope="col  fs-6" className="text-primary">
               Amount
             </th>
-            <th scope="col text-break fs-6" className="text-primary">
+            <th scope="col  fs-6" className="text-primary">
               Txn Id
             </th>
-            <th scope="col text-break fs-6" className="text-primary">
+            <th scope="col  fs-6" className="text-primary">
               Txn Type
             </th>
             <th scope="col fs-6" className="text-primary">
@@ -148,27 +148,27 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage, to
 
             {purpose === "bankStatement" && (
 
-              <th scope="col text-break fs-6" className="text-primary">
+              <th scope="col  fs-6" className="text-primary">
                 Balance
               </th>
             )}
             {purpose === "websiteStatement" && (
 
-              <th scope="col text-break fs-6" className="text-primary">
+              <th scope="col  fs-6" className="text-primary">
                 Balance
               </th>
             )}
 
-            <th scope="col text-break" className="text-primary">
+            <th scope="col " className="text-primary">
               Remarks
             </th>
 
 
 
-            <th scope="col text-break" className="text-primary">
+            <th scope="col " className="text-primary">
               Edit
             </th>
-            <th scope="col text-break" className="text-primary">
+            <th scope="col " className="text-primary">
               Delete
             </th>
 
@@ -188,7 +188,7 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage, to
 
                   <td>
                     <p
-                      className={`col fs-6 text-break ${
+                      className={`col fs-6  ${
                         data.transactionType.includes(
                           "Manual-Website-Withdraw"
                         ) ||
@@ -227,7 +227,7 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage, to
                   <td>
                     {data?.transactionType && (
                       <p
-                        className={`col fs-6 text-break ${
+                        className={`col fs-6  ${
                           data.transactionType.includes(
                             "Manual-Website-Withdraw"
                           ) ||
@@ -249,10 +249,10 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage, to
                       <p className="col fs-6">{data?.paymentMethod}</p>
                     )}
                     {data?.depositAmount && (
-                      <p className="col fs-6 text-break">N.A</p>
+                      <p className="col fs-6 ">N.A</p>
                     )}
                     {data?.withdrawAmount && (
-                      <p className="col fs-6 text-break">N.A</p>
+                      <p className="col fs-6 ">N.A</p>
                     )}
                   </td>
                   <td>{data?.subAdminName}</td>
@@ -261,10 +261,10 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage, to
                       <p className="col fs-6">{data?.userName}</p>
                     )}
                     {data?.depositAmount && (
-                      <p className="col fs-6 text-break">N.A</p>
+                      <p className="col fs-6 ">N.A</p>
                     )}
                     {data?.withdrawAmount && (
-                      <p className="col fs-6 text-break">N.A</p>
+                      <p className="col fs-6 ">N.A</p>
                     )}
                   </td>
 
@@ -276,10 +276,10 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage, to
                           <p className="col fs-6">{data?.introducerUserName}</p>
                         )}
                         {data?.depositAmount && (
-                          <p className="col fs-6 text-break">N.A</p>
+                          <p className="col fs-6 ">N.A</p>
                         )}
                         {data?.withdrawAmount && (
-                          <p className="col fs-6 text-break">N.A</p>
+                          <p className="col fs-6 ">N.A</p>
                         )}
                       </td>
                       <td>
