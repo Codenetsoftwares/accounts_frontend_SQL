@@ -98,7 +98,7 @@ const WebsiteStatement = () => {
   useEffect(() => {
     const fetchManualStatement = async () => {
       try {
-        const res = await AccountService.GetWebsiteStateMent(id, auth.user);
+        const res = await AccountService.GetWebsiteStateMent(auth.user, id);
         console.log(res);
         setDocumentView(res.data);
         setAccountData(res.data);
@@ -272,6 +272,8 @@ const WebsiteStatement = () => {
   let lastPage = Math.ceil(documentView.length / 10);
   let filterReminder = documentFilter.length % 10;
   let filterLastPage = Math.ceil(documentFilter.length / 10);
+  let lastFilterPageReminder = documentView.length % 10 === !0
+  let lastPageReminder = documentFilter.length % 10 === !0
   console.log(lastPage);
   console.log(page);
 
@@ -455,7 +457,7 @@ const WebsiteStatement = () => {
               <tbody>
                 {documentView.length > 0 ? (
                   <>
-                    {page === lastPage ? (
+                    {page === lastPageReminder ? (
                       <>
                         {documentView
                           .slice(page * 10 - 10, page * 10 - 10 + reminder)
@@ -473,10 +475,10 @@ const WebsiteStatement = () => {
                                     <p className={`col fs-6 text-break ${data.transactionType.includes(
                                       "Manual-Website-Withdraw"
                                     ) ||
-                                        data.transactionType.includes("Manual-Bank-Withdraw") ||
-                                        data.transactionType === "Withdraw"
-                                        ? "text-red"
-                                        : "text-black"
+                                      data.transactionType.includes("Manual-Bank-Withdraw") ||
+                                      data.transactionType === "Withdraw"
+                                      ? "text-red"
+                                      : "text-black"
                                       }`}>{data.amount}</p>
                                   )}
                                   {data.depositAmount && (
@@ -608,10 +610,10 @@ const WebsiteStatement = () => {
                                     <p className={`col fs-6 text-break ${data.transactionType.includes(
                                       "Manual-Website-Withdraw"
                                     ) ||
-                                        data.transactionType.includes("Manual-Bank-Withdraw") ||
-                                        data.transactionType === "Withdraw"
-                                        ? "text-red"
-                                        : "text-black"
+                                      data.transactionType.includes("Manual-Bank-Withdraw") ||
+                                      data.transactionType === "Withdraw"
+                                      ? "text-red"
+                                      : "text-black"
                                       }`}>{data.amount}</p>
                                   )}
                                   {data.depositAmount && (
@@ -733,7 +735,7 @@ const WebsiteStatement = () => {
               </tbody>
             </table>
             {documentView.length > 0 && (
-              
+
               <Pagination handlePage={selectPageHandler} page={page} totalPage={lastPage} totalData={documentView.length} />
 
             )}
@@ -785,7 +787,7 @@ const WebsiteStatement = () => {
               <tbody>
                 {documentFilter.length > 0 ? (
                   <>
-                    {page === filterLastPage ? (
+                      {page === lastFilterPageReminder ? (
                       <>
                         {documentFilter
                           .slice(
@@ -806,10 +808,10 @@ const WebsiteStatement = () => {
                                     <p className={`col fs-6 text-break ${data.transactionType.includes(
                                       "Manual-Website-Withdraw"
                                     ) ||
-                                        data.transactionType.includes("Manual-Bank-Withdraw") ||
-                                        data.transactionType === "Withdraw"
-                                        ? "text-red"
-                                        : "text-black"
+                                      data.transactionType.includes("Manual-Bank-Withdraw") ||
+                                      data.transactionType === "Withdraw"
+                                      ? "text-red"
+                                      : "text-black"
                                       }`}>{data.amount}</p>
                                   )}
                                   {data.depositAmount && (
@@ -877,7 +879,7 @@ const WebsiteStatement = () => {
                                     <p className="col fs-6 text-break">N.A</p>
                                   )}
                                 </td>
-                              
+
                                 <td>
                                   {data.balance ? (
                                     <p className="col fs-6 text-break">
@@ -887,7 +889,7 @@ const WebsiteStatement = () => {
                                     "N.A"
                                   )}
                                 </td>
-                                
+
 
                                 <td>{data.remarks}</td>
                                 <td>
@@ -942,10 +944,10 @@ const WebsiteStatement = () => {
                                     <p className={`col fs-6 text-break ${data.transactionType.includes(
                                       "Manual-Website-Withdraw"
                                     ) ||
-                                        data.transactionType.includes("Manual-Bank-Withdraw") ||
-                                        data.transactionType === "Withdraw"
-                                        ? "text-red"
-                                        : "text-black"
+                                      data.transactionType.includes("Manual-Bank-Withdraw") ||
+                                      data.transactionType === "Withdraw"
+                                      ? "text-red"
+                                      : "text-black"
                                       }`}>{data.amount}</p>
                                   )}
                                   {data.depositAmount && (
@@ -1065,7 +1067,7 @@ const WebsiteStatement = () => {
               </tbody>
             </table>
             {documentFilter.length > 0 && (
-             
+
               <Pagination handlePage={selectPageHandler} page={page} totalPage={filterLastPage} totalData={documentFilter.length} />
 
             )}

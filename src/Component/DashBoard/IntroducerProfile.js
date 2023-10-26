@@ -42,7 +42,7 @@ const IntroducerProfile = () => {
 
   useEffect(() => {
     AccountService.Introducerprofile(page, q, auth.user)
-      .then((res) => (setUsers(res.data.SecondArray), setPageNumber(res.data.pageNumber), setTotalData(res.data.allIntroDataLength)));
+      .then((res) => (setUsers(res.data.SecondArray), setPageNumber(res.data.pageNumber), setTotalData(res.data.allIntroDataLength))).catch(err => (setUsers([])))
   }, [auth, page, q]);
   console.log("users", users);
 
@@ -71,8 +71,7 @@ const IntroducerProfile = () => {
           aria-describedby="inputGroup-sizing-sm"
         />
       </div>
-
-      <ul>
+      {users.length > 0 ? (<><ul>
         {users.map((users) => (
           <div className="card container-fluid w-75">
             <div className="card-body">
@@ -147,6 +146,11 @@ const IntroducerProfile = () => {
           </div>
         ))}
       </ul>
+        <Pagination handlePage={handlePage} page={page} totalPage={pageNumber} totalData={totalData} />
+      </>) : (
+        <h1 className="text-center mt-4">No Introducer Founds</h1>
+      )}
+
       {ID !== undefined && <LiveBalanceIntroducer ID={ID} />}
 
       <IntroducerTransaction TxType={txType} IntroducerName={introducerName} />
@@ -176,7 +180,7 @@ const IntroducerProfile = () => {
           </button>
         </span>
       </div> */}
-      <Pagination handlePage={handlePage} page={page} totalPage={pageNumber} totalData={totalData} />
+
 
     </div>
   );

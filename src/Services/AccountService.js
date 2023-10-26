@@ -275,7 +275,7 @@ class AccountService {
     });
   }
 
-  GetBankStMent(id, user) {
+  GetBankStMent(user, id) {
     return axios({
       method: "post",
       url: `${API_HOST}/api/admin/manual-user-bank-account-summary/${id}`,
@@ -316,7 +316,7 @@ class AccountService {
     });
   }
 
-  GetWebsiteStateMent(id, user) {
+  GetWebsiteStateMent(user, id) {
     return axios({
       method: "post",
       url: `${API_HOST}/api/admin/manual-user-website-account-summary/${id}`,
