@@ -22,16 +22,10 @@ const AdminList = () => {
   useEffect(() => {
     if (auth.user) {
       AccountService.getAdminList(page, q, auth.user).then((res) => {
-        console.log(res.data);
-        if (res.data === "No sub-admins") {
-          setErorrData(res.data);
-          setErorr(true);
-        } else {
-          setAdminList(res.data.SecondArray);
-          setPageNumber(res.data.pageNumber);
-          setTotalData(res.data.allIntroDataLength);
-        }
-      });
+        setAdminList(res.data.SecondArray);
+        setPageNumber(res.data.pageNumber);
+        setTotalData(res.data.allIntroDataLength);
+      }).catch(err => setAdminList([]))
     }
   }, [auth, q, page]);
   console.log("=>>>>>>>>>", adminList);
@@ -70,80 +64,50 @@ const AdminList = () => {
           aria-describedby="inputGroup-sizing-sm"
         />
       </div>
-      <>
-        {Erorr ? (
-          <h3 className="text-center">{erorrData}</h3>
-        ) : (
-          <>
-            {adminList.map((data, i) => {
-              return (
-                <div className="card container" key={data?._id}>
-                  <div className="card-body ">
-                    <div className="d-flex justify-content-between">
-                      <div className=" text-left ">
-                        <h5 className="fs-6 ">{i + 1}.</h5>
-                      </div>
-                      <div className="">
-                        <h5 className="fs-5 text-nowrap">{data?.userName} </h5>
-                      </div>
-                      <div className="">
-                        <button
-                          className=""
-                          style={{
-                            height: "30px",
-                            backgroundColor: "#0275d8",
-                            border: "none",
-                            borderRadius: "5px",
-                          }}
-                        >
-                          <p>
-                            <Link to={`/subadminedit/${data?._id}`}>
-                              <button type="button" class="btn btn-info">
-                                Details
-                              </button>
-                            </Link>
-                          </p>
-                        </button>
-                      </div>
+      {adminList.length > 0 ? (
+        <>
+          {adminList.map((data, i) => {
+            return (
+              <div className="card container" key={data?._id}>
+                <div className="card-body ">
+                  <div className="d-flex justify-content-between">
+                    <div className=" text-left ">
+                      <h5 className="fs-6 ">{i + 1}.</h5>
+                    </div>
+                    <div className="">
+                      <h5 className="fs-5 text-nowrap">{data?.userName} </h5>
+                    </div>
+                    <div className="">
+                      <button
+                        className=""
+                        style={{
+                          height: "30px",
+                          backgroundColor: "#0275d8",
+                          border: "none",
+                          borderRadius: "5px",
+                        }}
+                      >
+                        <p>
+                          <Link to={`/subadminedit/${data?._id}`}>
+                            <button type="button" class="btn btn-info">
+                              Details
+                            </button>
+                          </Link>
+                        </p>
+                      </button>
                     </div>
                   </div>
                 </div>
-              );
-            })}
-          </>
-        )}
-      </>
-      {/* <div className="text-center">
-                <span className={`m-3 `}>
-                    <button
-                        className={`btn btn-primary rounded-pill ${page === 1 ? "disabled" : ""
-                            }`}
-                        onClick={() => {
-                            page > 1 && handlePage(page - 1);
-                        }}
-                    >
-                        Pre
-                    </button>
-                </span>
-                <span className="fs-4">{page}</span>
-                <span className={`m-3 `}>
-                    <button
-                        className={`btn btn-primary rounded-pill ${page === pageNumber ? "disabled" : ""
-                            }`}
-                        onClick={() => {
-                            handlePage(page + 1);
-                        }}
-                    >
-                        Next
-                    </button>
-                </span>
-            </div> */}
-      <Pagination
-        handlePage={handlePage}
-        page={page}
-        totalPage={pageNumber}
-        totalData={totalData}
-      />
+              </div>
+            );
+          })}
+          <Pagination
+            handlePage={handlePage}
+            page={page}
+            totalPage={pageNumber}
+            totalData={totalData} />
+        </>) : (<h1 className="text-center mt-4">No Users Founds</h1>)}
+
     </div>
   );
 };

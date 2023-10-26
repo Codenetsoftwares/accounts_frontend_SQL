@@ -27,6 +27,17 @@ const WebsiteTransactionPage = () => {
     setTotalData(data);
   };
   console.log(documentFilter);
+
+  let reminder = documentFilter.length % 10;
+  let lastPage = Math.ceil(documentFilter.length / 10);
+  let lastPageReminder = documentFilter.length % 10 === !0
+
+  const selectPageHandler = (selectedPage) => {
+    console.log(selectedPage);
+
+    setPage(selectedPage);
+  };
+
   return (
     <div>
       <FilterTransaction
@@ -46,6 +57,10 @@ const WebsiteTransactionPage = () => {
           page={page}
           totalPage={totalPage}
           totalData={totalData}
+          reminder={reminder}
+          lastPage={lastPage}
+          selectPageHandler={selectPageHandler}
+          lastPageReminder={lastPageReminder}
         />
       </div>
     </div>

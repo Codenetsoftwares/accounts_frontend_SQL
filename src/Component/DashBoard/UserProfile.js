@@ -30,7 +30,7 @@ const UserProfile = () => {
       setUsers(filteredData);
       setPageNumber(res.data.pageNumber);
       setTotalData(res.data.allIntroDataLength);
-    });
+    }).catch(err => { setUsers([]) })
   }, [auth, page, q]);
 
   console.log("users", users);
@@ -59,8 +59,7 @@ const UserProfile = () => {
           aria-describedby="inputGroup-sizing-sm"
         />
       </div>
-
-      <ul>
+      {users.length > 0 ? (<><ul>
         {users.map((user, index) => (
           <div
             className="card container-fluid w-75 mt-2 border-dark"
@@ -93,13 +92,16 @@ const UserProfile = () => {
           </div>
         ))}
       </ul>
+        <Pagination
+          handlePage={handlePage}
+          page={page}
+          totalPage={pageNumber}
+          totalData={totalData}
+        />
+      </>) : (<h1 className="text-center mt-4">No Users Founds</h1>)}
 
-      <Pagination
-        handlePage={handlePage}
-        page={page}
-        totalPage={pageNumber}
-        totalData={totalData}
-      />
+
+
     </div>
   );
 };

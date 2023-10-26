@@ -208,7 +208,7 @@ const AdminBank = () => {
                           <FontAwesomeIcon
                             icon={faEye}
                             className="delete-icon"
-                            
+
                           />
                         </button>
                       </div>

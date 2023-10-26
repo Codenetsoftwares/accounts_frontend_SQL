@@ -12,6 +12,7 @@ import { useParams } from 'react-router';
 const FilterTransaction = ({ purpose, handleData, page, handlePage, handleTotalData, api }) => {
   const { id } = useParams();
   const auth = useAuth();
+  const [accountData, setAccountData] = useState([]);
   const [subAdminlist, setSubAdminlist] = useState([]);
   const [subAdmin, setSubAdmin] = useState("");
   const [bankList, setBankList] = useState([]);
@@ -27,21 +28,11 @@ const FilterTransaction = ({ purpose, handleData, page, handlePage, handleTotalD
 
   const handleFilter = () => {
 
-    const data = {
-      transactionType: select,
-      introducerList: introducer,
-      subAdminList: subAdmin,
-      BankList: bank,
-      WebsiteList: website,
-      sdate: moment(startDatevalue).toDate(),
-      edate: moment(endDatevalue).toDate(),
-    }
-    api(data, page, auth.user, id).then((res) => {
+    api(auth.user, id).then((res) => {
       return (
-        setDocumentView(res.data.paginatedResults),
-        console.log(documentView),
-        handleData(res.data.paginatedResults, res.data.pageNumber),
-        handleTotalData(res.data.allIntroDataLength)
+        setDocumentView(res.data),
+        handleData(res.data),
+        setAccountData(res.data)
       )
     }).catch((err) => {
       return (
@@ -49,10 +40,21 @@ const FilterTransaction = ({ purpose, handleData, page, handlePage, handleTotalD
         toast.error(err.response.data.message)
       )
     });
-
   }
 
-  // const handlememo = useMemo(() => { handleFilter() }, [handleFilter])
+  const test = ["transactionType", "subAdminName", "websiteName", "bankName"];
+
+  const handleClick = (key, value) => {
+    let nArr = [...documentView];
+
+    if (test.includes(key)) {
+      nArr = nArr.filter((item) => item[key] === value);
+    }
+    // setDocumentView(nArr);
+    handleData(nArr)
+  };
+
+
   const handleReset = () => {
     setSelect("");
     setSubAdmin("");
@@ -62,21 +64,23 @@ const FilterTransaction = ({ purpose, handleData, page, handlePage, handleTotalD
     setEndDateValue(new Date());
     setIntroducer("");
     handleFilter();
-    handlePage(1)
+    handlePage(1);
+    handleData(accountData);
     // handlememo();
-    window.location.reload();
+    // window.location.reload();     
   };
-  useEffect(() => {
-    handleFilter();
-  }, []);
 
   useEffect(() => {
     handleFilter();
   }, [page]);
 
   useEffect(() => {
+    handleFilter();
+  }, []);
+
+  useEffect(() => {
     if (auth.user) {
-      TransactionSercvice.subAdminList(auth.user).then((res) => {
+      TransactionSercvice.subAdminList(auth.user, id).then((res) => {
         setSubAdminlist(res.data);
       });
       TransactionSercvice.bankList(auth.user).then((res) => {
@@ -89,37 +93,60 @@ const FilterTransaction = ({ purpose, handleData, page, handlePage, handleTotalD
     }
   }, [auth]);
 
-  const handleStartDatevalue = (e) => {
-    SetStartDatesetValue(moment(e));
-  };
-
-  const handleEndDatevalue = (e) => {
-    setEndDateValue(moment(e));
-  };
-
   const handleChange = (e) => {
     const value = e.target.value;
     setSelect(value);
+    handleClick("transactionType", value);
+    handlePage(1);
   };
 
   const handleSubAdmin = (e) => {
     const value = e.target.value;
     setSubAdmin(value);
+    handleClick("subAdminName", value);
+    handlePage(1);
   };
 
   const handleIntroducer = (e) => {
     const value = e.target.value;
     setIntroducer(value);
+    handleClick("introducerId", value);
+    handlePage(1);
   };
 
   const handleBank = (e) => {
     const value = e.target.value;
     setBank(value);
+    handleClick("bankName", value);
+    handlePage(1);
   };
 
   const handleWebsite = (e) => {
     const value = e.target.value;
     setWebsite(value);
+    handleClick("websiteName", value);
+    handlePage(1);
+  };
+
+  const handleStartDatevalue = (e) => {
+    SetStartDatesetValue(moment(e).format("DD-MM-YYYY HH:mm"));
+  };
+
+  const handleEndDatevalue = (e) => {
+    setEndDateValue(moment(e).format("DD-MM-YYYY HH:mm"));
+  };
+
+  const handelDate = () => {
+    const sdate = moment(startDatevalue, "DD-MM-YYYY HH:mm").toDate();
+    const edate = moment(endDatevalue, "DD-MM-YYYY HH:mm").toDate();
+    const filteredDocuments = documentView.filter((data) => {
+      const transactionDate = new Date(data.createdAt);
+      return transactionDate >= sdate && transactionDate <= edate;
+    });
+    handleData(filteredDocuments);
+    // setToggle(false);
+    // setPage(1);
+
   };
 
   return (
@@ -390,7 +417,7 @@ const FilterTransaction = ({ purpose, handleData, page, handlePage, handleTotalD
               <button
                 type="button"
                 className="btn btn-dark"
-                onClick={handleFilter}
+                onClick={handelDate}
               >
                 Filter
               </button>

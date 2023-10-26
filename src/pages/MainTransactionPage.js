@@ -2,50 +2,67 @@ import React, { useState } from 'react';
 import FilterTransaction from '../Component/FilterTransaction';
 import TableTransaction from '../Component/TableTransaction';
 import TransactionSercvice from '../Services/TransactionSercvice';
+import TableMainTransaction from '../Component/TableMainTransaction';
+import FilterMainTransaction from '../Component/FilterMainTransaction';
 
 const MainTransactionPage = () => {
-    const [documentFilter, setDocumentFilter] = useState([]);
-    const [page, setPage] = useState(1)
-    const [totalPage, setTotalPage] = useState(1)
-    const [totalData, setTotalData] = useState(0)
-    console.log(totalData)
-    const handleData = (data, totalPage) => {
-        // if (data !== undefined) {
-        setDocumentFilter(data);
-        // }
-        setTotalPage(totalPage);
-    }
+  const [documentFilter, setDocumentFilter] = useState([]);
+  const [page, setPage] = useState(1)
+  const [totalPage, setTotalPage] = useState(1)
+  const [totalData, setTotalData] = useState(0)
+  console.log(totalData)
+  const handleData = (data, totalPage) => {
+    // if (data !== undefined) {
+    setDocumentFilter(data);
+    // }
+    setTotalPage(totalPage);
+  }
 
-    const handlePage = (page) => {
-        setPage(page);
-    }
+  const handlePage = (page) => {
+    setPage(page);
+  }
 
-    const handleTotalData = (data) => {
-        setTotalData(data);
-    }
-    console.log(documentFilter)
-    return (
-      <div className="container-fluid" style={{ backgroundColor: "#fff4ec" }}>
-        <FilterTransaction
+  const handleTotalData = (data) => {
+    setTotalData(data);
+  }
+
+  let reminder = documentFilter.length % 10;
+  let lastPage = Math.ceil(documentFilter.length / 10);
+  let lastPageReminder = documentFilter.length % 10 === !0
+
+  const selectPageHandler = (selectedPage) => {
+    console.log(selectedPage);
+
+    setPage(selectedPage);
+  };
+
+  console.log(documentFilter)
+  return (
+    <div className="container-fluid" style={{ backgroundColor: "#fff4ec" }}>
+      <FilterMainTransaction
+        purpose={"mainStatement"}
+        handleData={handleData}
+        page={page}
+        handlePage={handlePage}
+        handleTotalData={handleTotalData}
+        api={TransactionSercvice.filterTransaction}
+      />
+      <div className="d-flex justify-content-center">
+        <TableMainTransaction
+          FilterData={documentFilter}
           purpose={"mainStatement"}
-          handleData={handleData}
-          page={page}
           handlePage={handlePage}
-          handleTotalData={handleTotalData}
-          api={TransactionSercvice.filterTransaction}
+          page={page}
+          totalPage={totalPage}
+          totalData={totalData}
+          reminder={reminder}
+          lastPage={lastPage}
+          selectPageHandler={selectPageHandler}
+          lastPageReminder={lastPageReminder}
         />
-        <div className="d-flex justify-content-center">
-          <TableTransaction
-            FilterData={documentFilter}
-            purpose={"mainStatement"}
-            handlePage={handlePage}
-            page={page}
-            totalPage={totalPage}
-            totalData={totalData}
-          />
-        </div>
       </div>
-    );
+    </div>
+  );
 };
 
 export default MainTransactionPage;
