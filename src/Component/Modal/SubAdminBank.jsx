@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import TransactionSercvice from "../../Services/TransactionSercvice";
 import { useAuth } from "../../Utils/Auth";
+import AccountService from "../../Services/AccountService";
 
-const SubAdminBank = () => {
+const SubAdminBank = ({ ID }) => {
   const [subAdminlist, setSubAdminlist] = useState([]);
   const [checkboxStates, setCheckboxStates] = useState([]); // State for checkbox data
   const auth = useAuth();
@@ -25,8 +26,25 @@ const SubAdminBank = () => {
   const handelsave = () => {
     const selectedNames = subAdminlist
       .filter((_, index) => checkboxStates[index])
-      .map((subAdmin) => subAdmin.firstname);
+      .map((subAdmin) => subAdmin.userName);
     console.log("Selected Names =>", selectedNames);
+    console.log(ID);
+    console.log(subAdminlist);
+    const data = {
+      subAdminIds: selectedNames,
+    };
+
+    AccountService.subadminbankpermission(ID, data, auth.user)
+      .then((response) => {
+        console.log("res", response.data);
+        alert(response.data.message);
+        // alert("Bank Added Sucessfully");
+        // window.location.reload();
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
+        console.log(error);
+      });
   };
 
   return (
@@ -71,14 +89,14 @@ const SubAdminBank = () => {
                           style={{ marginRight: "5px" }}
                           checked={checkboxStates[index]}
                           onChange={() => handleCheckboxChange(index)}
-                          value={subAdmin.firstname}
+                          value={subAdmin.userName}
                         />
                         <label
                           className="form-check-label"
                           htmlFor={`checkbox${index}`}
                           style={{ fontWeight: "bold" }}
                         >
-                          {subAdmin.firstname}
+                          {subAdmin.userName}
                         </label>
                       </div>
                       {index < subAdminlist.length - 1 && (
