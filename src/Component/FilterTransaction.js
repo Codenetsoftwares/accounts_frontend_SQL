@@ -25,6 +25,8 @@ const FilterTransaction = ({ purpose, handleData, page, handlePage, handleTotalD
   const [startDatevalue, SetStartDatesetValue] = useState(new Date() - 1 * 24 * 60 * 60 * 1000);
   const [endDatevalue, setEndDateValue] = useState(new Date());
   const [documentView, setDocumentView] = useState([]);
+  const [minAmount, setMinAmount] = useState(0);
+  const [maxAmount, setMaxAmount] = useState(0);
 
   const handleFilter = () => {
 
@@ -66,13 +68,11 @@ const FilterTransaction = ({ purpose, handleData, page, handlePage, handleTotalD
     handleFilter();
     handlePage(1);
     handleData(accountData);
+    setMinAmount(0);
+    setMaxAmount(0);
     // handlememo();
     // window.location.reload();     
   };
-
-  useEffect(() => {
-    handleFilter();
-  }, [page]);
 
   useEffect(() => {
     handleFilter();
@@ -128,6 +128,15 @@ const FilterTransaction = ({ purpose, handleData, page, handlePage, handleTotalD
     handlePage(1);
   };
 
+  const handleMinAmount = (e) => {
+    const value = e.target.value;
+    setMinAmount(value);
+  };
+  const handleMaxAmount = (e) => {
+    const value = e.target.value;
+    setMaxAmount(value);
+  };
+
   const handleStartDatevalue = (e) => {
     SetStartDatesetValue(moment(e).format("DD-MM-YYYY HH:mm"));
   };
@@ -136,18 +145,31 @@ const FilterTransaction = ({ purpose, handleData, page, handlePage, handleTotalD
     setEndDateValue(moment(e).format("DD-MM-YYYY HH:mm"));
   };
 
-  const handelDate = () => {
+  const handelData = () => {
     const sdate = moment(startDatevalue, "DD-MM-YYYY HH:mm").toDate();
     const edate = moment(endDatevalue, "DD-MM-YYYY HH:mm").toDate();
-    const filteredDocuments = documentView.filter((data) => {
+    let filteredDocuments = documentView.filter((data) => {
       const transactionDate = new Date(data.createdAt);
       return transactionDate >= sdate && transactionDate <= edate;
     });
-    handleData(filteredDocuments);
-    // setToggle(false);
-    // setPage(1);
 
-  };
+    if (minAmount !== 0 || maxAmount !== 0) {
+      filteredDocuments = filteredDocuments.filter((transaction) => {
+        return (
+          transaction.withdrawAmount >= minAmount &&
+          transaction.withdrawAmount <= maxAmount ||
+          transaction.depositAmount >= minAmount &&
+          transaction.depositAmount <= maxAmount ||
+          transaction.amount >= minAmount &&
+          transaction.amount <= maxAmount
+
+        );
+      }
+      );
+    };
+    handleData(filteredDocuments);
+    handlePage(1);
+  }
 
   return (
     <div
@@ -393,6 +415,37 @@ const FilterTransaction = ({ purpose, handleData, page, handlePage, handleTotalD
           </div></>}
         {/* when props pass introducerTransactionStatement & userTransactionStatement from parent component*/}
 
+        <div className="d-flex col pt-3 justify-content-center"  >
+          <h6 className="fw-bold text-nowrap pt-2"> Range Of Amount</h6>
+          <input
+            className="form-control mx-3 w-25"
+            type='number'
+            value={minAmount || ""}
+            autoComplete="off"
+            onChange={handleMinAmount}
+            style={{
+              border: "0.5px solid black",
+              borderRadius: "6px",
+            }}
+            required
+            min={1}
+          />
+          <h6 className="fw-bold text-nowrap pt-2"> To</h6>
+          <input
+            className="form-control mx-3 w-25"
+            type='number'
+            value={maxAmount || ""}
+            autoComplete="off"
+            onChange={handleMaxAmount}
+            style={{
+              border: "0.5px solid black",
+              borderRadius: "6px",
+            }}
+            min={1}
+            required
+          />
+        </div>
+
         <div className="row row-cols-4 row-cols-lg-4 g-2 g-lg-3 w-100 " style={{ paddingLeft: '5rem' }} >
           <div className="d-flex col justify-content-center ">
             <h6 className="fw-bold text-nowrap pt-2 pr-2"> Start Date</h6>
@@ -417,7 +470,7 @@ const FilterTransaction = ({ purpose, handleData, page, handlePage, handleTotalD
               <button
                 type="button"
                 className="btn btn-dark"
-                onClick={handelDate}
+                onClick={handelData}
               >
                 Filter
               </button>
