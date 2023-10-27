@@ -44,6 +44,8 @@ const WebsiteStatement = () => {
   const [totalData, setTotalData] = useState(0);
   const [totalPage, setTotalPage] = useState("");
   const [length, setLength] = useState("");
+  const [minAmount, setMinAmount] = useState(0);
+  const [maxAmount, setMaxAmount] = useState(0);
 
   console.log("This is Website Name", id);
 
@@ -93,6 +95,15 @@ const WebsiteStatement = () => {
     const value = e.target.value;
     setWebsite(value);
     handleClick("websiteName", value);
+  };
+
+  const handleMinAmount = (e) => {
+    const value = e.target.value;
+    setMinAmount(value);
+  };
+  const handleMaxAmount = (e) => {
+    const value = e.target.value;
+    setMaxAmount(value);
   };
 
   useEffect(() => {
@@ -145,18 +156,32 @@ const WebsiteStatement = () => {
   }, [auth]);
 
   console.log(documentView);
-  const handelDate = () => {
+  
+  const handleFilter = () => {
     const sdate = moment(startDatevalue, "DD-MM-YYYY HH:mm").toDate();
     const edate = moment(endDatevalue, "DD-MM-YYYY HH:mm").toDate();
-    const filteredDocuments = documentView.filter((data) => {
+    let filteredDocuments = documentView.filter((data) => {
       const transactionDate = new Date(data.createdAt);
       return transactionDate >= sdate && transactionDate <= edate;
     });
+
+    if (minAmount !== 0 || maxAmount !== 0) {
+      filteredDocuments = filteredDocuments.filter((transaction) => {
+        return (
+          transaction.withdrawAmount >= minAmount &&
+          transaction.withdrawAmount <= maxAmount ||
+          transaction.depositAmount >= minAmount &&
+          transaction.depositAmount <= maxAmount ||
+          transaction.amount >= minAmount &&
+          transaction.amount <= maxAmount
+
+        );
+      }
+      );
+    };
     setDocumentFilter(filteredDocuments);
     setToggle(false);
     setPage(1);
-    // setTotalPage(Math.ceil(documentFilter.length / 10));
-    // setLength(documentFilter.length);
   };
 
   const handleStartDatevalue = (e) => {
@@ -181,6 +206,8 @@ const WebsiteStatement = () => {
     SetStartDatesetValue(new Date() - 1 * 24 * 60 * 60 * 1000);
     setEndDateValue(new Date());
     setPage(1);
+    setMinAmount(0);
+    setMaxAmount(0);
   };
 
   const handleDelete = (e, id, transactionType) => {
@@ -350,6 +377,37 @@ const WebsiteStatement = () => {
               </select>
             </div>
 
+            <div className="d-flex col pt-3 justify-content-center"  >
+              <h6 className="fw-bold text-nowrap pt-2"> Range Of Amount</h6>
+              <input
+                className="form-control mx-3 w-25"
+                type='number'
+                value={minAmount || ""}
+                autoComplete="off"
+                onChange={handleMinAmount}
+                style={{
+                  border: "0.5px solid black",
+                  borderRadius: "6px",
+                }}
+                required
+                min={1}
+              />
+              <h6 className="fw-bold text-nowrap pt-2"> To</h6>
+              <input
+                className="form-control mx-3 w-25"
+                type='number'
+                value={maxAmount || ""}
+                autoComplete="off"
+                onChange={handleMaxAmount}
+                style={{
+                  border: "0.5px solid black",
+                  borderRadius: "6px",
+                }}
+                min={1}
+                required
+              />
+            </div>
+
             <div
               className="row row-cols-4 row-cols-lg-4 g-2 g-lg-3 w-100 "
               style={{ paddingLeft: "5rem" }}
@@ -378,7 +436,7 @@ const WebsiteStatement = () => {
                     type="button"
                     className="btn btn-dark"
                     // style={{ boxShadow: "17px 15px 27px -9px rgba(0, 0, 0, 0.41)" }}
-                    onClick={handelDate}
+                    onClick={handleFilter}
                   >
                     Filter
                   </button>
@@ -482,12 +540,26 @@ const WebsiteStatement = () => {
                                       }`}>{data.amount}</p>
                                   )}
                                   {data.depositAmount && (
-                                    <p className="col fs-6">
+                                    <p className={`col fs-6 text-break ${data.transactionType.includes(
+                                      "Manual-Website-Withdraw"
+                                    ) ||
+                                      data.transactionType.includes("Manual-Bank-Withdraw") ||
+                                      data.transactionType === "Withdraw"
+                                      ? "text-red"
+                                      : "text-black"
+                                      }`}>
                                       {data.depositAmount}
                                     </p>
                                   )}
                                   {data.withdrawAmount && (
-                                    <p className="col fs-6">
+                                    <p className={`col fs-6 text-break ${data.transactionType.includes(
+                                      "Manual-Website-Withdraw"
+                                    ) ||
+                                      data.transactionType.includes("Manual-Bank-Withdraw") ||
+                                      data.transactionType === "Withdraw"
+                                      ? "text-red"
+                                      : "text-black"
+                                      }`}>
                                       {data.withdrawAmount}
                                     </p>
                                   )}
@@ -787,7 +859,7 @@ const WebsiteStatement = () => {
               <tbody>
                 {documentFilter.length > 0 ? (
                   <>
-                      {page === lastFilterPageReminder ? (
+                    {page === lastFilterPageReminder ? (
                       <>
                         {documentFilter
                           .slice(

@@ -41,7 +41,7 @@ const UserProfile = () => {
 
   return (
     <div className="m-3">
-      <h1 className="d-flex justify-content-center">User Profile</h1>
+      <h1 className="d-flex justify-content-center fs-3 text-bold">USER PROFILE</h1>
       <div class="input-group input-group-sm ">
         <button type="button" class="btn btn-primary">
           <i class="fas fa-search"></i>

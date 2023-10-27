@@ -48,7 +48,7 @@ const AdminList = () => {
   return (
     <div className="card container">
       <div className="card-header border-transparent">
-        <h3 className=" d-flex justify-content-center">List of Sub-Admin</h3>
+        <h3 className=" d-flex justify-content-center fs-3 text-bold">LIST OF SUB-ADMIN</h3>
       </div>
       <div className="input-group input-group-sm mb-3 p-3">
         <input
