@@ -54,10 +54,21 @@ class AccountService {
       },
     });
   }
+
   getbank(user) {
     return axios({
       method: "get",
       url: API_HOST + "/api/get-bank-name",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  getrequestedbank(user) {
+    return axios({
+      method: "get",
+      url: API_HOST + "/api/superadmin/view-bank-requests",
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -210,7 +221,7 @@ class AccountService {
   }
 
   introducerLiveBalance(id, user) {
-    console.log(id)
+    console.log(id);
     if (id !== undefined) {
       return axios({
         method: "get",
@@ -220,7 +231,6 @@ class AccountService {
         },
       });
     }
-
   }
 
   Introducerprofile(page, search, user) {
@@ -541,6 +551,17 @@ class AccountService {
     return axios({
       method: "post",
       url: `${API_HOST}/api/super-admin/reset-password`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  subadminbankpermission(id, data, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/admin/bank/assign-subadmin/${id}`,
       data: data,
       headers: {
         Authorization: `Bearer ${user.token}`,

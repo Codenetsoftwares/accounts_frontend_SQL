@@ -58,6 +58,7 @@ import ResetPassword from "./Component/DashBoard/ResetPassword";
 import WebsiteTransactionPage from "./pages/WebsiteTransactionPage";
 import BankTransactionPage from "./pages/BankTransactionPage";
 import MyTxn from "./Component/DashBoard/MyTxn";
+import NewBank from "./NewBank&Website/NewBank";
 
 function App() {
   return (
@@ -339,6 +340,14 @@ function App() {
                 element={
                   <RequireAuth>
                     <BankEdit />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="newbank"
+                element={
+                  <RequireAuth>
+                   <NewBank/>
                   </RequireAuth>
                 }
               />

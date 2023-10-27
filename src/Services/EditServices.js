@@ -112,6 +112,27 @@ class EditServices {
     });
   }
 
+  NewBankRqApprove(id, data, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/approve-bank/${id}`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  NewBankRqReject(_id, user) {
+    return axios({
+      method: "delete",
+      url: `${API_HOST}/api/reject/${_id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
   IsWebsiteApprove(_id, data, user) {
     return axios({
       method: "post",
@@ -232,6 +253,18 @@ class EditServices {
       },
     });
   }
+
+  BankActiveInactive(id, data, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/admin/bank/isactive/${id}`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
 }
 
 export default new EditServices();

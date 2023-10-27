@@ -9,6 +9,8 @@ import {
   faFileAlt,
   faMinus,
   faEye,
+  faStar,
+  faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import InnerBank from "../InnerBank";
 import { Link, useNavigate } from "react-router-dom";
@@ -110,7 +112,7 @@ const AdminBank = () => {
   //   setIdWithdraw(id);
   // };
 
-  const handelActiveInactive = () => {
+  const handelactiveinactive = () => {
     setAI(true);
   };
 
@@ -188,7 +190,6 @@ const AdminBank = () => {
                             data-target="#exampleModalCenter"
                           />
                         </button>
-
                         <button type="button" class="btn btn-danger  btn-sm">
                           <FontAwesomeIcon
                             icon={faTrashAlt}
@@ -198,26 +199,54 @@ const AdminBank = () => {
                             }}
                           />
                         </button>
-
                         <button
                           type="button"
                           class="btn btn-primary  btn-sm"
                           data-toggle="modal"
                           data-target="#exampleModal"
+                          onClick={() => {
+                            handelId(data._id);
+                          }}
                         >
                           <FontAwesomeIcon
                             icon={faEye}
                             className="delete-icon"
-
                           />
                         </button>
+                        {data.isActive===false? (
+                          <button
+                            type="button"
+                            class="btn btn-dark btn-sm"
+                            title="Active"
+                            onClick={handelactiveinactive}
+                          >
+                            <FontAwesomeIcon
+                              icon={faStar}
+                              className="active-icon"
+                            />
+                          </button>
+                        ) : (
+                          <button
+                            type="button"
+                            class="btn btn-dark btn-sm"
+                            title="Inactive"
+                            onClick={handelactiveinactive}
+                          >
+                            <FontAwesomeIcon
+                              icon={faTimes}
+                              className="active-icon"
+                            />
+                          </button>
+                        )}
                       </div>
                       {/* Active,Inactive */}
-                      <div className="form-check form-switch mt-1">
+
+                      {/* <div className="form-check form-switch mt-1">
                         <input
                           className="form-check-input"
                           type="checkbox"
                           value="Introducer-Profile-View"
+                          onChange={handelactiveinactive}
                         />
 
                         <label
@@ -226,7 +255,7 @@ const AdminBank = () => {
                         >
                           Active
                         </label>
-                      </div>
+                      </div> */}
                       {/* End of Active,Inactive Part */}
                     </div>
                   </div>
@@ -308,7 +337,7 @@ const AdminBank = () => {
         <ModalAddBl ID={Id} />
         <ModalWthBl ID={Id} />
         <InnerBank />
-        <SubAdminBank />
+        <SubAdminBank ID={Id} />
       </div>
     </div>
   );
