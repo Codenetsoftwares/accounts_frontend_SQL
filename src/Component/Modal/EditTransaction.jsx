@@ -5,7 +5,6 @@ import AccountService from "../../Services/AccountService";
 
 const EditTransaction = ({ id }) => {
   const auth = useAuth();
-  console.log(id)
   const [isEditing, setIsEditing] = useState(false);
   const [editedData, setEditedData] = useState({});
   const [data, setData] = useState([]);
@@ -29,12 +28,10 @@ const EditTransaction = ({ id }) => {
   useEffect(() => {
     AccountService.getbank(auth.user).then((res) => setBank(res.data));
   }, [auth]);
-  console.log("bank names", bank);
 
   useEffect(() => {
     AccountService.website(auth.user).then((res) => setWebsite(res.data));
   }, [auth]);
-  console.log("Website Names", website);
 
   const handleToggleEdit = (e) => {
     e.preventDefault();
@@ -47,8 +44,6 @@ const EditTransaction = ({ id }) => {
   }
   const handleSubmit = (e, transactionType, field) => {
     e.preventDefault();
-    console.log(editedData.bankName)
-    console.log(editedData.websiteName)
 
     setIsEditing(false);
     setEditedData({ ...editedData, [field]: "" });

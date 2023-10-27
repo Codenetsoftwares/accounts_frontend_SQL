@@ -118,7 +118,7 @@ const AdminBank = () => {
   return (
     <div>
       <div class="card text-center card text-center mt-2 mr-5 ml-5">
-        <div class="card-header">Payment Details</div>
+        <div class="card-header fs-3 text-bold">PAYMENT DETAILS</div>
         <div class="card-body">
           {/* <input
             class="form-control mb-2"

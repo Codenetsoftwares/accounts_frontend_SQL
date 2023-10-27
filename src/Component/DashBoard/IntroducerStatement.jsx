@@ -217,7 +217,7 @@ const IntroducerStatement = () => {
               </select>
             </div>
 
-            <div className="d-flex col pt-3 justify-content-center">
+            {/* <div className="d-flex col pt-3 justify-content-center">
               <h6 className="fw-bold text-nowrap pt-2"> SubAdminlist</h6>
               <select
                 className="form-control mx-3 w-50"
@@ -240,7 +240,7 @@ const IntroducerStatement = () => {
                   );
                 })}
               </select>
-            </div>
+            </div> */}
 
             <div
               className="row row-cols-4 row-cols-lg-4 g-2 g-lg-3 w-100 "

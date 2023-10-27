@@ -107,7 +107,7 @@ const WebsiteDetails = () => {
   return (
     <>
       <div class="card text-center mt-2 mr-5 ml-5">
-        <div class="card-header">Website Details</div>
+        <div class="card-header fs-3 text-bold">WEBSITE DETAILS</div>
 
         <div class="card-body">
           {getWebsite.length > 0 &&

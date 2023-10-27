@@ -56,7 +56,7 @@ const IntroducerProfile = () => {
   return (
     <div className="m-3">
       <ToastContainer />
-      <h1 className="d-flex justify-content-center">Introducer Profile</h1>
+      <h1 className="d-flex justify-content-center fs-3 text-bold">INTRODUCER PROFILE</h1>
       <div class="input-group input-group-sm ">
         <input
           type="search"
