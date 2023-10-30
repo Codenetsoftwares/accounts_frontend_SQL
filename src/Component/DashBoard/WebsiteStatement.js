@@ -156,7 +156,7 @@ const WebsiteStatement = () => {
   }, [auth]);
 
   console.log(documentView);
-  
+
   const handleFilter = () => {
     const sdate = moment(startDatevalue, "DD-MM-YYYY HH:mm").toDate();
     const edate = moment(endDatevalue, "DD-MM-YYYY HH:mm").toDate();
@@ -385,6 +385,7 @@ const WebsiteStatement = () => {
                 value={minAmount || ""}
                 autoComplete="off"
                 onChange={handleMinAmount}
+                placeholder='Min Amt'
                 style={{
                   border: "0.5px solid black",
                   borderRadius: "6px",
@@ -399,6 +400,7 @@ const WebsiteStatement = () => {
                 value={maxAmount || ""}
                 autoComplete="off"
                 onChange={handleMaxAmount}
+                placeholder='Max Amt'
                 style={{
                   border: "0.5px solid black",
                   borderRadius: "6px",

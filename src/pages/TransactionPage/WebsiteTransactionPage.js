@@ -1,30 +1,32 @@
-import React, { useState } from 'react';
-import FilterTransaction from '../Component/FilterTransaction';
-import TableTransaction from '../Component/TableTransaction';
-import TransactionSercvice from '../Services/TransactionSercvice';
-import TableMainTransaction from '../Component/TableMainTransaction';
-import FilterMainTransaction from '../Component/FilterMainTransaction';
+import React from "react";
+import AccountService from "../../Services/AccountService";
+import { useState } from "react";
+import FilterTransaction from "../../Component/FilterTransaction";
+import TableTransaction from "../../Component/TableTransaction";
+import { useParams } from "react-router";
 
-const MainTransactionPage = () => {
+const WebsiteTransactionPage = () => {
+  const { id } = useParams();
   const [documentFilter, setDocumentFilter] = useState([]);
-  const [page, setPage] = useState(1)
-  const [totalPage, setTotalPage] = useState(1)
-  const [totalData, setTotalData] = useState(0)
-  console.log(totalData)
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
+  const [totalData, setTotalData] = useState(0);
+  console.log(totalData);
   const handleData = (data, totalPage) => {
     // if (data !== undefined) {
     setDocumentFilter(data);
     // }
     setTotalPage(totalPage);
-  }
+  };
 
   const handlePage = (page) => {
     setPage(page);
-  }
+  };
 
   const handleTotalData = (data) => {
     setTotalData(data);
-  }
+  };
+  console.log(documentFilter);
 
   let reminder = documentFilter.length % 10;
   let lastPage = Math.ceil(documentFilter.length / 10);
@@ -36,21 +38,21 @@ const MainTransactionPage = () => {
     setPage(selectedPage);
   };
 
-  console.log(documentFilter)
   return (
-    <div className="container-fluid" style={{ backgroundColor: "#fff4ec" }}>
-      <FilterMainTransaction
-        purpose={"mainStatement"}
+    <div>
+      <FilterTransaction
+        purpose={"websiteStatement"}
         handleData={handleData}
         page={page}
         handlePage={handlePage}
         handleTotalData={handleTotalData}
-        api={TransactionSercvice.filterTransaction}
+        api={AccountService.GetWebsiteStateMent}
+        id={id}
       />
       <div className="d-flex justify-content-center">
-        <TableMainTransaction
+        <TableTransaction
           FilterData={documentFilter}
-          purpose={"mainStatement"}
+          purpose={"websiteStatement"}
           handlePage={handlePage}
           page={page}
           totalPage={totalPage}
@@ -65,4 +67,4 @@ const MainTransactionPage = () => {
   );
 };
 
-export default MainTransactionPage;
+export default WebsiteTransactionPage;

@@ -383,6 +383,7 @@ const FilterMainTransaction = ({ purpose, handleData, page, handlePage, handleTo
                         value={minAmount || ""}
                         autoComplete="off"
                         onChange={handleMinAmount}
+                        placeholder='Min Amt'
                         style={{
                             border: "0.5px solid black",
                             borderRadius: "6px",
@@ -397,6 +398,8 @@ const FilterMainTransaction = ({ purpose, handleData, page, handlePage, handleTo
                         value={maxAmount || ""}
                         autoComplete="off"
                         onChange={handleMaxAmount}
+                        placeholder='Max Amt'
+
                         style={{
                             border: "0.5px solid black",
                             borderRadius: "6px",
