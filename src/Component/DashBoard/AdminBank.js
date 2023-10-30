@@ -20,6 +20,8 @@ import ModalBkdl from "../Modal/ModalBkdl";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SubAdminBank from "../Modal/SubAdminBank";
+import Pagination from "../Pagination";
+import ShimmerEffect from "../ShimmerEffect";
 // import { useParams } from "react-router";
 const AdminBank = () => {
   const navigate = useNavigate();
@@ -30,6 +32,10 @@ const AdminBank = () => {
   const [IdWithdraw, setIdWithdraw] = useState();
   const [AI, setAI] = useState(false);
   const [documentView, setDocumentView] = useState([]);
+  const [page, setPage] = useState(1)
+  const [totalPage, setTotalPage] = useState(1)
+  const [totalData, setTotalData] = useState(0)
+  const [isLoading, setIsLoading] = useState(false);
 
   // const { id } = useParams();
   const handleSubmit = (e) => {
@@ -59,6 +65,10 @@ const AdminBank = () => {
       });
     window.location.reload();
   };
+
+  const handlePage = (page) => {
+    setPage(page);
+  }
 
   const handlebankname = (event) => {
     setBankName(event.target.value);
@@ -98,11 +108,24 @@ const AdminBank = () => {
         });
     }
   };
+  const handleData = () => {
+    setIsLoading(true)
+    AccountService.getbank(page, auth.user).then((res) => {
+      return (
+        setGetBankName(res.data.paginatedResults),
+        setTotalData(res.data.allIntroDataLength),
+        setTotalPage(res.data.pageNumber),
+        setIsLoading(false)
+      )
+    });
+  }
 
   useEffect(() => {
-    AccountService.getbank(auth.user).then((res) => setGetBankName(res.data));
+
+    handleData()
   }, [auth]);
   console.log("Bank Names", getbankName);
+  console.log("first", isLoading)
 
   const handelId = (id) => {
     setId(id);
@@ -119,6 +142,7 @@ const AdminBank = () => {
   console.log(Id);
   return (
     <div>
+      <ShimmerEffect show={isLoading} />
       <div class="card text-center card text-center mt-2 mr-5 ml-5">
         <div class="card-header fs-3 text-bold">PAYMENT DETAILS</div>
         <div class="card-body">
@@ -213,7 +237,7 @@ const AdminBank = () => {
                             className="delete-icon"
                           />
                         </button>
-                        {data.isActive===false? (
+                        {data.isActive === false ? (
                           <button
                             type="button"
                             class="btn btn-dark btn-sm"
@@ -339,6 +363,9 @@ const AdminBank = () => {
         <InnerBank />
         <SubAdminBank ID={Id} />
       </div>
+      {getbankName.length > 0 &&
+        <Pagination handlePage={handlePage} page={page} totalPage={totalPage} totalData={totalData} />
+      }
     </div>
   );
 };

@@ -55,10 +55,10 @@ class AccountService {
     });
   }
 
-  getbank(user) {
+  getbank(page, user) {
     return axios({
       method: "get",
-      url: API_HOST + "/api/get-bank-name",
+      url: `${API_HOST}/api/get-bank-name?page=${page}&itemsPerPage=4`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
