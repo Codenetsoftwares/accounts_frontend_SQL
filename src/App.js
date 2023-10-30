@@ -51,12 +51,12 @@ import WebsiteEdit from "./Component/DashBoard/Request/Website/WebsiteEdit";
 import ErrorPage from "./pages/ErrorPage";
 import Login from "./Component/Login/Login";
 
-import MainTransactionPage from "./pages/MainTransactionPage";
+import MainTransactionPage from "./pages/TransactionPage/MainTransactionPage";
 import IntroducerStatement from "./Component/DashBoard/IntroducerStatement";
 import IntroducerAlert from "./Component/IntroducerAlert";
 import ResetPassword from "./Component/DashBoard/ResetPassword";
-import WebsiteTransactionPage from "./pages/WebsiteTransactionPage";
-import BankTransactionPage from "./pages/BankTransactionPage";
+import WebsiteTransactionPage from "./pages/TransactionPage/WebsiteTransactionPage";
+import BankTransactionPage from "./pages/TransactionPage/BankTransactionPage";
 import MyTxn from "./Component/DashBoard/MyTxn";
 
 function App() {

@@ -1,8 +1,8 @@
 import React from "react";
-import AccountService from "../Services/AccountService";
+import AccountService from "../../Services/AccountService";
 import { useState } from "react";
-import TableTransaction from "../Component/TableTransaction";
-import FilterTransaction from "../Component/FilterTransaction";
+import TableTransaction from "../../Component/TableTransaction";
+import FilterTransaction from "../../Component/FilterTransaction";
 import { useParams } from "react-router";
 
 const BankTransactionPage = () => {
