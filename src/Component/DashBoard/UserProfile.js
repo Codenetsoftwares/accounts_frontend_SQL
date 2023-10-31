@@ -97,6 +97,7 @@ const UserProfile = () => {
           page={page}
           totalPage={pageNumber}
           totalData={totalData}
+          perPagePagination={10}
         />
       </>) : (<h1 className="text-center mt-4">No Users Founds</h1>)}
 

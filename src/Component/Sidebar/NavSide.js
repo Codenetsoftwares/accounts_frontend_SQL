@@ -556,7 +556,14 @@ const NavSide = () => {
                               >
                                 <i className="far fa-circle nav-icon" />
                                 <p>Delete</p>
-                              </Link>
+                                  </Link>
+                                  <Link
+                                    to="/newwebsite"
+                                    className="nav-link text-white"
+                                  >
+                                    <i className="far fa-circle nav-icon" />
+                                    <p>New Website</p>
+                                  </Link>
                             </li>
                           )}
                         </>

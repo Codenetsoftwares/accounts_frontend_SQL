@@ -55,7 +55,7 @@ class AccountService {
     });
   }
 
-  getbank(page, user) {
+  getbank(user, page) {
     return axios({
       method: "get",
       url: `${API_HOST}/api/get-bank-name?page=${page}&itemsPerPage=4`,
@@ -75,10 +75,19 @@ class AccountService {
     });
   }
 
-  website(user) {
+  getrequestedwebsite(user) {
     return axios({
       method: "get",
-      url: API_HOST + "/api/get-website-name",
+      url: API_HOST + "/api/superadmin/view-website-requests",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+  website(user, page) {
+    return axios({
+      method: "get",
+      url: `${API_HOST}/api/get-website-name?page=${page}&itemsPerPage=4`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -568,6 +577,8 @@ class AccountService {
       },
     });
   }
+
+
 }
 
 export default new AccountService();

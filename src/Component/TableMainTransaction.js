@@ -380,7 +380,7 @@ const TableMainTransaction = ({ FilterData, purpose, page, handlePage, totalPage
                 //   {/* <input type='number' className='m-1' width={8} onChange={(e) => { setPge(e.target.value) }} />
                 //           <button type="button" class="btn btn-primary" onClick={handlePage(pge)}>Go</button> */}
                 // </div>
-                <Pagination handlePage={handlePage} page={page} totalPage={totalPage} totalData={totalData} />
+                <Pagination handlePage={handlePage} page={page} totalPage={totalPage} totalData={totalData} perPagePagination={10} />
             ) : null}
             <EditTransaction id={id} />
         </div>

@@ -108,22 +108,23 @@ const AdminBank = () => {
         });
     }
   };
-  const handleData = () => {
-    setIsLoading(true)
-    AccountService.getbank(page, auth.user).then((res) => {
-      return (
-        setGetBankName(res.data.paginatedResults),
-        setTotalData(res.data.allIntroDataLength),
-        setTotalPage(res.data.pageNumber),
-        setIsLoading(false)
-      )
-    });
-  }
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await AccountService.getbank(auth.user, page);
+        setGetBankName(res.data.paginatedResults);
+        setTotalData(res.data.allIntroDataLength);
+        setTotalPage(res.data.pageNumber);
+        setIsLoading(true);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setIsLoading(true);
+      }
+    };
+    fetchData();
+  }, [page]);
 
-    handleData()
-  }, [auth]);
   console.log("Bank Names", getbankName);
   console.log("first", isLoading)
 
@@ -141,131 +142,133 @@ const AdminBank = () => {
 
   console.log(Id);
   return (
-    <div>
-      <ShimmerEffect show={isLoading} />
-      <div class="card text-center card text-center mt-2 mr-5 ml-5">
-        <div class="card-header fs-3 text-bold">PAYMENT DETAILS</div>
-        <div class="card-body">
-          {/* <input
+    <>
+      {isLoading ?
+        <div>
+        <div>
+          <div class="card text-center card text-center mt-2 mr-5 ml-5">
+            <div class="card-header fs-3 text-bold">PAYMENT DETAILS</div>
+            <div class="card-body">
+              {/* <input
             class="form-control mb-2"
             id="inputPassword2"
             placeholder="Name"
             onChange={handlebankname}
           /> */}
-          <div class="card-body">
-            {getbankName.length > 0 &&
-              getbankName.map((data, index) => {
-                return (
-                  <div class="card d-flex justify-content-between">
-                    <div class="card-body ">
-                      <p className="font-weight-bold">
-                        {data.bankName}
-                        <br />
-                        <p className="text-success">Balance:{data.balance}</p>
-                      </p>
-                      <div className=" d-flex justify-content-center gap-1">
-                        <button
-                          type="button"
-                          class="btn btn-danger btn-sm"
-                          data-bs-toggle="modal"
-                          data-bs-target="#modalWthbl"
-                          onClick={() => {
-                            handelId(data._id);
-                          }}
-                        >
-                          <FontAwesomeIcon
-                            icon={faMinus}
-                            className="add-icon"
-                          />
-                        </button>
-                        <button
-                          type="button"
-                          class="btn btn-success btn-sm"
-                          data-bs-toggle="modal"
-                          data-bs-target="#modalAdbl"
-                          onClick={() => {
-                            handelId(data._id);
-                          }}
-                        >
-                          <FontAwesomeIcon icon={faPlus} className="add-icon" />
-                        </button>
-                        <button
-                          type="button"
-                          class="btn btn-info btn-sm"
-                          onClick={(e) => {
-                            handelstatement(e, data.bankName);
-                          }}
-                        >
-                          <FontAwesomeIcon
-                            icon={faFileAlt}
-                            className="add-icon"
-                          />
-                        </button>
-                        <button
-                          type="button"
-                          class="btn btn-warning btn-sm "
-                          onClick={(e) => {
-                            handelEditbank(e, data._id);
-                          }}
-                        >
-                          <FontAwesomeIcon
-                            icon={faEdit}
-                            data-toggle="modal"
-                            data-target="#exampleModalCenter"
-                          />
-                        </button>
-                        <button type="button" class="btn btn-danger  btn-sm">
-                          <FontAwesomeIcon
-                            icon={faTrashAlt}
-                            className="delete-icon"
-                            onClick={(e) => {
-                              handleDeleteBank(e, data._id);
-                            }}
-                          />
-                        </button>
-                        <button
-                          type="button"
-                          class="btn btn-primary  btn-sm"
-                          data-toggle="modal"
-                          data-target="#exampleModal"
-                          onClick={() => {
-                            handelId(data._id);
-                          }}
-                        >
-                          <FontAwesomeIcon
-                            icon={faEye}
-                            className="delete-icon"
-                          />
-                        </button>
-                        {data.isActive === false ? (
-                          <button
-                            type="button"
-                            class="btn btn-dark btn-sm"
-                            title="Active"
-                            onClick={handelactiveinactive}
-                          >
-                            <FontAwesomeIcon
-                              icon={faStar}
-                              className="active-icon"
-                            />
-                          </button>
-                        ) : (
-                          <button
-                            type="button"
-                            class="btn btn-dark btn-sm"
-                            title="Inactive"
-                            onClick={handelactiveinactive}
-                          >
-                            <FontAwesomeIcon
-                              icon={faTimes}
-                              className="active-icon"
-                            />
-                          </button>
-                        )}
-                      </div>
-                      {/* Active,Inactive */}
+              <div class="card-body">
+                {getbankName.length > 0 &&
+                  getbankName.map((data, index) => {
+                    return (
+                      <div class="card d-flex justify-content-between">
+                        <div class="card-body ">
+                          <p className="font-weight-bold">
+                            {data.bankName}
+                            <br />
+                            <p className="text-success">Balance:{data.balance}</p>
+                          </p>
+                          <div className=" d-flex justify-content-center gap-1">
+                            <button
+                              type="button"
+                              class="btn btn-danger btn-sm"
+                              data-bs-toggle="modal"
+                              data-bs-target="#modalWthbl"
+                              onClick={() => {
+                                handelId(data._id);
+                              }}
+                            >
+                              <FontAwesomeIcon
+                                icon={faMinus}
+                                className="add-icon"
+                              />
+                            </button>
+                            <button
+                              type="button"
+                              class="btn btn-success btn-sm"
+                              data-bs-toggle="modal"
+                              data-bs-target="#modalAdbl"
+                              onClick={() => {
+                                handelId(data._id);
+                              }}
+                            >
+                              <FontAwesomeIcon icon={faPlus} className="add-icon" />
+                            </button>
+                            <button
+                              type="button"
+                              class="btn btn-info btn-sm"
+                              onClick={(e) => {
+                                handelstatement(e, data.bankName);
+                              }}
+                            >
+                              <FontAwesomeIcon
+                                icon={faFileAlt}
+                                className="add-icon"
+                              />
+                            </button>
+                            <button
+                              type="button"
+                              class="btn btn-warning btn-sm "
+                              onClick={(e) => {
+                                handelEditbank(e, data._id);
+                              }}
+                            >
+                              <FontAwesomeIcon
+                                icon={faEdit}
+                                data-toggle="modal"
+                                data-target="#exampleModalCenter"
+                              />
+                            </button>
+                            <button type="button" class="btn btn-danger  btn-sm">
+                              <FontAwesomeIcon
+                                icon={faTrashAlt}
+                                className="delete-icon"
+                                onClick={(e) => {
+                                  handleDeleteBank(e, data._id);
+                                }}
+                              />
+                            </button>
+                            <button
+                              type="button"
+                              class="btn btn-primary  btn-sm"
+                              data-toggle="modal"
+                              data-target="#exampleModal"
+                              onClick={() => {
+                                handelId(data._id);
+                              }}
+                            >
+                              <FontAwesomeIcon
+                                icon={faEye}
+                                className="delete-icon"
+                              />
+                            </button>
+                            {data.isActive === false ? (
+                              <button
+                                type="button"
+                                class="btn btn-dark btn-sm"
+                                title="Active"
+                                onClick={handelactiveinactive}
+                              >
+                                <FontAwesomeIcon
+                                  icon={faStar}
+                                  className="active-icon"
+                                />
+                              </button>
+                            ) : (
+                              <button
+                                type="button"
+                                class="btn btn-dark btn-sm"
+                                title="Inactive"
+                                onClick={handelactiveinactive}
+                              >
+                                <FontAwesomeIcon
+                                  icon={faTimes}
+                                  className="active-icon"
+                                />
+                              </button>
+                            )}
+                          </div>
+                          {/* Active,Inactive */}
 
-                      {/* <div className="form-check form-switch mt-1">
+                          {/* <div className="form-check form-switch mt-1">
                         <input
                           className="form-check-input"
                           type="checkbox"
@@ -280,15 +283,15 @@ const AdminBank = () => {
                           Active
                         </label>
                       </div> */}
-                      {/* End of Active,Inactive Part */}
-                    </div>
-                  </div>
-                );
-              })}
-          </div>
-        </div>
-        <div class="card-footer text-muted">
-          {/* <div class="card-body">
+                          {/* End of Active,Inactive Part */}
+                        </div>
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
+            <div class="card-footer text-muted">
+              {/* <div class="card-body">
             {getbankName.length > 0 &&
               getbankName.map((data, index) => {
                 return (
@@ -350,23 +353,27 @@ const AdminBank = () => {
                 );
               })}
           </div> */}
-          <button
-            class="btn btn-primary"
-            data-bs-toggle="modal"
-            data-bs-target="#innerbnk"
-          >
-            Add New Bank
-          </button>
+              <button
+                class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#innerbnk"
+              >
+                Add New Bank
+              </button>
+            </div>
+            <ModalAddBl ID={Id} />
+            <ModalWthBl ID={Id} />
+            <InnerBank />
+            <SubAdminBank ID={Id} />
+          </div>
         </div>
-        <ModalAddBl ID={Id} />
-        <ModalWthBl ID={Id} />
-        <InnerBank />
-        <SubAdminBank ID={Id} />
-      </div>
-      {getbankName.length > 0 &&
-        <Pagination handlePage={handlePage} page={page} totalPage={totalPage} totalData={totalData} />
+        {getbankName.length > 0 &&
+          <Pagination handlePage={handlePage} page={page} totalPage={totalPage} totalData={totalData} perPagePagination={4} />
+        }
+      </div> : <div className="container"><ShimmerEffect /></div>
       }
-    </div>
+
+    </>
   );
 };
 

@@ -146,7 +146,7 @@ const IntroducerProfile = () => {
           </div>
         ))}
       </ul>
-        <Pagination handlePage={handlePage} page={page} totalPage={pageNumber} totalData={totalData} />
+        <Pagination handlePage={handlePage} page={page} totalPage={pageNumber} totalData={totalData} perPagePagination={10} />
       </>) : (
         <h1 className="text-center mt-4">No Introducer Founds</h1>
       )}

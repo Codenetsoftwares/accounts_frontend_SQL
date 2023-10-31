@@ -1,11 +1,24 @@
 import React from 'react'
-import { ShimmerPostDetails } from "react-shimmer-effects";
+import { ShimmerTable, ShimmerPostDetails } from "react-shimmer-effects";
 
-const ShimmerEffect = (show) => {
+const ShimmerEffect = () => {
     return (
-        <div>
-            {show === true ? (<ShimmerPostDetails card cta variant="EDITOR" />) : null}
-        </div>
+        <ShimmerTable row={5} col={5} />
+        // <div className="skeleton-blog">
+        //     <header>
+        //         <div className="skeleton-avatar">
+        //         </div>
+
+        //         <div className="skeleton-author">
+        //         </div>
+        //     </header>
+
+        //     <main className="skeleton-image">
+        //     </main>
+
+        //     <footer className="skeleton-footer">
+        //     </footer>
+        // </div>
     )
 }
 
