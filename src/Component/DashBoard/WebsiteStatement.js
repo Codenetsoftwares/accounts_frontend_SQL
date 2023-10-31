@@ -810,7 +810,7 @@ const WebsiteStatement = () => {
             </table>
             {documentView.length > 0 && (
 
-              <Pagination handlePage={selectPageHandler} page={page} totalPage={lastPage} totalData={documentView.length} />
+              <Pagination handlePage={selectPageHandler} page={page} totalPage={lastPage} totalData={documentView.length} perPagePagination={10} />
 
             )}
           </div>
@@ -1142,7 +1142,7 @@ const WebsiteStatement = () => {
             </table>
             {documentFilter.length > 0 && (
 
-              <Pagination handlePage={selectPageHandler} page={page} totalPage={filterLastPage} totalData={documentFilter.length} />
+                <Pagination handlePage={selectPageHandler} page={page} totalPage={filterLastPage} totalData={documentFilter.length} perPagePagination={10} />
 
             )}
           </div>

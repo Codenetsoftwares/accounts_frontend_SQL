@@ -96,10 +96,6 @@ const BankStatement = () => {
   }, [auth]);
 
   useEffect(() => {
-    AccountService.website(auth.user).then((res) => setWebsiteList(res.data));
-  }, [auth]);
-
-  useEffect(() => {
     AccountService.introducerId(auth.user).then((res) =>
       setIntroducerList(res.data)
     );
@@ -808,7 +804,7 @@ const BankStatement = () => {
             </table>
             {documentView.length > 0 && (
 
-              <Pagination handlePage={selectPageHandler} page={page} totalPage={lastPage} totalData={documentView.length} />
+              <Pagination handlePage={selectPageHandler} page={page} totalPage={lastPage} totalData={documentView.length} perPagePagination={10} />
             )}
           </div>
         ) : (
@@ -1282,7 +1278,7 @@ const BankStatement = () => {
               //   </button>
               // </div>
               //   )
-              <Pagination handlePage={selectPageHandler} page={page} totalPage={filterLastPage} totalData={documentFilter.length} />
+                <Pagination handlePage={selectPageHandler} page={page} totalPage={filterLastPage} totalData={documentFilter.length} perPagePagination={10} />
 
             )}
           </div>

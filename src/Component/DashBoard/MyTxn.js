@@ -832,6 +832,7 @@ const BankStatement = () => {
                 page={page}
                 totalPage={lastPage}
                 totalData={documentView.length}
+                perPagePagination={10}
               />
             )}
           </div>
@@ -1210,7 +1211,8 @@ const BankStatement = () => {
                 handlePage={selectPageHandler}
                 page={page}
                 totalPage={filterLastPage}
-                totalData={documentFilter.length}
+                  totalData={documentFilter.length}
+                  perPagePagination={10}
               />
             )}
           </div>

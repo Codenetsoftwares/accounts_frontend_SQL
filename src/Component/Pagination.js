@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 
-const Pagination = ({ handlePage, page, totalPage, totalData, lastPageReminder }) => {
-    let startIndex = Math.min((page - 1) * 10 + 1);
-    let endIndex = Math.min(page * 10, totalData);
+const Pagination = ({ handlePage, page, totalPage, totalData, lastPageReminder, perPagePagination }) => {
+    let startIndex = Math.min((page - 1) * perPagePagination + 1);
+    let endIndex = Math.min(page * perPagePagination, totalData);
 
     let arr = [];
     const handleAdvancepage = () => {

@@ -469,7 +469,7 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage, to
       </table>
       {FilterData.length > 0 && (
 
-        <Pagination handlePage={selectPageHandler} page={page} totalPage={lastPage} totalData={FilterData.length} lastPageReminder={lastPageReminder} />
+        <Pagination handlePage={selectPageHandler} page={page} totalPage={lastPage} totalData={FilterData.length} lastPageReminder={lastPageReminder} perPagePagination={10} />
       )}
     </div>
   );

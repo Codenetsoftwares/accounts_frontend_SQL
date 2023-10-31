@@ -1,18 +1,24 @@
 import React, { useState, useEffect } from "react";
 import TransactionSercvice from "../../Services/TransactionSercvice";
 import { useAuth } from "../../Utils/Auth";
-import AccountService from "../../Services/AccountService";
 
-const SubAdminBank = ({ ID }) => {
+const SubAdminBank = ({ ID, EditApi }) => {
   const [subAdminlist, setSubAdminlist] = useState([]);
+  const [subAdmin, setSubAdmin] = useState([]);
   const [checkboxStates, setCheckboxStates] = useState([]); // State for checkbox data
+  const [checkboxIsDeposit, setCheckboxIsDeposit] = useState([]); // State for checkbox data
+  const [checkboxIsWithdraw, setCheckboxIsWithdraw] = useState([]); // State for checkbox data
+
   const auth = useAuth();
 
   useEffect(() => {
     if (auth.user) {
       TransactionSercvice.subAdminList(auth.user).then((res) => {
-        setSubAdminlist(res.data);
+        setSubAdmin(res.data)
+        setSubAdminlist(res.data.map((data) => data.userName));
         setCheckboxStates(res.data.map(() => false)); // Initialize checkbox states
+        setCheckboxIsDeposit(res.data.map(() => false));
+        setCheckboxIsWithdraw(res.data.map(() => false));
       });
     }
   }, [auth]);
@@ -23,22 +29,50 @@ const SubAdminBank = ({ ID }) => {
     setCheckboxStates(newCheckboxStates);
   };
 
+  const handleCheckboxIsDepositChange = (index) => {
+    const newCheckboxIsDeposit = [...checkboxIsDeposit];
+    newCheckboxIsDeposit[index] = !newCheckboxIsDeposit[index];
+    setCheckboxIsDeposit(newCheckboxIsDeposit);
+  };
+  const handleCheckboxIsWithdrawChange = (index) => {
+    const newCheckboxIsWithdraw = [...checkboxIsWithdraw];
+    newCheckboxIsWithdraw[index] = !newCheckboxIsWithdraw[index];
+    setCheckboxIsWithdraw(newCheckboxIsWithdraw);
+  };
+  console.log("subadmin", checkboxStates, "isdeposit", checkboxIsDeposit, "iswithdraw", checkboxIsWithdraw)
   const handelsave = () => {
-    const selectedNames = subAdminlist
-      .filter((_, index) => checkboxStates[index])
-      .map((subAdmin) => subAdmin.userName);
-    console.log("Selected Names =>", selectedNames);
-    console.log(ID);
-    console.log(subAdminlist);
+    // const selectedNames = subAdminlist
+    //   .filter((_, index) => checkboxStates[index])
+    //   .map((subAdmin) => subAdmin.userName);
+    // console.log("Selected Names =>", selectedNames);
+    // console.log(ID);
+    // console.log(subAdminlist);
+    let arr = [];
+    const handledata = () => {
+      let data = {};
+      for (let i = 0; i <= 10; i++) {
+        if (checkboxStates[i] === true) {
+          data = {
+            subAdminId: subAdminlist[i],
+            isDeposit: checkboxIsDeposit[i],
+            isWithdraw: checkboxIsWithdraw[i]
+          }
+          arr.push(data)
+        }
+      }
+      return arr;
+    }
+    handledata();
+    console.log(arr)
     const data = {
-      subAdminIds: selectedNames,
+      isApproved: true,
+      subAdmins: arr,
     };
 
-    AccountService.subadminbankpermission(ID, data, auth.user)
+    EditApi(ID, data, auth.user)
       .then((response) => {
         console.log("res", response.data);
         alert(response.data.message);
-        // alert("Bank Added Sucessfully");
         // window.location.reload();
       })
       .catch((error) => {
@@ -46,7 +80,7 @@ const SubAdminBank = ({ ID }) => {
         console.log(error);
       });
   };
-
+  console.log(subAdminlist)
   return (
     <div>
       <div
@@ -74,34 +108,78 @@ const SubAdminBank = ({ ID }) => {
             </div>
             <div className="modal-body">
               <form>
-                {subAdminlist.length > 0 ? (
-                  subAdminlist.map((subAdmin, index) => (
+                {subAdmin.length > 0 ? (
+                  subAdmin.map((subAdmin, index) => (
                     <div
                       key={index}
                       className="form-check"
                       style={{ margin: "5px" }}
                     >
-                      <div style={{ display: "flex", alignItems: "center" }}>
-                        <input
-                          type="checkbox"
-                          className="form-check-input"
-                          id={`checkbox${index}`}
-                          style={{ marginRight: "5px" }}
-                          checked={checkboxStates[index]}
-                          onChange={() => handleCheckboxChange(index)}
-                          value={subAdmin.userName}
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor={`checkbox${index}`}
-                          style={{ fontWeight: "bold" }}
-                        >
-                          {subAdmin.userName}
-                        </label>
+                      <div className="d-flex justify-content-between">
+                        <div>
+                          <input
+                            type="checkbox"
+                            className="form-check-input"
+                            id={`checkbox${index}`}
+                            style={{ marginRight: "5px" }}
+                            checked={checkboxStates[index]}
+                            onChange={() => handleCheckboxChange(index)}
+                            value={subAdmin.userName}
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor={`checkbox${index}`}
+                            style={{ fontWeight: "bold" }}
+                          >
+                            {subAdmin.userName}
+                          </label>
+                        </div>
+
+                        <div>
+                          <input
+                            type="checkbox"
+                            className="form-check-input"
+                            id={`checkbox${index}`}
+                            style={{ marginRight: "5px" }}
+                            checked={checkboxIsDeposit[index]}
+                            onChange={() => handleCheckboxIsDepositChange(index)}
+                          // value={subAdmin.userName}
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor={`checkbox${index}`}
+                            style={{ fontWeight: "bold" }}
+                          >
+                            isDeposit
+                          </label>
+                        </div>
+
+                        <div>
+                          <input
+                            type="checkbox"
+                            className="form-check-input"
+                            id={`checkbox${index}`}
+                            style={{ marginRight: "5px" }}
+                            checked={checkboxIsWithdraw[index]}
+                            onChange={() => handleCheckboxIsWithdrawChange(index)}
+                          // value={subAdmin.userName}
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor={`checkbox${index}`}
+                            style={{ fontWeight: "bold" }}
+                          >
+                            isWithdraw
+                          </label>
+                        </div>
+
                       </div>
-                      {index < subAdminlist.length - 1 && (
-                        <hr style={{ margin: "5px 0", borderColor: "black" }} />
-                      )}
+
+                      {
+                        index < subAdminlist.length - 1 && (
+                          <hr style={{ margin: "5px 0", borderColor: "black" }} />
+                        )
+                      }
                     </div>
                   ))
                 ) : (
@@ -127,8 +205,8 @@ const SubAdminBank = ({ ID }) => {
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 };
 

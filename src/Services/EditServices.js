@@ -123,7 +123,28 @@ class EditServices {
     });
   }
 
+  NewWebsiteRqApprove(id, data, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/approve-website/${id}`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
   NewBankRqReject(_id, user) {
+    return axios({
+      method: "delete",
+      url: `${API_HOST}/api/reject/${_id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  NewWebsiteRqReject(_id, user) {
     return axios({
       method: "delete",
       url: `${API_HOST}/api/reject/${_id}`,

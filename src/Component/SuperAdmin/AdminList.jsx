@@ -105,7 +105,8 @@ const AdminList = () => {
             handlePage={handlePage}
             page={page}
             totalPage={pageNumber}
-            totalData={totalData} />
+            totalData={totalData}
+            perPagePagination={10}/>
         </>) : (<h1 className="text-center mt-4">No Users Founds</h1>)}
 
     </div>
