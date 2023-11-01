@@ -83,6 +83,7 @@ const BankStatement = () => {
     if (auth.user) {
       TransactionSercvice.subAdminList(auth.user).then((res) => {
         setSubAdminlist(res.data);
+        console.log(res.data)
       });
     }
   }, [auth]);
@@ -94,6 +95,10 @@ const BankStatement = () => {
       });
     }
   }, [auth]);
+
+  useEffect(() => {
+    handleFilter()
+  }, [documentView]);
 
   useEffect(() => {
     AccountService.introducerId(auth.user).then((res) =>
@@ -108,8 +113,9 @@ const BankStatement = () => {
   };
 
   const handleFilter = () => {
-    const sdate = moment(startDatevalue, "DD-MM-YYYY HH:mm").toDate();
-    const edate = moment(endDatevalue, "DD-MM-YYYY HH:mm").toDate();
+    console.log(startDatevalue)
+    const sdate = moment(startDatevalue).toDate();
+    const edate = moment(endDatevalue).toDate();
     let filteredDocuments = documentView.filter((data) => {
       const transactionDate = new Date(data.createdAt);
       return transactionDate >= sdate && transactionDate <= edate;
@@ -268,6 +274,7 @@ const BankStatement = () => {
     setPage(1);
     setMinAmount(0);
     setMaxAmount(0);
+    window.location.reload()
   };
 
   const handleStartDatevalue = (e) => {
@@ -350,8 +357,8 @@ const BankStatement = () => {
                 <option selected>Select subAdmin</option>
                 {subAdminlist.map((data) => {
                   return (
-                    <option key={data._id} value={data.firstname}>
-                      {data.firstname}
+                    <option key={data._id} value={data.userName}>
+                      {data.userName}
                     </option>
                   );
                 })}
@@ -1278,7 +1285,7 @@ const BankStatement = () => {
               //   </button>
               // </div>
               //   )
-                <Pagination handlePage={selectPageHandler} page={page} totalPage={filterLastPage} totalData={documentFilter.length} perPagePagination={10} />
+              <Pagination handlePage={selectPageHandler} page={page} totalPage={filterLastPage} totalData={documentFilter.length} perPagePagination={10} />
 
             )}
           </div>
