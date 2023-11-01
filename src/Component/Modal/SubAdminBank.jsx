@@ -39,14 +39,7 @@ const SubAdminBank = ({ ID, EditApi }) => {
     newCheckboxIsWithdraw[index] = !newCheckboxIsWithdraw[index];
     setCheckboxIsWithdraw(newCheckboxIsWithdraw);
   };
-  console.log("subadmin", checkboxStates, "isdeposit", checkboxIsDeposit, "iswithdraw", checkboxIsWithdraw)
   const handelsave = () => {
-    // const selectedNames = subAdminlist
-    //   .filter((_, index) => checkboxStates[index])
-    //   .map((subAdmin) => subAdmin.userName);
-    // console.log("Selected Names =>", selectedNames);
-    // console.log(ID);
-    // console.log(subAdminlist);
     let arr = [];
     const handledata = () => {
       let data = {};
@@ -73,14 +66,14 @@ const SubAdminBank = ({ ID, EditApi }) => {
       .then((response) => {
         console.log("res", response.data);
         alert(response.data.message);
-        // window.location.reload();
+        window.location.reload();
       })
       .catch((error) => {
         alert(error.response.data.message);
         console.log(error);
       });
   };
-  console.log(subAdminlist)
+
   return (
     <div>
       <div
