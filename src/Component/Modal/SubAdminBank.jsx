@@ -43,14 +43,14 @@ const SubAdminBank = ({ ID, EditApi }) => {
     let arr = [];
     const handledata = () => {
       let data = {};
-      for (let i = 0; i <= 10; i++) {
+      for (let i = 0; i < subAdminlist.length; i++) {
         if (checkboxStates[i] === true) {
           data = {
             subAdminId: subAdminlist[i],
             isDeposit: checkboxIsDeposit[i],
-            isWithdraw: checkboxIsWithdraw[i]
-          }
-          arr.push(data)
+            isWithdraw: checkboxIsWithdraw[i],
+          };
+          arr.push(data);
         }
       }
       return arr;
