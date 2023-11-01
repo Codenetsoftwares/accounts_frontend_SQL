@@ -155,11 +155,15 @@ const WebsiteStatement = () => {
     );
   }, [auth]);
 
+  useEffect(() => {
+    handleFilter()
+  }, [documentView]);
+
   console.log(documentView);
 
   const handleFilter = () => {
-    const sdate = moment(startDatevalue, "DD-MM-YYYY HH:mm").toDate();
-    const edate = moment(endDatevalue, "DD-MM-YYYY HH:mm").toDate();
+    const sdate = moment(startDatevalue).toDate();
+    const edate = moment(endDatevalue).toDate();
     let filteredDocuments = documentView.filter((data) => {
       const transactionDate = new Date(data.createdAt);
       return transactionDate >= sdate && transactionDate <= edate;
@@ -208,6 +212,7 @@ const WebsiteStatement = () => {
     setPage(1);
     setMinAmount(0);
     setMaxAmount(0);
+    window.location.reload();
   };
 
   const handleDelete = (e, id, transactionType) => {
@@ -1142,7 +1147,7 @@ const WebsiteStatement = () => {
             </table>
             {documentFilter.length > 0 && (
 
-                <Pagination handlePage={selectPageHandler} page={page} totalPage={filterLastPage} totalData={documentFilter.length} perPagePagination={10} />
+              <Pagination handlePage={selectPageHandler} page={page} totalPage={filterLastPage} totalData={documentFilter.length} perPagePagination={10} />
 
             )}
           </div>
