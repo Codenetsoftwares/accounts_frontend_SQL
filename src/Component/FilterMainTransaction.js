@@ -84,13 +84,13 @@ const FilterMainTransaction = ({ purpose, handleData, page, handlePage, handleTo
             TransactionSercvice.bankList(auth.user).then((res) => {
                 setBankList(res.data);
             });
-            AccountService.website(auth.user).then((res) => setWebsiteList(res.data));
+            AccountService.website(auth.user).then((res) => setWebsiteList(res.data.paginatedResults));
             AccountService.introducerId(auth.user).then((res) =>
                 setIntroducerList(res.data)
             );
         }
     }, [auth]);
-
+    console.log(websiteList)
     const handleStartDatevalue = (e) => {
         SetStartDatesetValue(moment(e));
     };
