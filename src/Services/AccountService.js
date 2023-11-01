@@ -567,6 +567,17 @@ class AccountService {
     });
   }
 
+  activeInactive(id, data, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/admin/bank/isactive/${id}`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
   subadminbankpermission(id, data, user) {
     return axios({
       method: "post",
@@ -577,8 +588,6 @@ class AccountService {
       },
     });
   }
-
-
 }
 
 export default new AccountService();
