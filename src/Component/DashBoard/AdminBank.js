@@ -140,7 +140,6 @@ const AdminBank = () => {
     setAI(true);
   };
 
-  console.log(Id);
   return (
     <>
       {isLoading ?
@@ -149,12 +148,6 @@ const AdminBank = () => {
           <div class="card text-center card text-center mt-2 mr-5 ml-5">
             <div class="card-header fs-3 text-bold">PAYMENT DETAILS</div>
             <div class="card-body">
-              {/* <input
-            class="form-control mb-2"
-            id="inputPassword2"
-            placeholder="Name"
-            onChange={handlebankname}
-          /> */}
               <div class="card-body">
                 {getbankName.length > 0 &&
                   getbankName.map((data, index) => {
