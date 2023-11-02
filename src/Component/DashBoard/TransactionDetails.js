@@ -106,9 +106,9 @@ const TransactionDetails = () => {
   }, [auth]);
 
   useEffect(() => {
-    AccountService.website(auth.user).then((res) => setWebsiteList(res.data));
+    AccountService.website(auth.user).then((res) => setWebsiteList(res.data.paginatedResults));
   }, [auth]);
-
+     
   useEffect(() => {
     AccountService.introducerId(auth.user).then((res) =>
       setIntroducerList(res.data)
@@ -387,17 +387,16 @@ const TransactionDetails = () => {
 
                         <td>
                           <p
-                            className={`col fs-6  ${
-                              data.transactionType.includes(
-                                "Manual-Website-Withdraw"
-                              ) ||
+                            className={`col fs-6  ${data.transactionType.includes(
+                              "Manual-Website-Withdraw"
+                            ) ||
                               data.transactionType.includes(
                                 "Manual-Bank-Withdraw"
                               ) ||
                               data.transactionType === "Withdraw"
-                                ? "text-red"
-                                : "text-black"
-                            }`}
+                              ? "text-red"
+                              : "text-black"
+                              }`}
                           >
                             {data.amount && (
                               <p className="col fs-6 font-weight-bold">
@@ -434,17 +433,16 @@ const TransactionDetails = () => {
                         <td>
                           {data?.transactionType && (
                             <p
-                              className={`col fs-6  ${
-                                data.transactionType.includes(
-                                  "Manual-Website-Withdraw"
-                                ) ||
+                              className={`col fs-6  ${data.transactionType.includes(
+                                "Manual-Website-Withdraw"
+                              ) ||
                                 data.transactionType.includes(
                                   "Manual-Bank-Withdraw"
                                 ) ||
                                 data.transactionType === "Withdraw"
-                                  ? "text-red"
-                                  : "text-black"
-                              }`}
+                                ? "text-red"
+                                : "text-black"
+                                }`}
                             >
                               {data.transactionType}
                             </p>
@@ -559,17 +557,16 @@ const TransactionDetails = () => {
 
                         <td>
                           <p
-                            className={`col fs-6  ${
-                              data.transactionType.includes(
-                                "Manual-Website-Withdraw"
-                              ) ||
+                            className={`col fs-6  ${data.transactionType.includes(
+                              "Manual-Website-Withdraw"
+                            ) ||
                               data.transactionType.includes(
                                 "Manual-Bank-Withdraw"
                               ) ||
                               data.transactionType === "Withdraw"
-                                ? "text-red"
-                                : "text-black"
-                            }`}
+                              ? "text-red"
+                              : "text-black"
+                              }`}
                           >
                             {data.amount && (
                               <p className="col fs-6 font-weight-bold">
@@ -606,17 +603,16 @@ const TransactionDetails = () => {
                         <td>
                           {data?.transactionType && (
                             <p
-                              className={`col fs-6  ${
-                                data.transactionType.includes(
-                                  "Manual-Website-Withdraw"
-                                ) ||
+                              className={`col fs-6  ${data.transactionType.includes(
+                                "Manual-Website-Withdraw"
+                              ) ||
                                 data.transactionType.includes(
                                   "Manual-Bank-Withdraw"
                                 ) ||
                                 data.transactionType === "Withdraw"
-                                  ? "text-red"
-                                  : "text-black"
-                              }`}
+                                ? "text-red"
+                                : "text-black"
+                                }`}
                             >
                               {data.transactionType}
                             </p>

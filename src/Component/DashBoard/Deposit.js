@@ -26,12 +26,12 @@ function Deposit() {
   const [selectedOption, setSelectedOption] = useState(null);
 
   useEffect(() => {
-    AccountService.getbank(auth.user).then((res) => setBank(res.data));
+    AccountService.getbank(auth.user).then((res) => setBank(res.data.paginatedResults));
   }, [auth]);
   console.log("bank names", Bank);
 
   useEffect(() => {
-    AccountService.website(auth.user).then((res) => setWebsite(res.data));
+    AccountService.website(auth.user).then((res) => setWebsite(res.data.paginatedResults));
   }, [auth]);
   console.log("Website Names", Website);
   useEffect(() => {
@@ -100,8 +100,8 @@ function Deposit() {
 
     const filtered = value
       ? UId.filter((data) =>
-          data.userName.toLowerCase().includes(value.toLowerCase())
-        )
+        data.userName.toLowerCase().includes(value.toLowerCase())
+      )
       : [];
 
     setFilteredOptions(filtered);
@@ -169,7 +169,7 @@ function Deposit() {
                   placeholder="Search by User Name"
                   value={searchTerm}
                   onChange={handleInputChange}
-                  
+
                 />
               </div>
               {filteredOptions.length > 0 && (
