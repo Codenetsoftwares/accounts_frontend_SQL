@@ -40,7 +40,7 @@ const FilterMainTransaction = ({ purpose, handleData, page, handlePage, handleTo
         }
         TransactionSercvice.filterTransaction(data, page, auth.user).then((res) => {
             return (
-                setDocumentView(res.data.SecondArray),
+                setDocumentView(res.data.paginatedResults),
                 console.log(documentView),
                 handleData(res.data.paginatedResults, res.data.pageNumber),
                 handleTotalData(res.data.allIntroDataLength)
@@ -54,7 +54,6 @@ const FilterMainTransaction = ({ purpose, handleData, page, handlePage, handleTo
 
     }
 
-    // const handlememo = useMemo(() => { handleFilter() }, [handleFilter])
     const handleReset = () => {
         setSelect("");
         setSubAdmin("");
@@ -65,7 +64,6 @@ const FilterMainTransaction = ({ purpose, handleData, page, handlePage, handleTo
         setIntroducer("");
         handleFilter();
         handlePage(1)
-        // handlememo();
         window.location.reload();
     };
     useEffect(() => {
