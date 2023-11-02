@@ -567,10 +567,21 @@ class AccountService {
     });
   }
 
-  activeInactive(id, data, user) {
+  activeInactiveBank(id, data, user) {
     return axios({
       method: "post",
       url: `${API_HOST}/api/admin/bank/isactive/${id}`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  activeInactiveWebsite(id, data, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/admin/website/isactive/${id}`,
       data: data,
       headers: {
         Authorization: `Bearer ${user.token}`,

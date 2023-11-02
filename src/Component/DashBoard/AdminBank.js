@@ -30,6 +30,7 @@ const AdminBank = () => {
   const [bankName, setBankName] = useState("");
   const [getbankName, setGetBankName] = useState([{}]);
   const [Id, setId] = useState();
+  const [SId, setSId] = useState();
   const [IdWithdraw, setIdWithdraw] = useState();
   const [SubAdmins, setSubAdmins] = useState([]);
   const [documentView, setDocumentView] = useState([]);
@@ -133,8 +134,9 @@ const AdminBank = () => {
     setId(id);
   };
 
-  const handelSubAdmin = (SubAdmins) => {
+  const handelSubAdmin = (SubAdmins , ID) => {
     setSubAdmins(SubAdmins);
+    setSId(ID);
   };
 
   // const handelWithdrawId = (id) => {
@@ -146,7 +148,7 @@ const AdminBank = () => {
     const data = {
       isActive: flag,
     };
-    AccountService.activeInactive(ID, data, auth.user)
+    AccountService.activeInactiveBank(ID, data, auth.user)
       .then((response) => {
         alert("Bank Activated");
         window.location.reload();
@@ -162,7 +164,7 @@ const AdminBank = () => {
     const data = {
       isActive: flag,
     };
-    AccountService.activeInactive(ID, data, auth.user)
+    AccountService.activeInactiveBank(ID, data, auth.user)
       .then((response) => {
         alert("Bank Inactivated");
         window.location.reload();
@@ -206,6 +208,7 @@ const AdminBank = () => {
                                   handelId(data._id);
                                 }}
                                 disabled={!data.isActive || !data.isWithdraw}
+                                title="Withdraw"
                               >
                                 <FontAwesomeIcon
                                   icon={faMinus}
@@ -221,6 +224,7 @@ const AdminBank = () => {
                                   handelId(data._id);
                                 }}
                                 disabled={!data.isActive || !data.isDeposit}
+                                title="Deposit"
                               >
                                 <FontAwesomeIcon
                                   icon={faPlus}
@@ -234,6 +238,7 @@ const AdminBank = () => {
                                   handelstatement(e, data.bankName);
                                 }}
                                 disabled={!data.isActive}
+                                title="Statement"
                               >
                                 <FontAwesomeIcon
                                   icon={faFileAlt}
@@ -247,6 +252,7 @@ const AdminBank = () => {
                                   handelEditbank(e, data._id);
                                 }}
                                 disabled={!data.isActive}
+                                title="Edit Bank"
                               >
                                 <FontAwesomeIcon
                                   icon={faEdit}
@@ -263,6 +269,7 @@ const AdminBank = () => {
                                 onClick={(e) => {
                                   handleDeleteBank(e, data._id);
                                 }}
+                                title="Delete"
                               >
                                 <FontAwesomeIcon
                                   icon={faTrashAlt}
@@ -277,7 +284,7 @@ const AdminBank = () => {
                                 data-toggle="modal"
                                 data-target="#RenewBankPermission"
                                 onClick={() => {
-                                  handelSubAdmin(data.subAdmins);
+                                  handelSubAdmin(data.subAdmins, data._id);
                                 }}
                                 disabled={!data.isActive}
                                 title="Renew Permission"
@@ -401,7 +408,7 @@ const AdminBank = () => {
               <ModalWthBl ID={Id} />
               <InnerBank />
               {/* <SubAdminBank ID={Id} /> */}
-              <RenewBankPermission SubAdmins={SubAdmins} />
+              <RenewBankPermission SubAdmins={SubAdmins} ID={SId} />
             </div>
           </div>
           {getbankName.length > 0 && (

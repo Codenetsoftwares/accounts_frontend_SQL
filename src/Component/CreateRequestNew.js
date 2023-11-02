@@ -51,103 +51,109 @@ const CreateRequestNew = ({ Api, purpose, ApiReject, EditApi }) => {
             });
     };
     return (
-        <div className="container">
-            <h1 className="text-center">New data Details</h1>
-            {error ? (
-                <p>{error}</p>
-            ) : data.length === 0 ? (
-                <div class="alert alert-info justify-content-center" role="alert">
-                    No Request Found !! &#128680;
-                </div>
-            ) : (
-                <table className="table table-striped">
-                    <thead>
-                        {purpose === "bank" && <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">data Name</th>
-                            <th scope="col">Active Status</th>
-                            <th scope="col">Acc Holder</th>
-                            <th scope="col">Acc No.</th>
-                            <th scope="col">IFSC Code</th>
-                            <th scope="col">Created By</th>
-                            <th scope="col">UPI App</th>
-                            <th scope="col">UPI ID</th>
-                            <th scope="col">UPI No.</th>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
-                        </tr>}
-                        {purpose === "website" &&
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">data Name</th>
-                                <th scope="col">Active Status</th>
-                                {/* <th scope="col">Acc Holder</th>
+      <div className="container">
+        <h1 className="text-center">New data Details</h1>
+        {error ? (
+          <p>{error}</p>
+        ) : data.length === 0 ? (
+          <div class="alert alert-info justify-content-center" role="alert">
+            No Request Found !! &#128680;
+          </div>
+        ) : (
+          <table className="table table-striped">
+            <thead>
+              {purpose === "bank" && (
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col"> Name</th>
+                  <th scope="col">Active Status</th>
+                  <th scope="col">Acc Holder</th>
+                  <th scope="col">Acc No.</th>
+                  <th scope="col">IFSC Code</th>
+                  <th scope="col">Created By</th>
+                  <th scope="col">UPI App</th>
+                  <th scope="col">UPI ID</th>
+                  <th scope="col">UPI No.</th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                </tr>
+              )}
+              {purpose === "website" && (
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col"> Name</th>
+                  <th scope="col">Active Status</th>
+                  {/* <th scope="col">Acc Holder</th>
                                 <th scope="col">Acc No.</th>
                                 <th scope="col">IFSC Code</th> */}
-                                <th scope="col">Created By</th>
-                                {/* <th scope="col">UPI App</th>
+                  <th scope="col">Created By</th>
+                  {/* <th scope="col">UPI App</th>
                                 <th scope="col">UPI ID</th>
                                 <th scope="col">UPI No.</th> */}
-                                <th scope="col"></th>
-                                <th scope="col"></th>
-                            </tr>
-                        }
-
-                    </thead>
-                    <tbody>
-                        {data.map((data, index) => (
-                            <tr key={index}>
-                                {purpose === "bank" &&
-                                    <> <th scope="row">{index + 1}</th>
-                                        <td>{data.bankName}</td>
-                                        <td>{data.isActive ? "Active" : "Inactive"}</td>
-                                        <td>{data.accountHolderName}</td>
-                                        <td>{data.accountNumber}</td>
-                                        <td>{data.ifscCode}</td>
-                                        <td>{data.subAdminName}</td>
-                                        <td>{data.upiAppName}</td>
-                                        <td>{data.upiId}</td>
-                                        <td>{data.upiNumber}</td></>
-                                }
-                                {purpose === "website" &&
-                                    <> <th scope="row">{index + 1}</th>
-                                        <td>{data.websiteName}</td>
-                                        <td>{data.isActive ? "Active" : "Inactive"}</td>
-                                        {/* <td>{data.accountHolderName}</td>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                </tr>
+              )}
+            </thead>
+            <tbody>
+              {data.map((data, index) => (
+                <tr key={index}>
+                  {purpose === "bank" && (
+                    <>
+                      {" "}
+                      <th scope="row">{index + 1}</th>
+                      <td>{data.bankName}</td>
+                      <td>{data.isActive ? "Active" : "Inactive"}</td>
+                      <td>{data.accountHolderName}</td>
+                      <td>{data.accountNumber}</td>
+                      <td>{data.ifscCode}</td>
+                      <td>{data.subAdminName}</td>
+                      <td>{data.upiAppName}</td>
+                      <td>{data.upiId}</td>
+                      <td>{data.upiNumber}</td>
+                    </>
+                  )}
+                  {purpose === "website" && (
+                    <>
+                      {" "}
+                      <th scope="row">{index + 1}</th>
+                      <td>{data.websiteName}</td>
+                      <td>{data.isActive ? "Active" : "Inactive"}</td>
+                      {/* <td>{data.accountHolderName}</td>
                                         <td>{data.accountNumber}</td>
                                         <td>{data.ifscCode}</td> */}
-                                        <td>{data.subAdminName}</td>
-                                        {/* <td>{data.upiAppName}</td>
+                      <td>{data.subAdminId}</td>
+                      {/* <td>{data.upiAppName}</td>
                                         <td>{data.upiId}</td>
                                     <td>{data.upiNumber}</td> */}
-                                </>
-                                }
-                                <td>
-                                    <button
-                                        className="btn btn-outline-success"
-                                        onClick={() => handleApprove(data._id)}
-                                        data-toggle="modal"
-                                        data-target="#exampleModal"
-                                    >
-                                        Approve & Active
-                                    </button>
-                                </td>
-                                <td>
-                                    <button
-                                        className="btn btn-outline-danger"
-                                        onClick={() => handleReject(data._id)}
-                                    >
-                                        Reject
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            )}
-            <SubAdminBank ID={Id} EditApi={EditApi} />
-        </div>
-    )
+                    </>
+                  )}
+                  <td>
+                    <button
+                      className="btn btn-outline-success"
+                      onClick={() => handleApprove(data._id)}
+                      data-toggle="modal"
+                      data-target="#exampleModal"
+                    >
+                      Approve & Active
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      className="btn btn-outline-danger"
+                      onClick={() => handleReject(data._id)}
+                    >
+                      Reject
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+        <SubAdminBank ID={Id} EditApi={EditApi} />
+      </div>
+    );
 }
 
 export default CreateRequestNew;

@@ -9,6 +9,9 @@ import {
   faPlus,
   faFileAlt,
   faMinus,
+  faEye,
+  faStar,
+  faTimes
 } from "@fortawesome/free-solid-svg-icons";
 import ModalAdWbl from "../Modal/ModalAdWbl";
 import ModalWbdl from "../Modal/ModalWbdl";
@@ -17,6 +20,7 @@ import { toast } from "react-toastify";
 import EditWebsite from "../Modal/EditWebsite";
 import ShimmerEffect from "../ShimmerEffect";
 import Pagination from "../Pagination";
+import RenewWebsitePermission from "../Modal/RenewWebsitePermission";
 const WebsiteDetails = () => {
   // const { id } = useParams();
   const auth = useAuth();
@@ -25,6 +29,8 @@ const WebsiteDetails = () => {
   const [getWebsite, setGetWebsite] = useState([]);
   const [name, setName] = useState([]);
   const [Id, setId] = useState("");
+  const [SId, setSId] = useState();
+   const [SubAdmins, setSubAdmins] = useState([]);
   const [WebId, setWebId] = useState("");
   const [page, setPage] = useState(1)
   const [totalPage, setTotalPage] = useState(1)
@@ -115,120 +121,234 @@ const WebsiteDetails = () => {
         setTotalPage(res.data.pageNumber);
         setIsLoading(true);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
         setIsLoading(true);
       }
     };
     fetchData();
-  }, [auth]);
+  }, [auth, page]);
   console.log("Website", getWebsite);
 
   const handelstatement = (e, name) => {
     navigate(`/websitestatement/${name}`);
   };
+
+    const handelactive = (ID) => {
+      const flag = true;
+      const data = {
+        isActive: flag,
+      };
+      AccountService.activeInactiveWebsite(ID, data, auth.user)
+        .then((response) => {
+          alert("Website Activated");
+          window.location.reload();
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    };
+
+    const handelinactive = (ID) => {
+      const flag = false;
+      const data = {
+        isActive: flag,
+      };
+      AccountService.activeInactiveWebsite(ID, data, auth.user)
+        .then((response) => {
+          alert("Website Inactivated");
+          window.location.reload();
+          console.log(response.data);
+        })
+        .catch((error) => {
+          alert(error.response.data.message);
+          console.error(error);
+        });
+  };
+    const handelSubAdmin = (SubAdmins, ID) => {
+      setSubAdmins(SubAdmins);
+      setSId(ID);
+    };
+  
   return (
     <>
-      {isLoading ? <div>
-        <div class="card text-center mt-2 mr-5 ml-5">
-          <div class="card-header fs-3 text-bold">WEBSITE DETAILS</div>
+      {isLoading ? (
+        <div>
+          <div class="card text-center mt-2 mr-5 ml-5">
+            <div class="card-header fs-3 text-bold">WEBSITE DETAILS</div>
 
-          <div class="card-body">
-            {getWebsite.length > 0 &&
-              getWebsite.map((data, index) => {
-                {
-                  localStorage.setItem("IdWeb", data._id);
-                }
-                return (
-                  <div class="card d-flex justify-content-between">
-                    <div class="card-body ">
-                      <p className="col font-weight-bold">
-                        {data.websiteName}<br /><p className="text-success">Balance:{data.balance}</p>
-                      </p>
-                      <div className=" d-flex justify-content-center gap-1">
-                        <button
-                          type="button"
-                          class="btn btn-danger  btn-sm"
-                          data-bs-toggle="modal"
-                          data-bs-target="#modalWthwbl"
-                          onClick={() => {
-                            handelId(data._id);
-                          }}
-                        >
-                          <FontAwesomeIcon icon={faMinus} className="add-icon" />
-                        </button>
-                        <button
-                          type="button"
-                          class="btn btn-success  btn-sm"
-                          data-bs-toggle="modal"
-                          data-bs-target="#modalAdWbl"
-                          onClick={() => {
-                            handelId(data._id);
-                          }}
-                        >
-                          <FontAwesomeIcon icon={faPlus} className="add-icon" />
-                        </button>
-                        <button
-                          type="button"
-                          class="btn btn-info  btn-sm"
-                          onClick={(e) => {
-                            handelstatement(e, data.websiteName);
-                          }}
-                        >
-                          <FontAwesomeIcon
-                            icon={faFileAlt}
-                            className="add-icon"
-                          />
-                        </button>
-                        <button
-                          type="button"
-                          class="btn btn-warning  btn-sm"
-                          onClick={() => {
-                            handelWebsiteEdit(data._id, data.websiteName);
-                          }}
-                          data-bs-toggle="modal"
-                          data-bs-target="#editwebsite"
-                        >
-                          <FontAwesomeIcon icon={faEdit} />
-                        </button>
-
-                        <button type="button" class="btn btn-danger  btn-sm">
-                          <FontAwesomeIcon
-                            icon={faTrashAlt}
-                            className="delete-icon"
+            <div class="card-body">
+              {getWebsite.length > 0 &&
+                getWebsite.map((data, index) => {
+                  {
+                    localStorage.setItem("IdWeb", data._id);
+                  }
+                  return (
+                    <div class="card d-flex justify-content-between">
+                      <div class="card-body ">
+                        <p className="col font-weight-bold">
+                          {data.websiteName}
+                          <br />
+                          <p className="text-success">Balance:{data.balance}</p>
+                        </p>
+                        <div className=" d-flex justify-content-center gap-1">
+                          <button
+                            type="button"
+                            class="btn btn-danger  btn-sm"
+                            data-bs-toggle="modal"
+                            data-bs-target="#modalWthwbl"
                             onClick={() => {
-                              handeldeletewebsite(data._id);
+                              handelId(data._id);
                             }}
-                          />
-                        </button>
+                            disabled={!data.isActive || !data.isWithdraw}
+                          >
+                            <FontAwesomeIcon
+                              icon={faMinus}
+                              className="add-icon"
+                            />
+                          </button>
+                          <button
+                            type="button"
+                            class="btn btn-success  btn-sm"
+                            data-bs-toggle="modal"
+                            data-bs-target="#modalAdWbl"
+                            onClick={() => {
+                              handelId(data._id);
+                            }}
+                            disabled={!data.isActive || !data.isDeposit}
+                          >
+                            <FontAwesomeIcon
+                              icon={faPlus}
+                              className="add-icon"
+                            />
+                          </button>
+                          <button
+                            type="button"
+                            class="btn btn-info  btn-sm"
+                            onClick={(e) => {
+                              handelstatement(e, data.websiteName);
+                            }}
+                            disabled={!data.isActive}
+                          >
+                            <FontAwesomeIcon
+                              icon={faFileAlt}
+                              className="add-icon"
+                            />
+                          </button>
+                          <button
+                            type="button"
+                            class="btn btn-warning  btn-sm"
+                            onClick={() => {
+                              handelWebsiteEdit(data._id, data.websiteName);
+                            }}
+                            data-bs-toggle="modal"
+                            data-bs-target="#editwebsite"
+                            disabled={!data.isActive}
+                          >
+                            <FontAwesomeIcon icon={faEdit} />
+                          </button>
+
+                          <button
+                            type="button"
+                            class="btn btn-danger  btn-sm"
+                            disabled={!data.isActive}
+                          >
+                            <FontAwesomeIcon
+                              icon={faTrashAlt}
+                              className="delete-icon"
+                              onClick={() => {
+                                handeldeletewebsite(data._id);
+                              }}
+                            />
+                          </button>
+                          <button
+                            type="button"
+                            class="btn btn-primary btn-sm"
+                            data-toggle="modal"
+                            data-target="#RenewWebsitePermission"
+                            onClick={() => {
+                              handelSubAdmin(data.subAdmins, data._id);
+                            }}
+                            disabled={!data.isActive}
+                            title="Renew Permission"
+                           
+                          >
+                            <FontAwesomeIcon
+                              icon={faEye}
+                              className="permission"
+                            />
+                          </button>
+                          {/* Active,Inactive */}
+                          {data.isActive === false ? (
+                            <button
+                              type="button"
+                              class="btn btn-dark btn-sm"
+                              title="Active"
+                              onClick={() => {
+                                handelactive(data._id);
+                              }}
+                            >
+                              <FontAwesomeIcon
+                                icon={faStar}
+                                className="active-icon"
+                              />
+                            </button>
+                          ) : (
+                            <button
+                              type="button"
+                              class="btn btn-dark btn-sm"
+                              title="Inactive"
+                              onClick={() => {
+                                handelinactive(data._id);
+                              }}
+                            >
+                              <FontAwesomeIcon
+                                icon={faTimes}
+                                className="active-icon"
+                              />
+                            </button>
+                          )}
+
+                          {/* End of Active,Inactive Part */}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+            </div>
+            <div class="card-footer text-muted ">
+              <input
+                class="form-control mb-2 text-center"
+                id="inputPassword2"
+                placeholder=" Enter your Website Name Here"
+                onChange={handlewebsite}
+                required
+              />
+              <a href="#" class="btn btn-primary" onClick={handleSubmit}>
+                Add Website
+              </a>
+            </div>
+            <ModalWthWbl ID={Id} />
+            <ModalAdWbl ID={Id} />
+            <ModalWbdl name={name} />
+            <EditWebsite ID={WebId} />
+            <RenewWebsitePermission SubAdmins={SubAdmins} ID={SId} />
           </div>
-          <div class="card-footer text-muted ">
-            <input
-              class="form-control mb-2 text-center"
-              id="inputPassword2"
-              placeholder=" Enter your Website Name Here"
-              onChange={handlewebsite}
-              required
+          {getWebsite.length > 0 && (
+            <Pagination
+              handlePage={handlePage}
+              page={page}
+              totalPage={totalPage}
+              totalData={totalData}
+              perPagePagination={4}
             />
-            <a href="#" class="btn btn-primary" onClick={handleSubmit}>
-              Add Website
-            </a>
-
-          </div>
-          <ModalWthWbl ID={Id} />
-          <ModalAdWbl ID={Id} />
-          <ModalWbdl name={name} />
-          <EditWebsite ID={WebId} />
+          )}
         </div>
-        {getWebsite.length > 0 &&
-          <Pagination handlePage={handlePage} page={page} totalPage={totalPage} totalData={totalData} perPagePagination={4} />
-        }
-      </div> : <div className="container"><ShimmerEffect /></div>}
-
+      ) : (
+        <div className="container">
+          <ShimmerEffect />
+        </div>
+      )}
     </>
   );
 };

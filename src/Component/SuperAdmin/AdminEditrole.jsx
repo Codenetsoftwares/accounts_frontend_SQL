@@ -78,7 +78,7 @@ const AdminEditrole = () => {
             <div className="card-body">
               <h5 className="card-title">Name</h5>
               <p className="card-text">
-                {adminData.firstname} {adminData.lastname}
+                {adminData.firstname} {adminData.lastname}   
               </p>
               <h5 className="card-title">User Name</h5>
               <p className="card-text">{adminData.userName}</p>
@@ -195,7 +195,7 @@ const AdminEditrole = () => {
                       checked={checkedItems.includes("Website-View")}
                       onChange={handleCheckboxChange}
                     />
-                    <span> Website View</span>
+                    <span>Website View</span>
                   </label>
                 </div>
                 <div>
@@ -221,7 +221,7 @@ const AdminEditrole = () => {
                       )}
                       onChange={handleCheckboxChange}
                     />
-                    <span> Create Withdraw Transaction</span>
+                    <span>Create Withdraw Transaction</span>
                   </label>
                 </div>
                 <div>
@@ -254,7 +254,7 @@ const AdminEditrole = () => {
                       checked={checkedItems.includes("User-Profile-View")}
                       onChange={handleCheckboxChange}
                     />
-                    <span> User Profile View</span>
+                    <span>User Profile View</span>
                   </label>
                 </div>
                 <div>
@@ -265,7 +265,7 @@ const AdminEditrole = () => {
                       checked={checkedItems.includes("Introducer-Profile-View")}
                       onChange={handleCheckboxChange}
                     />
-                    <span> Introducer Profile View</span>
+                    <span>Introducer Profile View</span>
                   </label>
                 </div>
                 <div>
@@ -289,7 +289,7 @@ const AdminEditrole = () => {
                       )}
                       onChange={handleCheckboxChange}
                     />
-                    <span> Transaction Edit Request</span>
+                    <span>Transaction Edit Request</span>
                   </label>
                 </div>
                 <div>
@@ -300,7 +300,7 @@ const AdminEditrole = () => {
                       checked={checkedItems.includes("RequestAdmin")}
                       onChange={handleCheckboxChange}
                     />
-                    <span>Request </span>
+                    <span>Request</span>
                   </label>
                 </div>
                 <div>
@@ -313,7 +313,7 @@ const AdminEditrole = () => {
                       )}
                       onChange={handleCheckboxChange}
                     />
-                    <span> Transaction Delete Request</span>
+                    <span>Transaction Delete Request</span>
                   </label>
                 </div>
               </div>

@@ -5,7 +5,7 @@ import EditServices from "../../Services/EditServices";
 import { FaHandsHelping } from "react-icons/fa";
 import SubAdminBank from "./SubAdminBank";
 
-const RenewBankPermission = ({ SubAdmins, ID }) => {
+const RenewWebsitePermission = ({ SubAdmins, ID }) => {
   const handelsave = () => {
     console.log(SubAdmins);
     console.log(ID);
@@ -13,7 +13,7 @@ const RenewBankPermission = ({ SubAdmins, ID }) => {
   return (
     <div
       class="modal fade"
-      id="RenewBankPermission"
+      id="RenewWebsitePermission"
       tabindex="-1"
       role="dialog"
       aria-labelledby="exampleModalCenterTitle"
@@ -84,4 +84,7 @@ const RenewBankPermission = ({ SubAdmins, ID }) => {
   );
 };
 
-export default RenewBankPermission;
+export default RenewWebsitePermission;
+
+
+
