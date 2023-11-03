@@ -26,12 +26,12 @@ function Deposit() {
   const [selectedOption, setSelectedOption] = useState(null);
 
   useEffect(() => {
-    AccountService.getbank(auth.user).then((res) => setBank(res.data.paginatedResults));
+    AccountService.getbank(auth.user).then((res) => setBank(res.data));
   }, [auth]);
   console.log("bank names", Bank);
 
   useEffect(() => {
-    AccountService.website(auth.user).then((res) => setWebsite(res.data.paginatedResults));
+    AccountService.website(auth.user).then((res) => setWebsite(res.data));
   }, [auth]);
   console.log("Website Names", Website);
   useEffect(() => {
