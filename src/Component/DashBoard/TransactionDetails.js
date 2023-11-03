@@ -106,7 +106,7 @@ const TransactionDetails = () => {
   }, [auth]);
 
   useEffect(() => {
-    AccountService.website(auth.user).then((res) => setWebsiteList(res.data.paginatedResults));
+    AccountService.website(auth.user).then((res) => setWebsiteList(res.data));
   }, [auth]);
      
   useEffect(() => {

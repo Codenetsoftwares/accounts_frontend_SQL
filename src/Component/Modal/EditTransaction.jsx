@@ -26,11 +26,11 @@ const EditTransaction = ({ id }) => {
   }, [id]);
 
   useEffect(() => {
-    AccountService.getbank(auth.user).then((res) => setBank(res.data.paginatedResults));
+    AccountService.getbank(auth.user).then((res) => setBank(res.data));
   }, [auth]);
 
   useEffect(() => {
-    AccountService.website(auth.user).then((res) => setWebsite(res.data.paginatedResults));
+    AccountService.website(auth.user).then((res) => setWebsite(res.data));
   }, [auth]);
 
   const handleToggleEdit = (e) => {

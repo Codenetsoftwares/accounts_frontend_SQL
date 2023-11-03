@@ -994,7 +994,9 @@ const BankStatement = () => {
                                 </tr>
                               );
                             })}
-                        </>) : (<>
+                          </>
+                          ) : (
+                            <>
                           {documentFilter
                             .slice(
                               page * 10 - 10,
@@ -1120,7 +1122,8 @@ const BankStatement = () => {
                                 </tr>
                               );
                             })}
-                        </>)
+                              </>
+                            )
                       }
                     </>
                     ) : (
