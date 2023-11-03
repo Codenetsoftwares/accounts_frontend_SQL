@@ -4,6 +4,8 @@ import { useAuth } from '../../Utils/Auth';
 import AccountService from '../../Services/AccountService';
 import { toast } from 'react-toastify';
 import SubAdResetPassword from "../Modal/SubAdResetPassword";
+import AssignedBank from '../Modal/AssignedBank';
+import AssignedWebsite from '../Modal/AssignedWebsite';
 
 const AdminEditrole = () => {
   const auth = useAuth();
@@ -41,6 +43,7 @@ const AdminEditrole = () => {
       setAdminData(res.data);
     });
   }, []);
+  console.log("Data =>>>>", adminData);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -78,7 +81,7 @@ const AdminEditrole = () => {
             <div className="card-body">
               <h5 className="card-title">Name</h5>
               <p className="card-text">
-                {adminData.firstname} {adminData.lastname}   
+                {adminData.firstname} {adminData.lastname}
               </p>
               <h5 className="card-title">User Name</h5>
               <p className="card-text">{adminData.userName}</p>
@@ -97,6 +100,25 @@ const AdminEditrole = () => {
                 {""}
                 Renew the permissions
               </button>
+
+              <button
+                type="button"
+                class="btn btn-info ml-2"
+                data-toggle="modal"
+                data-target="#AssignedBank"
+              >
+                Assigned Banks
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-success ml-2"
+                data-toggle="modal"
+                data-target="#AssignedWebsite"
+              >
+                Assigned Websites
+              </button>
+
               <Link
                 to={`/editsubadmin/${adminData._id}`}
                 style={{ cursor: "pointer" }}
@@ -331,6 +353,8 @@ const AdminEditrole = () => {
           </form>
         </div>
       )}
+      <AssignedBank ID={adminData.userName} />
+      <AssignedWebsite ID={adminData.userName} />
     </>
   );
 };

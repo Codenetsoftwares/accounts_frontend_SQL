@@ -194,7 +194,7 @@ const WebsiteDetails = () => {
                           <div class="card d-flex justify-content-between">
                             <div class="card-body ">
                               <p className="font-weight-bold ">
-                                {data.bankName}
+                                {data.websiteName}
                                 <br />
                                 <p className="text-success">
                                   Balance: {data.balance}
@@ -209,7 +209,7 @@ const WebsiteDetails = () => {
                                   onClick={() => {
                                     handelId(data._id);
                                   }}
-                                  disabled={!data.isActive || !data.isWithdraw}
+                                  disabled={!data.isWithdraw}
                                   title="Withdraw"
                                 >
                                   <FontAwesomeIcon
@@ -225,7 +225,7 @@ const WebsiteDetails = () => {
                                   onClick={() => {
                                     handelId(data._id);
                                   }}
-                                  disabled={!data.isActive || !data.isDeposit}
+                                  disabled={!data.isDeposit}
                                   title="Deposit"
                                 >
                                   <FontAwesomeIcon
@@ -239,7 +239,7 @@ const WebsiteDetails = () => {
                                   onClick={(e) => {
                                     handelstatement(e, data.bankName);
                                   }}
-                                  disabled={!data.isActive}
+                                  // disabled={!data.isActive}
                                   title="Statement"
                                 >
                                   <FontAwesomeIcon
@@ -253,7 +253,7 @@ const WebsiteDetails = () => {
                                   onClick={(e) => {
                                     handelWebsiteEdit(e, data._id);
                                   }}
-                                  disabled={!data.isActive}
+                                  // disabled={!data.isActive}
                                   title="Edit Bank"
                                 >
                                   <FontAwesomeIcon
@@ -267,7 +267,7 @@ const WebsiteDetails = () => {
                                 <button
                                   type="button"
                                   class="btn btn-danger btn-sm"
-                                  disabled={!data.isActive}
+                                  // disabled={!data.isActive}
                                   onClick={(e) => {
                                     handeldeletewebsite(e, data._id);
                                   }}
@@ -284,11 +284,11 @@ const WebsiteDetails = () => {
                                   type="button"
                                   class="btn btn-primary btn-sm"
                                   data-toggle="modal"
-                                  data-target="#RenewBankPermission"
+                                  data-target="#RenewWebsitePermission"
                                   onClick={() => {
                                     handelSubAdmin(data.subAdmins, data._id);
                                   }}
-                                  disabled={!data.isActive}
+                                  // disabled={!data.isActive}
                                   title="Renew Permission"
                                 >
                                   <FontAwesomeIcon
@@ -343,7 +343,7 @@ const WebsiteDetails = () => {
                           <div class="card d-flex justify-content-between">
                             <div class="card-body ">
                               <p className="font-weight-bold">
-                                {data.bankName}
+                                {data.websiteName}
                                 <br />
                                 <p className="text-success">
                                   Balance: {data.balance}
@@ -358,7 +358,7 @@ const WebsiteDetails = () => {
                                   onClick={() => {
                                     handelId(data._id);
                                   }}
-                                  disabled={!data.isActive || !data.isWithdraw}
+                                  disabled={!data.isWithdraw}
                                   title="Withdraw"
                                 >
                                   <FontAwesomeIcon
@@ -374,7 +374,7 @@ const WebsiteDetails = () => {
                                   onClick={() => {
                                     handelId(data._id);
                                   }}
-                                  disabled={!data.isActive || !data.isDeposit}
+                                  disabled={!data.isDeposit}
                                   title="Deposit"
                                 >
                                   <FontAwesomeIcon
@@ -388,7 +388,7 @@ const WebsiteDetails = () => {
                                   onClick={(e) => {
                                     handelstatement(e, data.bankName);
                                   }}
-                                  disabled={!data.isActive}
+                                  // disabled={!data.isActive}
                                   title="Statement"
                                 >
                                   <FontAwesomeIcon
@@ -402,7 +402,7 @@ const WebsiteDetails = () => {
                                   onClick={(e) => {
                                     handelWebsiteEdit(e, data._id);
                                   }}
-                                  disabled={!data.isActive}
+                                  // disabled={!data.isActive}
                                   title="Edit Bank"
                                 >
                                   <FontAwesomeIcon
@@ -416,7 +416,7 @@ const WebsiteDetails = () => {
                                 <button
                                   type="button"
                                   class="btn btn-danger btn-sm"
-                                  disabled={!data.isActive}
+                                  // disabled={!data.isActive}
                                   onClick={(e) => {
                                     handeldeletewebsite(e, data._id);
                                   }}
@@ -433,11 +433,11 @@ const WebsiteDetails = () => {
                                   type="button"
                                   class="btn btn-primary btn-sm"
                                   data-toggle="modal"
-                                  data-target="#RenewBankPermission"
+                                  data-target="#RenewWebsitePermission"
                                   onClick={() => {
                                     handelSubAdmin(data.subAdmins, data._id);
                                   }}
-                                  disabled={!data.isActive}
+                                  // disabled={!data.isActive}
                                   title="Renew Permission"
                                 >
                                   <FontAwesomeIcon
