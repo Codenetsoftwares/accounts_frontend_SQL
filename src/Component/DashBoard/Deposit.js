@@ -169,7 +169,6 @@ function Deposit() {
                   placeholder="Search by User Name"
                   value={searchTerm}
                   onChange={handleInputChange}
-
                 />
               </div>
               {filteredOptions.length > 0 && (
@@ -298,14 +297,24 @@ function Deposit() {
                 }}
               >
                 <option selected>Select Bank</option>
-                {Bank.map((data, index) => (
-                  <option
-                    key={index}
-                    value={JSON.stringify([data.bankName, data.accountNumber])}
-                  >
-                    {data.bankName}
-                  </option>
-                ))}
+                {Bank.map((data, index) => {
+                  // Checking if isActive is true before rendering the bank name
+                  if (data.isActive) {
+                    return (
+                      <option
+                        key={index}
+                        value={JSON.stringify([
+                          data.bankName,
+                          data.accountNumber,
+                        ])}
+                      >
+                        {data.bankName}
+                      </option>
+                    );
+                  } else {
+                    return null;
+                  }
+                })}
               </select>
             </div>
 
@@ -319,15 +328,22 @@ function Deposit() {
                 type="text"
                 className="form-select"
                 onChange={(e) => {
-                  setWebsiteName(e.target.value); // Parse the JSON string back to an array
+                  setWebsiteName(e.target.value); // Set the selected website name
                 }}
               >
                 <option selected>Select Website</option>
-                {Website.map((data, index) => (
-                  <option key={index} value={data.websiteName}>
-                    {data.websiteName}
-                  </option>
-                ))}
+                {Website.map((data, index) => {
+                  // Checking if isActive is true before rendering the website name
+                  if (data.isActive) {
+                    return (
+                      <option key={index} value={data.websiteName}>
+                        {data.websiteName}
+                      </option>
+                    );
+                  } else {
+                    return null; 
+                  }
+                })}
               </select>
             </div>
             <div className="input-group mb-3">

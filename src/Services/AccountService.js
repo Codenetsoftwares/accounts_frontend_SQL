@@ -65,6 +65,16 @@ class AccountService {
     });
   }
 
+  getactivebankweb(user) {
+    return axios({
+      method: "get",
+      url: API_HOST + "/api/active-visible-bank",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
   getrequestedbank(user) {
     return axios({
       method: "get",
@@ -594,6 +604,25 @@ class AccountService {
       method: "post",
       url: `${API_HOST}/api/admin/bank/assign-subadmin/${id}`,
       data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+  subadminassigneedbankview(id, user) {
+    return axios({
+      method: "get",
+      url: `${API_HOST}/api/admin/bank/view-subadmin/${id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  subadminassigneedwebsiteview(username, user) {
+    return axios({
+      method: "get",
+      url: `${API_HOST}/api/admin/website/view-subadmin/${username}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
