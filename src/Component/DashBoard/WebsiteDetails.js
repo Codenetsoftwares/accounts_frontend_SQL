@@ -509,8 +509,8 @@ const WebsiteDetails = () => {
             <Pagination
               handlePage={handlePage}
               page={page}
-              totalPage={totalPage}
-              totalData={totalData}
+              totalPage={lastPage}
+              totalData={getWebsite.length}
               perPagePagination={4}
             />
           )}
