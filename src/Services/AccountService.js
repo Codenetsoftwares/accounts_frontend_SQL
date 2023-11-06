@@ -628,6 +628,27 @@ class AccountService {
       },
     });
   }
+  permissionrenewBank(data, id, user) {
+    return axios({
+      method: "put",
+      url: `${API_HOST}/api/bank/edit-request/${id}`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  permissionrenewWebsite(data, id, user) {
+    return axios({
+      method: "put",
+      url: `${API_HOST}/api/website/edit-request/${id}`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
 }
 
 export default new AccountService();
