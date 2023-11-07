@@ -51,7 +51,7 @@ const ModalAdWbl = ({ ID }) => {
     <div>
       <div
         className="modal fade"
-        id="modalAdWbl"
+        id="modalAddBlWebsite"
         tabindex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
