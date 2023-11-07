@@ -172,9 +172,9 @@ const WebsiteDetails = () => {
     setSId(ID);
   };
 
-  let reminder = getWebsite.length % 10;
-  let lastPage = Math.ceil(getWebsite.length / 10);
-  let lastPageReminder = getWebsite.length % 10 === !0;
+  let reminder = getWebsite.length % 4;
+  let lastPage = Math.ceil(getWebsite.length / 4);
+  let lastPageReminder = getWebsite.length % 4 === !0;
   console.log(lastPage);
   console.log(page);
 
