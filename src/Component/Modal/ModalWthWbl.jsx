@@ -52,7 +52,7 @@ const ModalWthWbl = ({ ID }) => {
     <div>
       <div
         className="modal fade"
-        id="modalWthwbl"
+        id="modalWithdrawBlwebsite"
         tabindex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"

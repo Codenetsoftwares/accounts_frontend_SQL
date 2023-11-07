@@ -11,7 +11,7 @@ import {
   faMinus,
   faEye,
   faStar,
-  faTimes
+  faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import ModalAdWbl from "../Modal/ModalAdWbl";
 import ModalWbdl from "../Modal/ModalWbdl";
@@ -32,9 +32,9 @@ const WebsiteDetails = () => {
   const [SId, setSId] = useState();
   const [SubAdmins, setSubAdmins] = useState([]);
   const [WebId, setWebId] = useState("");
-  const [page, setPage] = useState(1)
-  const [totalPage, setTotalPage] = useState(1)
-  const [totalData, setTotalData] = useState(0)
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
+  const [totalData, setTotalData] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
   // console.log("Auth", auth);
@@ -70,7 +70,7 @@ const WebsiteDetails = () => {
 
   const handlePage = (page) => {
     setPage(page);
-  }
+  };
 
   const handelName = (id) => {
     setName(id);
@@ -85,13 +85,14 @@ const WebsiteDetails = () => {
 
   const handeldeletewebsite = (id) => {
     // e.preventDefault();
+    console.log("Line 88", id);
 
     const userConfirmed = window.confirm(
-      "Are You Sure You Want to Delete This Bank?"
+      "Are You Sure You Want to Delete This Website?"
     );
 
     if (userConfirmed) {
-      // console.log(data)
+      console.log("Im here in line 94");
       AccountService.deletewebsite({ requestId: id }, auth.user)
         .then((res) => {
           // console.log(response.data);
@@ -129,8 +130,9 @@ const WebsiteDetails = () => {
   }, [auth, page]);
   console.log("Website", getWebsite);
 
-  const handelstatement = (e, name) => {
-    navigate(`/websitestatement/${name}`);
+  const handelstatement = (e, websitename) => {
+    console.log("Website=>>>133", websitename);
+    navigate(`/websitestatement/${websitename}`);
   };
 
   const handelactive = (ID) => {
@@ -172,7 +174,7 @@ const WebsiteDetails = () => {
 
   let reminder = getWebsite.length % 10;
   let lastPage = Math.ceil(getWebsite.length / 10);
-  let lastPageReminder = getWebsite.length % 10 === !0
+  let lastPageReminder = getWebsite.length % 10 === !0;
   console.log(lastPage);
   console.log(page);
 
@@ -205,7 +207,7 @@ const WebsiteDetails = () => {
                                   type="button"
                                   class="btn btn-danger btn-sm"
                                   data-bs-toggle="modal"
-                                  data-bs-target="#modalWthbl"
+                                  data-bs-target="#modalWithdrawBlwebsite"
                                   onClick={() => {
                                     handelId(data._id);
                                   }}
@@ -221,7 +223,7 @@ const WebsiteDetails = () => {
                                   type="button"
                                   class="btn btn-success btn-sm"
                                   data-bs-toggle="modal"
-                                  data-bs-target="#modalAdbl"
+                                  data-bs-target="#modalAddBlWebsite"
                                   onClick={() => {
                                     handelId(data._id);
                                   }}
@@ -237,7 +239,7 @@ const WebsiteDetails = () => {
                                   type="button"
                                   class="btn btn-info btn-sm"
                                   onClick={(e) => {
-                                    handelstatement(e, data.bankName);
+                                    handelstatement(e, data.websiteName);
                                   }}
                                   // disabled={!data.isActive}
                                   title="Statement"
@@ -254,7 +256,7 @@ const WebsiteDetails = () => {
                                     handelWebsiteEdit(e, data._id);
                                   }}
                                   // disabled={!data.isActive}
-                                  title="Edit Bank"
+                                  title="Edit Website Coming soon..."
                                 >
                                   <FontAwesomeIcon
                                     icon={faEdit}
@@ -269,7 +271,7 @@ const WebsiteDetails = () => {
                                   class="btn btn-danger btn-sm"
                                   // disabled={!data.isActive}
                                   onClick={(e) => {
-                                    handeldeletewebsite(e, data._id);
+                                    handeldeletewebsite(data._id);
                                   }}
                                   title="Delete"
                                 >
@@ -336,155 +338,152 @@ const WebsiteDetails = () => {
                   </>
                 ) : (
                   <>
-                    {getWebsite
-                      .slice(page * 4 - 4, page * 4)
-                      .map((data) => {
-                        return (
-                          <div class="card d-flex justify-content-between">
-                            <div class="card-body ">
-                              <p className="font-weight-bold">
-                                {data.websiteName}
-                                <br />
-                                <p className="text-success">
-                                  Balance: {data.balance}
-                                </p>
+                    {getWebsite.slice(page * 4 - 4, page * 4).map((data) => {
+                      return (
+                        <div class="card d-flex justify-content-between">
+                          <div class="card-body ">
+                            <p className="font-weight-bold">
+                              {data.websiteName}
+                              <br />
+                              <p className="text-success">
+                                Balance: {data.balance}
                               </p>
-                              <div className="d-flex justify-content-center gap-1">
-                                <button
-                                  type="button"
-                                  class="btn btn-danger btn-sm"
-                                  data-bs-toggle="modal"
-                                  data-bs-target="#modalWthbl"
-                                  onClick={() => {
-                                    handelId(data._id);
-                                  }}
-                                  disabled={!data.isWithdraw}
-                                  title="Withdraw"
-                                >
-                                  <FontAwesomeIcon
-                                    icon={faMinus}
-                                    className="add-icon"
-                                  />
-                                </button>
-                                <button
-                                  type="button"
-                                  class="btn btn-success btn-sm"
-                                  data-bs-toggle="modal"
-                                  data-bs-target="#modalAdbl"
-                                  onClick={() => {
-                                    handelId(data._id);
-                                  }}
-                                  disabled={!data.isDeposit}
-                                  title="Deposit"
-                                >
-                                  <FontAwesomeIcon
-                                    icon={faPlus}
-                                    className="add-icon"
-                                  />
-                                </button>
-                                <button
-                                  type="button"
-                                  class="btn btn-info btn-sm"
-                                  onClick={(e) => {
-                                    handelstatement(e, data.bankName);
-                                  }}
-                                  // disabled={!data.isActive}
-                                  title="Statement"
-                                >
-                                  <FontAwesomeIcon
-                                    icon={faFileAlt}
-                                    className="add-icon"
-                                  />
-                                </button>
-                                <button
-                                  type="button"
-                                  class="btn btn-warning btn-sm"
-                                  onClick={(e) => {
-                                    handelWebsiteEdit(e, data._id);
-                                  }}
-                                  // disabled={!data.isActive}
-                                  title="Edit Bank"
-                                >
-                                  <FontAwesomeIcon
-                                    icon={faEdit}
-                                    data-toggle="modal"
-                                    data-target="#exampleModalCenter"
-                                  />
-                                </button>
-
-                                {/* Delete */}
-                                <button
-                                  type="button"
-                                  class="btn btn-danger btn-sm"
-                                  // disabled={!data.isActive}
-                                  onClick={(e) => {
-                                    handeldeletewebsite(e, data._id);
-                                  }}
-                                  title="Delete"
-                                >
-                                  <FontAwesomeIcon
-                                    icon={faTrashAlt}
-                                    className="delete-icon"
-                                  />
-                                </button>
-
-                                {/* Permission */}
-                                <button
-                                  type="button"
-                                  class="btn btn-primary btn-sm"
+                            </p>
+                            <div className="d-flex justify-content-center gap-1">
+                              <button
+                                type="button"
+                                class="btn btn-danger btn-sm"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modalWithdrawBlwebsite"
+                                onClick={() => {
+                                  handelId(data._id);
+                                }}
+                                disabled={!data.isWithdraw}
+                                title="Withdraw"
+                              >
+                                <FontAwesomeIcon
+                                  icon={faMinus}
+                                  className="add-icon"
+                                />
+                              </button>
+                              <button
+                                type="button"
+                                class="btn btn-success btn-sm"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modalAddBlWebsite"
+                                onClick={() => {
+                                  handelId(data._id);
+                                }}
+                                disabled={!data.isDeposit}
+                                title="Deposit"
+                              >
+                                <FontAwesomeIcon
+                                  icon={faPlus}
+                                  className="add-icon"
+                                />
+                              </button>
+                              <button
+                                type="button"
+                                class="btn btn-info btn-sm"
+                                onClick={(e) => {
+                                  handelstatement(e, data.websiteName);
+                                }}
+                                // disabled={!data.isActive}
+                                title="Statement"
+                              >
+                                <FontAwesomeIcon
+                                  icon={faFileAlt}
+                                  className="add-icon"
+                                />
+                              </button>
+                              <button
+                                type="button"
+                                class="btn btn-warning btn-sm"
+                                onClick={(e) => {
+                                  handelWebsiteEdit(e, data._id);
+                                }}
+                                // disabled={!data.isActive}
+                                title="Edit Website Coming soon..."
+                              >
+                                <FontAwesomeIcon
+                                  icon={faEdit}
                                   data-toggle="modal"
-                                  data-target="#RenewWebsitePermission"
+                                  data-target="#exampleModalCenter"
+                                />
+                              </button>
+
+                              {/* Delete */}
+                              <button
+                                type="button"
+                                class="btn btn-danger btn-sm"
+                                // disabled={!data.isActive}
+                                onClick={(e) => {
+                                  handeldeletewebsite(data._id);
+                                }}
+                                title="Delete"
+                              >
+                                <FontAwesomeIcon
+                                  icon={faTrashAlt}
+                                  className="delete-icon"
+                                />
+                              </button>
+
+                              {/* Permission */}
+                              <button
+                                type="button"
+                                class="btn btn-primary btn-sm"
+                                data-toggle="modal"
+                                data-target="#RenewWebsitePermission"
+                                onClick={() => {
+                                  handelSubAdmin(data.subAdmins, data._id);
+                                }}
+                                // disabled={!data.isActive}
+                                title="Renew Permission"
+                              >
+                                <FontAwesomeIcon
+                                  icon={faEye}
+                                  className="permission"
+                                />
+                              </button>
+
+                              {/* Active,Inactive */}
+                              {data.isActive === false ? (
+                                <button
+                                  type="button"
+                                  class="btn btn-dark btn-sm"
+                                  title="Active"
                                   onClick={() => {
-                                    handelSubAdmin(data.subAdmins, data._id);
+                                    handelactive(data._id);
                                   }}
-                                  // disabled={!data.isActive}
-                                  title="Renew Permission"
                                 >
                                   <FontAwesomeIcon
-                                    icon={faEye}
-                                    className="permission"
+                                    icon={faStar}
+                                    className="active-icon"
                                   />
                                 </button>
-
-                                {/* Active,Inactive */}
-                                {data.isActive === false ? (
-                                  <button
-                                    type="button"
-                                    class="btn btn-dark btn-sm"
-                                    title="Active"
-                                    onClick={() => {
-                                      handelactive(data._id);
-                                    }}
-                                  >
-                                    <FontAwesomeIcon
-                                      icon={faStar}
-                                      className="active-icon"
-                                    />
-                                  </button>
-                                ) : (
-                                  <button
-                                    type="button"
-                                    class="btn btn-dark btn-sm"
-                                    title="Inactive"
-                                    onClick={() => {
-                                      handelinactive(data._id);
-                                    }}
-                                  >
-                                    <FontAwesomeIcon
-                                      icon={faTimes}
-                                      className="active-icon"
-                                    />
-                                  </button>
-                                )}
-                              </div>
-                              {/* End of Active,Inactive Part */}
+                              ) : (
+                                <button
+                                  type="button"
+                                  class="btn btn-dark btn-sm"
+                                  title="Inactive"
+                                  onClick={() => {
+                                    handelinactive(data._id);
+                                  }}
+                                >
+                                  <FontAwesomeIcon
+                                    icon={faTimes}
+                                    className="active-icon"
+                                  />
+                                </button>
+                              )}
                             </div>
+                            {/* End of Active,Inactive Part */}
                           </div>
-                        );
-                      })}
+                        </div>
+                      );
+                    })}
                   </>
                 )}
-
               </>
             </div>
             <div class="card-footer text-muted ">
@@ -499,6 +498,8 @@ const WebsiteDetails = () => {
                 Add Website
               </a>
             </div>
+            {/* <ModalAdWbl ID={Id} /> */}
+            {/* <ModalWthWbl ID={Id} /> */}
             <ModalWthWbl ID={Id} />
             <ModalAdWbl ID={Id} />
             <ModalWbdl name={name} />
