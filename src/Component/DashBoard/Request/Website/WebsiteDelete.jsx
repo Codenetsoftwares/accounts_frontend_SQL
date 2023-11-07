@@ -51,56 +51,52 @@ const WebsiteDelete = () => {
 
     return (
       <>
-        <div className="container d-flex justify-content-center  ">
-          <div className=" p-2">
-            {viewWebsiteDelete.length > 0 ? (
-              viewWebsiteDelete.map((data, index) => {
-                return (
-                  <div>
-                    <table class="table table-striped">
-                      <thead>
-                        <tr>
-                          <th scope="col">#</th>
-                          <th scope="col">Website Name</th>
-                          <th></th>
-                          <th></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <th scope="row">{index + 1}</th>
-                          <td>{data.websiteName}</td>
-                          <td>
-                            {" "}
-                            <button
-                              class="btn btn-primary"
-                              onClick={(e) => handleApprove(e, data._id)}
-                            >
-                              Approve
-                            </button>
-                          </td>
-                          <td>
-                            {" "}
-                            <button
-                              class="btn btn-danger"
-                              onClick={(e) => handleReject(e, data._id)}
-                            >
-                              Reject
-                            </button>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                );
-              })
-            ) : (
-              <div class="alert alert-warning" role="alert">
-               No Delete Request Found
+        {viewWebsiteDelete.length > 0 ? (
+          <div className="container d-flex justify-content-center ">
+            <div className=" p-2">
+              <div>
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Website Name</th>
+                      <th></th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  {viewWebsiteDelete.map((data, index) => (
+                    <tr key={data._id}>
+                      <th scope="row">{index + 1}</th>
+                      <td>{data.websiteName}</td>
+                      <td>
+                        <button
+                          className="btn btn-primary"
+                          onClick={(e) => handleApprove(e, data._id)}
+                        >
+                          Approve
+                        </button>
+                      </td>
+                      <td>
+                        <button
+                          className="btn btn-danger"
+                          onClick={(e) => handleReject(e, data._id)}
+                        >
+                          Reject
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </table>
               </div>
-            )}
+            </div>
           </div>
-        </div>
+        ) : (
+          <div class="container alert alert-warning mt-1" role="alert">
+            <p className="d-flex justify-content-center">
+              No Delete Request Found
+            </p>
+          </div>
+        )}
       </>
     );
 }
