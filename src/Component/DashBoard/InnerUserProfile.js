@@ -21,11 +21,17 @@ const InnerUserProfile = () => {
   const [editedData, setEditedData] = useState({}); // Store edited data
   const [username, setUsername] = useState([]);
   const [IntroducerName, setIntroducerName] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filteredOptions, setFilteredOptions] = useState([]);
+  // const [searchTerm, setSearchTerm] = useState("");
+  // const [filteredOptions, setFilteredOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
+  const [searchTerm1, setSearchTerm1] = useState("");
+  const [searchTerm2, setSearchTerm2] = useState("");
+  const [searchTerm3, setSearchTerm3] = useState("");
+  const [filteredOptions1, setFilteredOptions1] = useState([]);
+  const [filteredOptions2, setFilteredOptions2] = useState([]);
+  const [filteredOptions3, setFilteredOptions3] = useState([]);
   const location = useLocation();
-  console.log('location', location)
+  console.log("location", location);
   // Calling Single Introducer Name API
   useEffect(() => {
     AccountService.IntroducerUserId(auth.user).then((res) =>
@@ -33,17 +39,17 @@ const InnerUserProfile = () => {
     );
   }, [auth]);
 
-  console.log(auth)
-  const { page, id } = location.state || {}
-  console.log('page', page)
-  console.log('id', id)
+  console.log(auth);
+  const { page, id } = location.state || {};
+  console.log("page", page);
+  console.log("id", id);
 
   const Handletransaction = () => {
-    console.log("first")
+    console.log("first");
     navigate("/transactiondetails", {
       state: { txndetails: foundObject.transactionDetail },
     });
-  }
+  };
 
   // useEffect(() => {
   //   AccountService.userprofile(page, auth.user)
@@ -59,11 +65,11 @@ const InnerUserProfile = () => {
   // }, [auth, id]);
   // console.log("This is User Deatils===>>", users);
 
-    useEffect(() => {
-      AccountService.singleuserprofile(auth.user , id).then((res) =>
-        setFoundObject(res.data[0])
-      );
-    }, [id, auth]);
+  useEffect(() => {
+    AccountService.singleuserprofile(auth.user, id).then((res) =>
+      setFoundObject(res.data[0])
+    );
+  }, [id, auth]);
   console.log("This is single user", foundObject);
 
   const toggleAccordion = () => {
@@ -96,12 +102,16 @@ const InnerUserProfile = () => {
       contactnumber: editedData.contactNumber,
       userName: editedData.userName,
       introducerPercentage: editedData.introducerPercentage,
-      introducersUserName: searchTerm,
+      introducerPercentage1: editedData.introducerPercentage1,
+      introducerPercentage2: editedData.introducerPercentage2,
+      introducersUserName: searchTerm1,
+      introducersUserName1: searchTerm2,
+      introducersUserName2: searchTerm3,
       websitedetail: editedData.websitedetail,
       bankDetail: {}, // Initialize empty bankDetail
       upiDetail: {}, // Initialize empty upiDetail
     };
-
+    console.log("Im here in line number 112=>>", data);
     // Check if bankDetail exists in editedData
     if (editedData.hasOwnProperty("bankDetail")) {
       // Iterate through properties of bankDetail
@@ -119,45 +129,82 @@ const InnerUserProfile = () => {
     }
 
     // put Api Fetching
-    AccountService.inneruserprofile(id, data, auth.user)
-      .then((res) => {
-        console.log("res", res);
-        if (res.status === 201) {
-          window.location.reload();
-          alert("Profile updated");
-        } else {
-          toast.error("Failed");
-        }
-      })
-
-      .catch((err) => {
-        if (!err.response) {
-          toast.error(err.message);
-          return;
-        }
-      });
+   
+    
+      AccountService.inneruserprofile(id, data, auth.user)
+        .then((res) => {
+          console.log("res", res);
+          if (res.status === 201) {
+            alert("Profile Updated");
+            window.location.reload();
+          }
+          
+        })
+        .catch((err) => {
+            toast.error("The sum of introducer percentages must be between 0 and 100");
+        });
+    
   };
   console.log("User Deatils", foundObject);
 
-  const handleIntroducerChange = (e) => {
+  const handleIntroducerChange1 = (e) => {
     const value = e.target.value;
-    setSearchTerm(value);
+    setSearchTerm1(value);
 
     // Filter the options based on the input value
 
     const filtered = value
       ? IntroducerName.filter((data) =>
-        data.userName.toLowerCase().includes(value.toLowerCase())
-      )
+          data.userName.toLowerCase().includes(value.toLowerCase())
+        )
       : [];
 
-    setFilteredOptions(filtered);
+    setFilteredOptions1(filtered);
   };
-  const handleOptionSelect = (option) => {
-    setSelectedOption(option);
-    setSearchTerm(option.userName);
-    setFilteredOptions([]); // Clear the filtered options when an option is selected
+  const handleIntroducerChange2 = (e) => {
+    const value = e.target.value;
+    setSearchTerm2(value);
+
+    // Filter the options based on the input value
+
+    const filtered = value
+      ? IntroducerName.filter((data) =>
+          data.userName.toLowerCase().includes(value.toLowerCase())
+        )
+      : [];
+
+    setFilteredOptions2(filtered);
   };
+  const handleIntroducerChange3 = (e) => {
+    const value = e.target.value;
+    setSearchTerm3(value);
+
+    // Filter the options based on the input value
+
+    const filtered = value
+      ? IntroducerName.filter((data) =>
+          data.userName.toLowerCase().includes(value.toLowerCase())
+        )
+      : [];
+
+    setFilteredOptions3(filtered);
+  };
+  const handleOptionSelect1 = (option) => {
+    // setSelectedOption(option);
+    setSearchTerm1(option.userName);
+    setFilteredOptions1([]); // Clear the filtered options when an option is selected
+  };
+  const handleOptionSelect2 = (option) => {
+    // setSelectedOption(option);
+    setSearchTerm2(option.userName);
+    setFilteredOptions2([]); // Clear the filtered options when an option is selected
+  };
+  const handleOptionSelect3 = (option) => {
+    // setSelectedOption(option);
+    setSearchTerm3(option.userName);
+    setFilteredOptions3([]); // Clear the filtered options when an option is selected
+  };
+
   return (
     <div
       className="d-flex align-items-center justify-content-center"
@@ -267,67 +314,217 @@ const InnerUserProfile = () => {
                         />
                       </div> */}
                       <div className="mb-3">
-                        <label className="form-label text-primary">
-                          Introducer Percentage{" "}
-                        </label>
-                        <input
-                          name="introducerPercentage"
-                          value={
-                            isEditing
-                              ? editedData.introducerPercentage
-                              : foundObject.introducerPercentage
-                          }
-                          onChange={handleInputChange}
-                          className="form-control"
-                          disabled={!isEditing}
-                        />
+                        <div className="row">
+                          <div className="col-md-4">
+                            <label className="form-label text-primary">
+                              Lvl 1 Introducer %
+                            </label>
+                            <input
+                              name="introducerPercentage"
+                              value={
+                                isEditing
+                                  ? editedData.introducerPercentage
+                                  : foundObject.introducerPercentage
+                              }
+                              onChange={handleInputChange}
+                              className="form-control"
+                              disabled={!isEditing}
+                            />
+                          </div>
+
+                          <div className="col-md-4">
+                            <label className="form-label text-primary">
+                              Lvl 2 Introducer %
+                            </label>
+                            <input
+                              name="introducerPercentage1"
+                              value={
+                                isEditing
+                                  ? editedData.introducerPercentage1
+                                  : foundObject.introducerPercentage1
+                              }
+                              onChange={handleInputChange}
+                              className="form-control"
+                              disabled={!isEditing}
+                            />
+                          </div>
+
+                          <div className="col-md-4">
+                            <label className="form-label text-primary">
+                              Lvl 3 Introducer %
+                            </label>
+                            <input
+                              name="introducerPercentage2"
+                              value={
+                                isEditing
+                                  ? editedData.introducerPercentage2
+                                  : foundObject.introducerPercentage2
+                              }
+                              onChange={handleInputChange}
+                              className="form-control"
+                              disabled={!isEditing}
+                            />
+                          </div>
+                        </div>
                       </div>
 
                       {/* Show Intro Name disabled Always and Change Intro */}
                       {isEditing ? (
-                        <div>
-                          <label className="form-label text-primary">
-                            Change Introducer
-                          </label>
-                          <div className="input-group mb-3">
-                            <div className="input-group-prepend">
-                              <span className="input-group-text">
-                                <i className="fa fa-user id"></i>
-                              </span>
+                        <>
+                          <div className="mb-3">
+                            <div className="row">
+                              {/* Introducer 1 Start */}
+                              <div className="col-md-4">
+                                <label className="form-label text-primary">
+                                  Change Introducer 1
+                                </label>
+                                <div className="input-group mb-3">
+                                  <div className="input-group-prepend">
+                                    <span className="input-group-text">
+                                      <i className="fa fa-user id"></i>
+                                    </span>
+                                  </div>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Search by Introducer Name"
+                                    value={searchTerm1}
+                                    onChange={handleIntroducerChange1}
+                                  />
+                                </div>
+                                {filteredOptions1.length > 0 && (
+                                  <div className="list-group">
+                                    {filteredOptions1.map((option, index) => (
+                                      <button
+                                        key={index}
+                                        className="list-group-item list-group-item-action"
+                                        onClick={() =>
+                                          handleOptionSelect1(option)
+                                        }
+                                      >
+                                        {option.userName}
+                                      </button>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                              {/* Introducer 1 End */}
+
+                              {/* Introducer 2 Start */}
+                              <div className="col-md-4">
+                                <label className="form-label text-primary">
+                                  Change Introducer 2
+                                </label>
+                                <div className="input-group mb-3">
+                                  <div className="input-group-prepend">
+                                    <span className="input-group-text">
+                                      <i className="fa fa-user id"></i>
+                                    </span>
+                                  </div>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Search by Introducer Name"
+                                    value={searchTerm2}
+                                    onChange={handleIntroducerChange2}
+                                  />
+                                </div>
+                                {filteredOptions2.length > 0 && (
+                                  <div className="list-group">
+                                    {filteredOptions2.map((option, index) => (
+                                      <button
+                                        key={index}
+                                        className="list-group-item list-group-item-action"
+                                        onClick={() =>
+                                          handleOptionSelect2(option)
+                                        }
+                                      >
+                                        {option.userName}
+                                      </button>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                              {/* Introducer 2 End */}
+
+                              {/* Introducer 3 Start */}
+                              <div className="col-md-4">
+                                <label className="form-label text-primary">
+                                  Change Introducer 3
+                                </label>
+                                <div className="input-group mb-3">
+                                  <div className="input-group-prepend">
+                                    <span className="input-group-text">
+                                      <i className="fa fa-user id"></i>
+                                    </span>
+                                  </div>
+                                  <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="Search by Introducer Name"
+                                    value={searchTerm3}
+                                    onChange={handleIntroducerChange3}
+                                  />
+                                </div>
+                                {filteredOptions3.length > 0 && (
+                                  <div className="list-group">
+                                    {filteredOptions3.map((option, index) => (
+                                      <button
+                                        key={index}
+                                        className="list-group-item list-group-item-action"
+                                        onClick={() =>
+                                          handleOptionSelect3(option)
+                                        }
+                                      >
+                                        {option.userName}
+                                      </button>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                              {/* Introducer 3 End */}
                             </div>
-                            <input
-                              type="text"
-                              className="form-control"
-                              placeholder="Search by Introducer Name"
-                              value={searchTerm}
-                              onChange={handleIntroducerChange}
-                            />
                           </div>
-                          {filteredOptions.length > 0 && (
-                            <div className="list-group">
-                              {filteredOptions.map((option, index) => (
-                                <button
-                                  key={index}
-                                  className="list-group-item list-group-item-action"
-                                  onClick={() => handleOptionSelect(option)}
-                                >
-                                  {option.userName}
-                                </button>
-                              ))}
-                            </div>
-                          )}
-                        </div>
+                        </>
                       ) : (
                         <div className="mb-3">
-                          <label className="form-label text-primary">
-                            Introducer Name{" "}
-                          </label>
-                          <input
-                            name="introducerPercentage"
-                            value={foundObject.introducersUserName}
-                            className="form-control"
-                            disabled
-                          />
+                          <div className="row">
+                            <div className="col-md-4">
+                              <label className="form-label text-primary">
+                                Lvl 1 Introducer
+                              </label>
+                              <input
+                                name="introducerPercentage"
+                                value={foundObject.introducersUserName}
+                                className="form-control"
+                                disabled
+                              />
+                            </div>
+
+                            <div className="col-md-4">
+                              <label className="form-label text-primary">
+                                Lvl 2 Introducer
+                              </label>
+                              <input
+                                name="introducerPercentage"
+                                value={foundObject.introducersUserName1}
+                                className="form-control"
+                                disabled
+                              />
+                            </div>
+
+                            <div className="col-md-4">
+                              <label className="form-label text-primary">
+                                Lvl 3 Introducer
+                              </label>
+                              <input
+                                name="introducerPercentage"
+                                value={foundObject.introducersUserName2}
+                                className="form-control"
+                                disabled
+                              />
+                            </div>
+                          </div>
                         </div>
                       )}
 

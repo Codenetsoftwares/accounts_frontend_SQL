@@ -22,15 +22,24 @@ const CreateActualUser = () => {
     yourUserName: "",
     yourEnterPassword: "",
     yourConfirmPassword: "",
-    yourIntroducerPercentage: "",
-    yourIntroducerName: "",
+    yourIntroducerPercentage1: "",
+    yourIntroducerName1: "",
+    yourIntroducerPercentage2: "",
+    yourIntroducerName2: "",
+    yourIntroducerPercentage3: "",
+    yourIntroducerName3: "",
     yourContact: "",
     // yourUserId: "",
   });
   const [checkedItems, setCheckedItems] = useState([]);
   const [IntroducerId, setIntroducerId] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filteredOptions, setFilteredOptions] = useState([]);
+  const [searchTerm1, setSearchTerm1] = useState("");
+  const [searchTerm2, setSearchTerm2] = useState("");
+  const [searchTerm3, setSearchTerm3] = useState("");
+  const [filteredOptions1, setFilteredOptions1] = useState([]);
+  const [filteredOptions2, setFilteredOptions2] = useState([]);
+  const [filteredOptions3, setFilteredOptions3] = useState([]);
+
   const [selectedOption, setSelectedOption] = useState(null);
 
   console.log("This is FromData=>>>", formData);
@@ -38,6 +47,8 @@ const CreateActualUser = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
+  
 
   const handleCheckboxChange = (event) => {
     const value = event.target.value;
@@ -61,11 +72,18 @@ const CreateActualUser = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(checkedItems);
+    const totalpercentage =
+      Number(formData.yourIntroducerPercentage1) +
+      Number(formData.yourIntroducerPercentage2) +
+      Number(formData.yourIntroducerPercentage3)
+    
     if (
-      formData.yourIntroducerPercentage > 100 ||
-      formData.yourIntroducerPercentage < 0
+     totalpercentage > 100 ||
+     totalpercentage < 0   
     ) {
-      toast.error("Percentage should not be more than 100 or Negetive");
+      toast.error(
+        "The sum of introducer percentages must be between 0 and 100"
+      );
       return;
     }
     const data = {
@@ -74,10 +92,15 @@ const CreateActualUser = () => {
       userName: formData.yourUserName,
       password: formData.yourEnterPassword,
       contactNumber: formData.yourContact,
-      introducersUserName: searchTerm,
-      introducerPercentage: formData.yourIntroducerPercentage,
+      introducersUserName: searchTerm1,
+      introducerPercentage: formData.yourIntroducerPercentage1,
+      introducersUserName1: searchTerm2,
+      introducerPercentage1: formData.yourIntroducerPercentage2,
+      introducersUserName2: searchTerm3,
+      introducerPercentage2: formData.yourIntroducerPercentage3,
       // userId: formData.yourUserId,
     };
+    console.log("Im here in line 83=>>",data);
     if (formData.yourEnterPassword === formData.yourConfirmPassword) {
       AccountService.createActualuser(data, auth.user)
         .then((res) => {
@@ -103,9 +126,9 @@ const CreateActualUser = () => {
   };
   // console.log("====>>>>", formData.yourIntroducerId);
 
-  const handleIntroducerChange = (e) => {
+  const handleIntroducerChange1 = (e) => {
     const value = e.target.value;
-    setSearchTerm(value);
+    setSearchTerm1(value);
 
     // Filter the options based on the input value
 
@@ -115,13 +138,51 @@ const CreateActualUser = () => {
         )
       : [];
 
-    setFilteredOptions(filtered);
+    setFilteredOptions1(filtered);
   };
-  const handleOptionSelect = (option) => {
-    setSelectedOption(option);
-    setSearchTerm(option.userName);
-    setFilteredOptions([]); // Clear the filtered options when an option is selected
+    const handleIntroducerChange2 = (e) => {
+      const value = e.target.value;
+      setSearchTerm2(value);
+
+      // Filter the options based on the input value
+
+      const filtered = value
+        ? IntroducerId.filter((data) =>
+            data.userName.toLowerCase().includes(value.toLowerCase())
+          )
+        : [];
+
+      setFilteredOptions2(filtered);
   };
+    const handleIntroducerChange3 = (e) => {
+      const value = e.target.value;
+      setSearchTerm3(value);
+
+      // Filter the options based on the input value
+
+      const filtered = value
+        ? IntroducerId.filter((data) =>
+            data.userName.toLowerCase().includes(value.toLowerCase())
+          )
+        : [];
+
+      setFilteredOptions3(filtered);
+    };
+  const handleOptionSelect1 = (option) => {
+    // setSelectedOption(option);
+    setSearchTerm1(option.userName);
+    setFilteredOptions1([]); // Clear the filtered options when an option is selected
+  };
+    const handleOptionSelect2 = (option) => {
+      // setSelectedOption(option);
+      setSearchTerm2(option.userName);
+      setFilteredOptions2([]); // Clear the filtered options when an option is selected
+  };
+    const handleOptionSelect3 = (option) => {
+      // setSelectedOption(option);
+      setSearchTerm3(option.userName);
+      setFilteredOptions3([]); // Clear the filtered options when an option is selected
+    };
 
   return (
     <div
@@ -206,9 +267,11 @@ const CreateActualUser = () => {
                           required
                         />
                       </div>
+
+                      {/* Introducer 1 start */}
                       <div className="col-md-6">
                         <label htmlFor="" className="form-label">
-                          <FaIdCard /> Introducer Name
+                          <FaIdCard /> Lvl 1 Intro Name
                           <span className="text-danger">*</span>
                         </label>
                         <div>
@@ -222,17 +285,17 @@ const CreateActualUser = () => {
                               type="text"
                               className="form-control"
                               placeholder="Search by Introducer Name"
-                              value={searchTerm}
-                              onChange={handleIntroducerChange}
+                              value={searchTerm1}
+                              onChange={handleIntroducerChange1}
                             />
                           </div>
-                          {filteredOptions.length > 0 && (
+                          {filteredOptions1.length > 0 && (
                             <div className="list-group">
-                              {filteredOptions.map((option, index) => (
+                              {filteredOptions1.map((option, index) => (
                                 <button
                                   key={index}
                                   className="list-group-item list-group-item-action"
-                                  onClick={() => handleOptionSelect(option)}
+                                  onClick={() => handleOptionSelect1(option)}
                                 >
                                   {option.userName}
                                 </button>
@@ -240,34 +303,141 @@ const CreateActualUser = () => {
                             </div>
                           )}
                         </div>
-                        {/* <input
-                          type="text"
-                          className="form-control"
-                          id="text"
-                          name="yourIntroducerId"
-                          value={formData.yourIntroducerId}
-                          onChange={handleChange}
-                          placeholder="Enter Introducer ID"
-                          required
-                        /> */}
                       </div>
+
                       <div className="col-md-6">
                         <label htmlFor="" className="form-label">
-                          <FaPercent /> Introducer Percentage
+                          <FaPercent />
+                          &nbsp;Lvl 1 Intro Percentage
                           <span className="text-danger">*</span>
                         </label>
                         <input
                           type="text"
                           className="form-control"
                           id="text"
-                          name="yourIntroducerPercentage"
-                          value={formData.yourIntroducerPercentage}
+                          name="yourIntroducerPercentage1"
+                          value={formData.yourIntroducerPercentage1}
                           onChange={handleChange}
                           placeholder="Enter Introducer Percentage"
                           required
                           max={100}
                         />
                       </div>
+                      {/* Introducer 1 end */}
+
+                      {/* Introducer 2 start */}
+                      <div className="col-md-6">
+                        <label htmlFor="" className="form-label">
+                          <FaIdCard /> &nbsp;Lvl 2 Intro Name
+                          <span className="text-danger">*</span>
+                        </label>
+                        <div>
+                          <div className="input-group mb-3">
+                            <div className="input-group-prepend">
+                              <span className="input-group-text">
+                                <i className="fa fa-user id"></i>
+                              </span>
+                            </div>
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Search by Introducer Name"
+                              value={searchTerm2}
+                              onChange={handleIntroducerChange2}
+                            />
+                          </div>
+                          {filteredOptions2.length > 0 && (
+                            <div className="list-group">
+                              {filteredOptions2.map((option, index) => (
+                                <button
+                                  key={index}
+                                  className="list-group-item list-group-item-action"
+                                  onClick={() => handleOptionSelect2(option)}
+                                >
+                                  {option.userName}
+                                </button>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="col-md-6">
+                        <label htmlFor="" className="form-label">
+                          <FaPercent />
+                          &nbsp;Lvl 2 Intro Percentage
+                          <span className="text-danger">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="text"
+                          name="yourIntroducerPercentage2"
+                          value={formData.yourIntroducerPercentage2}
+                          onChange={handleChange}
+                          placeholder="Enter Introducer Percentage"
+                          required
+                          max={100}
+                        />
+                      </div>
+                      {/* Introducer 2 end */}
+
+                      {/* Introducer 3 start */}
+                      <div className="col-md-6">
+                        <label htmlFor="" className="form-label">
+                          <FaIdCard /> &nbsp;Lvl 3 Intro Name
+                          <span className="text-danger">*</span>
+                        </label>
+                        <div>
+                          <div className="input-group mb-3">
+                            <div className="input-group-prepend">
+                              <span className="input-group-text">
+                                <i className="fa fa-user id"></i>
+                              </span>
+                            </div>
+                            <input
+                              type="text"
+                              className="form-control"
+                              placeholder="Search by Introducer Name"
+                              value={searchTerm3}
+                              onChange={handleIntroducerChange3}
+                            />
+                          </div>
+                          {filteredOptions3.length > 0 && (
+                            <div className="list-group">
+                              {filteredOptions3.map((option, index) => (
+                                <button
+                                  key={index}
+                                  className="list-group-item list-group-item-action"
+                                  onClick={() => handleOptionSelect3(option)}
+                                >
+                                  {option.userName}
+                                </button>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="col-md-6">
+                        <label htmlFor="" className="form-label">
+                          <FaPercent />
+                          &nbsp;Lvl 3 Intro Percentage
+                          <span className="text-danger">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="text"
+                          name="yourIntroducerPercentage3"
+                          value={formData.yourIntroducerPercentage3}
+                          onChange={handleChange}
+                          placeholder="Enter Introducer Percentage"
+                          required
+                          max={100}
+                        />
+                      </div>
+                      {/* Introducer 3 end */}
 
                       <div className="col-md-6">
                         <label htmlFor="" className="form-label">
