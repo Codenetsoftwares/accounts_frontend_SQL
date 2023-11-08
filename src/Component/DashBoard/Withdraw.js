@@ -80,7 +80,7 @@ function Withdraw() {
         .catch((error) => {
           // Handle error from the backend
           console.error(error);
-          alert(error.response.data.message);
+          alert(error.response.data);
           //  alert("Failed! Transaction ID Does Not Exists");
         });
     }
