@@ -313,60 +313,6 @@ const InnerUserProfile = () => {
                           disabled={!isEditing}
                         />
                       </div> */}
-                      <div className="mb-3">
-                        <div className="row">
-                          <div className="col-md-4">
-                            <label className="form-label text-primary">
-                              Lvl 1 Introducer %
-                            </label>
-                            <input
-                              name="introducerPercentage"
-                              value={
-                                isEditing
-                                  ? editedData.introducerPercentage
-                                  : foundObject.introducerPercentage
-                              }
-                              onChange={handleInputChange}
-                              className="form-control"
-                              disabled={!isEditing}
-                            />
-                          </div>
-
-                          <div className="col-md-4">
-                            <label className="form-label text-primary">
-                              Lvl 2 Introducer %
-                            </label>
-                            <input
-                              name="introducerPercentage1"
-                              value={
-                                isEditing
-                                  ? editedData.introducerPercentage1
-                                  : foundObject.introducerPercentage1
-                              }
-                              onChange={handleInputChange}
-                              className="form-control"
-                              disabled={!isEditing}
-                            />
-                          </div>
-
-                          <div className="col-md-4">
-                            <label className="form-label text-primary">
-                              Lvl 3 Introducer %
-                            </label>
-                            <input
-                              name="introducerPercentage2"
-                              value={
-                                isEditing
-                                  ? editedData.introducerPercentage2
-                                  : foundObject.introducerPercentage2
-                              }
-                              onChange={handleInputChange}
-                              className="form-control"
-                              disabled={!isEditing}
-                            />
-                          </div>
-                        </div>
-                      </div>
 
                       {/* Show Intro Name disabled Always and Change Intro */}
                       {isEditing ? (
@@ -527,6 +473,61 @@ const InnerUserProfile = () => {
                           </div>
                         </div>
                       )}
+
+                      <div className="mb-3">
+                        <div className="row">
+                          <div className="col-md-4">
+                            <label className="form-label text-primary">
+                              Lvl 1 Introducer %
+                            </label>
+                            <input
+                              name="introducerPercentage"
+                              value={
+                                isEditing
+                                  ? editedData.introducerPercentage
+                                  : foundObject.introducerPercentage
+                              }
+                              onChange={handleInputChange}
+                              className="form-control"
+                              disabled={!isEditing}
+                            />
+                          </div>
+
+                          <div className="col-md-4">
+                            <label className="form-label text-primary">
+                              Lvl 2 Introducer %
+                            </label>
+                            <input
+                              name="introducerPercentage1"
+                              value={
+                                isEditing
+                                  ? editedData.introducerPercentage1
+                                  : foundObject.introducerPercentage1
+                              }
+                              onChange={handleInputChange}
+                              className="form-control"
+                              disabled={!isEditing}
+                            />
+                          </div>
+
+                          <div className="col-md-4">
+                            <label className="form-label text-primary">
+                              Lvl 3 Introducer %
+                            </label>
+                            <input
+                              name="introducerPercentage2"
+                              value={
+                                isEditing
+                                  ? editedData.introducerPercentage2
+                                  : foundObject.introducerPercentage2
+                              }
+                              onChange={handleInputChange}
+                              className="form-control"
+                              disabled={!isEditing}
+                            />
+                          </div>
+                        </div>
+                      </div>
 
                       <div className="mb-3">
                         <label className="form-label text-primary">
