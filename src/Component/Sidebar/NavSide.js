@@ -68,7 +68,7 @@ const NavSide = () => {
               style={{ opacity: ".8" }}
             />
             <span className="brand-text font-weight-light text-white">
-              &nbsp;obhisab.com
+              &nbsp;bigcric.org
             </span>
             <span
               className="fs-4 ms-4  d-xl-none"
