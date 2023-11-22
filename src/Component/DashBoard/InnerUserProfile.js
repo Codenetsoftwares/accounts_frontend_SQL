@@ -333,9 +333,11 @@ const InnerUserProfile = () => {
                                   <input
                                     type="text"
                                     className="form-control"
-                                    placeholder="Search by Introducer Name"
                                     value={searchTerm1}
                                     onChange={handleIntroducerChange1}
+                                    placeholder={
+                                      foundObject.introducersUserName
+                                    }
                                   />
                                 </div>
                                 {filteredOptions1.length > 0 && (
@@ -370,7 +372,9 @@ const InnerUserProfile = () => {
                                   <input
                                     type="text"
                                     className="form-control"
-                                    placeholder="Search by Introducer Name"
+                                    placeholder={
+                                      foundObject.introducersUserName1
+                                    }
                                     value={searchTerm2}
                                     onChange={handleIntroducerChange2}
                                   />
@@ -407,7 +411,8 @@ const InnerUserProfile = () => {
                                   <input
                                     type="text"
                                     className="form-control"
-                                    placeholder="Search by Introducer Name"
+                                    placeholder={
+                                      foundObject.introducersUserName2}
                                     value={searchTerm3}
                                     onChange={handleIntroducerChange3}
                                   />
