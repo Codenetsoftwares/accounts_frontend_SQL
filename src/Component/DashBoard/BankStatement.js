@@ -493,12 +493,12 @@ const BankStatement = () => {
                   <th scope="col text-break" className="text-primary">
                     Remarks
                   </th>
-                  <th scope="col text-break" className="text-primary">
+                  {/* <th scope="col text-break" className="text-primary">
                     Edit
                   </th>
                   <th scope="col text-break" className="text-primary">
                     Delete
-                  </th>
+                  </th> */}
                 </tr>
               </thead>
               {/* </div> */}
@@ -619,7 +619,7 @@ const BankStatement = () => {
                                 </td>
 
                                 <td>{data.remarks}</td>
-                                <td>
+                                {/* <td>
                                   <button
                                     type="button"
                                     className="btn btn-primary"
@@ -648,7 +648,7 @@ const BankStatement = () => {
                                       }}
                                     />
                                   </button>
-                                </td>
+                                </td> */}
                               </tr>
                             );
                           })}
@@ -768,7 +768,7 @@ const BankStatement = () => {
                                 </td>
 
                                 <td>{data.remarks}</td>
-                                <td>
+                                {/* <td>
                                   <button
                                     type="button"
                                     className="btn btn-primary"
@@ -797,7 +797,7 @@ const BankStatement = () => {
                                       }}
                                     />
                                   </button>
-                                </td>
+                                </td> */}
                               </tr>
                             );
                           })}
@@ -849,12 +849,12 @@ const BankStatement = () => {
                   <th scope="col text-break" className="text-primary">
                     Remarks
                   </th>
-                  <th scope="col text-break" className="text-primary">
+                  {/* <th scope="col text-break" className="text-primary">
                     Edit
                   </th>
                   <th scope="col text-break" className="text-primary">
                     Delete
-                  </th>
+                  </th> */}
                 </tr>
               </thead>
               {/* </div> */}
@@ -961,7 +961,7 @@ const BankStatement = () => {
                                     )}
                                   </td>
                                   <td>{data.remarks}</td>
-                                  <td>
+                                  {/* <td>
                                     <button
                                       type="button"
                                       className="btn btn-primary"
@@ -990,7 +990,7 @@ const BankStatement = () => {
                                         }}
                                       />
                                     </button>
-                                  </td>
+                                  </td> */}
                                 </tr>
                               );
                             })}
@@ -1089,7 +1089,7 @@ const BankStatement = () => {
                                   </td>
 
                                   <td>{data.remarks}</td>
-                                  <td>
+                                  {/* <td>
                                     <button
                                       type="button"
                                       className="btn btn-primary"
@@ -1118,7 +1118,7 @@ const BankStatement = () => {
                                         }}
                                       />
                                     </button>
-                                  </td>
+                                  </td> */}
                                 </tr>
                               );
                             })}
@@ -1225,7 +1225,7 @@ const BankStatement = () => {
                                   )}
                                 </td>
                                 <td>{data.remarks}</td>
-                                <td>
+                                {/* <td>
                                   <button
                                     type="button"
                                     className="btn btn-primary"
@@ -1254,7 +1254,7 @@ const BankStatement = () => {
                                       }}
                                     />
                                   </button>
-                                </td>
+                                </td> */}
                               </tr>
                             );
                           })}

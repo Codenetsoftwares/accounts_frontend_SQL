@@ -510,12 +510,12 @@ const WebsiteStatement = () => {
                   <th scope="col text-break" className="text-primary">
                     Remarks
                   </th>
-                  <th scope="col text-break" className="text-primary">
+                  {/* <th scope="col text-break" className="text-primary">
                     Edit
                   </th>
                   <th scope="col text-break" className="text-primary">
                     Delete
-                  </th>
+                  </th> */}
                 </tr>
               </thead>
               {/* </div> */}
@@ -637,7 +637,7 @@ const WebsiteStatement = () => {
                                 </td>
 
                                 <td>{data.remarks}</td>
-                                <td>
+                                {/* <td>
                                   <button
                                     type="button"
                                     className="btn btn-primary"
@@ -666,7 +666,7 @@ const WebsiteStatement = () => {
                                       }}
                                     />
                                   </button>
-                                </td>
+                                </td> */}
                               </tr>
                             );
                           })}
@@ -772,7 +772,7 @@ const WebsiteStatement = () => {
                                 </td>
 
                                 <td>{data.remarks}</td>
-                                <td>
+                                {/* <td>
                                   <button
                                     type="button"
                                     className="btn btn-primary"
@@ -801,7 +801,7 @@ const WebsiteStatement = () => {
                                       }}
                                     />
                                   </button>
-                                </td>
+                                </td> */}
                               </tr>
                             );
                           })}
@@ -854,12 +854,12 @@ const WebsiteStatement = () => {
                   <th scope="col text-break" className="text-primary">
                     Remarks
                   </th>
-                  <th scope="col text-break" className="text-primary">
+                  {/* <th scope="col text-break" className="text-primary">
                     Edit
                   </th>
                   <th scope="col text-break" className="text-primary">
                     Delete
-                  </th>
+                  </th> */}
                 </tr>
               </thead>
               {/* </div> */}
@@ -971,7 +971,7 @@ const WebsiteStatement = () => {
 
 
                                 <td>{data.remarks}</td>
-                                <td>
+                                {/* <td>
                                   <button
                                     type="button"
                                     className="btn btn-primary"
@@ -1000,7 +1000,7 @@ const WebsiteStatement = () => {
                                       }}
                                     />
                                   </button>
-                                </td>
+                                </td> */}
                               </tr>
                             );
                           })}
@@ -1104,7 +1104,7 @@ const WebsiteStatement = () => {
                                   )}
                                 </td>
                                 <td>{data.remarks}</td>
-                                <td>
+                                {/* <td>
                                   <button
                                     type="button"
                                     className="btn btn-primary"
@@ -1133,7 +1133,7 @@ const WebsiteStatement = () => {
                                       }}
                                     />
                                   </button>
-                                </td>
+                                </td> */}
                               </tr>
                             );
                           })}
