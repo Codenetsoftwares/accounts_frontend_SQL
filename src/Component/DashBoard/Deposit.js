@@ -74,7 +74,7 @@ function Deposit() {
     console.log(data);
 
     const confirmed = window.confirm(
-      "Please double-check the form on obhisab.com before confirming, as changes or deletions won't be possible afterward."
+      "Please double-check the form on bigcric.org before confirming, as changes or deletions won't be possible afterward."
     );
     if (confirmed) {
       DashService.CreateTransactionDeposit(data, auth.user)

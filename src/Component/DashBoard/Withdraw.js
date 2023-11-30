@@ -67,7 +67,7 @@ function Withdraw() {
     console.log(data);
     // Call the API service method to send the data to the backend
     const confirmed = window.confirm(
-      "Please double-check the form on obhisab.com before confirming, as changes or deletions won't be possible afterward."
+      "Please double-check the form on bigcric.org before confirming, as changes or deletions won't be possible afterward."
     );
     if (confirmed) {
       DashService.CreateTransactionWithdraw(data, auth.user)
