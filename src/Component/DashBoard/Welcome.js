@@ -14,7 +14,7 @@ const Welcome = () => {
       <nav className="navbar navbar-dark bg-dark py-2 ">
         <div className="container d-flex justify-content-center">
           <a className="navbar-brand " href="#">
-          Bigcric
+            obhiasb
             <br />
           </a>
         </div>
@@ -29,7 +29,7 @@ const Welcome = () => {
           }}
         >
           <div className="container text-center">
-            <h1 className="display-5">Welcome to bigcric.org</h1>
+            <h1 className="display-5">Welcome to obhiasb.org</h1>
 
             <p className="lead">
               This is The central hub for managing accounts.
@@ -84,7 +84,7 @@ const Welcome = () => {
               zIndex: "10",
             }}
           >
-            &copy; 2023 bigcric.org All rights reserved.
+            &copy; 2023 obhiasb.org All rights reserved.
           </footer>
         </div>
       </div>
