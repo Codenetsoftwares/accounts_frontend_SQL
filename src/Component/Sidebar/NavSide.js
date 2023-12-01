@@ -8,6 +8,7 @@ import {
   faExchangeAlt,
   faSquarePlus,
   faExclamationTriangle,
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 const NavSide = () => {
   const auth = useAuth();
@@ -20,8 +21,7 @@ const NavSide = () => {
   const [IsToggleRequest, setIsToggleRequest] = useState(true);
   const [IsToggleBank, setIsToggleBank] = useState(true);
   const [IsToggleWebsite, setIsToggleWebsite] = useState(true);
-  const [isToggleCreateTransaction, setIsToggleCreateTransaction] =
-    useState(true);
+  const [isToggleRecycleBin, setIsToggleRecycleBin] = useState(true);
 
   useEffect(() => {
     setUserEmail(auth.user.userName);
@@ -50,6 +50,10 @@ const NavSide = () => {
   const handleToggleWebsite = () => {
     setIsToggleWebsite(!IsToggleWebsite);
   };
+
+  const handleToggleRecycleBin = () => {
+    setIsToggleRecycleBin(!isToggleRecycleBin);
+  };
   return (
     <div>
       {/* {isTogglenav ? ( */}
@@ -68,7 +72,7 @@ const NavSide = () => {
               style={{ opacity: ".8" }}
             />
             <span className="brand-text font-weight-light text-white">
-              &nbsp;obhiasb.org
+              &nbsp;obhiasb
             </span>
             <span
               className="fs-4 ms-4  d-xl-none"
@@ -572,7 +576,202 @@ const NavSide = () => {
                     )}
                   </>
                 )}
+              {/* {userrole.some(
+                (role) => role === "superAdmin" || role === "RequestAdmin"
+              ) && (
+                  <>
+                    {" "}
+                    {IsToggleRequest ? (
+                      <li className="nav-item ">
+                        <a
+                          className="nav-link text-white"
+                          onClick={handleToggleRequest}
+                        >
+                          &nbsp;&nbsp;
+                          <FontAwesomeIcon icon={faExclamationTriangle} />
+                          &nbsp;
+                          <p>
+                            &nbsp;Request
+                            <i className="fas fa-angle-left right" />
+                          </p>
+                        </a>
+                      </li>
+                    ) : (
+                      <li className="nav-item ">
+                        <a
+                          className="nav-link text-white"
+                          onClick={handleToggleRequest}
+                        >
+                          &nbsp;&nbsp;
+                          <FontAwesomeIcon icon={faExclamationTriangle} />
+                          &nbsp;
+                          <p>
+                            &nbsp;Request
+                            <i class="fas fa-chevron-down right"></i>
+                          </p>
+                        </a>
+
+                        {userrole.some(
+                          (role) =>
+                            role === "superAdmin" || role === "RequestAdmin"
+                        ) && (
+                            <>
+                              {IsToggleBank ? (
+                                <Link
+                                  className="nav-link text-white"
+                                  onClick={handleToggleBank}
+                                >
+                                  <i className="far fa-circle nav-icon" />
+                                  <p>
+                                    Bank
+                                    <i className="fas fa-angle-left right" />
+                                  </p>
+                                </Link>
+                              ) : (
+                                <li className="nav-item ">
+                                  <Link
+                                    to="#"
+                                    className="nav-link text-white"
+                                    onClick={handleToggleBank}
+                                  >
+                                    <i className="nav-icon fas fa-copy" />
+                                    <p>
+                                      Bank
+                                      <i class="fas fa-chevron-down right"></i>
+                                    </p>
+                                  </Link>
+                                  <Link
+                                    to="/bankEdit"
+                                    className="nav-link text-white"
+                                  >
+                                    <i className="far fa-circle nav-icon" />
+                                    <p>Edit</p>
+                                  </Link>
+                                  <Link
+                                    to="/bankDelete"
+                                    className="nav-link text-white"
+                                  >
+                                    <i className="far fa-circle nav-icon" />
+                                    <p>Delete</p>
+                                  </Link>
+                                  <Link to="/newbank" className="nav-link text-white">
+                                    <i className="far fa-circle nav-icon" />
+                                    <p>New Bank</p>
+                                  </Link>
+                                </li>
+                              )}
+                            </>
+                          )}
+                        {userrole.some(
+                          (role) =>
+                            role === "superAdmin" || role === "RequestAdmin"
+                        ) && (
+                            <>
+                              {IsToggleWebsite ? (
+                                <li
+                                  className="nav-link text-white"
+                                  onClick={handleToggleWebsite}
+                                >
+                                  <i className="far fa-circle nav-icon" />
+                                  <p>
+                                    Website
+                                    <i className="fas fa-angle-left right" />
+                                  </p>
+                                </li>
+                              ) : (
+                                <li className="nav-item ">
+                                  <Link
+                                    to="#"
+                                    className="nav-link text-white "
+                                    onClick={handleToggleWebsite}
+                                  >
+                                    <i className="nav-icon fas fa-copy" />
+                                    <p>
+                                      Website
+                                      <i class="fas fa-chevron-down right"></i>
+                                    </p>
+                                  </Link>
+                                  <Link
+                                    to="/websiteEdit"
+                                    className="nav-link text-white"
+                                  >
+                                    <i className="far fa-circle nav-icon" />
+                                    <p>Edit</p>
+                                  </Link>
+                                  <Link
+                                    to="/websiteDelete"
+                                    className="nav-link text-white"
+                                  >
+                                    <i className="far fa-circle nav-icon" />
+                                    <p>Delete</p>
+                                  </Link>
+                                  <Link to="/newwebsite" className="nav-link text-white">
+                                    <i className="far fa-circle nav-icon" />
+                                    <p>new Website</p>
+                                  </Link>
+                                </li>
+                              )}
+                            </>
+                          )}
+                      </li>
+                    )}
+                  </>
+                )} */}
               {/* request part */}
+
+              {/* recylebin part */}
+              {userrole.some(
+                (role) => role === "superAdmin" || role === "RequestAdmin"
+              ) && (
+                  <>
+                    {" "}
+                    {isToggleRecycleBin ? (
+                      <li className="nav-item ">
+                        <a
+                          className="nav-link text-white"
+                          onClick={handleToggleRecycleBin}
+                        >
+                          &nbsp;&nbsp;
+                          <FontAwesomeIcon icon={faTrash} />
+                          &nbsp;
+                          <p>
+                            &nbsp;Recycle Bin
+                            <i className="fas fa-angle-left right" />
+                          </p>
+                        </a>
+                      </li>
+                    ) : (
+                      <li className="nav-item ">
+                        <a
+                          className="nav-link text-white"
+                          onClick={handleToggleRecycleBin}
+                        >
+                          &nbsp;&nbsp;
+                          <FontAwesomeIcon icon={faTrash} />
+                          &nbsp;
+                          <p>
+                            &nbsp;Recycle Bin
+                            <i class="fas fa-chevron-down right"></i>
+                          </p>
+                        </a>
+                        <Link to="trashAllTransaction" className="nav-link text-white">
+                          <i className="far fa-circle nav-icon" />
+                          <p>All transaction</p>
+                        </Link>
+                        <Link
+                          to="trashIntroducerTransaction"
+                          className="nav-link text-white"
+                        >
+                          <i className="far fa-circle nav-icon" />
+                          <p>Introducer transaction</p>
+                        </Link>
+
+                      </li>
+                    )}
+                  </>
+                )}
+
+              {/* recylebin part */}
             </ul>
           </nav>
         </div>

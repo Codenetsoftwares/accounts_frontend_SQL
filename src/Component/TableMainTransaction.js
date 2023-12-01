@@ -167,10 +167,10 @@ const TableMainTransaction = ({ FilterData, purpose, page, handlePage, totalPage
 
                         {/* <th scope="col text-break" className="text-primary">
                             Edit
-                        </th>
+                        </th> */}
                         <th scope="col text-break" className="text-primary">
                             Delete
-                        </th> */}
+                        </th>
 
 
                     </tr>
@@ -293,7 +293,7 @@ const TableMainTransaction = ({ FilterData, purpose, page, handlePage, totalPage
                                         >
                                             <FontAwesomeIcon icon={faEdit} />
                                         </button>
-                                    </td>
+                                    </td> */}
                                     <td>
                                         <button type="button" className="btn btn-danger">
                                             <FontAwesomeIcon
@@ -307,7 +307,7 @@ const TableMainTransaction = ({ FilterData, purpose, page, handlePage, totalPage
                                                 }}
                                             />
                                         </button>
-                                    </td> */}
+                                    </td>
                                 </tr>
                             );
                         })

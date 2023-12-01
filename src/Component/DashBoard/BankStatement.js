@@ -495,10 +495,10 @@ const BankStatement = () => {
                   </th>
                   {/* <th scope="col text-break" className="text-primary">
                     Edit
-                  </th>
+                  </th> */}
                   <th scope="col text-break" className="text-primary">
                     Delete
-                  </th> */}
+                  </th>
                 </tr>
               </thead>
               {/* </div> */}
@@ -631,7 +631,7 @@ const BankStatement = () => {
                                   >
                                     <FontAwesomeIcon icon={faEdit} />
                                   </button>
-                                </td>
+                                </td> */}
                                 <td>
                                   <button
                                     type="button"
@@ -648,7 +648,7 @@ const BankStatement = () => {
                                       }}
                                     />
                                   </button>
-                                </td> */}
+                                </td>
                               </tr>
                             );
                           })}
@@ -780,7 +780,7 @@ const BankStatement = () => {
                                   >
                                     <FontAwesomeIcon icon={faEdit} />
                                   </button>
-                                </td>
+                                </td> */}
                                 <td>
                                   <button
                                     type="button"
@@ -797,7 +797,7 @@ const BankStatement = () => {
                                       }}
                                     />
                                   </button>
-                                </td> */}
+                                </td>
                               </tr>
                             );
                           })}
@@ -851,17 +851,18 @@ const BankStatement = () => {
                   </th>
                   {/* <th scope="col text-break" className="text-primary">
                     Edit
-                  </th>
+                  </th> */}
                   <th scope="col text-break" className="text-primary">
                     Delete
-                  </th> */}
+                  </th>
                 </tr>
               </thead>
               {/* </div> */}
               <tbody>
                 {documentFilter.length > 0 ? (
                   <>
-                    {page === lastFilterPageReminder ? (<>
+                      {page === lastFilterPageReminder ? (
+                        <>
                       {
                         lastPage === 1 ? (<>
                           {documentFilter
@@ -973,7 +974,7 @@ const BankStatement = () => {
                                     >
                                       <FontAwesomeIcon icon={faEdit} />
                                     </button>
-                                  </td>
+                                  </td> */}
                                   <td>
                                     <button
                                       type="button"
@@ -990,7 +991,7 @@ const BankStatement = () => {
                                         }}
                                       />
                                     </button>
-                                  </td> */}
+                                  </td>
                                 </tr>
                               );
                             })}
@@ -1101,7 +1102,7 @@ const BankStatement = () => {
                                     >
                                       <FontAwesomeIcon icon={faEdit} />
                                     </button>
-                                  </td>
+                                  </td> */}
                                   <td>
                                     <button
                                       type="button"
@@ -1118,7 +1119,7 @@ const BankStatement = () => {
                                         }}
                                       />
                                     </button>
-                                  </td> */}
+                                  </td>
                                 </tr>
                               );
                             })}
@@ -1237,7 +1238,7 @@ const BankStatement = () => {
                                   >
                                     <FontAwesomeIcon icon={faEdit} />
                                   </button>
-                                </td>
+                                </td> */}
                                 <td>
                                   <button
                                     type="button"
@@ -1254,7 +1255,7 @@ const BankStatement = () => {
                                       }}
                                     />
                                   </button>
-                                </td> */}
+                                </td>
                               </tr>
                             );
                           })}

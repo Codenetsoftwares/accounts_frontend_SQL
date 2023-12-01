@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import EditServices from "../../Services/EditServices";
 import { useAuth } from "../../Utils/Auth";
 import InnerAlert from "../../Modal/InnerAlert";
+import TransactionSercvice from "../../Services/TransactionSercvice";
 
 const Alert = () => {
   const auth = useAuth();
@@ -29,7 +30,7 @@ const Alert = () => {
     };
     switch (transactionType) {
       case "Deposit":
-        EditServices.IsApprove(id, data, auth.user)
+        TransactionSercvice.IsApprove(id, data, auth.user)
           .then((response) => {
             window.location.reload();
             console.log(response.data);
@@ -39,7 +40,7 @@ const Alert = () => {
           });
         break;
       case "Withdraw":
-        EditServices.IsApprove(id, data, auth.user)
+        TransactionSercvice.IsApprove(id, data, auth.user)
           .then((response) => {
             window.location.reload();
             console.log(response.data);
@@ -50,7 +51,7 @@ const Alert = () => {
         break;
 
       case "Manual-Bank-Withdraw":
-        EditServices.IsBankApprove(id, data, auth.user)
+        TransactionSercvice.IsBankApprove(id, data, auth.user)
           .then((response) => {
             window.location.reload();
             console.log(response.data);
@@ -61,7 +62,7 @@ const Alert = () => {
         break;
 
       case "Manual-Bank-Deposit":
-        EditServices.IsBankApprove(id, data, auth.user)
+        TransactionSercvice.IsBankApprove(id, data, auth.user)
           .then((response) => {
             window.location.reload();
             console.log(response.data);
@@ -72,7 +73,7 @@ const Alert = () => {
         break;
 
       case "Manual-Website-Withdraw":
-        EditServices.IsWebsiteApprove(id, data, auth.user)
+        TransactionSercvice.IsWebsiteApprove(id, data, auth.user)
           .then((response) => {
             window.location.reload();
             console.log(response.data);
@@ -83,7 +84,7 @@ const Alert = () => {
         break;
 
       case "Manual-Website-Deposit":
-        EditServices.IsWebsiteApprove(id, data, auth.user)
+        TransactionSercvice.IsWebsiteApprove(id, data, auth.user)
           .then((response) => {
             window.location.reload();
             console.log(response.data);
@@ -171,14 +172,11 @@ const Alert = () => {
 
   const handleDeleteApprove = (e, id, transactionType) => {
     e.preventDefault();
-    const flag = true;
 
-    const data = {
-      isApproved: flag,
-    };
+    const data = { requestId: id }
     switch (transactionType) {
       case "Deposit":
-        EditServices.IsTransactionDeleteApprove(id, auth.user)
+        TransactionSercvice.MoveTrashTransaction(data, auth.user)
           .then((response) => {
             window.location.reload();
             console.log(response.data);
@@ -188,7 +186,7 @@ const Alert = () => {
           });
         break;
       case "Withdraw":
-        EditServices.IsTransactionDeleteApprove(id, auth.user)
+        TransactionSercvice.MoveTrashTransaction(data, auth.user)
           .then((response) => {
             window.location.reload();
             console.log(response.data);
@@ -199,7 +197,7 @@ const Alert = () => {
         break;
 
       case "Manual-Bank-Withdraw":
-        EditServices.IsManualBankTransactionDeleteApprove(id, auth.user)
+        TransactionSercvice.MoveTrashBankTransaction(data, auth.user)
           .then((response) => {
             window.location.reload();
             console.log(response.data);
@@ -210,7 +208,7 @@ const Alert = () => {
         break;
 
       case "Manual-Bank-Deposit":
-        EditServices.IsManualBankTransactionDeleteApprove(id, auth.user)
+        TransactionSercvice.MoveTrashBankTransaction(data, auth.user)
           .then((response) => {
             window.location.reload();
             console.log(response.data);
@@ -221,7 +219,7 @@ const Alert = () => {
         break;
 
       case "Manual-Website-Withdraw":
-        EditServices.IsManualWebsiteTransactionDeleteApprove(id, auth.user)
+        TransactionSercvice.MoveTrashWebsiteTransaction(data, auth.user)
           .then((response) => {
             window.location.reload();
             console.log(response.data);
@@ -232,7 +230,7 @@ const Alert = () => {
         break;
 
       case "Manual-Website-Deposit":
-        EditServices.IsManualWebsiteTransactionDeleteApprove(id, auth.user)
+        TransactionSercvice.MoveTrashWebsiteTransaction(data, auth.user)
           .then((response) => {
             window.location.reload();
             console.log(response.data);
@@ -517,8 +515,8 @@ const Alert = () => {
                                 <p
                                   className={
                                     data.changedFields?.withdrawAmount ||
-                                    data.changedFields?.amount ||
-                                    data.changedFields?.depositAmount
+                                      data.changedFields?.amount ||
+                                      data.changedFields?.depositAmount
                                       ? "text-danger"
                                       : "text-success"
                                   }
