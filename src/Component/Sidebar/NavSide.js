@@ -758,13 +758,13 @@ const NavSide = () => {
                           <i className="far fa-circle nav-icon" />
                           <p>All transaction</p>
                         </Link>
-                        <Link
+                        {/* <Link
                           to="trashIntroducerTransaction"
                           className="nav-link text-white"
                         >
                           <i className="far fa-circle nav-icon" />
                           <p>Introducer transaction</p>
-                        </Link>
+                        </Link> */}
 
                       </li>
                     )}
