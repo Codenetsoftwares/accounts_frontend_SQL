@@ -339,13 +339,13 @@ const TrashAllTransaction = () => {
                                             </button>}
                                             {(data.Nametype === "Bank") && <button
                                                 className="btn btn-danger rounded"
-                                                onClick={(e) => handleRestore(e, data.bankName, data.Nametype)}
+                                                onClick={(e) => handleRestore(e, data.bankId, data.Nametype)}
                                             >
                                                 Restore
                                             </button>}
                                             {(data.Nametype === "Website") && <button
                                                 className="btn btn-danger rounded"
-                                                onClick={(e) => handleRestore(e, data.websiteName, data.Nametype)}
+                                                onClick={(e) => handleRestore(e, data.websiteId, data.Nametype)}
                                             >
                                                 Restore
                                             </button>}

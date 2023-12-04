@@ -137,7 +137,7 @@ class EditServices {
   NewBankRqReject(_id, user) {
     return axios({
       method: "delete",
-      url: `${API_HOST}/api/reject/${_id}`,
+      url: `${API_HOST}/api/bank/reject/${_id}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },

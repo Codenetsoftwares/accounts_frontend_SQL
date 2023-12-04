@@ -239,7 +239,7 @@ const WebsiteDetails = () => {
                                   type="button"
                                   class="btn btn-info btn-sm"
                                   onClick={(e) => {
-                                    handelstatement(e, data.websiteName);
+                                    handelstatement(e, data._id);
                                   }}
                                   // disabled={!data.isActive}
                                   title="Statement"
@@ -386,7 +386,7 @@ const WebsiteDetails = () => {
                                 type="button"
                                 class="btn btn-info btn-sm"
                                 onClick={(e) => {
-                                  handelstatement(e, data.websiteName);
+                                  handelstatement(e, data._id);
                                 }}
                                 // disabled={!data.isActive}
                                 title="Statement"
