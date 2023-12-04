@@ -75,7 +75,7 @@ const EditBank = () => {
             })
             .catch((error) => {
                 console.error(error);
-                toast.error("Failed! Invalid Data");
+                toast.error(error.response.data.message);
             });
     };
 
