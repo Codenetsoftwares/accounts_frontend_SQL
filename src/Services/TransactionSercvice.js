@@ -235,7 +235,7 @@ class TransactionService {
   RestoreBankTransaction(id, user) {
     return axios({
       method: "post",
-      url: `${API_HOST}/api/restore/bank/data/ ${id}`,
+      url: `${API_HOST}/api/restore/bank/data/${id}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },

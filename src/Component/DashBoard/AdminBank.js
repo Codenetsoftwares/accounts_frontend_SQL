@@ -79,6 +79,7 @@ const AdminBank = () => {
   };
 
   const handelstatement = (e, accountNumber) => {
+    console.log("first", accountNumber)
     navigate(`/bankstatement/${accountNumber}`);
   };
 
@@ -244,7 +245,8 @@ const AdminBank = () => {
                                     type="button"
                                     class="btn btn-info btn-sm"
                                     onClick={(e) => {
-                                      handelstatement(e, data.bankName);
+                                      console.log(data._id)
+                                      handelstatement(e, data._id);
                                     }}
                                     // disabled={!data.isActive}
                                     title="Statement"
@@ -391,7 +393,7 @@ const AdminBank = () => {
                                   type="button"
                                   class="btn btn-info btn-sm"
                                   onClick={(e) => {
-                                    handelstatement(e, data.bankName);
+                                    handelstatement(e, data._id);
                                   }}
                                   // disabled={!data.isActive}
                                   title="Statement"
