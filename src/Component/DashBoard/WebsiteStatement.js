@@ -510,12 +510,10 @@ const WebsiteStatement = () => {
                   <th scope="col text-break" className="text-primary">
                     Remarks
                   </th>
-                  {/* <th scope="col text-break" className="text-primary">
-                    Edit
-                  </th>
+                  {/*   */}
                   <th scope="col text-break" className="text-primary">
                     Delete
-                  </th> */}
+                  </th>
                 </tr>
               </thead>
               {/* </div> */}
@@ -649,7 +647,7 @@ const WebsiteStatement = () => {
                                   >
                                     <FontAwesomeIcon icon={faEdit} />
                                   </button>
-                                </td>
+                                </td> */}
                                 <td>
                                   <button
                                     type="button"
@@ -666,7 +664,7 @@ const WebsiteStatement = () => {
                                       }}
                                     />
                                   </button>
-                                </td> */}
+                                </td>
                               </tr>
                             );
                           })}
@@ -784,7 +782,7 @@ const WebsiteStatement = () => {
                                   >
                                     <FontAwesomeIcon icon={faEdit} />
                                   </button>
-                                </td>
+                                </td> */}
                                 <td>
                                   <button
                                     type="button"
@@ -801,7 +799,7 @@ const WebsiteStatement = () => {
                                       }}
                                     />
                                   </button>
-                                </td> */}
+                                </td>
                               </tr>
                             );
                           })}
@@ -856,10 +854,10 @@ const WebsiteStatement = () => {
                   </th>
                   {/* <th scope="col text-break" className="text-primary">
                     Edit
-                  </th>
+                  </th> */}
                   <th scope="col text-break" className="text-primary">
                     Delete
-                  </th> */}
+                  </th>
                 </tr>
               </thead>
               {/* </div> */}
@@ -983,7 +981,7 @@ const WebsiteStatement = () => {
                                   >
                                     <FontAwesomeIcon icon={faEdit} />
                                   </button>
-                                </td>
+                                </td> */}
                                 <td>
                                   <button
                                     type="button"
@@ -1000,7 +998,7 @@ const WebsiteStatement = () => {
                                       }}
                                     />
                                   </button>
-                                </td> */}
+                                </td>
                               </tr>
                             );
                           })}
@@ -1116,7 +1114,7 @@ const WebsiteStatement = () => {
                                   >
                                     <FontAwesomeIcon icon={faEdit} />
                                   </button>
-                                </td>
+                                </td> */}
                                 <td>
                                   <button
                                     type="button"
@@ -1133,7 +1131,7 @@ const WebsiteStatement = () => {
                                       }}
                                     />
                                   </button>
-                                </td> */}
+                                </td>
                               </tr>
                             );
                           })}

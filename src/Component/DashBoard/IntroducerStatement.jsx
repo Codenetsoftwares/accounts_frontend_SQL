@@ -357,9 +357,9 @@ const IntroducerStatement = () => {
                   <th scope="col " className="text-primary">
                     Remarks
                   </th>
-                  <th scope="col " className="text-primary">
+                  {/* <th scope="col " className="text-primary">
                     Edit
-                  </th>
+                  </th> */}
                   <th scope="col " className="text-primary">
                     Delete
                   </th>
@@ -524,7 +524,7 @@ const IntroducerStatement = () => {
                         </td> */}
 
                         <td>{data.remarks}</td>
-                        <td>
+                        {/* <td>
                           <button
                             type="button"
                             className="btn btn-primary"
@@ -542,7 +542,7 @@ const IntroducerStatement = () => {
                           >
                             <FontAwesomeIcon icon={faEdit} />
                           </button>
-                        </td>
+                        </td> */}
                         <td>
                           <button type="button" className="btn btn-danger">
                             <FontAwesomeIcon
@@ -617,9 +617,9 @@ const IntroducerStatement = () => {
                   <th scope="col " className="text-primary">
                     Remarks
                   </th>
-                  <th scope="col " className="text-primary">
+                  {/* <th scope="col " className="text-primary">
                     Edit
-                  </th>
+                  </th> */}
                   <th scope="col " className="text-primary">
                     Delete
                   </th>
@@ -784,7 +784,7 @@ const IntroducerStatement = () => {
                         </td> */}
 
                         <td>{data.remarks}</td>
-                        <td>
+                        {/* <td>
                           <button
                             type="button"
                             className="btn btn-primary"
@@ -802,7 +802,7 @@ const IntroducerStatement = () => {
                           >
                             <FontAwesomeIcon icon={faEdit} />
                           </button>
-                        </td>
+                        </td> */}
                         <td>
                           <button type="button" className="btn btn-danger">
                             <FontAwesomeIcon

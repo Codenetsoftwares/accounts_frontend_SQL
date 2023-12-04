@@ -198,6 +198,111 @@ class TransactionService {
       },
     });
   }
+
+  MoveTrashTransaction(data, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/admin/move-transaction-to-trash`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  MoveTrashBankTransaction(data, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/admin/move-bank-transaction-to-trash`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  MoveTrashWebsiteTransaction(data, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/admin/move-website-transaction-to-trash`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  RestoreBankTransaction(id, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/restore/bank/data/ ${id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  RestoreWebsiteTransaction(id, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/restore/website/data/${id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  RestoreTransaction(id, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/restore/transaction/data/${id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  IsTransactionDelete(_id, user) {
+    return axios({
+      method: "delete",
+      url: `${API_HOST}/api/delete/transactions/${_id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  ViewTrash(user) {
+    return axios({
+      method: "get",
+      url: `${API_HOST}/api/admin/view-trash`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  MoveTrashIntroducerTransaction(data, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/admin/move-introducer-transaction-to-trash`,
+      data: data,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  RestoreIntroducerTransaction(id, user) {
+    return axios({
+      method: "post",
+      url: `${API_HOST}/api/restore/Introducer/data/${id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
 }
 
 export default new TransactionService();

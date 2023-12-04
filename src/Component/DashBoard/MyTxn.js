@@ -198,84 +198,15 @@ const BankStatement = () => {
   };
 
   const handleDelete = (e, id, transactionType) => {
-    console.log(transactionType);
-    switch (transactionType) {
-      case "Deposit":
-        AccountService.SaveTransaction({ requestId: id }, auth.user)
 
-          .then((res) => {
-            console.log(res.data);
-
-            toast.success("Transaction delete request sent to Super Admin");
-          })
-          .catch((err) => {
-            toast.error(err.response.data.message);
-          });
-        break;
-      case "Withdraw":
-        AccountService.SaveTransaction({ requestId: id }, auth.user)
-          .then((res) => {
-            console.log(res.data);
-            toast.success("Transaction delete request sent to Super Admin");
-          })
-          .catch((err) => {
-            toast.error(err.response.data.message);
-          });
-        break;
-
-      case "Manual-Bank-Withdraw":
-        AccountService.SaveBankTransaction({ requestId: id }, auth.user)
-
-          .then((res) => {
-            console.log(res.data);
-            toast.success(
-              "Bank Transaction delete request sent to Super Admin"
-            );
-          })
-          .catch((err) => {
-            toast.error(err.response.data.message);
-          });
-        break;
-
-      case "Manual-Bank-Deposit":
-        AccountService.SaveBankTransaction({ requestId: id }, auth.user)
-
-          .then((res) => {
-            console.log(res.data);
-            toast.success(
-              "Website Transaction delete request sent to Super Admin"
-            );
-          })
-          .catch((err) => {
-            toast.error(err.response.data.message);
-          });
-        break;
-
-      case "Manual-Website-Withdraw":
-        AccountService.SaveWebsiteTransaction({ requestId: id }, auth.user)
-          .then((res) => {
-            console.log(res.data);
-            toast.success(
-              "Website Transaction delete request sent to Super Admin"
-            );
-          })
-          .catch((err) => {
-            toast.error(err.response.data.message);
-          });
-        break;
-      case "Manual-Website-Deposit":
-        AccountService.SaveWebsiteTransaction({ requestId: id }, auth.user)
-          .then((res) => {
-            console.log(res.data);
-            toast.success("Bank Transaction deleted");
-          })
-          .catch((err) => {
-            toast.error(err.response.data.message);
-          });
-        break;
-      default:
-      // code block
-    }
+    TransactionSercvice.MoveTrashIntroducerTransaction({ requestId: id }, auth.user)
+      .then((res) => {
+        console.log(res.data);
+        toast.success("Bank Transaction deleted");
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
   };
 
   const handleReset = () => {
@@ -507,9 +438,9 @@ const BankStatement = () => {
                   <th scope="col " className="text-primary">
                     Remarks
                   </th>
-                  <th scope="col " className="text-primary">
+                  {/* <th scope="col " className="text-primary">
                     Edit
-                  </th>
+                  </th> */}
                   <th scope="col " className="text-primary">
                     Delete
                   </th>
@@ -635,7 +566,7 @@ const BankStatement = () => {
                                 </td>
 
                                 <td>{data.remarks}</td>
-                                <td>
+                                {/* <td>
                                   <button
                                     type="button"
                                     className="btn btn-primary"
@@ -647,7 +578,7 @@ const BankStatement = () => {
                                   >
                                     <FontAwesomeIcon icon={faEdit} />
                                   </button>
-                                </td>
+                                </td> */}
                                 <td>
                                   <button
                                     type="button"
@@ -785,7 +716,7 @@ const BankStatement = () => {
                                 </td>
 
                                 <td>{data.remarks}</td>
-                                <td>
+                                {/* <td>
                                   <button
                                     type="button"
                                     className="btn btn-primary"
@@ -797,7 +728,7 @@ const BankStatement = () => {
                                   >
                                     <FontAwesomeIcon icon={faEdit} />
                                   </button>
-                                </td>
+                                </td> */}
                                 <td>
                                   <button
                                     type="button"
@@ -875,9 +806,9 @@ const BankStatement = () => {
                   <th scope="col " className="text-primary">
                     Remarks
                   </th>
-                  <th scope="col " className="text-primary">
+                  {/* <th scope="col " className="text-primary">
                     Edit
-                  </th>
+                  </th> */}
                   <th scope="col " className="text-primary">
                     Delete
                   </th>
@@ -996,7 +927,7 @@ const BankStatement = () => {
                                 </td>
 
                                 <td>{data.remarks}</td>
-                                <td>
+                                {/* <td>
                                   <button
                                     type="button"
                                     className="btn btn-primary"
@@ -1008,7 +939,7 @@ const BankStatement = () => {
                                   >
                                     <FontAwesomeIcon icon={faEdit} />
                                   </button>
-                                </td>
+                                </td> */}
                                 <td>
                                   <button
                                     type="button"
@@ -1144,7 +1075,7 @@ const BankStatement = () => {
                                   )}
                                 </td>
                                 <td>{data.remarks}</td>
-                                <td>
+                                {/* <td>
                                   <button
                                     type="button"
                                     className="btn btn-primary"
@@ -1156,7 +1087,7 @@ const BankStatement = () => {
                                   >
                                     <FontAwesomeIcon icon={faEdit} />
                                   </button>
-                                </td>
+                                </td> */}
                                 <td>
                                   <button
                                     type="button"
@@ -1211,8 +1142,8 @@ const BankStatement = () => {
                 handlePage={selectPageHandler}
                 page={page}
                 totalPage={filterLastPage}
-                  totalData={documentFilter.length}
-                  perPagePagination={10}
+                totalData={documentFilter.length}
+                perPagePagination={10}
               />
             )}
           </div>

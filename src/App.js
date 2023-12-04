@@ -60,6 +60,8 @@ import BankTransactionPage from "./pages/TransactionPage/BankTransactionPage";
 import MyTxn from "./Component/DashBoard/MyTxn";
 import NewBank from "./NewBank&Website/NewBank";
 import NewWebsite from "./NewBank&Website/NewWebsite";
+import TrashAllTransaction from "./Component/TrashAllTransaction";
+import TrashIntroducerTransaction from "./Component/TrashIntroducerTransaction";
 
 function App() {
   return (
@@ -348,7 +350,7 @@ function App() {
                 path="newbank"
                 element={
                   <RequireAuth>
-                   <NewBank/>
+                    <NewBank />
                   </RequireAuth>
                 }
               />
@@ -356,7 +358,7 @@ function App() {
                 path="newwebsite"
                 element={
                   <RequireAuth>
-                    <NewWebsite/>
+                    <NewWebsite />
                   </RequireAuth>
                 }
               />
@@ -365,6 +367,22 @@ function App() {
                 element={
                   <RequireAuth>
                     <WebsiteEdit />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="trashAllTransaction"
+                element={
+                  <RequireAuth>
+                    <TrashAllTransaction />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="trashIntroducerTransaction"
+                element={
+                  <RequireAuth>
+                    <TrashIntroducerTransaction />
                   </RequireAuth>
                 }
               />
