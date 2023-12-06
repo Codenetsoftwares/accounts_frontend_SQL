@@ -14,7 +14,7 @@ const WebsiteEdit = () => {
   }, [auth]);
 
   console.log("ALL Request", EditRq);
-  
+
   const handleapprove = (ID) => {
     const flag = true;
 
@@ -22,49 +22,48 @@ const WebsiteEdit = () => {
       isApproved: flag,
     };
 
-   EditServices.IsWebsiteEditApprove(ID, data, auth.user)
+    EditServices.IsWebsiteEditApprove(ID, data, auth.user)
       .then((response) => {
         console.log(response);
-        alert("Approved");
+        alert("Approved !! Website Name Changed");
         window.location.reload();
       })
       .catch((error) => {
-        alert(error);
+        alert(error.response.data.message);
       });
   };
   const handleReject = (e, id) => {
     e.preventDefault();
     EditServices.IsWebsiteDeleteReject(id, auth.user)
-        .then((response) => {
-            window.location.reload();
-            console.log(response.data);
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-};
+      .then((response) => {
+        alert("Rejected !! Website Name Remains Same ");
+        window.location.reload();
+        console.log(response.data);
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
+      });
+  };
   return (
     <>
       {EditRq.length > 0 ? (
         <div className="d-flex justify-content-center">
           {EditRq.map((item, index) => (
             <div
-              className="card ml-5 "
+              className="card ml-5 mt-5"
               style={{ width: "50rem" }}
               key={item.id}
             >
               <p key={index} className="ml-2 mt-2">
-               
-                <b>website Name</b>: {item.websiteName}
+                <b>Website Name</b>: {item.websiteName}
                 <br />
-             
               </p>
               <hr />
               <p className="d-flex justify-content-center text-primary">
                 {item.message}
               </p>
               <hr />
-             <p>
+              <p>
                 <button
                   type="button"
                   class="btn btn-success mr-2 ml-2"
@@ -83,10 +82,7 @@ const WebsiteEdit = () => {
           ))}
         </div>
       ) : (
-        <div
-          class="card"
-          
-        >
+        <div class="card">
           <div class="card-body">No Request Found</div>
         </div>
       )}

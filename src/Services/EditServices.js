@@ -229,7 +229,7 @@ class EditServices {
   IsWebsiteDeleteReject(_id, user) {
     return axios({
       method: "delete",
-      url: `${API_HOST}/api/reject/website-detail/${_id}`,
+      url: `${API_HOST}/api/reject-website-edit/${_id}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -285,7 +285,6 @@ class EditServices {
       },
     });
   }
-
 }
 
 export default new EditServices();
