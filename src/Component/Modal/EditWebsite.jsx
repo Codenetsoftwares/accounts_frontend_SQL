@@ -2,22 +2,22 @@ import React, { useState } from "react";
 import { useAuth } from "../../Utils/Auth";
 import AccountService from "../../Services/AccountService";
 
-const EditWebsite = (ID) => {
+const EditWebsite = ({ ID, webName }) => {
   const auth = useAuth();
 
   const [Name, SetName] = useState("");
   const handelSubmit = () => {
     const data = { websiteName: Name };
     console.log(ID);
-    AccountService.EditWebsite(data, ID.ID, auth.user)
+    AccountService.EditWebsite(data, ID, auth.user)
       .then((response) => {
         console.log(response.data);
         alert(response.data);
         window.location.reload();
       })
       .catch((error) => {
-        console.error(error);
-        alert(error);
+        console.log(error.response.data.message);
+        alert(error.response.data.message);
       });
   };
 
@@ -35,18 +35,26 @@ const EditWebsite = (ID) => {
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLabel">
                 Provide New Name
-              </h5>
-
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
+              </h5> 
             </div>
 
             <div className="modal-body">
               <form>
+                <div className="input-group mb-3">
+                  <div className="input-group-prepend">
+                    <span className="input-group-text">
+                      <small>Present Name </small>
+                    </span>
+                  </div>
+                  <input
+                    type="text"
+                    className="form-control font-weight-bold"
+                    value={webName}
+                    disabled
+                    style={{ fontSize: "15px" }}
+                  />
+                </div>
+
                 <div className="input-group mb-3">
                   <div className="input-group-prepend">
                     <span className="input-group-text">
@@ -61,6 +69,7 @@ const EditWebsite = (ID) => {
                     style={{ fontSize: "10px" }}
                   />
                 </div>
+
                 <input
                   type="text"
                   className="form-control"
@@ -72,19 +81,13 @@ const EditWebsite = (ID) => {
               </form>
             </div>
             <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
+              
               <button
                 type="button"
                 className="btn btn-primary"
                 onClick={handelSubmit}
               >
-                Save changes
+                Request
               </button>
             </div>
           </div>

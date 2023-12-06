@@ -32,6 +32,7 @@ const WebsiteDetails = () => {
   const [SId, setSId] = useState();
   const [SubAdmins, setSubAdmins] = useState([]);
   const [WebId, setWebId] = useState("");
+  const [WebName, setWebName] = useState("");
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
   const [totalData, setTotalData] = useState(0);
@@ -108,8 +109,11 @@ const WebsiteDetails = () => {
     }
   };
 
-  const handelWebsiteEdit = (id) => {
-    setWebId(id);
+  const handelWebsiteEdit = (_id, websiteName) => {
+    console.log("=>>", websiteName);
+    setWebId(_id);
+    setWebName(websiteName);
+    console.log("Line 116=>>", WebName);
   };
 
   // get api  fetch
@@ -252,11 +256,16 @@ const WebsiteDetails = () => {
                                 <button
                                   type="button"
                                   class="btn btn-warning btn-sm"
-                                  onClick={(e) => {
-                                    handelWebsiteEdit(e, data._id);
+                                  onClick={() => {
+                                    handelWebsiteEdit(
+                                      data._id,
+                                      data.websiteName
+                                    );
                                   }}
                                   // disabled={!data.isActive}
-                                  title="Edit Website Coming soon..."
+                                  title="Edit Website "
+                                  data-toggle="modal"
+                                  data-target="#editwebsite"
                                 >
                                   <FontAwesomeIcon
                                     icon={faEdit}
@@ -399,11 +408,13 @@ const WebsiteDetails = () => {
                               <button
                                 type="button"
                                 class="btn btn-warning btn-sm"
-                                onClick={(e) => {
-                                  handelWebsiteEdit(e, data._id);
+                                onClick={() => {
+                                  handelWebsiteEdit(data._id, data.websiteName);
                                 }}
                                 // disabled={!data.isActive}
-                                title="Edit Website Coming soon..."
+                                title="Edit Website"
+                                data-toggle="modal"
+                                data-target="#editwebsite"
                               >
                                 <FontAwesomeIcon
                                   icon={faEdit}
@@ -503,7 +514,7 @@ const WebsiteDetails = () => {
             <ModalWthWbl ID={Id} />
             <ModalAdWbl ID={Id} />
             <ModalWbdl name={name} />
-            <EditWebsite ID={WebId} />
+            <EditWebsite ID={WebId} webName={WebName} />
             <RenewWebsitePermission SubAdmins={SubAdmins} ID={SId} />
           </div>
           {getWebsite.length > 0 && (
