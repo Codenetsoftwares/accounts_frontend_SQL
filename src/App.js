@@ -77,23 +77,6 @@ function App() {
         theme="dark"
       />
       <AuthProvider>
-        {/* <BrowserRouter>
-        <Routes>
-          <Route index element={<Login />} />
-          <Route path="*" element={<ErrorPage />} />
-          <Route path="/" element={<AdminLayout />}> 
-           
-             
-            
-            
-
-            
-            
-          
-          
-          
-        </Routes>
-      </BrowserRouter> */}
         <AppRoutes />
       </AuthProvider>
     </React.Fragment>
