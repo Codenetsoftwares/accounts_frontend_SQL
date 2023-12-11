@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   const login = () => {
     try {
       console.log('logging in...');
-      const userString = localStorage.getItem('user');
+      const userString = sessionStorage.getItem('user');
       if (!userString) return;
 
       let userObject = {};
@@ -27,8 +27,8 @@ export const AuthProvider = ({ children }) => {
 
   };
   const logout = () => {
-    localStorage.removeItem('user');
-    localStorage.removeItem('role');
+    sessionStorage.removeItem('user');
+    sessionStorage.removeItem('role');
     setUser(null);
   };
   
