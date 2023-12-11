@@ -24,7 +24,7 @@ const NavSide = () => {
   const [isToggleRecycleBin, setIsToggleRecycleBin] = useState(true);
 
   useEffect(() => {
-    // setUserEmail(auth.user.userName);
+    setUserEmail(auth.user?.userName);
     setUserRole(auth.user.role);
 
   }, [auth]);
