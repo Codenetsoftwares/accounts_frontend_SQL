@@ -50,14 +50,7 @@ import ResetPassword from "../Component/DashBoard/ResetPassword";
 
 const AppRoutes = () => {
   const userrole = sessionStorage.getItem("role") || "";
-  console.log([userrole]);
-  console.log(
-    [userrole]?.some(
-      (role) =>
-        role.includes("superAdmin") ||
-        role.includes("RequestAdmin")
-    )
-  );
+  
   return (
     <BrowserRouter>
       <Routes>
