@@ -50,7 +50,7 @@ import ResetPassword from "../Component/DashBoard/ResetPassword";
 
 const AppRoutes = () => {
   const userrole = sessionStorage.getItem("role") || "";
-  
+
   return (
     <BrowserRouter>
       <Routes>
@@ -120,15 +120,6 @@ const AppRoutes = () => {
                 }
               />
             )}
-
-          <Route
-            path="subadminedit/:id"
-            element={
-              <RequireAuth>
-                <AdminEditrole />
-              </RequireAuth>
-            }
-          />
           {[userrole]?.some((role) => role.includes("superAdmin")) && (
             <Route
               path="createuser"
@@ -141,7 +132,7 @@ const AppRoutes = () => {
           )}
           {[userrole]?.some(
             (role) =>
-              role.includes("superAdmin") || role.includes("Create-Introducer")
+              role.includes("superAdmin") || role.includes("Create-User")
           ) && (
               <Route
                 path="createactualuser"
@@ -304,7 +295,7 @@ const AppRoutes = () => {
                 </RequireAuth>
               }
             />
-          )} 
+          )}
           {[userrole]?.some((role) => role.includes("superAdmin") || role.includes("RequestAdmin")) && (
             <Route
               path="trashAllTransaction"
@@ -315,6 +306,14 @@ const AppRoutes = () => {
               }
             />
           )}
+          <Route
+            path="subadminedit/:id"
+            element={
+              <RequireAuth>
+                <AdminEditrole />
+              </RequireAuth>
+            }
+          />
           <Route
             path="admindash"
             element={
@@ -438,7 +437,7 @@ const AppRoutes = () => {
               </RequireAuth>
             }
           />
-          
+
           <Route
             path="editwebsitedata/:id"
             element={
