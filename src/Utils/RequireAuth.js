@@ -11,7 +11,7 @@ export const RequireAuth = ({ children }) => {
 
   const login = () => {
     console.log('logging in...');
-    const userString = localStorage.getItem('user');
+    const userString = sessionStorage.getItem('user');
     if (!userString) return;
 
     let userObject = {};

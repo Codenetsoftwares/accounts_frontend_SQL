@@ -3,8 +3,8 @@ import LoginWth from "../src/Component/Login/LoginWth";
 import AdminDash from "../src/Component/DashBoard/AdminDash";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 // import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
-import React from "react";
-import { AuthProvider } from "./Utils/Auth";
+import React, { useEffect, useState } from "react";
+import { AuthProvider, useAuth } from "./Utils/Auth";
 import { RequireAuth } from "./Utils/RequireAuth";
 import { ToastContainer } from "react-toastify";
 import EditTransaction from "./Component/DashBoard/EditTransaction";
@@ -21,9 +21,7 @@ import AdminLayout from "./Component/Sidebar/AdminLayout";
 import AdminBank from "./Component/DashBoard/AdminBank";
 import UserProfile from "./Component/DashBoard/UserProfile";
 import InnerUserProfile from "./Component/DashBoard/InnerUserProfile";
-
 import TransactionDetails from "./Component/DashBoard/TransactionDetails";
-
 import EditBank from "./Component/EditBank";
 import CreateTransaction from "./Component/DashBoard/CreateTransaction";
 import WebsiteStatement from "./Component/DashBoard/WebsiteStatement";
@@ -32,7 +30,6 @@ import CreateActualUser from "./Component/DashBoard/CreateActualUser";
 import CreateIntroducer from "./Component/DashBoard/CreateIntroducer";
 import IntroducerProfile from "./Component/DashBoard/IntroducerProfile";
 import InnerIntroducer from "./Component/DashBoard/InnerIntroducer";
-
 import ButtonDemo from "./Component/DashBoard/ButtonDemo";
 import Withdraw from "./Component/DashBoard/Withdraw";
 import Deposit from "./Component/DashBoard/Deposit";
@@ -50,7 +47,6 @@ import WebsiteDelete from "./Component/DashBoard/Request/Website/WebsiteDelete";
 import WebsiteEdit from "./Component/DashBoard/Request/Website/WebsiteEdit";
 import ErrorPage from "./pages/ErrorPage";
 import Login from "./Component/Login/Login";
-
 import MainTransactionPage from "./pages/TransactionPage/MainTransactionPage";
 import IntroducerStatement from "./Component/DashBoard/IntroducerStatement";
 import IntroducerAlert from "./Component/IntroducerAlert";
@@ -62,8 +58,10 @@ import NewBank from "./NewBank&Website/NewBank";
 import NewWebsite from "./NewBank&Website/NewWebsite";
 import TrashAllTransaction from "./Component/TrashAllTransaction";
 import TrashIntroducerTransaction from "./Component/TrashIntroducerTransaction";
+import AppRoutes from "./Routes/AppRoutes";
 
 function App() {
+
   return (
     <React.Fragment>
       <ToastContainer
@@ -79,386 +77,25 @@ function App() {
         theme="dark"
       />
       <AuthProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route index element={<Login />} />
-            <Route path="*" element={<ErrorPage />} />
-            <Route path="/" element={<AdminLayout />}>
-              <Route
-                path="welcome"
-                element={
-                  <RequireAuth>
-                    <Welcome />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="admindash"
-                element={
-                  <RequireAuth>
-                    <AdminDash />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="bank"
-                element={
-                  <RequireAuth>
-                    <AdminBank />
-                  </RequireAuth>
-                }
-              />
+        {/* <BrowserRouter>
+        <Routes>
+          <Route index element={<Login />} />
+          <Route path="*" element={<ErrorPage />} />
+          <Route path="/" element={<AdminLayout />}> 
+           
+             
+            
+            
 
-              <Route
-                path="website"
-                element={
-                  <RequireAuth>
-                    <WebsiteDetails />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="introducerstatement/:id"
-                element={
-                  <RequireAuth>
-                    <IntroducerStatement />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="websitestatement/:id"
-                element={
-                  <RequireAuth>
-                    <WebsiteStatement />
-                  </RequireAuth>
-                }
-              />
-
-              <Route
-                path="bankstatement/:id"
-                element={
-                  <RequireAuth>
-                    <BankStatement />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="adminlist"
-                element={
-                  <RequireAuth>
-                    <AdminList />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="subadminedit/:id"
-                element={
-                  <RequireAuth>
-                    <AdminEditrole />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="userprofile"
-                element={
-                  <RequireAuth>
-                    <UserProfile />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="maintransactionpage"
-                element={
-                  <RequireAuth>
-                    <MainTransactionPage />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="banktransactionpage/:id"
-                element={
-                  <RequireAuth>
-                    <BankTransactionPage />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="websitetransactionpage/:id"
-                element={
-                  <RequireAuth>
-                    <WebsiteTransactionPage />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="withdraw"
-                element={
-                  <RequireAuth>
-                    <Withdraw />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="/deposit"
-                element={
-                  <RequireAuth>
-                    <Deposit />
-                  </RequireAuth>
-                }
-              />
-
-              <Route
-                path="introducerprofile"
-                element={
-                  <RequireAuth>
-                    <IntroducerProfile />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="innerintroducer/:id"
-                element={
-                  <RequireAuth>
-                    <InnerIntroducer />
-                  </RequireAuth>
-                }
-              />
-
-              <Route
-                path="dashboard"
-                element={
-                  <RequireAuth>
-                    <CreateTransaction />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="createuser"
-                element={
-                  <RequireAuth>
-                    <CreateUser />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="createactualuser"
-                element={
-                  <RequireAuth>
-                    <CreateActualUser />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="createintroducer"
-                element={
-                  <RequireAuth>
-                    <CreateIntroducer />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="innerprofile"
-                element={
-                  <RequireAuth>
-                    <InnerUserProfile />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="singleintroducer/:id"
-                element={
-                  <RequireAuth>
-                    <SingleIntroducer />
-                  </RequireAuth>
-                }
-              />
-
-              <Route
-                path="editsubadmin/:id"
-                element={
-                  <RequireAuth>
-                    <EditProfileSubadmin />
-                  </RequireAuth>
-                }
-              />
-
-              <Route
-                path="showpercentageintroducer"
-                element={
-                  <RequireAuth>
-                    <IntroShowPr />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="transactiondetails"
-                element={
-                  <RequireAuth>
-                    <TransactionDetails />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="mytxn"
-                element={
-                  <RequireAuth>
-                    <MyTxn />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="buttons"
-                element={
-                  <RequireAuth>
-                    <ButtonDemo />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="alert"
-                element={
-                  <RequireAuth>
-                    <Alert />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="introduceralert"
-                element={
-                  <RequireAuth>
-                    <IntroducerAlert />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="bankDelete"
-                element={
-                  <RequireAuth>
-                    <BankDelete />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="bankEdit"
-                element={
-                  <RequireAuth>
-                    <BankEdit />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="newbank"
-                element={
-                  <RequireAuth>
-                    <NewBank />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="newwebsite"
-                element={
-                  <RequireAuth>
-                    <NewWebsite />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="websiteEdit"
-                element={
-                  <RequireAuth>
-                    <WebsiteEdit />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="trashAllTransaction"
-                element={
-                  <RequireAuth>
-                    <TrashAllTransaction />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="trashIntroducerTransaction"
-                element={
-                  <RequireAuth>
-                    <TrashIntroducerTransaction />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="websiteDelete"
-                element={
-                  <RequireAuth>
-                    <WebsiteDelete />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="Testing"
-                element={
-                  <RequireAuth>
-                    <DuplicateDashboard />
-                  </RequireAuth>
-                }
-              />
-            </Route>
-
-            {/* <Route path='admindash' element={<RequireAuth><AdminDash/></RequireAuth>}/> */}
-            {/* <Route path='dashboard' element={<RequireAuth><Dashboard/></RequireAuth>}/> */}
-            <Route
-              path="admindash/:id"
-              element={
-                <RequireAuth>
-                  <EditTransaction />
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="admindash/:id"
-              element={
-                <RequireAuth>
-                  <EditTransaction />
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="editwebsitedata/:id"
-              element={
-                <RequireAuth>
-                  <EditWebTransaction />
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="editbankdata/:id"
-              element={
-                <RequireAuth>
-                  <EditBnkTransaction />
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="editbank/:id"
-              element={
-                <RequireAuth>
-                  <EditBank />
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="resetpassword"
-              element={
-                <RequireAuth>
-                  <ResetPassword />
-                </RequireAuth>
-              }
-            />
-          </Routes>
-        </BrowserRouter>
+            
+            
+          
+          
+          
+        </Routes>
+      </BrowserRouter> */}
+        <AppRoutes />
       </AuthProvider>
-      {/* <AdminDash/>
-      <Dashboard/> */}
     </React.Fragment>
   );
 }

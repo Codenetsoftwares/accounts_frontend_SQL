@@ -26,6 +26,7 @@ const NavSide = () => {
   useEffect(() => {
     setUserEmail(auth.user.userName);
     setUserRole(auth.user.role);
+
   }, [auth]);
 
   console.log(userrole);
@@ -357,10 +358,9 @@ const NavSide = () => {
               {userrole.some(
                 (role) =>
                   role === "superAdmin" ||
-                  role === "Dashboard-View" ||
-                  role === "Transaction-View" ||
-                  role === "Transaction-Edit-Request" ||
-                  role === "Transaction-Delete-Request"
+                  role === "report-all-txn" ||
+                  role === "report-my-txn"
+
               ) && (
                   <>
                     {isToggleDash ? (

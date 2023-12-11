@@ -39,8 +39,8 @@ const Login = () => {
         console.log("res", res);
         console.log("res", res.data.token.accessToken);
         if (res.status === 200) {
-          localStorage.setItem("user", res.data.token.accessToken);
-          localStorage.setItem("role", res.data.role);
+          sessionStorage.setItem("user", res.data.token.accessToken);
+          sessionStorage.setItem("role", res.data.token.role);
           console.log("===>", auth);
           console.log("admin");
           toast.success("Login Successfully");
