@@ -36,8 +36,6 @@ const Login = () => {
       // persist: persist,
     })
       .then((res) => {
-        console.log("res", res);
-        console.log("res", res.data.token.accessToken);
         if (res.status === 200) {
           sessionStorage.setItem("user", res.data.token.accessToken);
           sessionStorage.setItem("role", res.data.token.role);
