@@ -45,6 +45,7 @@ const Login = () => {
           // alert("login successfull");
           auth.login();
           navigate("/welcome");
+          window.location.reload();
         } else {
           toast.error(res.data.message);
           navigate("/");
