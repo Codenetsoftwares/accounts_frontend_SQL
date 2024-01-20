@@ -262,7 +262,7 @@ const AdminBank = () => {
                                     onClick={(e) => {
                                       handelEditbank(e, data._id);
                                     }}
-                                    // disabled={!data.isActive}
+                                    disabled={!data.isEdit}
                                     title="Edit Bank"
                                   >
                                     <FontAwesomeIcon
@@ -281,6 +281,7 @@ const AdminBank = () => {
                                       handleDeleteBank(e, data._id);
                                     }}
                                     title="Delete"
+                                    disabled={!data.isDelete}
                                   >
                                     <FontAwesomeIcon
                                       icon={faTrashAlt}
@@ -297,7 +298,7 @@ const AdminBank = () => {
                                     onClick={() => {
                                       handelSubAdmin(data.subAdmins, data._id);
                                     }}
-                                    // disabled={!data.isActive}
+                                    disabled={!data.isRenew}
                                     title="Renew Permission"
                                   >
                                     <FontAwesomeIcon

@@ -13,8 +13,9 @@ const RenewWebsitePermission = ({ SubAdmins, ID }) => {
   const [checkboxStates, setCheckboxStates] = useState([]); // State for checkbox data
   const [checkboxIsDeposit, setCheckboxIsDeposit] = useState([]); // State for checkbox data
   const [checkboxIsWithdraw, setCheckboxIsWithdraw] = useState([]); // State for checkbox data
-  const [subAdminIsDeposit, setSubAdminIsDeposit] = useState([]);
-  const [subAdminIsWithdraw, setSubAdminIsWithdraw] = useState([]);
+  const [checkboxIsEdit, setCheckboxIsEdit] = useState([]); // State for Edit checkbox data
+  const [checkboxIsDelete, setCheckboxIsDelete] = useState([]); // State for Delete checkbox data
+  const [checkboxIsRenew, setCheckboxIsRenew] = useState([]); // State for Renew checkbox data
   const [subAdminlist, setSubAdminlist] = useState([]);
 
   const auth = useAuth();
@@ -30,6 +31,9 @@ const RenewWebsitePermission = ({ SubAdmins, ID }) => {
   const setData = () => {
     setCheckboxIsDeposit(arrDeposit);
     setCheckboxIsWithdraw(arrWithdraw);
+    setCheckboxIsEdit(arrEdit);
+    setCheckboxIsDelete(arrDelete);
+    setCheckboxIsRenew(arrRenew);
     setCheckboxStates(newArray);
   };
 
@@ -43,6 +47,9 @@ const RenewWebsitePermission = ({ SubAdmins, ID }) => {
       subAdminId: item.userName,
       isDeposit: false,
       isWithdraw: false,
+      isEdit: false,
+      isRenew: false,
+      isDelete: false,
       _id: item._id,
     })),
     ...SubAdmins,
@@ -55,7 +62,9 @@ const RenewWebsitePermission = ({ SubAdmins, ID }) => {
   console.log(uniqueMergedArray);
   let arrDeposit = [];
   let arrWithdraw = [];
-  let arrsubadmin = [];
+  let arrEdit = [];
+  let arrRenew = [];
+  let arrDelete = [];
 
   // var flag = 0;
   // for (let i = flag; i < uniqueMergedArray.length; i++) {
@@ -81,6 +90,9 @@ const RenewWebsitePermission = ({ SubAdmins, ID }) => {
   for (let i = 0; i < uniqueMergedArray.length; i++) {
     arrDeposit.push(uniqueMergedArray[i].isDeposit);
     arrWithdraw.push(uniqueMergedArray[i].isWithdraw);
+    arrEdit.push(uniqueMergedArray[i].isEdit);
+    arrRenew.push(uniqueMergedArray[i].isRenew);
+    arrDelete.push(uniqueMergedArray[i].isDelete);
   }
   // console.log(mergedData);
   // const handelsave = () => {
@@ -108,6 +120,24 @@ const RenewWebsitePermission = ({ SubAdmins, ID }) => {
     setCheckboxIsWithdraw(newCheckboxIsWithdraw);
   };
 
+  const handleCheckboxIsEditChange = (index) => {
+    const newCheckboxIsEdit = [...checkboxIsEdit];
+    newCheckboxIsEdit[index] = !newCheckboxIsEdit[index];
+    setCheckboxIsEdit(newCheckboxIsEdit);
+  };
+
+  const handleCheckboxIsDeleteChange = (index) => {
+    const newCheckboxIsDelete = [...checkboxIsDelete];
+    newCheckboxIsDelete[index] = !newCheckboxIsDelete[index];
+    setCheckboxIsDelete(newCheckboxIsDelete);
+  };
+
+  const handleCheckboxIsRenewChange = (index) => {
+    const newCheckboxIsRenew = [...checkboxIsRenew];
+    newCheckboxIsRenew[index] = !newCheckboxIsRenew[index];
+    setCheckboxIsRenew(newCheckboxIsRenew);
+  };
+
   // const handelsave = () => {
   //   console.log("Chcekboxstate", checkboxStates);
   //   console.log("ChcekboxDeposit", checkboxIsDeposit);
@@ -129,6 +159,9 @@ const RenewWebsitePermission = ({ SubAdmins, ID }) => {
             subAdminId: subAdminlist[i],
             isDeposit: checkboxIsDeposit[i],
             isWithdraw: checkboxIsWithdraw[i],
+            isEdit: checkboxIsEdit[i],
+            isDelete: checkboxIsDelete[i],
+            isRenew: checkboxIsWithdraw[i],
           };
           arr.push(data);
         }
@@ -184,19 +217,23 @@ const RenewWebsitePermission = ({ SubAdmins, ID }) => {
                   <table className="table table-striped">
                     <thead>
                       <tr>
-                        <th scope="col">#</th>
                         <th scope="col">SubAdmin</th>
                         <th scope="col">Deposit</th>
                         <th scope="col">Withdraw</th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">Delete</th>
+                        <th scope="col">Renew</th>
                       </tr>
                     </thead>
                     <tbody>
                       {SubAdmins.map((subAdmin, index) => (
                         <tr key={subAdmin._id}>
-                          <th scope="row">{index + 1}</th>
                           <td>{subAdmin.subAdminId}</td>
                           <td>{subAdmin.isDeposit ? "Yes" : "No"}</td>
                           <td>{subAdmin.isWithdraw ? "Yes" : "No"}</td>
+                          <td>{subAdmin.isEdit ? "Yes" : "No"}</td>
+                          <td>{subAdmin.isDelete ? "Yes" : "No"}</td>
+                          <td>{subAdmin.isRenew ? "Yes" : "No"}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -214,68 +251,120 @@ const RenewWebsitePermission = ({ SubAdmins, ID }) => {
                     className="form-check"
                     style={{ margin: "5px" }}
                   >
-                    <div className="d-flex justify-content-between">
-                      <div>
-                        <input
-                          type="checkbox"
-                          className="form-check-input"
-                          id={`checkbox${index}`}
-                          style={{ marginRight: "5px" }}
-                          checked={checkboxStates[index]}
-                          onChange={() => handleCheckboxChange(index)}
-                          value={subAdmin.userName}
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor={`checkbox${index}`}
-                          style={{ fontWeight: "bold" }}
-                        >
-                          {subAdmin.userName}
-                        </label>
-                      </div>
+                    <div className="container">
+                      <div class="row row-cols-auto align-items-center">
+                        <div class="col-sm-8">
+                          <input
+                            type="checkbox"
+                            className="form-check-input "
+                            id={`checkbox${index}`}
+                            // style={{ marginRight: "5px" }}
+                            checked={checkboxStates[index]}
+                            onChange={() => handleCheckboxChange(index)}
+                            value={subAdmin.userName}
+                          />
+                          <label
+                            className="form-check-label text-info"
+                            htmlFor={`checkbox${index}`}
+                            style={{ fontWeight: "bold" }}
+                          >
+                            {subAdmin.userName}
+                          </label>
+                        </div>
 
-                      <div>
-                        <input
-                          type="checkbox"
-                          className="form-check-input"
-                          id={`checkbox${index}`}
-                          style={{ marginRight: "5px" }}
-                          checked={checkboxIsDeposit[index]}
-                          onChange={() => handleCheckboxIsDepositChange(index)}
-                          // value={subAdmin.userName}
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor={`checkbox${index}`}
-                          style={{ fontWeight: "bold" }}
-                        >
-                          isDeposit
-                        </label>
-                      </div>
-
-                      <div>
-                        <input
-                          type="checkbox"
-                          className="form-check-input"
-                          id={`checkbox${index}`}
-                          style={{ marginRight: "5px" }}
-                          checked={checkboxIsWithdraw[index]}
-                          onChange={() => handleCheckboxIsWithdrawChange(index)}
-                          // value={subAdmin.userName}
-                        />
-                        <label
-                          className="form-check-label"
-                          htmlFor={`checkbox${index}`}
-                          style={{ fontWeight: "bold" }}
-                        >
-                          isWithdraw
-                        </label>
+                        <div class="col-sm-8">
+                          <input
+                            type="checkbox"
+                            className="form-check-input"
+                            id={`checkbox${index}`}
+                            // style={{ marginRight: "5px" }}
+                            checked={checkboxIsDeposit[index]}
+                            onChange={() =>
+                              handleCheckboxIsDepositChange(index)
+                            }
+                            // value={subAdmin.userName}
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor={`checkbox${index}`}
+                          >
+                            Deposit
+                          </label>
+                        </div>
+                        <div class="col-sm-8">
+                          <input
+                            type="checkbox"
+                            className="form-check-input"
+                            id={`checkbox${index}`}
+                            // style={{ marginRight: "5px" }}
+                            checked={checkboxIsWithdraw[index]}
+                            onChange={() =>
+                              handleCheckboxIsWithdrawChange(index)
+                            }
+                            // value={subAdmin.userName}
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor={`checkbox${index}`}
+                          >
+                            Withdraw
+                          </label>
+                        </div>
+                        <div class="col-sm-8">
+                          <input
+                            type="checkbox"
+                            className="form-check-input"
+                            id={`checkbox${index}`}
+                            // style={{ marginRight: "5px" }}
+                            checked={checkboxIsEdit[index]}
+                            onChange={() => handleCheckboxIsEditChange(index)}
+                            // value={subAdmin.userName}
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor={`checkbox${index}`}
+                          >
+                            Edit
+                          </label>
+                        </div>
+                        <div class="col-sm-8">
+                          <input
+                            type="checkbox"
+                            className="form-check-input"
+                            id={`checkbox${index}`}
+                            // style={{ marginRight: "5px" }}
+                            checked={checkboxIsDelete[index]}
+                            onChange={() => handleCheckboxIsDeleteChange(index)}
+                            // value={subAdmin.userName}
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor={`checkbox${index}`}
+                          >
+                            Delete
+                          </label>
+                        </div>
+                        <div class="col-sm-8">
+                          <input
+                            type="checkbox"
+                            className="form-check-input"
+                            id={`checkbox${index}`}
+                            checked={checkboxIsRenew[index]}
+                            onChange={() => handleCheckboxIsRenewChange(index)}
+                            // value={subAdmin.userName}
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor={`checkbox${index}`}
+                          >
+                            Renew
+                          </label>
+                        </div>
                       </div>
                     </div>
-                    {/* 
                     {index < subAdminlist.length - 1 && (
                       <hr style={{ margin: "5px 0", borderColor: "black" }} />
-                    )} */}
+                    )}
                   </div>
                 ))}
               </>
@@ -295,6 +384,8 @@ const RenewWebsitePermission = ({ SubAdmins, ID }) => {
               <button
                 type="button"
                 class="btn btn-success"
+                // data-toggle="modal"
+                // data-target="#exampleModal"
                 onClick={handelsave}
               >
                 Save

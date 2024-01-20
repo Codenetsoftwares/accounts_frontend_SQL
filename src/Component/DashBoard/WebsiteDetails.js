@@ -266,6 +266,7 @@ const WebsiteDetails = () => {
                                   title="Edit Website "
                                   data-toggle="modal"
                                   data-target="#editwebsite"
+                                  disabled={!data.isEdit}
                                 >
                                   <FontAwesomeIcon
                                     icon={faEdit}
@@ -283,6 +284,7 @@ const WebsiteDetails = () => {
                                     handeldeletewebsite(data._id);
                                   }}
                                   title="Delete"
+                                  disabled={!data.isDelete}
                                 >
                                   <FontAwesomeIcon
                                     icon={faTrashAlt}
@@ -301,6 +303,7 @@ const WebsiteDetails = () => {
                                   }}
                                   // disabled={!data.isActive}
                                   title="Renew Permission"
+                                  disabled={!data.isRenew}
                                 >
                                   <FontAwesomeIcon
                                     icon={faEye}
@@ -415,6 +418,7 @@ const WebsiteDetails = () => {
                                 title="Edit Website"
                                 data-toggle="modal"
                                 data-target="#editwebsite"
+                                disabled={!data.isEdit}
                               >
                                 <FontAwesomeIcon
                                   icon={faEdit}
@@ -432,6 +436,7 @@ const WebsiteDetails = () => {
                                   handeldeletewebsite(data._id);
                                 }}
                                 title="Delete"
+                                disabled={!data.isDelete}
                               >
                                 <FontAwesomeIcon
                                   icon={faTrashAlt}
@@ -450,6 +455,7 @@ const WebsiteDetails = () => {
                                 }}
                                 // disabled={!data.isActive}
                                 title="Renew Permission"
+                                disabled={!data.isRenew}
                               >
                                 <FontAwesomeIcon
                                   icon={faEye}
