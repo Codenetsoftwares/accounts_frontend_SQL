@@ -318,6 +318,23 @@ const CreateUser = () => {
                               Request
                             </label>
                           </div>
+                          <div className="form-check form-switch">
+                            <input
+                              className="form-check-input"
+                              type="checkbox"
+                              value="RecycleBin-View"
+                              checked={checkedItems.includes(
+                                "RecycleBin-View"
+                              )}
+                              onChange={handleCheckboxChange}
+                            />
+                            <label
+                              className="form-check-label"
+                              for="flexSwitchCheckDefault"
+                            >
+                              RecycleBin View
+                            </label>
+                          </div>
                         </div>
                         <div className="col-md-6 align-items-end">
                           <div className="form-check form-switch">
@@ -437,6 +454,7 @@ const CreateUser = () => {
                               Create Introducer
                             </label>
                           </div>
+
                         </div>
                       </div>
                       <div className="col-12">
