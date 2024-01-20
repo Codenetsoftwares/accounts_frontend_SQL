@@ -337,7 +337,20 @@ const AdminEditrole = () => {
                     />
                     <span>Transaction Delete Request</span>
                   </label>
-                </div>
+                  </div>
+                  <div>
+                    <label>
+                      <input
+                        type="checkbox"
+                        value="RecycleBin-View"
+                        checked={checkedItems.includes(
+                          "RecycleBin-View"
+                        )}
+                        onChange={handleCheckboxChange}
+                      />
+                      <span>RecycleBin View</span>
+                    </label>
+                  </div>
               </div>
               <div className="card-footer">
                 <div className="col-12 text-end">
