@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import TransactionSercvice from "../../Services/TransactionSercvice";
 import { useAuth } from "../../Utils/Auth";
 
-const SubAdminBank = ({ ID, EditApi }) => {
+const SubAdminBank = ({ ID, EditApi, purpose }) => {
+  console.log("first1011110", purpose)
   const [subAdminlist, setSubAdminlist] = useState([]);
   const [subAdmin, setSubAdmin] = useState([]);
   const [checkboxStates, setCheckboxStates] = useState([]); // State for subadmin checkbox data
@@ -15,8 +16,9 @@ const SubAdminBank = ({ ID, EditApi }) => {
   const auth = useAuth();
 
   useEffect(() => {
-    if (auth.user) {
-      TransactionSercvice.subAdminList(auth.user).then((res) => {
+
+    if (purpose === "bank") {
+      TransactionSercvice.bankSubAdminList(auth.user).then((res) => {
         setSubAdmin(res.data);
         setSubAdminlist(res.data.map((data) => data.userName));
         setCheckboxStates(res.data.map(() => false)); // Initialize checkbox states
@@ -27,6 +29,20 @@ const SubAdminBank = ({ ID, EditApi }) => {
         setCheckboxIsRenew(res.data.map(() => false));
       });
     }
+    else {
+      TransactionSercvice.websiteSubAdminList(auth.user).then((res) => {
+        setSubAdmin(res.data);
+        setSubAdminlist(res.data.map((data) => data.userName));
+        setCheckboxStates(res.data.map(() => false)); // Initialize checkbox states
+        setCheckboxIsDeposit(res.data.map(() => false));
+        setCheckboxIsWithdraw(res.data.map(() => false));
+        setCheckboxIsEdit(res.data.map(() => false));
+        setCheckboxIsDelete(res.data.map(() => false));
+        setCheckboxIsRenew(res.data.map(() => false));
+      });
+    }
+
+
   }, [auth]);
 
   //  For subadmin Name Change
@@ -186,12 +202,12 @@ const SubAdminBank = ({ ID, EditApi }) => {
                               onChange={() =>
                                 handleCheckboxIsDepositChange(index)
                               }
-                              // value={subAdmin.userName}
+                            // value={subAdmin.userName}
                             />
                             <label
                               className="form-check-label"
                               htmlFor={`checkbox${index}`}
-                              // style={{ fontWeight: "bold" }}
+                            // style={{ fontWeight: "bold" }}
                             >
                               Deposit
                             </label>
@@ -206,12 +222,12 @@ const SubAdminBank = ({ ID, EditApi }) => {
                               onChange={() =>
                                 handleCheckboxIsWithdrawChange(index)
                               }
-                              // value={subAdmin.userName}
+                            // value={subAdmin.userName}
                             />
                             <label
                               className="form-check-label"
                               htmlFor={`checkbox${index}`}
-                              // style={{ fontWeight: "bold" }}
+                            // style={{ fontWeight: "bold" }}
                             >
                               Withdraw
                             </label>
@@ -224,12 +240,12 @@ const SubAdminBank = ({ ID, EditApi }) => {
                               // style={{ marginRight: "5px" }}
                               checked={checkboxIsEdit[index]}
                               onChange={() => handleCheckboxIsEditChange(index)}
-                              // value={subAdmin.userName}
+                            // value={subAdmin.userName}
                             />
                             <label
                               className="form-check-label"
                               htmlFor={`checkbox${index}`}
-                              // style={{ fontWeight: "bold" }}
+                            // style={{ fontWeight: "bold" }}
                             >
                               Edit
                             </label>
@@ -244,12 +260,12 @@ const SubAdminBank = ({ ID, EditApi }) => {
                               onChange={() =>
                                 handleCheckboxIsDeleteChange(index)
                               }
-                              // value={subAdmin.userName}
+                            // value={subAdmin.userName}
                             />
                             <label
                               className="form-check-label"
                               htmlFor={`checkbox${index}`}
-                              // style={{ fontWeight: "bold" }}
+                            // style={{ fontWeight: "bold" }}
                             >
                               Delete
                             </label>
@@ -264,12 +280,12 @@ const SubAdminBank = ({ ID, EditApi }) => {
                               onChange={() =>
                                 handleCheckboxIsRenewChange(index)
                               }
-                              // value={subAdmin.userName}
+                            // value={subAdmin.userName}
                             />
                             <label
                               className="form-check-label"
                               htmlFor={`checkbox${index}`}
-                              // style={{ fontWeight: "bold" }}
+                            // style={{ fontWeight: "bold" }}
                             >
                               Renew
                             </label>

@@ -42,6 +42,26 @@ class TransactionService {
     });
   }
 
+  bankSubAdminList(user) {
+    return axios({
+      method: "get",
+      url: API_HOST + "/api/admin/sub-admin-name/bank-view",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  websiteSubAdminList(user) {
+    return axios({
+      method: "get",
+      url: API_HOST + "/api/admin/sub-admin-name/website-view",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
   websiteList(user) {
     return axios({
       method: "get",
