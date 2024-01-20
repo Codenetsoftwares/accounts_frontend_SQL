@@ -79,7 +79,7 @@ const AdminBank = () => {
   };
 
   const handelstatement = (e, accountNumber) => {
-    console.log("first", accountNumber)
+    console.log("first", accountNumber);
     navigate(`/bankstatement/${accountNumber}`);
   };
 
@@ -245,7 +245,7 @@ const AdminBank = () => {
                                     type="button"
                                     class="btn btn-info btn-sm"
                                     onClick={(e) => {
-                                      console.log(data._id)
+                                      console.log(data._id);
                                       handelstatement(e, data._id);
                                     }}
                                     // disabled={!data.isActive}
@@ -411,6 +411,7 @@ const AdminBank = () => {
                                   }}
                                   // disabled={!data.isActive}
                                   title="Edit Bank"
+                                  disabled={!data.isEdit}
                                 >
                                   <FontAwesomeIcon
                                     icon={faEdit}
@@ -428,6 +429,7 @@ const AdminBank = () => {
                                     handleDeleteBank(e, data._id);
                                   }}
                                   title="Delete"
+                                  disabled={!data.isDelete}
                                 >
                                   <FontAwesomeIcon
                                     icon={faTrashAlt}
@@ -446,6 +448,7 @@ const AdminBank = () => {
                                   }}
                                   // disabled={!data.isActive}
                                   title="Renew Permission"
+                                  disabled={!data.isRenew}
                                 >
                                   <FontAwesomeIcon
                                     icon={faEye}

@@ -13,8 +13,9 @@ const RenewBankPermission = ({ SubAdmins, ID }) => {
   const [checkboxStates, setCheckboxStates] = useState([]); // State for checkbox data
   const [checkboxIsDeposit, setCheckboxIsDeposit] = useState([]); // State for checkbox data
   const [checkboxIsWithdraw, setCheckboxIsWithdraw] = useState([]); // State for checkbox data
-  const [subAdminIsDeposit, setSubAdminIsDeposit] = useState([]);
-  const [subAdminIsWithdraw, setSubAdminIsWithdraw] = useState([]);
+  const [checkboxIsEdit, setCheckboxIsEdit] = useState([]); // State for Edit checkbox data
+  const [checkboxIsDelete, setCheckboxIsDelete] = useState([]); // State for Delete checkbox data
+  const [checkboxIsRenew, setCheckboxIsRenew] = useState([]); // State for Renew checkbox data
   const [subAdminlist, setSubAdminlist] = useState([]);
 
   const auth = useAuth();
@@ -30,6 +31,9 @@ const RenewBankPermission = ({ SubAdmins, ID }) => {
   const setData = () => {
     setCheckboxIsDeposit(arrDeposit);
     setCheckboxIsWithdraw(arrWithdraw);
+    setCheckboxIsEdit(arrEdit)
+    setCheckboxIsDelete(arrDelete)
+    setCheckboxIsRenew(arrRenew)
     setCheckboxStates(newArray);
   };
 
@@ -43,6 +47,9 @@ const RenewBankPermission = ({ SubAdmins, ID }) => {
       subAdminId: item.userName,
       isDeposit: false,
       isWithdraw: false,
+      isEdit: false,
+      isRenew: false,
+      isDelete: false,
       _id: item._id,
     })),
     ...SubAdmins,
@@ -55,6 +62,9 @@ const RenewBankPermission = ({ SubAdmins, ID }) => {
   console.log(uniqueMergedArray);
   let arrDeposit = [];
   let arrWithdraw = [];
+  let arrEdit = [];
+  let arrRenew = [];
+  let arrDelete = [];
   let arrsubadmin = [];
 
   // var flag = 0;
