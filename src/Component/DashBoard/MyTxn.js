@@ -15,7 +15,7 @@ import TransactionSercvice from "../../Services/TransactionSercvice";
 import { Button } from "react-bootstrap";
 import Pagination from "../Pagination";
 
-const BankStatement = () => {
+const MyTxn = () => {
   const { id } = useParams();
   const auth = useAuth();
   const navigate = useNavigate();
@@ -1154,4 +1154,4 @@ const BankStatement = () => {
   );
 };
 
-export default BankStatement;
+export default MyTxn;

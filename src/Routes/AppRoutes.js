@@ -31,7 +31,7 @@ import TrashAllTransaction from "../Component/TrashAllTransaction";
 import AdminDash from "../Component/DashBoard/AdminDash";
 import IntroducerStatement from "../Component/DashBoard/IntroducerStatement";
 import WebsiteStatement from "../Component/DashBoard/WebsiteStatement";
-import BankStatement from "../Component/DashBoard/MyTxn";
+
 import BankTransactionPage from "../pages/TransactionPage/BankTransactionPage";
 import WebsiteTransactionPage from "../pages/TransactionPage/WebsiteTransactionPage";
 import InnerIntroducer from "../Component/DashBoard/InnerIntroducer";
@@ -46,7 +46,7 @@ import EditWebTransaction from "../Component/DashBoard/EditWebTransaction";
 import EditBnkTransaction from "../Component/DashBoard/EditBnkTransaction ";
 import EditBank from "../Component/EditBank";
 import ResetPassword from "../Component/DashBoard/ResetPassword";
-
+import BankStatement from "../Component/DashBoard/BankStatement";
 
 const AppRoutes = () => {
   const userrole = sessionStorage.getItem("role") || "";
@@ -71,55 +71,55 @@ const AppRoutes = () => {
               role.includes("Create-Withdraw-Transaction") ||
               role.includes("Create-Transaction")
           ) && (
-              <Route
-                path="withdraw"
-                element={
-                  <RequireAuth>
-                    <Withdraw />
-                  </RequireAuth>
-                }
-              />
-            )}
+            <Route
+              path="withdraw"
+              element={
+                <RequireAuth>
+                  <Withdraw />
+                </RequireAuth>
+              }
+            />
+          )}
           {[userrole]?.some(
             (role) =>
               role.includes("superAdmin") ||
               role.includes("Create-Withdraw-Transaction") ||
               role.includes("Create-Transaction")
           ) && (
-              <Route
-                path="deposit"
-                element={
-                  <RequireAuth>
-                    <Deposit />
-                  </RequireAuth>
-                }
-              />
-            )}
+            <Route
+              path="deposit"
+              element={
+                <RequireAuth>
+                  <Deposit />
+                </RequireAuth>
+              }
+            />
+          )}
           {[userrole]?.some(
             (role) => role.includes("superAdmin") || role.includes("Bank-View")
           ) && (
-              <Route
-                path="bank"
-                element={
-                  <RequireAuth>
-                    <AdminBank />
-                  </RequireAuth>
-                }
-              />
-            )}
+            <Route
+              path="bank"
+              element={
+                <RequireAuth>
+                  <AdminBank />
+                </RequireAuth>
+              }
+            />
+          )}
           {[userrole]?.some(
             (role) =>
               role.includes("superAdmin") || role.includes("Website-View")
           ) && (
-              <Route
-                path="website"
-                element={
-                  <RequireAuth>
-                    <WebsiteDetails />
-                  </RequireAuth>
-                }
-              />
-            )}
+            <Route
+              path="website"
+              element={
+                <RequireAuth>
+                  <WebsiteDetails />
+                </RequireAuth>
+              }
+            />
+          )}
           {[userrole]?.some((role) => role.includes("superAdmin")) && (
             <Route
               path="createuser"
@@ -134,58 +134,58 @@ const AppRoutes = () => {
             (role) =>
               role.includes("superAdmin") || role.includes("Create-User")
           ) && (
-              <Route
-                path="createactualuser"
-                element={
-                  <RequireAuth>
-                    <CreateActualUser />
-                  </RequireAuth>
-                }
-              />
-            )}
+            <Route
+              path="createactualuser"
+              element={
+                <RequireAuth>
+                  <CreateActualUser />
+                </RequireAuth>
+              }
+            />
+          )}
           {[userrole]?.some(
             (role) =>
               role.includes("superAdmin") || role.includes("Create-Introducer")
           ) && (
-              <Route
-                path="createintroducer"
-                element={
-                  <RequireAuth>
-                    <CreateIntroducer />
-                  </RequireAuth>
-                }
-              />
-            )}
+            <Route
+              path="createintroducer"
+              element={
+                <RequireAuth>
+                  <CreateIntroducer />
+                </RequireAuth>
+              }
+            />
+          )}
           {[userrole]?.some(
             (role) =>
               role.includes("superAdmin") ||
               role.includes("Profile-View") ||
               role.includes("User-Profile-View")
           ) && (
-              <Route
-                path="userprofile"
-                element={
-                  <RequireAuth>
-                    <UserProfile />
-                  </RequireAuth>
-                }
-              />
-            )}
+            <Route
+              path="userprofile"
+              element={
+                <RequireAuth>
+                  <UserProfile />
+                </RequireAuth>
+              }
+            />
+          )}
           {[userrole]?.some(
             (role) =>
               role.includes("superAdmin") ||
               role.includes("Profile-View") ||
               role.includes("Introducer-Profile-View")
           ) && (
-              <Route
-                path="introducerprofile"
-                element={
-                  <RequireAuth>
-                    <IntroducerProfile />
-                  </RequireAuth>
-                }
-              />
-            )}
+            <Route
+              path="introducerprofile"
+              element={
+                <RequireAuth>
+                  <IntroducerProfile />
+                </RequireAuth>
+              }
+            />
+          )}
           {[userrole]?.some((role) => role.includes("superAdmin")) && (
             <Route
               path="adminlist"
@@ -196,7 +196,10 @@ const AppRoutes = () => {
               }
             />
           )}
-          {[userrole]?.some((role) => role.includes("superAdmin") || role.includes("report-all-txn")) && (
+          {[userrole]?.some(
+            (role) =>
+              role.includes("superAdmin") || role.includes("report-all-txn")
+          ) && (
             <Route
               path="maintransactionpage"
               element={
@@ -206,7 +209,10 @@ const AppRoutes = () => {
               }
             />
           )}
-          {[userrole]?.some((role) => role.includes("superAdmin") || role.includes("report-my-txn")) && (
+          {[userrole]?.some(
+            (role) =>
+              role.includes("superAdmin") || role.includes("report-my-txn")
+          ) && (
             <Route
               path="mytxn"
               element={
@@ -216,7 +222,10 @@ const AppRoutes = () => {
               }
             />
           )}
-          {[userrole]?.some((role) => role.includes("superAdmin") || role.includes("RequestAdmin")) && (
+          {[userrole]?.some(
+            (role) =>
+              role.includes("superAdmin") || role.includes("RequestAdmin")
+          ) && (
             <Route
               path="alert"
               element={
@@ -226,7 +235,10 @@ const AppRoutes = () => {
               }
             />
           )}
-          {[userrole]?.some((role) => role.includes("superAdmin") || role.includes("RequestAdmin")) && (
+          {[userrole]?.some(
+            (role) =>
+              role.includes("superAdmin") || role.includes("RequestAdmin")
+          ) && (
             <Route
               path="introduceralert"
               element={
@@ -236,7 +248,10 @@ const AppRoutes = () => {
               }
             />
           )}
-          {[userrole]?.some((role) => role.includes("superAdmin") || role.includes("RequestAdmin")) && (
+          {[userrole]?.some(
+            (role) =>
+              role.includes("superAdmin") || role.includes("RequestAdmin")
+          ) && (
             <Route
               path="bankDelete"
               element={
@@ -246,7 +261,10 @@ const AppRoutes = () => {
               }
             />
           )}
-          {[userrole]?.some((role) => role.includes("superAdmin") || role.includes("RequestAdmin")) && (
+          {[userrole]?.some(
+            (role) =>
+              role.includes("superAdmin") || role.includes("RequestAdmin")
+          ) && (
             <Route
               path="bankEdit"
               element={
@@ -256,7 +274,10 @@ const AppRoutes = () => {
               }
             />
           )}
-          {[userrole]?.some((role) => role.includes("superAdmin") || role.includes("RequestAdmin")) && (
+          {[userrole]?.some(
+            (role) =>
+              role.includes("superAdmin") || role.includes("RequestAdmin")
+          ) && (
             <Route
               path="newbank"
               element={
@@ -266,7 +287,10 @@ const AppRoutes = () => {
               }
             />
           )}
-          {[userrole]?.some((role) => role.includes("superAdmin") || role.includes("RequestAdmin")) && (
+          {[userrole]?.some(
+            (role) =>
+              role.includes("superAdmin") || role.includes("RequestAdmin")
+          ) && (
             <Route
               path="newwebsite"
               element={
@@ -276,7 +300,10 @@ const AppRoutes = () => {
               }
             />
           )}
-          {[userrole]?.some((role) => role.includes("superAdmin") || role.includes("RequestAdmin")) && (
+          {[userrole]?.some(
+            (role) =>
+              role.includes("superAdmin") || role.includes("RequestAdmin")
+          ) && (
             <Route
               path="websiteEdit"
               element={
@@ -286,7 +313,10 @@ const AppRoutes = () => {
               }
             />
           )}
-          {[userrole]?.some((role) => role.includes("superAdmin") || role.includes("RequestAdmin")) && (
+          {[userrole]?.some(
+            (role) =>
+              role.includes("superAdmin") || role.includes("RequestAdmin")
+          ) && (
             <Route
               path="websiteDelete"
               element={
@@ -296,7 +326,10 @@ const AppRoutes = () => {
               }
             />
           )}
-          {[userrole]?.some((role) => role.includes("superAdmin") || role.includes("RequestAdmin")) && (
+          {[userrole]?.some(
+            (role) =>
+              role.includes("superAdmin") || role.includes("RequestAdmin")
+          ) && (
             <Route
               path="trashAllTransaction"
               element={
