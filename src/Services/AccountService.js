@@ -65,6 +65,26 @@ class AccountService {
     });
   }
 
+  getActiveBank(user) {
+    return axios({
+      method: "get",
+      url: `${API_HOST}/api/get-activeBank-name`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  getActiveWebsite(user) {
+    return axios({
+      method: "get",
+      url: `${API_HOST}/api/get-activeWebsite-name`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
   getactivebankweb(user) {
     return axios({
       method: "get",

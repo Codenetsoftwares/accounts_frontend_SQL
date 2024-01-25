@@ -25,12 +25,14 @@ function Withdraw() {
   const [filteredOptions, setFilteredOptions] = useState([]);
 
   useEffect(() => {
-    AccountService.getbank(auth.user).then((res) => setBank(res.data));
+    AccountService.getActiveBank(auth.user).then((res) => setBank(res.data));
   }, [auth]);
   console.log("bank names", Bank);
 
   useEffect(() => {
-    AccountService.website(auth.user).then((res) => setWebsite(res.data));
+    AccountService.getActiveWebsite(auth.user).then((res) =>
+      setWebsite(res.data)
+    );
   }, [auth]);
   console.log("Website Names", Website);
 
