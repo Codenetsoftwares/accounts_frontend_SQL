@@ -608,6 +608,28 @@ class AccountService {
     });
   }
 
+  revokeAllPermissionBank(id, subAdminId, user) {
+    return axios({
+      method: "delete",
+      url: `${API_HOST}/api/bank/delete-subadmin/${id}/${subAdminId}`,
+
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
+  revokeAllPermissionWebsite(id, subAdminId, user) {
+    return axios({
+      method: "delete",
+      url: `${API_HOST}/api/website/delete-subadmin/${id}/${subAdminId}`,
+
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
   activeInactiveWebsite(id, data, user) {
     return axios({
       method: "post",

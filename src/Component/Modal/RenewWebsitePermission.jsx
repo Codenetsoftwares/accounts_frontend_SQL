@@ -6,6 +6,8 @@ import { FaHandsHelping } from "react-icons/fa";
 import SubAdminBank from "./SubAdminBank";
 import { useAuth } from "../../Utils/Auth";
 import TransactionSercvice from "../../Services/TransactionSercvice";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const RenewWebsitePermission = ({ SubAdmins, ID }) => {
   const [toggle, setToggle] = useState(true);
@@ -185,6 +187,18 @@ const RenewWebsitePermission = ({ SubAdmins, ID }) => {
         console.log(error);
       });
   };
+  const handelRevokePermision = (SubAdminID) => {
+    AccountService.revokeAllPermissionWebsite(ID, SubAdminID, auth.user)
+      .then((response) => {
+        alert("All Permission Revoked For this SubAdmin");
+        window.location.reload();
+        console.log(response.data);
+      })
+      .catch((error) => {
+        alert("Oh ho!! Something Went Wrong");
+        console.error(error);
+      });
+  };
   return (
     <div
       class="modal fade"
@@ -234,6 +248,15 @@ const RenewWebsitePermission = ({ SubAdmins, ID }) => {
                           <td>{subAdmin.isEdit ? "Yes" : "No"}</td>
                           <td>{subAdmin.isDelete ? "Yes" : "No"}</td>
                           <td>{subAdmin.isRenew ? "Yes" : "No"}</td>
+                          <td
+                            className="btn-danger"
+                            title="Revoke All Permision"
+                            onClick={() => {
+                              handelRevokePermision(subAdmin.subAdminId);
+                            }}
+                          >
+                            <FontAwesomeIcon icon={faTimes} />
+                          </td>
                         </tr>
                       ))}
                     </tbody>
