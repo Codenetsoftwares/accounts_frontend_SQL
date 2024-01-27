@@ -214,30 +214,32 @@ const RenewBankPermission = ({ SubAdmins, ID }) => {
             {toggle ? (
               <>
                 {SubAdmins && SubAdmins.length > 0 ? (
-                  <table className="table table-striped">
-                    <thead>
-                      <tr>
-                        <th scope="col">SubAdmin</th>
-                        <th scope="col">Deposit</th>
-                        <th scope="col">Withdraw</th>
-                        <th scope="col">Edit</th>
-                        <th scope="col">Delete</th>
-                        <th scope="col">Renew</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {SubAdmins.map((subAdmin, index) => (
-                        <tr key={subAdmin._id}>
-                          <td>{subAdmin.subAdminId}</td>
-                          <td>{subAdmin.isDeposit ? "Yes" : "No"}</td>
-                          <td>{subAdmin.isWithdraw ? "Yes" : "No"}</td>
-                          <td>{subAdmin.isEdit ? "Yes" : "No"}</td>
-                          <td>{subAdmin.isDelete ? "Yes" : "No"}</td>
-                          <td>{subAdmin.isRenew ? "Yes" : "No"}</td>
+                  <div>
+                    <table className="table table-striped table-sm">
+                      <thead>
+                        <tr>
+                          <th scope="col">SubAdmin</th>
+                          <th scope="col">Deposit</th>
+                          <th scope="col">Withdraw</th>
+                          <th scope="col">Edit</th>
+                          <th scope="col">Delete</th>
+                          <th scope="col">Renew</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {SubAdmins.map((subAdmin, index) => (
+                          <tr key={subAdmin._id}>
+                            <td>{subAdmin.subAdminId}</td>
+                            <td>{subAdmin.isDeposit ? "Yes" : "No"}</td>
+                            <td>{subAdmin.isWithdraw ? "Yes" : "No"}</td>
+                            <td>{subAdmin.isEdit ? "Yes" : "No"}</td>
+                            <td>{subAdmin.isDelete ? "Yes" : "No"}</td>
+                            <td>{subAdmin.isRenew ? "Yes" : "No"}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 ) : (
                   <p>No permissions found</p>
                 )}

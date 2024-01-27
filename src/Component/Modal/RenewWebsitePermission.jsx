@@ -214,7 +214,7 @@ const RenewWebsitePermission = ({ SubAdmins, ID }) => {
             {toggle ? (
               <>
                 {SubAdmins && SubAdmins.length > 0 ? (
-                  <table className="table table-striped">
+                  <table className="table table-striped table-sm">
                     <thead>
                       <tr>
                         <th scope="col">SubAdmin</th>
