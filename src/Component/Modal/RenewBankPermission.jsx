@@ -44,6 +44,11 @@ const RenewBankPermission = ({ SubAdmins, ID }) => {
     setData();
   };
 
+  const funtoggle = () => {
+    setToggle(true);
+    setData();
+  };
+
   const mergedArray = [
     ...subAdmin.map((item) => ({
       subAdminId: item.userName,
@@ -221,6 +226,7 @@ const RenewBankPermission = ({ SubAdmins, ID }) => {
               class="close"
               data-dismiss="modal"
               aria-label="Close"
+              onClick={funtoggle}
             >
               <span aria-hidden="true">&times;</span>
             </button>
@@ -245,21 +251,13 @@ const RenewBankPermission = ({ SubAdmins, ID }) => {
                       <tbody>
                         {SubAdmins.map((subAdmin, index) => (
                           <tr key={subAdmin._id}>
-                            <td>{subAdmin.subAdminId} </td>
+                            <td> {subAdmin.subAdminId} </td>
                             <td>{subAdmin.isDeposit ? "Yes" : "No"}</td>
                             <td>{subAdmin.isWithdraw ? "Yes" : "No"}</td>
                             <td>{subAdmin.isEdit ? "Yes" : "No"}</td>
                             <td>{subAdmin.isDelete ? "Yes" : "No"}</td>
                             <td>{subAdmin.isRenew ? "Yes" : "No"}</td>
-                            <td
-                              className="btn-danger"
-                              title="Revoke All Permision"
-                              onClick={() => {
-                                handelRevokePermision(subAdmin.subAdminId);
-                              }}
-                            >
-                              <FontAwesomeIcon icon={faTimes} />
-                            </td>
+                           
                           </tr>
                         ))}
                       </tbody>
@@ -295,7 +293,16 @@ const RenewBankPermission = ({ SubAdmins, ID }) => {
                             htmlFor={`checkbox${index}`}
                             style={{ fontWeight: "bold" }}
                           >
-                            {subAdmin.userName}{" "}
+                            {subAdmin.userName} &nbsp;&nbsp;&nbsp;&nbsp;
+                            <FontAwesomeIcon
+                              icon={faTimes}
+                              title="Revoke All Permision"
+                              className="bg-danger"
+                              style={{ cursor: "pointer" }}
+                              onClick={() => {
+                                handelRevokePermision(subAdmin.userName);
+                              }}
+                            />
                           </label>
                         </div>
 
@@ -394,6 +401,8 @@ const RenewBankPermission = ({ SubAdmins, ID }) => {
                     )}
                   </div>
                 ))}
+
+             
               </>
             )}
           </div>
@@ -404,6 +413,7 @@ const RenewBankPermission = ({ SubAdmins, ID }) => {
                 type="button"
                 class="btn btn-secondary"
                 data-dismiss="modal"
+                onClick={funtoggle}
               >
                 Close
               </button>

@@ -140,6 +140,11 @@ const RenewWebsitePermission = ({ SubAdmins, ID }) => {
     setCheckboxIsRenew(newCheckboxIsRenew);
   };
 
+  const funtoggle = () => {
+    setToggle(true);
+    setData();
+  };
+
   // const handelsave = () => {
   //   console.log("Chcekboxstate", checkboxStates);
   //   console.log("ChcekboxDeposit", checkboxIsDeposit);
@@ -219,6 +224,7 @@ const RenewWebsitePermission = ({ SubAdmins, ID }) => {
               class="close"
               data-dismiss="modal"
               aria-label="Close"
+              onClick={funtoggle}
             >
               <span aria-hidden="true">&times;</span>
             </button>
@@ -248,15 +254,6 @@ const RenewWebsitePermission = ({ SubAdmins, ID }) => {
                           <td>{subAdmin.isEdit ? "Yes" : "No"}</td>
                           <td>{subAdmin.isDelete ? "Yes" : "No"}</td>
                           <td>{subAdmin.isRenew ? "Yes" : "No"}</td>
-                          <td
-                            className="btn-danger"
-                            title="Revoke All Permision"
-                            onClick={() => {
-                              handelRevokePermision(subAdmin.subAdminId);
-                            }}
-                          >
-                            <FontAwesomeIcon icon={faTimes} />
-                          </td>
                         </tr>
                       ))}
                     </tbody>
@@ -291,8 +288,17 @@ const RenewWebsitePermission = ({ SubAdmins, ID }) => {
                             htmlFor={`checkbox${index}`}
                             style={{ fontWeight: "bold" }}
                           >
-                            {subAdmin.userName}
+                            {subAdmin.userName}&nbsp;&nbsp;&nbsp;&nbsp;
                           </label>
+                          <FontAwesomeIcon
+                            icon={faTimes}
+                            title="Revoke All Permision"
+                            className="bg-danger"
+                            style={{ cursor: "pointer" }}
+                            onClick={() => {
+                              handelRevokePermision(subAdmin.userName);
+                            }}
+                          />
                         </div>
 
                         <div class="col-sm-8">
@@ -400,6 +406,7 @@ const RenewWebsitePermission = ({ SubAdmins, ID }) => {
                 type="button"
                 class="btn btn-secondary"
                 data-dismiss="modal"
+                onClick={funtoggle}
               >
                 Close
               </button>
