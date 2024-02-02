@@ -225,6 +225,7 @@ const MyTxn = () => {
     setPage(1);
     setMinAmount(0);
     setMaxAmount(0);
+    window.location.reload();
   };
 
   const handleStartDatevalue = (e) => {
