@@ -23,7 +23,6 @@ const Pagination = ({ handlePage, page, totalPage, totalData, lastPageReminder, 
     // useEffect(() => { handleAdvancepage() }, [])
     // handleAdvancepage()
 
-    console.log(arr)
     return (
         <div className="text-center">
             <h4>

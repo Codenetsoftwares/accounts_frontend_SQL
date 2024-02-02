@@ -26,9 +26,13 @@ const BankStatement = () => {
   const [Manualstmnt, SetManualstmnt] = useState([]);
   const [Userstmnt, SetUserstmnt] = useState([]);
   const [select, setSelect] = useState("All");
-  const [startDatevalue, SetStartDatesetValue] = useState(
-    new Date() - 1 * 24 * 60 * 60 * 1000
-  );
+  // const [startDatevalue, SetStartDatesetValue] = useState(
+  //   new Date() - 1 * 24 * 60 * 60 * 1000
+  // );
+  const defaultStartDate = new Date();
+  defaultStartDate.setDate(defaultStartDate.getDate() - 1);
+
+  const [startDatevalue, SetStartDatesetValue] = useState(defaultStartDate);
   const [endDatevalue, setEndDateValue] = useState(new Date());
   const [toggle, setToggle] = useState(true);
   const [subAdminlist, setSubAdminlist] = useState([]);
@@ -83,7 +87,7 @@ const BankStatement = () => {
     if (auth.user) {
       TransactionSercvice.subAdminList(auth.user).then((res) => {
         setSubAdminlist(res.data);
-        console.log(res.data)
+      
       });
     }
   }, [auth]);
@@ -107,15 +111,17 @@ const BankStatement = () => {
   }, [auth]);
 
   const selectPageHandler = (selectedPage) => {
-    console.log(selectedPage);
+  
 
     setPage(selectedPage);
   };
 
   const handleFilter = () => {
-    console.log(startDatevalue)
-    const sdate = moment(startDatevalue).toDate();
-    const edate = moment(endDatevalue).toDate();
+    const sdate = moment(startDatevalue, 'DD-MM-YYYY HH:mm').toDate();
+    const edate = moment(endDatevalue, 'DD-MM-YYYY HH:mm').toDate();
+    console.log("sdate=====>", sdate);
+    console.log("edate=====>", edate)
+    console.log("documentView=====>", documentView)
     let filteredDocuments = documentView.filter((data) => {
       const transactionDate = new Date(data.createdAt);
       return transactionDate >= sdate && transactionDate <= edate;
@@ -135,6 +141,7 @@ const BankStatement = () => {
       }
       );
     };
+    console.log("filteredDocuments=======>", filteredDocuments)
     setDocumentFilter(filteredDocuments);
     setToggle(false);
     setPage(1);
@@ -182,13 +189,13 @@ const BankStatement = () => {
   };
 
   const handleDelete = (e, id, transactionType) => {
-    console.log(transactionType);
+  
     switch (transactionType) {
       case "Deposit":
         AccountService.SaveTransaction({ requestId: id }, auth.user)
 
           .then((res) => {
-            console.log(res.data);
+          
 
             toast.success("Transaction delete request sent to Super Admin");
           })
@@ -199,7 +206,7 @@ const BankStatement = () => {
       case "Withdraw":
         AccountService.SaveTransaction({ requestId: id }, auth.user)
           .then((res) => {
-            console.log(res.data);
+  
             toast.success("Transaction delete request sent to Super Admin");
           })
           .catch((err) => {
@@ -211,7 +218,7 @@ const BankStatement = () => {
         AccountService.SaveBankTransaction({ requestId: id }, auth.user)
 
           .then((res) => {
-            console.log(res.data);
+   
             toast.success(
               "Bank Transaction delete request sent to Super Admin"
             );
@@ -225,7 +232,7 @@ const BankStatement = () => {
         AccountService.SaveBankTransaction({ requestId: id }, auth.user)
 
           .then((res) => {
-            console.log(res.data);
+      
             toast.success(
               "Website Transaction delete request sent to Super Admin"
             );
@@ -238,7 +245,7 @@ const BankStatement = () => {
       case "Manual-Website-Withdraw":
         AccountService.SaveWebsiteTransaction({ requestId: id }, auth.user)
           .then((res) => {
-            console.log(res.data);
+      
             toast.success(
               "Website Transaction delete request sent to Super Admin"
             );
@@ -250,7 +257,7 @@ const BankStatement = () => {
       case "Manual-Website-Deposit":
         AccountService.SaveWebsiteTransaction({ requestId: id }, auth.user)
           .then((res) => {
-            console.log(res.data);
+
             toast.success("Bank Transaction deleted");
           })
           .catch((err) => {
@@ -291,8 +298,6 @@ const BankStatement = () => {
   let filterLastPage = Math.ceil(documentFilter.length / 10);
   let lastFilterPageReminder = documentView.length % 10 === !0
   let lastPageReminder = documentFilter.length % 10 === !0
-  console.log(lastPage);
-  console.log(page);
 
   return (
     <>
