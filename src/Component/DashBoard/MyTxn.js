@@ -26,9 +26,10 @@ const MyTxn = () => {
   const [Manualstmnt, SetManualstmnt] = useState([]);
   const [Userstmnt, SetUserstmnt] = useState([]);
   const [select, setSelect] = useState("All");
-  const [startDatevalue, SetStartDatesetValue] = useState(
-    new Date() - 1 * 24 * 60 * 60 * 1000
-  );
+  const defaultStartDate = new Date();
+  defaultStartDate.setDate(defaultStartDate.getDate() - 1);
+
+  const [startDatevalue, SetStartDatesetValue] = useState(defaultStartDate);
   const [endDatevalue, setEndDateValue] = useState(new Date());
   const [toggle, setToggle] = useState(true);
   const [subAdminlist, setSubAdminlist] = useState([]);
@@ -126,7 +127,10 @@ const MyTxn = () => {
 
     setPage(selectedPage);
   };
-
+ useEffect(() => {
+   handleFilter();
+ }, [documentView]);
+  
   const handleFilter = () => {
     const sdate = moment(startDatevalue, "DD-MM-YYYY HH:mm").toDate();
     const edate = moment(endDatevalue, "DD-MM-YYYY HH:mm").toDate();
