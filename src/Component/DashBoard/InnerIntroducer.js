@@ -9,7 +9,7 @@ const InnerIntroducer = () => {
   const navigate = useNavigate();
   const [client, SetClient] = useState([]);
   const [q, setQ] = useState("");
-  
+
   const { id } = useParams();
 
   useEffect(() => {
@@ -29,11 +29,9 @@ const InnerIntroducer = () => {
 
   const handelShowPercentage = (e, Transaction) => {
     console.log("T=>>>>>", Transaction);
-    
+
     navigate("/showpercentageintroducer", { state: { Transaction } });
   };
-
- 
 
   return (
     <div className="d-flex justify-content-center mt-1 flex-column">
@@ -66,7 +64,10 @@ const InnerIntroducer = () => {
             </p>
             <hr />
             <p>
-              <b>Percentage For This User</b> :&nbsp;{user.introducerPercentage}{" "}
+              <b>Percentage For This User</b> :&nbsp;
+              {user.introducerPercentage == null
+                ? 0
+                : user.introducerPercentage}{" "}
               %
             </p>
             <hr />
