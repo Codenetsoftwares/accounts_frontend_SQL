@@ -38,8 +38,8 @@ const Login = () => {
       .then((res) => {
         if (res.status === 200) {
           sessionStorage.setItem("user", res.data.token.accessToken);
-          sessionStorage.setItem("role", res.data.token.role);
-          console.log("===>", auth);
+          sessionStorage.setItem("role", res.data.token.roles);
+          console.log("===>", res);
           console.log("admin");
           toast.success("Login Successfully");
           // alert("login successfull");
