@@ -215,7 +215,7 @@ const AdminBank = () => {
                                     data-bs-toggle="modal"
                                     data-bs-target="#modalWthbl"
                                     onClick={() => {
-                                      handelId(data._id);
+                                      handelId(data.bank_id);
                                     }}
                                     disabled={!data.isWithdraw}
                                     title="Withdraw"
@@ -231,7 +231,7 @@ const AdminBank = () => {
                                     data-bs-toggle="modal"
                                     data-bs-target="#modalAdbl"
                                     onClick={() => {
-                                      handelId(data._id);
+                                      handelId(data.bank_id);
                                     }}
                                     disabled={!data.isDeposit}
                                     title="Deposit"
@@ -245,8 +245,8 @@ const AdminBank = () => {
                                     type="button"
                                     class="btn btn-info btn-sm"
                                     onClick={(e) => {
-                                      console.log(data._id);
-                                      handelstatement(e, data._id);
+                                      console.log(data.bank_id);
+                                      handelstatement(e, data.bank_id);
                                     }}
                                     // disabled={!data.isActive}
                                     title="Statement"
@@ -260,7 +260,7 @@ const AdminBank = () => {
                                     type="button"
                                     class="btn btn-warning btn-sm"
                                     onClick={(e) => {
-                                      handelEditbank(e, data._id);
+                                      handelEditbank(e, data.bank_id);
                                     }}
                                     disabled={!data.isEdit}
                                     title="Edit Bank"
@@ -278,7 +278,7 @@ const AdminBank = () => {
                                     class="btn btn-danger btn-sm"
                                     // disabled={!data.isActive}
                                     onClick={(e) => {
-                                      handleDeleteBank(e, data._id);
+                                      handleDeleteBank(e, data.bank_id);
                                     }}
                                     title="Delete"
                                     disabled={!data.isDelete}
@@ -296,7 +296,10 @@ const AdminBank = () => {
                                     data-toggle="modal"
                                     data-target="#RenewBankPermission"
                                     onClick={() => {
-                                      handelSubAdmin(data.subAdmins, data._id);
+                                      handelSubAdmin(
+                                        data.subAdmins,
+                                        data.bank_id
+                                      );
                                     }}
                                     disabled={!data.isRenew}
                                     title="Renew Permission"
@@ -314,7 +317,7 @@ const AdminBank = () => {
                                       class="btn btn-dark btn-sm"
                                       title="Active"
                                       onClick={() => {
-                                        handelactive(data._id);
+                                        handelactive(data.bank_id);
                                       }}
                                     >
                                       <FontAwesomeIcon
@@ -328,7 +331,7 @@ const AdminBank = () => {
                                       class="btn btn-dark btn-sm"
                                       title="Inactive"
                                       onClick={() => {
-                                        handelinactive(data._id);
+                                        handelinactive(data.bank_id);
                                       }}
                                     >
                                       <FontAwesomeIcon
@@ -364,7 +367,7 @@ const AdminBank = () => {
                                   data-bs-toggle="modal"
                                   data-bs-target="#modalWthbl"
                                   onClick={() => {
-                                    handelId(data._id);
+                                    handelId(data.bank_id);
                                   }}
                                   disabled={!data.isWithdraw}
                                   title="Withdraw"
@@ -380,7 +383,7 @@ const AdminBank = () => {
                                   data-bs-toggle="modal"
                                   data-bs-target="#modalAdbl"
                                   onClick={() => {
-                                    handelId(data._id);
+                                    handelId(data.bank_id);
                                   }}
                                   disabled={!data.isDeposit}
                                   title="Deposit"
@@ -394,7 +397,7 @@ const AdminBank = () => {
                                   type="button"
                                   class="btn btn-info btn-sm"
                                   onClick={(e) => {
-                                    handelstatement(e, data._id);
+                                    handelstatement(e, data.bank_id);
                                   }}
                                   // disabled={!data.isActive}
                                   title="Statement"
@@ -408,7 +411,7 @@ const AdminBank = () => {
                                   type="button"
                                   class="btn btn-warning btn-sm"
                                   onClick={(e) => {
-                                    handelEditbank(e, data._id);
+                                    handelEditbank(e, data.bank_id);
                                   }}
                                   // disabled={!data.isActive}
                                   title="Edit Bank"
@@ -427,7 +430,7 @@ const AdminBank = () => {
                                   class="btn btn-danger btn-sm"
                                   // disabled={!data.isActive}
                                   onClick={(e) => {
-                                    handleDeleteBank(e, data._id);
+                                    handleDeleteBank(e, data.bank_id);
                                   }}
                                   title="Delete"
                                   disabled={!data.isDelete}
@@ -445,7 +448,10 @@ const AdminBank = () => {
                                   data-toggle="modal"
                                   data-target="#RenewBankPermission"
                                   onClick={() => {
-                                    handelSubAdmin(data.subAdmins, data._id);
+                                    handelSubAdmin(
+                                      data.subAdmins,
+                                      data.bank_id
+                                    );
                                   }}
                                   // disabled={!data.isActive}
                                   title="Renew Permission"
@@ -464,7 +470,7 @@ const AdminBank = () => {
                                     class="btn btn-dark btn-sm"
                                     title="Active"
                                     onClick={() => {
-                                      handelactive(data._id);
+                                      handelactive(data.bank_id);
                                     }}
                                   >
                                     <FontAwesomeIcon
@@ -478,7 +484,7 @@ const AdminBank = () => {
                                     class="btn btn-dark btn-sm"
                                     title="Inactive"
                                     onClick={() => {
-                                      handelinactive(data._id);
+                                      handelinactive(data.bank_id);
                                     }}
                                   >
                                     <FontAwesomeIcon

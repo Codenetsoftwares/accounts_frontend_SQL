@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { useAuth } from '../Utils/Auth';
-import SubAdminBank from './Modal/SubAdminBank';
+import React, { useEffect, useState } from "react";
+import { useAuth } from "../Utils/Auth";
+import SubAdminBank from "./Modal/SubAdminBank";
 
 const CreateRequestNew = ({ Api, purpose, ApiReject, EditApi }) => {
-  console.log("first", purpose)
+  console.log("first", purpose);
   const auth = useAuth();
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
@@ -13,7 +13,7 @@ const CreateRequestNew = ({ Api, purpose, ApiReject, EditApi }) => {
     Api(auth.user)
       .then((res) => {
         setData(res.data);
-        console.log(res.data)
+        console.log(res.data);
       })
       .catch((err) => {
         setError("Error fetching data. Please try again.");
@@ -129,22 +129,42 @@ const CreateRequestNew = ({ Api, purpose, ApiReject, EditApi }) => {
                   </>
                 )}
                 <td>
-                  <button
-                    className="btn btn-outline-success"
-                    onClick={() => handleApprove(data._id)}
-                    data-toggle="modal"
-                    data-target="#exampleModal"
-                  >
-                    Approve & Active
-                  </button>
+                  {purpose === "bank" ? (
+                    <button
+                      className="btn btn-outline-success"
+                      onClick={() => handleApprove(data.bank_id)}
+                      data-toggle="modal"
+                      data-target="#exampleModal"
+                    >
+                      Approve & Active
+                    </button>
+                  ) : (
+                    <button
+                      className="btn btn-outline-success"
+                      onClick={() => handleApprove(data._id)}
+                      data-toggle="modal"
+                      data-target="#exampleModal"
+                    >
+                      Approve & Active
+                    </button>
+                  )}
                 </td>
                 <td>
-                  <button
-                    className="btn btn-outline-danger"
-                    onClick={() => handleReject(data._id)}
-                  >
-                    Reject
-                  </button>
+                  {purpose === "bank" ? (
+                    <button
+                      className="btn btn-outline-danger"
+                      onClick={() => handleReject(data.bank_id)}
+                    >
+                      Reject
+                    </button>
+                  ) : (
+                    <button
+                      className="btn btn-outline-danger"
+                      onClick={() => handleReject(data._id)}
+                    >
+                      Reject
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}
@@ -154,6 +174,6 @@ const CreateRequestNew = ({ Api, purpose, ApiReject, EditApi }) => {
       <SubAdminBank ID={Id} EditApi={EditApi} purpose={purpose} />
     </div>
   );
-}
+};
 
 export default CreateRequestNew;
