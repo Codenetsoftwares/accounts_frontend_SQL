@@ -326,7 +326,7 @@ class AccountService {
 
   GetBankStMent(user, id) {
     return axios({
-      method: "post",
+      method: "get",
       url: `${API_HOST}/api/admin/manual-user-bank-account-summary/${id}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
