@@ -13,7 +13,6 @@ const InnerUserProfile = () => {
   // const { id } = useParams();
   const auth = useAuth();
   const navigate = useNavigate();
-  // console.log("User ID==>>", id);
   const [users, setUsers] = useState([]);
   const [foundObject, setFoundObject] = useState([]);
   const [isAccordionOpen, setIsAccordionOpen] = useState(false); // State for accordion open/close
@@ -21,17 +20,9 @@ const InnerUserProfile = () => {
   const [editedData, setEditedData] = useState({}); // Store edited data
   const [username, setUsername] = useState([]);
   const [IntroducerName, setIntroducerName] = useState([]);
-  // const [searchTerm, setSearchTerm] = useState("");
-  // const [filteredOptions, setFilteredOptions] = useState([]);
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [searchTerm1, setSearchTerm1] = useState("");
-  const [searchTerm2, setSearchTerm2] = useState("");
-  const [searchTerm3, setSearchTerm3] = useState("");
-  const [filteredOptions1, setFilteredOptions1] = useState([]);
-  const [filteredOptions2, setFilteredOptions2] = useState([]);
-  const [filteredOptions3, setFilteredOptions3] = useState([]);
+  const [filteredOptions, setFilteredOptions] = useState([]);
   const location = useLocation();
-  console.log("location", location);
+
   // Calling Single Introducer Name API
   useEffect(() => {
     AccountService.IntroducerUserId(auth.user).then((res) =>
@@ -39,38 +30,20 @@ const InnerUserProfile = () => {
     );
   }, [auth]);
 
-  console.log(auth);
   const { page, id } = location.state || {};
-  console.log("page", page);
-  console.log("id", id);
 
   const Handletransaction = () => {
-    console.log("first");
     navigate("/transactiondetails", {
-      state: { txndetails: foundObject.transactionDetail },
+      state: { txndetails: foundObject.UserTransactionDetail },
     });
   };
-
-  // useEffect(() => {
-  //   AccountService.userprofile(page, auth.user)
-  //     .then((res) => {
-  //       setUsers(res.data);
-  //       const userWithId = res.data.SecondArray.find((user) => user._id === id);
-  //       setFoundObject(userWithId);
-  //     })
-  //     .catch((error) => {
-  //       // Handle error
-  //       console.error("Error fetching user data:", error);
-  //     });
-  // }, [auth, id]);
-  // console.log("This is User Deatils===>>", users);
 
   useEffect(() => {
     AccountService.singleuserprofile(auth.user, id).then((res) =>
       setFoundObject(res.data[0])
     );
   }, [id, auth]);
-  console.log("This is single user", foundObject);
+  // console.log("This is single user", foundObject);
 
   const toggleAccordion = () => {
     setIsAccordionOpen(!isAccordionOpen);
@@ -90,7 +63,6 @@ const InnerUserProfile = () => {
   const handleResetPassword = (e, username) => {
     setUsername(username);
   };
-  console.log("password ========>", username);
 
   const handleSave = (field) => {
     setIsEditing(false);
@@ -104,14 +76,14 @@ const InnerUserProfile = () => {
       introducerPercentage: editedData.introducerPercentage,
       introducerPercentage1: editedData.introducerPercentage1,
       introducerPercentage2: editedData.introducerPercentage2,
-      introducersUserName: searchTerm1,
-      introducersUserName1: searchTerm2,
-      introducersUserName2: searchTerm3,
+      introducersUserName: editedData.introducersUserName,
+      introducersUserName1: editedData.introducersUserName1,
+      introducersUserName2: editedData.introducersUserName2,
       websitedetail: editedData.websitedetail,
       bankDetail: {}, // Initialize empty bankDetail
       upiDetail: {}, // Initialize empty upiDetail
     };
-    console.log("Im here in line number 112=>>", data);
+
     // Check if bankDetail exists in editedData
     if (editedData.hasOwnProperty("bankDetail")) {
       // Iterate through properties of bankDetail
@@ -129,27 +101,25 @@ const InnerUserProfile = () => {
     }
 
     // put Api Fetching
-   
-    
-      AccountService.inneruserprofile(id, data, auth.user)
-        .then((res) => {
+
+    AccountService.inneruserprofile(id, data, auth.user)
+      .then((res) => {
+        if (res.status === 201) {
           console.log("res", res);
-          if (res.status === 201) {
-            alert("Profile Updated");
-            window.location.reload();
-          }
-          
-        })
-        .catch((err) => {
-            toast.error("The sum of introducer percentages must be between 0 and 100");
-        });
-    
+          alert("Profile Updated");
+          window.location.reload();
+        }
+      })
+      .catch((err) => {
+        toast.error(
+          "The sum of introducer percentages must be between 0 and 100"
+        );
+      });
   };
-  console.log("User Deatils", foundObject);
 
-  const handleIntroducerChange1 = (e) => {
-    const value = e.target.value;
-    setSearchTerm1(value);
+  const handleIntroducerChange = (e) => {
+    const { name, value } = e.target;
+    setEditedData({ ...editedData, [name]: value });
 
     // Filter the options based on the input value
 
@@ -159,58 +129,22 @@ const InnerUserProfile = () => {
         )
       : [];
 
-    setFilteredOptions1(filtered);
+    setFilteredOptions(filtered);
   };
-  const handleIntroducerChange2 = (e) => {
-    const value = e.target.value;
-    setSearchTerm2(value);
 
-    // Filter the options based on the input value
+  const handleOptionSelect = (e, option) => {
+    console.log(e.target.name);
+    const { name } = e.target;
+    setEditedData({ ...editedData, [name]: option.userName });
 
-    const filtered = value
-      ? IntroducerName.filter((data) =>
-          data.userName.toLowerCase().includes(value.toLowerCase())
-        )
-      : [];
-
-    setFilteredOptions2(filtered);
-  };
-  const handleIntroducerChange3 = (e) => {
-    const value = e.target.value;
-    setSearchTerm3(value);
-
-    // Filter the options based on the input value
-
-    const filtered = value
-      ? IntroducerName.filter((data) =>
-          data.userName.toLowerCase().includes(value.toLowerCase())
-        )
-      : [];
-
-    setFilteredOptions3(filtered);
-  };
-  const handleOptionSelect1 = (option) => {
-    // setSelectedOption(option);
-    setSearchTerm1(option.userName);
-    setFilteredOptions1([]); // Clear the filtered options when an option is selected
-  };
-  const handleOptionSelect2 = (option) => {
-    // setSelectedOption(option);
-    setSearchTerm2(option.userName);
-    setFilteredOptions2([]); // Clear the filtered options when an option is selected
-  };
-  const handleOptionSelect3 = (option) => {
-    // setSelectedOption(option);
-    setSearchTerm3(option.userName);
-    setFilteredOptions3([]); // Clear the filtered options when an option is selected
+    // setSearchTerm1(option.userName);
+    setFilteredOptions([]); // Clear the filtered options when an option is selected
   };
 
   return (
     <div
       className="d-flex align-items-center justify-content-center"
       style={{
-        // background:
-        //   "linear-gradient(90deg, rgba(23,183,184,1) 0%, rgba(23,184,155,0.9668242296918768) 100%)",
         top: 0,
         left: 0,
         width: "100%",
@@ -271,7 +205,7 @@ const InnerUserProfile = () => {
                           disabled={!isEditing}
                         />
                       </div>
-                      <div className="mb-3">
+                      {/* <div className="mb-3">
                         <label className="form-label text-primary">
                           Contact Number
                         </label>
@@ -280,33 +214,7 @@ const InnerUserProfile = () => {
                           value={
                             isEditing
                               ? editedData.contactNumber
-                              : foundObject.contactNumber
-                          }
-                          onChange={handleInputChange}
-                          className="form-control"
-                          disabled={!isEditing}
-                        />
-                      </div>
-                      {/* <div className="mb-3">
-                        <label className="form-label">Email</label>
-                        <input
-                          name="email"
-                          value={
-                            isEditing ? editedData.email : foundObject.email
-                          }
-                          onChange={handleInputChange}
-                          className="form-control"
-                          disabled={!isEditing}
-                        />
-                      </div> */}
-                      {/* <div className="mb-3">
-                        <label className="form-label">Username</label>
-                        <input
-                          name="userName"
-                          value={
-                            isEditing
-                              ? editedData.userName
-                              : foundObject.userName
+                              : foundObject.contactNumber ?? "N.A"
                           }
                           onChange={handleInputChange}
                           className="form-control"
@@ -333,21 +241,26 @@ const InnerUserProfile = () => {
                                   <input
                                     type="text"
                                     className="form-control"
-                                    value={searchTerm1}
-                                    onChange={handleIntroducerChange1}
-                                    placeholder={
-                                      foundObject.introducersUserName
+                                    name="introducersUserName"
+                                    value={
+                                      isEditing
+                                        ? editedData.introducersUserName ??
+                                          "N.A"
+                                        : foundObject.introducersUserName ??
+                                          "N.A"
                                     }
+                                    onChange={(e) => handleIntroducerChange(e)}
                                   />
                                 </div>
-                                {filteredOptions1.length > 0 && (
+                                {filteredOptions.length > 0 && (
                                   <div className="list-group">
-                                    {filteredOptions1.map((option, index) => (
+                                    {filteredOptions.map((option, index) => (
                                       <button
                                         key={index}
+                                        name="introducersUserName"
                                         className="list-group-item list-group-item-action"
-                                        onClick={() =>
-                                          handleOptionSelect1(option)
+                                        onClick={(e) =>
+                                          handleOptionSelect(e, option)
                                         }
                                       >
                                         {option.userName}
@@ -372,21 +285,26 @@ const InnerUserProfile = () => {
                                   <input
                                     type="text"
                                     className="form-control"
-                                    placeholder={
-                                      foundObject.introducersUserName1
+                                    name="introducersUserName1"
+                                    value={
+                                      isEditing
+                                        ? editedData.introducersUserName1 ??
+                                          "N.A"
+                                        : foundObject.introducersUserName1 ??
+                                          "N.A"
                                     }
-                                    value={searchTerm2}
-                                    onChange={handleIntroducerChange2}
+                                    onChange={(e) => handleIntroducerChange(e)}
                                   />
                                 </div>
-                                {filteredOptions2.length > 0 && (
+                                {filteredOptions.length > 0 && (
                                   <div className="list-group">
-                                    {filteredOptions2.map((option, index) => (
+                                    {filteredOptions.map((option, index) => (
                                       <button
                                         key={index}
+                                        name="introducersUserName1"
                                         className="list-group-item list-group-item-action"
-                                        onClick={() =>
-                                          handleOptionSelect2(option)
+                                        onClick={(e) =>
+                                          handleOptionSelect(e, option)
                                         }
                                       >
                                         {option.userName}
@@ -411,20 +329,26 @@ const InnerUserProfile = () => {
                                   <input
                                     type="text"
                                     className="form-control"
-                                    placeholder={
-                                      foundObject.introducersUserName2}
-                                    value={searchTerm3}
-                                    onChange={handleIntroducerChange3}
+                                    name="introducersUserName2"
+                                    value={
+                                      isEditing
+                                        ? editedData.introducersUserName2 ??
+                                          "N.A"
+                                        : foundObject.introducersUserName2 ??
+                                          "N.A"
+                                    }
+                                    onChange={(e) => handleIntroducerChange(e)}
                                   />
                                 </div>
-                                {filteredOptions3.length > 0 && (
+                                {filteredOptions.length > 0 && (
                                   <div className="list-group">
-                                    {filteredOptions3.map((option, index) => (
+                                    {filteredOptions.map((option, index) => (
                                       <button
                                         key={index}
+                                        name="introducersUserName2"
                                         className="list-group-item list-group-item-action"
-                                        onClick={() =>
-                                          handleOptionSelect3(option)
+                                        onClick={(e) =>
+                                          handleOptionSelect(e, option)
                                         }
                                       >
                                         {option.userName}
@@ -446,7 +370,7 @@ const InnerUserProfile = () => {
                               </label>
                               <input
                                 name="introducerPercentage"
-                                value={foundObject.introducersUserName}
+                                value={foundObject.introducersUserName ?? "N.A"}
                                 className="form-control"
                                 disabled
                               />
@@ -458,7 +382,9 @@ const InnerUserProfile = () => {
                               </label>
                               <input
                                 name="introducerPercentage"
-                                value={foundObject.introducersUserName1}
+                                value={
+                                  foundObject.introducersUserName1 ?? "N.A"
+                                }
                                 className="form-control"
                                 disabled
                               />
@@ -470,7 +396,9 @@ const InnerUserProfile = () => {
                               </label>
                               <input
                                 name="introducerPercentage"
-                                value={foundObject.introducersUserName2}
+                                value={
+                                  foundObject.introducersUserName2 ?? "N.A"
+                                }
                                 className="form-control"
                                 disabled
                               />
@@ -490,7 +418,7 @@ const InnerUserProfile = () => {
                               value={
                                 isEditing
                                   ? editedData.introducerPercentage
-                                  : foundObject.introducerPercentage
+                                  : foundObject.introducerPercentage ?? "N.A"
                               }
                               onChange={handleInputChange}
                               className="form-control"
@@ -507,7 +435,7 @@ const InnerUserProfile = () => {
                               value={
                                 isEditing
                                   ? editedData.introducerPercentage1
-                                  : foundObject.introducerPercentage1
+                                  : foundObject.introducerPercentage1 ?? "N.A"
                               }
                               onChange={handleInputChange}
                               className="form-control"
@@ -524,7 +452,7 @@ const InnerUserProfile = () => {
                               value={
                                 isEditing
                                   ? editedData.introducerPercentage2
-                                  : foundObject.introducerPercentage2
+                                  : foundObject.introducerPercentage2 ?? "N.A"
                               }
                               onChange={handleInputChange}
                               className="form-control"

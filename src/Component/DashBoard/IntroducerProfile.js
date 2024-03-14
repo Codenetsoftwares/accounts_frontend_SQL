@@ -50,6 +50,7 @@ const IntroducerProfile = () => {
     e.preventDefault()
     setID(ID);
   };
+  console.log("users", users);
 
   console.log("Live Bl", ID);
 
@@ -136,7 +137,7 @@ const IntroducerProfile = () => {
                 data-toggle="modal"
                 data-target="#LiveBalance"
                 onClick={(e) => {
-                  handleLiveBl(e, users._id);
+                  handleLiveBl(e, users.intro_id);
                 }}
               >
                 Total Profit Lifetime &nbsp;

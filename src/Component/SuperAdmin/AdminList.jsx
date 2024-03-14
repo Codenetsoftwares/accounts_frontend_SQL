@@ -21,11 +21,13 @@ const AdminList = () => {
 
   useEffect(() => {
     if (auth.user) {
-      AccountService.getAdminList(page, q, auth.user).then((res) => {
-        setAdminList(res.data.SecondArray);
-        setPageNumber(res.data.pageNumber);
-        setTotalData(res.data.allIntroDataLength);
-      }).catch(err => setAdminList([]))
+      AccountService.getAdminList(page, q, auth.user)
+        .then((res) => {
+          setAdminList(res.data.introData);
+          setPageNumber(res.data.pageNumber);
+          setTotalData(res.data.allIntroDataLength);
+        })
+        .catch((err) => setAdminList([]));
     }
   }, [auth, q, page]);
   console.log("=>>>>>>>>>", adminList);
@@ -48,7 +50,9 @@ const AdminList = () => {
   return (
     <div className="card container">
       <div className="card-header border-transparent">
-        <h3 className=" d-flex justify-content-center fs-3 text-bold">LIST OF SUB-ADMIN</h3>
+        <h3 className=" d-flex justify-content-center fs-3 text-bold">
+          LIST OF SUB-ADMIN
+        </h3>
       </div>
       <div className="input-group input-group-sm mb-3 p-3">
         <input
@@ -106,9 +110,12 @@ const AdminList = () => {
             page={page}
             totalPage={pageNumber}
             totalData={totalData}
-            perPagePagination={10}/>
-        </>) : (<h1 className="text-center mt-4">No Users Founds</h1>)}
-
+            perPagePagination={10}
+          />
+        </>
+      ) : (
+        <h1 className="text-center mt-4">No Users Founds</h1>
+      )}
     </div>
   );
 };
