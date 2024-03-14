@@ -78,15 +78,16 @@ const WebsiteDetails = () => {
   };
   console.log("This is Name==>>>", name);
 
-  const handelId = (id) => {
-    setId(id);
+  const handelId = (website_id) => {
+    console.log("website_id", website_id);
+    setId(website_id);
   };
 
   console.log("ide", Id);
 
-  const handeldeletewebsite = (id) => {
+  const handeldeletewebsite = (website_id) => {
     // e.preventDefault();
-    console.log("Line 88", id);
+    console.log("Line 88", website_id);
 
     const userConfirmed = window.confirm(
       "Are You Sure You Want to Delete This Website?"
@@ -94,11 +95,11 @@ const WebsiteDetails = () => {
 
     if (userConfirmed) {
       console.log("Im here in line 94");
-      AccountService.deletewebsite({ requestId: id }, auth.user)
+      AccountService.deletewebsite({ requestId: website_id }, auth.user)
         .then((res) => {
-          // console.log(response.data);
-          if (res.status === 200) {
-            alert("Website Deleted approval sent!");
+          console.log("100=>>>",res);
+          if (res.status === 201) {
+            alert("Website Delete Request Sent!");
             window.location.reload();
           }
         })
@@ -171,9 +172,10 @@ const WebsiteDetails = () => {
         console.error(error);
       });
   };
-  const handelSubAdmin = (SubAdmins, ID) => {
+
+  const handelSubAdmin = (SubAdmins, WebsiteID) => {
     setSubAdmins(SubAdmins);
-    setSId(ID);
+    setSId(WebsiteID);
   };
 
   let reminder = getWebsite.length % 4;
@@ -213,7 +215,7 @@ const WebsiteDetails = () => {
                                   data-bs-toggle="modal"
                                   data-bs-target="#modalWithdrawBlwebsite"
                                   onClick={() => {
-                                    handelId(data._id);
+                                    handelId(data.website_id);
                                   }}
                                   disabled={!data.isWithdraw}
                                   title="Withdraw"
@@ -229,7 +231,7 @@ const WebsiteDetails = () => {
                                   data-bs-toggle="modal"
                                   data-bs-target="#modalAddBlWebsite"
                                   onClick={() => {
-                                    handelId(data._id);
+                                    handelId(data.website_id);
                                   }}
                                   disabled={!data.isDeposit}
                                   title="Deposit"
@@ -243,7 +245,7 @@ const WebsiteDetails = () => {
                                   type="button"
                                   class="btn btn-info btn-sm"
                                   onClick={(e) => {
-                                    handelstatement(e, data._id);
+                                    handelstatement(e, data.website_id);
                                   }}
                                   // disabled={!data.isActive}
                                   title="Statement"
@@ -258,7 +260,7 @@ const WebsiteDetails = () => {
                                   class="btn btn-warning btn-sm"
                                   onClick={() => {
                                     handelWebsiteEdit(
-                                      data._id,
+                                      data.website_id,
                                       data.websiteName
                                     );
                                   }}
@@ -281,7 +283,7 @@ const WebsiteDetails = () => {
                                   class="btn btn-danger btn-sm"
                                   // disabled={!data.isActive}
                                   onClick={(e) => {
-                                    handeldeletewebsite(data._id);
+                                    handeldeletewebsite(data.website_id);
                                   }}
                                   title="Delete"
                                   disabled={!data.isDelete}
@@ -299,7 +301,10 @@ const WebsiteDetails = () => {
                                   data-toggle="modal"
                                   data-target="#RenewWebsitePermission"
                                   onClick={() => {
-                                    handelSubAdmin(data.subAdmins, data._id);
+                                    handelSubAdmin(
+                                      data.subAdmins,
+                                      data.website_id
+                                    );
                                   }}
                                   // disabled={!data.isActive}
                                   title="Renew Permission"
@@ -312,13 +317,13 @@ const WebsiteDetails = () => {
                                 </button>
 
                                 {/* Active,Inactive */}
-                                {data.isActive === false ? (
+                                {data.isActive === 0 ? (
                                   <button
                                     type="button"
                                     class="btn btn-dark btn-sm"
                                     title="Active"
                                     onClick={() => {
-                                      handelactive(data._id);
+                                      handelactive(data.website_id);
                                     }}
                                   >
                                     <FontAwesomeIcon
@@ -332,7 +337,7 @@ const WebsiteDetails = () => {
                                     class="btn btn-dark btn-sm"
                                     title="Inactive"
                                     onClick={() => {
-                                      handelinactive(data._id);
+                                      handelinactive(data.website_id);
                                     }}
                                   >
                                     <FontAwesomeIcon
@@ -368,7 +373,7 @@ const WebsiteDetails = () => {
                                 data-bs-toggle="modal"
                                 data-bs-target="#modalWithdrawBlwebsite"
                                 onClick={() => {
-                                  handelId(data._id);
+                                  handelId(data.website_id);
                                 }}
                                 disabled={!data.isWithdraw}
                                 title="Withdraw"
@@ -384,7 +389,7 @@ const WebsiteDetails = () => {
                                 data-bs-toggle="modal"
                                 data-bs-target="#modalAddBlWebsite"
                                 onClick={() => {
-                                  handelId(data._id);
+                                  handelId(data.website_id);
                                 }}
                                 disabled={!data.isDeposit}
                                 title="Deposit"
@@ -398,7 +403,7 @@ const WebsiteDetails = () => {
                                 type="button"
                                 class="btn btn-info btn-sm"
                                 onClick={(e) => {
-                                  handelstatement(e, data._id);
+                                  handelstatement(e, data.website_id);
                                 }}
                                 // disabled={!data.isActive}
                                 title="Statement"
@@ -412,7 +417,10 @@ const WebsiteDetails = () => {
                                 type="button"
                                 class="btn btn-warning btn-sm"
                                 onClick={() => {
-                                  handelWebsiteEdit(data._id, data.websiteName);
+                                  handelWebsiteEdit(
+                                    data.website_id,
+                                    data.websiteName
+                                  );
                                 }}
                                 // disabled={!data.isActive}
                                 title="Edit Website"
@@ -433,7 +441,7 @@ const WebsiteDetails = () => {
                                 class="btn btn-danger btn-sm"
                                 // disabled={!data.isActive}
                                 onClick={(e) => {
-                                  handeldeletewebsite(data._id);
+                                  handeldeletewebsite(data.website_id);
                                 }}
                                 title="Delete"
                                 disabled={!data.isDelete}
@@ -451,7 +459,10 @@ const WebsiteDetails = () => {
                                 data-toggle="modal"
                                 data-target="#RenewWebsitePermission"
                                 onClick={() => {
-                                  handelSubAdmin(data.subAdmins, data._id);
+                                  handelSubAdmin(
+                                    data.subAdmins,
+                                    data.website_id
+                                  );
                                 }}
                                 // disabled={!data.isActive}
                                 title="Renew Permission"
@@ -464,13 +475,13 @@ const WebsiteDetails = () => {
                               </button>
 
                               {/* Active,Inactive */}
-                              {data.isActive === false ? (
+                              {data.isActive === 0 ? (
                                 <button
                                   type="button"
                                   class="btn btn-dark btn-sm"
                                   title="Active"
                                   onClick={() => {
-                                    handelactive(data._id);
+                                    handelactive(data.website_id);
                                   }}
                                 >
                                   <FontAwesomeIcon
@@ -484,7 +495,7 @@ const WebsiteDetails = () => {
                                   class="btn btn-dark btn-sm"
                                   title="Inactive"
                                   onClick={() => {
-                                    handelinactive(data._id);
+                                    handelinactive(data.website_id);
                                   }}
                                 >
                                   <FontAwesomeIcon

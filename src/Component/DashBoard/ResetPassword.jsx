@@ -61,71 +61,136 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="container mt-5 pt-5 d-flex justify-content-center">
-      <form
-        onSubmit={handleSubmit}
-        style={{ width: "30rem", border: "2px solid black" }}
-      >
-        <div className="ml-2 mr-2">
-          <div className="form-group ">
-            <label htmlFor="exampleInputEmail1 ">
-              {" "}
-              &nbsp;&nbsp;Old Password*
-            </label>
+    // <div className="container mt-5 pt-5 d-flex justify-content-center">
+    //   <form
+    //     onSubmit={handleSubmit}
+    //     style={{ width: "30rem", border: "2px solid black" }}
+    //   >
+    //     <div className="ml-2 mr-2">
+    //       <div className="form-group ">
+    //         <label htmlFor="exampleInputEmail1 ">
+    //           {" "}
+    //           &nbsp;&nbsp;Old Password*
+    //         </label>
 
-            <input
-              type="text"
-              className="form-control"
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-              placeholder="Old Password"
-              value={oldPassword}
-              onChange={handleOldPasswordChange}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="exampleInputPassword1">
-              &nbsp;&nbsp;New Password*
-            </label>
+    //         <input
+    //           type="text"
+    //           className="form-control"
+    //           id="exampleInputEmail1"
+    //           aria-describedby="emailHelp"
+    //           placeholder="Old Password"
+    //           value={oldPassword}
+    //           onChange={handleOldPasswordChange}
+    //         />
+    //       </div>
+    //       <div className="form-group">
+    //         <label htmlFor="exampleInputPassword1">
+    //           &nbsp;&nbsp;New Password*
+    //         </label>
 
-            <input
-              type="password"
-              className="form-control"
-              id="exampleInputPassword1"
-              placeholder="New Password"
-              value={newPassword}
-              onChange={handleNewPasswordChange}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="exampleInputPassword2">
-              &nbsp;&nbsp;Confirm Password*
-            </label>
+    //         <input
+    //           type="password"
+    //           className="form-control"
+    //           id="exampleInputPassword1"
+    //           placeholder="New Password"
+    //           value={newPassword}
+    //           onChange={handleNewPasswordChange}
+    //         />
+    //       </div>
+    //       <div className="form-group">
+    //         <label htmlFor="exampleInputPassword2">
+    //           &nbsp;&nbsp;Confirm Password*
+    //         </label>
 
-            <input
-              type="Text"
-              className="form-control"
-              id="exampleInputPassword2"
-              placeholder="Confirm Password"
-              value={confirmNewPassword}
-              onChange={handleConfirmNewPasswordChange}
-            />
+    //         <input
+    //           type="Text"
+    //           className="form-control"
+    //           id="exampleInputPassword2"
+    //           placeholder="Confirm Password"
+    //           value={confirmNewPassword}
+    //           onChange={handleConfirmNewPasswordChange}
+    //         />
+    //       </div>
+    //     </div>
+    //     <div className="d-flex justify-content-center mb-2">
+    //       <button type="submit" className="btn btn-primary">
+    //         Reset
+    //       </button>
+    //       <button
+    //         type="button"
+    //         className="btn btn-primary ml-2"
+    //         onClick={handleBackButton}
+    //       >
+    //         Back
+    //       </button>
+    //     </div>
+    //   </form>
+    // </div>
+
+    <section className="content mt-2">
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12">
+            <div className="card card-success">
+              <div className="card-header">
+                <h3 className="card-title">Change Password</h3>
+              </div>
+              <form>
+                <div className="card-body">
+                  <div className="form-group">
+                    <label for="exampleInputEmail1">Current Password</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="exampleInputEmail1"
+                      placeholder="Current Password *"
+                      value={oldPassword}
+                      onChange={handleOldPasswordChange}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label for="exampleInputPassword1">New Password</label>
+                    <input
+                      type="password"
+                      className="form-control"
+                      placeholder="New Password *"
+                      value={newPassword}
+                      onChange={handleNewPasswordChange}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label for="exampleInputFile">Confirm Password</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Confirm Password *"
+                      value={confirmNewPassword}
+                      onChange={handleConfirmNewPasswordChange}
+                    />
+                  </div>
+                </div>
+                <div className="card-footer">
+                  <button
+                    type="submit"
+                    className="btn btn-success mr-2"
+                    onClick={handleSubmit}
+                  >
+                    Change
+                  </button>
+                  <button
+                    type="submit"
+                    className="btn btn-secondary"
+                    onClick={handleBackButton}
+                  >
+                    Back
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
-        <div className="d-flex justify-content-center mb-2">
-          <button type="submit" className="btn btn-primary">
-            Reset
-          </button>
-          <button
-            type="button"
-            className="btn btn-primary ml-2"
-            onClick={handleBackButton}
-          >
-            Back
-          </button>
-        </div>
-      </form>
-    </div>
+      </div>
+    </section>
   );
 };
 
