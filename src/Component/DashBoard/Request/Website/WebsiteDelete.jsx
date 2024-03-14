@@ -65,13 +65,13 @@ const WebsiteDelete = () => {
                     </tr>
                   </thead>
                   {viewWebsiteDelete.map((data, index) => (
-                    <tr key={data._id}>
+                    <tr key={data.websiteTransactionId}>
                       <th scope="row">{index + 1}</th>
                       <td>{data.websiteName}</td>
                       <td>
                         <button
                           className="btn btn-primary"
-                          onClick={(e) => handleApprove(e, data._id)}
+                          onClick={(e) => handleApprove(e, data.websiteTransactionId)}
                         >
                           Approve
                         </button>
@@ -79,7 +79,7 @@ const WebsiteDelete = () => {
                       <td>
                         <button
                           className="btn btn-danger"
-                          onClick={(e) => handleReject(e, data._id)}
+                          onClick={(e) => handleReject(e, data.websiteTransactionId)}
                         >
                           Reject
                         </button>

@@ -141,7 +141,7 @@ const CreateRequestNew = ({ Api, purpose, ApiReject, EditApi }) => {
                   ) : (
                     <button
                       className="btn btn-outline-success"
-                      onClick={() => handleApprove(data._id)}
+                      onClick={() => handleApprove(data.website_id)}
                       data-toggle="modal"
                       data-target="#exampleModal"
                     >
@@ -160,7 +160,7 @@ const CreateRequestNew = ({ Api, purpose, ApiReject, EditApi }) => {
                   ) : (
                     <button
                       className="btn btn-outline-danger"
-                      onClick={() => handleReject(data._id)}
+                      onClick={() => handleReject(data.website_id)}
                     >
                       Reject
                     </button>
