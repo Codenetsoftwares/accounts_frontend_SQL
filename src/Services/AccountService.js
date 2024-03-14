@@ -239,7 +239,6 @@ class AccountService {
   }
 
   singleuserprofile(user, id) {
-    console.log("from service =>>>>", user);
     return axios({
       method: "get",
       url: `${API_HOST}/api/single-user-profile/${id}`,
@@ -261,15 +260,15 @@ class AccountService {
 
   introducerLiveBalance(id, user) {
     console.log(id);
-    if (id !== undefined) {
-      return axios({
-        method: "get",
-        url: `${API_HOST}/api/admin/introducer-live-balance/${id}`,
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
-    }
+    // if (id !== undefined) {
+    return axios({
+      method: "get",
+      url: `${API_HOST}/api/admin/introducer-live-balance/${id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+    // }
   }
 
   Introducerprofile(page, search, user) {

@@ -68,7 +68,7 @@ const UserProfile = () => {
             <div className="card-body">
               <p
                 onClick={() => {
-                  Handelinnerprofile(user._id);
+                  Handelinnerprofile(user.user_id);
                 }}
                 style={{ color: "blue", cursor: "pointer" }}
               >

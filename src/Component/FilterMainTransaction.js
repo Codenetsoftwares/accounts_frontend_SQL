@@ -33,8 +33,8 @@ const FilterMainTransaction = ({ purpose, handleData, page, handlePage, handleTo
             subAdminList: subAdmin,
             BankList: bank,
             WebsiteList: website,
-            sdate: moment(startDatevalue).toDate(),
-            edate: moment(endDatevalue).toDate(),
+            // sdate: moment(startDatevalue).toDate(),
+            // edate: moment(endDatevalue).toDate(),
             maxAmount: maxAmount,
             minAmount: minAmount
         }
