@@ -205,7 +205,7 @@ const InnerUserProfile = () => {
                           disabled={!isEditing}
                         />
                       </div>
-                      {/* <div className="mb-3">
+                      <div className="mb-3">
                         <label className="form-label text-primary">
                           Contact Number
                         </label>
@@ -220,7 +220,7 @@ const InnerUserProfile = () => {
                           className="form-control"
                           disabled={!isEditing}
                         />
-                      </div> */}
+                      </div>
 
                       {/* Show Intro Name disabled Always and Change Intro */}
                       {isEditing ? (

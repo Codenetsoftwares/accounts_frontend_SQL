@@ -400,7 +400,7 @@ class AccountService {
     console.log("user", user);
     return axios({
       method: "put",
-      url: `${API_HOST}/api/intoducer-name-edit/${id}`,
+      url: `${API_HOST}/api/admin/intoducer-profile-edit/${id}`,
       data: data,
       headers: {
         Authorization: `Bearer ${user.token}`,

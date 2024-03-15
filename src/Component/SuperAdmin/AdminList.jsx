@@ -92,7 +92,7 @@ const AdminList = () => {
                         }}
                       >
                         <p>
-                          <Link to={`/subadminedit/${data?._id}`}>
+                          <Link to={`/subadminedit/${data?.admin_id}`}>
                             <button type="button" class="btn btn-info">
                               Details
                             </button>

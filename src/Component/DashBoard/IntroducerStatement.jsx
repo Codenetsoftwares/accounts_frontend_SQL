@@ -548,7 +548,11 @@ const IntroducerStatement = () => {
                             <FontAwesomeIcon
                               icon={faTrash}
                               onClick={(e) => {
-                                handleDelete(e, data._id, data.transactionType);
+                                handleDelete(
+                                  e,
+                                  data.introTransactionId,
+                                  data.transactionType
+                                );
                               }}
                             />
                           </button>
@@ -808,7 +812,11 @@ const IntroducerStatement = () => {
                             <FontAwesomeIcon
                               icon={faTrash}
                               onClick={(e) => {
-                                handleDelete(e, data._id, data.transactionType);
+                                handleDelete(
+                                  e,
+                                  data.introTransactionId,
+                                  data.transactionType
+                                );
                               }}
                             />
                           </button>

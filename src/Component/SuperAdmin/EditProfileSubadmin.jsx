@@ -19,7 +19,7 @@ const EditProfileSubadmin = () => {
   useEffect(() => {
     AccountService.getSingleAdmin(id, auth.user).then((res) => {
       console.log(res.data);
-      setFoundObject(res.data);
+      setFoundObject(res.data[0]);
     });
   }, []);
 
