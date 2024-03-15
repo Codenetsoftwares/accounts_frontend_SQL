@@ -26,11 +26,10 @@ const IntroducerProfile = () => {
   const navigate = useNavigate();
   const [introducerName, setIntroducerName] = useState("");
   const [txType, setTxType] = useState("");
-  const [page, setPage] = useState(1)
-  const [pageNumber, setPageNumber] = useState("")
-  const [totalData, setTotalData] = useState(0)
+  const [page, setPage] = useState(1);
+  const [pageNumber, setPageNumber] = useState("");
+  const [totalData, setTotalData] = useState(0);
   const RawFilterData = [];
-
 
   // const handelinnerprofile =()=>{
   //   navigate(`/innerprofile/${users._id}`);
@@ -38,16 +37,23 @@ const IntroducerProfile = () => {
 
   const handlePage = (page) => {
     setPage(page);
-  }
+  };
 
   useEffect(() => {
     AccountService.Introducerprofile(page, q, auth.user)
-      .then((res) => (setUsers(res.data.SecondArray), setPageNumber(res.data.pageNumber), setTotalData(res.data.allIntroDataLength))).catch(err => (setUsers([])))
+      .then(
+        (res) => (
+          setUsers(res.data.SecondArray),
+          setPageNumber(res.data.pageNumber),
+          setTotalData(res.data.allIntroDataLength)
+        )
+      )
+      .catch((err) => setUsers([]));
   }, [auth, page, q]);
   console.log("users", users);
 
   const handleLiveBl = (e, ID) => {
-    e.preventDefault()
+    e.preventDefault();
     setID(ID);
   };
   console.log("users", users);
@@ -57,7 +63,9 @@ const IntroducerProfile = () => {
   return (
     <div className="m-3">
       <ToastContainer />
-      <h1 className="d-flex justify-content-center fs-3 text-bold">INTRODUCER PROFILE</h1>
+      <h1 className="d-flex justify-content-center fs-3 text-bold">
+        INTRODUCER PROFILE
+      </h1>
       <div class="input-group input-group-sm ">
         <input
           type="search"
@@ -72,39 +80,41 @@ const IntroducerProfile = () => {
           aria-describedby="inputGroup-sizing-sm"
         />
       </div>
-      {users.length > 0 ? (<><ul>
-        {users.map((users) => (
-          <div className="card container-fluid w-75">
-            <div className="card-body">
-              <p className="text-bold">{users.userName}</p>
-              <IntroducerPayment
-                IntroducerName={users.userName}
-                balance={users.balance.balance}
-                duebalance={users.balance.currentDue}
-                id={users._id}
-              />
-              <Link
-                to={`/innerintroducer/${users._id}`}
-                style={{ cursor: "pointer" }}
-              >
-                <button type="button" class="btn btn-primary">
-                  NetWork &nbsp;
-                  <FontAwesomeIcon icon={faNetworkWired} />
-                </button>
-              </Link>
-              <br />
-              <Link
-                to={`/singleintroducer/${users._id}`}
-                style={{ cursor: "pointer" }}
-              >
-                <button type="button" class="btn btn-info mt-2">
-                  Edit Profile &nbsp;
-                  <FontAwesomeIcon icon={faEdit} />
-                </button>
-              </Link>
-              <br />
-              {/* Deposit and Withdraw Part Start */}
-              {/* <div>
+      {users.length > 0 ? (
+        <>
+          <ul>
+            {users.map((users) => (
+              <div className="card container-fluid w-75">
+                <div className="card-body">
+                  <p className="text-bold">{users.userName}</p>
+                  <IntroducerPayment
+                    IntroducerName={users.userName}
+                    balance={users.balance.balance}
+                    duebalance={users.balance.currentDue}
+                    id={users.intro_id}
+                  />
+                  <Link
+                    to={`/innerintroducer/${users.intro_id}`}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <button type="button" class="btn btn-primary">
+                      NetWork &nbsp;
+                      <FontAwesomeIcon icon={faNetworkWired} />
+                    </button>
+                  </Link>
+                  <br />
+                  <Link
+                    to={`/singleintroducer/${users.intro_id}`}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <button type="button" class="btn btn-info mt-2">
+                      Edit Profile &nbsp;
+                      <FontAwesomeIcon icon={faEdit} />
+                    </button>
+                  </Link>
+                  <br />
+                  {/* Deposit and Withdraw Part Start */}
+                  {/* <div>
                 <button
                   type="button"
                   class="btn btn-success mt-2"
@@ -129,26 +139,33 @@ const IntroducerProfile = () => {
                   Withdraw
                 </button>
               </div> */}
-              {/* Deposit and Withdraw Part End */}
+                  {/* Deposit and Withdraw Part End */}
 
-              <button
-                type="button"
-                class="btn btn-warning mt-2"
-                data-toggle="modal"
-                data-target="#LiveBalance"
-                onClick={(e) => {
-                  handleLiveBl(e, users.intro_id);
-                }}
-              >
-                Total Profit Lifetime &nbsp;
-                <FontAwesomeIcon icon={faBalanceScale} />
-              </button>
-            </div>
-          </div>
-        ))}
-      </ul>
-        <Pagination handlePage={handlePage} page={page} totalPage={pageNumber} totalData={totalData} perPagePagination={10} />
-      </>) : (
+                  <button
+                    type="button"
+                    class="btn btn-warning mt-2"
+                    data-toggle="modal"
+                    data-target="#LiveBalance"
+                    onClick={(e) => {
+                      handleLiveBl(e, users.intro_id);
+                    }}
+                  >
+                    Total Profit Lifetime &nbsp;
+                    <FontAwesomeIcon icon={faBalanceScale} />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </ul>
+          <Pagination
+            handlePage={handlePage}
+            page={page}
+            totalPage={pageNumber}
+            totalData={totalData}
+            perPagePagination={10}
+          />
+        </>
+      ) : (
         <h1 className="text-center mt-4">No Introducer Founds</h1>
       )}
 
@@ -181,8 +198,6 @@ const IntroducerProfile = () => {
           </button>
         </span>
       </div> */}
-
-
     </div>
   );
 };

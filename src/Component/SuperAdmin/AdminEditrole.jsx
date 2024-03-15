@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useAuth } from '../../Utils/Auth';
-import AccountService from '../../Services/AccountService';
-import { toast } from 'react-toastify';
+import { useAuth } from "../../Utils/Auth";
+import AccountService from "../../Services/AccountService";
+import { toast } from "react-toastify";
 import SubAdResetPassword from "../Modal/SubAdResetPassword";
-import AssignedBank from '../Modal/AssignedBank';
-import AssignedWebsite from '../Modal/AssignedWebsite';
+import AssignedBank from "../Modal/AssignedBank";
+import AssignedWebsite from "../Modal/AssignedWebsite";
 
 const AdminEditrole = () => {
   const auth = useAuth();
@@ -20,7 +20,7 @@ const AdminEditrole = () => {
     setCheckedItems(adminData.roles);
   };
   const handleResetPassword = (e, username) => {
-    setUsername(username)
+    setUsername(username);
   };
 
   const handleCheckboxChange = (event) => {
@@ -33,45 +33,41 @@ const AdminEditrole = () => {
       );
     }
   };
-  console.log(checkedItems)
+  console.log(checkedItems);
   useEffect(() => {
-    AccountService.getSingleAdmin(
-      id,
-      auth.user
-    ).then((res) => {
+    AccountService.getSingleAdmin(id, auth.user).then((res) => {
       console.log(res.data);
-      setAdminData(res.data);
+      setAdminData(res.data[0]);
     });
   }, []);
   console.log("Data =>>>>", adminData);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(checkedItems)
-    AccountService.updateSingleAdminPermission(id, { roles: checkedItems }, auth.user)
+    console.log(checkedItems);
+    AccountService.updateSingleAdminPermission(
+      id,
+      { roles: checkedItems },
+      auth.user
+    )
       .then((res) => {
         console.log(res);
         toast.success("update successfully");
         navigate("/adminlist", { replace: false });
-
       })
       .catch((err) => {
         if (err.response.data) {
           toast.error(err.response.data.message);
-
         }
       });
-
   };
-
 
   const handleUpdate = () => {
     setDisplayEdit(true);
     setData();
   };
   const rolesArray = adminData.roles || [];
-
-
+  console.log("first", adminData);
   return (
     <>
       {displayEdit === false ? (
@@ -120,7 +116,7 @@ const AdminEditrole = () => {
               </button>
 
               <Link
-                to={`/editsubadmin/${adminData._id}`}
+                to={`/editsubadmin/${adminData.admin_id}`}
                 style={{ cursor: "pointer" }}
               >
                 <button type="button" class="btn btn-warning ml-2">
@@ -337,20 +333,18 @@ const AdminEditrole = () => {
                     />
                     <span>Transaction Delete Request</span>
                   </label>
-                  </div>
-                  <div>
-                    <label>
-                      <input
-                        type="checkbox"
-                        value="RecycleBin-View"
-                        checked={checkedItems.includes(
-                          "RecycleBin-View"
-                        )}
-                        onChange={handleCheckboxChange}
-                      />
-                      <span>RecycleBin View</span>
-                    </label>
-                  </div>
+                </div>
+                <div>
+                  <label>
+                    <input
+                      type="checkbox"
+                      value="RecycleBin-View"
+                      checked={checkedItems.includes("RecycleBin-View")}
+                      onChange={handleCheckboxChange}
+                    />
+                    <span>RecycleBin View</span>
+                  </label>
+                </div>
               </div>
               <div className="card-footer">
                 <div className="col-12 text-end">

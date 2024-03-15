@@ -279,7 +279,7 @@ const IntroducerAlert = () => {
                         <button
                           class="btn btn-primary"
                           onClick={(e) =>
-                            handleEditApprove(e, data._id, data.transactionType)
+                            handleEditApprove(e, data.IntroEditID, data.transactionType)
                           }
                         >
                           Approve
@@ -287,7 +287,7 @@ const IntroducerAlert = () => {
                         <button
                           class="btn btn-danger"
                           onClick={(e) =>
-                            handleEditReject(e, data._id, data.transactionType)
+                            handleEditReject(e, data.IntroEditID, data.transactionType)
                           }
                         >
                           Reject
@@ -410,7 +410,7 @@ const IntroducerAlert = () => {
                           onClick={(e) =>
                             handleDeleteApprove(
                               e,
-                              data._id,
+                              data.IntroEditID,
                               data.transactionType
                             )
                           }
@@ -422,7 +422,7 @@ const IntroducerAlert = () => {
                           onClick={(e) =>
                             handleDeleteReject(
                               e,
-                              data._id,
+                              data.IntroEditID,
                               data.transactionType
                             )
                           }
