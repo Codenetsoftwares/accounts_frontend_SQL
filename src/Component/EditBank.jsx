@@ -11,6 +11,8 @@ const EditBank = () => {
     const navigate = useNavigate();
     console.log("This is Auth", auth);
     const { id } = useParams();
+
+    console.log("ID by param", id);
     const [bname, setBname] = useState("");
     const [accno, setAccno] = useState("");
     const [ifsc, setIfsc] = useState("");
