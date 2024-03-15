@@ -74,8 +74,8 @@ const AdminBank = () => {
     setBankName(event.target.value);
   };
 
-  const handelEditbank = (e, _id) => {
-    navigate(`/editbank/${_id}`);
+  const handelEditbank = (e, bank_id) => {
+    navigate(`/editbank/${bank_id}`);
   };
 
   const handelstatement = (e, accountNumber) => {
