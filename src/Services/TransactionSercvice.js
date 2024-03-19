@@ -211,22 +211,20 @@ class TransactionService {
     });
   }
 
-  MoveTrashBankTransaction(data, user) {
+  MoveTrashBankTransaction(id, user) {
     return axios({
       method: "post",
-      url: `${API_HOST}/api/admin/move-bank-transaction-to-trash`,
-      data: data,
+      url: `${API_HOST}/api/delete-bank-transaction/${id}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
     });
   }
 
-  MoveTrashWebsiteTransaction(data, user) {
+  MoveTrashWebsiteTransaction(id, user) {
     return axios({
       method: "post",
-      url: `${API_HOST}/api/admin/move-website-transaction-to-trash`,
-      data: data,
+      url: `${API_HOST}/api/delete-website-transaction/${id}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },

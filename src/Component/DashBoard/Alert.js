@@ -172,11 +172,10 @@ const Alert = () => {
 
   const handleDeleteApprove = (e, id, transactionType) => {
     e.preventDefault();
-
-    const data = { requestId: id }
+    // const data = { requestId: id }
     switch (transactionType) {
       case "Deposit":
-        TransactionSercvice.MoveTrashTransaction(data, auth.user)
+        TransactionSercvice.MoveTrashTransaction(id, auth.user)
           .then((response) => {
             window.location.reload();
             console.log(response.data);
@@ -186,7 +185,7 @@ const Alert = () => {
           });
         break;
       case "Withdraw":
-        TransactionSercvice.MoveTrashTransaction(data, auth.user)
+        TransactionSercvice.MoveTrashTransaction(id, auth.user)
           .then((response) => {
             window.location.reload();
             console.log(response.data);
@@ -197,7 +196,7 @@ const Alert = () => {
         break;
 
       case "Manual-Bank-Withdraw":
-        TransactionSercvice.MoveTrashBankTransaction(data, auth.user)
+        TransactionSercvice.MoveTrashBankTransaction(id, auth.user)
           .then((response) => {
             window.location.reload();
             console.log(response.data);
@@ -208,7 +207,7 @@ const Alert = () => {
         break;
 
       case "Manual-Bank-Deposit":
-        TransactionSercvice.MoveTrashBankTransaction(data, auth.user)
+        TransactionSercvice.MoveTrashBankTransaction(id, auth.user)
           .then((response) => {
             window.location.reload();
             console.log(response.data);
@@ -219,7 +218,7 @@ const Alert = () => {
         break;
 
       case "Manual-Website-Withdraw":
-        TransactionSercvice.MoveTrashWebsiteTransaction(data, auth.user)
+        TransactionSercvice.MoveTrashWebsiteTransaction(id, auth.user)
           .then((response) => {
             window.location.reload();
             console.log(response.data);
@@ -230,7 +229,7 @@ const Alert = () => {
         break;
 
       case "Manual-Website-Deposit":
-        TransactionSercvice.MoveTrashWebsiteTransaction(data, auth.user)
+        TransactionSercvice.MoveTrashWebsiteTransaction(id, auth.user)
           .then((response) => {
             window.location.reload();
             console.log(response.data);
@@ -515,8 +514,8 @@ const Alert = () => {
                                 <p
                                   className={
                                     data.changedFields?.withdrawAmount ||
-                                      data.changedFields?.amount ||
-                                      data.changedFields?.depositAmount
+                                    data.changedFields?.amount ||
+                                    data.changedFields?.depositAmount
                                       ? "text-danger"
                                       : "text-success"
                                   }
@@ -553,8 +552,8 @@ const Alert = () => {
                           onClick={(e) =>
                             handleDeleteApprove(
                               e,
-                              data._id,
-                              data.transactionType
+                              data.Edit_ID,
+                              data.transactionType,
                             )
                           }
                         >
