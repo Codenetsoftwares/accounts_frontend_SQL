@@ -51,8 +51,6 @@ const WebsiteStatement = () => {
   const [minAmount, setMinAmount] = useState(0);
   const [maxAmount, setMaxAmount] = useState(0);
 
-
-
   const test = ["transactionType", "subAdminName", "websiteName", "bankName"];
   const handleClick = (key, value) => {
     let nArr = [...documentView];
@@ -128,8 +126,6 @@ const WebsiteStatement = () => {
   }, [id, auth]);
 
   const selectPageHandler = (selectedPage) => {
-
-
     setPage(selectedPage);
   };
 
@@ -163,17 +159,16 @@ const WebsiteStatement = () => {
     handleFilter();
   }, [documentView]);
 
-
   // console.log("startDatevalue", moment(startDatevalue).toDate())
   const handleFilter = () => {
-    const sdate = moment(startDatevalue, 'DD-MM-YYYY HH:mm').toDate();
-    const edate = moment(endDatevalue, 'DD-MM-YYYY HH:mm').toDate();
+    const sdate = moment(startDatevalue, "DD-MM-YYYY HH:mm").toDate();
+    const edate = moment(endDatevalue, "DD-MM-YYYY HH:mm").toDate();
     console.log("sdate=====>", sdate);
-    console.log("edate=====>", edate)
-    console.log("documentView=====>", documentView)
+    console.log("edate=====>", edate);
+    console.log("documentView=====>", documentView);
     let filteredDocuments = documentView.filter((data) => {
       const transactionDate = new Date(data.createdAt);
-      console.log("transactiondate", transactionDate)
+      console.log("transactiondate", transactionDate);
       return transactionDate >= sdate && transactionDate <= edate;
     });
 
@@ -188,7 +183,7 @@ const WebsiteStatement = () => {
         );
       });
     }
-    console.log("filteredDocuments=======>", filteredDocuments)
+    console.log("filteredDocuments=======>", filteredDocuments);
     setDocumentFilter(filteredDocuments);
     setToggle(false);
     setPage(1);
@@ -221,9 +216,7 @@ const WebsiteStatement = () => {
     window.location.reload();
   };
 
-
   const handleDelete = (e, id, transactionType) => {
-
     switch (transactionType) {
       case "Deposit":
         AccountService.SaveTransaction({ requestId: id }, auth.user)
@@ -238,7 +231,6 @@ const WebsiteStatement = () => {
       case "Withdraw":
         AccountService.SaveTransaction({ requestId: id }, auth.user)
           .then((res) => {
-
             toast.success("Transaction delete request sent to Super Admin");
           })
           .catch((err) => {
@@ -286,7 +278,6 @@ const WebsiteStatement = () => {
       case "Manual-Website-Deposit":
         AccountService.SaveWebsiteTransaction({ requestId: id }, auth.user)
           .then((res) => {
-
             toast.success("Bank Transaction deleted");
           })
           .catch((err) => {
@@ -309,7 +300,6 @@ const WebsiteStatement = () => {
   let filterLastPage = Math.ceil(documentFilter.length / 10);
   let lastFilterPageReminder = documentView.length % 10 === !0;
   let lastPageReminder = documentFilter.length % 10 === !0;
-
 
   return (
     <>
@@ -536,48 +526,51 @@ const WebsiteStatement = () => {
                                 <td>
                                   {data.amount && (
                                     <p
-                                      className={`col fs-6 text-break ${data.transactionType.includes(
-                                        "Manual-Website-Withdraw"
-                                      ) ||
+                                      className={`col fs-6 text-break ${
+                                        data.transactionType.includes(
+                                          "Manual-Website-Withdraw"
+                                        ) ||
                                         data.transactionType.includes(
                                           "Manual-Bank-Withdraw"
                                         ) ||
                                         data.transactionType === "Withdraw"
-                                        ? "text-red"
-                                        : "text-black"
-                                        }`}
+                                          ? "text-red"
+                                          : "text-black"
+                                      }`}
                                     >
                                       {data.amount}
                                     </p>
                                   )}
                                   {data.depositAmount && (
                                     <p
-                                      className={`col fs-6 text-break ${data.transactionType.includes(
-                                        "Manual-Website-Withdraw"
-                                      ) ||
+                                      className={`col fs-6 text-break ${
+                                        data.transactionType.includes(
+                                          "Manual-Website-Withdraw"
+                                        ) ||
                                         data.transactionType.includes(
                                           "Manual-Bank-Withdraw"
                                         ) ||
                                         data.transactionType === "Withdraw"
-                                        ? "text-red"
-                                        : "text-black"
-                                        }`}
+                                          ? "text-red"
+                                          : "text-black"
+                                      }`}
                                     >
                                       {data.depositAmount}
                                     </p>
                                   )}
                                   {data.withdrawAmount && (
                                     <p
-                                      className={`col fs-6 text-break ${data.transactionType.includes(
-                                        "Manual-Website-Withdraw"
-                                      ) ||
+                                      className={`col fs-6 text-break ${
+                                        data.transactionType.includes(
+                                          "Manual-Website-Withdraw"
+                                        ) ||
                                         data.transactionType.includes(
                                           "Manual-Bank-Withdraw"
                                         ) ||
                                         data.transactionType === "Withdraw"
-                                        ? "text-red"
-                                        : "text-black"
-                                        }`}
+                                          ? "text-red"
+                                          : "text-black"
+                                      }`}
                                     >
                                       {data.withdrawAmount}
                                     </p>
@@ -599,16 +592,17 @@ const WebsiteStatement = () => {
                                 <td>
                                   {data.transactionType && (
                                     <p
-                                      className={`col fs-6 text-break text-bold ${data.transactionType.includes(
-                                        "Manual-Website-Withdraw"
-                                      ) ||
+                                      className={`col fs-6 text-break text-bold ${
+                                        data.transactionType.includes(
+                                          "Manual-Website-Withdraw"
+                                        ) ||
                                         data.transactionType.includes(
                                           "Manual-Bank-Withdraw"
                                         ) ||
                                         data.transactionType === "Withdraw"
-                                        ? "text-red"
-                                        : "text-black"
-                                        }`}
+                                          ? "text-red"
+                                          : "text-black"
+                                      }`}
                                     >
                                       {data.transactionType}
                                     </p>
@@ -674,7 +668,7 @@ const WebsiteStatement = () => {
                                       onClick={(e) => {
                                         handleDelete(
                                           e,
-                                          data._id,
+                                          data.WebsiteTransaction_Id,
                                           data.transactionType
                                         );
                                       }}
@@ -701,16 +695,17 @@ const WebsiteStatement = () => {
                                 <td>
                                   {data.amount && (
                                     <p
-                                      className={`col fs-6 text-break ${data.transactionType.includes(
-                                        "Manual-Website-Withdraw"
-                                      ) ||
+                                      className={`col fs-6 text-break ${
+                                        data.transactionType.includes(
+                                          "Manual-Website-Withdraw"
+                                        ) ||
                                         data.transactionType.includes(
                                           "Manual-Bank-Withdraw"
                                         ) ||
                                         data.transactionType === "Withdraw"
-                                        ? "text-red"
-                                        : "text-black"
-                                        }`}
+                                          ? "text-red"
+                                          : "text-black"
+                                      }`}
                                     >
                                       {data.amount}
                                     </p>
@@ -742,16 +737,17 @@ const WebsiteStatement = () => {
                                 <td>
                                   {data.transactionType && (
                                     <p
-                                      className={`col fs-6 text-break text-bold ${data.transactionType.includes(
-                                        "Manual-Website-Withdraw"
-                                      ) ||
+                                      className={`col fs-6 text-break text-bold ${
+                                        data.transactionType.includes(
+                                          "Manual-Website-Withdraw"
+                                        ) ||
                                         data.transactionType.includes(
                                           "Manual-Bank-Withdraw"
                                         ) ||
                                         data.transactionType === "Withdraw"
-                                        ? "text-red"
-                                        : "text-black"
-                                        }`}
+                                          ? "text-red"
+                                          : "text-black"
+                                      }`}
                                     >
                                       {data.transactionType}
                                     </p>
@@ -817,7 +813,7 @@ const WebsiteStatement = () => {
                                       onClick={(e) => {
                                         handleDelete(
                                           e,
-                                          data._id,
+                                          data.WebsiteTransaction_Id,
                                           data.transactionType
                                         );
                                       }}
@@ -911,16 +907,17 @@ const WebsiteStatement = () => {
                                 <td>
                                   {data.amount && (
                                     <p
-                                      className={`col fs-6 text-break ${data.transactionType.includes(
-                                        "Manual-Website-Withdraw"
-                                      ) ||
+                                      className={`col fs-6 text-break ${
+                                        data.transactionType.includes(
+                                          "Manual-Website-Withdraw"
+                                        ) ||
                                         data.transactionType.includes(
                                           "Manual-Bank-Withdraw"
                                         ) ||
                                         data.transactionType === "Withdraw"
-                                        ? "text-red"
-                                        : "text-black"
-                                        }`}
+                                          ? "text-red"
+                                          : "text-black"
+                                      }`}
                                     >
                                       {data.amount}
                                     </p>
@@ -952,16 +949,17 @@ const WebsiteStatement = () => {
                                 <td>
                                   {data.transactionType && (
                                     <p
-                                      className={`col fs-6 text-break text-bold ${data.transactionType.includes(
-                                        "Manual-Website-Withdraw"
-                                      ) ||
+                                      className={`col fs-6 text-break text-bold ${
+                                        data.transactionType.includes(
+                                          "Manual-Website-Withdraw"
+                                        ) ||
                                         data.transactionType.includes(
                                           "Manual-Bank-Withdraw"
                                         ) ||
                                         data.transactionType === "Withdraw"
-                                        ? "text-red"
-                                        : "text-black"
-                                        }`}
+                                          ? "text-red"
+                                          : "text-black"
+                                      }`}
                                     >
                                       {data.transactionType}
                                     </p>
@@ -1027,7 +1025,7 @@ const WebsiteStatement = () => {
                                       onClick={(e) => {
                                         handleDelete(
                                           e,
-                                          data._id,
+                                          data.WebsiteTransaction_Id,
                                           data.transactionType
                                         );
                                       }}
@@ -1054,16 +1052,17 @@ const WebsiteStatement = () => {
                                 <td>
                                   {data.amount && (
                                     <p
-                                      className={`col fs-6 text-break ${data.transactionType.includes(
-                                        "Manual-Website-Withdraw"
-                                      ) ||
+                                      className={`col fs-6 text-break ${
+                                        data.transactionType.includes(
+                                          "Manual-Website-Withdraw"
+                                        ) ||
                                         data.transactionType.includes(
                                           "Manual-Bank-Withdraw"
                                         ) ||
                                         data.transactionType === "Withdraw"
-                                        ? "text-red"
-                                        : "text-black"
-                                        }`}
+                                          ? "text-red"
+                                          : "text-black"
+                                      }`}
                                     >
                                       {data.amount}
                                     </p>
@@ -1095,16 +1094,17 @@ const WebsiteStatement = () => {
                                 <td>
                                   {data.transactionType && (
                                     <p
-                                      className={`col fs-6 text-break text-bold ${data.transactionType.includes(
-                                        "Manual-Website-Withdraw"
-                                      ) ||
+                                      className={`col fs-6 text-break text-bold ${
+                                        data.transactionType.includes(
+                                          "Manual-Website-Withdraw"
+                                        ) ||
                                         data.transactionType.includes(
                                           "Manual-Bank-Withdraw"
                                         ) ||
                                         data.transactionType === "Withdraw"
-                                        ? "text-red"
-                                        : "text-black"
-                                        }`}
+                                          ? "text-red"
+                                          : "text-black"
+                                      }`}
                                     >
                                       {data.transactionType}
                                     </p>
@@ -1168,7 +1168,7 @@ const WebsiteStatement = () => {
                                       onClick={(e) => {
                                         handleDelete(
                                           e,
-                                          data._id,
+                                          data.WebsiteTransaction_Id,
                                           data.transactionType
                                         );
                                       }}
