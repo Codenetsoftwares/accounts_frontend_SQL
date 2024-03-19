@@ -6,7 +6,7 @@ class EditServices {
   ViewAlert(user) {
     return axios({
       method: "get",
-      url: API_HOST + "/api/superadmin/view-edit-transaction-requests",
+      url: API_HOST + "/api/admin/view-Delete-Request",
       headers: {
         Authorization: `Bearer ${user.token}`,
       },

@@ -647,7 +647,7 @@ const BankStatement = () => {
                                       onClick={(e) => {
                                         handleDelete(
                                           e,
-                                          data._id,
+                                          data.BankTransaction_Id,
                                           data.transactionType
                                         );
                                       }}
@@ -796,7 +796,7 @@ const BankStatement = () => {
                                       onClick={(e) => {
                                         handleDelete(
                                           e,
-                                          data._id,
+                                          data.BankTransaction_Id,
                                           data.transactionType
                                         );
                                       }}
@@ -990,7 +990,7 @@ const BankStatement = () => {
                                         onClick={(e) => {
                                           handleDelete(
                                             e,
-                                            data._id,
+                                            data.BankTransaction_Id,
                                             data.transactionType
                                           );
                                         }}
@@ -1118,7 +1118,7 @@ const BankStatement = () => {
                                         onClick={(e) => {
                                           handleDelete(
                                             e,
-                                            data._id,
+                                            data.BankTransaction_Id,
                                             data.transactionType
                                           );
                                         }}
@@ -1254,7 +1254,7 @@ const BankStatement = () => {
                                       onClick={(e) => {
                                         handleDelete(
                                           e,
-                                          data._id,
+                                          data.BankTransaction_Id,
                                           data.transactionType
                                         );
                                       }}
