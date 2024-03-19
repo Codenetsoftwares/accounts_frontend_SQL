@@ -25,7 +25,7 @@ class EditServices {
   IsTransactionDeleteReject(_id, user) {
     return axios({
       method: "delete",
-      url: `${API_HOST}/api/reject/${_id}`,
+      url: `${API_HOST}/api/reject/introducer-detail/${_id}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -83,7 +83,7 @@ class EditServices {
   IsReject(_id, user) {
     return axios({
       method: "delete",
-      url: `${API_HOST}/api/reject/${_id}`,
+      url: `${API_HOST}/api/reject/introducer-detail/${_id}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },

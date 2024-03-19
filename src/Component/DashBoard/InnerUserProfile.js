@@ -79,7 +79,7 @@ const InnerUserProfile = () => {
       introducersUserName: editedData.introducersUserName,
       introducersUserName1: editedData.introducersUserName1,
       introducersUserName2: editedData.introducersUserName2,
-      websitedetail: editedData.websitedetail,
+      websitedetail: editedData.Websites_Details,
       bankDetail: {}, // Initialize empty bankDetail
       upiDetail: {}, // Initialize empty upiDetail
     };
@@ -465,13 +465,17 @@ const InnerUserProfile = () => {
                       <div className="mb-3">
                         <label className="form-label text-primary">
                           Website Details
+                          {console.log(
+                            "first====>",
+                            editedData.Websites_Details
+                          )}
                         </label>
                         <input
-                          name="WebsiteDetails"
+                          name="Websites_Details"
                           value={
                             isEditing
-                              ? editedData.WebsiteDetails
-                              : foundObject.WebsiteDetails
+                              ? editedData.Websites_Details
+                              : foundObject.Websites_Details
                           }
                           onChange={handleInputChange}
                           className="form-control"
