@@ -67,13 +67,13 @@ const WebsiteEdit = () => {
                 <button
                   type="button"
                   class="btn btn-success mr-2 ml-2"
-                  onClick={() => handleapprove(item.websiteTransactionId)}
+                  onClick={() => handleapprove(item.website_id)}
                 >
                   Approve
                 </button>
                 <button
                   class="btn btn-danger"
-                  onClick={(e) => handleReject(e, item.websiteTransactionId)}
+                  onClick={(e) => handleReject(e, item.website_id)}
                 >
                   Reject
                 </button>

@@ -311,7 +311,7 @@ const AdminBank = () => {
                                   </button>
 
                                   {/* Active,Inactive */}
-                                  {data.isActive === false ? (
+                                  {data.isActive === 0 ? (
                                     <button
                                       type="button"
                                       class="btn btn-dark btn-sm"
@@ -464,7 +464,7 @@ const AdminBank = () => {
                                 </button>
 
                                 {/* Active,Inactive */}
-                                {data.isActive === false ? (
+                                {data.isActive === 0 ? (
                                   <button
                                     type="button"
                                     class="btn btn-dark btn-sm"

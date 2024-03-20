@@ -347,14 +347,7 @@ const AppRoutes = () => {
               </RequireAuth>
             }
           />
-          <Route
-            path="admindash"
-            element={
-              <RequireAuth>
-                <AdminDash />
-              </RequireAuth>
-            }
-          />
+
           <Route
             path="introducerstatement/:id"
             element={

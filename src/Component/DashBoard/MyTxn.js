@@ -1154,7 +1154,7 @@ const MyTxn = () => {
           </div>
         )}
       </div>
-      <EditTransaction id={dataId} />
+      {/* <EditTransaction id={dataId} /> */}
     </>
   );
 };
