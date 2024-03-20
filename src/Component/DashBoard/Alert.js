@@ -267,7 +267,7 @@ const Alert = () => {
         break;
 
       case "Manual-Bank-Withdraw":
-        EditServices.IsManualBankTransactionDeleteReject(id, auth.user)
+        EditServices.IsTransactionDeleteReject(id, auth.user)
           .then((response) => {
             window.location.reload();
             console.log(response.data);
@@ -278,7 +278,7 @@ const Alert = () => {
         break;
 
       case "Manual-Bank-Deposit":
-        EditServices.IsManualBankTransactionDeleteReject(id, auth.user)
+        EditServices.IsTransactionDeleteReject(id, auth.user)
           .then((response) => {
             window.location.reload();
             console.log(response.data);
@@ -289,7 +289,7 @@ const Alert = () => {
         break;
 
       case "Manual-Website-Withdraw":
-        EditServices.IsManualWebsiteTransactionDeleteReject(id, auth.user)
+        EditServices.IsTransactionDeleteReject(id, auth.user)
           .then((response) => {
             window.location.reload();
             console.log(response.data);
@@ -300,7 +300,7 @@ const Alert = () => {
         break;
 
       case "Manual-Website-Deposit":
-        EditServices.IsManualWebsiteTransactionDeleteReject(id, auth.user)
+        EditServices.IsTransactionDeleteReject(id, auth.user)
           .then((response) => {
             window.location.reload();
             console.log(response.data);
@@ -553,7 +553,7 @@ const Alert = () => {
                             handleDeleteApprove(
                               e,
                               data.Edit_ID,
-                              data.transactionType,
+                              data.transactionType
                             )
                           }
                         >
@@ -564,7 +564,7 @@ const Alert = () => {
                           onClick={(e) =>
                             handleDeleteReject(
                               e,
-                              data._id,
+                              data.Edit_ID,
                               data.transactionType
                             )
                           }

@@ -137,23 +137,23 @@ const WebsiteStatement = () => {
     }
   }, [auth]);
 
-  useEffect(() => {
-    if (auth.user) {
-      TransactionSercvice.bankList(auth.user).then((res) => {
-        setBankList(res.data);
-      });
-    }
-  }, [auth]);
+  // useEffect(() => {
+  //   if (auth.user) {
+  //     TransactionSercvice.bankList(auth.user).then((res) => {
+  //       setBankList(res.data);
+  //     });
+  //   }
+  // }, [auth]);
 
-  useEffect(() => {
-    AccountService.website(auth.user).then((res) => setWebsiteList(res.data));
-  }, [auth]);
+  // useEffect(() => {
+  //   AccountService.website(auth.user).then((res) => setWebsiteList(res.data));
+  // }, [auth]);
 
-  useEffect(() => {
-    AccountService.introducerId(auth.user).then((res) =>
-      setIntroducerList(res.data)
-    );
-  }, [auth]);
+  // useEffect(() => {
+  //   AccountService.introducerId(auth.user).then((res) =>
+  //     setIntroducerList(res.data)
+  //   );
+  // }, [auth]);
 
   useEffect(() => {
     handleFilter();
@@ -663,16 +663,35 @@ const WebsiteStatement = () => {
                                     type="button"
                                     className="btn btn-danger"
                                   >
-                                    <FontAwesomeIcon
-                                      icon={faTrash}
-                                      onClick={(e) => {
-                                        handleDelete(
-                                          e,
-                                          data.WebsiteTransaction_Id,
-                                          data.transactionType
-                                        );
-                                      }}
-                                    />
+                                    {["Deposit", "Withdraw"].includes(
+                                      data.transactionType
+                                    ) && (
+                                      <FontAwesomeIcon
+                                        icon={faTrash}
+                                        onClick={(e) => {
+                                          handleDelete(
+                                            e,
+                                            data.Transaction_Id,
+                                            data.transactionType
+                                          );
+                                        }}
+                                      />
+                                    )}
+                                    {[
+                                      "Manual-Website-Withdraw",
+                                      "Manual-Website-Deposit",
+                                    ].includes(data.transactionType) && (
+                                      <FontAwesomeIcon
+                                        icon={faTrash}
+                                        onClick={(e) => {
+                                          handleDelete(
+                                            e,
+                                            data.WebsiteTransaction_Id,
+                                            data.transactionType
+                                          );
+                                        }}
+                                      />
+                                    )}
                                   </button>
                                 </td>
                               </tr>
@@ -808,16 +827,35 @@ const WebsiteStatement = () => {
                                     type="button"
                                     className="btn btn-danger"
                                   >
-                                    <FontAwesomeIcon
-                                      icon={faTrash}
-                                      onClick={(e) => {
-                                        handleDelete(
-                                          e,
-                                          data.WebsiteTransaction_Id,
-                                          data.transactionType
-                                        );
-                                      }}
-                                    />
+                                    {["Deposit", "Withdraw"].includes(
+                                      data.transactionType
+                                    ) && (
+                                      <FontAwesomeIcon
+                                        icon={faTrash}
+                                        onClick={(e) => {
+                                          handleDelete(
+                                            e,
+                                            data.Transaction_Id,
+                                            data.transactionType
+                                          );
+                                        }}
+                                      />
+                                    )}
+                                    {[
+                                      "Manual-Website-Withdraw",
+                                      "Manual-Website-Deposit",
+                                    ].includes(data.transactionType) && (
+                                      <FontAwesomeIcon
+                                        icon={faTrash}
+                                        onClick={(e) => {
+                                          handleDelete(
+                                            e,
+                                            data.WebsiteTransaction_Id,
+                                            data.transactionType
+                                          );
+                                        }}
+                                      />
+                                    )}
                                   </button>
                                 </td>
                               </tr>
@@ -1020,16 +1058,35 @@ const WebsiteStatement = () => {
                                     type="button"
                                     className="btn btn-danger"
                                   >
-                                    <FontAwesomeIcon
-                                      icon={faTrash}
-                                      onClick={(e) => {
-                                        handleDelete(
-                                          e,
-                                          data.WebsiteTransaction_Id,
-                                          data.transactionType
-                                        );
-                                      }}
-                                    />
+                                    {["Deposit", "Withdraw"].includes(
+                                      data.transactionType
+                                    ) && (
+                                      <FontAwesomeIcon
+                                        icon={faTrash}
+                                        onClick={(e) => {
+                                          handleDelete(
+                                            e,
+                                            data.Transaction_Id,
+                                            data.transactionType
+                                          );
+                                        }}
+                                      />
+                                    )}
+                                    {[
+                                      "Manual-Website-Withdraw",
+                                      "Manual-Website-Deposit",
+                                    ].includes(data.transactionType) && (
+                                      <FontAwesomeIcon
+                                        icon={faTrash}
+                                        onClick={(e) => {
+                                          handleDelete(
+                                            e,
+                                            data.WebsiteTransaction_Id,
+                                            data.transactionType
+                                          );
+                                        }}
+                                      />
+                                    )}
                                   </button>
                                 </td>
                               </tr>
@@ -1163,16 +1220,35 @@ const WebsiteStatement = () => {
                                     type="button"
                                     className="btn btn-danger"
                                   >
-                                    <FontAwesomeIcon
-                                      icon={faTrash}
-                                      onClick={(e) => {
-                                        handleDelete(
-                                          e,
-                                          data.WebsiteTransaction_Id,
-                                          data.transactionType
-                                        );
-                                      }}
-                                    />
+                                    {["Deposit", "Withdraw"].includes(
+                                      data.transactionType
+                                    ) && (
+                                      <FontAwesomeIcon
+                                        icon={faTrash}
+                                        onClick={(e) => {
+                                          handleDelete(
+                                            e,
+                                            data.Transaction_Id,
+                                            data.transactionType
+                                          );
+                                        }}
+                                      />
+                                    )}
+                                    {[
+                                      "Manual-Website-Withdraw",
+                                      "Manual-Website-Deposit",
+                                    ].includes(data.transactionType) && (
+                                      <FontAwesomeIcon
+                                        icon={faTrash}
+                                        onClick={(e) => {
+                                          handleDelete(
+                                            e,
+                                            data.WebsiteTransaction_Id,
+                                            data.transactionType
+                                          );
+                                        }}
+                                      />
+                                    )}
                                   </button>
                                 </td>
                               </tr>
@@ -1198,7 +1274,7 @@ const WebsiteStatement = () => {
           </div>
         )}
       </div>
-      <EditTransaction id={dataId} />
+      {/* <EditTransaction id={dataId} /> */}
     </>
   );
 };

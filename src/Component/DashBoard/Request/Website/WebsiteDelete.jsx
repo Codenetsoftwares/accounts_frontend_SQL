@@ -71,7 +71,7 @@ const WebsiteDelete = () => {
                       <td>
                         <button
                           className="btn btn-primary"
-                          onClick={(e) => handleApprove(e, data.websiteTransactionId)}
+                          onClick={(e) => handleApprove(e, data.website_id)}
                         >
                           Approve
                         </button>
@@ -79,7 +79,7 @@ const WebsiteDelete = () => {
                       <td>
                         <button
                           className="btn btn-danger"
-                          onClick={(e) => handleReject(e, data.websiteTransactionId)}
+                          onClick={(e) => handleReject(e, data.website_id)}
                         >
                           Reject
                         </button>

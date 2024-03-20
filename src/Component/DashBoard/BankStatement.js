@@ -92,23 +92,23 @@ const BankStatement = () => {
     }
   }, [auth]);
 
-  useEffect(() => {
-    if (auth.user) {
-      TransactionSercvice.bankList(auth.user).then((res) => {
-        setBankList(res.data);
-      });
-    }
-  }, [auth]);
+  // useEffect(() => {
+  //   if (auth.user) {
+  //     TransactionSercvice.bankList(auth.user).then((res) => {
+  //       setBankList(res.data);
+  //     });
+  //   }
+  // }, [auth]);
 
   useEffect(() => {
     handleFilter()
   }, [documentView]);
 
-  useEffect(() => {
-    AccountService.introducerId(auth.user).then((res) =>
-      setIntroducerList(res.data)
-    );
-  }, [auth]);
+  // useEffect(() => {
+  //   AccountService.introducerId(auth.user).then((res) =>
+  //     setIntroducerList(res.data)
+  //   );
+  // }, [auth]);
 
   const selectPageHandler = (selectedPage) => {
   
@@ -1300,7 +1300,7 @@ const BankStatement = () => {
           </div>
         )}
       </div>
-      <EditTransaction id={dataId} />
+      {/* <EditTransaction id={dataId} /> */}
     </>
   );
 };

@@ -22,10 +22,10 @@ class EditServices {
     });
   }
 
-  IsTransactionDeleteReject(_id, user) {
+  IsTransactionDeleteReject(id, user) {
     return axios({
       method: "delete",
-      url: `${API_HOST}/api/reject/introducer-detail/${_id}`,
+      url: `${API_HOST}/api/reject/DeleteRequest/${id}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -186,20 +186,20 @@ class EditServices {
     });
   }
 
-  IsBankDeleteApprove(_id, user) {
+  IsBankDeleteApprove(id, user) {
     return axios({
       method: "post",
-      url: `${API_HOST}/api/delete-bank/${_id}`,
+      url: `${API_HOST}/api/delete-bank/${id}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
     });
   }
 
-  IsBankDeleteReject(_id, user) {
+  IsBankDeleteReject(id, user) {
     return axios({
       method: "delete",
-      url: `${API_HOST}/api/reject/bank-detail/${_id}`,
+      url: `${API_HOST}/api/reject/bank-detail/${id}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -216,20 +216,20 @@ class EditServices {
     });
   }
 
-  IsWebsiteDeleteApprove(_id, user) {
+  IsWebsiteDeleteApprove(id, user) {
     return axios({
       method: "post",
-      url: `${API_HOST}/api/delete-website/${_id}`,
+      url: `${API_HOST}/api/delete-website/${id}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
     });
   }
 
-  IsWebsiteDeleteReject(_id, user) {
+  IsWebsiteDeleteReject(id, user) {
     return axios({
       method: "delete",
-      url: `${API_HOST}/api/reject-website-edit/${_id}`,
+      url: `${API_HOST}/api/reject/website-detail/${id}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
