@@ -238,7 +238,7 @@ const TrashAllTransaction = () => {
                         <button
                           className="btn btn-danger rounded"
                           onClick={(e) =>
-                            handleRestore(e, data.transactionID, data.Nametype)
+                            handleRestore(e, data.Transaction_Id, data.Nametype)
                           }
                         >
                           Restore

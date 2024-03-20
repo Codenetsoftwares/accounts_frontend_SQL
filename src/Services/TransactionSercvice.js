@@ -200,11 +200,10 @@ class TransactionService {
     });
   }
 
-  MoveTrashTransaction(data, user) {
+  MoveTrashTransaction(id, user) {
     return axios({
       method: "post",
-      url: `${API_HOST}/api/admin/move-transaction-to-trash`,
-      data: data,
+      url: `${API_HOST}/api/delete-transaction/${id}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -264,7 +263,7 @@ class TransactionService {
   IsTransactionDelete(_id, user) {
     return axios({
       method: "delete",
-      url: `${API_HOST}/api/delete/transactions/${_id}`,
+      url: `${API_HOST}/api/reject/trash/transactions/${_id}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
