@@ -382,7 +382,7 @@ const TableMainTransaction = ({ FilterData, purpose, page, handlePage, totalPage
                 // </div>
                 <Pagination handlePage={handlePage} page={page} totalPage={totalPage} totalData={totalData} perPagePagination={10} />
             ) : null}
-            <EditTransaction id={id} />
+            {/* <EditTransaction id={id} /> */}
         </div>
     );
 };
