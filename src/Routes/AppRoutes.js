@@ -47,6 +47,7 @@ import EditBnkTransaction from "../Component/DashBoard/EditBnkTransaction ";
 import EditBank from "../Component/EditBank";
 import ResetPassword from "../Component/DashBoard/ResetPassword";
 import BankStatement from "../Component/DashBoard/BankStatement";
+import MainFilterTransaction from "../pages/TransactionPage/MainFilterTransaction";
 
 const AppRoutes = () => {
   const userrole = sessionStorage.getItem("role") || "";
@@ -205,6 +206,19 @@ const AppRoutes = () => {
               element={
                 <RequireAuth>
                   <MainTransactionPage />
+                </RequireAuth>
+              }
+            />
+          )}
+          {[userrole]?.some(
+            (role) =>
+              role.includes("superAdmin") || role.includes("report-all-txn")
+          ) && (
+            <Route
+              path="mainfiltertransactionpage"
+              element={
+                <RequireAuth>
+                  <MainFilterTransaction />
                 </RequireAuth>
               }
             />
