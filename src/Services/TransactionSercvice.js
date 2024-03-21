@@ -3,15 +3,15 @@ const API_HOST = process.env.REACT_APP_API_HOST;
 console.log(API_HOST);
 
 class TransactionService {
-  // getAccountSummary(user) {
-  //   return axios({
-  //     method: "get",
-  //     url: API_HOST + "/api/admin/account-summary",
-  //     headers: {
-  //       Authorization: `Bearer ${user.token}`,
-  //     },
-  //   });
-  // }
+  getAccountSummary(user) {
+    return axios({
+      method: "get",
+      url: API_HOST + "/api/admin/account-summary",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
 
   subAdminList(user) {
     return axios({

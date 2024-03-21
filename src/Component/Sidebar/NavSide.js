@@ -393,7 +393,7 @@ const NavSide = () => {
                           role === "superAdmin" || role === "report-all-txn"
                       ) && (
                         <Link
-                          to="/maintransactionpage"
+                          to="/mainfiltertransactionpage"
                           className="nav-link text-white"
                         >
                           <i className="far fa-circle nav-icon" />

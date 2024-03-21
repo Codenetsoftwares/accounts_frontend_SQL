@@ -525,36 +525,53 @@ const BankStatement = () => {
                                 </td>
                                 <td>
                                   {data.amount && (
-                                    <p className={`col fs-6 text-break ${data.transactionType.includes(
-                                      "Manual-Website-Withdraw"
-                                    ) ||
-                                      data.transactionType.includes("Manual-Bank-Withdraw") ||
-                                      data.transactionType === "Withdraw"
-                                      ? "text-red"
-                                      : "text-black"
-                                      }`}>{data.amount}</p>
+                                    <p
+                                      className={`col fs-6 text-break ${
+                                        data.transactionType.includes(
+                                          "Manual-Website-Withdraw"
+                                        ) ||
+                                        data.transactionType.includes(
+                                          "Manual-Bank-Withdraw"
+                                        ) ||
+                                        data.transactionType === "Withdraw"
+                                          ? "text-red"
+                                          : "text-black"
+                                      }`}
+                                    >
+                                      {data.amount}
+                                    </p>
                                   )}
                                   {data.depositAmount && (
-                                    <p className={`col fs-6 text-break ${data.transactionType.includes(
-                                      "Manual-Website-Withdraw"
-                                    ) ||
-                                      data.transactionType.includes("Manual-Bank-Withdraw") ||
-                                      data.transactionType === "Withdraw"
-                                      ? "text-red"
-                                      : "text-black"
-                                      }`}>
+                                    <p
+                                      className={`col fs-6 text-break ${
+                                        data.transactionType.includes(
+                                          "Manual-Website-Withdraw"
+                                        ) ||
+                                        data.transactionType.includes(
+                                          "Manual-Bank-Withdraw"
+                                        ) ||
+                                        data.transactionType === "Withdraw"
+                                          ? "text-red"
+                                          : "text-black"
+                                      }`}
+                                    >
                                       {data.depositAmount}
                                     </p>
                                   )}
                                   {data.withdrawAmount && (
-                                    <p className={`col fs-6 text-break ${data.transactionType.includes(
-                                      "Manual-Website-Withdraw"
-                                    ) ||
-                                      data.transactionType.includes("Manual-Bank-Withdraw") ||
-                                      data.transactionType === "Withdraw"
-                                      ? "text-red"
-                                      : "text-black"
-                                      }`}>
+                                    <p
+                                      className={`col fs-6 text-break ${
+                                        data.transactionType.includes(
+                                          "Manual-Website-Withdraw"
+                                        ) ||
+                                        data.transactionType.includes(
+                                          "Manual-Bank-Withdraw"
+                                        ) ||
+                                        data.transactionType === "Withdraw"
+                                          ? "text-red"
+                                          : "text-black"
+                                      }`}
+                                    >
                                       {data.withdrawAmount}
                                     </p>
                                   )}
@@ -574,16 +591,19 @@ const BankStatement = () => {
                                 </td>
                                 <td>
                                   {data.transactionType && (
-                                    <p className={`col fs-6 text-bold text-break ${data.transactionType.includes(
-                                      "Manual-Website-Withdraw"
-                                    ) ||
-                                      data.transactionType.includes(
-                                        "Manual-Bank-Withdraw"
-                                      ) ||
-                                      data.transactionType === "Withdraw"
-                                      ? "text-red"
-                                      : "text-black"
-                                      }`}>
+                                    <p
+                                      className={`col fs-6 text-bold text-break ${
+                                        data.transactionType.includes(
+                                          "Manual-Website-Withdraw"
+                                        ) ||
+                                        data.transactionType.includes(
+                                          "Manual-Bank-Withdraw"
+                                        ) ||
+                                        data.transactionType === "Withdraw"
+                                          ? "text-red"
+                                          : "text-black"
+                                      }`}
+                                    >
                                       {data.transactionType}
                                     </p>
                                   )}
@@ -642,16 +662,35 @@ const BankStatement = () => {
                                     type="button"
                                     className="btn btn-danger"
                                   >
-                                    <FontAwesomeIcon
-                                      icon={faTrash}
-                                      onClick={(e) => {
-                                        handleDelete(
-                                          e,
-                                          data.BankTransaction_Id,
-                                          data.transactionType
-                                        );
-                                      }}
-                                    />
+                                    {["Deposit", "Withdraw"].includes(
+                                      data.transactionType
+                                    ) && (
+                                      <FontAwesomeIcon
+                                        icon={faTrash}
+                                        onClick={(e) => {
+                                          handleDelete(
+                                            e,
+                                            data.Transaction_Id,
+                                            data.transactionType
+                                          );
+                                        }}
+                                      />
+                                    )}
+                                    {[
+                                      "Manual-Bank-Withdraw",
+                                      "Manual-Bank-Deposit",
+                                    ].includes(data.transactionType) && (
+                                      <FontAwesomeIcon
+                                        icon={faTrash}
+                                        onClick={(e) => {
+                                          handleDelete(
+                                            e,
+                                            data.BankTransaction_Id,
+                                            data.transactionType
+                                          );
+                                        }}
+                                      />
+                                    )}
                                   </button>
                                 </td>
                               </tr>
@@ -673,36 +712,53 @@ const BankStatement = () => {
                                 </td>
                                 <td>
                                   {data.amount && (
-                                    <p className={`col fs-6 text-break ${data.transactionType.includes(
-                                      "Manual-Website-Withdraw"
-                                    ) ||
-                                      data.transactionType.includes("Manual-Bank-Withdraw") ||
-                                      data.transactionType === "Withdraw"
-                                      ? "text-red"
-                                      : "text-black"
-                                      }`}>{data.amount}</p>
+                                    <p
+                                      className={`col fs-6 text-break ${
+                                        data.transactionType.includes(
+                                          "Manual-Website-Withdraw"
+                                        ) ||
+                                        data.transactionType.includes(
+                                          "Manual-Bank-Withdraw"
+                                        ) ||
+                                        data.transactionType === "Withdraw"
+                                          ? "text-red"
+                                          : "text-black"
+                                      }`}
+                                    >
+                                      {data.amount}
+                                    </p>
                                   )}
                                   {data.depositAmount && (
-                                    <p className={`col fs-6 text-break ${data.transactionType.includes(
-                                      "Manual-Website-Withdraw"
-                                    ) ||
-                                      data.transactionType.includes("Manual-Bank-Withdraw") ||
-                                      data.transactionType === "Withdraw"
-                                      ? "text-red"
-                                      : "text-black"
-                                      }`}>
+                                    <p
+                                      className={`col fs-6 text-break ${
+                                        data.transactionType.includes(
+                                          "Manual-Website-Withdraw"
+                                        ) ||
+                                        data.transactionType.includes(
+                                          "Manual-Bank-Withdraw"
+                                        ) ||
+                                        data.transactionType === "Withdraw"
+                                          ? "text-red"
+                                          : "text-black"
+                                      }`}
+                                    >
                                       {data.depositAmount}
                                     </p>
                                   )}
                                   {data.withdrawAmount && (
-                                    <p className={`col fs-6 text-break ${data.transactionType.includes(
-                                      "Manual-Website-Withdraw"
-                                    ) ||
-                                      data.transactionType.includes("Manual-Bank-Withdraw") ||
-                                      data.transactionType === "Withdraw"
-                                      ? "text-red"
-                                      : "text-black"
-                                      }`}>
+                                    <p
+                                      className={`col fs-6 text-break ${
+                                        data.transactionType.includes(
+                                          "Manual-Website-Withdraw"
+                                        ) ||
+                                        data.transactionType.includes(
+                                          "Manual-Bank-Withdraw"
+                                        ) ||
+                                        data.transactionType === "Withdraw"
+                                          ? "text-red"
+                                          : "text-black"
+                                      }`}
+                                    >
                                       {data.withdrawAmount}
                                     </p>
                                   )}
@@ -722,16 +778,19 @@ const BankStatement = () => {
                                 </td>
                                 <td>
                                   {data.transactionType && (
-                                    <p className={`col fs-6 text-break text-bold ${data.transactionType.includes(
-                                      "Manual-Website-Withdraw"
-                                    ) ||
-                                      data.transactionType.includes(
-                                        "Manual-Bank-Withdraw"
-                                      ) ||
-                                      data.transactionType === "Withdraw"
-                                      ? "text-red"
-                                      : "text-black"
-                                      }`}>
+                                    <p
+                                      className={`col fs-6 text-break text-bold ${
+                                        data.transactionType.includes(
+                                          "Manual-Website-Withdraw"
+                                        ) ||
+                                        data.transactionType.includes(
+                                          "Manual-Bank-Withdraw"
+                                        ) ||
+                                        data.transactionType === "Withdraw"
+                                          ? "text-red"
+                                          : "text-black"
+                                      }`}
+                                    >
                                       {data.transactionType}
                                     </p>
                                   )}
@@ -791,16 +850,35 @@ const BankStatement = () => {
                                     type="button"
                                     className="btn btn-danger"
                                   >
-                                    <FontAwesomeIcon
-                                      icon={faTrash}
-                                      onClick={(e) => {
-                                        handleDelete(
-                                          e,
-                                          data.BankTransaction_Id,
-                                          data.transactionType
-                                        );
-                                      }}
-                                    />
+                                    {["Deposit", "Withdraw"].includes(
+                                      data.transactionType
+                                    ) && (
+                                      <FontAwesomeIcon
+                                        icon={faTrash}
+                                        onClick={(e) => {
+                                          handleDelete(
+                                            e,
+                                            data.Transaction_Id,
+                                            data.transactionType
+                                          );
+                                        }}
+                                      />
+                                    )}
+                                    {[
+                                      "Manual-Bank-Withdraw",
+                                      "Manual-Bank-Deposit",
+                                    ].includes(data.transactionType) && (
+                                      <FontAwesomeIcon
+                                        icon={faTrash}
+                                        onClick={(e) => {
+                                          handleDelete(
+                                            e,
+                                            data.BankTransaction_Id,
+                                            data.transactionType
+                                          );
+                                        }}
+                                      />
+                                    )}
                                   </button>
                                 </td>
                               </tr>
@@ -883,14 +961,21 @@ const BankStatement = () => {
                                   </td>
                                   <td>
                                     {data.amount && (
-                                      <p className={`col fs-6 text-break ${data.transactionType.includes(
-                                        "Manual-Website-Withdraw"
-                                      ) ||
-                                        data.transactionType.includes("Manual-Bank-Withdraw") ||
-                                        data.transactionType === "Withdraw"
-                                        ? "text-red"
-                                        : "text-black"
-                                        }`}>{data.amount}</p>
+                                      <p
+                                        className={`col fs-6 text-break ${
+                                          data.transactionType.includes(
+                                            "Manual-Website-Withdraw"
+                                          ) ||
+                                          data.transactionType.includes(
+                                            "Manual-Bank-Withdraw"
+                                          ) ||
+                                          data.transactionType === "Withdraw"
+                                            ? "text-red"
+                                            : "text-black"
+                                        }`}
+                                      >
+                                        {data.amount}
+                                      </p>
                                     )}
                                     {data.depositAmount && (
                                       <p className="col fs-6">
@@ -918,16 +1003,19 @@ const BankStatement = () => {
                                   </td>
                                   <td>
                                     {data.transactionType && (
-                                      <p className={`col fs-6 text-break text-bold ${data.transactionType.includes(
-                                        "Manual-Website-Withdraw"
-                                      ) ||
-                                        data.transactionType.includes(
-                                          "Manual-Bank-Withdraw"
-                                        ) ||
-                                        data.transactionType === "Withdraw"
-                                        ? "text-red"
-                                        : "text-black"
-                                        }`}>
+                                      <p
+                                        className={`col fs-6 text-break text-bold ${
+                                          data.transactionType.includes(
+                                            "Manual-Website-Withdraw"
+                                          ) ||
+                                          data.transactionType.includes(
+                                            "Manual-Bank-Withdraw"
+                                          ) ||
+                                          data.transactionType === "Withdraw"
+                                            ? "text-red"
+                                            : "text-black"
+                                        }`}
+                                      >
                                         {data.transactionType}
                                       </p>
                                     )}
@@ -948,7 +1036,9 @@ const BankStatement = () => {
                                   <td>{data.subAdminName}</td>
                                   <td>
                                     {data.paymentMethod && (
-                                      <p className="col fs-6">{data.userName}</p>
+                                      <p className="col fs-6">
+                                        {data.userName}
+                                      </p>
                                     )}
                                     {data.depositAmount && (
                                       <p className="col fs-6 text-break">N.A</p>
@@ -985,16 +1075,35 @@ const BankStatement = () => {
                                       type="button"
                                       className="btn btn-danger"
                                     >
-                                      <FontAwesomeIcon
-                                        icon={faTrash}
-                                        onClick={(e) => {
-                                          handleDelete(
-                                            e,
-                                            data.BankTransaction_Id,
-                                            data.transactionType
-                                          );
-                                        }}
-                                      />
+                                      {["Deposit", "Withdraw"].includes(
+                                        data.transactionType
+                                      ) && (
+                                        <FontAwesomeIcon
+                                          icon={faTrash}
+                                          onClick={(e) => {
+                                            handleDelete(
+                                              e,
+                                              data.Transaction_Id,
+                                              data.transactionType
+                                            );
+                                          }}
+                                        />
+                                      )}
+                                      {[
+                                        "Manual-Bank-Withdraw",
+                                        "Manual-Bank-Deposit",
+                                      ].includes(data.transactionType) && (
+                                        <FontAwesomeIcon
+                                          icon={faTrash}
+                                          onClick={(e) => {
+                                            handleDelete(
+                                              e,
+                                              data.BankTransaction_Id,
+                                              data.transactionType
+                                            );
+                                          }}
+                                        />
+                                      )}
                                     </button>
                                   </td>
                                 </tr>
@@ -1019,14 +1128,21 @@ const BankStatement = () => {
                                   </td>
                                   <td>
                                     {data.amount && (
-                                      <p className={`col fs-6 text-break ${data.transactionType.includes(
-                                        "Manual-Website-Withdraw"
-                                      ) ||
-                                        data.transactionType.includes("Manual-Bank-Withdraw") ||
-                                        data.transactionType === "Withdraw"
-                                        ? "text-red"
-                                        : "text-black"
-                                        }`}>{data.amount}</p>
+                                      <p
+                                        className={`col fs-6 text-break ${
+                                          data.transactionType.includes(
+                                            "Manual-Website-Withdraw"
+                                          ) ||
+                                          data.transactionType.includes(
+                                            "Manual-Bank-Withdraw"
+                                          ) ||
+                                          data.transactionType === "Withdraw"
+                                            ? "text-red"
+                                            : "text-black"
+                                        }`}
+                                      >
+                                        {data.amount}
+                                      </p>
                                     )}
                                   </td>
                                   <td>
@@ -1044,16 +1160,19 @@ const BankStatement = () => {
                                   </td>
                                   <td>
                                     {data.transactionType && (
-                                      <p className={`col fs-6 text-break text-bold ${data.transactionType.includes(
-                                        "Manual-Website-Withdraw"
-                                      ) ||
-                                        data.transactionType.includes(
-                                          "Manual-Bank-Withdraw"
-                                        ) ||
-                                        data.transactionType === "Withdraw"
-                                        ? "text-red"
-                                        : "text-black"
-                                        }`}>
+                                      <p
+                                        className={`col fs-6 text-break text-bold ${
+                                          data.transactionType.includes(
+                                            "Manual-Website-Withdraw"
+                                          ) ||
+                                          data.transactionType.includes(
+                                            "Manual-Bank-Withdraw"
+                                          ) ||
+                                          data.transactionType === "Withdraw"
+                                            ? "text-red"
+                                            : "text-black"
+                                        }`}
+                                      >
                                         {data.transactionType}
                                       </p>
                                     )}
@@ -1074,7 +1193,9 @@ const BankStatement = () => {
                                   <td>{data.subAdminName}</td>
                                   <td>
                                     {data.paymentMethod && (
-                                      <p className="col fs-6">{data.userName}</p>
+                                      <p className="col fs-6">
+                                        {data.userName}
+                                      </p>
                                     )}
                                     {data.depositAmount && (
                                       <p className="col fs-6 text-break">N.A</p>
@@ -1113,16 +1234,35 @@ const BankStatement = () => {
                                       type="button"
                                       className="btn btn-danger"
                                     >
-                                      <FontAwesomeIcon
-                                        icon={faTrash}
-                                        onClick={(e) => {
-                                          handleDelete(
-                                            e,
-                                            data.BankTransaction_Id,
-                                            data.transactionType
-                                          );
-                                        }}
-                                      />
+                                      {["Deposit", "Withdraw"].includes(
+                                        data.transactionType
+                                      ) && (
+                                        <FontAwesomeIcon
+                                          icon={faTrash}
+                                          onClick={(e) => {
+                                            handleDelete(
+                                              e,
+                                              data.Transaction_Id,
+                                              data.transactionType
+                                            );
+                                          }}
+                                        />
+                                      )}
+                                      {[
+                                        "Manual-Bank-Withdraw",
+                                        "Manual-Bank-Deposit",
+                                      ].includes(data.transactionType) && (
+                                        <FontAwesomeIcon
+                                          icon={faTrash}
+                                          onClick={(e) => {
+                                            handleDelete(
+                                              e,
+                                              data.BankTransaction_Id,
+                                              data.transactionType
+                                            );
+                                          }}
+                                        />
+                                      )}
                                     </button>
                                   </td>
                                 </tr>
@@ -1249,16 +1389,35 @@ const BankStatement = () => {
                                     type="button"
                                     className="btn btn-danger"
                                   >
-                                    <FontAwesomeIcon
-                                      icon={faTrash}
-                                      onClick={(e) => {
-                                        handleDelete(
-                                          e,
-                                          data.BankTransaction_Id,
-                                          data.transactionType
-                                        );
-                                      }}
-                                    />
+                                     {["Deposit", "Withdraw"].includes(
+                                      data.transactionType
+                                    ) && (
+                                      <FontAwesomeIcon
+                                        icon={faTrash}
+                                        onClick={(e) => {
+                                          handleDelete(
+                                            e,
+                                            data.Transaction_Id,
+                                            data.transactionType
+                                          );
+                                        }}
+                                      />
+                                    )}
+                                    {[
+                                      "Manual-Bank-Withdraw",
+                                      "Manual-Bank-Deposit",
+                                    ].includes(data.transactionType) && (
+                                      <FontAwesomeIcon
+                                        icon={faTrash}
+                                        onClick={(e) => {
+                                          handleDelete(
+                                            e,
+                                            data.BankTransaction_Id,
+                                            data.transactionType
+                                          );
+                                        }}
+                                      />
+                                    )}
                                   </button>
                                 </td>
                               </tr>
