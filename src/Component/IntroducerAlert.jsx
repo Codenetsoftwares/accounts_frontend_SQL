@@ -123,7 +123,7 @@ const IntroducerAlert = () => {
   const handleDeleteReject = (e, id, transactionType) => {
     switch (transactionType) {
       case "Deposit":
-        EditServices.IsTransactionDeleteReject(id, auth.user)
+        EditServices.IsIntroducerTransactionDeleteReject(id, auth.user)
           .then((response) => {
             window.location.reload();
             console.log(response.data);
@@ -133,7 +133,7 @@ const IntroducerAlert = () => {
           });
         break;
       case "Withdraw":
-        EditServices.IsTransactionDeleteReject(id, auth.user)
+        EditServices.IsIntroducerTransactionDeleteReject(id, auth.user)
           .then((response) => {
             window.location.reload();
             console.log(response.data);

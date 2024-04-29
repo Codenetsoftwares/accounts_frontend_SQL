@@ -31,6 +31,17 @@ class EditServices {
       },
     });
   }
+
+  IsIntroducerTransactionDeleteReject(id, user) {
+    return axios({
+      method: "delete",
+      url: `${API_HOST}/api/reject/introducer-detail/${id}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
   IsManualBankTransactionDeleteApprove(_id, user) {
     return axios({
       method: "post",
