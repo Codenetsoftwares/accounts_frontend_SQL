@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { useAuth } from "../../Utils/Auth";
 import AccountService from "../../Services/AccountService";
 import { toast } from "react-toastify";
+import FullScreenLoader from "../FullScreenLoader";
 
 const ModalAdWbl = ({ ID }) => {
   const auth = useAuth();
   const [Amount, SetAmount] = useState(0);
   const [Remarks, SetRemarks] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   console.log("id", ID);
 
@@ -19,6 +21,7 @@ const ModalAdWbl = ({ ID }) => {
   };
 
   const handelsubmit = () => {
+    setIsLoading(true);
     if (Amount === 0 || Remarks === "" || Amount < 0) {
       if (Amount < 0) {
         toast.error("Amount can not be negetive");
@@ -35,12 +38,14 @@ const ModalAdWbl = ({ ID }) => {
     AccountService.ManualWebsiteEntryDeposit(ID, data, auth.user)
       .then((res) => {
         // console.log(response.data);
+        setIsLoading(false);
         if (res.status === 200) {
           alert(res.data.message);
           window.location.reload();
         }
       })
       .catch((error) => {
+        setIsLoading(false);
         alert(error.response.data.message);
         console.log(error);
         // alert.error("e.message");
@@ -49,6 +54,7 @@ const ModalAdWbl = ({ ID }) => {
 
   return (
     <div>
+      <FullScreenLoader show={isLoading} />
       <div
         className="modal fade"
         id="modalAddBlWebsite"

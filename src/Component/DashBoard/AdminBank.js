@@ -198,6 +198,7 @@ const AdminBank = () => {
                       {getbankName
                         .slice(page * 4 - 4, page * 4 - 4 + reminder)
                         .map((data) => {
+                          console.log("first===>", data)
                           return (
                             <div class="card d-flex justify-content-between">
                               <div class="card-body ">
@@ -350,6 +351,7 @@ const AdminBank = () => {
                   ) : (
                     <>
                       {getbankName.slice(page * 4 - 4, page * 4).map((data) => {
+                        console.log("first===>", data)
                         return (
                           <div class="card d-flex justify-content-between">
                             <div class="card-body ">

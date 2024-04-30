@@ -3,11 +3,13 @@ import { useAuth } from "../../Utils/Auth";
 import AccountService from "../../Services/AccountService";
 import { toast } from "react-toastify";
 import TransactionSercvice from "../../Services/TransactionSercvice";
+import FullScreenLoader from "../FullScreenLoader";
 
 const IntroducerWithdrawTransaction = ({ IntroducerName }) => {
   const auth = useAuth();
   const [Amount, SetAmount] = useState(0);
   const [Remarks, SetRemarks] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handelamtchange = (e) => {
     SetAmount(e.target.value);
@@ -18,6 +20,7 @@ const IntroducerWithdrawTransaction = ({ IntroducerName }) => {
   };
 
   const handleSubmit = () => {
+    setIsLoading(true);
     if (Amount === 0 || Remarks === "" || Amount < 0) {
       if (Amount < 0) {
         toast.error("Amount can not be negetive");
@@ -36,12 +39,14 @@ const IntroducerWithdrawTransaction = ({ IntroducerName }) => {
     TransactionSercvice.IntroducerWithdrawTransaction(data, auth.user)
       .then((res) => {
         // console.log(response.data);
+        setIsLoading(false);
         if (res.status === 200) {
           alert(res.data.message);
           window.location.reload();
         }
       })
       .catch((error) => {
+        setIsLoading(false);
         alert(error.response.data.message);
         console.log(error);
         // alert.error("e.message");
@@ -49,6 +54,7 @@ const IntroducerWithdrawTransaction = ({ IntroducerName }) => {
   };
   return (
     <div>
+      <FullScreenLoader show={isLoading} />
       <div
         class="modal fade"
         id="withdrawModal"

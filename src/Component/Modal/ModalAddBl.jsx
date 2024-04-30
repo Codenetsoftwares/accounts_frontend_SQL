@@ -3,11 +3,13 @@ import { useAuth } from "../../Utils/Auth";
 import AccountService from "../../Services/AccountService";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import FullScreenLoader from "../FullScreenLoader";
 
 const ModalAddBl = ({ ID }) => {
   const auth = useAuth();
   const [Amount, SetAmount] = useState(0);
   const [Remarks, SetRemarks] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handelamtchange = (e) => {
     SetAmount(e.target.value);
@@ -19,6 +21,7 @@ const ModalAddBl = ({ ID }) => {
 
   const handelsubmit = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     if (Amount === 0 || Remarks === "" || Amount < 0) {
       if (Amount < 0) {
         toast.error("Amount can not be negetive");
@@ -37,6 +40,7 @@ const ModalAddBl = ({ ID }) => {
     AccountService.ManualBankEntryDeposit(ID, data, auth.user)
       .then((res) => {
         // console.log(response.data);
+        setIsLoading(false);
         if (res.status === 200) {
           console.log(res);
           alert(res.data.message);
@@ -44,6 +48,7 @@ const ModalAddBl = ({ ID }) => {
         }
       })
       .catch((error) => {
+        setIsLoading(false);
         alert(error.response.data.message);
         // alert.error("e.message");
       });
@@ -51,6 +56,7 @@ const ModalAddBl = ({ ID }) => {
 
   return (
     <div>
+      <FullScreenLoader show={isLoading} />
       <div
         className="modal fade"
         id="modalAdbl"
