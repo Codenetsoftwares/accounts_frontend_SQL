@@ -82,7 +82,7 @@ function Withdraw() {
         .catch((error) => {
           // Handle error from the backend
           console.error(error);
-          alert(error.response.data);
+          alert(error.response.data.message);
           //  alert("Failed! Transaction ID Does Not Exists");
         });
     }
@@ -246,7 +246,7 @@ function Withdraw() {
               <select
                 type="text"
                 className="form-select"
-                value={paymentMethod || ""} 
+                value={paymentMethod || ""}
                 onChange={(e) => {
                   setPaymentMethod(e.target.value);
                 }}
