@@ -21,7 +21,6 @@ const ModalWthWbl = ({ ID }) => {
 
   const handelsubmit = (e) => {
     e.preventDefault();
-    setIsLoading(true);
     if (Amount === 0 || Remarks === "" || Amount < 0) {
       if (Amount < 0) {
         toast.error("Amount can not be negetive");
@@ -30,6 +29,7 @@ const ModalWthWbl = ({ ID }) => {
       toast.error("Amount and Remarks fields cannot be empty.");
       return;
     }
+    setIsLoading(true);
     const data = {
       amount: Number(Amount),
       transactionType: "Manual-Website-Withdraw",

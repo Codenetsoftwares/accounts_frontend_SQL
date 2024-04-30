@@ -20,7 +20,6 @@ const IntroducerWithdrawTransaction = ({ IntroducerName }) => {
   };
 
   const handleSubmit = () => {
-    setIsLoading(true);
     if (Amount === 0 || Remarks === "" || Amount < 0) {
       if (Amount < 0) {
         toast.error("Amount can not be negetive");
@@ -29,6 +28,7 @@ const IntroducerWithdrawTransaction = ({ IntroducerName }) => {
       toast.error("Amount and Remarks fields cannot be empty.");
       return;
     }
+    setIsLoading(true);
     const data = {
       amount: Number(Amount),
       transactionType: "Withdraw",
