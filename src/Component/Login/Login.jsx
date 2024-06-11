@@ -39,7 +39,7 @@ const Login = () => {
         console.log(res);
         if (res.status === 200) {
           sessionStorage.setItem("user", res.data.token.accessToken);
-          sessionStorage.setItem("role", res.data.token.role);
+          sessionStorage.setItem("role", res.data.token.roles);
           console.log("===>", res);
           console.log("admin");
           toast.success("Login Successfully");

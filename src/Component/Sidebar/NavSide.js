@@ -25,7 +25,7 @@ const NavSide = () => {
 
   useEffect(() => {
     setUserEmail(auth?.user?.userName);
-    setUserRole(auth?.user?.role);
+    setUserRole(auth?.user?.roles);
   }, [auth]);
 
   console.log(auth);
