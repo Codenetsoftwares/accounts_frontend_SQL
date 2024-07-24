@@ -15,7 +15,11 @@
     "browser-router": "^0.2.0",
     "cdbreact": "^1.5.18",
     "dotenv": "^16.3.1",
+    "formik": "^2.4.6",
+    "i": "^0.3.7",
     "jwt-decode": "^3.1.2",
+    "lodash": "^4.17.21",
+    "npm": "^10.8.2",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.4",
     "react-calendar": "^4.3.0",
@@ -24,6 +28,7 @@
     "react-datetime": "^3.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.10.1",
+    "react-infinite-scroll-component": "^6.1.0",
     "react-router": "^6.13.0",
     "react-router-dom": "^6.13.0",
     "react-scripts": "5.0.1",
@@ -34,7 +39,8 @@
     "styled-jsx": "^5.1.2",
     "use-local-storage": "^3.0.0",
     "uuid": "^9.0.0",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^1.4.0"
   },
   "scripts": {
     "start": "react-scripts start",
