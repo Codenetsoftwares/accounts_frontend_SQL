@@ -36,8 +36,8 @@ const Login = () => {
     await AccountService.adminlogin(values) // Corrected here to pass values directly
       .then((res) => {
         if (res.status === 200) {
-          sessionStorage.setItem("user", res.data.token.accessToken);
-          sessionStorage.setItem("role", res.data.token.roles);
+          sessionStorage.setItem("user", res.data.data.accessToken);
+          sessionStorage.setItem("role", res.data.data.roles);
           console.log("===>", auth);
           console.log("admin");
           toast.success("Login Successfully");
