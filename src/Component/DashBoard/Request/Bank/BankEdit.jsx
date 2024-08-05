@@ -9,7 +9,7 @@ const BankEdit = () => {
   useEffect(() => {
     if (auth.user) {
       EditServices.ViewBankEditRq(auth.user).then((res) => {
-        const changedFieldsArray = res.data.map((item) => item.changedFields);
+        const changedFieldsArray = res.data.data.map((item) => item.changedFields);
 
         SetChangeFiled(changedFieldsArray);
 

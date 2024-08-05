@@ -38,8 +38,8 @@ const Login = () => {
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
-          sessionStorage.setItem("user", res.data.token.accessToken);
-          sessionStorage.setItem("role", res.data.token.roles);
+          sessionStorage.setItem("user", res.data.data.accessToken);
+          sessionStorage.setItem("role", res.data.data.roles);
           console.log("===>", res);
           console.log("admin");
           toast.success("Login Successfully");
@@ -48,7 +48,7 @@ const Login = () => {
           navigate("/welcome");
           window.location.reload();
         } else {
-          toast.error(res.data.message);
+          toast.error(res.data.data.message);
           navigate("/");
         }
       })

@@ -19,7 +19,7 @@ const EditProfileSubadmin = () => {
   useEffect(() => {
     AccountService.getSingleAdmin(id, auth.user).then((res) => {
       console.log(res.data);
-      setFoundObject(res.data[0]);
+      setFoundObject(res.data.data);
     });
   }, []);
 
@@ -41,16 +41,16 @@ const EditProfileSubadmin = () => {
     setIsEditing(false);
     setEditedData({ ...editedData, [field]: "" });
     const data = {
-      firstname: editedData.firstname,
-      lastname: editedData.lastname,
+      firstName: editedData.firstname,
+      lastName: editedData.lastname,
     };
 
     // put Api Fetching
     AccountService.editsubadminprofile(id, data, auth.user)
       .then((res) => {
         console.log("res", res);
-        if (res.status === 201) {
-          alert("Profile updated");
+        if (res.status === 200) {
+         alert("Profile updated");
           window.location.reload();
         } else {
           toast.error("Failed");
@@ -105,8 +105,8 @@ const EditProfileSubadmin = () => {
                           name="firstname"
                           value={
                             isEditing
-                              ? editedData.firstname
-                              : foundObject.firstname
+                              ? editedData.firstName
+                              : foundObject.firstName
                           }
                           onChange={handleInputChange}
                           className="form-control"
@@ -120,8 +120,8 @@ const EditProfileSubadmin = () => {
                           name="lastname"
                           value={
                             isEditing
-                              ? editedData.lastname
-                              : foundObject.lastname
+                              ? editedData.lastName
+                              : foundObject.lastName
                           }
                           onChange={handleInputChange}
                           className="form-control"
