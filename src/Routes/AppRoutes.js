@@ -218,7 +218,7 @@ const AppRoutes = () => {
               path="mainfiltertransactionpage"
               element={
                 <RequireAuth>
-                  <MainFilterTransaction />
+                  <MainTransactionPage />
                 </RequireAuth>
               }
             />

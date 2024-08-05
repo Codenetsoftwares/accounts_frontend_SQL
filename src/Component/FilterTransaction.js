@@ -42,9 +42,9 @@ const FilterTransaction = ({
     api(auth.user, id)
       .then((res) => {
         return (
-          setDocumentView(res.data),
-          handleData(res.data),
-          setAccountData(res.data)
+          setDocumentView(res.data.data),
+          handleData(res.data.data),
+          setAccountData(res.data.data)
         );
       })
       .catch((err) => {
@@ -82,7 +82,7 @@ const FilterTransaction = ({
     setMinAmount(0);
     setMaxAmount(0);
     // handlememo();
-    // window.location.reload();
+    // window.location.reload(); 
   };
 
   useEffect(() => {
@@ -93,14 +93,14 @@ const FilterTransaction = ({
   useEffect(() => {
     if (auth.user) {
       TransactionSercvice.subAdminList(auth.user, id).then((res) => {
-        setSubAdminlist(res.data);
+        setSubAdminlist(res.data.data);
       });
       TransactionSercvice.bankList(auth.user).then((res) => {
-        setBankList(res.data);
+        setBankList(res.data.data);
       });
-      AccountService.website(auth.user).then((res) => setWebsiteList(res.data));
+      AccountService.website(auth.user).then((res) => setWebsiteList(res.data.data));
       AccountService.introducerId(auth.user).then((res) =>
-        setIntroducerList(res.data)
+        setIntroducerList(res.data.data)
       );
     }
   }, [auth]);
