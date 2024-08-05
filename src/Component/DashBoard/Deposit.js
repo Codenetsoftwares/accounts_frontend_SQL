@@ -38,16 +38,16 @@ const Deposit = () => {
 
   useEffect(() => {
     AccountService.getActiveBank(auth.user).then((res) => {
-      setBankOptions(res.data);
-      setFilteredBankOptions(res.data);
+      setBankOptions(res.data.data);
+      setFilteredBankOptions(res.data.data);
     });
     AccountService.getActiveWebsite(auth.user).then((res) => {
-      setWebsiteOptions(res.data);
-      setFilteredWebsiteOptions(res.data);
+      setWebsiteOptions(res.data.data);
+      setFilteredWebsiteOptions(res.data.data);
     });
     AccountService.userId(auth.user).then((res) => {
-      setAllUserNameOptions(res.data);
-      setFilteredUserNameOptions(res.data);
+      setAllUserNameOptions(res.data.data);
+      setFilteredUserNameOptions(res.data.data);
     });
   }, [auth]);
 
@@ -55,7 +55,7 @@ const Deposit = () => {
     debounce((value) => {
       if (value) {
         const filteredItems = allUserNameOptions.filter((item) =>
-          item.userName.toLowerCase().includes(value.toLowerCase())
+          item.toLowerCase().includes(value.toLowerCase())  // doubt from paul
         );
         setFilteredUserNameOptions(filteredItems);
         setIsDropdownVisible(true);
@@ -99,6 +99,8 @@ const Deposit = () => {
     [websiteOptions]
   );
 
+  console.log("filteredUserNameOptions", filteredUserNameOptions);
+
   const handleKeyDown = (e, setFieldValue) => {
     if (e.key === "ArrowDown") {
       setActiveIndex(
@@ -118,7 +120,7 @@ const Deposit = () => {
   };
 
   const handleOptionClick = (option, setFieldValue) => {
-    setFieldValue("userName", option.userName);
+    setFieldValue("userName", option);
     setIsDropdownVisible(false);
     setActiveIndex(-1);
   };
@@ -142,7 +144,7 @@ const Deposit = () => {
         .catch((error) => {
           setIsLoading(false);
           console.error(error);
-          alert(error.response.data.message);
+          alert(error.response.data.errMessage);
         });
     }
   };
@@ -221,7 +223,7 @@ const Deposit = () => {
                                   activeIndex === index ? "#f0f0f0" : "white",
                               }}
                             >
-                              {option.userName}
+                              {option}
                             </li>
                           ))
                         ) : (

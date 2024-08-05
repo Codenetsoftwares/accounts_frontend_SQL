@@ -414,7 +414,7 @@ const TableMainTransaction = ({
           perPagePagination={10}
         />
       ) : null}
-      <EditTransaction id={id} />
+      {/* <EditTransaction id={id} /> */}
     </SingleCard>
   );
 };

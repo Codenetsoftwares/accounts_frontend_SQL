@@ -60,6 +60,9 @@ const WebsiteDetails = () => {
 
   const handleSearch = (event) => {
     setSearch(event.target.value);
+    if (!event.target.value) {
+      setGetWebsite([]);
+    }
   };
 
   const handleSubmit = (e) => {
@@ -75,13 +78,14 @@ const WebsiteDetails = () => {
     )
       .then((res) => {
         console.log("res", res);
-        if (res.status === 200) {
+        if (res.status === 201) {
           alert(res.data.message);
           window.location.reload();
         }
+        // console.log(res);
       })
       .catch((err) => {
-        alert(err.response.data.message);
+        alert(err.response.data.errMessage);
         console.log(err);
       });
     // window.location.reload();
@@ -299,14 +303,14 @@ const WebsiteDetails = () => {
               <GridCard columns={2}>
                 {getWebsite.map((data) => (
                   <div
-                    key={data.website_id}
+                    key={data.websiteId}
                     className="col d-flex justify-content-center align-items-center"
-                    onMouseEnter={() => setHoveredCard(data.website_id)}
+                    onMouseEnter={() => setHoveredCard(data.websiteId)}
                     onMouseLeave={() => setHoveredCard(null)}
                   >
                     <div
                       className={`card d-flex justify-content-between ${
-                        hoveredCard === data.website_id
+                        hoveredCard === data.websiteId
                           ? "card-hover-highlight"
                           : ""
                       }`}
@@ -316,7 +320,7 @@ const WebsiteDetails = () => {
                         width: "100%",
                         position: "relative",
                       }}
-                      onClick={() => handleCardClick(data.website_id)}
+                      onClick={() => handleCardClick(data.websiteId)}
                     >
                       <div className="card-body">
                         <p
@@ -341,7 +345,7 @@ const WebsiteDetails = () => {
                                 data-bs-toggle="modal"
                                 data-bs-target="#modalWithdrawBlwebsite"
                                 onClick={() => {
-                                  handelId(data.website_id);
+                                  handelId(data.websiteId);
                                 }}
                                 disabled={!data.isWithdraw}
                                 title="Withdraw"
@@ -359,7 +363,7 @@ const WebsiteDetails = () => {
                                 data-bs-toggle="modal"
                                 data-bs-target="#modalAddBlWebsite"
                                 onClick={() => {
-                                  handelId(data.website_id);
+                                  handelId(data.websiteId);
                                 }}
                                 disabled={!data.isDeposit}
                                 title="Deposit"
@@ -375,7 +379,7 @@ const WebsiteDetails = () => {
                                 type="button"
                                 className="btn btn-custom btn-sm btn-zoom-out"
                                 onClick={(e) => {
-                                  handelstatement(e, data.website_id);
+                                  handelstatement(e, data.websiteId);
                                 }}
                                 title="Statement"
                               >
@@ -392,7 +396,7 @@ const WebsiteDetails = () => {
                                 className="btn btn-custom btn-sm btn-zoom-out"
                                 onClick={() => {
                                   handelWebsiteEdit(
-                                    data.website_id,
+                                    data.websiteId,
                                     data.websiteName
                                   );
                                 }}
@@ -413,7 +417,7 @@ const WebsiteDetails = () => {
                                 type="button"
                                 className="btn btn-custom btn-sm btn-zoom-out"
                                 onClick={(e) => {
-                                  handeldeletewebsite(data.website_id);
+                                  handeldeletewebsite(data.websiteId);
                                 }}
                                 title="Delete"
                                 disabled={!data.isDelete}
@@ -434,7 +438,7 @@ const WebsiteDetails = () => {
                                 onClick={() => {
                                   handelSubAdmin(
                                     data.subAdmins,
-                                    data.website_id
+                                    data.websiteId
                                   );
                                 }}
                                 title="Renew Permission"
@@ -451,13 +455,13 @@ const WebsiteDetails = () => {
                       </div>
 
                       <div className="card-top-right">
-                        {data.isActive === 0 ? (
+                        {data.isActive === true ? (
                           <span
                             type="button"
                             className="badge-pill badge-success   btn-zoom-out-custom   "
-                            title="Active"
+                            title="Click To Inactive"
                             onClick={() => {
-                              handelactive(data.website_id);
+                              handelinactive(data.websiteId);
                             }}
                           >
                             Active
@@ -472,9 +476,9 @@ const WebsiteDetails = () => {
                           <span
                             type="button"
                             className="badge-pill badge-secondary  btn-zoom-out-custom "
-                            title="Inactive"
+                            title="Click To Active"
                             onClick={() => {
-                              handelinactive(data.website_id);
+                              handelactive(data.websiteId);
                             }}
                           >
                             Inactive

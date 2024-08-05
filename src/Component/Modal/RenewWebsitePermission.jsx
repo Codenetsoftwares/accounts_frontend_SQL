@@ -26,8 +26,8 @@ const RenewWebsitePermission = ({ SubAdmins, ID }) => {
   useEffect(() => {
     if (auth.user) {
       TransactionSercvice.subAdminList(auth.user).then((res) => {
-        setSubAdmin(res.data);
-        setSubAdminlist(res.data.map((data) => data.userName));
+        setSubAdmin(res.data.data);
+        setSubAdminlist(res.data.data.map((data) => data.userName));
       });
     }
   }, [auth]);

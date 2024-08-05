@@ -34,7 +34,7 @@ const AdminBank = () => {
   const navigate = useNavigate();
   const auth = useAuth();
   const [bankName, setBankName] = useState("");
-  const [getbankName, setGetBankName] = useState([{}]);
+  const [getbankName, setGetBankName] = useState([]);
   const [Id, setId] = useState();
   const [SId, setSId] = useState();
   const [IdWithdraw, setIdWithdraw] = useState();
@@ -56,6 +56,7 @@ const AdminBank = () => {
     setActiveCard(id);
     setTimeout(() => setActiveCard(null), 300); // Reset the animation class after animation duration
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -90,7 +91,11 @@ const AdminBank = () => {
 
   const handleSearch = (event) => {
     setSearch(event.target.value);
+    if (!event.target.value) {
+      setGetBankName([]);
+    }
   };
+
   const handlebankname = (event) => {
     setBankName(event.target.value);
   };
@@ -116,14 +121,14 @@ const AdminBank = () => {
       AccountService.deletebank({ requestId: id }, auth.user)
         .then((res) => {
           // console.log(response.data);
-          if (res.status === 200) {
+          if (res.successCode === 201) {
             alert(res.data.message);
             // alert("Bank Deleted approval sent!");
             window.location.reload();
           }
         })
         .catch((error) => {
-          alert(error.response.data.message);
+          alert(error.response.data.errMessage);
           console.log(error);
           // toast.error(error);
           // alert.error("e.message");
@@ -196,7 +201,7 @@ const AdminBank = () => {
 
   useEffect(() => {
     fetchData();
-  }, [page, search]);
+  }, [search]);
 
   // for search input field handled from frontend   to be done by serverside
   const fetchMoreData = () => {
@@ -210,6 +215,10 @@ const AdminBank = () => {
       fetchData(); // Fetch more data when page changes
     }
   }, [page]);
+
+  console.log("SubAdmins", SubAdmins);
+
+  console.log("getbankName", getbankName);
   return (
     <div className="bg-white">
       <div
@@ -286,14 +295,14 @@ const AdminBank = () => {
               <GridCard columns={2}>
                 {getbankName.map((data) => (
                   <div
-                    key={data.bank_id}
+                    key={data.bankId}
                     className="col d-flex justify-content-center align-items-center "
-                    onMouseEnter={() => setHoveredCard(data.bank_id)}
+                    onMouseEnter={() => setHoveredCard(data.bankId)}
                     onMouseLeave={() => setHoveredCard(null)}
                   >
                     <div
                       className={`card d-flex justify-content-between ${
-                        hoveredCard === data.bank_id ? "card-hover-shadow" : ""
+                        hoveredCard === data.bankId ? "card-hover-shadow" : ""
                       }`}
                       style={{
                         borderRadius: "20px",
@@ -301,7 +310,7 @@ const AdminBank = () => {
                         width: "100%",
                         position: "relative",
                       }}
-                      onClick={() => handleCardClick(data.bank_id)}
+                      onClick={() => handleCardClick(data.bankId)}
                     >
                       <div className="card-body">
                         <p
@@ -323,7 +332,7 @@ const AdminBank = () => {
                                 data-bs-toggle="modal"
                                 data-bs-target="#modalWthbl"
                                 onClick={() => {
-                                  handelId(data.bank_id);
+                                  handelId(data.bankId);
                                 }}
                                 disabled={!data.isWithdraw}
                                 title="Withdraw"
@@ -341,7 +350,7 @@ const AdminBank = () => {
                                 data-bs-toggle="modal"
                                 data-bs-target="#modalAdbl"
                                 onClick={() => {
-                                  handelId(data.bank_id);
+                                  handelId(data.bankId);
                                 }}
                                 disabled={!data.isDeposit}
                                 title="Deposit"
@@ -357,7 +366,7 @@ const AdminBank = () => {
                                 type="button"
                                 className="btn btn-steel-blue btn-sm btn-hover-zoom"
                                 onClick={(e) => {
-                                  handelstatement(e, data.bank_id);
+                                  handelstatement(e, data.bankId);
                                 }}
                                 title="Statement"
                               >
@@ -373,7 +382,7 @@ const AdminBank = () => {
                                 type="button"
                                 className="btn btn-steel-blue btn-sm btn-hover-zoom"
                                 onClick={(e) => {
-                                  handelEditbank(e, data.bank_id);
+                                  handelEditbank(e, data.bankId);
                                 }}
                                 title="Edit Bank"
                                 data-toggle="modal"
@@ -392,7 +401,7 @@ const AdminBank = () => {
                                 type="button"
                                 className="btn btn-steel-blue btn-sm btn-hover-zoom"
                                 onClick={(e) => {
-                                  handleDeleteBank(e, data.bank_id);
+                                  handleDeleteBank(e, data.bankId);
                                 }}
                                 title="Delete"
                                 disabled={!data.isDelete}
@@ -411,7 +420,7 @@ const AdminBank = () => {
                                 data-toggle="modal"
                                 data-target="#RenewBankPermission"
                                 onClick={() => {
-                                  handelSubAdmin(data.subAdmins, data.bank_id);
+                                  handelSubAdmin(data.subAdmins, data.bankId);
                                 }}
                                 title="Renew Permission"
                                 disabled={!data.isRenew}
@@ -427,13 +436,13 @@ const AdminBank = () => {
                       </div>
 
                       <div className="card-position-top-right">
-                        {data.isActive === 0 ? (
+                        {data.isActive === true ? (
                           <span
                             type="button"
                             className="badge-pill badge-success   btn-hover-scale   "
-                            title="Active"
+                            title="Click To Inactive"
                             onClick={() => {
-                              handelactive(data.bank_id);
+                              handelinactive(data.bankId);
                             }}
                           >
                             Active
@@ -447,9 +456,9 @@ const AdminBank = () => {
                           <span
                             type="button"
                             className="badge-pill badge-secondary  btn-hover-scale"
-                            title="Inactive"
+                            title="Click To Active"
                             onClick={() => {
-                              handelinactive(data.bank_id);
+                              handelactive(data.bankId);
                             }}
                           >
                             Inactive
@@ -472,7 +481,7 @@ const AdminBank = () => {
         <ModalAddBl ID={Id} />
         <ModalWthBl ID={Id} />
         <InnerBank />
-        <SubAdminBank ID={Id} />
+        {/* <SubAdminBank ID={Id} /> */}
         <RenewBankPermission SubAdmins={SubAdmins} ID={SId} />
       </div>
     </div>

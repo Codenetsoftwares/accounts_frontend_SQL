@@ -26,8 +26,8 @@ const RenewBankPermission = ({ SubAdmins, ID }) => {
   useEffect(() => {
     if (auth.user) {
       TransactionSercvice.subAdminList(auth.user).then((res) => {
-        setSubAdmin(res.data);
-        setSubAdminlist(res.data.map((data) => data.userName));
+        setSubAdmin(res.data.data);
+        setSubAdminlist(res.data.data.map((data) => data.userName));
       });
     }
   }, [auth]);
@@ -282,7 +282,7 @@ const RenewBankPermission = ({ SubAdmins, ID }) => {
                   columns={1}
                   style={{ margin: "1rem", borderRadius: "8px" }}
                 >
-                  {subAdmin.map((admin, index) => (
+                  {subAdmin?.map((admin, index) => (
                     <SingleCard
                       key={index}
                       className="p-4 mb-4 shadow-sm  "

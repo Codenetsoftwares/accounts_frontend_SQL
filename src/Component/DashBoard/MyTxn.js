@@ -111,9 +111,9 @@ const MyTxn = () => {
     }
   }, [auth]);
 
-  useEffect(() => {
-    AccountService.website(auth.user).then((res) => setWebsiteList(res.data));
-  }, [auth]);
+  // useEffect(() => {
+  //   AccountService.website(auth.user).then((res) => setWebsiteList(res.data));
+  // }, [auth]);
 
   useEffect(() => {
     AccountService.introducerId(auth.user).then((res) =>
@@ -1200,7 +1200,7 @@ const MyTxn = () => {
         </div>
       )}
 
-      <EditTransaction id={dataId} />
+      {/* <EditTransaction id={dataId} /> */}
     </>
   );
 };

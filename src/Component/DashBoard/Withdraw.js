@@ -39,16 +39,16 @@ const Withdraw = () => {
 
   useEffect(() => {
     AccountService.getActiveBank(auth.user).then((res) => {
-      setBankOptions(res.data);
-      setFilteredBankOptions(res.data);
+      setBankOptions(res.data.data);
+      setFilteredBankOptions(res.data.data);
     });
     AccountService.getActiveWebsite(auth.user).then((res) => {
-      setWebsiteOptions(res.data);
-      setFilteredWebsiteOptions(res.data);
+      setWebsiteOptions(res.data.data);
+      setFilteredWebsiteOptions(res.data.data);
     });
     AccountService.userId(auth.user).then((res) => {
-      setAllUserNameOptions(res.data);
-      setFilteredUserNameOptions(res.data);
+      setAllUserNameOptions(res.data.data);
+      setFilteredUserNameOptions(res.data.data);
     });
   }, [auth]);
 
@@ -56,7 +56,7 @@ const Withdraw = () => {
     debounce((value) => {
       if (value) {
         const filteredItems = allUserNameOptions.filter((item) =>
-          item.userName.toLowerCase().includes(value.toLowerCase())
+          item.toLowerCase().includes(value.toLowerCase())
         );
         setFilteredUserNameOptions(filteredItems);
         setIsDropdownVisible(true);
@@ -119,7 +119,7 @@ const Withdraw = () => {
   };
 
   const handleOptionClick = (option, setFieldValue) => {
-    setFieldValue("userName", option.userName);
+    setFieldValue("userName", option);
     setIsDropdownVisible(false);
     setActiveIndex(-1);
   };
@@ -141,7 +141,7 @@ const Withdraw = () => {
         .catch((error) => {
           setIsLoading(false);
           console.error(error);
-          alert(error.response.data.message);
+          alert(error.response.data.errMessage);
         });
     }
   };
@@ -220,7 +220,7 @@ const Withdraw = () => {
                                   activeIndex === index ? "#f0f0f0" : "white",
                               }}
                             >
-                              {option.userName}
+                              {option}
                             </li>
                           ))
                         ) : (
