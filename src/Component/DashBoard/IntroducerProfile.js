@@ -33,7 +33,6 @@ import IntroducerProfileView from "../Modal/IntroducerProfileView";
 import { Oval } from "react-loader-spinner"; // Import the Oval spinner
 import InfiniteScroll from "react-infinite-scroll-component";
 
-
 const IntroducerProfile = ({ data }) => {
   const auth = useAuth();
   const [users, setUsers] = useState([]);
@@ -68,7 +67,6 @@ const IntroducerProfile = ({ data }) => {
   };
   const fetchData = async (searchTerm = search, newPage = page) => {
     try {
-
       const res = await AccountService.Introducerprofile(
         newPage,
         searchTerm,
@@ -123,7 +121,6 @@ const IntroducerProfile = ({ data }) => {
     }
   }, [page, search]);
 
-
   const handleCardClick = (id) => {
     setActiveCard(id);
     setTimeout(() => setActiveCard(null), 300); // Reset the animation class after animation duration
@@ -176,23 +173,25 @@ const IntroducerProfile = ({ data }) => {
               style={{ overflowX: "hidden" }}
               dataLength={users.length}
               next={fetchMoreData}
-  loader={
-        // Center the spinner
-        <div className="d-flex justify-content-center align-items-center" style={{ height: "80vh" }}>
-          <Oval
-            height={50}
-            width={50}
-            color="#4fa94d"
-            visible={true}
-            ariaLabel="oval-loading"
-            secondaryColor="#4fa94d"
-            strokeWidth={2}
-            strokeWidthSecondary={2}
-          />
-        </div>
-      }
+              loader={
+                // Center the spinner
+                <div
+                  className="d-flex justify-content-center align-items-center"
+                  style={{ height: "80vh" }}
+                >
+                  <Oval
+                    height={50}
+                    width={50}
+                    color="#4fa94d"
+                    visible={true}
+                    ariaLabel="oval-loading"
+                    secondaryColor="#4fa94d"
+                    strokeWidth={2}
+                    strokeWidthSecondary={2}
+                  />
+                </div>
+              }
               hasMore={hasMore}
-            
               height={600}
               endMessage={
                 <p style={{ textAlign: "center" }}>
@@ -253,7 +252,7 @@ const IntroducerProfile = ({ data }) => {
                         {/* <IntroducerPayment id={user.introId} /> */}
                         {/* </div> */}
                         <div className="container">
-                          <div className="row g-1 justify-content-center mt-5">
+                          <div className="row g-1 justify-content-center mt-3">
                             <div className="col-6 col-sm-4 col-md-3 col-lg-2">
                               <button
                                 type="button"
@@ -369,7 +368,7 @@ const IntroducerProfile = ({ data }) => {
             </InfiniteScroll>
           </SingleCard>
         </div>
-        {ID && <LiveBalanceIntroducer ID={ID} />}
+        {ID && !!ID.length && <LiveBalanceIntroducer ID={ID} />}
         <IntroducerTransaction
           TxType={txType}
           IntroducerName={introducerName}
@@ -379,7 +378,6 @@ const IntroducerProfile = ({ data }) => {
         {profileView && <IntroducerProfileView data={profileView} />}
       </div>
     </div>
-
   );
 };
 

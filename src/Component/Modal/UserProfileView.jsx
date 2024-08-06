@@ -18,7 +18,7 @@ const UserProfileView = ({ user }) => {
           <div className="modal-content" style={{ backgroundColor: "#4682b4" }}>
             <div className="modal-header">
               <h5 className="modal-title text-white" id="exampleModalp">
-                USER PROFILE
+                Profile
               </h5>
               <button
                 type="button"
@@ -65,7 +65,7 @@ const UserProfileView = ({ user }) => {
                     // height:"25px"
                   }}
                 >
-                  <SingleCard >
+                  <SingleCard>
                     <h5 className="text-dark">{user.userName} Details</h5>
                     <div className="row">
                       <div class="col-sm-3 text-truncate">
@@ -128,7 +128,9 @@ const UserProfileView = ({ user }) => {
                         <p class="mb-0">Level 1 Percentage:</p>
                       </div>
                       <div class="col-sm-9">
-                        <p class="text-muted mb-0">{user?.introducerPercentage}%</p>
+                        <p class="text-muted mb-0">
+                          {user?.introducerPercentage}%
+                        </p>
                       </div>
                     </div>
 
@@ -152,7 +154,9 @@ const UserProfileView = ({ user }) => {
                         <p class="mb-0">Level 2 Percentage:</p>
                       </div>
                       <div class="col-sm-9">
-                        <p class="text-muted mb-0">{user?.introducerPercentage1}%</p>
+                        <p class="text-muted mb-0">
+                          {user?.introducerPercentage1}%
+                        </p>
                       </div>
                     </div>
 
@@ -176,7 +180,9 @@ const UserProfileView = ({ user }) => {
                         <p class="mb-0">Level 3 Percentage:</p>
                       </div>
                       <div class="col-sm-9">
-                        <p class="text-muted mb-0">{user?.introducerPercentage2}%</p>
+                        <p class="text-muted mb-0">
+                          {user?.introducerPercentage2}%
+                        </p>
                       </div>{" "}
                     </div>
                   </SingleCard>

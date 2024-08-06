@@ -1,6 +1,5 @@
 import React from "react";
-import SingleCard from "../../common/SingleCard";
-
+import SingleCard from "../../common/singleCard";
 
 const SubAdminProfileView = ({ data }) => {
   console.log("=====>>> sp", data);

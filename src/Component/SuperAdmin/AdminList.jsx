@@ -1,26 +1,24 @@
 import React, { useCallback, useEffect, useState } from "react";
 import AccountService from "../../Services/AccountService";
-import { useNavigate,Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../Utils/Auth";
 import Pagination from "../Pagination";
 import { debounce } from "lodash";
 import InfiniteScroll from "react-infinite-scroll-component";
-
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import SubAdminProfileView from "../Modal/SubAdminProfileView";
 
 import { Oval } from "react-loader-spinner";
-import SingleCard from "../../common/SingleCard";
-import GridCard from "../../common/GridCard";
+// import SingleCard from "../../common/SingleCard";
+// import GridCard from "../../common/GridCard";
 import "./AdminList.css";
-
-
+import SingleCard from "../../common/singleCard";
+import GridCard from "../../common/gridCard";
 
 const AdminList = () => {
-
-   const navigate = useNavigate();
+  const navigate = useNavigate();
   const [adminList, setAdminList] = useState([]);
   const [Erorr, setErorr] = useState(false);
   const [erorrData, setErorrData] = useState("");
@@ -36,8 +34,7 @@ const AdminList = () => {
   const [activeCard, setActiveCard] = useState(null);
   const [profileView, setProfileView] = useState("");
 
-
-  console.log('=====>>> sub list',adminList)
+  console.log("=====>>> sub list", adminList);
 
   const handleSearch = (event) => {
     setSearch(event.target.value);
@@ -59,7 +56,7 @@ const AdminList = () => {
         searchTerm,
         auth.user
       );
-      console.log('======>>>>> response',res.data.data)
+      console.log("======>>>>> response", res.data.data);
       const filteredData = res.data.data.filter((item) => item !== null);
       setAdminList((prevUsers) =>
         searchTerm.length > 0 ? filteredData : [...prevUsers, ...filteredData]
@@ -135,7 +132,7 @@ const AdminList = () => {
   const handleProfileView = (id) => {
     // console.log(d);
     const selectedUser = adminList.find((user) => user.adminId === id);
-    console.log('selected user',selectedUser )
+    console.log("selected user", selectedUser);
     setProfileView(selectedUser);
   };
 
@@ -144,7 +141,6 @@ const AdminList = () => {
   };
 
   return (
-
     <div className="bg-white">
       <div
         className="card text-center mt-2 mr-5 ml-5"
@@ -179,25 +175,25 @@ const AdminList = () => {
               dataLength={adminList.length}
               next={fetchMoreData}
               hasMore={hasMore}
-             loader={
-            <div
-              className="d-flex justify-content-center align-items-center"
-              style={{ height: "80vh" }}
-            >
-              <Oval
-                height={40}
-                width={40}
-                color="#4fa94d"
-                wrapperStyle={{}}
-                wrapperClass=""
-                visible={true}
-                ariaLabel="oval-loading"
-                secondaryColor="#4fa94d"
-                strokeWidth={2}
-                strokeWidthSecondary={2}
-              />
-            </div>
-          }
+              loader={
+                <div
+                  className="d-flex justify-content-center align-items-center"
+                  style={{ height: "80vh" }}
+                >
+                  <Oval
+                    height={40}
+                    width={40}
+                    color="#4fa94d"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    visible={true}
+                    ariaLabel="oval-loading"
+                    secondaryColor="#4fa94d"
+                    strokeWidth={2}
+                    strokeWidthSecondary={2}
+                  />
+                </div>
+              }
               height={600}
               endMessage={
                 <p style={{ textAlign: "center" }}>
@@ -245,18 +241,19 @@ const AdminList = () => {
                         </p>
                         <div className="container">
                           <div>
-                       
-                              <button
-                                type="button"
-                                className="btn btn-steel-blue btn-sm btn-hover-zoom font-weight-bold "
-                                style={{ fontFamily: "'Abril Fatface', serif ", textDecoration: "underline",}}
-                                onClick={(e) => {
-                                  handelDetails(e, data.adminId);
-                                }}
-                              >
-                                Click Here For More Details
-                              </button>
-                          
+                            <button
+                              type="button"
+                              className="btn btn-steel-blue btn-sm btn-hover-zoom font-weight-bold "
+                              style={{
+                                fontFamily: "'Abril Fatface', serif ",
+                                textDecoration: "underline",
+                              }}
+                              onClick={(e) => {
+                                handelDetails(e, data.adminId);
+                              }}
+                            >
+                              Click Here For More Details
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -268,9 +265,8 @@ const AdminList = () => {
           </SingleCard>
         </div>
       </div>
-      <SubAdminProfileView data={profileView}/>
+      <SubAdminProfileView data={profileView} />
     </div>
-
   );
 };
 export default AdminList;
