@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
@@ -10,17 +10,24 @@ import Pagination from './Pagination';
 import SingleCard from "../common/singleCard";
 
 
-const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage, totalData, lastPage, reminder, selectPageHandler, lastPageReminder }) => {
-  console.log('totalData', totalData)
+const TableMainTransaction = ({
+  FilterData,
+  purpose,
+  page,
+  handlePage,
+  totalPage,
+  totalData,
+}) => {
+  console.log("totalData", totalData);
   const auth = useAuth();
 
   const [id, setId] = useState("");
   const [pge, setPge] = useState(1);
 
   const handleId = (e, id) => {
-    e.preventDefault()
-    setId(id)
-  }
+    e.preventDefault();
+    setId(id);
+  };
 
   const handleDelete = (e, id, transactionType) => {
     e.preventDefault();
@@ -34,7 +41,7 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage, to
             toast.success("Transaction delete request sent to Super Admin");
           })
           .catch((err) => {
-            toast.error(err.response.data?.message)
+            toast.error(err.response.data?.message);
           });
         break;
 
@@ -46,7 +53,7 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage, to
             toast.success("Transaction delete request sent to Super Admin");
           })
           .catch((err) => {
-            toast.error(err.response.data?.message)
+            toast.error(err.response.data?.message);
           });
         break;
 
@@ -60,7 +67,7 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage, to
             );
           })
           .catch((err) => {
-            toast.error(err.response.data?.message)
+            toast.error(err.response.data?.message);
           });
         break;
 
@@ -74,7 +81,7 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage, to
             );
           })
           .catch((err) => {
-            toast.error(err.response.data?.message)
+            toast.error(err.response.data?.message);
           });
         break;
 
@@ -87,7 +94,7 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage, to
             );
           })
           .catch((err) => {
-            toast.error(err.response.data?.message)
+            toast.error(err.response.data?.message);
           });
         break;
 
@@ -100,14 +107,14 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage, to
             );
           })
           .catch((err) => {
-            toast.error(err.response.data?.message)
+            toast.error(err.response.data?.message);
           });
         break;
 
       default:
     }
   };
-  console.log(FilterData)
+  console.log(FilterData);
   return (
     <SingleCard className="card card-body rounded-8px">
       <SingleCard className="container-fluid w-90">
@@ -342,6 +349,7 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage, to
                             )}
                           </td>
                           <td>
+
                             <p className="col fs-6">
                               {data?.bankName ? data?.bankName : "N.A"}
                             </p>
@@ -408,9 +416,9 @@ const TableTransaction = ({ FilterData, purpose, page, handlePage, totalPage, to
           perPagePagination={10}
         />
       ) : null}
-      
+
     </SingleCard>
   );
 };
 
-export default TableTransaction;
+export default TableMainTransaction;
