@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import FilterTransaction from '../../Component/FilterTransaction';
-import TableTransaction from '../../Component/TableTransaction';
 import TransactionSercvice from '../../Services/TransactionSercvice';
 import TableMainTransaction from '../../Component/TableMainTransaction';
 import FilterMainTransaction from '../../Component/FilterMainTransaction';
