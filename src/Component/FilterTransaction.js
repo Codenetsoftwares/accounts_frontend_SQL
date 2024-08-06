@@ -37,6 +37,18 @@ const FilterTransaction = ({
   const [documentView, setDocumentView] = useState([]);
   const [minAmount, setMinAmount] = useState(0);
   const [maxAmount, setMaxAmount] = useState(0);
+  const [filteredBankOptions, setFilteredBankOptions] = useState([]);
+  const [filteredWebsiteOptions, setFilteredWebsiteOptions] = useState([]);
+  const [filteredSubAdminOptions, setFilteredSubAdminOptions] = useState([]);
+  const [filteredIntroducerOptions, setFilteredIntroducerOptions] = useState([]);
+  const [activeBankIndex, setActiveBankIndex] = useState(-1);
+  const [activeWebsiteIndex, setActiveWebsiteIndex] = useState(-1);
+  const [activeSubAdminIndex, setActiveSubAdminIndex] = useState(-1);
+  const [activeIntroducerIndex, setActiveIntroducerIndex] = useState(-1);
+  const [isBankDropdownVisible, setIsBankDropdownVisible] = useState(false);
+  const [isWebsiteDropdownVisible, setIsWebsiteDropdownVisible] = useState(false);
+  const [isSubAdminDropdownVisible, setIsSubAdminDropdownVisible] = useState(false);
+  const [isIntroducerDropdownVisible, setIsIntroducerDropdownVisible] = useState(false);
 
   const handleFilter = () => {
     api(auth.user, id)
@@ -92,18 +104,111 @@ const FilterTransaction = ({
 
   useEffect(() => {
     if (auth.user) {
-      TransactionSercvice.subAdminList(auth.user, id).then((res) => {
-        setSubAdminlist(res.data.data);
-      });
-      TransactionSercvice.bankList(auth.user).then((res) => {
-        setBankList(res.data.data);
-      });
-      AccountService.website(auth.user).then((res) => setWebsiteList(res.data.data));
-      AccountService.introducerId(auth.user).then((res) =>
-        setIntroducerList(res.data.data)
-      );
+      // Create an array of promises for the API calls
+      const promises = [
+        TransactionSercvice.subAdminList(auth.user),
+        TransactionSercvice.bankList(auth.user),
+        AccountService.website(auth.user),
+        AccountService.introducerId(auth.user),
+      ];
+
+      // Use Promise.all to handle all promises concurrently
+      Promise.all(promises)
+        .then(([subAdminRes, bankRes, websiteRes, introducerRes]) => {
+          // Handle the response for each API call
+          setSubAdminlist(subAdminRes.data.data);
+          setFilteredSubAdminOptions(subAdminRes.data.data);
+
+          setBankList(bankRes.data.data);
+          setFilteredBankOptions(bankRes.data.data);
+
+          setWebsiteList(websiteRes.data.data);
+          setFilteredWebsiteOptions(websiteRes.data.data);
+
+          setIntroducerList(introducerRes.data.data);
+          setFilteredIntroducerOptions(introducerRes.data.data);
+        })
+        .catch((error) => {
+          // Handle any errors that occur during the API calls
+          console.error("An error occurred while fetching data:", error);
+        });
     }
   }, [auth]);
+
+  const handleSearchBank = useCallback(
+    debounce((value) => {
+      if (value) {
+        const filteredItems = bankOptions.filter((item) =>
+          item.bankName.toLowerCase().includes(value.toLowerCase())
+        );
+        setFilteredBankOptions(filteredItems);
+        setIsBankDropdownVisible(true);
+      } else {
+        setFilteredBankOptions([]);
+        setIsBankDropdownVisible(false);
+      }
+    }, 1300),
+    [bankOptions]
+  );
+
+  const handleSearchWebsite = useCallback(
+    debounce((value) => {
+      if (value) {
+        const filteredItems = websiteOptions.filter((item) =>
+          item.websiteName.toLowerCase().includes(value.toLowerCase())
+        );
+        setFilteredWebsiteOptions(filteredItems);
+        setIsWebsiteDropdownVisible(true);
+      } else {
+        setFilteredWebsiteOptions([]);
+        setIsWebsiteDropdownVisible(false);
+      }
+    }, 1300),
+    [websiteOptions]
+  );
+
+  const handleBankKeyDown = (e, setFieldValue) => {
+    if (e.key === "ArrowDown") {
+      setActiveBankIndex((prevIndex) =>
+        (prevIndex + 1) % filteredBankOptions.length
+      );
+    } else if (e.key === "ArrowUp") {
+      setActiveBankIndex(
+        (prevIndex) =>
+          (prevIndex - 1 + filteredBankOptions.length) %
+          filteredBankOptions.length
+      );
+    } else if ((e.key === "Enter" || e.key === "Tab") && activeBankIndex >= 0) {
+      setFieldValue("bankName", filteredBankOptions[activeBankIndex].bankName);
+      setIsBankDropdownVisible(false);
+      setActiveBankIndex(-1);
+    }
+  };
+
+  const handleWebsiteKeyDown = (e, setFieldValue) => {
+    if (e.key === "ArrowDown") {
+      setActiveWebsiteIndex((prevIndex) =>
+        (prevIndex + 1) % filteredWebsiteOptions.length
+      );
+    } else if (e.key === "ArrowUp") {
+      setActiveWebsiteIndex(
+        (prevIndex) =>
+          (prevIndex - 1 + filteredWebsiteOptions.length) %
+          filteredWebsiteOptions.length
+      );
+    } else if (
+      (e.key === "Enter" || e.key === "Tab") &&
+      activeWebsiteIndex >= 0
+    ) {
+      setFieldValue(
+        "websiteName",
+        filteredWebsiteOptions[activeWebsiteIndex].websiteName
+      );
+      setIsWebsiteDropdownVisible(false);
+      setActiveWebsiteIndex(-1);
+    }
+  };
+
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -378,55 +483,55 @@ const FilterTransaction = ({
         {/* when props pass introducerTransactionStatement & userTransactionStatement from parent component*/}
         {purpose ===
           ("introducerTransactionStatement" || "userTransactionStatement") && (
-          <>
-            <div className="d-flex col pt-3 justify-content-center">
-              <h6 className="fw-bold text-nowrap pt-2"> BankNameList</h6>
-              <select
-                className="form-control mx-3 w-50"
-                value={bank || ""}
-                autoComplete="off"
-                onChange={handleBank}
-                style={{
-                  border: "0.5px solid black",
-                  borderRadius: "6px",
-                }}
-                required
-              >
-                <option selected>Select Bank</option>
-                {bankList.map((data) => {
-                  return (
-                    <option key={data._id} value={data.bankName}>
-                      {data.bankName}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-            <div className="d-flex col pt-3 justify-content-center">
-              <h6 className="fw-bold text-nowrap pt-2"> WebsitesList</h6>
-              <select
-                className="form-control mx-3 w-50"
-                value={website || ""}
-                autoComplete="off"
-                onChange={handleWebsite}
-                style={{
-                  border: "0.5px solid black",
-                  borderRadius: "6px",
-                }}
-                required
-              >
-                <option selected>Select website</option>
-                {websiteList.map((data) => {
-                  return (
-                    <option key={data._id} value={data.websiteName}>
-                      {data.websiteName}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-          </>
-        )}
+            <>
+              <div className="d-flex col pt-3 justify-content-center">
+                <h6 className="fw-bold text-nowrap pt-2"> BankNameList</h6>
+                <select
+                  className="form-control mx-3 w-50"
+                  value={bank || ""}
+                  autoComplete="off"
+                  onChange={handleBank}
+                  style={{
+                    border: "0.5px solid black",
+                    borderRadius: "6px",
+                  }}
+                  required
+                >
+                  <option selected>Select Bank</option>
+                  {bankList.map((data) => {
+                    return (
+                      <option key={data._id} value={data.bankName}>
+                        {data.bankName}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+              <div className="d-flex col pt-3 justify-content-center">
+                <h6 className="fw-bold text-nowrap pt-2"> WebsitesList</h6>
+                <select
+                  className="form-control mx-3 w-50"
+                  value={website || ""}
+                  autoComplete="off"
+                  onChange={handleWebsite}
+                  style={{
+                    border: "0.5px solid black",
+                    borderRadius: "6px",
+                  }}
+                  required
+                >
+                  <option selected>Select website</option>
+                  {websiteList.map((data) => {
+                    return (
+                      <option key={data._id} value={data.websiteName}>
+                        {data.websiteName}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+            </>
+          )}
         {/* when props pass introducerTransactionStatement & userTransactionStatement from parent component*/}
 
         <div className="d-flex col pt-3 justify-content-center">
