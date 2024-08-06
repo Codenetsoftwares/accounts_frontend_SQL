@@ -13,8 +13,9 @@ const AdminEditrole = () => {
   const navigate = useNavigate();
   const [checkedItems, setCheckedItems] = useState([]);
   const [displayEdit, setDisplayEdit] = useState(false);
-  const [adminData, setAdminData] = useState({});
+  const [adminData, setAdminData] = useState([]);
   const [username, setUsername] = useState([]);
+  console.log('====>>> admin data',adminData)
 
   const setData = () => {
     setCheckedItems(adminData.roles);
@@ -37,7 +38,7 @@ const AdminEditrole = () => {
   useEffect(() => {
     AccountService.getSingleAdmin(id, auth.user).then((res) => {
       console.log(res.data);
-      setAdminData(res.data[0]);
+      setAdminData(res.data.data);
     });
   }, []);
   console.log("Data =>>>>", adminData);
@@ -67,7 +68,7 @@ const AdminEditrole = () => {
     setData();
   };
   const rolesArray = adminData.roles || [];
-  console.log("first", adminData);
+  console.log("line 71first", rolesArray);
   return (
     <>
       {displayEdit === false ? (
@@ -77,14 +78,14 @@ const AdminEditrole = () => {
             <div className="card-body">
               <h5 className="card-title">Name</h5>
               <p className="card-text">
-                {adminData.firstname} {adminData.lastname}
+                {adminData.firstName} {adminData?.lastName}
               </p>
               <h5 className="card-title">User Name</h5>
-              <p className="card-text">{adminData.userName}</p>
+              <p className="card-text">{adminData?.userName}</p>
               <h5 className="card-title">Current Permissions</h5>
               {rolesArray.length > 0 ? (
                 <ul className="card-text">
-                  {rolesArray.map((role, index) => (
+                  {rolesArray?.map((role, index) => (
                     <li key={index}>{role}</li>
                   ))}
                 </ul>
@@ -116,7 +117,7 @@ const AdminEditrole = () => {
               </button>
 
               <Link
-                to={`/editsubadmin/${adminData.admin_id}`}
+                to={`/editsubadmin/${adminData?.adminId}`}
                 style={{ cursor: "pointer" }}
               >
                 <button type="button" class="btn btn-warning ml-2">
@@ -133,7 +134,7 @@ const AdminEditrole = () => {
                 aria-expanded="false"
                 aria-controls="collapseExample"
                 onClick={(e) => {
-                  handleResetPassword(e, adminData.userName);
+                  handleResetPassword(e, adminData?.userName);
                 }}
               >
                 Reset password
@@ -360,8 +361,8 @@ const AdminEditrole = () => {
           </form>
         </div>
       )}
-      <AssignedBank ID={adminData.userName} />
-      <AssignedWebsite ID={adminData.userName} />
+      <AssignedBank ID={adminData?.userName} />
+      <AssignedWebsite ID={adminData?.userName} />
     </>
   );
 };

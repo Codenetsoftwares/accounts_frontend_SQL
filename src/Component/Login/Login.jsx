@@ -38,14 +38,13 @@ const Login = () => {
         if (res.status === 200) {
           sessionStorage.setItem("user", res.data.data.accessToken);
           sessionStorage.setItem("role", res.data.data.roles);
-          console.log("===>", auth);
           console.log("admin");
           toast.success("Login Successfully");
           auth.login();
           navigate("/welcome");
           window.location.reload();
         } else {
-          toast.error(res.data.message);
+          toast.error(res.data.data.message);
           navigate("/");
         }
       })
