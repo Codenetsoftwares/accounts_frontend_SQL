@@ -9,12 +9,12 @@ const MainTransactionPage = () => {
   const [totalPage, setTotalPage] = useState(1)
   const [totalData, setTotalData] = useState(0)
   console.log(totalData)
-  const handleData = (data, totalPage) => {
-    // if (data !== undefined) {
-    setDocumentFilter(data);
-    // }
-    setTotalPage(totalPage);
-  }
+  // const handleData = (data, totalPage) => {
+  //   // if (data !== undefined) {
+  //   setDocumentFilter(data);
+  //   // }
+  //   setTotalPage(totalPage);
+  // }
 
   const handlePage = (page) => {
     setPage(page);
@@ -24,9 +24,9 @@ const MainTransactionPage = () => {
     setTotalData(data);
   }
 
-  let reminder = documentFilter.length % 10;
-  let lastPage = Math.ceil(documentFilter.length / 10);
-  let lastPageReminder = documentFilter.length % 10 === !0
+  // let reminder = documentFilter.length % 10;
+  // let lastPage = Math.ceil(documentFilter.length / 10);
+  // let lastPageReminder = documentFilter.length % 10 === !0
 
   const selectPageHandler = (selectedPage) => {
     console.log(selectedPage);
@@ -39,11 +39,14 @@ const MainTransactionPage = () => {
     <div className="container-fluid" style={{ backgroundColor: "#fff4ec" }}>
       <FilterMainTransaction
         purpose={"mainStatement"}
-        handleData={handleData}
+        // handleData={handleData}
+        setTotalPage={setTotalPage}
         page={page}
+        setPage={setPage}
         handlePage={handlePage}
         handleTotalData={handleTotalData}
         api={TransactionSercvice.filterTransaction}
+        setDocumentFilter={setDocumentFilter}
       />
       <div className="d-flex justify-content-center">
         <TableMainTransaction
@@ -53,10 +56,7 @@ const MainTransactionPage = () => {
           page={page}
           totalPage={totalPage}
           totalData={totalData}
-          reminder={reminder}
-          lastPage={lastPage}
           selectPageHandler={selectPageHandler}
-          lastPageReminder={lastPageReminder}
         />
       </div>
     </div>

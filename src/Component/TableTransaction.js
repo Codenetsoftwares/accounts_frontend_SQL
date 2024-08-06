@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
-import { useAuth } from "../Utils/Auth";
-import AccountService from "../Services/AccountService";
-import { toast } from "react-toastify";
-import EditTransaction from "./Modal/EditTransaction";
-import Pagination from "./Pagination";
+import { useAuth } from '../Utils/Auth';
+import AccountService from '../Services/AccountService';
+import { toast } from 'react-toastify';
+import EditTransaction from './Modal/EditTransaction';
+import Pagination from './Pagination';
 import SingleCard from "../common/singleCard";
+
 
 const TableMainTransaction = ({
   FilterData,
@@ -348,6 +349,7 @@ const TableMainTransaction = ({
                             )}
                           </td>
                           <td>
+
                             <p className="col fs-6">
                               {data?.bankName ? data?.bankName : "N.A"}
                             </p>
@@ -414,7 +416,7 @@ const TableMainTransaction = ({
           perPagePagination={10}
         />
       ) : null}
-      {/* <EditTransaction id={id} /> */}
+
     </SingleCard>
   );
 };

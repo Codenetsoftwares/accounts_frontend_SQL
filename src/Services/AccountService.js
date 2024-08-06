@@ -117,7 +117,8 @@ class AccountService {
   website(user, page, search) {
     return axios({
       method: "get",
-      url: `${API_HOST}/api/get-website-name?page=${page}&pageSize=10&search=${search}`,
+      url: `${API_HOST}/api/admin/website-name`,
+
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
