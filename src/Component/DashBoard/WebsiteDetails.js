@@ -142,7 +142,11 @@ const WebsiteDetails = () => {
   const fetchData = async () => {
     try {
       setIsLoading(true);
-      const res = await AccountService.website(auth.user, page, search);
+      const res = await AccountService.getWebsiteDetails(
+        auth.user,
+        page,
+        search
+      );
       setGetWebsite(
         search.length > 0
           ? res.data.data

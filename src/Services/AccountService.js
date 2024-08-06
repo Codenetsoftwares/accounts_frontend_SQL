@@ -125,6 +125,16 @@ class AccountService {
     });
   }
 
+  getWebsiteDetails(user, page, search) {
+    return axios({
+      method: "get",
+      url: `${API_HOST}/api/get-website-name?page=${page}&pageSize=10&search=${search}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
   userId(user) {
     return axios({
       method: "get",

@@ -11,8 +11,8 @@ import { CreateIntroducerSchema } from "../../Services/schema";
 const CreateIntroducer = () => {
   const auth = useAuth();
   const [formData] = useState({
-    firstname: "",
-    lastname: "",
+    firstName: "",
+    lastName: "",
     userName: "",
     password: "",
   });
@@ -107,41 +107,41 @@ const CreateIntroducer = () => {
                       </div>
 
                       <div className="col-md-6">
-                        <label htmlFor="firstname" className="form-label">
+                        <label htmlFor="firstName" className="form-label">
                           <FaUser /> First Name
                           <span className="text-danger">*</span>
                         </label>
                         <input
                           type="text"
                           className="form-control"
-                          id="firstname"
-                          name="firstname"
-                          value={values.firstname}
+                          id="firstName"
+                          name="firstName"
+                          value={values.firstName}
                           onChange={handleChange}
                           onBlur={handleBlur}
                           placeholder="First Name"
                         />
-                        {touched.firstname && errors.firstname ? (
-                          <div className="text-danger">{errors.firstname}</div>
+                        {touched.firstName && errors.firstName ? (
+                          <div className="text-danger">{errors.firstName}</div>
                         ) : null}
                       </div>
                       <div className="col-md-6">
-                        <label htmlFor="lastname" className="form-label">
+                        <label htmlFor="lastName" className="form-label">
                           <FaUser /> Last Name
                           <span className="text-danger">*</span>
                         </label>
                         <input
                           type="text"
                           className="form-control"
-                          id="lastname"
-                          name="lastname"
-                          value={values.lastname}
+                          id="lastName"
+                          name="lastName"
+                          value={values.lastName}
                           onChange={handleChange}
                           onBlur={handleBlur}
                           placeholder="Last Name"
                         />
-                        {touched.lastname && errors.lastname ? (
-                          <div className="text-danger">{errors.lastname}</div>
+                        {touched.lastName && errors.lastName ? (
+                          <div className="text-danger">{errors.lastName}</div>
                         ) : null}
                       </div>
 

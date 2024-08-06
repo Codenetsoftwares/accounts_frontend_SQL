@@ -8,6 +8,7 @@ import { useAuth } from "../../Utils/Auth";
 import DashService from "../../Services/DashService";
 import FullScreenLoader from "../../Component/FullScreenLoader";
 import { debounce } from "lodash";
+import { toast } from "react-toastify";
 
 const Withdraw = () => {
   const initialValues = {
@@ -34,20 +35,27 @@ const Withdraw = () => {
     useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
+  const [activeBankIndex, setActiveBankIndex] = useState(-1);
+  const [activeWebsiteIndex, setActiveWebsiteIndex] = useState(-1);
 
   const auth = useAuth();
 
   useEffect(() => {
     AccountService.getActiveBank(auth.user).then((res) => {
       setBankOptions(res.data.data);
+
       setFilteredBankOptions(res.data.data);
     });
+
     AccountService.getActiveWebsite(auth.user).then((res) => {
       setWebsiteOptions(res.data.data);
+
       setFilteredWebsiteOptions(res.data.data);
     });
+
     AccountService.userId(auth.user).then((res) => {
       setAllUserNameOptions(res.data.data);
+
       setFilteredUserNameOptions(res.data.data);
     });
   }, [auth]);
@@ -111,10 +119,52 @@ const Withdraw = () => {
           (prevIndex - 1 + filteredUserNameOptions.length) %
           filteredUserNameOptions.length
       );
-    } else if (e.key === "Enter" || ("Tab" && activeIndex >= 0)) {
-      setFieldValue("userName", filteredUserNameOptions[activeIndex].userName);
+    } else if ((e.key === "Enter" || e.key === "Tab") && activeIndex >= 0) {
+      setFieldValue("userName", filteredUserNameOptions[activeIndex]);
       setIsDropdownVisible(false);
       setActiveIndex(-1);
+    }
+  };
+
+  const handleBankKeyDown = (e, setFieldValue) => {
+    if (e.key === "ArrowDown") {
+      setActiveBankIndex(
+        (prevIndex) => (prevIndex + 1) % filteredBankOptions.length
+      );
+    } else if (e.key === "ArrowUp") {
+      setActiveBankIndex(
+        (prevIndex) =>
+          (prevIndex - 1 + filteredBankOptions.length) %
+          filteredBankOptions.length
+      );
+    } else if ((e.key === "Enter" || e.key === "Tab") && activeBankIndex >= 0) {
+      setFieldValue("bankName", filteredBankOptions[activeBankIndex].bankName);
+      setIsBankDropdownVisible(false);
+      setActiveBankIndex(-1);
+    }
+  };
+
+  const handleWebsiteKeyDown = (e, setFieldValue) => {
+    if (e.key === "ArrowDown") {
+      setActiveWebsiteIndex(
+        (prevIndex) => (prevIndex + 1) % filteredWebsiteOptions.length
+      );
+    } else if (e.key === "ArrowUp") {
+      setActiveWebsiteIndex(
+        (prevIndex) =>
+          (prevIndex - 1 + filteredWebsiteOptions.length) %
+          filteredWebsiteOptions.length
+      );
+    } else if (
+      (e.key === "Enter" || e.key === "Tab") &&
+      activeWebsiteIndex >= 0
+    ) {
+      setFieldValue(
+        "websiteName",
+        filteredWebsiteOptions[activeWebsiteIndex].websiteName
+      );
+      setIsWebsiteDropdownVisible(false);
+      setActiveWebsiteIndex(-1);
     }
   };
 
@@ -124,7 +174,19 @@ const Withdraw = () => {
     setActiveIndex(-1);
   };
 
-  const handleSubmit = (values) => {
+  const handleBankOptionClick = (option, setFieldValue) => {
+    setFieldValue("bankName", option.bankName);
+    setIsBankDropdownVisible(false);
+    setActiveBankIndex(-1);
+  };
+
+  const handleWebsiteOptionClick = (option, setFieldValue) => {
+    setFieldValue("websiteName", option.websiteName);
+    setIsWebsiteDropdownVisible(false);
+    setActiveWebsiteIndex(-1);
+  };
+
+  const handleSubmit = (values, { resetForm }) => {
     console.log("values", values);
     const confirmed = window.confirm(
       "Please double-check the form on obhiasb before confirming, as changes or deletions won't be possible afterward."
@@ -134,14 +196,14 @@ const Withdraw = () => {
       DashService.CreateTransactionWithdraw(values, auth.user)
         .then((response) => {
           console.log(response.data);
-          alert("Transaction Created Successfully!!");
+          toast.success("Transaction Created Successfully!!");
           setIsLoading(false);
-          window.location.reload();
+          resetForm();
         })
         .catch((error) => {
           setIsLoading(false);
           console.error(error);
-          alert(error.response.data.errMessage);
+          toast.error(error.response.data.message);
         });
     }
   };
@@ -263,7 +325,10 @@ const Withdraw = () => {
                       onChange={(e) => {
                         handleChange(e);
                         handleSearchBank(e.target.value);
+                        setIsBankDropdownVisible(true);
+                        setActiveBankIndex(-1);
                       }}
+                      onKeyDown={(e) => handleBankKeyDown(e, setFieldValue)}
                       placeholder="Search Bank Name"
                     />
                     <ErrorMessage
@@ -290,11 +355,17 @@ const Withdraw = () => {
                           filteredBankOptions.map((option, index) => (
                             <li
                               key={index}
-                              onClick={() => {
-                                setFieldValue("bankName", option.bankName);
-                                setIsBankDropdownVisible(false);
+                              onClick={() =>
+                                handleBankOptionClick(option, setFieldValue)
+                              }
+                              style={{
+                                padding: "8px",
+                                cursor: "pointer",
+                                backgroundColor:
+                                  activeBankIndex === index
+                                    ? "#f0f0f0"
+                                    : "white",
                               }}
-                              style={{ padding: "8px", cursor: "pointer" }}
                             >
                               {option.bankName}
                             </li>
@@ -318,7 +389,10 @@ const Withdraw = () => {
                       onChange={(e) => {
                         handleChange(e);
                         handleSearchWebsite(e.target.value);
+                        setIsWebsiteDropdownVisible(true);
+                        setActiveWebsiteIndex(-1);
                       }}
+                      onKeyDown={(e) => handleWebsiteKeyDown(e, setFieldValue)}
                       placeholder="Search Website Name"
                     />
 
@@ -346,14 +420,17 @@ const Withdraw = () => {
                           filteredWebsiteOptions.map((option, index) => (
                             <li
                               key={index}
-                              onClick={() => {
-                                setFieldValue(
-                                  "websiteName",
-                                  option.websiteName
-                                );
-                                setIsWebsiteDropdownVisible(false);
+                              onClick={() =>
+                                handleWebsiteOptionClick(option, setFieldValue)
+                              }
+                              style={{
+                                padding: "8px",
+                                cursor: "pointer",
+                                backgroundColor:
+                                  activeWebsiteIndex === index
+                                    ? "#f0f0f0"
+                                    : "white",
                               }}
-                              style={{ padding: "8px", cursor: "pointer" }}
                             >
                               {option.websiteName}
                             </li>

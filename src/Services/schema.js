@@ -12,8 +12,7 @@ export const LoginSchema = Yup.object().shape({
 
 export const CreateDepositTransactionSchema = Yup.object({
   transactionID: Yup.string().required("Transaction ID is required"),
-  amount: Yup.string()
-    .required("Amount is required"),
+  amount: Yup.string().required("Amount is required"),
   paymentMethod: Yup.string()
     .oneOf(["UPI", "IMPS"], "Invalid Transaction Type")
     .required("Payment Method is required"),
@@ -45,9 +44,8 @@ export const CreateWithDrawTransactionSchema = Yup.object({
   remarks: Yup.string().required("Remarks are required"),
 });
 
-
 export const CreateIntroducerSchema = Yup.object().shape({
-  firstname: Yup.string()
+  firstName: Yup.string()
     .min(2, "Username must be at least 2 characters")
     .max(10, "Username must not exceed 10 characters")
     .required("Username is required"),
@@ -55,7 +53,7 @@ export const CreateIntroducerSchema = Yup.object().shape({
     .min(2, "Username must be at least 2 characters")
     .max(25, "Username must not exceed 25 characters")
     .required("Username is required"),
-  lastname: Yup.string()
+  lastName: Yup.string()
     .min(2, "Username must be at least 2 characters")
     .max(10, "Username must not exceed 10 characters")
     .required("Username is required"),
@@ -65,7 +63,7 @@ export const CreateIntroducerSchema = Yup.object().shape({
 });
 
 export const CreateUserSchema = Yup.object({
-  firstname: Yup.string()
+  firstName: Yup.string()
     .min(2, "Username must be at least 2 characters")
     .max(10, "Username must not exceed 10 characters")
     .required("Username is required"),
@@ -73,7 +71,7 @@ export const CreateUserSchema = Yup.object({
     .min(2, "Username must be at least 2 characters")
     .max(25, "Username must not exceed 25 characters")
     .required("Username is required"),
-  lastname: Yup.string()
+  lastName: Yup.string()
     .min(2, "Username must be at least 2 characters")
     .max(10, "Username must not exceed 10 characters")
     .required("Username is required"),
@@ -83,13 +81,41 @@ export const CreateUserSchema = Yup.object({
   contactNumber: Yup.string()
     .min(10, "Contact Number must be at least 10 characters")
     .required("Contact Number is required"),
-  introducersUserName: Yup.string()
-    .required("Introducers Username is required"),
-  introducerPercentage: Yup.string()
-    .required("Introducers Percentage is required"),
+  introducersUserName: Yup.string().required(
+    "Introducers Username is required"
+  ),
+  introducerPercentage: Yup.string().required(
+    "Introducers Percentage is required"
+  ),
   introducersUserName1: Yup.string(),
   introducersUserName2: Yup.string(),
   introducerPercentage: Yup.string(),
   introducerPercentage: Yup.string(),
   confirmPassword: Yup.string(),
+});
+
+export const CreateSubAdminSchema = Yup.object().shape({
+  firstName: Yup.string()
+    .required("First name is required")
+    .min(2, "First name must be at least 2 characters")
+    .max(50, "First name must be at most 50 characters"),
+
+  lastName: Yup.string()
+    .required("Last name is required")
+    .min(2, "Last name must be at least 2 characters")
+    .max(50, "Last name must be at most 50 characters"),
+
+  userName: Yup.string()
+    .required("Username is required")
+    .min(3, "Username must be at least 3 characters")
+    .max(20, "Username must be at most 20 characters"),
+
+  password: Yup.string()
+    .required("Password is required")
+    .min(6, "Password must be at least 6 characters")
+    .max(20, "Password must be at most 20 characters"),
+
+  roles: Yup.array()
+    .of(Yup.string().required("Role is required"))
+    .min(1, "At least one role is required"),
 });

@@ -109,12 +109,12 @@ const CreateActualUser = () => {
   // Fetch introducer options on component mount
   useEffect(() => {
     AccountService.IntroducerUserId(auth.user).then((res) => {
-      setIntroducerOption(res.data);
-      setIntroducerOption1(res.data);
-      setIntroducerOption2(res.data);
-      setFilteredIntroducerOption(res.data);
-      setFilteredIntroducerOption1(res.data);
-      setFilteredIntroducerOption2(res.data);
+      setIntroducerOption(res.data.data);
+      setIntroducerOption1(res.data.data);
+      setIntroducerOption2(res.data.data);
+      setFilteredIntroducerOption(res.data.data);
+      setFilteredIntroducerOption1(res.data.data);
+      setFilteredIntroducerOption2(res.data.data);
     });
   }, [auth]);
 
@@ -130,12 +130,12 @@ const CreateActualUser = () => {
       AccountService.createActualuser(values, auth.user)
         .then((res) => {
           console.log("res", res);
-          alert(res.data.message);
+          alert(res?.data?.data?.message);
           window.location.reload(); // Reload page after successful submission
         })
         .catch((err) => {
           console.log("error", err.response.data.message);
-          toast.error(err.response.data.message); // Display error message
+          toast.error(err?.response?.data?.message); // Display error message
           return;
         });
     }
@@ -217,19 +217,19 @@ const CreateActualUser = () => {
 
                           {/* First Name Field */}
                           <div className="col-md-4">
-                            <label htmlFor="firstname" className="form-label">
+                            <label htmlFor="firstName" className="form-label">
                               <FaUser /> First Name
                               <span className="text-danger">*</span>
                             </label>
                             <Field
                               type="text"
                               className={`form-control`}
-                              id="firstname"
-                              name="firstname"
+                              id="firstName"
+                              name="firstName"
                               placeholder="Enter First Name"
                             />
                             <ErrorMessage
-                              name="firstname"
+                              name="firstName"
                               component="div"
                               className="text-danger"
                             />
@@ -237,19 +237,19 @@ const CreateActualUser = () => {
 
                           {/* Last Name Field */}
                           <div className="col-md-4">
-                            <label htmlFor="lastname" className="form-label">
+                            <label htmlFor="lastName" className="form-label">
                               <FaUser /> Last Name
                               <span className="text-danger">*</span>
                             </label>
                             <Field
                               type="text"
                               className={`form-control`}
-                              id="lastname"
-                              name="lastname"
+                              id="lastName"
+                              name="lastName"
                               placeholder="Enter Last Name"
                             />
                             <ErrorMessage
-                              name="lastname"
+                              name="lastName"
                               component="div"
                               className="text-danger"
                             />

@@ -8,6 +8,7 @@ import { useAuth } from "../../Utils/Auth";
 import DashService from "../../Services/DashService";
 import FullScreenLoader from "../../Component/FullScreenLoader";
 import { debounce } from "lodash";
+import { toast } from "react-toastify";
 
 const Deposit = () => {
   const initialValues = {
@@ -34,8 +35,11 @@ const Deposit = () => {
     useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
+  const [activeBankIndex, setActiveBankIndex] = useState(-1);
+  const [activeWebsiteIndex, setActiveWebsiteIndex] = useState(-1);
   const auth = useAuth();
 
+  // Fetch options from the server
   useEffect(() => {
     AccountService.getActiveBank(auth.user).then((res) => {
       setBankOptions(res.data.data);
@@ -51,11 +55,12 @@ const Deposit = () => {
     });
   }, [auth]);
 
+  // Debounce function to search user names
   const handleSearchUserName = useCallback(
     debounce((value) => {
       if (value) {
         const filteredItems = allUserNameOptions.filter((item) =>
-          item.toLowerCase().includes(value.toLowerCase())  // doubt from paul
+          item.toLowerCase().includes(value.toLowerCase())
         );
         setFilteredUserNameOptions(filteredItems);
         setIsDropdownVisible(true);
@@ -67,6 +72,7 @@ const Deposit = () => {
     [allUserNameOptions]
   );
 
+  // Debounce function to search bank names
   const handleSearchBank = useCallback(
     debounce((value) => {
       if (value) {
@@ -83,6 +89,7 @@ const Deposit = () => {
     [bankOptions]
   );
 
+  // Debounce function to search website names
   const handleSearchWebsite = useCallback(
     debounce((value) => {
       if (value) {
@@ -99,8 +106,7 @@ const Deposit = () => {
     [websiteOptions]
   );
 
-  console.log("filteredUserNameOptions", filteredUserNameOptions);
-
+  // Handle keyboard navigation and selection for user names
   const handleKeyDown = (e, setFieldValue) => {
     if (e.key === "ArrowDown") {
       setActiveIndex(
@@ -112,12 +118,58 @@ const Deposit = () => {
           (prevIndex - 1 + filteredUserNameOptions.length) %
           filteredUserNameOptions.length
       );
-    } else if (e.key === "Enter" || ("Tab" && activeIndex >= 0)) {
-      setFieldValue("userName", filteredUserNameOptions[activeIndex].userName);
+    } else if ((e.key === "Enter" || e.key === "Tab") && activeIndex >= 0) {
+      setFieldValue("userName", filteredUserNameOptions[activeIndex]);
       setIsDropdownVisible(false);
       setActiveIndex(-1);
     }
   };
+
+  // Handle keyboard navigation and selection for bank names
+  const handleBankKeyDown = (e, setFieldValue) => {
+    if (e.key === "ArrowDown") {
+      setActiveBankIndex(
+        (prevIndex) => (prevIndex + 1) % filteredBankOptions.length
+      );
+    } else if (e.key === "ArrowUp") {
+      setActiveBankIndex(
+        (prevIndex) =>
+          (prevIndex - 1 + filteredBankOptions.length) %
+          filteredBankOptions.length
+      );
+    } else if ((e.key === "Enter" || e.key === "Tab") && activeBankIndex >= 0) {
+      setFieldValue("bankName", filteredBankOptions[activeBankIndex].bankName);
+      setIsBankDropdownVisible(false);
+      setActiveBankIndex(-1);
+    }
+  };
+
+  // Handle keyboard navigation and selection for website names
+  const handleWebsiteKeyDown = (e, setFieldValue) => {
+    if (e.key === "ArrowDown") {
+      setActiveWebsiteIndex(
+        (prevIndex) => (prevIndex + 1) % filteredWebsiteOptions.length
+      );
+    } else if (e.key === "ArrowUp") {
+      setActiveWebsiteIndex(
+        (prevIndex) =>
+          (prevIndex - 1 + filteredWebsiteOptions.length) %
+          filteredWebsiteOptions.length
+      );
+    } else if (
+      (e.key === "Enter" || e.key === "Tab") &&
+      activeWebsiteIndex >= 0
+    ) {
+      setFieldValue(
+        "websiteName",
+        filteredWebsiteOptions[activeWebsiteIndex].websiteName
+      );
+      setIsWebsiteDropdownVisible(false);
+      setActiveWebsiteIndex(-1);
+    }
+  };
+
+  // Handle option click for user names
 
   const handleOptionClick = (option, setFieldValue) => {
     setFieldValue("userName", option);
@@ -125,26 +177,43 @@ const Deposit = () => {
     setActiveIndex(-1);
   };
 
-  const handleSubmit = (values) => {
+  // Handle option click for bank names
+  const handleBankOptionClick = (option, setFieldValue) => {
+    console.log("Bank option clicked:", option);
+    setFieldValue("bankName", option.bankName);
+    setIsBankDropdownVisible(false);
+    setActiveBankIndex(-1);
+  };
+
+  // Handle option click for website names
+  const handleWebsiteOptionClick = (option, setFieldValue) => {
+    console.log("Website option clicked:", option);
+    setFieldValue("websiteName", option.websiteName);
+    setIsWebsiteDropdownVisible(false);
+    setActiveWebsiteIndex(-1);
+  };
+
+  // Handle form submission
+  const handleSubmit = (values, { resetForm }) => {
     // Convert amount from string to number
     values.amount = parseFloat(values.amount); // Or use parseInt if it should be an integer
     console.log("values", values);
     const confirmed = window.confirm(
-      "Please double-check the form on obhiasb before confirming, as changes or deletions won't be possible afterward."
+      "Please double-check the form before confirming, as changes or deletions won't be possible afterward."
     );
     if (confirmed) {
       setIsLoading(true);
       DashService.CreateTransactionDeposit(values, auth.user)
         .then((response) => {
           console.log(response.data);
-          alert("Transaction Created Successfully!!");
+          toast.success("Transaction Created Successfully!!");
           setIsLoading(false);
-          window.location.reload();
+          resetForm();
         })
         .catch((error) => {
           setIsLoading(false);
           console.error(error);
-          alert(error.response.data.errMessage);
+          toast.error(error.response.data.message);
         });
     }
   };
@@ -189,58 +258,39 @@ const Deposit = () => {
                       onKeyDown={(e) => handleKeyDown(e, setFieldValue)}
                       placeholder="Search Customer Name"
                     />
+                    {isDropdownVisible && (
+                      <div className="dropdown-menu show w-100">
+                        {filteredUserNameOptions.map((option, index) => (
+                          <div
+                            key={option}
+                            className={`dropdown-item ${
+                              index === activeIndex ? "active" : ""
+                            }`}
+                            onClick={() =>
+                              handleOptionClick(option, setFieldValue)
+                            }
+                          >
+                            {option}
+                          </div>
+                        ))}
+                      </div>
+                    )}
                     <ErrorMessage
                       name="userName"
                       component="div"
                       className="text-danger"
                     />
-                    {isDropdownVisible && (
-                      <ul
-                        style={{
-                          border: "1px solid #ccc",
-                          listStyle: "none",
-                          padding: 0,
-                          margin: 0,
-                          position: "absolute",
-                          zIndex: 1,
-                          background: "white",
-                          width: "93%",
-                          maxHeight: "200px",
-                          overflow: "auto",
-                        }}
-                      >
-                        {filteredUserNameOptions.length > 0 ? (
-                          filteredUserNameOptions.map((option, index) => (
-                            <li
-                              key={index}
-                              onClick={() =>
-                                handleOptionClick(option, setFieldValue)
-                              }
-                              style={{
-                                padding: "8px",
-                                cursor: "pointer",
-                                backgroundColor:
-                                  activeIndex === index ? "#f0f0f0" : "white",
-                              }}
-                            >
-                              {option}
-                            </li>
-                          ))
-                        ) : (
-                          <li style={{ padding: "8px" }}>Not found</li>
-                        )}
-                      </ul>
-                    )}
                   </div>
                 </Col>
                 <Col md={6}>
                   <div className="form-group">
-                    <label htmlFor="transactionID">Type Transaction Id</label>
+                    <label htmlFor="transactionID">Transaction ID</label>
                     <Field
-                      type="text"
+                      id="transactionID"
                       name="transactionID"
+                      type="text"
                       className="form-control"
-                      placeholder="Type Transaction Id"
+                      placeholder="Enter Transaction ID"
                     />
                     <ErrorMessage
                       name="transactionID"
@@ -250,7 +300,6 @@ const Deposit = () => {
                   </div>
                 </Col>
               </Row>
-
               <Row className="mb-3">
                 <Col md={6}>
                   <div className="form-group">
@@ -266,13 +315,11 @@ const Deposit = () => {
                       onChange={(e) => {
                         handleChange(e);
                         handleSearchBank(e.target.value);
+                        setIsBankDropdownVisible(true);
+                        setActiveBankIndex(-1);
                       }}
+                      onKeyDown={(e) => handleBankKeyDown(e, setFieldValue)}
                       placeholder="Search Bank Name"
-                    />
-                    <ErrorMessage
-                      name="bankName"
-                      component="div"
-                      className="text-danger"
                     />
                     {isBankDropdownVisible && (
                       <ul
@@ -293,11 +340,17 @@ const Deposit = () => {
                           filteredBankOptions.map((option, index) => (
                             <li
                               key={index}
-                              onClick={() => {
-                                setFieldValue("bankName", option.bankName);
-                                setIsBankDropdownVisible(false);
+                              onClick={() =>
+                                handleBankOptionClick(option, setFieldValue)
+                              }
+                              style={{
+                                padding: "8px",
+                                cursor: "pointer",
+                                backgroundColor:
+                                  activeBankIndex === index
+                                    ? "#f0f0f0"
+                                    : "white",
                               }}
-                              style={{ padding: "8px", cursor: "pointer" }}
                             >
                               {option.bankName}
                             </li>
@@ -307,11 +360,18 @@ const Deposit = () => {
                         )}
                       </ul>
                     )}
+                    <ErrorMessage
+                      name="bankName"
+                      component="div"
+                      className="text-danger"
+                    />
                   </div>
                 </Col>
                 <Col md={6}>
                   <div className="form-group">
-                    <label htmlFor="websiteName">Website Name</label>
+                    <label htmlFor="websiteName">
+                      <FaSearch /> Search Website Name
+                    </label>
                     <Field
                       id="websiteName"
                       name="websiteName"
@@ -321,13 +381,11 @@ const Deposit = () => {
                       onChange={(e) => {
                         handleChange(e);
                         handleSearchWebsite(e.target.value);
+                        setIsWebsiteDropdownVisible(true);
+                        setActiveWebsiteIndex(-1);
                       }}
+                      onKeyDown={(e) => handleWebsiteKeyDown(e, setFieldValue)}
                       placeholder="Search Website Name"
-                    />
-                    <ErrorMessage
-                      name="websiteName"
-                      component="div"
-                      className="text-danger"
                     />
                     {isWebsiteDropdownVisible && (
                       <ul
@@ -348,14 +406,17 @@ const Deposit = () => {
                           filteredWebsiteOptions.map((option, index) => (
                             <li
                               key={index}
-                              onClick={() => {
-                                setFieldValue(
-                                  "websiteName",
-                                  option.websiteName
-                                );
-                                setIsWebsiteDropdownVisible(false);
+                              onClick={() =>
+                                handleWebsiteOptionClick(option, setFieldValue)
+                              }
+                              style={{
+                                padding: "8px",
+                                cursor: "pointer",
+                                backgroundColor:
+                                  activeWebsiteIndex === index
+                                    ? "#f0f0f0"
+                                    : "white",
                               }}
-                              style={{ padding: "8px", cursor: "pointer" }}
                             >
                               {option.websiteName}
                             </li>
@@ -365,37 +426,24 @@ const Deposit = () => {
                         )}
                       </ul>
                     )}
-                  </div>
-                </Col>
-              </Row>
-
-              <Row className="mb-3">
-                <Col md={6}>
-                  <div className="form-group">
-                    <label htmlFor="paymentMethod">Payment Method</label>
-                    <Field
-                      as="select"
-                      name="paymentMethod"
-                      className="form-control"
-                    >
-                      <option value="UPI">UPI</option>
-                      <option value="IMPS">IMPS</option>
-                    </Field>
                     <ErrorMessage
-                      name="paymentMethod"
+                      name="websiteName"
                       component="div"
                       className="text-danger"
                     />
                   </div>
                 </Col>
+              </Row>
+              <Row className="mb-3">
                 <Col md={6}>
                   <div className="form-group">
                     <label htmlFor="amount">Amount</label>
                     <Field
-                      type="text"
+                      id="amount"
                       name="amount"
+                      type="text"
                       className="form-control"
-                      placeholder="Enter amount"
+                      placeholder="Enter Amount"
                     />
                     <ErrorMessage
                       name="amount"
@@ -404,15 +452,13 @@ const Deposit = () => {
                     />
                   </div>
                 </Col>
-              </Row>
-
-              <Row className="mb-3">
                 <Col md={6}>
                   <div className="form-group">
                     <label htmlFor="bonus">Bonus</label>
                     <Field
-                      type="number"
+                      id="bonus"
                       name="bonus"
+                      type="text"
                       className="form-control"
                       placeholder="Enter Bonus"
                     />
@@ -423,13 +469,36 @@ const Deposit = () => {
                     />
                   </div>
                 </Col>
+              </Row>
+              <Row className="mb-3">
+                <Col md={6}>
+                  <div className="form-group">
+                    <label htmlFor="paymentMethod">Payment Method</label>
+                    <Field
+                      as="select"
+                      id="paymentMethod"
+                      name="paymentMethod"
+                      className="form-control"
+                    >
+                      <option value="UPI">UPI</option>
+                      <option value="IMPS">IMPS</option>
+                      <option value="RTGS">RTGS</option>
+                      <option value="NEFT">NEFT</option>
+                    </Field>
+                    <ErrorMessage
+                      name="paymentMethod"
+                      component="div"
+                      className="text-danger"
+                    />
+                  </div>
+                </Col>
                 <Col md={6}>
                   <div className="form-group">
                     <label htmlFor="remarks">Remarks</label>
                     <Field
-                      as="textarea"
-                      rows={3}
+                      id="remarks"
                       name="remarks"
+                      as="textarea"
                       className="form-control"
                       placeholder="Enter Remarks"
                     />
