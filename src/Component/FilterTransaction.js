@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useAuth } from "../Utils/Auth";
 import TransactionSercvice from "../Services/TransactionSercvice";
 import Datetime from "react-datetime";
@@ -9,6 +9,8 @@ import AccountService from "../Services/AccountService";
 import { toast } from "react-toastify";
 import SingleCard from "../common/singleCard";
 import GridCard from "../common/gridCard";
+import { debounce } from "lodash";
+
 
 const FilterMainTransaction = ({
   purpose,
@@ -34,6 +36,7 @@ const FilterMainTransaction = ({
   const [documentView, setDocumentView] = useState([]);
   const [minAmount, setMinAmount] = useState(0);
   const [maxAmount, setMaxAmount] = useState(0);
+  const [accountData, setAccountData] = useState([]);
 
   const [filteredBankOptions, setFilteredBankOptions] = useState([]);
   const [filteredWebsiteOptions, setFilteredWebsiteOptions] = useState([]);
@@ -92,7 +95,7 @@ const FilterMainTransaction = ({
     setMaxAmount(0);
     // handlememo();
     // window.location.reload(); 
-e
+
   };
   useEffect(() => {
     handleFilter();
@@ -135,79 +138,79 @@ e
     }
   }, [auth]);
 
-  const handleSearchBank = useCallback(
-    debounce((value) => {
-      if (value) {
-        const filteredItems = bankOptions.filter((item) =>
-          item.bankName.toLowerCase().includes(value.toLowerCase())
-        );
-        setFilteredBankOptions(filteredItems);
-        setIsBankDropdownVisible(true);
-      } else {
-        setFilteredBankOptions([]);
-        setIsBankDropdownVisible(false);
-      }
-    }, 1300),
-    [bankOptions]
-  );
+  // const handleSearchBank = useCallback(
+  //   debounce((value) => {
+  //     if (value) {
+  //       const filteredItems = bankOptions.filter((item) =>
+  //         item.bankName.toLowerCase().includes(value.toLowerCase())
+  //       );
+  //       setFilteredBankOptions(filteredItems);
+  //       setIsBankDropdownVisible(true);
+  //     } else {
+  //       setFilteredBankOptions([]);
+  //       setIsBankDropdownVisible(false);
+  //     }
+  //   }, 1300),
+  //   [bankOptions]
+  // );
 
-  const handleSearchWebsite = useCallback(
-    debounce((value) => {
-      if (value) {
-        const filteredItems = websiteOptions.filter((item) =>
-          item.websiteName.toLowerCase().includes(value.toLowerCase())
-        );
-        setFilteredWebsiteOptions(filteredItems);
-        setIsWebsiteDropdownVisible(true);
-      } else {
-        setFilteredWebsiteOptions([]);
-        setIsWebsiteDropdownVisible(false);
-      }
-    }, 1300),
-    [websiteOptions]
-  );
+  // const handleSearchWebsite = useCallback(
+  //   debounce((value) => {
+  //     if (value) {
+  //       const filteredItems = websiteOptions.filter((item) =>
+  //         item.websiteName.toLowerCase().includes(value.toLowerCase())
+  //       );
+  //       setFilteredWebsiteOptions(filteredItems);
+  //       setIsWebsiteDropdownVisible(true);
+  //     } else {
+  //       setFilteredWebsiteOptions([]);
+  //       setIsWebsiteDropdownVisible(false);
+  //     }
+  //   }, 1300),
+  //   [websiteOptions]
+  // );
 
-  const handleBankKeyDown = (e, setFieldValue) => {
-    if (e.key === "ArrowDown") {
-      setActiveBankIndex((prevIndex) =>
-        (prevIndex + 1) % filteredBankOptions.length
-      );
-    } else if (e.key === "ArrowUp") {
-      setActiveBankIndex(
-        (prevIndex) =>
-          (prevIndex - 1 + filteredBankOptions.length) %
-          filteredBankOptions.length
-      );
-    } else if ((e.key === "Enter" || e.key === "Tab") && activeBankIndex >= 0) {
-      setFieldValue("bankName", filteredBankOptions[activeBankIndex].bankName);
-      setIsBankDropdownVisible(false);
-      setActiveBankIndex(-1);
-    }
-  };
+  // const handleBankKeyDown = (e, setFieldValue) => {
+  //   if (e.key === "ArrowDown") {
+  //     setActiveBankIndex((prevIndex) =>
+  //       (prevIndex + 1) % filteredBankOptions.length
+  //     );
+  //   } else if (e.key === "ArrowUp") {
+  //     setActiveBankIndex(
+  //       (prevIndex) =>
+  //         (prevIndex - 1 + filteredBankOptions.length) %
+  //         filteredBankOptions.length
+  //     );
+  //   } else if ((e.key === "Enter" || e.key === "Tab") && activeBankIndex >= 0) {
+  //     setFieldValue("bankName", filteredBankOptions[activeBankIndex].bankName);
+  //     setIsBankDropdownVisible(false);
+  //     setActiveBankIndex(-1);
+  //   }
+  // };
 
-  const handleWebsiteKeyDown = (e, setFieldValue) => {
-    if (e.key === "ArrowDown") {
-      setActiveWebsiteIndex((prevIndex) =>
-        (prevIndex + 1) % filteredWebsiteOptions.length
-      );
-    } else if (e.key === "ArrowUp") {
-      setActiveWebsiteIndex(
-        (prevIndex) =>
-          (prevIndex - 1 + filteredWebsiteOptions.length) %
-          filteredWebsiteOptions.length
-      );
-    } else if (
-      (e.key === "Enter" || e.key === "Tab") &&
-      activeWebsiteIndex >= 0
-    ) {
-      setFieldValue(
-        "websiteName",
-        filteredWebsiteOptions[activeWebsiteIndex].websiteName
-      );
-      setIsWebsiteDropdownVisible(false);
-      setActiveWebsiteIndex(-1);
-    }
-  };
+  // const handleWebsiteKeyDown = (e, setFieldValue) => {
+  //   if (e.key === "ArrowDown") {
+  //     setActiveWebsiteIndex((prevIndex) =>
+  //       (prevIndex + 1) % filteredWebsiteOptions.length
+  //     );
+  //   } else if (e.key === "ArrowUp") {
+  //     setActiveWebsiteIndex(
+  //       (prevIndex) =>
+  //         (prevIndex - 1 + filteredWebsiteOptions.length) %
+  //         filteredWebsiteOptions.length
+  //     );
+  //   } else if (
+  //     (e.key === "Enter" || e.key === "Tab") &&
+  //     activeWebsiteIndex >= 0
+  //   ) {
+  //     setFieldValue(
+  //       "websiteName",
+  //       filteredWebsiteOptions[activeWebsiteIndex].websiteName
+  //     );
+  //     setIsWebsiteDropdownVisible(false);
+  //     setActiveWebsiteIndex(-1);
+  //   }
+  // };
 
 
 
@@ -465,14 +468,14 @@ e
             <div className="d-flex">
               <Datetime
                 value={startDatevalue}
-                onChange={handleStartDatevalue}
+                // onChange={handleStartDatevalue}
                 dateFormat="DD-MM-YYYY"
                 timeFormat="HH:mm"
               />
               <h6 className="fw-bold text-nowrap">To</h6>
               <Datetime
                 value={endDatevalue}
-                onChange={handleEndDatevalue}
+                // onChange={handleEndDatevalue}
                 dateFormat="DD-MM-YYYY"
                 timeFormat="HH:mm"
               />
