@@ -114,14 +114,15 @@ const WebsiteDetails = () => {
       console.log("Im here in line 94");
       AccountService.deletewebsite({ requestId: id }, auth.user)
         .then((res) => {
-          // console.log(response.data);
+          console.log("res=>>>>", res);
           if (res.status === 200) {
             alert("Website Deleted approval sent!");
-            window.location.reload();
+            // window.location.reload();
           }
         })
         .catch((error) => {
-          toast.error(error);
+          toast.error(error.errMessage);
+          console.log("error=>>>", error.data);
           // alert.error("e.message");
         });
     }

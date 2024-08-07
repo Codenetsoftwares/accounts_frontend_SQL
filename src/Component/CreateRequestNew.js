@@ -20,6 +20,8 @@ const CreateRequestNew = ({ Api, purpose, ApiReject, EditApi }) => {
       });
   }, [auth]);
 
+  console.log("data = >>>>>", data);
+
   const handleApprove = (_id) => {
     setId(_id);
     // const flag = true;
@@ -96,7 +98,7 @@ const CreateRequestNew = ({ Api, purpose, ApiReject, EditApi }) => {
             )}
           </thead>
           <tbody>
-            {data?.map((data, index) => (
+            {data?.reverse().map((data, index) => (
               <tr key={index}>
                 {purpose === "bank" && (
                   <>
@@ -132,7 +134,7 @@ const CreateRequestNew = ({ Api, purpose, ApiReject, EditApi }) => {
                   {purpose === "bank" ? (
                     <button
                       className="btn btn-outline-success"
-                      onClick={() => handleApprove(data.bank_id)}
+                      onClick={() => handleApprove(data.bankId)}
                       data-toggle="modal"
                       data-target="#exampleModal"
                     >
@@ -141,7 +143,7 @@ const CreateRequestNew = ({ Api, purpose, ApiReject, EditApi }) => {
                   ) : (
                     <button
                       className="btn btn-outline-success"
-                      onClick={() => handleApprove(data.website_id)}
+                      onClick={() => handleApprove(data.websiteId)}
                       data-toggle="modal"
                       data-target="#exampleModal"
                     >
@@ -153,14 +155,14 @@ const CreateRequestNew = ({ Api, purpose, ApiReject, EditApi }) => {
                   {purpose === "bank" ? (
                     <button
                       className="btn btn-outline-danger"
-                      onClick={() => handleReject(data.bank_id)}
+                      onClick={() => handleReject(data.bankId)}
                     >
                       Reject
                     </button>
                   ) : (
                     <button
                       className="btn btn-outline-danger"
-                      onClick={() => handleReject(data.website_id)}
+                      onClick={() => handleReject(data.websiteId)}
                     >
                       Reject
                     </button>
