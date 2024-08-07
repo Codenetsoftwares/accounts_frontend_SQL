@@ -48,30 +48,9 @@ const MyTxn = () => {
   const [minAmount, setMinAmount] = useState(0);
   const [maxAmount, setMaxAmount] = useState(0);
 
-  // console.log("==>>>", id);
-  console.log(documentView);
-  console.log("data===>", documentView);
-  const test = ["transactionType", "subAdminName", "websiteName", "bankName"];
+  
 
-  const handleClick = (key, value) => {
-    let nArr = [...documentView];
-    // const originalData = [...documentView];
-
-    if (test.includes(key)) {
-      nArr = nArr.filter((item) => item[key] === value);
-    }
-    // if (nArr.length === 0) {
-    //   nArr = originalData;
-    // }
-    setDocumentView(nArr);
-    // setTotalPage(Math.ceil(documentView.length / 10));
-    // setLength(documentView.length);
-  };
-
-  const handleId = (e, id) => {
-    e.preventDefault();
-    setDataId(id);
-  };
+  
 
   useEffect(() => {
     TransactionSercvice.subadminWiseTxn(auth.user.userName, auth.user).then(
@@ -95,32 +74,6 @@ const MyTxn = () => {
   }, [auth]);
 
   console.log("txn=>>>", documentView);
-
-  useEffect(() => {
-    if (auth.user) {
-      TransactionSercvice.subAdminList(auth.user).then((res) => {
-        setSubAdminlist(res.data);
-      });
-    }
-  }, [auth]);
-
-  useEffect(() => {
-    if (auth.user) {
-      TransactionSercvice.bankList(auth.user).then((res) => {
-        setBankList(res.data);
-      });
-    }
-  }, [auth]);
-
-  // useEffect(() => {
-  //   AccountService.website(auth.user).then((res) => setWebsiteList(res.data));
-  // }, [auth]);
-
-  useEffect(() => {
-    AccountService.introducerId(auth.user).then((res) =>
-      setIntroducerList(res.data)
-    );
-  }, [auth]);
 
   const selectPageHandler = (selectedPage) => {
     console.log(selectedPage);
@@ -155,40 +108,15 @@ const MyTxn = () => {
     setPage(1);
   };
 
-  // console.log("documentView =>>>", documentView);
-  // console.log("accountData =>>>", accountData);
 
   const handleChange = (e) => {
     const value = e.target.value;
     setSelect(value);
-    handleClick("transactionType", value);
+    // handleClick("transactionType", value);
     setPage(1);
   };
 
-  const handleSubAdmin = (e) => {
-    const value = e.target.value;
-    setSubAdmin(value);
-    handleClick("subAdminName", value);
-    setPage(1);
-  };
-
-  const handleIntroducer = (e) => {
-    const value = e.target.value;
-    setIntroducer(value);
-    handleClick("introducerId", value);
-  };
-
-  const handleBank = (e) => {
-    const value = e.target.value;
-    setBank(value);
-    handleClick("bankName", value);
-  };
-
-  const handleWebsite = (e) => {
-    const value = e.target.value;
-    setWebsite(value);
-    handleClick("websiteName", value);
-  };
+  
 
   const handleMinAmount = (e) => {
     const value = e.target.value;
@@ -236,17 +164,12 @@ const MyTxn = () => {
     setEndDateValue(moment(e).format("DD-MM-YYYY HH:mm"));
   };
 
-  let reminder = documentView.length % 10;
-  let lastPage = Math.ceil(documentView.length / 10);
-  let filterReminder = documentFilter.length % 10;
-  let filterLastPage = Math.ceil(documentFilter.length / 10);
-  console.log(lastPage);
-  console.log(page);
-  console.log(documentView);
+
   return (
     <>
-      <SingleCard className="card card-body rounded-8px mt-1">
-        <SingleCard
+      <div className="card card-body rounded-8px mt-2">
+        {/* This is for Normal View */}
+        <div
           className="card card-body rounded-8px shadow"
           style={{
             backgroundColor: "#e6f7ff",
@@ -254,77 +177,136 @@ const MyTxn = () => {
             margin: "auto",
           }}
         >
-          <div className="row g-3">
-            <div className="col-md-4 col-lg-3">
+          <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+            <div className="col d-flex flex-column align-items-center pt-3">
               <h6 className="fw-bold text-nowrap">Transaction</h6>
               <select
-                className="form-control"
+                className="form-control w-100"
                 value={select || ""}
                 autoComplete="off"
                 onChange={handleChange}
-                style={{ border: "0.5px solid black", borderRadius: "6px" }}
+                style={{
+                  border: "0.5px solid #ced4da",
+                  borderRadius: "6px",
+                }}
               >
-                <option value="">All</option>
-                <option value="Deposit">Deposit</option>
-                <option value="Withdraw">Withdraw</option>
-                <option value="Manual-Bank-Deposit">Manual Bank Deposit</option>
-                <option value="Manual-Bank-Withdraw">Manual Bank Withdraw</option>
+                <option value="All">
+                  <b>All</b>
+                </option>
+                <option value="Deposit">
+                  <b>Deposit</b>
+                </option>
+                <option value="Withdraw">
+                  <b>Withdraw</b>
+                </option>
+                <option value="Manual-Bank-Deposit">
+                  <b>Manual Bank Deposit</b>
+                </option>
+                <option value="Manual-Bank-Withdraw">
+                  <b>Manual Bank Withdraw</b>
+                </option>
                 <option value="Manual-Website-Deposit">
-                  Manual Website Deposit
+                  <b>Manual Website Deposit</b>
                 </option>
                 <option value="Manual-Website-Withdraw">
-                  Manual Website Withdraw
+                  <b>Manual Website Withdraw</b>
                 </option>
               </select>
             </div>
-            <div className="col-md-4 col-lg-3">
-              <h6 className="fw-bold text-nowrap">Date Range</h6>
-              <div className="d-flex">
-                <Datetime
-                  value={startDatevalue}
-                  onChange={handleStartDatevalue}
-                  dateFormat="DD-MM-YYYY"
-                  timeFormat="HH:mm"
+
+            <div className="col d-flex flex-column align-items-center pt-3">
+              <h6 className="fw-bold text-nowrap">Range Of Amount</h6>
+              <div className="d-flex flex-column flex-md-row align-items-center w-100">
+                <input
+                  className="form-control mb-2 mb-md-0 mx-0 mx-md-2"
+                  type="number"
+                  value={minAmount || ""}
+                  autoComplete="off"
+                  onChange={handleMinAmount}
+                  placeholder="Min Amt"
+                  style={{
+                    border: "0.5px solid #ced4da",
+                    borderRadius: "6px",
+                  }}
+                  required
+                  min={1}
                 />
-                <h6 className="fw-bold text-nowrap">To</h6>
-                <Datetime
-                  value={endDatevalue}
-                  onChange={handleEndDatevalue}
-                  dateFormat="DD-MM-YYYY"
-                  timeFormat="HH:mm"
+                <h6 className="fw-bold mx-2">To</h6>
+                <input
+                  className="form-control mx-0 mx-md-2"
+                  type="number"
+                  value={maxAmount || ""}
+                  autoComplete="off"
+                  onChange={handleMaxAmount}
+                  placeholder="Max Amt"
+                  style={{
+                    border: "0.5px solid #ced4da",
+                    borderRadius: "6px",
+                  }}
+                  min={1}
+                  required
                 />
               </div>
             </div>
-            <div className="col-md-4 col-lg-3">
-              <div className="d-flex justify-content-between gap-2">
+
+            <div className="col d-flex flex-column align-items-center pt-3">
+              <div className="d-flex flex-column flex-md-row align-items-center w-100">
+                <div className="d-flex flex-column mx-0 mx-md-2 w-100">
+                  <h6 className="fw-bold text-nowrap">Start Date</h6>
+                  <Datetime
+                    value={startDatevalue}
+                    onChange={handleStartDatevalue}
+                    dateFormat="DD-MM-YYYY"
+                    timeFormat="HH:mm"
+                    className="w-100"
+                  />
+                </div>
+                <div className="d-flex flex-column mx-0 mx-md-2 w-100">
+                  <h6 className="fw-bold text-nowrap">End Date</h6>
+                  <Datetime
+                    value={endDatevalue}
+                    onChange={handleEndDatevalue}
+                    dateFormat="DD-MM-YYYY"
+                    timeFormat="HH:mm"
+                    className="w-100"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="col-12 d-flex justify-content-center pt-3">
+              <div className="d-flex flex-wrap justify-content-center w-100">
                 <button
-                  className="btn btn-dark"
+                  type="button"
+                  className="btn btn-dark mx-2"
                   onClick={handleFilter}
-                  style={{ borderRadius: "6px" }}
                 >
                   Filter
                 </button>
                 <button
-                  className="btn btn-dark"
+                  type="button"
+                  className="btn btn-dark mx-2"
                   onClick={handleReset}
-                  style={{ borderRadius: "6px" }}
                 >
                   Reset
                 </button>
-
-                {documentView !== undefined && (
-                  <CSVLink data={documentView} className="btn btn-success">
+                {toggle ? (
+                  <CSVLink data={documentView} className="btn btn-success mx-2">
                     Download Data
+                  </CSVLink>
+                ) : (
+                  <CSVLink
+                    data={documentFilter}
+                    className="btn btn-success mx-2"
+                  >
+                    Download Filter Data
                   </CSVLink>
                 )}
               </div>
             </div>
-            {/* <div className="col-12 mt-3">
-             
-            </div> */}
           </div>
-        </SingleCard>
-      </SingleCard>
+        </div>
+      </div>
       <SingleCard className="card card-body rounded-8px">
         <SingleCard className="container-fluid w-90">
           <div
@@ -393,56 +375,7 @@ const MyTxn = () => {
                   >
                     Entry by
                   </th>
-                  <th
-                    scope="col"
-                    className="text-info"
-                    style={{ backgroundColor: "#e6f7ff" }}
-                  >
-                    User Name
-                  </th>
-                  {/* {purpose === "mainStatement" && (
-                    <>
-                      <th
-                        scope="col"
-                        className="text-info"
-                        style={{ backgroundColor: "#e6f7ff" }}
-                      >
-                        Intro Name
-                      </th>
-                      <th
-                        scope="col"
-                        className="text-info"
-                        style={{ backgroundColor: "#e6f7ff" }}
-                      >
-                        Bank
-                      </th>
-                      <th
-                        scope="col"
-                        className="text-info"
-                        style={{ backgroundColor: "#e6f7ff" }}
-                      >
-                        Website
-                      </th>
-                    </>
-                  )}
-                  {purpose === "bankStatement" && (
-                    <th
-                      scope="col"
-                      className="text-info"
-                      style={{ backgroundColor: "#e6f7ff" }}
-                    >
-                      Balance
-                    </th>
-                  )}
-                  {purpose === "websiteStatement" && (
-                    <th
-                      scope="col"
-                      className="text-info"
-                      style={{ backgroundColor: "#e6f7ff" }}
-                    >
-                      Balance
-                    </th>
-                  )} */}
+                  
                   <th
                     scope="col"
                     className="text-info"
@@ -450,9 +383,7 @@ const MyTxn = () => {
                   >
                     Remarks
                   </th>
-                  {/* <th scope="col text-break" className="text-primary">
-                            Edit
-                        </th> */}
+                  
                   <th
                     scope="col"
                     className="text-info"
@@ -529,68 +460,9 @@ const MyTxn = () => {
                           )}
                         </td>
                         <td>{data?.subAdminName}</td>
-                        <td>
-                          {data?.paymentMethod && (
-                            <p className="col fs-6">{data?.userName}</p>
-                          )}
-                          {data?.depositAmount && (
-                            <p className="col fs-6 text-break">N.A</p>
-                          )}
-                          {data?.withdrawAmount && (
-                            <p className="col fs-6 text-break">N.A</p>
-                          )}
-                        </td>
-
-                        {/* when props pass mainStatement from parent component*/}
-                        {/* {purpose === "mainStatement" && (
-                          <>
-                            <td>
-                              {data?.paymentMethod && (
-                                <p className="col fs-6">
-                                  {data?.introducerUserName}
-                                </p>
-                              )}
-                              {data?.depositAmount && (
-                                <p className="col fs-6 text-break">N.A</p>
-                              )}
-                              {data?.withdrawAmount && (
-                                <p className="col fs-6 text-break">N.A</p>
-                              )}
-                            </td>
-                            <td>
-                              <p className="col fs-6">
-                                {data?.bankName ? data?.bankName : "N.A"}
-                              </p>
-                            </td>
-                            <td>
-                              <p className="col fs-6">
-                                {data?.websiteName ? data?.websiteName : "N.A"}
-                              </p>
-                            </td>
-                          </>
-                        )} */}
-                        {/* when props pass mainStatement from parent component*/}
-                        {/* {purpose === "bankStatement" && (
-                          <td>{data.balance ? data.balance : "N .A"}</td>
-                        )} */}
-                        {/* {purpose === "websiteStatement" && (
-                          <td>{data.balance ? data.balance : "N .A"}</td>
-                        )} */}
+                       
                         <td>{data?.remarks}</td>
-                        {/* <td>
-                                        <button
-                                            type="button"
-                                            className="btn btn-primary"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#edittransaction"
-                                            onClick={(e) => {
-                                                console.log("id===>", data?._id);
-                                                handleId(e, data?._id);
-                                            }}
-                                        >
-                                            <FontAwesomeIcon icon={faEdit} />
-                                        </button>
-                                    </td> */}
+                        
                         <td>
                           <button type="button" className="btn btn-danger">
                             <FontAwesomeIcon
@@ -626,8 +498,6 @@ const MyTxn = () => {
         ) : null} */}
 
       </SingleCard>
-
-      {/* <EditTransaction id={dataId} /> */}
     </>
   );
 };
