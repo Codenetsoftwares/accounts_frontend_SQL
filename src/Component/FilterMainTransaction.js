@@ -68,7 +68,6 @@ const FilterMainTransaction = ({ purpose, handleData, setPage, handlePage, handl
                 toast.error(err.response.data.message)
             )
         });
-
     }
 
     const handleReset = () => {

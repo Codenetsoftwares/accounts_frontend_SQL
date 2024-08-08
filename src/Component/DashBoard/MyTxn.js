@@ -15,6 +15,7 @@ import TransactionSercvice from "../../Services/TransactionSercvice";
 import { Button } from "react-bootstrap";
 import Pagination from "../Pagination";
 import SingleCard from "../../common/singleCard";
+import { errorHandler } from "../../Utils/helper";
 
 const MyTxn = () => {
   const { id } = useParams();
@@ -26,7 +27,7 @@ const MyTxn = () => {
   const [documentFilter, setDocumentFilter] = useState([]);
   const [Manualstmnt, SetManualstmnt] = useState([]);
   const [Userstmnt, SetUserstmnt] = useState([]);
-  const [select, setSelect] = useState("All");
+  const [select, setSelect] = useState("");
   const defaultStartDate = new Date();
   defaultStartDate.setDate(defaultStartDate.getDate() - 1);
 
@@ -47,13 +48,22 @@ const MyTxn = () => {
   const [length, setLength] = useState("");
   const [minAmount, setMinAmount] = useState(0);
   const [maxAmount, setMaxAmount] = useState(0);
+  const [totalData, setTotalData] = useState("");
 
-  
 
-  
+  const data = {
+    "filters": {
+      transactionType: select,
+      // sdate: moment(startDatevalue).toDate(),
+      // edate: moment(endDatevalue).toDate(),
+      // maxAmount: maxAmount,
+      // minAmount: minAmount
+    }
+  }
+
 
   useEffect(() => {
-    TransactionSercvice.subadminWiseTxn(auth.user.userName, auth.user).then(
+    TransactionSercvice.subadminWiseTxn(auth.user.userName, auth.user, data, page).then(
       (res) => {
         console.log("res=>>>>", res.data);
 
@@ -65,13 +75,16 @@ const MyTxn = () => {
           }
         });
 
-        setDocumentView(filteredData);
-        setAccountData(filteredData);
-        setLength(filteredData.length);
-        setTotalPage(Math.ceil(res.data.length) / 10);
+        setDocumentView(res.data.data);
+        setAccountData(res.data.data);
+        setPage(res.data.pagination.page);
+        setTotalPage(res.data.pagination.totalPages);
+        setTotalData(res.data.pagination.totalItems);
       }
-    );
-  }, [auth]);
+    ).catch((err) => {
+      errorHandler(err.message, "Something went wrong");
+    });
+  }, [auth, select, page]);
 
   console.log("txn=>>>", documentView);
 
@@ -80,9 +93,9 @@ const MyTxn = () => {
 
     setPage(selectedPage);
   };
-  useEffect(() => {
-    handleFilter();
-  }, [documentView]);
+  // useEffect(() => {
+  //   handleFilter();
+  // }, [documentView]);
 
   const handleFilter = () => {
     const sdate = moment(startDatevalue, "DD-MM-YYYY HH:mm").toDate();
@@ -116,7 +129,7 @@ const MyTxn = () => {
     setPage(1);
   };
 
-  
+
 
   const handleMinAmount = (e) => {
     const value = e.target.value;
@@ -375,7 +388,7 @@ const MyTxn = () => {
                   >
                     Entry by
                   </th>
-                  
+
                   <th
                     scope="col"
                     className="text-info"
@@ -383,7 +396,7 @@ const MyTxn = () => {
                   >
                     Remarks
                   </th>
-                  
+
                   <th
                     scope="col"
                     className="text-info"
@@ -460,17 +473,29 @@ const MyTxn = () => {
                           )}
                         </td>
                         <td>{data?.subAdminName}</td>
-                       
+
                         <td>{data?.remarks}</td>
-                        
+
                         <td>
                           <button type="button" className="btn btn-danger">
-                            <FontAwesomeIcon
+                            {data?.Transaction_Id && <FontAwesomeIcon
                               icon={faTrash}
                               onClick={(e) => {
-                                handleDelete(e, data?._id, data?.transactionType);
+                                handleDelete(e, data?.Transaction_Id, data?.transactionType);
                               }}
-                            />
+                            />}
+                            {data?.bankTransactionId && <FontAwesomeIcon
+                              icon={faTrash}
+                              onClick={(e) => {
+                                handleDelete(e, data?.bankTransactionId, data?.transactionType);
+                              }}
+                            />}
+                            {data?.websiteTransactionId && <FontAwesomeIcon
+                              icon={faTrash}
+                              onClick={(e) => {
+                                handleDelete(e, data?.websiteTransactionId, data?.transactionType);
+                              }}
+                            />}
                           </button>
                         </td>
                       </tr>
@@ -487,15 +512,15 @@ const MyTxn = () => {
             </table>
           </div>
         </SingleCard>
-        {/* {documentView?.length > 0 ? (
+        {documentView?.length > 0 ? (
           <Pagination
-            handlePage={handlePage}
+            handlePage={selectPageHandler}
             page={page}
             totalPage={totalPage}
             totalData={totalData}
             perPagePagination={10}
           />
-        ) : null} */}
+        ) : null}
 
       </SingleCard>
     </>
