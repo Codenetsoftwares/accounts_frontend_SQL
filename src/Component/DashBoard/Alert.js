@@ -13,7 +13,9 @@ const Alert = () => {
 
   useEffect(() => {
     if (auth.user) {
-      EditServices.ViewAlert(auth.user).then((res) => setAlert(res.data));
+      EditServices.ViewAlert(auth.user).then((res) =>
+        setAlert(res?.data?.data)
+      );
     }
   }, [auth]);
 
@@ -318,19 +320,12 @@ const Alert = () => {
   console.log("=>>>", alert);
   return (
     <>
-      <div className="container d-flex justify-content-center  ">
+      <div className="d-flex justify-content-center  ">
         <br />
-        <div
-          className="card  rounded-2 "
-          style={{
-            boxShadow: "26px -13px 32px -15px rgba(29,29,31,0.68)",
-            backgroundImage:
-              "linear-gradient(90deg, rgba(60,251,165,1) 0%, rgba(171,246,241,1) 50%, rgba(60,251,165,1) 100%)",
-          }}
-        ></div>
-        <div className=" p-2">
-          {alert.length > 0 ? (
-            alert.map((data, i) => {
+        <div className="rounded-2"></div>
+        <div>
+          {alert?.length > 0 ? (
+            alert?.map((data, i) => {
               return (
                 <>
                   {data.type === "Edit" && (
@@ -405,7 +400,7 @@ const Alert = () => {
                                   onClick={(e) =>
                                     handleEditApprove(
                                       e,
-                                      data._id,
+                                      data.editId,
                                       data.transactionType,
                                       data.message
                                     )
@@ -421,7 +416,7 @@ const Alert = () => {
                                   onClick={(e) =>
                                     handleEditReject(
                                       e,
-                                      data._id,
+                                      data.editId,
                                       data.transactionType
                                     )
                                   }
@@ -552,7 +547,7 @@ const Alert = () => {
                           onClick={(e) =>
                             handleDeleteApprove(
                               e,
-                              data.Edit_ID,
+                              data.editId,
                               data.transactionType
                             )
                           }
@@ -564,7 +559,7 @@ const Alert = () => {
                           onClick={(e) =>
                             handleDeleteReject(
                               e,
-                              data.Edit_ID,
+                              data.editId,
                               data.transactionType
                             )
                           }
@@ -578,7 +573,9 @@ const Alert = () => {
               );
             })
           ) : (
-            <h1>No Alert Found</h1>
+            <div class="alert alert-warning fs-6" role="alert">
+              No Alert Found
+            </div>
           )}
         </div>
         <InnerAlert />

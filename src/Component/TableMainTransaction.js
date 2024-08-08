@@ -23,7 +23,7 @@ const TableMainTransaction = ({ FilterData, purpose, page, handlePage, totalPage
 
     const handleDelete = (e, id, transactionType) => {
         e.preventDefault();
-        console.log(transactionType);
+        console.log("id====>", id);
         switch (transactionType) {
             case "Deposit":
                 AccountService.SaveTransaction({ requestId: id }, auth.user)
@@ -33,7 +33,7 @@ const TableMainTransaction = ({ FilterData, purpose, page, handlePage, totalPage
                         toast.success("Transaction delete request sent to Super Admin");
                     })
                     .catch((err) => {
-                        toast.error(err.response.data?.message)
+                        toast.error(err.response.data?.errMessage)
                     });
                 break;
 
@@ -45,7 +45,7 @@ const TableMainTransaction = ({ FilterData, purpose, page, handlePage, totalPage
                         toast.success("Transaction delete request sent to Super Admin");
                     })
                     .catch((err) => {
-                        toast.error(err.response.data?.message)
+                        toast.error(err.response.data?.errMessage)
                     });
                 break;
 
@@ -59,7 +59,7 @@ const TableMainTransaction = ({ FilterData, purpose, page, handlePage, totalPage
                         );
                     })
                     .catch((err) => {
-                        toast.error(err.response.data?.message)
+                        toast.error(err.response.data?.errMessage)
                     });
                 break;
 
@@ -73,7 +73,7 @@ const TableMainTransaction = ({ FilterData, purpose, page, handlePage, totalPage
                         );
                     })
                     .catch((err) => {
-                        toast.error(err.response.data?.message)
+                        toast.error(err.response.data?.errMessage)
                     });
                 break;
 
@@ -86,7 +86,7 @@ const TableMainTransaction = ({ FilterData, purpose, page, handlePage, totalPage
                         );
                     })
                     .catch((err) => {
-                        toast.error(err.response.data?.message)
+                        toast.error(err.response.data?.errMessage)
                     });
                 break;
 
@@ -99,7 +99,7 @@ const TableMainTransaction = ({ FilterData, purpose, page, handlePage, totalPage
                         );
                     })
                     .catch((err) => {
-                        toast.error(err.response.data?.message)
+                        toast.error(err.response.data?.errMessage)
                     });
                 break;
 
@@ -376,12 +376,24 @@ const TableMainTransaction = ({ FilterData, purpose, page, handlePage, totalPage
                                     </td> */}
                                             <td>
                                                 <button type="button" className="btn btn-danger">
-                                                    <FontAwesomeIcon
+                                                    {data?.Transaction_Id && <FontAwesomeIcon
                                                         icon={faTrash}
                                                         onClick={(e) => {
-                                                            handleDelete(e, data?._id, data?.transactionType);
+                                                            handleDelete(e, data?.Transaction_Id, data?.transactionType);
                                                         }}
-                                                    />
+                                                    />}
+                                                    {data?.bankTransactionId && <FontAwesomeIcon
+                                                        icon={faTrash}
+                                                        onClick={(e) => {
+                                                            handleDelete(e, data?.bankTransactionId, data?.transactionType);
+                                                        }}
+                                                    />}
+                                                    {data?.websiteTransactionId && <FontAwesomeIcon
+                                                        icon={faTrash}
+                                                        onClick={(e) => {
+                                                            handleDelete(e, data?.websiteTransactionId, data?.transactionType);
+                                                        }}
+                                                    />}
                                                 </button>
                                             </td>
                                         </tr>

@@ -169,10 +169,12 @@ class TransactionService {
     });
   }
 
-  subadminWiseTxn(username, user) {
+  subadminWiseTxn(username, user, data, page) {
+    console.log("page",page)
     return axios({
-      method: "get",
-      url: `${API_HOST}/api/view-subadmin-transaction/${username}`,
+      method: "post",
+      url: `${API_HOST}/api/view-subadmin-transaction/${username}?page=${page}&pageSize=${10}`,
+      data: data,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },

@@ -245,7 +245,7 @@ const UserProfile = () => {
                       }}
                       onClick={() => handleCardClick(user.userId)}
                     >
-                      <div className="card-body ">
+                      <div className="card-body">
                         <button
                           type="button"
                           className="btn btn-steel-blue btn-sm btn-hover-zoom fs-4"
@@ -264,7 +264,7 @@ const UserProfile = () => {
                           {user.userName}
                         </p>
                         <div className="container">
-                          <div className="row g-1 justify-content-center mt-5">
+                          <div className="row g-1 justify-content-center mt-3">
                             <div className="col-6 col-sm-4 col-md-3 col-lg-2">
                               <button
                                 type="button"

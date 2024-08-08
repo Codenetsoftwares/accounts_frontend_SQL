@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useAuth } from "../Utils/Auth"
 import TransactionSercvice from '../Services/TransactionSercvice'
 import Datetime from "react-datetime";
@@ -8,12 +8,12 @@ import { CSVLink } from "react-csv";
 import AccountService from '../Services/AccountService';
 import { toast } from 'react-toastify';
 import SingleCard from '../common/singleCard';
+import { debounce } from 'lodash';
 
 const FilterMainTransaction = ({ purpose, handleData, setPage, handlePage, handleTotalData, FilterData, page, setTotalPage, setDocumentFilter }) => {
     const auth = useAuth();
     const [subAdminlist, setSubAdminlist] = useState([]);
     const [subAdmin, setSubAdmin] = useState("");
-    const [bankList, setBankList] = useState([]);
     const [bank, setBank] = useState("");
     const [introducerList, setIntroducerList] = useState([]);
     const [introducer, setIntroducer] = useState("");
@@ -25,8 +25,20 @@ const FilterMainTransaction = ({ purpose, handleData, setPage, handlePage, handl
     const [documentView, setDocumentView] = useState([]);
     const [minAmount, setMinAmount] = useState(0);
     const [maxAmount, setMaxAmount] = useState(0);
+    const [bankList, setBankList] = useState([]);
+    const [filteredBankOptions, setFilteredBankOptions] = useState([]);
+    const [isBankDropdownVisible, setIsBankDropdownVisible] = useState(false);
+    const [activeBankIndex, setActiveBankIndex] = useState(-1);
+    const [filteredSubAdminOptions, setFilteredSubAdminOptions] = useState([]);
+    const [isSubAdminDropdownVisible, setIsSubAdminDropdownVisible] = useState(false);
+    const [activeSubAdminIndex, setActiveSubAdminIndex] = useState(-1);
+    const [filteredIntroducerOptions, setFilteredIntroducerOptions] = useState([]);
+    const [isIntroducerDropdownVisible, setIsIntroducerDropdownVisible] = useState(false);
+    const [activeIntroducerIndex, setActiveIntroducerIndex] = useState(-1);
+    const [filteredWebsiteOptions, setFilteredWebsiteOptions] = useState([]);
+    const [isWebsiteDropdownVisible, setIsWebsiteDropdownVisible] = useState(false);
+    const [activeWebsiteIndex, setActiveWebsiteIndex] = useState(-1);
     const [searchByTransactionId, setSearchByTransactionId] = useState("");
-
 
     const handleFilter = () => {
         const data = {
@@ -56,7 +68,6 @@ const FilterMainTransaction = ({ purpose, handleData, setPage, handlePage, handl
                 toast.error(err.response.data.message)
             )
         });
-
     }
 
     const handleReset = () => {
@@ -77,22 +88,41 @@ const FilterMainTransaction = ({ purpose, handleData, setPage, handlePage, handl
 
     useEffect(() => {
         handleFilter();
-    }, [page]);
+    }, [page, select, introducer, subAdmin, bank,website]);
 
     useEffect(() => {
         if (auth.user) {
-            TransactionSercvice.subAdminList(auth.user).then((res) => {
-                setSubAdminlist(res.data.data);
-            });
-            TransactionSercvice.bankList(auth.user).then((res) => {
-                setBankList(res.data.data);
-            });
-            AccountService.website(auth.user).then((res) => setWebsiteList(res.data.data));
-            AccountService.introducerId(auth.user).then((res) =>
-                setIntroducerList(res.data.data)
-            );
+            // Create an array of promises for the API calls
+            const promises = [
+                TransactionSercvice.subAdminList(auth.user),
+                TransactionSercvice.bankList(auth.user),
+                AccountService.website(auth.user),
+                AccountService.introducerId(auth.user),
+            ];
+
+            // Use Promise.all to handle all promises concurrently
+            Promise.all(promises)
+                .then(([subAdminRes, bankRes, websiteRes, introducerRes]) => {
+                    // Handle the response for each API call
+                    setSubAdminlist(subAdminRes.data.data);
+                    setFilteredSubAdminOptions(subAdminRes.data.data);
+
+                    setBankList(bankRes.data.data);
+                    setFilteredBankOptions(bankRes.data.data);
+
+                    setWebsiteList(websiteRes.data.data);
+                    setFilteredWebsiteOptions(websiteRes.data.data);
+
+                    setIntroducerList(introducerRes.data.data);
+                    setFilteredIntroducerOptions(introducerRes.data.data);
+                })
+                .catch((error) => {
+                    // Handle any errors that occur during the API calls
+                    console.error("An error occurred while fetching data:", error);
+                });
         }
     }, [auth]);
+
     console.log(websiteList)
     const handleStartDatevalue = (e) => {
         SetStartDatesetValue(moment(e));
@@ -120,7 +150,9 @@ const FilterMainTransaction = ({ purpose, handleData, setPage, handlePage, handl
     const handleBank = (e) => {
         const value = e.target.value;
         setBank(value);
+        handleSearchBank(value); // Ensure this is called here
     };
+
 
     const handleMinAmount = (e) => {
         const value = e.target.value;
@@ -139,6 +171,170 @@ const FilterMainTransaction = ({ purpose, handleData, setPage, handlePage, handl
         const value = e.target.value;
         setSearchByTransactionId(value);
     };
+
+    // Debounced function for searching banks
+    const handleSearchBank = useCallback(
+        debounce((value) => {
+            console.log('Debounced function called with:', value); // Debug log
+            if (value) {
+                const filteredItems = bankList.filter((item) =>
+                    item.bankName.toLowerCase().includes(value.toLowerCase())
+                );
+                setFilteredBankOptions(filteredItems);
+                setIsBankDropdownVisible(true);
+            } else {
+                setFilteredBankOptions([]);
+                setIsBankDropdownVisible(false);
+            }
+        }, 1300),
+        [bankList]
+    );
+
+
+
+    const handleBankKeyDown = (e) => {
+        if (e.key === "ArrowDown") {
+            setActiveBankIndex((prevIndex) =>
+                (prevIndex + 1) % filteredBankOptions.length
+            );
+        } else if (e.key === "ArrowUp") {
+            setActiveBankIndex(
+                (prevIndex) =>
+                    (prevIndex - 1 + filteredBankOptions.length) %
+                    filteredBankOptions.length
+            );
+        } else if ((e.key === "Enter" || e.key === "Tab") && activeBankIndex >= 0) {
+            setBank(filteredBankOptions[activeBankIndex].bankName);
+            setIsBankDropdownVisible(false);
+            setActiveBankIndex(-1);
+        }
+    };
+
+
+    const handleWebsiteSearch = useCallback(
+        debounce((value) => {
+            if (value) {
+                const filteredItems = websiteList.filter((item) =>
+                    item.websiteName.toLowerCase().includes(value.toLowerCase())
+                );
+                setFilteredWebsiteOptions(filteredItems);
+                setIsWebsiteDropdownVisible(true);
+            } else {
+                setFilteredWebsiteOptions([]);
+                setIsWebsiteDropdownVisible(false);
+            }
+        }, 1300),
+        [websiteList]
+    );
+
+    const handleWebsiteChange = (e) => {
+        const value = e.target.value;
+        setWebsite(value);
+        handleWebsiteSearch(value);
+    };
+
+    const handleWebsiteKeyDown = (e) => {
+        if (e.key === "ArrowDown") {
+            setActiveWebsiteIndex((prevIndex) =>
+                (prevIndex + 1) % filteredWebsiteOptions.length
+            );
+        } else if (e.key === "ArrowUp") {
+            setActiveWebsiteIndex(
+                (prevIndex) =>
+                    (prevIndex - 1 + filteredWebsiteOptions.length) %
+                    filteredWebsiteOptions.length
+            );
+        } else if ((e.key === "Enter" || e.key === "Tab") && activeWebsiteIndex >= 0) {
+            setWebsite(filteredWebsiteOptions[activeWebsiteIndex].websiteName);
+            setIsWebsiteDropdownVisible(false);
+            setActiveWebsiteIndex(-1);
+        }
+    };
+
+
+    const handleSubAdminSearch = useCallback(
+        debounce((value) => {
+            if (value) {
+                const filteredItems = subAdminlist.filter((item) =>
+                    item.userName.toLowerCase().includes(value.toLowerCase())
+                );
+                setFilteredSubAdminOptions(filteredItems);
+                setIsSubAdminDropdownVisible(true);
+            } else {
+                setFilteredSubAdminOptions([]);
+                setIsSubAdminDropdownVisible(false);
+            }
+        }, 1300),
+        [subAdminlist]
+    );
+
+    const handleSubAdminChange = (e) => {
+        const value = e.target.value;
+        setSubAdmin(value);
+        handleSubAdminSearch(value);
+    };
+
+    const handleSubAdminKeyDown = (e) => {
+        if (e.key === "ArrowDown") {
+            setActiveSubAdminIndex((prevIndex) =>
+                (prevIndex + 1) % filteredSubAdminOptions.length
+            );
+        } else if (e.key === "ArrowUp") {
+            setActiveSubAdminIndex(
+                (prevIndex) =>
+                    (prevIndex - 1 + filteredSubAdminOptions.length) %
+                    filteredSubAdminOptions.length
+            );
+        } else if ((e.key === "Enter" || e.key === "Tab") && activeSubAdminIndex >= 0) {
+            setSubAdmin(filteredSubAdminOptions[activeSubAdminIndex].userName);
+            setIsSubAdminDropdownVisible(false);
+            setActiveSubAdminIndex(-1);
+        }
+    };
+
+
+    const handleIntroducerSearch = useCallback(
+        debounce((value) => {
+            if (value) {
+                const filteredItems = introducerList.filter((item) =>
+                    item.userName.toLowerCase().includes(value.toLowerCase())
+                );
+                setFilteredIntroducerOptions(filteredItems);
+                setIsIntroducerDropdownVisible(true);
+            } else {
+                setFilteredIntroducerOptions([]);
+                setIsIntroducerDropdownVisible(false);
+            }
+        }, 1300),
+        [introducerList]
+    );
+
+    const handleIntroducerChange = (e) => {
+        const value = e.target.value;
+        setIntroducer(value);
+        handleIntroducerSearch(value);
+    };
+
+    const handleIntroducerKeyDown = (e) => {
+        if (e.key === "ArrowDown") {
+            setActiveIntroducerIndex((prevIndex) =>
+                (prevIndex + 1) % filteredIntroducerOptions.length
+            );
+        } else if (e.key === "ArrowUp") {
+            setActiveIntroducerIndex(
+                (prevIndex) =>
+                    (prevIndex - 1 + filteredIntroducerOptions.length) %
+                    filteredIntroducerOptions.length
+            );
+        } else if ((e.key === "Enter" || e.key === "Tab") && activeIntroducerIndex >= 0) {
+            setIntroducer(filteredIntroducerOptions[activeIntroducerIndex].userName);
+            setIsIntroducerDropdownVisible(false);
+            setActiveIntroducerIndex(-1);
+        }
+    };
+
+
+   
 
     return (
         <SingleCard className="card card-body rounded-8px mt-1">
@@ -160,7 +356,7 @@ const FilterMainTransaction = ({ purpose, handleData, setPage, handlePage, handl
                             onChange={handleChange}
                             style={{ border: "0.5px solid black", borderRadius: "6px" }}
                         >
-                            <option value="All">All</option>
+                            <option value="">All</option>
                             <option value="Deposit">Deposit</option>
                             <option value="Withdraw">Withdraw</option>
                             <option value="Manual-Bank-Deposit">Manual Bank Deposit</option>
@@ -176,82 +372,170 @@ const FilterMainTransaction = ({ purpose, handleData, setPage, handlePage, handl
 
                     <div className="col-md-4 col-lg-3">
                         <h6 className="fw-bold text-nowrap">SubAdmin List</h6>
-                        <select
+                        <input
                             className="form-control"
                             value={subAdmin || ""}
+                            placeholder="SubAdmin Name"
+                            type="text"
                             autoComplete="off"
-                            onChange={handleSubAdmin}
+                            onChange={handleSubAdminChange}
+                            onKeyDown={handleSubAdminKeyDown}
+                            onFocus={() => setIsSubAdminDropdownVisible(true)}
+                            onBlur={() => setIsSubAdminDropdownVisible(false)}
                             style={{ border: "0.5px solid black", borderRadius: "6px" }}
-                            required
-                        >
-                            <option value="">Select subAdmin</option>
-                            {subAdminlist.map((data) => (
-                                <option key={data._id} value={data.userName}>
-                                    {data.userName}
-                                </option>
-                            ))}
-                        </select>
+                        />
+                        {isSubAdminDropdownVisible && (
+                            <ul
+                                className="dropdown-menu show w-100"
+                                style={{ maxHeight: "150px", overflowY: "auto" }}
+                            >
+                                {filteredSubAdminOptions.length > 0 ? (
+                                    filteredSubAdminOptions.map((option, index) => (
+                                        <li
+                                            key={index}
+                                            className={`dropdown-item ${index === activeSubAdminIndex ? "active" : ""}`}
+                                            onMouseDown={() => {
+                                                setSubAdmin(option.userName);
+                                                setIsSubAdminDropdownVisible(false);
+                                                setActiveSubAdminIndex(-1);
+                                            }}
+                                        >
+                                            {option.userName}
+                                        </li>
+                                    ))
+                                ) : (
+                                    <li style={{ padding: "8px" }}>Not found</li>
+                                )}
+                            </ul>
+                        )}
                     </div>
+
 
                     {purpose === "mainStatement" && (
                         <>
                             <div className="col-md-4 col-lg-3">
                                 <h6 className="fw-bold text-nowrap">Introducer List</h6>
-                                <select
+                                <input
                                     className="form-control"
                                     value={introducer || ""}
+                                    placeholder="Introducer Name"
+                                    type="text"
                                     autoComplete="off"
-                                    onChange={handleIntroducer}
+                                    onChange={handleIntroducerChange}
+                                    onKeyDown={handleIntroducerKeyDown}
+                                    onFocus={() => setIsIntroducerDropdownVisible(true)}
+                                    onBlur={() => setIsIntroducerDropdownVisible(false)}
                                     style={{ border: "0.5px solid black", borderRadius: "6px" }}
-                                    required
-                                >
-                                    <option value="">Select Introducer</option>
-                                    {introducerList.map((data) => (
-                                        <option key={data._id} value={data.userName}>
-                                            {data.userName}
-                                        </option>
-                                    ))}
-                                </select>
+                                />
+                                {isIntroducerDropdownVisible && (
+                                    <ul
+                                        className="dropdown-menu show w-100"
+                                        style={{ maxHeight: "150px", overflowY: "auto" }}
+                                    >
+                                        {filteredIntroducerOptions.length > 0 ? (
+                                            filteredIntroducerOptions.map((option, index) => (
+                                                <li
+                                                    key={index}
+                                                    className={`dropdown-item ${index === activeIntroducerIndex ? "active" : ""}`}
+                                                    onMouseDown={() => {
+                                                        setIntroducer(option.userName);
+                                                        setIsIntroducerDropdownVisible(false);
+                                                        setActiveIntroducerIndex(-1);
+                                                    }}
+                                                >
+                                                    {option.userName}
+                                                </li>
+                                            ))
+                                        ) : (
+                                            <li style={{ padding: "8px" }}>Not found</li>
+                                        )}
+                                    </ul>
+                                )}
                             </div>
+
                             <div className="col-md-4 col-lg-3">
-                                <h6 className="fw-bold text-nowrap">Bank Name List</h6>
-                                <select
+                                <h6 className="fw-bold text-nowrap">Bank Name</h6>
+                                <input
                                     className="form-control"
                                     value={bank || ""}
+                                    placeholder="Bank Name"
+                                    type="text"
                                     autoComplete="off"
                                     onChange={handleBank}
+                                    onKeyDown={handleBankKeyDown}
+                                    onFocus={() => setIsBankDropdownVisible(true)}
+                                    onBlur={() => setIsBankDropdownVisible(false)}
                                     style={{ border: "0.5px solid black", borderRadius: "6px" }}
-                                    required
-                                >
-                                    <option value="">Select Bank</option>
-                                    {bankList.map((data) => (
-                                        <option key={data._id} value={data.bankName}>
-                                            {data.bankName}
-                                        </option>
-                                    ))}
-                                </select>
+                                />
+                                {isBankDropdownVisible && (
+                                    <ul
+                                        className="dropdown-menu show w-100"
+                                        style={{ maxHeight: "150px", overflowY: "auto" }}
+                                    >
+                                        {filteredBankOptions.length > 0 ? (
+                                            filteredBankOptions.map((option, index) => (
+                                                <li
+                                                    key={index}
+                                                    className={`dropdown-item ${index === activeBankIndex ? "active" : ""}`}
+                                                    onMouseDown={() => {
+                                                        setBank(option.bankName);
+                                                        setIsBankDropdownVisible(false);
+                                                        setActiveBankIndex(-1);
+                                                    }}
+                                                >
+                                                    {option.bankName}
+                                                </li>
+                                            ))
+                                        ) : (
+                                            <li style={{ padding: "8px" }}>Not found</li>
+                                        )}
+                                    </ul>
+                                )}
+
                             </div>
                         </>
                     )}
 
                     <div className="col-md-4 col-lg-3">
                         <h6 className="fw-bold text-nowrap">Websites List</h6>
-                        <select
+                        <input
                             className="form-control"
                             value={website || ""}
+                            placeholder="Website Name"
+                            type="text"
                             autoComplete="off"
-                            onChange={handleWebsite}
+                            onChange={handleWebsiteChange}
+                            onKeyDown={handleWebsiteKeyDown}
+                            onFocus={() => setIsWebsiteDropdownVisible(true)}
+                            onBlur={() => setIsWebsiteDropdownVisible(false)}
                             style={{ border: "0.5px solid black", borderRadius: "6px" }}
-                            required
-                        >
-                            <option value="">Select Website</option>
-                            {websiteList.map((data) => (
-                                <option key={data._id} value={data.websiteName}>
-                                    {data.websiteName}
-                                </option>
-                            ))}
-                        </select>
+                        />
+                        {isWebsiteDropdownVisible && (
+                            <ul
+                                className="dropdown-menu show w-100"
+                                style={{ maxHeight: "150px", overflowY: "auto" }}
+                            >
+                                {filteredWebsiteOptions.length > 0 ? (
+                                    filteredWebsiteOptions.map((option, index) => (
+                                        <li
+                                            key={index}
+                                            className={`dropdown-item ${index === activeWebsiteIndex ? "active" : ""}`}
+                                            onMouseDown={() => {
+                                                setWebsite(option.websiteName);
+                                                setIsWebsiteDropdownVisible(false);
+                                                setActiveWebsiteIndex(-1);
+                                            }}
+                                        >
+                                            {option.websiteName}
+                                        </li>
+                                    ))
+                                ) : (
+                                    <li style={{ padding: "8px" }}>Not found</li>
+                                )}
+                            </ul>
+                        )}
                     </div>
+
 
                     {(purpose === "introducerReport" || purpose === "mainStatement") && (
                         <div className="col-md-4 col-lg-3">

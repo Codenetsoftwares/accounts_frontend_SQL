@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "../../Utils/Auth";
 import AccountService from "../../Services/AccountService";
 import { toast } from "react-toastify";
@@ -10,6 +10,21 @@ const ModalAddBl = ({ ID }) => {
   const [Amount, SetAmount] = useState(0);
   const [Remarks, SetRemarks] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  // Refresh the Form after the Modal triggered each and every time
+  useEffect(() => {
+    const handleModalShow = () => {
+      SetAmount("");
+      SetRemarks("");
+    };
+
+    const modalElement = document.getElementById("modalAdbl");
+    modalElement.addEventListener("shown.bs.modal", handleModalShow);
+
+    return () => {
+      modalElement.removeEventListener("shown.bs.modal", handleModalShow);
+    };
+  }, []);
 
   const handelamtchange = (e) => {
     SetAmount(e.target.value);
@@ -43,13 +58,17 @@ const ModalAddBl = ({ ID }) => {
         setIsLoading(false);
         if (res.status === 200) {
           console.log(res);
-          alert(res.data.message);
-          window.location.reload();
+          toast.success(res.data.message);
+          // Close the modal
+          const closeButton = document.querySelector("#modalAdbl .btn-close");
+          if (closeButton) {
+            closeButton.click();
+          }
         }
       })
       .catch((error) => {
         setIsLoading(false);
-        alert(error.response.data.message);
+        toast.error(error.response.data.message);
         // alert.error("e.message");
       });
   };

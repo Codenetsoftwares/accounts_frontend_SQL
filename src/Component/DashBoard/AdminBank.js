@@ -47,6 +47,7 @@ const AdminBank = () => {
   const [hoveredCard, setHoveredCard] = useState(null);
   const [activeCard, setActiveCard] = useState(null);
   const [hasMore, setHasMore] = useState(true);
+  const [response, setResponse] = useState({});
 
   console.log("========>>>> bankName details", getbankName);
 
@@ -122,13 +123,12 @@ const AdminBank = () => {
         .then((res) => {
           // console.log(response.data);
           if (res.successCode === 201) {
-            alert(res.data.message);
-            // alert("Bank Deleted approval sent!");
-            window.location.reload();
+            toast.success(res.data.message);
+            setResponse(res.data);
           }
         })
         .catch((error) => {
-          alert(error.response.data.errMessage);
+          toast.error(error.response.data.errMessage);
           console.log(error);
           // toast.error(error);
           // alert.error("e.message");
@@ -174,12 +174,11 @@ const AdminBank = () => {
     };
     AccountService.activeInactiveBank(ID, data, auth.user)
       .then((response) => {
-        alert("Bank Activated");
-        window.location.reload();
-        console.log(response.data);
+        toast.success(response.data.message);
+        setResponse(response.data);
       })
       .catch((error) => {
-        console.error(error);
+        toast.error(error.response.data.errMessage);
       });
   };
 
@@ -201,7 +200,7 @@ const AdminBank = () => {
 
   useEffect(() => {
     fetchData();
-  }, [search]);
+  }, [search, response]);
 
   // for search input field handled from frontend   to be done by serverside
   const fetchMoreData = () => {

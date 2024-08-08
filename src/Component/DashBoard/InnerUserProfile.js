@@ -36,7 +36,7 @@ const InnerUserProfile = () => {
   // Calling Single Introducer Name API
   useEffect(() => {
     AccountService.IntroducerUserId(auth.user).then((res) =>
-      setIntroducerName(res.data)
+      setIntroducerName(res.data.data)
     );
   }, [auth]);
 
@@ -97,8 +97,8 @@ const InnerUserProfile = () => {
     setIsEditing(false);
     setEditedData({ ...editedData, [field]: "" });
     const data = {
-      firstname: editedData.firstName,
-      lastname: editedData.lastName,
+      firstName: editedData.firstName,
+      lastName: editedData.lastName,
       email: editedData.email,
       contactnumber: editedData.contactNumber,
       userName: editedData.userName,
@@ -130,21 +130,19 @@ const InnerUserProfile = () => {
     }
 
     // put Api Fetching
-   
-    
-      AccountService.inneruserprofile(id, data, auth.user)
-        .then((res) => {
-          console.log("res", res);
-          if (res.status === 201) {
-            alert("Profile Updated");
-            window.location.reload();
-          }
-          
-        })
-        .catch((err) => {
-            toast.error("The sum of introducer percentages must be between 0 and 100");
-        });
-    
+
+    AccountService.inneruserprofile(id, data, auth.user)
+      .then((res) => {
+        console.log("res", res);
+        if (res.status === 201) {
+          alert("Profile Updated");
+          window.location.reload();
+        }
+      })
+      .catch((err) => {
+        console.log("err", err);
+        toast.error(err.response.data.errMessage);
+      });
   };
   console.log("User Deatils", foundObject);
 
@@ -159,7 +157,6 @@ const InnerUserProfile = () => {
           data.userName.toLowerCase().includes(value.toLowerCase())
         )
       : [];
-
     setFilteredOptions1(filtered);
   };
   const handleIntroducerChange2 = (e) => {
@@ -236,79 +233,78 @@ const InnerUserProfile = () => {
             </h1> */}
             <div className="row justify-content-center">
               {/* <div className="card"> */}
-                <SingleCard className="mt-2" style={{ backgroundColor: "#4682b4" }}>
-                <SingleCard    className="card shadow-lg p-3 mb-5 bg-white rounded"
-                      style={{
-                        backgroundColor: "#f8f9fa",
-                        borderRadius: "10px",
-                        padding: "20px",
-                        filter: "drop-shadow(0px 8px 16px rgba(0, 0, 0, 0.8))",
-                        boxShadow: "none"  // Remove default box shadow
-                      }}>
-                <div className="card-body" >
-                  {foundObject && (
-                    <>
-                      <div className="mb-3">
-                        <div className="row">
-                          <div className="col-md-4">
-                        <label className="form-label text-dark">
-                          First Name
-                        </label>
-                        <input
-                          name="firstname"
-                          value={
-                            isEditing
-                              ? editedData.firstName
-                              : foundObject?.firstName
-                          }
-                          onChange={handleInputChange}
-                          className="form-control"
-                          disabled={!isEditing}
-                        />
-                      
+              <SingleCard
+                className="mt-2"
+                style={{ backgroundColor: "#4682b4" }}
+              >
+                <SingleCard
+                  className="card shadow-lg p-3 mb-5 bg-white rounded"
+                  style={{
+                    backgroundColor: "#f8f9fa",
+                    borderRadius: "10px",
+                    padding: "20px",
+                    filter: "drop-shadow(0px 8px 16px rgba(0, 0, 0, 0.8))",
+                    boxShadow: "none", // Remove default box shadow
+                  }}
+                >
+                  <div className="card-body">
+                    {foundObject && (
+                      <>
+                        <div className="mb-3">
+                          <div className="row">
+                            <div className="col-md-4">
+                              <label className="form-label text-dark">
+                                First Name
+                              </label>
+                              <input
+                                name="firstname"
+                                value={
+                                  isEditing
+                                    ? editedData.firstName
+                                    : foundObject?.firstName
+                                }
+                                onChange={handleInputChange}
+                                className="form-control"
+                                disabled={!isEditing}
+                              />
+                            </div>
+
+                            <div className="col-md-4">
+                              <label className="form-label text-dark">
+                                Last Name
+                              </label>
+                              <input
+                                name="lastname"
+                                value={
+                                  isEditing
+                                    ? editedData.lastName
+                                    : foundObject?.lastName
+                                }
+                                onChange={handleInputChange}
+                                className="form-control"
+                                disabled={!isEditing}
+                              />
+                            </div>
+
+                            <div className="col-md-4">
+                              <label className="form-label text-dark">
+                                Contact Number
+                              </label>
+                              <input
+                                name="contactNumber"
+                                value={
+                                  isEditing
+                                    ? editedData.contactNumber
+                                    : foundObject?.contactNumber
+                                }
+                                onChange={handleInputChange}
+                                className="form-control"
+                                disabled={!isEditing}
+                              />
+                            </div>
+                          </div>
                         </div>
-                      
-                      
-                      
-                      
-                      <div className="col-md-4">
-                        <label className="form-label text-dark">
-                          Last Name
-                        </label>
-                        <input
-                          name="lastname"
-                          value={
-                            isEditing
-                              ? editedData.lastName
-                              : foundObject?.lastName
-                          }
-                          onChange={handleInputChange}
-                          className="form-control"
-                          disabled={!isEditing}
-                        />
-                      </div>
-                    
-                     
-                     
-                      <div className="col-md-4">
-                        <label className="form-label text-dark">
-                          Contact Number
-                        </label>
-                        <input
-                          name="contactNumber"
-                          value={
-                            isEditing
-                              ? editedData.contactNumber
-                              : foundObject?.contactNumber
-                          }
-                          onChange={handleInputChange}
-                          className="form-control"
-                          disabled={!isEditing}
-                        />
-                  </div>
-                  </div>
-                      </div>
-                      {/* <div className="mb-3">
+                        {/* <div className="mb-3">
                         <label className="form-label">Email</label>
                         <input
                           name="email"
@@ -320,7 +316,7 @@ const InnerUserProfile = () => {
                           disabled={!isEditing}
                         />
                       </div> */}
-                      {/* <div className="mb-3">
+                        {/* <div className="mb-3">
                         <label className="form-label">Username</label>
                         <input
                           name="userName"
@@ -335,455 +331,457 @@ const InnerUserProfile = () => {
                         />
                       </div> */}
 
-                      {/* Show Intro Name disabled Always and Change Intro */}
-                      {isEditing ? (
-                        <>
+                        {/* Show Intro Name disabled Always and Change Intro */}
+                        {isEditing ? (
+                          <>
+                            <div className="mb-3">
+                              <div className="row">
+                                {/* Introducer 1 Start */}
+                                <div className="col-md-4">
+                                  <label className="form-label text-dark">
+                                    Change Introducer 1
+                                  </label>
+                                  <div className="input-group mb-3">
+                                    <div className="input-group-prepend">
+                                      <span className="input-group-text">
+                                        <i className="fa fa-user id"></i>
+                                      </span>
+                                    </div>
+                                    <input
+                                      type="text"
+                                      className="form-control"
+                                      value={searchTerm1}
+                                      onChange={handleIntroducerChange1}
+                                      placeholder={
+                                        foundObject?.introducersUserName
+                                      }
+                                    />
+                                  </div>
+                                  {filteredOptions1.length > 0 && (
+                                    <div className="list-group">
+                                      {filteredOptions1.map((option, index) => (
+                                        <button
+                                          key={index}
+                                          className="list-group-item list-group-item-action"
+                                          onClick={() =>
+                                            handleOptionSelect1(option)
+                                          }
+                                        >
+                                          {option.userName}
+                                        </button>
+                                      ))}
+                                    </div>
+                                  )}
+                                </div>
+                                {/* Introducer 1 End */}
+
+                                {/* Introducer 2 Start */}
+                                <div className="col-md-4">
+                                  <label className="form-label text-dark">
+                                    Change Introducer 2
+                                  </label>
+                                  <div className="input-group mb-3">
+                                    <div className="input-group-prepend">
+                                      <span className="input-group-text">
+                                        <i className="fa fa-user id"></i>
+                                      </span>
+                                    </div>
+                                    <input
+                                      type="text"
+                                      className="form-control"
+                                      placeholder={
+                                        foundObject?.introducersUserName1
+                                      }
+                                      value={searchTerm2}
+                                      onChange={handleIntroducerChange2}
+                                    />
+                                  </div>
+                                  {filteredOptions2.length > 0 && (
+                                    <div className="list-group">
+                                      {filteredOptions2.map((option, index) => (
+                                        <button
+                                          key={index}
+                                          className="list-group-item list-group-item-action"
+                                          onClick={() =>
+                                            handleOptionSelect2(option)
+                                          }
+                                        >
+                                          {option.userName}
+                                        </button>
+                                      ))}
+                                    </div>
+                                  )}
+                                </div>
+                                {/* Introducer 2 End */}
+
+                                {/* Introducer 3 Start */}
+                                <div className="col-md-4">
+                                  <label className="form-label text-dark">
+                                    Change Introducer 3
+                                  </label>
+                                  <div className="input-group mb-3">
+                                    <div className="input-group-prepend">
+                                      <span className="input-group-text">
+                                        <i className="fa fa-user id"></i>
+                                      </span>
+                                    </div>
+                                    <input
+                                      type="text"
+                                      className="form-control"
+                                      placeholder={
+                                        foundObject?.introducersUserName2
+                                      }
+                                      value={searchTerm3}
+                                      onChange={handleIntroducerChange3}
+                                    />
+                                  </div>
+                                  {filteredOptions3.length > 0 && (
+                                    <div className="list-group">
+                                      {filteredOptions3.map((option, index) => (
+                                        <button
+                                          key={index}
+                                          className="list-group-item list-group-item-action"
+                                          onClick={() =>
+                                            handleOptionSelect3(option)
+                                          }
+                                        >
+                                          {option.userName}
+                                        </button>
+                                      ))}
+                                    </div>
+                                  )}
+                                </div>
+                                {/* Introducer 3 End */}
+                              </div>
+                            </div>
+                          </>
+                        ) : (
                           <div className="mb-3">
                             <div className="row">
-                              {/* Introducer 1 Start */}
                               <div className="col-md-4">
                                 <label className="form-label text-dark">
-                                  Change Introducer 1
+                                  Lvl 1 Introducer
                                 </label>
-                                <div className="input-group mb-3">
-                                  <div className="input-group-prepend">
-                                    <span className="input-group-text">
-                                      <i className="fa fa-user id"></i>
-                                    </span>
-                                  </div>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    value={searchTerm1}
-                                    onChange={handleIntroducerChange1}
-                                    placeholder={
-                                      foundObject?.introducersUserName
-                                    }
-                                  />
-                                </div>
-                                {filteredOptions1.length > 0 && (
-                                  <div className="list-group">
-                                    {filteredOptions1.map((option, index) => (
-                                      <button
-                                        key={index}
-                                        className="list-group-item list-group-item-action"
-                                        onClick={() =>
-                                          handleOptionSelect1(option)
-                                        }
-                                      >
-                                        {option.userName}
-                                      </button>
-                                    ))}
-                                  </div>
-                                )}
+                                <input
+                                  name="introducerPercentage"
+                                  value={foundObject?.introducersUserName}
+                                  className="form-control"
+                                  disabled
+                                />
                               </div>
-                              {/* Introducer 1 End */}
 
-                              {/* Introducer 2 Start */}
                               <div className="col-md-4">
                                 <label className="form-label text-dark">
-                                  Change Introducer 2
+                                  Lvl 2 Introducer
                                 </label>
-                                <div className="input-group mb-3">
-                                  <div className="input-group-prepend">
-                                    <span className="input-group-text">
-                                      <i className="fa fa-user id"></i>
-                                    </span>
-                                  </div>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder={
-                                      foundObject?.introducersUserName1
-                                    }
-                                    value={searchTerm2}
-                                    onChange={handleIntroducerChange2}
-                                  />
-                                </div>
-                                {filteredOptions2.length > 0 && (
-                                  <div className="list-group">
-                                    {filteredOptions2.map((option, index) => (
-                                      <button
-                                        key={index}
-                                        className="list-group-item list-group-item-action"
-                                        onClick={() =>
-                                          handleOptionSelect2(option)
-                                        }
-                                      >
-                                        {option.userName}
-                                      </button>
-                                    ))}
-                                  </div>
-                                )}
+                                <input
+                                  name="introducerPercentage"
+                                  value={foundObject?.introducersUserName1}
+                                  className="form-control"
+                                  disabled
+                                />
                               </div>
-                              {/* Introducer 2 End */}
 
-                              {/* Introducer 3 Start */}
                               <div className="col-md-4">
                                 <label className="form-label text-dark">
-                                  Change Introducer 3
+                                  Lvl 3 Introducer
                                 </label>
-                                <div className="input-group mb-3">
-                                  <div className="input-group-prepend">
-                                    <span className="input-group-text">
-                                      <i className="fa fa-user id"></i>
-                                    </span>
-                                  </div>
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder={
-                                      foundObject?.introducersUserName2}
-                                    value={searchTerm3}
-                                    onChange={handleIntroducerChange3}
-                                  />
-                                </div>
-                                {filteredOptions3.length > 0 && (
-                                  <div className="list-group">
-                                    {filteredOptions3.map((option, index) => (
-                                      <button
-                                        key={index}
-                                        className="list-group-item list-group-item-action"
-                                        onClick={() =>
-                                          handleOptionSelect3(option)
-                                        }
-                                      >
-                                        {option.userName}
-                                      </button>
-                                    ))}
-                                  </div>
-                                )}
+                                <input
+                                  name="introducerPercentage"
+                                  value={foundObject?.introducersUserName2}
+                                  className="form-control"
+                                  disabled
+                                />
                               </div>
-                              {/* Introducer 3 End */}
                             </div>
                           </div>
-                        </>
-                      ) : (
+                        )}
+
                         <div className="mb-3">
                           <div className="row">
                             <div className="col-md-4">
                               <label className="form-label text-dark">
-                                Lvl 1 Introducer
+                                Lvl 1 Introducer %
                               </label>
                               <input
                                 name="introducerPercentage"
-                                value={foundObject?.introducersUserName}
+                                value={
+                                  isEditing
+                                    ? editedData.introducerPercentage
+                                    : foundObject?.introducerPercentage
+                                }
+                                onChange={handleInputChange}
                                 className="form-control"
-                                disabled
+                                disabled={!isEditing}
                               />
                             </div>
 
                             <div className="col-md-4">
                               <label className="form-label text-dark">
-                                Lvl 2 Introducer
+                                Lvl 2 Introducer %
                               </label>
                               <input
-                                name="introducerPercentage"
-                                value={foundObject?.introducersUserName1}
+                                name="introducerPercentage1"
+                                value={
+                                  isEditing
+                                    ? editedData.introducerPercentage1
+                                    : foundObject?.introducerPercentage1
+                                }
+                                onChange={handleInputChange}
                                 className="form-control"
-                                disabled
+                                disabled={!isEditing}
                               />
                             </div>
 
                             <div className="col-md-4">
                               <label className="form-label text-dark">
-                                Lvl 3 Introducer
+                                Lvl 3 Introducer %
                               </label>
                               <input
-                                name="introducerPercentage"
-                                value={foundObject?.introducersUserName2}
+                                name="introducerPercentage2"
+                                value={
+                                  isEditing
+                                    ? editedData.introducerPercentage2
+                                    : foundObject?.introducerPercentage2
+                                }
+                                onChange={handleInputChange}
                                 className="form-control"
-                                disabled
+                                disabled={!isEditing}
                               />
                             </div>
                           </div>
                         </div>
-                      )}
 
-                      <div className="mb-3">
-                        <div className="row">
-                          <div className="col-md-4">
-                            <label className="form-label text-dark">
-                              Lvl 1 Introducer %
-                            </label>
-                            <input
-                              name="introducerPercentage"
-                              value={
-                                isEditing
-                                  ? editedData.introducerPercentage
-                                  : foundObject?.introducerPercentage
-                              }
-                              onChange={handleInputChange}
-                              className="form-control"
-                              disabled={!isEditing}
-                            />
-                          </div>
-
-                          <div className="col-md-4">
-                            <label className="form-label text-dark">
-                              Lvl 2 Introducer %
-                            </label>
-                            <input
-                              name="introducerPercentage1"
-                              value={
-                                isEditing
-                                  ? editedData.introducerPercentage1
-                                  : foundObject?.introducerPercentage1
-                              }
-                              onChange={handleInputChange}
-                              className="form-control"
-                              disabled={!isEditing}
-                            />
-                          </div>
-
-                          <div className="col-md-4">
-                            <label className="form-label text-dark">
-                              Lvl 3 Introducer %
-                            </label>
-                            <input
-                              name="introducerPercentage2"
-                              value={
-                                isEditing
-                                  ? editedData.introducerPercentage2
-                                  : foundObject?.introducerPercentage2
-                              }
-                              onChange={handleInputChange}
-                              className="form-control"
-                              disabled={!isEditing}
-                            />
-                          </div>
+                        <div className="mb-3">
+                          <label className="form-label text-dark">
+                            Website Details
+                          </label>
+                          <input
+                            name="WebsiteDetails"
+                            value={
+                              isEditing
+                                ? editedData.Websites_Details
+                                : foundObject?.Websites_Details
+                            }
+                            onChange={handleInputChange}
+                            className="form-control"
+                            disabled={!isEditing}
+                          />
                         </div>
-                      </div>
-
-                      <div className="mb-3">
-                        <label className="form-label text-dark">
-                          Website Details
-                        </label>
-                        <input
-                          name="WebsiteDetails"
-                          value={
-                            isEditing
-                              ? editedData.Websites_Details
-                              : foundObject?.Websites_Details
-                          }
-                          onChange={handleInputChange}
-                          className="form-control"
-                          disabled={!isEditing}
-                        />
-                      </div>
-                      {/* <button
+                        {/* <button
                         className="btn btn-link"
                         onClick={toggleAccordion}
                       >
                         Payment Details
                       </button> */}
-{/* transaction details commented */}
-                      {/* <p
+                        {/* transaction details commented */}
+                        {/* <p
                         className="btn btn-link pt-4"
                         onClick={Handletransaction}
                       >
                         Transaction Details
                       </p> */}
-                      {isAccordionOpen && (
-                        <div className="accordion">
-                          <div className="accordion-item">
-                            <h2 className="accordion-header">
-                              <button
-                                className="accordion-button"
-                                type="button"
-                                onClick={toggleAccordion}
-                              >
-                                Bank Details
-                              </button>
-                            </h2>
-                            <div className="accordion-collapse collapse show">
-                              <div className="accordion-body">
-                                <div className="row">
-                                  <div className="col-md-6">
-                                    <div className="form-group">
-                                      <label
-                                        htmlFor="bankName"
-                                        className="form-label"
-                                      >
-                                        Bank Name:
-                                        {/* {editedData.bankDetail} */}
-                                      </label>
-                                      <input
-                                        type="text"
-                                        id="bankName"
-                                        className="form-control"
-                                        value={
-                                          isEditing
-                                            ? editedData.bankDetail &&
-                                              editedData.bankDetail.bankName // Check if bankName exists in editedData.bankDetail
-                                            : foundObject?.bankDetail &&
-                                              foundObject?.bankDetail.bankName // Check if bankName exists in foundObject?.bankDetail}
-                                        }
-                                        disabled={!isEditing}
-                                      />
+                        {isAccordionOpen && (
+                          <div className="accordion">
+                            <div className="accordion-item">
+                              <h2 className="accordion-header">
+                                <button
+                                  className="accordion-button"
+                                  type="button"
+                                  onClick={toggleAccordion}
+                                >
+                                  Bank Details
+                                </button>
+                              </h2>
+                              <div className="accordion-collapse collapse show">
+                                <div className="accordion-body">
+                                  <div className="row">
+                                    <div className="col-md-6">
+                                      <div className="form-group">
+                                        <label
+                                          htmlFor="bankName"
+                                          className="form-label"
+                                        >
+                                          Bank Name:
+                                          {/* {editedData.bankDetail} */}
+                                        </label>
+                                        <input
+                                          type="text"
+                                          id="bankName"
+                                          className="form-control"
+                                          value={
+                                            isEditing
+                                              ? editedData.bankDetail &&
+                                                editedData.bankDetail.bankName // Check if bankName exists in editedData.bankDetail
+                                              : foundObject?.bankDetail &&
+                                                foundObject?.bankDetail.bankName // Check if bankName exists in foundObject?.bankDetail}
+                                          }
+                                          disabled={!isEditing}
+                                        />
+                                      </div>
+                                      <div className="form-group">
+                                        <label
+                                          htmlFor="accountNumber"
+                                          className="form-label"
+                                        >
+                                          Account Number:
+                                        </label>
+                                        <input
+                                          type="text"
+                                          id="accountNumber"
+                                          className="form-control"
+                                          value={
+                                            isEditing
+                                              ? editedData.bankDetail &&
+                                                editedData.bankDetail
+                                                  .accountNumber // Check if accountNumber exists in editedData.bankDetail
+                                              : foundObject?.bankDetail &&
+                                                foundObject?.bankDetail
+                                                  .accountNumber // Check if accountNumber exists in foundObject?.bankDetail
+                                          }
+                                          disabled={!isEditing}
+                                        />
+                                      </div>
                                     </div>
-                                    <div className="form-group">
-                                      <label
-                                        htmlFor="accountNumber"
-                                        className="form-label"
-                                      >
-                                        Account Number:
-                                      </label>
-                                      <input
-                                        type="text"
-                                        id="accountNumber"
-                                        className="form-control"
-                                        value={
-                                          isEditing
-                                            ? editedData.bankDetail &&
-                                              editedData.bankDetail
-                                                .accountNumber // Check if accountNumber exists in editedData.bankDetail
-                                            : foundObject?.bankDetail &&
-                                              foundObject?.bankDetail
-                                                .accountNumber // Check if accountNumber exists in foundObject?.bankDetail
-                                        }
-                                        disabled={!isEditing}
-                                      />
-                                    </div>
-                                  </div>
-                                  <div className="col-md-6">
-                                    <div className="form-group">
-                                      <label
-                                        htmlFor="ifscCode"
-                                        className="form-label"
-                                      >
-                                        IFSC Code:
-                                      </label>
-                                      <input
-                                        type="text"
-                                        id="ifscCode"
-                                        className="form-control"
-                                        value={
-                                          isEditing
-                                            ? editedData.bankDetail &&
-                                              editedData.bankDetail.ifscCode // Check if ifscCode exists in editedData.bankDetail
-                                            : foundObject?.bankDetail &&
-                                              foundObject?.bankDetail.ifscCode
-                                        }
-                                        disabled={!isEditing}
-                                      />
-                                    </div>
-                                    <div className="form-group">
-                                      <label
-                                        htmlFor="accountHolderName"
-                                        className="form-label"
-                                      >
-                                        Account Holder Name:
-                                      </label>
-                                      <input
-                                        type="text"
-                                        id="accountHolderName"
-                                        className="form-control"
-                                        value={
-                                          isEditing
-                                            ? editedData.bankDetail &&
-                                              editedData.bankDetail
-                                                .accountHolderName // Check if accountHolderName exists in editedData.bankDetail
-                                            : foundObject?.bankDetail &&
-                                              foundObject?.bankDetail
-                                                .accountHolderName
-                                        }
-                                        disabled={!isEditing}
-                                      />
-                                    </div>
-                                    <div className="form-group">
-                                      <label
-                                        htmlFor="Upi"
-                                        className="form-label"
-                                      >
-                                        UPI Application:
-                                      </label>
-                                      <input
-                                        type="text"
-                                        id="upiApp"
-                                        className="form-control"
-                                        value={
-                                          isEditing
-                                            ? editedData.bankDetail &&
-                                              editedData.bankDetail.upiApp
-                                            : foundObject?.bankDetail &&
-                                              foundObject?.bankDetail.upiApp
-                                        }
-                                        disabled={!isEditing}
-                                      />
-                                    </div>
-                                    <div className="form-group">
-                                      <label
-                                        htmlFor="Upi"
-                                        className="form-label"
-                                      >
-                                        UPI ID:
-                                      </label>
-                                      <input
-                                        type="text"
-                                        id="upiId"
-                                        className="form-control"
-                                        value={
-                                          isEditing
-                                            ? editedData.bankDetail &&
-                                              editedData.bankDetail.upiId
-                                            : foundObject?.bankDetail &&
-                                              foundObject?.bankDetail.upiId
-                                        }
-                                        disabled={!isEditing}
-                                      />
-                                    </div>
-                                    <div className="form-group">
-                                      <label
-                                        htmlFor="Upi"
-                                        className="form-label"
-                                      >
-                                        UPI Number:
-                                      </label>
-                                      <input
-                                        type="text"
-                                        id="upiNumber"
-                                        className="form-control"
-                                        value={
-                                          isEditing
-                                            ? editedData.bankDetail &&
-                                              editedData.bankDetail.upiNumber
-                                            : foundObject?.bankDetail &&
-                                              foundObject?.bankDetail.upiNumber
-                                        }
-                                        disabled={!isEditing}
-                                      />
+                                    <div className="col-md-6">
+                                      <div className="form-group">
+                                        <label
+                                          htmlFor="ifscCode"
+                                          className="form-label"
+                                        >
+                                          IFSC Code:
+                                        </label>
+                                        <input
+                                          type="text"
+                                          id="ifscCode"
+                                          className="form-control"
+                                          value={
+                                            isEditing
+                                              ? editedData.bankDetail &&
+                                                editedData.bankDetail.ifscCode // Check if ifscCode exists in editedData.bankDetail
+                                              : foundObject?.bankDetail &&
+                                                foundObject?.bankDetail.ifscCode
+                                          }
+                                          disabled={!isEditing}
+                                        />
+                                      </div>
+                                      <div className="form-group">
+                                        <label
+                                          htmlFor="accountHolderName"
+                                          className="form-label"
+                                        >
+                                          Account Holder Name:
+                                        </label>
+                                        <input
+                                          type="text"
+                                          id="accountHolderName"
+                                          className="form-control"
+                                          value={
+                                            isEditing
+                                              ? editedData.bankDetail &&
+                                                editedData.bankDetail
+                                                  .accountHolderName // Check if accountHolderName exists in editedData.bankDetail
+                                              : foundObject?.bankDetail &&
+                                                foundObject?.bankDetail
+                                                  .accountHolderName
+                                          }
+                                          disabled={!isEditing}
+                                        />
+                                      </div>
+                                      <div className="form-group">
+                                        <label
+                                          htmlFor="Upi"
+                                          className="form-label"
+                                        >
+                                          UPI Application:
+                                        </label>
+                                        <input
+                                          type="text"
+                                          id="upiApp"
+                                          className="form-control"
+                                          value={
+                                            isEditing
+                                              ? editedData.bankDetail &&
+                                                editedData.bankDetail.upiApp
+                                              : foundObject?.bankDetail &&
+                                                foundObject?.bankDetail.upiApp
+                                          }
+                                          disabled={!isEditing}
+                                        />
+                                      </div>
+                                      <div className="form-group">
+                                        <label
+                                          htmlFor="Upi"
+                                          className="form-label"
+                                        >
+                                          UPI ID:
+                                        </label>
+                                        <input
+                                          type="text"
+                                          id="upiId"
+                                          className="form-control"
+                                          value={
+                                            isEditing
+                                              ? editedData.bankDetail &&
+                                                editedData.bankDetail.upiId
+                                              : foundObject?.bankDetail &&
+                                                foundObject?.bankDetail.upiId
+                                          }
+                                          disabled={!isEditing}
+                                        />
+                                      </div>
+                                      <div className="form-group">
+                                        <label
+                                          htmlFor="Upi"
+                                          className="form-label"
+                                        >
+                                          UPI Number:
+                                        </label>
+                                        <input
+                                          type="text"
+                                          id="upiNumber"
+                                          className="form-control"
+                                          value={
+                                            isEditing
+                                              ? editedData.bankDetail &&
+                                                editedData.bankDetail.upiNumber
+                                              : foundObject?.bankDetail &&
+                                                foundObject?.bankDetail
+                                                  .upiNumber
+                                          }
+                                          disabled={!isEditing}
+                                        />
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      )}
-                      {isEditing ? (
-                        <button
-                          className="btn btn-dark mx-1 "
-                          onClick={handleSave}
-                        >
-                          <FontAwesomeIcon icon={faSave} /> Save
-                        </button>
-                      ) : (
-                        <>
+                        )}
+                        {isEditing ? (
                           <button
-                            className="btn btn-secondary mx-1"
-                            onClick={handleToggleEdit}
+                            className="btn btn-dark mx-1 "
+                            onClick={handleSave}
                           >
-                            <FontAwesomeIcon icon={faEdit} /> Edit
+                            <FontAwesomeIcon icon={faSave} /> Save
                           </button>
-                        </>
-                      )}
-                    </>
-                  )}
-                </div>
+                        ) : (
+                          <>
+                            <button
+                              className="btn btn-secondary mx-1"
+                              onClick={handleToggleEdit}
+                            >
+                              <FontAwesomeIcon icon={faEdit} /> Edit
+                            </button>
+                          </>
+                        )}
+                      </>
+                    )}
+                  </div>
                 </SingleCard>
-                </SingleCard>
-                {/* <button
+              </SingleCard>
+              {/* <button
                   class="btn btn-primary"
                   type="button"
                   data-toggle="collapse"
