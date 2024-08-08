@@ -10,7 +10,7 @@ import {
   faExclamationTriangle,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
-const NavSide = ({ onSelect }) => {
+const NavSide = () => {
   const auth = useAuth();
   const [isToggle, setIsToggle] = useState(true);
   const [isToggleCreate, setIsToggleCreate] = useState(true);
@@ -53,10 +53,6 @@ const NavSide = ({ onSelect }) => {
 
   const handleToggleRecycleBin = () => {
     setIsToggleRecycleBin(!isToggleRecycleBin);
-  };
-  const handleMenuClick = (menuItem) => {
-    console.log("=====>>>> menuItem", menuItem);
-    onSelect(menuItem); // Call onSelect callback with selected menu item
   };
   return (
     <div>
@@ -111,7 +107,7 @@ const NavSide = ({ onSelect }) => {
               data-accordion="false"
             >
               <Link className="nav-item " to="/welcome">
-                <a href="#" className="nav-link active"  onClick={() => handleMenuClick('dashboard')}>
+                <a href="#" className="nav-link active">
                   <i className="nav-icon fas fa-tachometer-alt"></i>
                   <p>Dashboard</p>
                 </a>
@@ -167,7 +163,7 @@ const NavSide = ({ onSelect }) => {
                           role === "Create-Transaction"
                       ) && (
                         <>
-                          <Link to="/deposit" className="nav-link text-white" onClick={() => handleMenuClick('Deposit')}>
+                          <Link to="/deposit" className="nav-link text-white">
                             <i className="far fa-circle nav-icon" />
                             <p>Deposit</p>
                           </Link>
@@ -181,7 +177,7 @@ const NavSide = ({ onSelect }) => {
                           role === "Create-Transaction"
                       ) && (
                         <>
-                          <Link to="/withdraw" className="nav-link text-white" onClick={() => handleMenuClick('Withdraw')}>
+                          <Link to="/withdraw" className="nav-link text-white">
                             <i className="far fa-circle nav-icon" />
                             <p>Withdraw</p>
                           </Link>
@@ -198,7 +194,7 @@ const NavSide = ({ onSelect }) => {
                 (role) => role === "superAdmin" || role === "Bank-View"
               ) && (
                 <>
-                  <Link to="/bank" className="nav-link text-white" onClick={() => handleMenuClick('Bank')}>
+                  <Link to="/bank" className="nav-link text-white">
                     <i className="fas fa-university nav-icon m-2" />
                     <p>Bank</p>
                   </Link>
@@ -211,7 +207,7 @@ const NavSide = ({ onSelect }) => {
                 (role) => role === "superAdmin" || role === "Website-View"
               ) && (
                 <>
-                  <Link to="/website" className="nav-link text-white" onClick={() => handleMenuClick('Website')}>
+                  <Link to="/website" className="nav-link text-white">
                     <i className="fas fa-globe nav-icon m-2" />
                     <p>Website</p>
                   </Link>
@@ -254,7 +250,7 @@ const NavSide = ({ onSelect }) => {
                         </p>
                       </a>
                       {userrole.some((role) => role === "superAdmin") && (
-                        <Link to="/createuser" className="nav-link text-white" onClick={() => handleMenuClick('createSubAdmin')}>
+                        <Link to="/createuser" className="nav-link text-white">
                           <i className="far fa-circle nav-icon" />
                           <p>Create SubAdmin</p>
                         </Link>
@@ -267,7 +263,6 @@ const NavSide = ({ onSelect }) => {
                         <Link
                           to="/createactualuser"
                           className="nav-link text-white"
-                          onClick={() => handleMenuClick('createUser')}
                         >
                           <i className="far fa-circle nav-icon" />
                           <p>Create User</p>
@@ -280,7 +275,6 @@ const NavSide = ({ onSelect }) => {
                         <Link
                           to="/createintroducer"
                           className="nav-link text-white"
-                          onClick={() => handleMenuClick('createIntroducer')}
                         >
                           <i className="far fa-circle nav-icon" />
                           <p>Create Introducer</p>
@@ -327,7 +321,7 @@ const NavSide = ({ onSelect }) => {
                           role === "Profile-View" ||
                           role === "User-Profile-View"
                       ) && (
-                        <Link to="userprofile" className="nav-link text-white" onClick={() => handleMenuClick('userProfile')}>
+                        <Link to="userprofile" className="nav-link text-white">
                           <i className="far fa-circle nav-icon" />
                           <p>User Profile</p>
                         </Link>
@@ -341,7 +335,6 @@ const NavSide = ({ onSelect }) => {
                         <Link
                           to="/introducerprofile"
                           className="nav-link text-white"
-                          onClick={() => handleMenuClick('introducerProfile')}
                         >
                           <i className="far fa-circle nav-icon" />
                           <p>Introducer</p>
@@ -350,7 +343,7 @@ const NavSide = ({ onSelect }) => {
                       {userrole.some(
                         (role) => role === "superAdmin" || role === ""
                       ) && (
-                        <Link to="/adminlist" className="nav-link text-white" onClick={() => handleMenuClick('subAdminProfile')}>
+                        <Link to="/adminlist" className="nav-link text-white">
                           <i className="far fa-circle nav-icon" />
                           <p>SubAdmin</p>
                         </Link>
@@ -402,7 +395,6 @@ const NavSide = ({ onSelect }) => {
                         <Link
                           to="/mainfiltertransactionpage"
                           className="nav-link text-white"
-                          onClick={() => handleMenuClick('AllTransactionDetails')}
                         >
                           <i className="far fa-circle nav-icon" />
                           <p>All Transaction Details</p>
@@ -412,7 +404,7 @@ const NavSide = ({ onSelect }) => {
                         (role) =>
                           role === "superAdmin" || role === "report-my-txn"
                       ) && (
-                        <Link to="/mytxn" className="nav-link text-white" onClick={() => handleMenuClick('MyTransactions')}>
+                        <Link to="/mytxn" className="nav-link text-white">
                           <i className="far fa-circle nav-icon" />
                           <p>My Transactions</p>
                         </Link>
@@ -465,7 +457,6 @@ const NavSide = ({ onSelect }) => {
                       <Link
                         to="/introduceralert"
                         className="nav-link text-white"
-                        onClick={() => handleMenuClick('introducerTransactionRequest')}
                       >
                         <i className="far fa-circle nav-icon" />
                         <p>Introducer transaction</p>
@@ -502,7 +493,6 @@ const NavSide = ({ onSelect }) => {
                               <Link
                                 to="/bankEdit"
                                 className="nav-link text-white"
-                                onClick={() => handleMenuClick('BankEdit')}
                               >
                                 <i className="far fa-circle nav-icon" />
                                 <p>Edit</p>
@@ -511,7 +501,6 @@ const NavSide = ({ onSelect }) => {
                               <Link
                                 to="/bankDelete"
                                 className="nav-link text-white"
-                                onClick={() => handleMenuClick('BankDelete')}
                               >
                                 <i className="far fa-circle nav-icon" />
                                 <p>Delete</p>
@@ -519,7 +508,6 @@ const NavSide = ({ onSelect }) => {
                               <Link
                                 to="/newbank"
                                 className="nav-link text-white"
-                                onClick={() => handleMenuClick('NewBank')}
                               >
                                 <i className="far fa-circle nav-icon" />
                                 <p>New Bank</p>
@@ -560,7 +548,6 @@ const NavSide = ({ onSelect }) => {
                               <Link
                                 to="/websiteEdit"
                                 className="nav-link text-white"
-                                onClick={() => handleMenuClick('WebsiteEdit')}
                               >
                                 <i className="far fa-circle nav-icon" />
                                 <p>Edit</p>
@@ -568,7 +555,6 @@ const NavSide = ({ onSelect }) => {
                               <Link
                                 to="/websiteDelete"
                                 className="nav-link text-white"
-                                onClick={() => handleMenuClick('WebsiteDelete')}
                               >
                                 <i className="far fa-circle nav-icon" />
                                 <p>Delete</p>
@@ -576,7 +562,6 @@ const NavSide = ({ onSelect }) => {
                               <Link
                                 to="/newwebsite"
                                 className="nav-link text-white"
-                                onClick={() => handleMenuClick('newWebsite')}
                               >
                                 <i className="far fa-circle nav-icon" />
                                 <p>New Website</p>
@@ -628,7 +613,6 @@ const NavSide = ({ onSelect }) => {
                       <Link
                         to="trashAllTransaction"
                         className="nav-link text-white"
-                        onClick={() => handleMenuClick('AllTransactionTrash')}
                       >
                         <i className="far fa-circle nav-icon" />
                         <p>All transaction</p>

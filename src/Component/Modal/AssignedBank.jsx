@@ -4,14 +4,13 @@ import AccountService from "../../Services/AccountService";
 
 const AssignedBank = ({ ID }) => {
   const [BankNames, setBankNames] = useState([]);
-  console.log('=====>>> data for banknames',BankNames)
   const auth = useAuth();
 
   useEffect(() => {
     AccountService.subadminassigneedbankview(ID, auth.user)
       .then((res) =>
-          // console.log('=====>>>> responce',res)
-        setBankNames(res.data.data)
+        //   console.log(res.data)
+        setBankNames(res.data)
       )
       .catch((err) => {
         console.log(err.response.data.message);

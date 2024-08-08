@@ -12,15 +12,13 @@ const CreateRequestNew = ({ Api, purpose, ApiReject, EditApi }) => {
   useEffect(() => {
     Api(auth.user)
       .then((res) => {
-        setData(res.data.data);
+        setData(res.data);
         console.log(res.data);
       })
       .catch((err) => {
         setError("Error fetching data. Please try again.");
       });
   }, [auth]);
-
-  console.log("data = >>>>>", data);
 
   const handleApprove = (_id) => {
     setId(_id);
@@ -98,7 +96,7 @@ const CreateRequestNew = ({ Api, purpose, ApiReject, EditApi }) => {
             )}
           </thead>
           <tbody>
-            {data?.reverse().map((data, index) => (
+            {data.map((data, index) => (
               <tr key={index}>
                 {purpose === "bank" && (
                   <>
@@ -134,7 +132,7 @@ const CreateRequestNew = ({ Api, purpose, ApiReject, EditApi }) => {
                   {purpose === "bank" ? (
                     <button
                       className="btn btn-outline-success"
-                      onClick={() => handleApprove(data.bankId)}
+                      onClick={() => handleApprove(data.bank_id)}
                       data-toggle="modal"
                       data-target="#exampleModal"
                     >
@@ -143,7 +141,7 @@ const CreateRequestNew = ({ Api, purpose, ApiReject, EditApi }) => {
                   ) : (
                     <button
                       className="btn btn-outline-success"
-                      onClick={() => handleApprove(data.websiteId)}
+                      onClick={() => handleApprove(data.website_id)}
                       data-toggle="modal"
                       data-target="#exampleModal"
                     >
@@ -155,14 +153,14 @@ const CreateRequestNew = ({ Api, purpose, ApiReject, EditApi }) => {
                   {purpose === "bank" ? (
                     <button
                       className="btn btn-outline-danger"
-                      onClick={() => handleReject(data.bankId)}
+                      onClick={() => handleReject(data.bank_id)}
                     >
                       Reject
                     </button>
                   ) : (
                     <button
                       className="btn btn-outline-danger"
-                      onClick={() => handleReject(data.websiteId)}
+                      onClick={() => handleReject(data.website_id)}
                     >
                       Reject
                     </button>

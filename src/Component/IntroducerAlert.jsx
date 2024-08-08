@@ -153,8 +153,15 @@ const IntroducerAlert = () => {
     <>
       <div className="container d-flex justify-content-center  ">
         <br />
-        <div className="rounded-2 mb-2"></div>
-        <div className="p-2">
+        <div
+          className="card  rounded-2 mb-2"
+          style={{
+            boxShadow: "26px -13px 32px -15px rgba(29,29,31,0.68)",
+            backgroundImage:
+              "linear-gradient(90deg, rgba(60,251,165,1) 0%, rgba(171,246,241,1) 50%, rgba(60,251,165,1) 100%)",
+          }}
+        ></div>
+        <div className=" p-2">
           {alert.length > 0 ? (
             alert.map((data, i) => {
               return (
@@ -272,11 +279,7 @@ const IntroducerAlert = () => {
                         <button
                           class="btn btn-primary"
                           onClick={(e) =>
-                            handleEditApprove(
-                              e,
-                              data.IntroEditID,
-                              data.transactionType
-                            )
+                            handleEditApprove(e, data.IntroEditID, data.transactionType)
                           }
                         >
                           Approve
@@ -284,11 +287,7 @@ const IntroducerAlert = () => {
                         <button
                           class="btn btn-danger"
                           onClick={(e) =>
-                            handleEditReject(
-                              e,
-                              data.IntroEditID,
-                              data.transactionType
-                            )
+                            handleEditReject(e, data.IntroEditID, data.transactionType)
                           }
                         >
                           Reject
@@ -437,9 +436,7 @@ const IntroducerAlert = () => {
               );
             })
           ) : (
-            <div class="alert alert-warning  fs-6" role="alert">
-              No Alert Found
-            </div>
+            <h1>No Alert Found</h1>
           )}
         </div>
         <InnerAlert />

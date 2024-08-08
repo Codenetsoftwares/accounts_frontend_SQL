@@ -9,13 +9,11 @@ const BankEdit = () => {
   useEffect(() => {
     if (auth.user) {
       EditServices.ViewBankEditRq(auth.user).then((res) => {
-        const changedFieldsArray = res.data.data.map(
-          (item) => item.changedFields
-        );
+        const changedFieldsArray = res.data.map((item) => item.changedFields);
 
         SetChangeFiled(changedFieldsArray);
 
-        SetEditRq(res.data.data);
+        SetEditRq(res.data);
       });
     }
   }, [auth]);
@@ -87,8 +85,7 @@ const BankEdit = () => {
                 {item.message}
               </p>
               <hr />
-              {/* commented for null data type */}
-              {/* <p className="ml-2">
+              <p className="ml-2">
                 <b className="ml-2 text-danger">
                   {" "}
                   Here are the fields that have been changed{" "}
@@ -96,27 +93,27 @@ const BankEdit = () => {
 
                 {item.hasOwnProperty("changedFields") &&
                   item.changedFields &&
-                  Object.keys(item?.changedFields).length > 0 && (
+                  Object.keys(item.changedFields).length > 0 && (
                     <ul>
-                      {Object.keys(item?.changedFields).map((key) => (
+                      {Object.keys(item.changedFields).map((key) => (
                         <li key={key}>
-                          <b>{key}</b>: {item?.changedFields[key]}
+                          <b>{key}</b>: {item.changedFields[key]}
                         </li>
                       ))}
                     </ul>
                   )}
-              // </p> */}
+              </p>
               <p>
                 <button
                   type="button"
                   class="btn btn-success mr-2 ml-2"
-                  onClick={() => handleapprove(item.bankId)}
+                  onClick={() => handleapprove(item.bankTransactionId)}
                 >
                   Approve
                 </button>
                 <button
                   class="btn btn-danger"
-                  onClick={(e) => handleReject(e, item.bankId)}
+                  onClick={(e) => handleReject(e, item.bankTransactionId)}
                 >
                   Reject
                 </button>
@@ -125,11 +122,8 @@ const BankEdit = () => {
           ))}
         </div>
       ) : (
-        <div
-          class="alert alert-warning fs-6 d-flex justify-content-center container"
-          role="alert"
-        >
-          No Alert Found
+        <div class="card">
+          <div class="card-body">No Request Found</div>
         </div>
       )}
     </>

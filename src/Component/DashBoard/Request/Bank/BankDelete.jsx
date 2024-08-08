@@ -12,7 +12,7 @@ const BankDelete = () => {
   useEffect(() => {
     if (auth.user) {
       EditServices.ViewBankDelete(auth.user).then((res) =>
-        setViewBankDelete(res.data.data)
+        setViewBankDelete(res.data)
       );
     }
   }, [auth]);
@@ -127,13 +127,13 @@ const BankDelete = () => {
                   <div className="col d-flex justify-content-center gap-2 mb-2">
                     <button
                       class="btn btn-primary"
-                      onClick={(e) => handleApprove(e, data.bankId)}
+                      onClick={(e) => handleApprove(e, data.bank_id)}
                     >
                       Approve
                     </button>
                     <button
                       class="btn btn-danger"
-                      onClick={(e) => handleReject(e, data.bankId)}
+                      onClick={(e) => handleReject(e, data.bank_id)}
                     >
                       Reject
                     </button>

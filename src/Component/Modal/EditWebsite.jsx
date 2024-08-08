@@ -12,7 +12,7 @@ const EditWebsite = ({ ID, webName }) => {
     AccountService.EditWebsite(data, ID, auth.user)
       .then((response) => {
         console.log(response.data);
-        alert(response.data.message);
+        alert(response.data);
         window.location.reload();
       })
       .catch((error) => {
@@ -35,7 +35,7 @@ const EditWebsite = ({ ID, webName }) => {
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLabel">
                 Provide New Name
-              </h5>
+              </h5> 
             </div>
 
             <div className="modal-body">
@@ -81,6 +81,7 @@ const EditWebsite = ({ ID, webName }) => {
               </form>
             </div>
             <div className="modal-footer">
+              
               <button
                 type="button"
                 className="btn btn-primary"
