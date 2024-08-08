@@ -48,6 +48,7 @@ const WebsiteDetails = () => {
   const [hoveredCard, setHoveredCard] = useState(null);
   const [search, setSearch] = useState(""); // usestate for search state
   const [hasMore, setHasMore] = useState(true);
+  const [response, setResponse] = useState({});
 
   const handleCardClick = (id) => {
     setActiveCard(id);
@@ -79,16 +80,17 @@ const WebsiteDetails = () => {
       .then((res) => {
         console.log("res", res);
         if (res.status === 201) {
-          alert(res.data.message);
-          window.location.reload();
+          toast.success(res.data.message);
+          setResponse(res.data);
+          setWebsite("");
         }
         // console.log(res);
       })
       .catch((err) => {
-        alert(err.response.data.errMessage);
+        toast.error(err.response.data.errMessage);
         console.log(err);
       });
-    // window.location.reload();
+    // setResponse(res.data);
   };
 
   const handelName = (id) => {
@@ -115,15 +117,13 @@ const WebsiteDetails = () => {
       AccountService.deletewebsite({ requestId: id }, auth.user)
         .then((res) => {
           console.log("res=>>>>", res);
-          if (res.status === 200) {
-            alert("Website Deleted approval sent!");
-            // window.location.reload();
+          if (res.status === 201) {
+            toast.success(res.data.message);
+            setResponse(res.data);
           }
         })
         .catch((error) => {
-          toast.error(error.errMessage);
-          console.log("error=>>>", error.data);
-          // alert.error("e.message");
+          toast.error(error.response.data.errMessage);
         });
     }
   };
@@ -138,7 +138,7 @@ const WebsiteDetails = () => {
   // get api  fetch
   useEffect(() => {
     fetchData();
-  }, [search]);
+  }, [search, response]);
 
   const fetchData = async () => {
     try {
@@ -203,12 +203,13 @@ const WebsiteDetails = () => {
     };
     AccountService.activeInactiveWebsite(ID, data, auth.user)
       .then((response) => {
-        alert("Website Activated");
-        window.location.reload();
+        toast.success(response.data.message);
+        setResponse(response.data);
         console.log(response.data);
       })
       .catch((error) => {
         console.error(error);
+        toast.error(error.response.data.errMessage);
       });
   };
 
@@ -219,12 +220,12 @@ const WebsiteDetails = () => {
     };
     AccountService.activeInactiveWebsite(ID, data, auth.user)
       .then((response) => {
-        alert("Website Inactivated");
-        window.location.reload();
+        toast.success(response.data.message);
+        setResponse(response.data);
         console.log(response.data);
       })
       .catch((error) => {
-        alert(error.response.data.message);
+        toast.error(error.response.data.errMessage);
         console.error(error);
       });
   };

@@ -81,12 +81,8 @@ export const CreateUserSchema = Yup.object({
   contactNumber: Yup.string()
     .min(10, "Contact Number must be at least 10 characters")
     .required("Contact Number is required"),
-  introducersUserName: Yup.string().required(
-    "Introducers Username is required"
-  ),
-  introducerPercentage: Yup.string().required(
-    "Introducers Percentage is required"
-  ),
+  introducersUserName: Yup.string(),
+  introducerPercentage: Yup.string(),
   introducersUserName1: Yup.string(),
   introducersUserName2: Yup.string(),
   introducerPercentage: Yup.string(),

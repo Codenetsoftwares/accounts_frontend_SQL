@@ -90,7 +90,7 @@ const Login = () => {
                         onBlur={handleBlur}
                       />
                       {errors.userName && touched.userName ? (
-                        <p>{errors.userName}</p>
+                        <p className="text-danger h5 mt-1">{errors.userName}</p>
                       ) : null}
                     </div>
 
@@ -105,7 +105,7 @@ const Login = () => {
                         onBlur={handleBlur}
                       />
                       {errors.password && touched.password ? (
-                        <p>{errors.password}</p>
+                        <p className="text-danger h5 mt-1">{errors.password}</p>
                       ) : null}
                     </div>
 
