@@ -15,7 +15,7 @@ const InnerIntroducer = () => {
   useEffect(() => {
     AccountService.introducerUsersingleProfile(id, auth.user)
       .then((res) => {
-        SetClient(res.data);
+        SetClient(res.data.data);
       })
       .catch((error) => {
         console.error("Error fetching user data:", error);
@@ -29,7 +29,6 @@ const InnerIntroducer = () => {
 
   const handelShowPercentage = (e, Transaction) => {
     console.log("T=>>>>>", Transaction);
-
     navigate("/showpercentageintroducer", { state: { Transaction } });
   };
 
@@ -52,41 +51,45 @@ const InnerIntroducer = () => {
       <h5 className="d-flex justify-content-center">
         This are the list Of Users{" "}
       </h5>
-      {filteredUsers.map((user) => (
-        <div class="card container ">
-          <div class="card-body text-bg-success">
-            <p>
-              <b>User Name</b> :&nbsp;{user.userName}
-            </p>
-            <hr />
-            <p>
-              <b>Name</b> :&nbsp;{user.firstname}&nbsp;{user.lastname}
-            </p>
-            <hr />
-            <p>
-              <b>Percentage For This User</b> :&nbsp;
-              {user.introducerPercentage == null
-                ? 0
-                : user.introducerPercentage}{" "}
-              %
-            </p>
-            <hr />
-            <p>
-              <button
-                type="button"
-                class="btn btn-primary"
-                // data-toggle="modal"
-                // data-target=".InnerIntroducerShowTransaction"
-                onClick={(e) =>
-                  handelShowPercentage(e, user.transactionDetail, user._id)
-                }
-              >
-                Show Transactions
-              </button>
-            </p>
+      {filteredUsers && filteredUsers?.length > 0 ? (
+        filteredUsers?.map((user) => (
+          <div className="card container" key={user._id}>
+            <div className="card-body text-bg-success">
+              <p>
+                <b>User Name</b> :&nbsp;{user.userName}
+              </p>
+              <hr />
+              <p>
+                <b>Name</b> :&nbsp;{user.firstName}&nbsp;{user.lastName}
+              </p>
+              <hr />
+              <p>
+                <b>Percentage For This User</b> :&nbsp;
+                {user.introducerPercentage == null
+                  ? 0
+                  : user.introducerPercentage}{" "}
+                %
+              </p>
+              <hr />
+              <p>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={(e) =>
+                    handelShowPercentage(e, user.transactionDetail, user._id)
+                  }
+                >
+                  Show Transactions
+                </button>
+              </p>
+            </div>
           </div>
+        ))
+      ) : (
+        <div className="alert alert-warning" role="alert">
+          No data found
         </div>
-      ))}
+      )}
 
       {/* <ShowPercentage ID={id} /> */}
       {/* <InnerIntroducerShowTransaction Transaction={TransactionDetails} /> */}

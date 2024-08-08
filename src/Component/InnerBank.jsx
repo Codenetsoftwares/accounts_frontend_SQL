@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "../Utils/Auth";
 import AccountService from "../Services/AccountService";
 import { toast } from "react-toastify";
@@ -11,36 +11,36 @@ const InnerBank = ({ getbankName }) => {
   const [upi, setUpi] = useState("");
   const [upiName, setUpiName] = useState("");
   const [upiPhoneNumber, setUpiPhoneNumber] = useState("");
-  // const [selectedBank, setSelectedBank] = useState(null);
 
   const auth = useAuth();
-  // console.log("This is Auth==>>>", auth);
-  // console.log("getbank", getbankName);
-  const bnamechnage = (e) => {
-    setBname(e.target.value);
-  };
-  const accnochnage = (e) => {
-    setAccno(e.target.value);
-  };
-  const ifscchnage = (e) => {
-    setIfsc(e.target.value);
-  };
-  const hnamechnage = (e) => {
-    setHname(e.target.value);
-  };
-  const hUpichnage = (e) => {
-    setUpi(e.target.value);
-  };
-  const hupiNamechnage = (e) => {
-    setUpiName(e.target.value);
-  };
-  const hUpiNumberchnage = (e) => {
-    setUpiPhoneNumber(e.target.value);
-  };
 
-  // const handleShowDetails = (bank) => {
-  //   setSelectedBank(bank);
-  // };
+  // Refresh the Form after the Modal triggered each and every time
+  useEffect(() => {
+    const handleModalShow = () => {
+      setBname("");
+      setAccno("");
+      setIfsc("");
+      setHname("");
+      setUpi("");
+      setUpiName("");
+      setUpiPhoneNumber("");
+    };
+
+    const modalElement = document.getElementById("innerbnk");
+    modalElement.addEventListener("shown.bs.modal", handleModalShow);
+
+    return () => {
+      modalElement.removeEventListener("shown.bs.modal", handleModalShow);
+    };
+  }, []);
+
+  const bnamechnage = (e) => setBname(e.target.value);
+  const accnochnage = (e) => setAccno(e.target.value);
+  const ifscchnage = (e) => setIfsc(e.target.value);
+  const hnamechnage = (e) => setHname(e.target.value);
+  const hUpichnage = (e) => setUpi(e.target.value);
+  const hupiNamechnage = (e) => setUpiName(e.target.value);
+  const hUpiNumberchnage = (e) => setUpiPhoneNumber(e.target.value);
 
   const handelsubmit = (e) => {
     e.preventDefault();
@@ -58,12 +58,15 @@ const InnerBank = ({ getbankName }) => {
     AccountService.addBank(data, auth.user)
       .then((response) => {
         console.log("bank", response.data);
-        alert(response.data.message);
-        // alert("Bank Added Sucessfully");
-        window.location.reload();
+        toast.success(response.data.message);
+        // Close the modal
+        const closeButton = document.querySelector("#innerbnk .btn-close");
+        if (closeButton) {
+          closeButton.click();
+        }
       })
       .catch((error) => {
-        alert(error.response.data.message);
+        toast.error(error.response.data.errMessage);
         console.log(error);
       });
   };
@@ -97,51 +100,49 @@ const InnerBank = ({ getbankName }) => {
                 type="text"
                 className="form-control"
                 placeholder="Name of Bank *"
-                aria-describedby="addon-wrapping"
+                value={bname}
                 onChange={bnamechnage}
-                // value={selectedBank.bankName}
-                // readOnly
               />
               <input
                 type="text"
                 className="form-control"
                 placeholder="Acc No. *"
-                aria-describedby="addon-wrapping"
+                value={accno}
                 onChange={accnochnage}
               />
               <input
                 type="text"
                 className="form-control"
                 placeholder="IFSC CODE "
-                aria-describedby="addon-wrapping"
+                value={ifsc}
                 onChange={ifscchnage}
               />
               <input
                 type="text"
                 className="form-control"
                 placeholder="Name of the Acc. Holder "
-                aria-describedby="addon-wrapping"
+                value={hname}
                 onChange={hnamechnage}
               />
               <input
                 type="text"
                 className="form-control"
                 placeholder="UPI ID "
-                aria-describedby="addon-wrapping"
+                value={upi}
                 onChange={hUpichnage}
               />
               <input
                 type="text"
                 className="form-control"
                 placeholder="UPI App Name "
-                aria-describedby="addon-wrapping"
+                value={upiName}
                 onChange={hupiNamechnage}
               />
               <input
                 type="text"
                 className="form-control"
                 placeholder="UPI Phone Number "
-                aria-describedby="addon-wrapping"
+                value={upiPhoneNumber}
                 onChange={hUpiNumberchnage}
               />
             </div>
@@ -164,15 +165,6 @@ const InnerBank = ({ getbankName }) => {
           </div>
         </div>
       </div>
-
-      {/* <ul>
-        {getbankName.map((bank, index) => (
-          <li key={index}>
-            {bank.bankName}
-            <button onClick={() => handleShowDetails(bank)}>Show Details</button>
-          </li>
-        ))}
-      </ul> */}
     </div>
   );
 };

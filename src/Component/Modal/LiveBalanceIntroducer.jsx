@@ -9,9 +9,10 @@ const LiveBalanceIntroducer = ({ ID }) => {
 
   useEffect(() => {
     AccountService.introducerLiveBalance(ID, auth.user)
+
       .then((res) => {
-        // console.log("res", res.data.LiveBalance);
-        SetLiveBalance(res.data.LiveBalance);
+        console.log("res", res);
+        SetLiveBalance(res.data.data.LiveBalance);
       })
       .catch((error) => {
         toast.error(error.response.data.message);
