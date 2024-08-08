@@ -19,25 +19,25 @@ const SubAdminBank = ({ ID, EditApi, purpose }) => {
     if (purpose === "bank") {
       TransactionSercvice.bankSubAdminList(auth.user).then((res) => {
         console.log("response", res);
-        setSubAdmin(res?.data?.data);
-        setSubAdminlist(res?.data?.data.map((data) => data.userName));
-        setCheckboxStates(res?.data?.data.map(() => false)); // Initialize checkbox states
-        setCheckboxIsDeposit(res?.data?.data.map(() => false));
-        setCheckboxIsWithdraw(res?.data?.data.map(() => false));
-        setCheckboxIsEdit(res?.data?.data.map(() => false));
-        setCheckboxIsDelete(res?.data?.data.map(() => false));
-        setCheckboxIsRenew(res?.data?.data.map(() => false));
+        setSubAdmin(res.data);
+        setSubAdminlist(res.data.map((data) => data.userName));
+        setCheckboxStates(res.data.map(() => false)); // Initialize checkbox states
+        setCheckboxIsDeposit(res.data.map(() => false));
+        setCheckboxIsWithdraw(res.data.map(() => false));
+        setCheckboxIsEdit(res.data.map(() => false));
+        setCheckboxIsDelete(res.data.map(() => false));
+        setCheckboxIsRenew(res.data.map(() => false));
       });
     } else {
       TransactionSercvice.websiteSubAdminList(auth.user).then((res) => {
-        setSubAdmin(res?.data?.data);
-        setSubAdminlist(res?.data?.data.map((data) => data.userName));
-        setCheckboxStates(res?.data?.data.map(() => false)); // Initialize checkbox states
-        setCheckboxIsDeposit(res?.data?.data.map(() => false));
-        setCheckboxIsWithdraw(res?.data?.data.map(() => false));
-        setCheckboxIsEdit(res?.data?.data.map(() => false));
-        setCheckboxIsDelete(res?.data?.data.map(() => false));
-        setCheckboxIsRenew(res?.data?.data.map(() => false));
+        setSubAdmin(res.data);
+        setSubAdminlist(res.data.map((data) => data.userName));
+        setCheckboxStates(res.data.map(() => false)); // Initialize checkbox states
+        setCheckboxIsDeposit(res.data.map(() => false));
+        setCheckboxIsWithdraw(res.data.map(() => false));
+        setCheckboxIsEdit(res.data.map(() => false));
+        setCheckboxIsDelete(res.data.map(() => false));
+        setCheckboxIsRenew(res.data.map(() => false));
       });
     }
   }, [auth]);

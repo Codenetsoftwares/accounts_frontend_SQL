@@ -179,7 +179,7 @@ class EditServices {
   ViewBankDelete(user) {
     return axios({
       method: "get",
-      url: API_HOST + "/api/super-admin/view-bank-edit-requests",
+      url: API_HOST + "/api/superadmin/view-bank-edit-requests",
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -259,7 +259,7 @@ class EditServices {
   ViewBankEditRq(user) {
     return axios({
       method: "get",
-      url: API_HOST + "/api/super-admin/view-bank-edit-requests",
+      url: API_HOST + "/api/superadmin/view-bank-edit-requests",
       headers: {
         Authorization: `Bearer ${user.token}`,
       },

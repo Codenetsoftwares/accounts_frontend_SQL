@@ -116,7 +116,7 @@ class TransactionService {
   filterTransaction(data, page, user) {
     return axios({
       method: "post",
-      url: `${API_HOST}/api/admin/account-summary?page=${page}&pageSize=${10}`,
+      url: `${API_HOST}/api/admin/filter-data?page=${page}&itemsPerPage=${10}`,
       data: data,
       headers: {
         Authorization: `Bearer ${user.token}`,
@@ -169,12 +169,10 @@ class TransactionService {
     });
   }
 
-  subadminWiseTxn(username, user, data, page) {
-    console.log("page",page)
+  subadminWiseTxn(username, user) {
     return axios({
-      method: "post",
-      url: `${API_HOST}/api/view-subadmin-transaction/${username}?page=${page}&pageSize=${10}`,
-      data: data,
+      method: "get",
+      url: `${API_HOST}/api/view-subadmin-transaction/${username}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useAuth } from "../../Utils/Auth";
 import { useParams } from "react-router";
@@ -14,9 +14,6 @@ import TransactionSercvice from "../../Services/TransactionSercvice";
 import { toast } from "react-toastify";
 import EditTransaction from "../Modal/EditTransaction";
 import Pagination from "../Pagination";
-import SingleCard from "../../common/singleCard";
-import { debounce } from "lodash";
-import { errorHandler } from "../../Utils/helper";
 
 const WebsiteStatement = () => {
   const { id } = useParams();
@@ -27,7 +24,7 @@ const WebsiteStatement = () => {
   const [documentFilter, setDocumentFilter] = useState([]);
   const [Manualstmnt, SetManualstmnt] = useState([]);
   const [Userstmnt, SetUserstmnt] = useState([]);
-  const [select, setSelect] = useState("");
+  const [select, setSelect] = useState("All");
   // const [startDatevalue, SetStartDatesetValue] = useState(
   //   new Date() - 1 * 24 * 60 * 60 * 1000
   // );
@@ -53,49 +50,53 @@ const WebsiteStatement = () => {
   const [length, setLength] = useState("");
   const [minAmount, setMinAmount] = useState(0);
   const [maxAmount, setMaxAmount] = useState(0);
-  const [filteredSubAdminOptions, setFilteredSubAdminOptions] = useState([]);
-  const [isSubAdminDropdownVisible, setIsSubAdminDropdownVisible] = useState(false);
-  const [activeSubAdminIndex, setActiveSubAdminIndex] = useState(-1);
 
-  const data = {
-    "filters": {
-      transactionType: select,
-      subAdminId: subAdmin,
-      // sdate: moment(startDatevalue).toDate(),
-      // edate: moment(endDatevalue).toDate(),
-      // maxAmount: maxAmount,
-      // minAmount: minAmount
+  const test = ["transactionType", "subAdminName", "websiteName", "bankName"];
+  const handleClick = (key, value) => {
+    let nArr = [...documentView];
+    // const originalData = [...documentView];
+
+    if (test.includes(key)) {
+      nArr = nArr.filter((item) => item[key] === value);
     }
-  }
+    // if (nArr.length === 0) {
+    //   nArr = originalData;
+    // }
+    setDocumentView(nArr);
+    // setTotalPage(Math.ceil(documentView.length / 10));
+    // setLength(documentView.length);
+  };
 
   const handleChange = (e) => {
     const value = e.target.value;
     setSelect(value);
-
+    handleClick("transactionType", value);
     setPage(1);
   };
 
   const handleSubAdmin = (e) => {
     const value = e.target.value;
     setSubAdmin(value);
-
+    handleClick("subAdminName", value);
     setPage(1);
   };
 
   const handleIntroducer = (e) => {
     const value = e.target.value;
     setIntroducer(value);
-
+    handleClick("introducerId", value);
   };
 
   const handleBank = (e) => {
     const value = e.target.value;
     setBank(value);
+    handleClick("bankName", value);
   };
 
   const handleWebsite = (e) => {
     const value = e.target.value;
     setWebsite(value);
+    handleClick("websiteName", value);
   };
 
   const handleMinAmount = (e) => {
@@ -110,23 +111,82 @@ const WebsiteStatement = () => {
   useEffect(() => {
     const fetchManualStatement = async () => {
       try {
-        const res = await AccountService.GetWebsiteStateMent(auth.user, id, data,page);
-        setDocumentView(res.data.data);
-        setAccountData(res.data.data);
-        setPage(res.data.pagination.page);
-        setTotalPage(res.data.pagination.totalPages);
-        setTotalData(res.data.pagination.totalItems);
-      } catch (err) {
-        errorHandler(err.message, "Something went wrong");
+        const res = await AccountService.GetWebsiteStateMent(auth.user, id);
 
+        setDocumentView(res.data);
+        setAccountData(res.data);
+        // setPageNumber(res.data.pageNumber);
+        // setTotalData(res.data.ArrayLength);
+      } catch (err) {
+        toast.error(err.response.data.message);
       }
     };
 
     fetchManualStatement();
-  }, [id, auth, select, subAdmin, page]);
+  }, [id, auth]);
 
   const selectPageHandler = (selectedPage) => {
     setPage(selectedPage);
+  };
+
+  useEffect(() => {
+    if (auth.user) {
+      TransactionSercvice.subAdminList(auth.user).then((res) => {
+        setSubAdminlist(res.data);
+      });
+    }
+  }, [auth]);
+
+  // useEffect(() => {
+  //   if (auth.user) {
+  //     TransactionSercvice.bankList(auth.user).then((res) => {
+  //       setBankList(res.data);
+  //     });
+  //   }
+  // }, [auth]);
+
+  // useEffect(() => {
+  //   AccountService.website(auth.user).then((res) => setWebsiteList(res.data));
+  // }, [auth]);
+
+  // useEffect(() => {
+  //   AccountService.introducerId(auth.user).then((res) =>
+  //     setIntroducerList(res.data)
+  //   );
+  // }, [auth]);
+
+  useEffect(() => {
+    handleFilter();
+  }, [documentView]);
+
+  // console.log("startDatevalue", moment(startDatevalue).toDate())
+  const handleFilter = () => {
+    const sdate = moment(startDatevalue, "DD-MM-YYYY HH:mm").toDate();
+    const edate = moment(endDatevalue, "DD-MM-YYYY HH:mm").toDate();
+    console.log("sdate=====>", sdate);
+    console.log("edate=====>", edate);
+    console.log("documentView=====>", documentView);
+    let filteredDocuments = documentView.filter((data) => {
+      const transactionDate = new Date(data.createdAt);
+      console.log("transactiondate", transactionDate);
+      return transactionDate >= sdate && transactionDate <= edate;
+    });
+
+    if (minAmount !== 0 || maxAmount !== 0) {
+      filteredDocuments = filteredDocuments.filter((transaction) => {
+        return (
+          (transaction.withdrawAmount >= minAmount &&
+            transaction.withdrawAmount <= maxAmount) ||
+          (transaction.depositAmount >= minAmount &&
+            transaction.depositAmount <= maxAmount) ||
+          (transaction.amount >= minAmount && transaction.amount <= maxAmount)
+        );
+      });
+    }
+    console.log("filteredDocuments=======>", filteredDocuments);
+    setDocumentFilter(filteredDocuments);
+    setToggle(false);
+    setPage(1);
   };
 
   const handleStartDatevalue = (e) => {
@@ -140,15 +200,6 @@ const WebsiteStatement = () => {
   const handlePage = (page) => {
     setPage(page);
   };
-
-  useEffect(() => {
-    if (auth.user) {
-      TransactionSercvice.subAdminList(auth.user).then((res) => {
-        setSubAdminlist(res.data.data);
-
-      });
-    }
-  }, [auth]);
 
   const handleReset = () => {
     setSelect("");
@@ -243,486 +294,988 @@ const WebsiteStatement = () => {
     setDataId(id);
   };
 
-  const handleSubAdminSearch = useCallback(
-    debounce((value) => {
-      if (value) {
-        const filteredItems = subAdminlist.filter((item) =>
-          item.userName.toLowerCase().includes(value.toLowerCase())
-        );
-        setFilteredSubAdminOptions(filteredItems);
-        setIsSubAdminDropdownVisible(true);
-      } else {
-        setFilteredSubAdminOptions([]);
-        setIsSubAdminDropdownVisible(false);
-      }
-    }, 1300),
-    [subAdminlist]
-  );
-
-  const handleSubAdminChange = (e) => {
-    const value = e.target.value;
-    setSubAdmin(value);
-    handleSubAdminSearch(value);
-  };
-
-  const handleSubAdminKeyDown = (e) => {
-    if (e.key === "ArrowDown") {
-      setActiveSubAdminIndex((prevIndex) =>
-        (prevIndex + 1) % filteredSubAdminOptions.length
-      );
-    } else if (e.key === "ArrowUp") {
-      setActiveSubAdminIndex(
-        (prevIndex) =>
-          (prevIndex - 1 + filteredSubAdminOptions.length) %
-          filteredSubAdminOptions.length
-      );
-    } else if ((e.key === "Enter" || e.key === "Tab") && activeSubAdminIndex >= 0) {
-      setSubAdmin(filteredSubAdminOptions[activeSubAdminIndex].userName);
-      setIsSubAdminDropdownVisible(false);
-      setActiveSubAdminIndex(-1);
-    }
-  };
+  let reminder = documentView.length % 10;
+  let lastPage = Math.ceil(documentView.length / 10);
+  let filterReminder = documentFilter.length % 10;
+  let filterLastPage = Math.ceil(documentFilter.length / 10);
+  let lastFilterPageReminder = documentView.length % 10 === !0;
+  let lastPageReminder = documentFilter.length % 10 === !0;
 
   return (
-    <div className="">
-      <SingleCard>
-        <SingleCard style={{ border: "1px solid #4682b4" }}>
-          <div
-            className="card card-body rounded-4 "
-            style={{
-              backgroundColor: "#4682b4",
-              boxShadow:
-                "0 8px 16px rgba(0,0,0,0.3), 0 12px 24px rgba(0,0,0,0.2)",
-              borderRadius: "1000px",
-              padding: "20px",
-              transformStyle: "preserve-3d",
-              margin: "20px",
-              zIndex: "1000",
-            }}
-          >
-            <div className="row g-2">
-              <div className="col-12 col-md-3">
-                <h6 className="fw-bold text-light">Transaction</h6>
-                <select
-                  className="form-control"
-                  value={select || ""}
-                  autoComplete="off"
-                  onChange={handleChange}
-                  style={{
-                    border: "0.5px solid black",
-                    borderRadius: "6px",
-                    boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-                  }}
-                >
-                  <option value="">
-                    <b>All</b>
-                  </option>
-                  <option value="Deposit">
-                    <b>Deposit</b>
-                  </option>
-                  <option value="Withdraw">
-                    <b>Withdraw</b>
-                  </option>
-                  <option value="Manual-Website-Deposit">
-                    <b>Manual Website Deposit</b>
-                  </option>
-                  <option value="Manual-Website-Withdraw">
-                    <b>Manual Website Withdraw</b>
-                  </option>
-                </select>
-              </div>
-
-              <div className="col-md-4 col-lg-3">
-                <h6 className="fw-bold text-nowrap">SubAdmin List</h6>
-                <input
-                  className="form-control"
-                  value={subAdmin || ""}
-                  placeholder="SubAdmin Name"
-                  type="text"
-                  autoComplete="off"
-                  onChange={handleSubAdminChange}
-                  onKeyDown={handleSubAdminKeyDown}
-                  onFocus={() => setIsSubAdminDropdownVisible(true)}
-                  onBlur={() => setIsSubAdminDropdownVisible(false)}
-                  style={{ border: "0.5px solid black", borderRadius: "6px" }}
-                />
-                {isSubAdminDropdownVisible && (
-                  <ul
-                    className="dropdown-menu show w-100"
-                    style={{ maxHeight: "150px", overflowY: "auto" }}
-                  >
-                    {filteredSubAdminOptions.length > 0 ? (
-                      filteredSubAdminOptions.map((option, index) => (
-                        <li
-                          key={index}
-                          className={`dropdown-item ${index === activeSubAdminIndex ? "active" : ""}`}
-                          onMouseDown={() => {
-                            setSubAdmin(option.userName);
-                            setIsSubAdminDropdownVisible(false);
-                            setActiveSubAdminIndex(-1);
-                          }}
-                        >
-                          {option.userName}
-                        </li>
-                      ))
-                    ) : (
-                      <li style={{ padding: "8px" }}>Not found</li>
-                    )}
-                  </ul>
-                )}
-              </div>
-
-              <div className="col-12 col-md-3">
-                <h6 className="fw-bold text-light">Range Of Amount</h6>
-                <div className="d-flex align-items-center">
-                  <input
-                    className="form-control"
-                    type="number"
-                    value={minAmount || ""}
-                    autoComplete="off"
-                    onChange={handleMinAmount}
-                    placeholder="Min Amt"
-                    style={{
-                      border: "0.5px solid black",
-                      borderRadius: "6px",
-                      boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-                    }}
-                    required
-                    min={1}
-                  />
-                  <h6 className="fw-bold text-light px-2">To</h6>
-                  <input
-                    className="form-control"
-                    type="number"
-                    value={maxAmount || ""}
-                    autoComplete="off"
-                    onChange={handleMaxAmount}
-                    placeholder="Max Amt"
-                    style={{
-                      border: "0.5px solid black",
-                      borderRadius: "6px",
-                      boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-                    }}
-                    required
-                    min={1}
-                  />
-                </div>
-              </div>
-
-              <div className="col-12 col-md-3">
-                <h6 className="fw-bold text-light">Date Range</h6>
-                <div className="d-flex align-items-center">
-                  <Datetime
-                    value={startDatevalue}
-                    onChange={handleStartDatevalue}
-                    dateFormat="DD-MM-YYYY"
-                    timeFormat="HH:mm"
-                    inputProps={{
-                      style: {
-                        border: "0.5px solid black",
-                        borderRadius: "6px",
-                        boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-                      },
-                    }}
-                  />
-                  <h6 className="fw-bold text-light px-2">To</h6>
-                  <Datetime
-                    value={endDatevalue}
-                    onChange={handleEndDatevalue}
-                    dateFormat="DD-MM-YYYY"
-                    timeFormat="HH:mm"
-                    inputProps={{
-                      style: {
-                        border: "0.5px solid black",
-                        borderRadius: "6px",
-                        boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-                        right: "50px",
-                      },
-                    }}
-                  />
-                </div>
-              </div>
+    <>
+      <div className="">
+        {/* This is for Normal View */}
+        <div
+          className="card card-body rounded-1 "
+          style={{ backgroundColor: "#fff4ec" }}
+        >
+          <div className="row row-cols-2 row-cols-lg-3 g-2 g-lg-2">
+            <div className="d-flex col pt-3 justify-content-center">
+              <h6 className="fw-bold text-nowrap pt-2">Transaction</h6>
+              <select
+                className="form-control mx-3 w-50"
+                value={select || ""}
+                autoComplete="off"
+                onChange={handleChange}
+                style={{
+                  // boxShadow: " 17px 15px 27px -9px rgba(0,0,0,0.41)",
+                  border: "0.5px solid black",
+                  borderRadius: "6px",
+                }}
+              >
+                <option className="d-flex" value="All">
+                  <b>All</b>
+                </option>
+                <option className="d-flex" value="Deposit">
+                  <b>Deposit</b>
+                </option>
+                <option className="d-flex" value="Withdraw">
+                  <b>Withdraw</b>
+                </option>
+                {/* <option className="d-flex" value="Manual-Bank-Deposit">
+                  <b>Manual Bank Deposit</b>
+                </option>{" "}
+                <option className="d-flex" value="Manual-Bank-Withdraw">
+                  <b>Manual Bank Withdraw</b>
+                </option> */}
+                <option className="d-flex" value="Manual-Website-Deposit">
+                  <b>Manual Website Deposit</b>
+                </option>{" "}
+                <option className="d-flex" value="Manual-Website-Withdraw">
+                  <b>Manual Website Withdraw</b>
+                </option>
+              </select>
             </div>
 
-            <div className="row g-2 mt-3">
-              <div className="col-12 d-flex justify-content-center flex-wrap">
-                <button
-                  type="button"
-                  className="btn btn-dark mx-2"
-                  // onClick={handleFilter}
-                  style={{ boxShadow: "0 4px 8px rgba(0,0,0,0.1)" }}
-                >
-                  Filter
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-dark mx-2"
-                  onClick={handleReset}
-                  style={{ boxShadow: "0 4px 8px rgba(0,0,0,0.1)" }}
-                >
-                  Reset
-                </button>
+            <div className="d-flex col pt-3 justify-content-center">
+              <h6 className="fw-bold text-nowrap pt-2"> SubAdminlist</h6>
+              <select
+                className="form-control mx-3 w-50"
+                value={subAdmin || ""}
+                autoComplete="off"
+                onChange={handleSubAdmin}
+                style={{
+                  // boxShadow: " 17px 15px 27px -9px rgba(0,0,0,0.41)",
+                  border: "0.5px solid black",
+                  borderRadius: "6px",
+                }}
+                required
+              >
+                <option selected>Select subAdmin</option>
+                {subAdminlist.map((data) => {
+                  return (
+                    <option key={data._id} value={data.firstname}>
+                      {data.userName}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+
+            <div className="d-flex col pt-3 justify-content-center">
+              <h6 className="fw-bold text-nowrap pt-2"> Range Of Amount</h6>
+              <input
+                className="form-control mx-3 w-25"
+                type="number"
+                value={minAmount || ""}
+                autoComplete="off"
+                onChange={handleMinAmount}
+                placeholder="Min Amt"
+                style={{
+                  border: "0.5px solid black",
+                  borderRadius: "6px",
+                }}
+                required
+                min={1}
+              />
+              <h6 className="fw-bold text-nowrap pt-2"> To</h6>
+              <input
+                className="form-control mx-3 w-25"
+                type="number"
+                value={maxAmount || ""}
+                autoComplete="off"
+                onChange={handleMaxAmount}
+                placeholder="Max Amt"
+                style={{
+                  border: "0.5px solid black",
+                  borderRadius: "6px",
+                }}
+                min={1}
+                required
+              />
+            </div>
+
+            <div
+              className="row row-cols-4 row-cols-lg-4 g-2 g-lg-3 w-100 "
+              style={{ paddingLeft: "5rem" }}
+            >
+              <div className="d-flex col justify-content-center ">
+                <h6 className="fw-bold text-nowrap pt-2 pr-2"> Start Date</h6>
+                <Datetime
+                  value={startDatevalue}
+                  onChange={handleStartDatevalue}
+                  dateFormat="DD-MM-YYYY"
+                  timeFormat="HH:mm"
+                />
+              </div>
+              <div className="d-flex col  justify-content-center">
+                <h6 className="fw-bold text-nowrap pt-2 pr-2"> End Date</h6>
+                <Datetime
+                  value={endDatevalue}
+                  onChange={handleEndDatevalue}
+                  dateFormat="DD-MM-YYYY"
+                  timeFormat="HH:mm"
+                />
+              </div>
+              <div className="d-flex col justify-content-center">
+                <div className="mx-2">
+                  <button
+                    type="button"
+                    className="btn btn-dark"
+                    // style={{ boxShadow: "17px 15px 27px -9px rgba(0, 0, 0, 0.41)" }}
+                    onClick={handleFilter}
+                  >
+                    Filter
+                  </button>
+                </div>
+                <div className="mx-2">
+                  <button
+                    type="button"
+                    className="btn btn-dark"
+                    // style={{ boxShadow: "17px 15px 27px -9px rgba(0, 0, 0, 0.41)" }}
+                    onClick={handleReset}
+                  >
+                    Reset
+                  </button>
+                </div>
                 {toggle ? (
-                  <CSVLink
-                    data={documentView}
-                    className="btn btn-success mx-2"
-                  >
-                    Download Data
-                  </CSVLink>
+                  <div className="mx-2">
+                    <CSVLink data={documentView} className="btn btn-success">
+                      Download Data
+                    </CSVLink>
+                  </div>
                 ) : (
-                  <CSVLink
-                    data={documentFilter}
-                    className="btn btn-success mx-2"
-                  >
-                    Download Filter Data
-                  </CSVLink>
+                  <div className="mx-2">
+                    <CSVLink data={documentFilter} className="btn btn-success">
+                      Download Filter Data
+                    </CSVLink>
+                  </div>
                 )}
               </div>
             </div>
           </div>
-        </SingleCard>
-      </SingleCard>
+        </div>
+        {toggle ? (
+          <div>
+            {/* Normal View */}
+            <table className="table table-bordered  table-sm table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+              <thead className="table-success">
+                <tr align="center" bgcolor="green" className="fs-6">
+                  <th scope="col fs-6" className="text-primary">
+                    Date & Time
+                  </th>
+                  <th scope="col text-break fs-6" className="text-primary">
+                    Amount
+                  </th>
+                  <th scope="col text-break fs-6" className="text-primary">
+                    Txn Id
+                  </th>
+                  <th scope="col text-break fs-6" className="text-primary">
+                    Txn Type
+                  </th>
+                  <th scope="col fs-6" className="text-primary">
+                    Gateway
+                  </th>
+                  <th scope="col fs-6" className="text-primary">
+                    Entry by
+                  </th>
+                  <th scope="col fs-6" className="text-primary">
+                    User Name
+                  </th>
 
-      <SingleCard className="card card-body rounded-8px mt-2">
-        <SingleCard className="card card-body rounded-8px">
-          <SingleCard className="container-fluid w-90">
-            <div
-              className="table-responsive"
-              style={{ maxHeight: "400px", overflowY: "auto" }}
-            >
-              <table className="table table-striped table-bordered table-hover">
-                <thead
-                  className="table-success"
-                  style={{ position: "sticky", top: 0, zIndex: 1 }}
-                >
-                  <tr align="center" bgcolor="green" className="fs-6">
-                    <th
-                      scope="col"
-                      className="text-info"
-                      style={{ backgroundColor: "#e6f7ff" }}
-                    >
-                      Date & Time
-                    </th>
-                    <th
-                      scope="col"
-                      className="text-info"
-                      style={{ backgroundColor: "#e6f7ff" }}
-                    >
-                      Amount
-                    </th>
-                    <th
-                      scope="col"
-                      className="text-info"
-                      style={{ backgroundColor: "#e6f7ff" }}
-                    >
-                      Bonus
-                    </th>{" "}
-                    <th
-                      scope="col"
-                      className="text-info"
-                      style={{ backgroundColor: "#e6f7ff" }}
-                    >
-                      Bank Charges
-                    </th>
-                    <th
-                      scope="col"
-                      className="text-info"
-                      style={{ backgroundColor: "#e6f7ff" }}
-                    >
-                      Txn Id
-                    </th>
-                    <th
-                      scope="col"
-                      className="text-info"
-                      style={{ backgroundColor: "#e6f7ff" }}
-                    >
-                      Txn Type
-                    </th>
-                    <th
-                      scope="col"
-                      className="text-info"
-                      style={{ backgroundColor: "#e6f7ff" }}
-                    >
-                      Gateway
-                    </th>
-                    <th
-                      scope="col"
-                      className="text-info"
-                      style={{ backgroundColor: "#e6f7ff" }}
-                    >
-                      Entry by
-                    </th>
-                    <th
-                      scope="col"
-                      className="text-info"
-                      style={{ backgroundColor: "#e6f7ff" }}
-                    >
-                      User Name
-                    </th>
-                    <th
-                      scope="col"
-                      className="text-info"
-                      style={{ backgroundColor: "#e6f7ff" }}
-                    >
-                      Balance
-                    </th>
-                    <th
-                      scope="col"
-                      className="text-info"
-                      style={{ backgroundColor: "#e6f7ff" }}
-                    >
-                      Remarks
-                    </th>
-                    {/* <th scope="col text-break" className="text-primary">
-                            Edit
-                        </th> */}
-                    <th
-                      scope="col"
-                      className="text-info"
-                      style={{ backgroundColor: "#e6f7ff" }}
-                    >
-                      Delete
-                    </th>
-                  </tr>
-                </thead>
-                {/* </div> */}
-                <tbody>
-                  {documentView?.length > 0 ? (
-                    documentView?.map((data, i) => {
-                      return (
-                        <tr align="center" className="fs-6">
-                          <td>
-                            {" "}
-                            {new Date(data?.createdAt).toLocaleString(
-                              "default"
-                            )}{" "}
-                          </td>
-                          <td>
-                            {data?.amount && (
-                              <p className="col fs-6">{data?.amount}</p>
-                            )}
-                            {data?.depositAmount && (
-                              <p className="col fs-6">{data?.depositAmount}</p>
-                            )}
-                            {data?.withdrawAmount && (
-                              <p className="col fs-6">{data?.withdrawAmount}</p>
-                            )}
-                          </td>
-                          <td>
-                            {data?.bonus ? (
-                              <p className="col fs-6">{data?.bonus}</p>
-                            ) : (
-                              <p className="col fs-6">N.A</p>
-                            )}
-                          </td>
-                          <td>
-                            {data?.bankCharges ? (
-                              <p className="col fs-6">{data?.bankCharges}</p>
-                            ) : (
-                              <p className="col fs-6">N.A</p>
-                            )}
-                          </td>
-                          <td>
-                            {data?.transactionID && (
-                              <p className="col fs-6 ">{data?.transactionID}</p>
-                            )}
-                            {data?.depositAmount && (
-                              <p className="col fs-6 ">N.A</p>
-                            )}
-                            {data?.withdrawAmount && (
-                              <p className="col fs-6 ">N.A</p>
-                            )}
-                          </td>
-                          <td>
-                            {data?.transactionType && (
-                              <p className="col fs-6 text-break">
-                                {data?.transactionType}
-                              </p>
-                            )}
-                          </td>
-                          <td>
-                            {data?.paymentMethod && (
-                              <p className="col fs-6">{data?.paymentMethod}</p>
-                            )}
-                            {data?.depositAmount && (
-                              <p className="col fs-6 text-break">N.A</p>
-                            )}
-                            {data?.withdrawAmount && (
-                              <p className="col fs-6 text-break">N.A</p>
-                            )}
-                          </td>
-                          <td>{data?.subAdminName}</td>
-                          <td>
-                            {data?.paymentMethod && (
-                              <p className="col fs-6">{data?.userName}</p>
-                            )}
-                            {data?.depositAmount && (
-                              <p className="col fs-6 text-break">N.A</p>
-                            )}
-                            {data?.withdrawAmount && (
-                              <p className="col fs-6 text-break">N.A</p>
-                            )}
-                          </td>
+                  <th scope="col text-break fs-6" className="text-primary">
+                    Balance
+                  </th>
 
-                          <td>{data.balance ? data.balance : "N .A"}</td>
-                          <td>{data?.remarks}</td>
-                          {/* <td>
-                                        <button
-                                            type="button"
-                                            className="btn btn-primary"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#edittransaction"
-                                            onClick={(e) => {
-                                                console.log("id===>", data?._id);
-                                                handleId(e, data?._id);
-                                            }}
-                                        >
-                                            <FontAwesomeIcon icon={faEdit} />
-                                        </button>
-                                    </td> */}
-                          <td>
-                            <button type="button" className="btn btn-danger">
-                              {data?.Transaction_Id && <FontAwesomeIcon
-                                icon={faTrash}
-                                onClick={(e) => {
-                                  handleDelete(e, data?.Transaction_Id, data?.transactionType);
-                                }}
-                              />}
-                              {data?.websiteTransactionId && <FontAwesomeIcon
-                                icon={faTrash}
-                                onClick={(e) => {
-                                  handleDelete(e, data?.websiteTransactionId, data?.transactionType);
-                                }}
-                              />}
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    })
-                  ) : (
-                    <tr>
-                      <td colSpan="14" className="text-center fs-4">
-                        No Transaction Found!
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </SingleCard>
-          {documentView?.length > 0 ? (
-            <Pagination
-              handlePage={handlePage}
-              page={page}
-              totalPage={totalPage}
-              totalData={totalData}
-              perPagePagination={10}
-            />
-          ) : null}
+                  <th scope="col text-break" className="text-primary">
+                    Remarks
+                  </th>
+                  {/*   */}
+                  <th scope="col text-break" className="text-primary">
+                    Delete
+                  </th>
+                </tr>
+              </thead>
+              {/* </div> */}
+              <tbody>
+                {documentView.length > 0 ? (
+                  <>
+                    {page === lastPageReminder ? (
+                      <>
+                        {documentView
+                          .slice(page * 10 - 10, page * 10 - 10 + reminder)
+                          .map((data) => {
+                            return (
+                              <tr align="center" className="fs-6">
+                                <td>
+                                  {" "}
+                                  {new Date(data.createdAt).toLocaleString(
+                                    "default"
+                                  )}{" "}
+                                </td>
+                                <td>
+                                  {data.amount && (
+                                    <p
+                                      className={`col fs-6 text-break ${
+                                        data.transactionType.includes(
+                                          "Manual-Website-Withdraw"
+                                        ) ||
+                                        data.transactionType.includes(
+                                          "Manual-Bank-Withdraw"
+                                        ) ||
+                                        data.transactionType === "Withdraw"
+                                          ? "text-red"
+                                          : "text-black"
+                                      }`}
+                                    >
+                                      {data.amount}
+                                    </p>
+                                  )}
+                                  {data.depositAmount && (
+                                    <p
+                                      className={`col fs-6 text-break ${
+                                        data.transactionType.includes(
+                                          "Manual-Website-Withdraw"
+                                        ) ||
+                                        data.transactionType.includes(
+                                          "Manual-Bank-Withdraw"
+                                        ) ||
+                                        data.transactionType === "Withdraw"
+                                          ? "text-red"
+                                          : "text-black"
+                                      }`}
+                                    >
+                                      {data.depositAmount}
+                                    </p>
+                                  )}
+                                  {data.withdrawAmount && (
+                                    <p
+                                      className={`col fs-6 text-break ${
+                                        data.transactionType.includes(
+                                          "Manual-Website-Withdraw"
+                                        ) ||
+                                        data.transactionType.includes(
+                                          "Manual-Bank-Withdraw"
+                                        ) ||
+                                        data.transactionType === "Withdraw"
+                                          ? "text-red"
+                                          : "text-black"
+                                      }`}
+                                    >
+                                      {data.withdrawAmount}
+                                    </p>
+                                  )}
+                                </td>
+                                <td>
+                                  {data.transactionID && (
+                                    <p className="col fs-6 text-break">
+                                      {data.transactionID}
+                                    </p>
+                                  )}
+                                  {data.depositAmount && (
+                                    <p className="col fs-6 text-break">N.A</p>
+                                  )}
+                                  {data.withdrawAmount && (
+                                    <p className="col fs-6 text-break">N.A</p>
+                                  )}
+                                </td>
+                                <td>
+                                  {data.transactionType && (
+                                    <p
+                                      className={`col fs-6 text-break text-bold ${
+                                        data.transactionType.includes(
+                                          "Manual-Website-Withdraw"
+                                        ) ||
+                                        data.transactionType.includes(
+                                          "Manual-Bank-Withdraw"
+                                        ) ||
+                                        data.transactionType === "Withdraw"
+                                          ? "text-red"
+                                          : "text-black"
+                                      }`}
+                                    >
+                                      {data.transactionType}
+                                    </p>
+                                  )}
+                                </td>
+                                <td>
+                                  {data.paymentMethod && (
+                                    <p className="col fs-6">
+                                      {data.paymentMethod}
+                                    </p>
+                                  )}
+                                  {data.depositAmount && (
+                                    <p className="col fs-6 text-break">N.A</p>
+                                  )}
+                                  {data.withdrawAmount && (
+                                    <p className="col fs-6 text-break">N.A</p>
+                                  )}
+                                </td>
+                                <td>{data.subAdminName}</td>
+                                <td>
+                                  {data.paymentMethod && (
+                                    <p className="col fs-6">{data.userName}</p>
+                                  )}
+                                  {data.depositAmount && (
+                                    <p className="col fs-6 text-break">N.A</p>
+                                  )}
+                                  {data.withdrawAmount && (
+                                    <p className="col fs-6 text-break">N.A</p>
+                                  )}
+                                </td>
 
-        </SingleCard>
-      </SingleCard>
-    </div>
+                                <td>
+                                  {data.balance ? (
+                                    <p className="col fs-6 text-break">
+                                      {data.balance}
+                                    </p>
+                                  ) : (
+                                    "N.A"
+                                  )}
+                                </td>
+
+                                <td>{data.remarks}</td>
+                                {/* <td>
+                                  <button
+                                    type="button"
+                                    className="btn btn-primary"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#edittransaction"
+                                    onClick={(e) => {
+                                      handleId(e, data._id);
+                                    }}
+                                  >
+                                    <FontAwesomeIcon icon={faEdit} />
+                                  </button>
+                                </td> */}
+                                <td>
+                                  <button
+                                    type="button"
+                                    className="btn btn-danger"
+                                  >
+                                    {["Deposit", "Withdraw"].includes(
+                                      data.transactionType
+                                    ) && (
+                                      <FontAwesomeIcon
+                                        icon={faTrash}
+                                        onClick={(e) => {
+                                          handleDelete(
+                                            e,
+                                            data.Transaction_Id,
+                                            data.transactionType
+                                          );
+                                        }}
+                                      />
+                                    )}
+                                    {[
+                                      "Manual-Website-Withdraw",
+                                      "Manual-Website-Deposit",
+                                    ].includes(data.transactionType) && (
+                                      <FontAwesomeIcon
+                                        icon={faTrash}
+                                        onClick={(e) => {
+                                          handleDelete(
+                                            e,
+                                            data.WebsiteTransaction_Id,
+                                            data.transactionType
+                                          );
+                                        }}
+                                      />
+                                    )}
+                                  </button>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                      </>
+                    ) : (
+                      <>
+                        {documentView
+                          .slice(page * 10 - 10, page * 10)
+                          .map((data) => {
+                            return (
+                              <tr align="center" className="fs-6">
+                                <td>
+                                  {" "}
+                                  {new Date(data.createdAt).toLocaleString(
+                                    "default"
+                                  )}{" "}
+                                </td>
+                                <td>
+                                  {data.amount && (
+                                    <p
+                                      className={`col fs-6 text-break ${
+                                        data.transactionType.includes(
+                                          "Manual-Website-Withdraw"
+                                        ) ||
+                                        data.transactionType.includes(
+                                          "Manual-Bank-Withdraw"
+                                        ) ||
+                                        data.transactionType === "Withdraw"
+                                          ? "text-red"
+                                          : "text-black"
+                                      }`}
+                                    >
+                                      {data.amount}
+                                    </p>
+                                  )}
+                                  {data.depositAmount && (
+                                    <p className="col fs-6">
+                                      {data.depositAmount}
+                                    </p>
+                                  )}
+                                  {data.withdrawAmount && (
+                                    <p className="col fs-6">
+                                      {data.withdrawAmount}
+                                    </p>
+                                  )}
+                                </td>
+                                <td>
+                                  {data.transactionID && (
+                                    <p className="col fs-6 text-break">
+                                      {data.transactionID}
+                                    </p>
+                                  )}
+                                  {data.depositAmount && (
+                                    <p className="col fs-6 text-break">N.A</p>
+                                  )}
+                                  {data.withdrawAmount && (
+                                    <p className="col fs-6 text-break">N.A</p>
+                                  )}
+                                </td>
+                                <td>
+                                  {data.transactionType && (
+                                    <p
+                                      className={`col fs-6 text-break text-bold ${
+                                        data.transactionType.includes(
+                                          "Manual-Website-Withdraw"
+                                        ) ||
+                                        data.transactionType.includes(
+                                          "Manual-Bank-Withdraw"
+                                        ) ||
+                                        data.transactionType === "Withdraw"
+                                          ? "text-red"
+                                          : "text-black"
+                                      }`}
+                                    >
+                                      {data.transactionType}
+                                    </p>
+                                  )}
+                                </td>
+                                <td>
+                                  {data.paymentMethod && (
+                                    <p className="col fs-6">
+                                      {data.paymentMethod}
+                                    </p>
+                                  )}
+                                  {data.depositAmount && (
+                                    <p className="col fs-6 text-break">N.A</p>
+                                  )}
+                                  {data.withdrawAmount && (
+                                    <p className="col fs-6 text-break">N.A</p>
+                                  )}
+                                </td>
+                                <td>{data.subAdminName}</td>
+                                <td>
+                                  {data.paymentMethod && (
+                                    <p className="col fs-6">{data.userName}</p>
+                                  )}
+                                  {data.depositAmount && (
+                                    <p className="col fs-6 text-break">N.A</p>
+                                  )}
+                                  {data.withdrawAmount && (
+                                    <p className="col fs-6 text-break">N.A</p>
+                                  )}
+                                </td>
+
+                                <td>
+                                  {data.balance ? (
+                                    <p className="col fs-6 text-break">
+                                      {data.balance}
+                                    </p>
+                                  ) : (
+                                    "N.A"
+                                  )}
+                                </td>
+
+                                <td>{data.remarks}</td>
+                                {/* <td>
+                                  <button
+                                    type="button"
+                                    className="btn btn-primary"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#edittransaction"
+                                    onClick={(e) => {
+                                      handleId(e, data._id);
+                                    }}
+                                  >
+                                    <FontAwesomeIcon icon={faEdit} />
+                                  </button>
+                                </td> */}
+                                <td>
+                                  <button
+                                    type="button"
+                                    className="btn btn-danger"
+                                  >
+                                    {["Deposit", "Withdraw"].includes(
+                                      data.transactionType
+                                    ) && (
+                                      <FontAwesomeIcon
+                                        icon={faTrash}
+                                        onClick={(e) => {
+                                          handleDelete(
+                                            e,
+                                            data.Transaction_Id,
+                                            data.transactionType
+                                          );
+                                        }}
+                                      />
+                                    )}
+                                    {[
+                                      "Manual-Website-Withdraw",
+                                      "Manual-Website-Deposit",
+                                    ].includes(data.transactionType) && (
+                                      <FontAwesomeIcon
+                                        icon={faTrash}
+                                        onClick={(e) => {
+                                          handleDelete(
+                                            e,
+                                            data.WebsiteTransaction_Id,
+                                            data.transactionType
+                                          );
+                                        }}
+                                      />
+                                    )}
+                                  </button>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                      </>
+                    )}
+                  </>
+                ) : (
+                  <h1 className="text-center">No Transaction Found</h1>
+                )}
+              </tbody>
+            </table>
+            {documentView.length > 0 && (
+              <Pagination
+                handlePage={selectPageHandler}
+                page={page}
+                totalPage={lastPage}
+                totalData={documentView.length}
+                perPagePagination={10}
+              />
+            )}
+          </div>
+        ) : (
+          <div>
+            {/* Normal View */}
+            <table class="table table-bordered  table-sm table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl">
+              <thead className="table-success">
+                <tr align="center" bgcolor="green" className="fs-6">
+                  <th scope="col fs-6" className="text-primary">
+                    Date & Time
+                  </th>
+                  <th scope="col text-break fs-6" className="text-primary">
+                    Amount
+                  </th>
+                  <th scope="col text-break fs-6" className="text-primary">
+                    Txn Id
+                  </th>
+                  <th scope="col text-break fs-6" className="text-primary">
+                    Txn Type
+                  </th>
+                  <th scope="col fs-6" className="text-primary">
+                    Gateway
+                  </th>
+                  <th scope="col fs-6" className="text-primary">
+                    Entry by
+                  </th>
+                  <th scope="col fs-6" className="text-primary">
+                    User Name
+                  </th>
+
+                  <th scope="col text-break fs-6" className="text-primary">
+                    Balance
+                  </th>
+
+                  <th scope="col text-break" className="text-primary">
+                    Remarks
+                  </th>
+                  {/* <th scope="col text-break" className="text-primary">
+                    Edit
+                  </th> */}
+                  <th scope="col text-break" className="text-primary">
+                    Delete
+                  </th>
+                </tr>
+              </thead>
+              {/* </div> */}
+              <tbody>
+                {documentFilter.length > 0 ? (
+                  <>
+                    {page === lastFilterPageReminder ? (
+                      <>
+                        {documentFilter
+                          .slice(
+                            page * 10 - 10,
+                            page * 10 - 10 + filterReminder
+                          )
+                          .map((data) => {
+                            return (
+                              <tr align="center" className="fs-6">
+                                <td>
+                                  {" "}
+                                  {new Date(data.createdAt).toLocaleString(
+                                    "default"
+                                  )}{" "}
+                                </td>
+                                <td>
+                                  {data.amount && (
+                                    <p
+                                      className={`col fs-6 text-break ${
+                                        data.transactionType.includes(
+                                          "Manual-Website-Withdraw"
+                                        ) ||
+                                        data.transactionType.includes(
+                                          "Manual-Bank-Withdraw"
+                                        ) ||
+                                        data.transactionType === "Withdraw"
+                                          ? "text-red"
+                                          : "text-black"
+                                      }`}
+                                    >
+                                      {data.amount}
+                                    </p>
+                                  )}
+                                  {data.depositAmount && (
+                                    <p className="col fs-6">
+                                      {data.depositAmount}
+                                    </p>
+                                  )}
+                                  {data.withdrawAmount && (
+                                    <p className="col fs-6">
+                                      {data.withdrawAmount}
+                                    </p>
+                                  )}
+                                </td>
+                                <td>
+                                  {data.transactionID && (
+                                    <p className="col fs-6 text-break">
+                                      {data.transactionID}
+                                    </p>
+                                  )}
+                                  {data.depositAmount && (
+                                    <p className="col fs-6 text-break">N.A</p>
+                                  )}
+                                  {data.withdrawAmount && (
+                                    <p className="col fs-6 text-break">N.A</p>
+                                  )}
+                                </td>
+                                <td>
+                                  {data.transactionType && (
+                                    <p
+                                      className={`col fs-6 text-break text-bold ${
+                                        data.transactionType.includes(
+                                          "Manual-Website-Withdraw"
+                                        ) ||
+                                        data.transactionType.includes(
+                                          "Manual-Bank-Withdraw"
+                                        ) ||
+                                        data.transactionType === "Withdraw"
+                                          ? "text-red"
+                                          : "text-black"
+                                      }`}
+                                    >
+                                      {data.transactionType}
+                                    </p>
+                                  )}
+                                </td>
+                                <td>
+                                  {data.paymentMethod && (
+                                    <p className="col fs-6">
+                                      {data.paymentMethod}
+                                    </p>
+                                  )}
+                                  {data.depositAmount && (
+                                    <p className="col fs-6 text-break">N.A</p>
+                                  )}
+                                  {data.withdrawAmount && (
+                                    <p className="col fs-6 text-break">N.A</p>
+                                  )}
+                                </td>
+                                <td>{data.subAdminName}</td>
+                                <td>
+                                  {data.paymentMethod && (
+                                    <p className="col fs-6">{data.userName}</p>
+                                  )}
+                                  {data.depositAmount && (
+                                    <p className="col fs-6 text-break">N.A</p>
+                                  )}
+                                  {data.withdrawAmount && (
+                                    <p className="col fs-6 text-break">N.A</p>
+                                  )}
+                                </td>
+
+                                <td>
+                                  {data.balance ? (
+                                    <p className="col fs-6 text-break">
+                                      {data.balance}
+                                    </p>
+                                  ) : (
+                                    "N.A"
+                                  )}
+                                </td>
+
+                                <td>{data.remarks}</td>
+                                {/* <td>
+                                  <button
+                                    type="button"
+                                    className="btn btn-primary"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#edittransaction"
+                                    onClick={(e) => {
+                                      handleId(e, data._id);
+                                    }}
+                                  >
+                                    <FontAwesomeIcon icon={faEdit} />
+                                  </button>
+                                </td> */}
+                                <td>
+                                  <button
+                                    type="button"
+                                    className="btn btn-danger"
+                                  >
+                                    {["Deposit", "Withdraw"].includes(
+                                      data.transactionType
+                                    ) && (
+                                      <FontAwesomeIcon
+                                        icon={faTrash}
+                                        onClick={(e) => {
+                                          handleDelete(
+                                            e,
+                                            data.Transaction_Id,
+                                            data.transactionType
+                                          );
+                                        }}
+                                      />
+                                    )}
+                                    {[
+                                      "Manual-Website-Withdraw",
+                                      "Manual-Website-Deposit",
+                                    ].includes(data.transactionType) && (
+                                      <FontAwesomeIcon
+                                        icon={faTrash}
+                                        onClick={(e) => {
+                                          handleDelete(
+                                            e,
+                                            data.WebsiteTransaction_Id,
+                                            data.transactionType
+                                          );
+                                        }}
+                                      />
+                                    )}
+                                  </button>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                      </>
+                    ) : (
+                      <>
+                        {documentFilter
+                          .slice(page * 10 - 10, page * 10)
+                          .map((data) => {
+                            return (
+                              <tr align="center" className="fs-6">
+                                <td>
+                                  {" "}
+                                  {new Date(data.createdAt).toLocaleString(
+                                    "default"
+                                  )}{" "}
+                                </td>
+                                <td>
+                                  {data.amount && (
+                                    <p
+                                      className={`col fs-6 text-break ${
+                                        data.transactionType.includes(
+                                          "Manual-Website-Withdraw"
+                                        ) ||
+                                        data.transactionType.includes(
+                                          "Manual-Bank-Withdraw"
+                                        ) ||
+                                        data.transactionType === "Withdraw"
+                                          ? "text-red"
+                                          : "text-black"
+                                      }`}
+                                    >
+                                      {data.amount}
+                                    </p>
+                                  )}
+                                  {data.depositAmount && (
+                                    <p className="col fs-6">
+                                      {data.depositAmount}
+                                    </p>
+                                  )}
+                                  {data.withdrawAmount && (
+                                    <p className="col fs-6">
+                                      {data.withdrawAmount}
+                                    </p>
+                                  )}
+                                </td>
+                                <td>
+                                  {data.transactionID && (
+                                    <p className="col fs-6 text-break">
+                                      {data.transactionID}
+                                    </p>
+                                  )}
+                                  {data.depositAmount && (
+                                    <p className="col fs-6 text-break">N.A</p>
+                                  )}
+                                  {data.withdrawAmount && (
+                                    <p className="col fs-6 text-break">N.A</p>
+                                  )}
+                                </td>
+                                <td>
+                                  {data.transactionType && (
+                                    <p
+                                      className={`col fs-6 text-break text-bold ${
+                                        data.transactionType.includes(
+                                          "Manual-Website-Withdraw"
+                                        ) ||
+                                        data.transactionType.includes(
+                                          "Manual-Bank-Withdraw"
+                                        ) ||
+                                        data.transactionType === "Withdraw"
+                                          ? "text-red"
+                                          : "text-black"
+                                      }`}
+                                    >
+                                      {data.transactionType}
+                                    </p>
+                                  )}
+                                </td>
+                                <td>
+                                  {data.paymentMethod && (
+                                    <p className="col fs-6">
+                                      {data.paymentMethod}
+                                    </p>
+                                  )}
+                                  {data.depositAmount && (
+                                    <p className="col fs-6 text-break">N.A</p>
+                                  )}
+                                  {data.withdrawAmount && (
+                                    <p className="col fs-6 text-break">N.A</p>
+                                  )}
+                                </td>
+                                <td>{data.subAdminName}</td>
+                                <td>
+                                  {data.paymentMethod && (
+                                    <p className="col fs-6">{data.userName}</p>
+                                  )}
+                                  {data.depositAmount && (
+                                    <p className="col fs-6 text-break">N.A</p>
+                                  )}
+                                  {data.withdrawAmount && (
+                                    <p className="col fs-6 text-break">N.A</p>
+                                  )}
+                                </td>
+                                <td>
+                                  {data.balance ? (
+                                    <p className="col fs-6 text-break">
+                                      {data.balance}
+                                    </p>
+                                  ) : (
+                                    "N.A"
+                                  )}
+                                </td>
+                                <td>{data.remarks}</td>
+                                {/* <td>
+                                  <button
+                                    type="button"
+                                    className="btn btn-primary"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#edittransaction"
+                                    onClick={(e) => {
+                                      handleId(e, data._id);
+                                    }}
+                                  >
+                                    <FontAwesomeIcon icon={faEdit} />
+                                  </button>
+                                </td> */}
+                                <td>
+                                  <button
+                                    type="button"
+                                    className="btn btn-danger"
+                                  >
+                                    {["Deposit", "Withdraw"].includes(
+                                      data.transactionType
+                                    ) && (
+                                      <FontAwesomeIcon
+                                        icon={faTrash}
+                                        onClick={(e) => {
+                                          handleDelete(
+                                            e,
+                                            data.Transaction_Id,
+                                            data.transactionType
+                                          );
+                                        }}
+                                      />
+                                    )}
+                                    {[
+                                      "Manual-Website-Withdraw",
+                                      "Manual-Website-Deposit",
+                                    ].includes(data.transactionType) && (
+                                      <FontAwesomeIcon
+                                        icon={faTrash}
+                                        onClick={(e) => {
+                                          handleDelete(
+                                            e,
+                                            data.WebsiteTransaction_Id,
+                                            data.transactionType
+                                          );
+                                        }}
+                                      />
+                                    )}
+                                  </button>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                      </>
+                    )}
+                  </>
+                ) : (
+                  <h1 className="text-center">No Transaction Found</h1>
+                )}
+              </tbody>
+            </table>
+            {documentFilter.length > 0 && (
+              <Pagination
+                handlePage={selectPageHandler}
+                page={page}
+                totalPage={filterLastPage}
+                totalData={documentFilter.length}
+                perPagePagination={10}
+              />
+            )}
+          </div>
+        )}
+      </div>
+      {/* <EditTransaction id={dataId} /> */}
+    </>
   );
 };
 

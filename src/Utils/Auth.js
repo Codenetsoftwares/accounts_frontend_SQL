@@ -29,7 +29,6 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     sessionStorage.removeItem('user');
     sessionStorage.removeItem('role');
-    localStorage.removeItem('selectedMenuItem')
     setUser(null);
   };
   

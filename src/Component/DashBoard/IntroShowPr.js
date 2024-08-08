@@ -75,7 +75,7 @@ const IntroShowPr = () => {
   useEffect(() => {
     if (auth.user) {
       TransactionSercvice.subAdminList(auth.user).then((res) => {
-        setSubAdminlist(res.data.data);
+        setSubAdminlist(res.data);
       });
     }
   }, [auth]);
@@ -83,20 +83,18 @@ const IntroShowPr = () => {
   useEffect(() => {
     if (auth.user) {
       TransactionSercvice.bankList(auth.user).then((res) => {
-        setBankList(res.data.data);
+        setBankList(res.data);
       });
     }
   }, [auth]);
 
   useEffect(() => {
-    AccountService.website(auth.user).then((res) =>
-      setWebsiteList(res.data.data)
-    );
+    AccountService.website(auth.user).then((res) => setWebsiteList(res.data));
   }, [auth]);
 
   useEffect(() => {
     AccountService.introducerId(auth.user).then((res) =>
-      setIntroducerList(res.data.data)
+      setIntroducerList(res.data)
     );
   }, [auth]);
 
@@ -211,8 +209,8 @@ const IntroShowPr = () => {
                 <option selected>Select subAdmin</option>
                 {subAdminlist.map((data) => {
                   return (
-                    <option key={data._id} value={data.userName}>
-                      {data.userName}
+                    <option key={data._id} value={data.firstname}>
+                      {data.firstname}
                     </option>
                   );
                 })}

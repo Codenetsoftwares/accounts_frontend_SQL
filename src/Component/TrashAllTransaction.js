@@ -13,7 +13,7 @@ const TrashAllTransaction = () => {
   useEffect(() => {
     if (auth.user) {
       TransactionSercvice.ViewTrash(auth.user).then((res) =>
-        setAlert(res.data.data)
+        setAlert(res.data)
       );
     }
   }, [auth]);
