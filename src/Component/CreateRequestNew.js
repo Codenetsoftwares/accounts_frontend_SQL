@@ -12,7 +12,7 @@ const CreateRequestNew = ({ Api, purpose, ApiReject, EditApi }) => {
   useEffect(() => {
     Api(auth.user)
       .then((res) => {
-        setData(res.data.data);
+        setData(res.data);
         console.log(res.data);
       })
       .catch((err) => {
@@ -96,7 +96,7 @@ const CreateRequestNew = ({ Api, purpose, ApiReject, EditApi }) => {
             )}
           </thead>
           <tbody>
-            {data?.map((data, index) => (
+            {data.map((data, index) => (
               <tr key={index}>
                 {purpose === "bank" && (
                   <>

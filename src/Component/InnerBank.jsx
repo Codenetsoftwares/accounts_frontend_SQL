@@ -60,10 +60,10 @@ const InnerBank = ({ getbankName }) => {
         console.log("bank", response.data);
         alert(response.data.message);
         // alert("Bank Added Sucessfully");
-        // window.location.reload();
+        window.location.reload();
       })
       .catch((error) => {
-        alert(error.response.data.errMessage);
+        alert(error.response.data.message);
         console.log(error);
       });
   };

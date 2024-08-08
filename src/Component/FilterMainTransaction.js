@@ -7,9 +7,8 @@ import moment from "moment";
 import { CSVLink } from "react-csv";
 import AccountService from '../Services/AccountService';
 import { toast } from 'react-toastify';
-import SingleCard from '../common/singleCard';
 
-const FilterMainTransaction = ({ purpose, handleData, setPage, handlePage, handleTotalData, FilterData, page, setTotalPage, setDocumentFilter }) => {
+const FilterMainTransaction = ({ purpose, handleData, page, handlePage, handleTotalData }) => {
     const auth = useAuth();
     const [subAdminlist, setSubAdminlist] = useState([]);
     const [subAdmin, setSubAdmin] = useState("");
@@ -25,30 +24,26 @@ const FilterMainTransaction = ({ purpose, handleData, setPage, handlePage, handl
     const [documentView, setDocumentView] = useState([]);
     const [minAmount, setMinAmount] = useState(0);
     const [maxAmount, setMaxAmount] = useState(0);
-    const [searchByTransactionId, setSearchByTransactionId] = useState("");
 
 
     const handleFilter = () => {
         const data = {
-            "filters": {
-                transactionType: select,
-                introducerUserName: introducer,
-                subAdminId: subAdmin,
-                bankName: bank,
-                websiteName: website,
-                // sdate: moment(startDatevalue).toDate(),
-                // edate: moment(endDatevalue).toDate(),
-                // maxAmount: maxAmount,
-                // minAmount: minAmount
-            }
+            transactionType: select,
+            introducerList: introducer,
+            subAdminList: subAdmin,
+            BankList: bank,
+            WebsiteList: website,
+            // sdate: moment(startDatevalue).toDate(),
+            // edate: moment(endDatevalue).toDate(),
+            maxAmount: maxAmount,
+            minAmount: minAmount
         }
         TransactionSercvice.filterTransaction(data, page, auth.user).then((res) => {
             return (
-                console.log(res.data.pagination),
-                setDocumentFilter(res.data.data),
-                setPage(res.data.pagination.page),
-                setTotalPage(res.data.pagination.totalPages),
-                handleTotalData(res.data.pagination.totalItems)
+                setDocumentView(res.data.paginatedResults),
+                console.log(documentView),
+                handleData(res.data.paginatedResults, res.data.pageNumber),
+                handleTotalData(res.data.allIntroDataLength)
             )
         }).catch((err) => {
             return (
@@ -82,14 +77,14 @@ const FilterMainTransaction = ({ purpose, handleData, setPage, handlePage, handl
     useEffect(() => {
         if (auth.user) {
             TransactionSercvice.subAdminList(auth.user).then((res) => {
-                setSubAdminlist(res.data.data);
+                setSubAdminlist(res.data);
             });
             TransactionSercvice.bankList(auth.user).then((res) => {
-                setBankList(res.data.data);
+                setBankList(res.data);
             });
-            AccountService.website(auth.user).then((res) => setWebsiteList(res.data.data));
+            AccountService.website(auth.user).then((res) => setWebsiteList(res.data));
             AccountService.introducerId(auth.user).then((res) =>
-                setIntroducerList(res.data.data)
+                setIntroducerList(res.data)
             );
         }
     }, [auth]);
@@ -135,206 +130,332 @@ const FilterMainTransaction = ({ purpose, handleData, setPage, handlePage, handl
         setWebsite(value);
     };
 
-    const handleSearchByTransactionId = (e) => {
-        const value = e.target.value;
-        setSearchByTransactionId(value);
-    };
-
     return (
-        <SingleCard className="card card-body rounded-8px mt-1">
-            <SingleCard
-                className="card card-body rounded-8px shadow"
-                style={{
-                    backgroundColor: "#e6f7ff",
-                    maxWidth: "1500px",
-                    margin: "auto",
-                }}
-            >
-                <div className="row g-3">
-                    <div className="col-md-4 col-lg-3">
-                        <h6 className="fw-bold text-nowrap">Transaction</h6>
-                        <select
-                            className="form-control"
-                            value={select || ""}
-                            autoComplete="off"
-                            onChange={handleChange}
-                            style={{ border: "0.5px solid black", borderRadius: "6px" }}
-                        >
-                            <option value="All">All</option>
-                            <option value="Deposit">Deposit</option>
-                            <option value="Withdraw">Withdraw</option>
-                            <option value="Manual-Bank-Deposit">Manual Bank Deposit</option>
-                            <option value="Manual-Bank-Withdraw">Manual Bank Withdraw</option>
-                            <option value="Manual-Website-Deposit">
-                                Manual Website Deposit
-                            </option>
-                            <option value="Manual-Website-Withdraw">
-                                Manual Website Withdraw
-                            </option>
-                        </select>
-                    </div>
+        <div
+            className="card card-body rounded-1 "
+            style={{ backgroundColor: '#fff4ec' }}
+        >
+            <div className="row row-cols-2 row-cols-lg-3 g-2 g-lg-2" >
 
-                    <div className="col-md-4 col-lg-3">
-                        <h6 className="fw-bold text-nowrap">SubAdmin List</h6>
-                        <select
-                            className="form-control"
-                            value={subAdmin || ""}
-                            autoComplete="off"
-                            onChange={handleSubAdmin}
-                            style={{ border: "0.5px solid black", borderRadius: "6px" }}
-                            required
-                        >
-                            <option value="">Select subAdmin</option>
-                            {subAdminlist.map((data) => (
+                <div className="d-flex col pt-3 justify-content-center"  >
+                    <h6 className="fw-bold text-nowrap pt-2" >
+                        Transaction
+                    </h6>
+                    <select
+                        className="form-control mx-3 w-50"
+                        value={select || ""}
+                        autoComplete="off"
+                        onChange={handleChange}
+                        style={{
+                            border: "0.5px solid black",
+                            borderRadius: "6px"
+                        }}
+                    >
+                        <option className="d-flex" value="All">
+                            <b>All</b>
+                        </option>
+                        <option className="d-flex" value="Deposit">
+                            <b>Deposit</b>
+                        </option>
+                        <option className="d-flex" value="Withdraw">
+                            <b>Withdraw</b>
+                        </option>
+                        <option className="d-flex" value="Manual-Bank-Deposit">
+                            <b>Manual Bank Deposit</b>
+                        </option>{" "}
+                        <option className="d-flex" value="Manual-Bank-Withdraw">
+                            <b>Manual Bank Withdraw</b>
+                        </option>
+                        <option className="d-flex" value="Manual-Website-Deposit">
+                            <b>Manual Website Deposit</b>
+                        </option>{" "}
+                        <option className="d-flex" value="Manual-Website-Withdraw">
+                            <b>Manual Website Withdraw</b>
+                        </option>
+                    </select>
+                </div>
+
+                <div className="d-flex col pt-3 justify-content-center" >
+                    <h6 className="fw-bold text-nowrap pt-2"> SubAdminlist</h6>
+                    <select
+                        className="form-control mx-3 w-50"
+                        value={subAdmin || ""}
+                        autoComplete="off"
+                        onChange={handleSubAdmin}
+                        style={{
+                            border: "0.5px solid black",
+                            borderRadius: "6px",
+                        }}
+                        required
+                    >
+                        <option selected>Select subAdmin</option>
+                        {subAdminlist.map((data) => {
+                            return (
+                                <option key={data._id} value={data.firstname}>
+                                    {data.firstname}
+                                </option>
+                            );
+                        })}
+                    </select>
+                </div>
+
+                {/* when props pass mainstatement from parent component*/}
+                {purpose === "mainStatement" && <><div className="d-flex col pt-3 justify-content-center" >
+                    <h6 className="fw-bold text-nowrap pt-2"> Introducerlist</h6>
+                    <select
+                        className="form-control mx-3 w-50"
+                        value={introducer || ""}
+                        autoComplete="off"
+                        onChange={handleIntroducer}
+                        style={{
+                            border: "0.5px solid black",
+                            borderRadius: "6px",
+                        }}
+                        required
+                    >
+                        <option selected>Select Introducer</option>
+                        {introducerList.map((data) => {
+                            return (
                                 <option key={data._id} value={data.userName}>
                                     {data.userName}
                                 </option>
-                            ))}
+                            );
+                        })}
+                    </select>
+                </div>
+                    <div className="d-flex col pt-3 justify-content-center"  >
+                        <h6 className="fw-bold text-nowrap pt-2"> BankNameList</h6>
+                        <select
+                            className="form-control mx-3 w-50"
+                            value={bank || ""}
+                            autoComplete="off"
+                            onChange={handleBank}
+                            style={{
+                                border: "0.5px solid black",
+                                borderRadius: "6px",
+                            }}
+                            required
+                        >
+                            <option selected>Select Bank</option>
+                            {bankList.map((data) => {
+                                return (
+                                    <option key={data._id} value={data.bankName}>
+                                        {data.bankName}
+                                    </option>
+                                );
+                            })}
                         </select>
                     </div>
-
-                    {purpose === "mainStatement" && (
-                        <>
-                            <div className="col-md-4 col-lg-3">
-                                <h6 className="fw-bold text-nowrap">Introducer List</h6>
-                                <select
-                                    className="form-control"
-                                    value={introducer || ""}
-                                    autoComplete="off"
-                                    onChange={handleIntroducer}
-                                    style={{ border: "0.5px solid black", borderRadius: "6px" }}
-                                    required
-                                >
-                                    <option value="">Select Introducer</option>
-                                    {introducerList.map((data) => (
-                                        <option key={data._id} value={data.userName}>
-                                            {data.userName}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-                            <div className="col-md-4 col-lg-3">
-                                <h6 className="fw-bold text-nowrap">Bank Name List</h6>
-                                <select
-                                    className="form-control"
-                                    value={bank || ""}
-                                    autoComplete="off"
-                                    onChange={handleBank}
-                                    style={{ border: "0.5px solid black", borderRadius: "6px" }}
-                                    required
-                                >
-                                    <option value="">Select Bank</option>
-                                    {bankList.map((data) => (
-                                        <option key={data._id} value={data.bankName}>
-                                            {data.bankName}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-                        </>
-                    )}
-
-                    <div className="col-md-4 col-lg-3">
-                        <h6 className="fw-bold text-nowrap">Websites List</h6>
+                    <div className="d-flex col pt-3 justify-content-center" >
+                        <h6 className="fw-bold text-nowrap pt-2"> WebsitesList</h6>
                         <select
-                            className="form-control"
+                            className="form-control mx-3 w-50"
                             value={website || ""}
                             autoComplete="off"
                             onChange={handleWebsite}
-                            style={{ border: "0.5px solid black", borderRadius: "6px" }}
+                            style={{
+                                border: "0.5px solid black",
+                                borderRadius: "6px",
+                            }}
                             required
                         >
-                            <option value="">Select Website</option>
-                            {websiteList.map((data) => (
+                            <option selected>Select website</option>
+                            {websiteList.map((data) => {
+                                return (
+                                    <option key={data._id} value={data.websiteName}>
+                                        {data.websiteName}
+                                    </option>
+                                );
+                            })}
+                        </select>
+                    </div></>}
+                {/* when props pass mainstatement  from parent component*/}
+
+                {/* when props pass bankstatement from parent component*/}
+                {/* {purpose === "bankStatement" && <div className="d-flex col pt-3 justify-content-center"  >
+                    <h6 className="fw-bold text-nowrap pt-2"> BankNameList</h6>
+                    <select
+                        className="form-control mx-3 w-50"
+                        value={bank || ""}
+                        autoComplete="off"
+                        onChange={handleBank}
+                        style={{
+                            border: "0.5px solid black",
+                            borderRadius: "6px",
+                        }}
+                        required
+                    >
+                        <option selected>Select Bank</option>
+                        {bankList.map((data) => {
+                            return (
+                                <option key={data._id} value={data.bankName}>
+                                    {data.bankName}
+                                </option>
+                            );
+                        })}
+                    </select>
+                </div>} */}
+                {/* when props pass bankstatement from parent component*/}
+
+                {/* when props pass websitestatement from parent component*/}
+                {/* {purpose === "websiteStatement" && <div className="d-flex col pt-3 justify-content-center" >
+                    <h6 className="fw-bold text-nowrap pt-2"> WebsitesList</h6>
+                    <select
+                        className="form-control mx-3 w-50"
+                        value={website || ""}
+                        autoComplete="off"
+                        onChange={handleWebsite}
+                        style={{
+                            border: "0.5px solid black",
+                            borderRadius: "6px",
+                        }}
+                        required
+                    >
+                        <option selected>Select website</option>
+                        {websiteList.map((data) => {
+                            return (
                                 <option key={data._id} value={data.websiteName}>
                                     {data.websiteName}
                                 </option>
-                            ))}
+                            );
+                        })}
+                    </select>
+                </div>} */}
+                {/* when props pass websitestatement from parent component*/}
+
+                {/* when props pass introducerTransactionStatement & userTransactionStatement from parent component*/}
+                {purpose === ("introducerTransactionStatement" || "userTransactionStatement") && <>
+                    <div className="d-flex col pt-3 justify-content-center"  >
+                        <h6 className="fw-bold text-nowrap pt-2"> BankNameList</h6>
+                        <select
+                            className="form-control mx-3 w-50"
+                            value={bank || ""}
+                            autoComplete="off"
+                            onChange={handleBank}
+                            style={{
+                                border: "0.5px solid black",
+                                borderRadius: "6px",
+                            }}
+                            required
+                        >
+                            <option selected>Select Bank</option>
+                            {bankList.map((data) => {
+                                return (
+                                    <option key={data._id} value={data.bankName}>
+                                        {data.bankName}
+                                    </option>
+                                );
+                            })}
                         </select>
                     </div>
+                    <div className="d-flex col pt-3 justify-content-center" >
+                        <h6 className="fw-bold text-nowrap pt-2"> WebsitesList</h6>
+                        <select
+                            className="form-control mx-3 w-50"
+                            value={website || ""}
+                            autoComplete="off"
+                            onChange={handleWebsite}
+                            style={{
+                                border: "0.5px solid black",
+                                borderRadius: "6px",
+                            }}
+                            required
+                        >
+                            <option selected>Select website</option>
+                            {websiteList.map((data) => {
+                                return (
+                                    <option key={data._id} value={data.websiteName}>
+                                        {data.websiteName}
+                                    </option>
+                                );
+                            })}
+                        </select>
+                    </div></>}
+                {/* when props pass introducerTransactionStatement & userTransactionStatement from parent component*/}
 
-                    {(purpose === "introducerReport" || purpose === "mainStatement") && (
-                        <div className="col-md-4 col-lg-3">
-                            <h6 className="fw-bold text-nowrap">Range Of Amount</h6>
-                            <div className="d-flex justify-content-between">
-                                <input
-                                    type="number"
-                                    className="form-control"
-                                    placeholder="Min Amount"
-                                    value={minAmount || ""}
-                                    onChange={handleMinAmount}
-                                    style={{ border: "0.5px solid black", borderRadius: "6px" }}
-                                />
-                                <h6 className="fw-bold mx-2">To</h6>
-                                <input
-                                    type="number"
-                                    className="form-control"
-                                    placeholder="Max Amount"
-                                    value={maxAmount || ""}
-                                    onChange={handleMaxAmount}
-                                    style={{ border: "0.5px solid black", borderRadius: "6px" }}
-                                />
-                            </div>
-                        </div>
-                    )}
+                <div className="d-flex col pt-3 justify-content-center"  >
+                    <h6 className="fw-bold text-nowrap pt-2"> Range Of Amount</h6>
+                    <input
+                        className="form-control mx-3 w-25"
+                        type='number'
+                        value={minAmount || ""}
+                        autoComplete="off"
+                        onChange={handleMinAmount}
+                        placeholder='Min Amt'
+                        style={{
+                            border: "0.5px solid black",
+                            borderRadius: "6px",
+                        }}
+                        required
+                        min={1}
+                    />
+                    <h6 className="fw-bold text-nowrap pt-2"> To</h6>
+                    <input
+                        className="form-control mx-3 w-25"
+                        type='number'
+                        value={maxAmount || ""}
+                        autoComplete="off"
+                        onChange={handleMaxAmount}
+                        placeholder='Max Amt'
 
-                    <div className="col-md-4 col-lg-3">
-                        <h6 className="fw-bold text-nowrap">Search By Transaction ID</h6>
-                        <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Transaction ID"
-                            value={searchByTransactionId || ""}
-                            onChange={handleSearchByTransactionId}
-                            style={{ border: "0.5px solid black", borderRadius: "6px" }}
+                        style={{
+                            border: "0.5px solid black",
+                            borderRadius: "6px",
+                        }}
+                        min={1}
+                        required
+                    />
+                </div>
+
+
+                <div className="row row-cols-4 row-cols-lg-4 g-2 g-lg-3 w-100 " style={{ paddingLeft: '5rem' }} >
+                    <div className="d-flex col justify-content-center ">
+                        <h6 className="fw-bold text-nowrap pt-2 pr-2"> Start Date</h6>
+                        <Datetime
+                            value={startDatevalue}
+                            onChange={handleStartDatevalue}
+                            dateFormat="DD-MM-YYYY"
+                            timeFormat="HH:mm"
                         />
                     </div>
-
-                    <div className="col-md-4 col-lg-3">
-                        <h6 className="fw-bold text-nowrap">Date Range</h6>
-                        <div className="d-flex">
-                            <Datetime
-                                value={startDatevalue}
-                                onChange={handleStartDatevalue}
-                                dateFormat="DD-MM-YYYY"
-                                timeFormat="HH:mm"
-                            />
-                            <h6 className="fw-bold text-nowrap">To</h6>
-                            <Datetime
-                                value={endDatevalue}
-                                onChange={handleEndDatevalue}
-                                dateFormat="DD-MM-YYYY"
-                                timeFormat="HH:mm"
-                            />
-                        </div>
+                    <div className="d-flex col  justify-content-center">
+                        <h6 className="fw-bold text-nowrap pt-2 pr-2"> End Date</h6>
+                        <Datetime
+                            value={endDatevalue}
+                            onChange={handleEndDatevalue}
+                            dateFormat="DD-MM-YYYY"
+                            timeFormat="HH:mm"
+                        />
                     </div>
-                    <div className="col-12 mt-3">
-                        <div className="d-flex justify-content-start gap-2">
+                    <div className="d-flex col justify-content-center">
+                        <div className="mx-2">
                             <button
+                                type="button"
                                 className="btn btn-dark"
                                 onClick={handleFilter}
-                                style={{ borderRadius: "6px" }}
                             >
                                 Filter
                             </button>
+                        </div>
+                        <div className="mx-2">
                             <button
+                                type="button"
                                 className="btn btn-dark"
                                 onClick={handleReset}
-                                style={{ borderRadius: "6px" }}
                             >
                                 Reset
                             </button>
+                        </div>
+                        <div className="mx-2">
+                            {documentView !== undefined && <CSVLink data={documentView} className="btn btn-success">
+                                Download Data
+                            </CSVLink>}
 
-                            {documentView !== undefined && (
-                                <CSVLink data={documentView} className="btn btn-success">
-                                    Download Data
-                                </CSVLink>
-                            )}
                         </div>
                     </div>
                 </div>
-            </SingleCard>
-        </SingleCard>
+            </div>
+        </div>
     )
 }
 
