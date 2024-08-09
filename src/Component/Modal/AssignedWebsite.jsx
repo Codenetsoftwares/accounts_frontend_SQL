@@ -10,8 +10,7 @@ const AssignedWebsite = ({ ID }) => {
   useEffect(() => {
     AccountService.subadminassigneedwebsiteview(username, auth.user)
       .then((res) =>
-          console.log('===>>> response for website',res)
-        // setWebsiteNames(res.data)
+        setWebsiteNames(res.data.data)
       )
       .catch((err) => {
         console.log(err.response.data.message);

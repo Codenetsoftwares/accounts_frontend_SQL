@@ -70,7 +70,7 @@ const UserProfile = () => {
       setUsers((prevUsers) =>
         searchTerm.length > 0 ? filteredData : [...prevUsers, ...filteredData]
       );
-      setHasMore(newPage < res.data.pageNumber);
+      setHasMore(newPage < res.data.pagination.totalPages);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
