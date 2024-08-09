@@ -4,7 +4,7 @@ import AccountService from "../../Services/AccountService";
 import { toast } from "react-toastify";
 import FullScreenLoader from "../FullScreenLoader";
 
-const ModalWthBl = ({ ID }) => {
+const ModalWthBl = ({ ID, renderParent }) => {
   const auth = useAuth();
   const [Amount, SetAmount] = useState(0);
   const [Remarks, SetRemarks] = useState("");
@@ -58,6 +58,7 @@ const ModalWthBl = ({ ID }) => {
         setIsLoading(false);
         if (res.status === 200) {
           toast.success(res.data.message);
+          renderParent(res.data);
           // Close the modal
           const closeButton = document.querySelector("#modalWthbl .btn-close");
           if (closeButton) {

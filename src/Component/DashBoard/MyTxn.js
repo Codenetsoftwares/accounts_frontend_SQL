@@ -142,7 +142,7 @@ const MyTxn = () => {
 
   const handleDelete = (e, id, transactionType) => {
     TransactionSercvice.MoveTrashIntroducerTransaction(
-      { requestId: id },
+      { requestId: id, type:transactionType },
       auth.user
     )
       .then((res) => {
@@ -481,19 +481,31 @@ const MyTxn = () => {
                             {data?.Transaction_Id && <FontAwesomeIcon
                               icon={faTrash}
                               onClick={(e) => {
-                                handleDelete(e, data?.Transaction_Id, data?.transactionType);
+                                handleDelete(
+                                  e,
+                                  data?.Transaction_Id,
+                                  data?.type
+                                );
                               }}
                             />}
                             {data?.bankTransactionId && <FontAwesomeIcon
                               icon={faTrash}
                               onClick={(e) => {
-                                handleDelete(e, data?.bankTransactionId, data?.transactionType);
+                                handleDelete(
+                                  e,
+                                  data?.bankTransactionId,
+                                  data?.type
+                                );
                               }}
                             />}
                             {data?.websiteTransactionId && <FontAwesomeIcon
                               icon={faTrash}
                               onClick={(e) => {
-                                handleDelete(e, data?.websiteTransactionId, data?.transactionType);
+                                handleDelete(
+                                  e,
+                                  data?.websiteTransactionId,
+                                  data?.type
+                                );
                               }}
                             />}
                           </button>

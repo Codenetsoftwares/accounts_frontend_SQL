@@ -347,13 +347,14 @@ const WebsiteDetails = () => {
                             <div className="col-6 col-sm-4 col-md-3 col-lg-2">
                               <button
                                 type="button"
-                                className="btn btn-custom btn-sm btn-zoom-out"
+                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${
+                                  data.isWithdraw ? "" : "avoid-clicks"
+                                }`}
                                 data-bs-toggle="modal"
                                 data-bs-target="#modalWithdrawBlwebsite"
                                 onClick={() => {
                                   handelId(data.websiteId);
                                 }}
-                                disabled={!data.isWithdraw}
                                 title="Withdraw"
                               >
                                 <FontAwesomeIcon
@@ -365,13 +366,14 @@ const WebsiteDetails = () => {
                             <div className="col-6 col-sm-4 col-md-3 col-lg-2">
                               <button
                                 type="button"
-                                className="btn btn-custom btn-sm btn-zoom-out"
+                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${
+                                  data.isEdit ? "" : "avoid-clicks"
+                                }`}
                                 data-bs-toggle="modal"
                                 data-bs-target="#modalAddBlWebsite"
                                 onClick={() => {
                                   handelId(data.websiteId);
                                 }}
-                                disabled={!data.isDeposit}
                                 title="Deposit"
                               >
                                 <FontAwesomeIcon
@@ -399,7 +401,9 @@ const WebsiteDetails = () => {
                             <div className="col-6 col-sm-4 col-md-3 col-lg-2">
                               <button
                                 type="button"
-                                className="btn btn-custom btn-sm btn-zoom-out"
+                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${
+                                  data.isEdit ? "" : "avoid-clicks"
+                                }`}
                                 onClick={() => {
                                   handelWebsiteEdit(
                                     data.websiteId,
@@ -409,7 +413,6 @@ const WebsiteDetails = () => {
                                 title="Edit Website"
                                 data-toggle="modal"
                                 data-target="#editwebsite"
-                                disabled={!data.isEdit}
                               >
                                 <FontAwesomeIcon
                                   icon={faEdit}
@@ -421,12 +424,13 @@ const WebsiteDetails = () => {
                             <div className="col-6 col-sm-4 col-md-3 col-lg-2">
                               <button
                                 type="button"
-                                className="btn btn-custom btn-sm btn-zoom-out"
+                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${
+                                  data.isDelete ? "" : "avoid-clicks"
+                                }`}
                                 onClick={(e) => {
                                   handeldeletewebsite(data.websiteId);
                                 }}
                                 title="Delete"
-                                disabled={!data.isDelete}
                               >
                                 <FontAwesomeIcon
                                   icon={faTrashAlt}
@@ -438,7 +442,9 @@ const WebsiteDetails = () => {
                             <div className="col-6 col-sm-4 col-md-3 col-lg-2">
                               <button
                                 type="button"
-                                className="btn btn-custom btn-sm btn-zoom-out"
+                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${
+                                  data.isRenew ? "" : "avoid-clicks"
+                                }`}
                                 data-toggle="modal"
                                 data-target="#RenewWebsitePermission"
                                 onClick={() => {
@@ -448,7 +454,6 @@ const WebsiteDetails = () => {
                                   );
                                 }}
                                 title="Renew Permission"
-                                disabled={!data.isRenew}
                               >
                                 <FontAwesomeIcon
                                   icon={faEye}

@@ -8,7 +8,7 @@ const WebsiteEdit = () => {
   useEffect(() => {
     if (auth.user) {
       EditServices.ViewwebsiteEditRq(auth.user).then((res) => {
-        SetEditRq(res.data);
+        SetEditRq(res.data.data);
       });
     }
   }, [auth]);
@@ -67,13 +67,13 @@ const WebsiteEdit = () => {
                 <button
                   type="button"
                   class="btn btn-success mr-2 ml-2"
-                  onClick={() => handleapprove(item.website_id)}
+                  onClick={() => handleapprove(item.websiteId)}
                 >
                   Approve
                 </button>
                 <button
                   class="btn btn-danger"
-                  onClick={(e) => handleReject(e, item.website_id)}
+                  onClick={(e) => handleReject(e, item.websiteId)}
                 >
                   Reject
                 </button>

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 // import useLocalStorage from "use-local-storage";
+import "./Welcome.css";
 
 const Welcome = () => {
   const defaultDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -12,11 +13,11 @@ const Welcome = () => {
   return (
     <div className="container-fluid  mb-3 ">
       <nav className="navbar navbar-dark bg-dark py-2 ">
-        <div className="container d-flex justify-content-center">
-          <a className="navbar-brand " href="#">
+        <div className="container d-flex justify-content-center p-2">
+          {/* <a className="navbar-brand " href="#">
             obhiasb
             <br />
-          </a>
+          </a> */}
         </div>
       </nav>
       <div className="d-flex flex-column ">
@@ -29,7 +30,7 @@ const Welcome = () => {
           }}
         >
           <div className="container text-center">
-            <h1 className="display-5">Welcome to obhiasb</h1>
+            <h1 className="display-5 animated-heading">Welcome to obhiasb</h1>
 
             <p className="lead">
               This is The central hub for managing accounts.

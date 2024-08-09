@@ -284,8 +284,8 @@ class TransactionService {
 
   MoveTrashIntroducerTransaction(data, user) {
     return axios({
-      method: "post",
-      url: `${API_HOST}/api/admin/move-introducer-transaction-to-trash`,
+      method: "delete",
+      url: `${API_HOST}/api/admin/move-transaction-to-delete-request`,
       data: data,
       headers: {
         Authorization: `Bearer ${user.token}`,

@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FullScreenLoader from "../FullScreenLoader";
 
-const ModalAddBl = ({ ID }) => {
+const ModalAddBl = ({ ID, renderParent }) => {
   const auth = useAuth();
   const [Amount, SetAmount] = useState(0);
   const [Remarks, SetRemarks] = useState("");
@@ -59,6 +59,7 @@ const ModalAddBl = ({ ID }) => {
         if (res.status === 200) {
           console.log(res);
           toast.success(res.data.message);
+          renderParent(res.data);
           // Close the modal
           const closeButton = document.querySelector("#modalAdbl .btn-close");
           if (closeButton) {

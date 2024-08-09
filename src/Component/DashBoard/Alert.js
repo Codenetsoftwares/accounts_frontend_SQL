@@ -431,144 +431,140 @@ const Alert = () => {
                     </div>
                   )}
 
-                  {data.type === "Delete" && (
-                    <div className="card">
-                      <h5 class="card-title text-center text-danger">
-                        {data.message}
-                      </h5>
-                      <div className="card-body">
+                  <div className="card">
+                    <h5 class="card-title text-center text-danger">
+                      {data.message}
+                    </h5>
+                    <div className="card-body">
+                      <div className="row">
                         <div className="row">
                           <div className="row">
-                            <div className="row">
-                              <p className="col fs-6">
-                                Transaction Type:
-                                <br />
-                                <p className="text-success">
-                                  {data.transactionType}
-                                </p>
+                            <p className="col fs-6">
+                              Transaction Type:
+                              <br />
+                              <p className="text-success">
+                                {data.transactionType}
                               </p>
-                              <p className="col fs-6 ">
-                                Transaction Id:
-                                <br />
-                                <p
-                                  className={
-                                    data.changedFields?.transactionID
-                                      ? "text-danger"
-                                      : "text-success"
-                                  }
-                                >
-                                  {data.changedFields?.transactionID ||
-                                    data.transactionID}
-                                </p>
+                            </p>
+                            <p className="col fs-6 ">
+                              Transaction Id:
+                              <br />
+                              <p
+                                className={
+                                  data.changedFields?.transactionID
+                                    ? "text-danger"
+                                    : "text-success"
+                                }
+                              >
+                                {data.changedFields?.transactionID ||
+                                  data.transactionID}
                               </p>
-                              <p className="col fs-6 ">
-                                Gateway:
-                                <br />
-                                <p
-                                  className={
-                                    data.changedFields?.paymentMethod
-                                      ? "text-danger"
-                                      : "text-success"
-                                  }
-                                >
-                                  {data.changedFields?.paymentMethod ||
-                                    data.paymentMethod}
-                                </p>
+                            </p>
+                            <p className="col fs-6 ">
+                              Gateway:
+                              <br />
+                              <p
+                                className={
+                                  data.changedFields?.paymentMethod
+                                    ? "text-danger"
+                                    : "text-success"
+                                }
+                              >
+                                {data.changedFields?.paymentMethod ||
+                                  data.paymentMethod}
                               </p>
-                              <p className="col fs-6 ">
-                                UserName:
-                                <br />
-                                <p
-                                  className={
-                                    data.changedFields?.userName
-                                      ? "text-danger"
-                                      : "text-success"
-                                  }
-                                >
-                                  {data.changedFields?.userName ||
-                                    data.userName}
-                                </p>
+                            </p>
+                            <p className="col fs-6 ">
+                              UserName:
+                              <br />
+                              <p
+                                className={
+                                  data.changedFields?.userName
+                                    ? "text-danger"
+                                    : "text-success"
+                                }
+                              >
+                                {data.changedFields?.userName || data.userName}
                               </p>
-                              <p className="col fs-6 ">
-                                Website:
-                                <br />
-                                <p
-                                  className={
-                                    data.changedFields?.websiteName
-                                      ? "text-danger"
-                                      : "text-success"
-                                  }
-                                >
-                                  {data.changedFields?.websiteName ||
-                                    data.websiteName}
-                                </p>
+                            </p>
+                            <p className="col fs-6 ">
+                              Website:
+                              <br />
+                              <p
+                                className={
+                                  data.changedFields?.websiteName
+                                    ? "text-danger"
+                                    : "text-success"
+                                }
+                              >
+                                {data.changedFields?.websiteName ||
+                                  data.websiteName}
                               </p>
-                              <p className="col fs-6 ">
-                                Amount:
-                                <br />
-                                <p
-                                  className={
-                                    data.changedFields?.withdrawAmount ||
-                                    data.changedFields?.amount ||
-                                    data.changedFields?.depositAmount
-                                      ? "text-danger"
-                                      : "text-success"
-                                  }
-                                >
-                                  {data.changedFields?.withdrawAmount ||
-                                    data.changedFields?.amount ||
-                                    data.changedFields?.depositAmount ||
-                                    data.withdrawAmount ||
-                                    data.amount ||
-                                    data.depositAmount}
-                                </p>
+                            </p>
+                            <p className="col fs-6 ">
+                              Amount:
+                              <br />
+                              <p
+                                className={
+                                  data.changedFields?.withdrawAmount ||
+                                  data.changedFields?.amount ||
+                                  data.changedFields?.depositAmount
+                                    ? "text-danger"
+                                    : "text-success"
+                                }
+                              >
+                                {data.changedFields?.withdrawAmount ||
+                                  data.changedFields?.amount ||
+                                  data.changedFields?.depositAmount ||
+                                  data.withdrawAmount ||
+                                  data.amount ||
+                                  data.depositAmount}
                               </p>
-                              <p className="col fs-6 ">
-                                Bank:
-                                <br />
-                                <p
-                                  className={
-                                    data.changedFields?.bankName
-                                      ? "text-danger"
-                                      : "text-success"
-                                  }
-                                >
-                                  {data.changedFields?.bankName ||
-                                    data.bankName}
-                                </p>
+                            </p>
+                            <p className="col fs-6 ">
+                              Bank:
+                              <br />
+                              <p
+                                className={
+                                  data.changedFields?.bankName
+                                    ? "text-danger"
+                                    : "text-success"
+                                }
+                              >
+                                {data.changedFields?.bankName || data.bankName}
                               </p>
-                            </div>
+                            </p>
                           </div>
                         </div>
                       </div>
-                      <div className="col d-flex justify-content-center gap-2 mb-2">
-                        <button
-                          class="btn btn-primary"
-                          onClick={(e) =>
-                            handleDeleteApprove(
-                              e,
-                              data.editId,
-                              data.transactionType
-                            )
-                          }
-                        >
-                          Approve
-                        </button>
-                        <button
-                          class="btn btn-danger"
-                          onClick={(e) =>
-                            handleDeleteReject(
-                              e,
-                              data.editId,
-                              data.transactionType
-                            )
-                          }
-                        >
-                          Reject
-                        </button>
-                      </div>
                     </div>
-                  )}
+                    <div className="col d-flex justify-content-center gap-2 mb-2">
+                      <button
+                        class="btn btn-primary"
+                        onClick={(e) =>
+                          handleDeleteApprove(
+                            e,
+                            data.editId,
+                            data.transactionType
+                          )
+                        }
+                      >
+                        Approve
+                      </button>
+                      <button
+                        class="btn btn-danger"
+                        onClick={(e) =>
+                          handleDeleteReject(
+                            e,
+                            data.editId,
+                            data.transactionType
+                          )
+                        }
+                      >
+                        Reject
+                      </button>
+                    </div>
+                  </div>
                 </>
               );
             })

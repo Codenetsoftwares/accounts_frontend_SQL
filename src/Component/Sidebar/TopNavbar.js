@@ -55,7 +55,7 @@ const TopNavbar = ({ selectedMenuItem }) => {
   } else if (selectedMenuItem === "AllTransactionRequest") {
     heading = "All Transaction Requests";
   } else if (selectedMenuItem === "introducerTransactionRequest") {
-    heading = "Introducer Transactions Requests";
+    heading = " introducer Transactions Requests";
   } else if (selectedMenuItem === "BankEdit") {
     heading = "Bank Edit";
   } else if (selectedMenuItem === "BankDelete") {
@@ -66,9 +66,9 @@ const TopNavbar = ({ selectedMenuItem }) => {
     heading = "Website Edit";
   } else if (selectedMenuItem === "WebsiteDelete") {
     heading = "Website Delete";
-  }else if (selectedMenuItem === "newWebsite") {
+  } else if (selectedMenuItem === "newWebsite") {
     heading = "New Website Details";
-  }else if (selectedMenuItem === "AllTransactionTrash") {
+  } else if (selectedMenuItem === "AllTransactionTrash") {
     heading = "All Transaction Trash Details";
   }
   return (
@@ -101,13 +101,13 @@ const TopNavbar = ({ selectedMenuItem }) => {
           </li>
         </ul>
         <div className="d-flex justify-content-center align-items-center flex-grow-1">
-      <span
-        className="navbar-brand"
-        style={{ color: "white", fontWeight: "bold" }}
-      >
-        {heading}
-      </span>
-    </div>
+          <span
+            className="navbar-brand"
+            style={{ color: "white", fontWeight: "bold" }}
+          >
+            {heading}
+          </span>
+        </div>
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
             <a

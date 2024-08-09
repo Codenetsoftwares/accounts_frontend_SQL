@@ -455,6 +455,8 @@ const Withdraw = () => {
                     >
                       <option value="UPI">UPI</option>
                       <option value="IMPS">IMPS</option>
+                      <option value="RTGS">RTGS</option>
+                      <option value="NEFT">NEFT</option>
                     </Field>
                     <ErrorMessage
                       name="paymentMethod"

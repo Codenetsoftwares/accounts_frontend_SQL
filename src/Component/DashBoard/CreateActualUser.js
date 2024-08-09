@@ -24,10 +24,11 @@ const CreateActualUser = () => {
 
   // Initial form values
   const initialValues = {
-    firstname: "",
+    firstName: "",
     userName: "",
-    lastname: "",
+    lastName: "",
     password: "",
+    confirmPassword: "",
     contactNumber: "",
     introducersUserName: "",
     introducersUserName1: "",
@@ -119,7 +120,7 @@ const CreateActualUser = () => {
   }, [auth]);
 
   // Handle form submission
-  const handleSubmit = (values) => {
+  const handleSubmit = (values, { resetForm }) => {
     // Convert percentage fields to numbers
     values.introducerPercentage = parseFloat(values.introducerPercentage);
     values.introducerPercentage1 = parseFloat(values.introducerPercentage1);
@@ -129,15 +130,25 @@ const CreateActualUser = () => {
     if (values.password === values.confirmPassword) {
       AccountService.createActualuser(values, auth.user)
         .then((res) => {
-          console.log("res", res);
-          alert(res?.data?.data?.message);
-          window.location.reload(); // Reload page after successful submission
+          console.log("res", res?.data);
+          toast.success(res?.data?.message);
+          resetForm({ values: initialValues });
+          // Clear custom states
+          setFilteredIntroducerOption([]);
+          setFilteredIntroducerOption1([]);
+          setFilteredIntroducerOption2([]);
+          setIsDropdownVisible(false);
+          setIsDropdownVisible1(false);
+          setIsDropdownVisible2(false);
+          // window.location.reload(); // Reload page after successful submission
         })
         .catch((err) => {
           console.log("error", err.response.data.message);
           toast.error(err?.response?.data?.message); // Display error message
           return;
         });
+    } else {
+      toast.error("Password and Confirm Password Should be Same");
     }
   };
 

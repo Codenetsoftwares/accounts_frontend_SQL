@@ -121,9 +121,9 @@ const AdminBank = () => {
       // console.log(data)
       AccountService.deletebank({ requestId: id }, auth.user)
         .then((res) => {
-          // console.log(response.data);
-          if (res.successCode === 201) {
-            toast.success(res.data.message);
+          console.log("res", res);
+          if (res.status === 201) {
+            toast.success(res.data.data.message);
             setResponse(res.data);
           }
         })
@@ -189,8 +189,8 @@ const AdminBank = () => {
     };
     AccountService.activeInactiveBank(ID, data, auth.user)
       .then((response) => {
-        alert("Bank Inactivated");
-        window.location.reload();
+        toast.success(response.data.message);
+        setResponse(response.data);
         console.log(response.data);
       })
       .catch((error) => {
@@ -199,6 +199,7 @@ const AdminBank = () => {
   };
 
   useEffect(() => {
+    setGetBankName([]);
     fetchData();
   }, [search, response]);
 
@@ -327,13 +328,14 @@ const AdminBank = () => {
                             <div className="col-6 col-sm-4 col-md-3 col-lg-2">
                               <button
                                 type="button"
-                                className="btn btn-steel-blue btn-sm btn-hover-zoom"
+                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${
+                                  data.isWithdraw ? "" : "avoid-clicks"
+                                }`} // Handling the css from Index css for disable if don't have permission
                                 data-bs-toggle="modal"
                                 data-bs-target="#modalWthbl"
                                 onClick={() => {
                                   handelId(data.bankId);
                                 }}
-                                disabled={!data.isWithdraw}
                                 title="Withdraw"
                               >
                                 <FontAwesomeIcon
@@ -345,13 +347,14 @@ const AdminBank = () => {
                             <div className="col-6 col-sm-4 col-md-3 col-lg-2">
                               <button
                                 type="button"
-                                className="btn btn-steel-blue btn-sm btn-hover-zoom"
+                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${
+                                  data.isDeposit ? "" : "avoid-clicks"
+                                }`}
                                 data-bs-toggle="modal"
                                 data-bs-target="#modalAdbl"
                                 onClick={() => {
                                   handelId(data.bankId);
                                 }}
-                                disabled={!data.isDeposit}
                                 title="Deposit"
                               >
                                 <FontAwesomeIcon
@@ -379,14 +382,15 @@ const AdminBank = () => {
                             <div className="col-6 col-sm-4 col-md-3 col-lg-2">
                               <button
                                 type="button"
-                                className="btn btn-steel-blue btn-sm btn-hover-zoom"
+                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${
+                                  data.isEdit ? "" : "avoid-clicks"
+                                }`}
                                 onClick={(e) => {
                                   handelEditbank(e, data.bankId);
                                 }}
                                 title="Edit Bank"
                                 data-toggle="modal"
                                 data-target="#exampleModalCenter"
-                                disabled={!data.isEdit}
                               >
                                 <FontAwesomeIcon
                                   icon={faEdit}
@@ -398,12 +402,13 @@ const AdminBank = () => {
                             <div className="col-6 col-sm-4 col-md-3 col-lg-2">
                               <button
                                 type="button"
-                                className="btn btn-steel-blue btn-sm btn-hover-zoom"
+                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${
+                                  data.isDelete ? "" : "avoid-clicks"
+                                }`}
                                 onClick={(e) => {
                                   handleDeleteBank(e, data.bankId);
                                 }}
                                 title="Delete"
-                                disabled={!data.isDelete}
                               >
                                 <FontAwesomeIcon
                                   icon={faTrashAlt}
@@ -415,14 +420,15 @@ const AdminBank = () => {
                             <div className="col-6 col-sm-4 col-md-3 col-lg-2">
                               <button
                                 type="button"
-                                className="btn btn-steel-blue btn-sm btn-hover-zoom"
+                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${
+                                  data.isRenew ? "" : "avoid-clicks"
+                                }`}
                                 data-toggle="modal"
                                 data-target="#RenewBankPermission"
                                 onClick={() => {
                                   handelSubAdmin(data.subAdmins, data.bankId);
                                 }}
                                 title="Renew Permission"
-                                disabled={!data.isRenew}
                               >
                                 <FontAwesomeIcon
                                   icon={faEye}
@@ -477,8 +483,8 @@ const AdminBank = () => {
           </SingleCard>
         </div>
 
-        <ModalAddBl ID={Id} />
-        <ModalWthBl ID={Id} />
+        <ModalAddBl ID={Id} renderParent={setResponse} />
+        <ModalWthBl ID={Id} renderParent={setResponse} />
         <InnerBank />
         {/* <SubAdminBank ID={Id} /> */}
         <RenewBankPermission SubAdmins={SubAdmins} ID={SId} />

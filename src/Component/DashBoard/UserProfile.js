@@ -131,12 +131,12 @@ const UserProfile = () => {
     setSelectedUser(user);
   };
 
-  const handleTransaction = (e, userName) => {
+  const handleTransaction = (e, userData) => {
     e.preventDefault();
-    console.log("Transaction for user:", userName);
+    console.log("Transaction for user:", userData);
 
     navigate("/transactiondetails", {
-      state: { txndetails: users.transactionDetails },
+      state: { txndetails: userData?.transactionDetails },
     });
   };
 
@@ -226,7 +226,7 @@ const UserProfile = () => {
               }
             >
               <GridCard columns={3}>
-                {users.map((user, index) => (
+                {users?.map((user, index) => (
                   <div
                     key={user.userId}
                     className="col d-flex justify-content-center align-items-center "
@@ -301,9 +301,7 @@ const UserProfile = () => {
                               <button
                                 type="button"
                                 className="btn btn-steel-blue btn-sm btn-hover-zoom"
-                                onClick={(e) =>
-                                  handleTransaction(e, user.userName)
-                                }
+                                onClick={(e) => handleTransaction(e, user)}
                                 title="Transaction Details"
                               >
                                 <FontAwesomeIcon
