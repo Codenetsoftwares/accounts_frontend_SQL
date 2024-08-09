@@ -56,12 +56,12 @@ const AdminList = () => {
         searchTerm,
         auth.user
       );
-      console.log("======>>>>> response", res.data.data);
+      console.log("======>>>>> response", res.data);
       const filteredData = res.data.data.filter((item) => item !== null);
       setAdminList((prevUsers) =>
         searchTerm.length > 0 ? filteredData : [...prevUsers, ...filteredData]
       );
-      setHasMore(newPage < res.data.pageNumber);
+      setHasMore(newPage < res.data.pagination.totalPages);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
@@ -100,34 +100,6 @@ const AdminList = () => {
       fetchData(); // Fetch more data when page changes
     }
   }, [page]);
-
-  // useEffect(() => {
-  //   if (auth.user) {
-  //     AccountService.getAdminList(page, q, auth.user)
-  //       .then((res) => {
-  //         setAdminList(res.data.SecondArray);
-  //         setPageNumber(res.data.pageNumber);
-  //         setTotalData(res.data.allIntroDataLength);
-  //       })
-  //       .catch((err) => setAdminList([]));
-  //   }
-  // }, [auth, q, page]);
-  // console.log("=>>>>>>>>>", adminList);
-
-  // Data for Filter
-  // for (let i = 0; i < adminList.length; i++) {
-  //   RawFilterData.push({
-  //     userName: adminList[i].userName,
-  //     adminId: adminList[i].adminId,
-  //   });
-  // }
-
-  // const filteredUsers = RawFilterData.filter((user) => {
-  //   const lowerCaseUserName = user.userName.toLowerCase();
-  //   const lowerCaseQuery = q.toLowerCase();
-  //   return lowerCaseUserName.includes(lowerCaseQuery);
-  // });
-  // console.log(auth.user);
 
   const handleProfileView = (id) => {
     // console.log(d);

@@ -10,7 +10,6 @@ const AssignedBank = ({ ID }) => {
   useEffect(() => {
     AccountService.subadminassigneedbankview(ID, auth.user)
       .then((res) =>
-          // console.log('=====>>>> responce',res)
         setBankNames(res.data.data)
       )
       .catch((err) => {
