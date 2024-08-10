@@ -1,3 +1,13 @@
-body{
-  background-color: #fff4ec;
+body {
+	background-color: #fff4ec;
+}
+
+.deposit-error-msg {
+	position: absolute;
+	bottom: -8px;
+}
+
+.withdraw-error-msg {
+	position: absolute;
+	bottom: -8px;
 }

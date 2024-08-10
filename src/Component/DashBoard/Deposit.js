@@ -9,6 +9,7 @@ import DashService from "../../Services/DashService";
 import FullScreenLoader from "../../Component/FullScreenLoader";
 import { debounce } from "lodash";
 import { toast } from "react-toastify";
+import { customErrorHandler } from "../../Utils/helper.js";
 
 const Deposit = () => {
   const initialValues = {
@@ -43,15 +44,15 @@ const Deposit = () => {
   useEffect(() => {
     AccountService.getActiveBank(auth.user).then((res) => {
       setBankOptions(res.data.data);
-      setFilteredBankOptions(res.data.data);
+      // setFilteredBankOptions(res.data.data);
     });
     AccountService.getActiveWebsite(auth.user).then((res) => {
       setWebsiteOptions(res.data.data);
-      setFilteredWebsiteOptions(res.data.data);
+      // setFilteredWebsiteOptions(res.data.data);
     });
     AccountService.userId(auth.user).then((res) => {
       setAllUserNameOptions(res.data.data);
-      setFilteredUserNameOptions(res.data.data);
+      // setFilteredUserNameOptions(res.data.data);
     });
   }, [auth]);
 
@@ -212,8 +213,7 @@ const Deposit = () => {
         })
         .catch((error) => {
           setIsLoading(false);
-          console.error(error);
-          toast.error(error.response.data.message);
+          toast.error(customErrorHandler(error));
         });
     }
   };
@@ -260,25 +260,25 @@ const Deposit = () => {
                     />
                     {isDropdownVisible && (
                       <div className="dropdown-menu show w-100">
-                        {filteredUserNameOptions.map((option, index) => (
-                          <div
+                        {filteredUserNameOptions.map((option, index) => {
+                          return (<div
                             key={option}
-                            className={`dropdown-item ${
-                              index === activeIndex ? "active" : ""
-                            }`}
+                            className={`dropdown-item ${index === activeIndex ? "active" : ""
+                              }`}
                             onClick={() =>
                               handleOptionClick(option, setFieldValue)
                             }
                           >
                             {option}
-                          </div>
-                        ))}
+                          </div>)
+                        })}
+                        {!filteredUserNameOptions?.length && <span className="ms-3"> Not found</span>}
                       </div>
                     )}
                     <ErrorMessage
                       name="userName"
                       component="div"
-                      className="text-danger"
+                      className="text-danger deposit-error-msg"
                     />
                   </div>
                 </Col>
@@ -295,7 +295,7 @@ const Deposit = () => {
                     <ErrorMessage
                       name="transactionID"
                       component="div"
-                      className="text-danger"
+                      className="text-danger deposit-error-msg"
                     />
                   </div>
                 </Col>
@@ -363,7 +363,7 @@ const Deposit = () => {
                     <ErrorMessage
                       name="bankName"
                       component="div"
-                      className="text-danger"
+                      className="text-danger deposit-error-msg"
                     />
                   </div>
                 </Col>
@@ -429,7 +429,7 @@ const Deposit = () => {
                     <ErrorMessage
                       name="websiteName"
                       component="div"
-                      className="text-danger"
+                      className="text-danger deposit-error-msg"
                     />
                   </div>
                 </Col>
@@ -441,14 +441,14 @@ const Deposit = () => {
                     <Field
                       id="amount"
                       name="amount"
-                      type="text"
                       className="form-control"
                       placeholder="Enter Amount"
+                      type="number"
                     />
                     <ErrorMessage
                       name="amount"
                       component="div"
-                      className="text-danger"
+                      className="text-danger deposit-error-msg"
                     />
                   </div>
                 </Col>
@@ -458,14 +458,14 @@ const Deposit = () => {
                     <Field
                       id="bonus"
                       name="bonus"
-                      type="text"
+                      type="number"
                       className="form-control"
                       placeholder="Enter Bonus"
                     />
                     <ErrorMessage
                       name="bonus"
                       component="div"
-                      className="text-danger"
+                      className="text-danger deposit-error-msg"
                     />
                   </div>
                 </Col>
@@ -505,7 +505,7 @@ const Deposit = () => {
                     <ErrorMessage
                       name="remarks"
                       component="div"
-                      className="text-danger"
+                      className="text-danger deposit-error-msg"
                     />
                   </div>
                 </Col>

@@ -175,7 +175,13 @@ const AdminBank = () => {
     AccountService.activeInactiveBank(ID, data, auth.user)
       .then((response) => {
         toast.success(response.data.message);
-        setResponse(response.data);
+        getbankName.forEach(bank => {
+          if (bank.bankId === ID) {
+            bank.isActive = !bank.isActive
+
+          }
+        })
+        setGetBankName(getbankName)
       })
       .catch((error) => {
         toast.error(error.response.data.errMessage);
@@ -190,7 +196,13 @@ const AdminBank = () => {
     AccountService.activeInactiveBank(ID, data, auth.user)
       .then((response) => {
         toast.success(response.data.message);
-        setResponse(response.data);
+        getbankName.forEach(bank => {
+          if (bank.bankId === ID) {
+            bank.isActive = !bank.isActive
+
+          }
+        })
+        setGetBankName(getbankName)
         console.log(response.data);
       })
       .catch((error) => {
@@ -301,9 +313,8 @@ const AdminBank = () => {
                     onMouseLeave={() => setHoveredCard(null)}
                   >
                     <div
-                      className={`card d-flex justify-content-between ${
-                        hoveredCard === data.bankId ? "card-hover-shadow" : ""
-                      }`}
+                      className={`card d-flex justify-content-between ${hoveredCard === data.bankId ? "card-hover-shadow" : ""
+                        }`}
                       style={{
                         borderRadius: "20px",
                         height: "200px",
@@ -328,9 +339,8 @@ const AdminBank = () => {
                             <div className="col-6 col-sm-4 col-md-3 col-lg-2">
                               <button
                                 type="button"
-                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${
-                                  data.isWithdraw ? "" : "avoid-clicks"
-                                }`} // Handling the css from Index css for disable if don't have permission
+                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${data.isWithdraw ? "" : "avoid-clicks"
+                                  }`} // Handling the css from Index css for disable if don't have permission
                                 data-bs-toggle="modal"
                                 data-bs-target="#modalWthbl"
                                 onClick={() => {
@@ -347,9 +357,8 @@ const AdminBank = () => {
                             <div className="col-6 col-sm-4 col-md-3 col-lg-2">
                               <button
                                 type="button"
-                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${
-                                  data.isDeposit ? "" : "avoid-clicks"
-                                }`}
+                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${data.isDeposit ? "" : "avoid-clicks"
+                                  }`}
                                 data-bs-toggle="modal"
                                 data-bs-target="#modalAdbl"
                                 onClick={() => {
@@ -382,9 +391,8 @@ const AdminBank = () => {
                             <div className="col-6 col-sm-4 col-md-3 col-lg-2">
                               <button
                                 type="button"
-                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${
-                                  data.isEdit ? "" : "avoid-clicks"
-                                }`}
+                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${data.isEdit ? "" : "avoid-clicks"
+                                  }`}
                                 onClick={(e) => {
                                   handelEditbank(e, data.bankId);
                                 }}
@@ -402,9 +410,8 @@ const AdminBank = () => {
                             <div className="col-6 col-sm-4 col-md-3 col-lg-2">
                               <button
                                 type="button"
-                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${
-                                  data.isDelete ? "" : "avoid-clicks"
-                                }`}
+                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${data.isDelete ? "" : "avoid-clicks"
+                                  }`}
                                 onClick={(e) => {
                                   handleDeleteBank(e, data.bankId);
                                 }}
@@ -420,9 +427,8 @@ const AdminBank = () => {
                             <div className="col-6 col-sm-4 col-md-3 col-lg-2">
                               <button
                                 type="button"
-                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${
-                                  data.isRenew ? "" : "avoid-clicks"
-                                }`}
+                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${data.isRenew ? "" : "avoid-clicks"
+                                  }`}
                                 data-toggle="modal"
                                 data-target="#RenewBankPermission"
                                 onClick={() => {

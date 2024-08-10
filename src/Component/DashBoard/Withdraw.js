@@ -9,6 +9,7 @@ import DashService from "../../Services/DashService";
 import FullScreenLoader from "../../Component/FullScreenLoader";
 import { debounce } from "lodash";
 import { toast } from "react-toastify";
+import { customErrorHandler } from "../../Utils/helper";
 
 const Withdraw = () => {
   const initialValues = {
@@ -203,7 +204,7 @@ const Withdraw = () => {
         .catch((error) => {
           setIsLoading(false);
           console.error(error);
-          toast.error(error.response.data.message);
+          toast.error(customErrorHandler(error));
         });
     }
   };
@@ -251,7 +252,7 @@ const Withdraw = () => {
                     <ErrorMessage
                       name="userName"
                       component="div"
-                      className="text-danger"
+                      className="text-danger withdraw-error-msg"
                     />
                     {isDropdownVisible && (
                       <ul
@@ -304,7 +305,7 @@ const Withdraw = () => {
                     <ErrorMessage
                       name="transactionID"
                       component="div"
-                      className="text-danger"
+                      className="text-danger withdraw-error-msg"
                     />
                   </div>
                 </Col>
@@ -334,7 +335,7 @@ const Withdraw = () => {
                     <ErrorMessage
                       name="bankName"
                       component="div"
-                      className="text-danger"
+                      className="text-danger withdraw-error-msg"
                     />
                     {isBankDropdownVisible && (
                       <ul
@@ -399,7 +400,7 @@ const Withdraw = () => {
                     <ErrorMessage
                       name="websiteName"
                       component="div"
-                      className="text-danger"
+                      className="text-danger withdraw-error-msg"
                     />
                     {isWebsiteDropdownVisible && (
                       <ul
@@ -461,7 +462,7 @@ const Withdraw = () => {
                     <ErrorMessage
                       name="paymentMethod"
                       component="div"
-                      className="text-danger"
+                      className="text-danger withdraw-error-msg"
                     />
                   </div>
                 </Col>
@@ -477,7 +478,7 @@ const Withdraw = () => {
                     <ErrorMessage
                       name="amount"
                       component="div"
-                      className="text-danger"
+                      className="text-danger withdraw-error-msg"
                     />
                   </div>
                 </Col>
@@ -496,7 +497,7 @@ const Withdraw = () => {
                     <ErrorMessage
                       name="bankCharges"
                       component="div"
-                      className="text-danger"
+                      className="text-danger withdraw-error-msg"
                     />
                   </div>
                 </Col>
@@ -513,7 +514,7 @@ const Withdraw = () => {
                     <ErrorMessage
                       name="remarks"
                       component="div"
-                      className="text-danger"
+                      className="text-danger withdraw-error-msg"
                     />
                   </div>
                 </Col>

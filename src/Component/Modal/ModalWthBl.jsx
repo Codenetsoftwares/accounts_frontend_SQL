@@ -3,6 +3,7 @@ import { useAuth } from "../../Utils/Auth";
 import AccountService from "../../Services/AccountService";
 import { toast } from "react-toastify";
 import FullScreenLoader from "../FullScreenLoader";
+import { customErrorHandler } from "../../Utils/helper.js";
 
 const ModalWthBl = ({ ID, renderParent }) => {
   const auth = useAuth();
@@ -58,7 +59,7 @@ const ModalWthBl = ({ ID, renderParent }) => {
         setIsLoading(false);
         if (res.status === 200) {
           toast.success(res.data.message);
-          renderParent(res.data);
+          // renderParent(res.data);
           // Close the modal
           const closeButton = document.querySelector("#modalWthbl .btn-close");
           if (closeButton) {
@@ -68,8 +69,7 @@ const ModalWthBl = ({ ID, renderParent }) => {
       })
       .catch((error) => {
         setIsLoading(false);
-        toast.error(error.response.data.message);
-        // alert.error("e.message");
+        toast.error(customErrorHandler(error));
       });
   };
 

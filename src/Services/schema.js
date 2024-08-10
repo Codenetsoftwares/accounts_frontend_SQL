@@ -12,9 +12,11 @@ export const LoginSchema = Yup.object().shape({
 
 export const CreateDepositTransactionSchema = Yup.object({
   transactionID: Yup.string().required("Transaction ID is required"),
-  amount: Yup.string().required("Amount is required"),
+  amount: Yup.number()
+    .positive("Amount must be a positive number")
+    .required("Amount is required"),
   paymentMethod: Yup.string()
-    .oneOf(["UPI", "IMPS", "RTGS", "NEFT"], "Invalid Transaction Type")
+    .oneOf(["UPI", "IMPS", "RTGS", "NEFT"], "Invalid Payment Method")
     .required("Payment Method is required"),
   userName: Yup.string().required("User Name is required"),
   bankName: Yup.string().required("Bank Name is required"),
@@ -22,7 +24,8 @@ export const CreateDepositTransactionSchema = Yup.object({
   transactionType: Yup.string()
     .oneOf(["Deposit", "Withdrawal"], "Invalid Transaction Type")
     .required("Transaction Type is required"),
-  bonus: Yup.number().min(0, "Bonus must be a positive number"),
+  bonus: Yup.number()
+    .positive("Amount must be a positive number"),
   remarks: Yup.string().required("Remarks are required"),
 });
 
