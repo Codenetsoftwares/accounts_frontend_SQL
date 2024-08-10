@@ -27,6 +27,7 @@ import GridCard from "../../common/gridCard";
 import SingleCard from "../../common/singleCard";
 import "./WebsiteDetails.css";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { customErrorHandler } from "../../Utils/helper";
 
 const WebsiteDetails = () => {
   // const { id } = useParams();
@@ -80,17 +81,14 @@ const WebsiteDetails = () => {
       .then((res) => {
         console.log("res", res);
         if (res.status === 201) {
-          toast.success(res.data.message);
-          setResponse(res.data);
+          toast.success(res.data.message)
           setWebsite("");
         }
-        // console.log(res);
       })
       .catch((err) => {
-        toast.error(err.response.data.errMessage);
+        toast.error(customErrorHandler(err));
         console.log(err);
-      });
-    // setResponse(res.data);
+      }); 
   };
 
   const handelName = (id) => {
@@ -123,7 +121,7 @@ const WebsiteDetails = () => {
           }
         })
         .catch((error) => {
-          toast.error(error.response.data.errMessage);
+          toast.error(customErrorHandler(error));
         });
     }
   };
@@ -138,7 +136,7 @@ const WebsiteDetails = () => {
   // get api  fetch
   useEffect(() => {
     fetchData();
-  }, [search, response]);
+  }, [search]);
 
   const fetchData = async () => {
     try {
@@ -204,7 +202,12 @@ const WebsiteDetails = () => {
     AccountService.activeInactiveWebsite(ID, data, auth.user)
       .then((response) => {
         toast.success(response.data.message);
-        setResponse(response.data);
+        getWebsite.forEach((website) => {
+          if (website.websiteId === ID) {
+            website.isActive = !website.isActive;
+          }
+        });
+        setGetWebsite(getWebsite);
         console.log(response.data);
       })
       .catch((error) => {
@@ -221,7 +224,12 @@ const WebsiteDetails = () => {
     AccountService.activeInactiveWebsite(ID, data, auth.user)
       .then((response) => {
         toast.success(response.data.message);
-        setResponse(response.data);
+        getWebsite.forEach((website) => {
+          if (website.websiteId === ID) {
+            website.isActive = !website.isActive;
+          }
+        });
+        setGetWebsite(getWebsite);
         console.log(response.data);
       })
       .catch((error) => {
@@ -480,7 +488,7 @@ const WebsiteDetails = () => {
                               icon={faCheckCircle}
                               className="active-icon ms-1 "
                             />
-                            <span className="dot dot-green position-absolute top-0 start-100 translate-middle"></span>
+                            {/* <span className="dot dot-green position-absolute top-0 start-100 translate-middle"></span> */}
                           </span>
                         ) : (
                           // <span class="badge badge-pill badge-success">Success</span>
@@ -497,7 +505,7 @@ const WebsiteDetails = () => {
                               icon={faTimesCircle}
                               className="active-icon ms-1"
                             />
-                            <span className="dot dot-red dot-merged position-absolute top-0 start-100 translate-middle"></span>
+                            {/* <span className="dot dot-red dot-merged position-absolute top-0 start-100 translate-middle"></span> */}
                           </span>
                         )}
                       </div>
@@ -509,11 +517,24 @@ const WebsiteDetails = () => {
           </SingleCard>
         </div>
 
-        <ModalWthWbl ID={Id} />
-        <ModalAdWbl ID={Id} />
+        <ModalWthWbl
+          ID={Id}
+          getWebsite={getWebsite}
+          setGetWebsite={setGetWebsite}
+        />
+        <ModalAdWbl
+          ID={Id}
+          getWebsite={getWebsite}
+          setGetWebsite={setGetWebsite}
+        />
         <ModalWbdl name={name} />
         <EditWebsite ID={WebId} webName={WebName} />
-        <RenewWebsitePermission SubAdmins={SubAdmins} ID={SId} />
+        <RenewWebsitePermission
+          SubAdmins={SubAdmins}
+          ID={SId}
+          getWebsite={getWebsite}
+          setGetWebsite={setGetWebsite}
+        />
       </div>
     </div>
   );

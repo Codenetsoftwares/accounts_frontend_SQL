@@ -1,14 +1,29 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import { useAuth } from "../../Utils/Auth";
 import AccountService from "../../Services/AccountService";
 import { toast } from "react-toastify";
 import FullScreenLoader from "../FullScreenLoader";
+import { customErrorHandler } from "../../Utils/helper";
 
-const ModalAdWbl = ({ ID }) => {
+const ModalAdWbl = ({ ID , setGetWebsite , getWebsite }) => {
   const auth = useAuth();
   const [Amount, SetAmount] = useState(0);
   const [Remarks, SetRemarks] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const handleModalShow = () => {
+      SetAmount(0);
+      SetRemarks("");
+    };
+
+    const modalElement = document.getElementById("modalAddBlWebsite");
+    modalElement.addEventListener("shown.bs.modal", handleModalShow);
+
+    return () => {
+      modalElement.removeEventListener("shown.bs.modal", handleModalShow);
+    };
+  }, []);
 
   console.log("id", ID);
 
@@ -39,15 +54,28 @@ const ModalAdWbl = ({ ID }) => {
       .then((res) => {
         // console.log(response.data);
         setIsLoading(false);
-        if (res.status === 200) {
-          alert(res.data.message);
-          window.location.reload();
+        if (res.status === 201) {
+          const updatedWebsites = getWebsite.map(website => {
+            if (website.websiteId === ID){
+              return {
+                ...website,
+                balance: website.balance + res.data.data.depositAmount
+              };
+            }
+            return website;
+          });
+          setGetWebsite(updatedWebsites);          
+          // renderParent(res.data);
+          // Close the modal
+          const closeButton = document.querySelector("#modalAddBlWebsite .btn-close");
+          if (closeButton) {
+            closeButton.click();
+          }
         }
       })
       .catch((error) => {
         setIsLoading(false);
-        alert(error.response.data.message);
-        console.log(error);
+        toast.error(customErrorHandler(error));
         // alert.error("e.message");
       });
   };
@@ -98,6 +126,7 @@ const ModalAdWbl = ({ ID }) => {
                     className="form-control"
                     placeholder="Amount"
                     onChange={handelamtchange}
+                    value={Amount}
                     // min={0}
                   />
                 </div>

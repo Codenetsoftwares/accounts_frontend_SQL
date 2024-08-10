@@ -10,8 +10,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import GridCard from "../../common/gridCard";
 import SingleCard from "../../common/singleCard";
+import { toast } from "react-toastify";
+import { customErrorHandler } from "../../Utils/helper";
 
-const RenewWebsitePermission = ({ SubAdmins, ID }) => {
+const RenewWebsitePermission = ({ SubAdmins, ID , getWebsite , setGetWebsite}) => {
   const [toggle, setToggle] = useState(true);
   const [subAdmin, setSubAdmin] = useState([]);
   const [checkboxStates, setCheckboxStates] = useState([]); // State for checkbox data
@@ -185,12 +187,23 @@ const RenewWebsitePermission = ({ SubAdmins, ID }) => {
     console.log(data);
     AccountService.permissionrenewWebsite(data, ID, auth.user)
       .then((response) => {
-        console.log("res", response.data);
-        alert(response.data.message);
-        window.location.reload();
+        toast.success(response.data.message);
+        const updatedBankNames = getWebsite.map(website => {
+          if (website.websiteId === ID) {
+            return {
+              ...website,
+              subAdmins: data.subAdmins
+            };
+          }
+          return website;
+        });
+        
+        setGetWebsite(updatedBankNames);
+        // Close the modal
+        document.querySelector("#RenewWebsitePermission .btn-close").click();
       })
       .catch((error) => {
-        alert(error.response.data.message);
+        toast.error(customErrorHandler(error));
         console.log(error);
       });
   };
@@ -281,7 +294,9 @@ const RenewWebsitePermission = ({ SubAdmins, ID }) => {
                   columns={1}
                   style={{ margin: "1rem", borderRadius: "8px" }}
                 >
-                  {subAdmin.map((admin, index) => (
+                  {subAdmin.map((admin, index) => {
+                     if (!toggle && index === 0) return null
+                     return (
                     <SingleCard
                       key={index}
                       className="p-4 mb-4 shadow-sm  "
@@ -388,7 +403,8 @@ const RenewWebsitePermission = ({ SubAdmins, ID }) => {
                         ))}
                       </div>
                     </SingleCard>
-                  ))}
+                     )
+})}
                 </GridCard>
               </SingleCard>
             )}

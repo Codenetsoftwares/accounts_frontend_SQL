@@ -1,15 +1,31 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import { useAuth } from "../../Utils/Auth";
 import AccountService from "../../Services/AccountService";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FullScreenLoader from "../FullScreenLoader";
+import { customErrorHandler } from "../../Utils/helper";
 
-const ModalWthWbl = ({ ID }) => {
+const ModalWthWbl = ({ ID, setGetWebsite, getWebsite }) => {
   const auth = useAuth();
   const [Amount, SetAmount] = useState(0);
   const [Remarks, SetRemarks] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+    // Refresh the Form after the Modal triggered each and every time
+    useEffect(() => {
+      const handleModalShow = () => {
+        SetAmount(0);
+        SetRemarks("");
+      };
+  
+      const modalElement = document.getElementById("modalWithdrawBlwebsite");
+      modalElement.addEventListener("shown.bs.modal", handleModalShow);
+  
+      return () => {
+        modalElement.removeEventListener("shown.bs.modal", handleModalShow);
+      };
+    }, []);
 
   const handelamtchange = (e) => {
     SetAmount(e.target.value);
@@ -41,14 +57,28 @@ const ModalWthWbl = ({ ID }) => {
       .then((res) => {
         // console.log(response.data);
         setIsLoading(false);
-        if (res.status === 200) {
-          alert(res.data.message);
-          window.location.reload();
+        if (res.status === 201) {
+          const updatedWebsites = getWebsite.map(website => {
+            if (website.websiteId === ID) {
+              return {
+                ...website,
+                balance: website.balance - res.data.data.withdrawAmount
+              };
+            }
+            return website;
+          });
+          setGetWebsite(updatedWebsites);          
+          // renderParent(res.data);
+          // Close the modal
+          const closeButton = document.querySelector("#modalWithdrawBlwebsite .btn-close");
+          if (closeButton) {
+            closeButton.click();
+          }
         }
       })
       .catch((error) => {
         setIsLoading(false);
-        alert(error.response.data.message);
+        toast.error(customErrorHandler(error));
         // alert.error("e.message");
       });
   };

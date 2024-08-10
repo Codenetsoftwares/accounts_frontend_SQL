@@ -1,23 +1,42 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import { useAuth } from "../../Utils/Auth";
 import AccountService from "../../Services/AccountService";
+import { toast } from "react-toastify";
+import { customErrorHandler } from "../../Utils/helper";
 
 const EditWebsite = ({ ID, webName }) => {
   const auth = useAuth();
 
   const [Name, SetName] = useState("");
+
+  useEffect(() => {
+    const handleModalShow = () => {
+      SetName("");
+    };
+
+    const modalElement = document.getElementById("editwebsite");
+    modalElement.addEventListener("shown.bs.modal", handleModalShow);
+
+    return () => {
+      modalElement.removeEventListener("shown.bs.modal", handleModalShow);
+    };
+  }, []);
+
   const handelSubmit = () => {
     const data = { websiteName: Name };
     console.log(ID);
     AccountService.EditWebsite(data, ID, auth.user)
       .then((response) => {
         console.log(response.data);
-        alert(response.data.message);
-        window.location.reload();
+        toast.success(response.data.message);
+        const closeButton = document.querySelector("#editwebsite .btn-close");
+        if (closeButton) {
+          closeButton.click();
+        }
       })
       .catch((error) => {
         console.log(error.response.data.message);
-        alert(error.response.data.message);
+        toast.error(customErrorHandler(error));
       });
   };
 
@@ -36,6 +55,12 @@ const EditWebsite = ({ ID, webName }) => {
               <h5 className="modal-title" id="exampleModalLabel">
                 Provide New Name
               </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
             </div>
 
             <div className="modal-body">
@@ -72,6 +97,7 @@ const EditWebsite = ({ ID, webName }) => {
 
                 <input
                   type="text"
+                  value={Name}
                   className="form-control"
                   placeholder="New Website Name"
                   onChange={(e) => {
@@ -81,6 +107,8 @@ const EditWebsite = ({ ID, webName }) => {
               </form>
             </div>
             <div className="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
               <button
                 type="button"
                 className="btn btn-primary"
