@@ -124,7 +124,7 @@ const AdminBank = () => {
           console.log("res", res);
           if (res.status === 201) {
             toast.success(res.data.data.message);
-            setResponse(res.data);
+            // setResponse(res.data);
           }
         })
         .catch((error) => {
@@ -461,7 +461,7 @@ const AdminBank = () => {
                               icon={faCheckCircle}
                               className="active-icon ms-1"
                             />
-                            <span className="status-dot status-dot-green position-absolute top-0 start-100 translate-middle"></span>
+                            <span className="position-absolute top-0 start-100 translate-middle"></span>
                           </span>
                         ) : (
                           <span
@@ -477,7 +477,7 @@ const AdminBank = () => {
                               icon={faTimesCircle}
                               className="active-icon ms-1"
                             />
-                            <span className="status-dot status-dot-red dot-merged position-absolute top-0 start-100 translate-middle"></span>
+                            <span className="dot-merged position-absolute top-0 start-100 translate-middle"></span>
                           </span>
                         )}
                       </div>
@@ -489,11 +489,11 @@ const AdminBank = () => {
           </SingleCard>
         </div>
 
-        <ModalAddBl ID={Id} renderParent={setResponse} />
-        <ModalWthBl ID={Id} renderParent={setResponse} />
+        <ModalAddBl ID={Id} renderParent={setResponse} getbankName={getbankName} setGetBankName={setGetBankName} />
+        <ModalWthBl ID={Id} renderParent={setResponse} getbankName={getbankName} setGetBankName={setGetBankName} />
         <InnerBank />
         {/* <SubAdminBank ID={Id} /> */}
-        <RenewBankPermission SubAdmins={SubAdmins} ID={SId} />
+        <RenewBankPermission SubAdmins={SubAdmins} ID={SId} getbankName={getbankName} setGetBankName={setGetBankName} />
       </div>
     </div>
   );

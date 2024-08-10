@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import FullScreenLoader from "../FullScreenLoader";
 import { customErrorHandler } from "../../Utils/helper.js";
 
-const ModalWthBl = ({ ID, renderParent }) => {
+const ModalWthBl = ({ ID, renderParent, setGetBankName, getbankName }) => {
   const auth = useAuth();
   const [Amount, SetAmount] = useState(0);
   const [Remarks, SetRemarks] = useState("");
@@ -59,6 +59,12 @@ const ModalWthBl = ({ ID, renderParent }) => {
         setIsLoading(false);
         if (res.status === 200) {
           toast.success(res.data.message);
+          getbankName.forEach(bank => {
+            if (bank.bankId === ID) {
+              bank.balance = bank.balance - res.data.data.withdrawAmount
+            }
+          })
+          setGetBankName(getbankName)
           // renderParent(res.data);
           // Close the modal
           const closeButton = document.querySelector("#modalWthbl .btn-close");

@@ -10,8 +10,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import SingleCard from "../../common/singleCard";
 import GridCard from "../../common/gridCard";
+import { customErrorHandler } from "../../Utils/helper";
+import { toast } from "react-toastify";
 
-const RenewBankPermission = ({ SubAdmins, ID }) => {
+const RenewBankPermission = ({ SubAdmins, ID, getbankName, setGetBankName }) => {
   const [toggle, setToggle] = useState(true);
   const [subAdmin, setSubAdmin] = useState([]);
   const [checkboxStates, setCheckboxStates] = useState([]); // State for checkbox data
@@ -186,15 +188,23 @@ const RenewBankPermission = ({ SubAdmins, ID }) => {
     AccountService.permissionrenewBank(data, ID, auth.user)
       .then((response) => {
         console.log("res", response.data);
-        alert(response.data.message);
-        window.location.reload();
+        toast.success(response.data.message);
+        getbankName.forEach(bank => {
+          if (bank.bankId === ID) {
+            bank.subAdmins = data.subAdmins
+          }
+        })
+        setGetBankName(getbankName)
+        // Close the modal
+        document.querySelector("#RenewBankPermission .btn-close").click();
       })
       .catch((error) => {
-        alert(error.response.data.message);
-        console.log(error);
+        console.error(error);
+        toast.error(customErrorHandler(error));
       });
   };
 
+  // pending for enhancement
   const handelRevokePermision = (SubAdminID) => {
     AccountService.revokeAllPermissionBank(ID, SubAdminID, auth.user)
       .then((response) => {
@@ -252,16 +262,18 @@ const RenewBankPermission = ({ SubAdmins, ID }) => {
                         </tr>
                       </thead>
                       <tbody>
-                        {SubAdmins.map((subAdmin, index) => (
-                          <tr key={subAdmin._id}>
-                            <td> {subAdmin.subAdminId} </td>
-                            <td>{subAdmin.isDeposit ? "Yes" : "No"}</td>
-                            <td>{subAdmin.isWithdraw ? "Yes" : "No"}</td>
-                            <td>{subAdmin.isEdit ? "Yes" : "No"}</td>
-                            <td>{subAdmin.isDelete ? "Yes" : "No"}</td>
-                            <td>{subAdmin.isRenew ? "Yes" : "No"}</td>
-                          </tr>
-                        ))}
+                        {SubAdmins.map((subAdmin, index) => {
+                          return (
+                            <tr key={subAdmin._id}>
+                              <td> {subAdmin.subAdminId} </td>
+                              <td>{subAdmin.isDeposit ? "Yes" : "No"}</td>
+                              <td>{subAdmin.isWithdraw ? "Yes" : "No"}</td>
+                              <td>{subAdmin.isEdit ? "Yes" : "No"}</td>
+                              <td>{subAdmin.isDelete ? "Yes" : "No"}</td>
+                              <td>{subAdmin.isRenew ? "Yes" : "No"}</td>
+                            </tr>
+                          )
+                        })}
                       </tbody>
                     </table>
                   </div>
@@ -282,114 +294,120 @@ const RenewBankPermission = ({ SubAdmins, ID }) => {
                   columns={1}
                   style={{ margin: "1rem", borderRadius: "8px" }}
                 >
-                  {subAdmin?.map((admin, index) => (
-                    <SingleCard
-                      key={index}
-                      className="p-4 mb-4 shadow-sm  "
-                      style={{
-                        marginBottom: "1rem",
-                        borderRadius: "8px",
-                        border: "1px solid #3b6e91",
-                        position: "relative",
-                      }}
-                    >
-                      <div className="d-flex align-items-start mb-3">
-                        <input
-                          type="checkbox"
-                          className="form-check-input me-2"
-                          id={`checkbox${index}`}
-                          checked={checkboxStates[index]}
-                          onChange={() => handleCheckboxChange(index)}
-                          value={admin.userName}
+                  {subAdmin?.map((admin, index) => {
+                    if (!toggle && index === 0) return null
+                    return (
+                      <SingleCard
+                        key={index}
+                        className="p-4 mb-4 shadow-sm  "
+                        style={{
+                          marginBottom: "1rem",
+                          borderRadius: "8px",
+                          border: "1px solid #3b6e91",
+                          position: "relative",
+                        }}
+                      >
+                        <div className="d-flex align-items-start mb-3">
+                          <input
+                            type="checkbox"
+                            className="form-check-input me-2"
+                            id={`checkbox${index}`}
+                            checked={checkboxStates[index]}
+                            onChange={() => handleCheckboxChange(index)}
+                            value={admin.userName}
+                            style={{
+                              border: "2px solid #3b6e91",
+                              position: "relative",
+                              zIndex: 1,
+                            }}
+                          />
+                          <label
+                            className="form-check-label  fw-bold"
+                            htmlFor={`checkbox${index}`}
+                            style={{ color: "#3b6e91", marginRight: "1rem" }}
+                          >
+                            {admin.userName}
+                          </label>
+                          <div className="ms-auto">
+                            <FontAwesomeIcon
+                              icon={faTimes}
+                              title="Revoke All Permission"
+                              className="text-danger"
+                              style={{ cursor: "pointer", fontSize: "1.25rem" }}
+                              onClick={() =>
+                                handelRevokePermision(admin.userName)
+                              }
+                            />
+                          </div>
+                        </div>
+                        <hr
                           style={{
-                            border: "2px solid #3b6e91",
-                            position: "relative",
-                            zIndex: 1,
+                            border: "1px solid black",
+                            margin: "0 -1rem 1rem -1rem",
                           }}
                         />
-                        <label
-                          className="form-check-label  fw-bold"
-                          htmlFor={`checkbox${index}`}
-                          style={{ color: "#3b6e91", marginRight: "1rem" }}
-                        >
-                          {admin.userName}
-                        </label>
-                        <div className="ms-auto">
-                          <FontAwesomeIcon
-                            icon={faTimes}
-                            title="Revoke All Permission"
-                            className="text-danger"
-                            style={{ cursor: "pointer", fontSize: "1.25rem" }}
-                            onClick={() =>
-                              handelRevokePermision(admin.userName)
-                            }
-                          />
+                        <div className="d-flex flex-column gap-2">
+                          {" "}
+                          {/* Align labels in a straight column */}
+                          {[
+                            {
+                              label: "Deposit",
+                              state: checkboxIsDeposit,
+                              handler: handleCheckboxIsDepositChange,
+                            },
+                            {
+                              label: "Withdraw",
+                              state: checkboxIsWithdraw,
+                              handler: handleCheckboxIsWithdrawChange,
+                            },
+                            {
+                              label: "Edit",
+                              state: checkboxIsEdit,
+                              handler: handleCheckboxIsEditChange,
+                            },
+                            {
+                              label: "Delete",
+                              state: checkboxIsDelete,
+                              handler: handleCheckboxIsDeleteChange,
+                            },
+                            {
+                              label: "Renew",
+                              state: checkboxIsRenew,
+                              handler: handleCheckboxIsRenewChange,
+                            },
+                          ].map(({ label, state, handler }, idx) => {
+                            if (index === 0) return null
+                            return (
+                              <div
+                                key={idx}
+                                className="form-check d-flex align-items-center"
+                              >
+                                <input
+                                  type="checkbox"
+                                  className="form-check-input me-2 "
+                                  id={`${label}${index}`}
+                                  checked={state[index]}
+                                  onChange={() => handler(index)}
+                                  style={{ border: "1px solid #708090" }}
+                                />
+                                <label
+                                  className="form-check-label"
+                                  htmlFor={`${label}${index}`}
+                                  style={{
+                                    fontFamily: "'Abril Fatface', serif ",
+                                    fontWeight: "bold",
+                                    color: "#708090",
+                                  }}
+                                >
+                                  {label}
+                                </label>
+                              </div>
+                            )
+                          })}
                         </div>
-                      </div>
-                      <hr
-                        style={{
-                          border: "1px solid black",
-                          margin: "0 -1rem 1rem -1rem",
-                        }}
-                      />
-                      <div className="d-flex flex-column gap-2">
-                        {" "}
-                        {/* Align labels in a straight column */}
-                        {[
-                          {
-                            label: "Deposit",
-                            state: checkboxIsDeposit,
-                            handler: handleCheckboxIsDepositChange,
-                          },
-                          {
-                            label: "Withdraw",
-                            state: checkboxIsWithdraw,
-                            handler: handleCheckboxIsWithdrawChange,
-                          },
-                          {
-                            label: "Edit",
-                            state: checkboxIsEdit,
-                            handler: handleCheckboxIsEditChange,
-                          },
-                          {
-                            label: "Delete",
-                            state: checkboxIsDelete,
-                            handler: handleCheckboxIsDeleteChange,
-                          },
-                          {
-                            label: "Renew",
-                            state: checkboxIsRenew,
-                            handler: handleCheckboxIsRenewChange,
-                          },
-                        ].map(({ label, state, handler }, idx) => (
-                          <div
-                            key={idx}
-                            className="form-check d-flex align-items-center"
-                          >
-                            <input
-                              type="checkbox"
-                              className="form-check-input me-2 "
-                              id={`${label}${index}`}
-                              checked={state[index]}
-                              onChange={() => handler(index)}
-                              style={{ border: "1px solid #708090" }}
-                            />
-                            <label
-                              className="form-check-label"
-                              htmlFor={`${label}${index}`}
-                              style={{
-                                fontFamily: "'Abril Fatface', serif ",
-                                fontWeight: "bold",
-                                color: "#708090",
-                              }}
-                            >
-                              {label}
-                            </label>
-                          </div>
-                        ))}
-                      </div>
-                    </SingleCard>
-                  ))}
+                      </SingleCard>
+                    )
+                  })}
                 </GridCard>
               </SingleCard>
             )}

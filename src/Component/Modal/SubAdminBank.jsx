@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import TransactionSercvice from "../../Services/TransactionSercvice";
 import { useAuth } from "../../Utils/Auth";
+import { toast } from "react-toastify";
+import { customErrorHandler } from "../../Utils/helper";
 
 const SubAdminBank = ({ ID, EditApi, purpose }) => {
   console.log("first1011110", purpose);
@@ -110,11 +112,15 @@ const SubAdminBank = ({ ID, EditApi, purpose }) => {
     EditApi(ID, data, auth.user)
       .then((response) => {
         console.log("res", response.data);
-        alert(response.data.message);
-        window.location.reload();
+        // alert(response.data.message);
+        toast.success(response.data.message);
+        setTimeout(() => {
+          window.location.reload();
+        }, 500)
       })
       .catch((error) => {
-        alert(error.response.data.message);
+        // alert(error.response.data.message);
+        toast.error(customErrorHandler(error));
         console.log(error);
       });
   };
@@ -199,12 +205,12 @@ const SubAdminBank = ({ ID, EditApi, purpose }) => {
                               onChange={() =>
                                 handleCheckboxIsDepositChange(index)
                               }
-                              // value={subAdmin.userName}
+                            // value={subAdmin.userName}
                             />
                             <label
                               className="form-check-label"
                               htmlFor={`checkbox${index}`}
-                              // style={{ fontWeight: "bold" }}
+                            // style={{ fontWeight: "bold" }}
                             >
                               Deposit
                             </label>
@@ -219,12 +225,12 @@ const SubAdminBank = ({ ID, EditApi, purpose }) => {
                               onChange={() =>
                                 handleCheckboxIsWithdrawChange(index)
                               }
-                              // value={subAdmin.userName}
+                            // value={subAdmin.userName}
                             />
                             <label
                               className="form-check-label"
                               htmlFor={`checkbox${index}`}
-                              // style={{ fontWeight: "bold" }}
+                            // style={{ fontWeight: "bold" }}
                             >
                               Withdraw
                             </label>
@@ -237,12 +243,12 @@ const SubAdminBank = ({ ID, EditApi, purpose }) => {
                               // style={{ marginRight: "5px" }}
                               checked={checkboxIsEdit[index]}
                               onChange={() => handleCheckboxIsEditChange(index)}
-                              // value={subAdmin.userName}
+                            // value={subAdmin.userName}
                             />
                             <label
                               className="form-check-label"
                               htmlFor={`checkbox${index}`}
-                              // style={{ fontWeight: "bold" }}
+                            // style={{ fontWeight: "bold" }}
                             >
                               Edit
                             </label>
@@ -257,12 +263,12 @@ const SubAdminBank = ({ ID, EditApi, purpose }) => {
                               onChange={() =>
                                 handleCheckboxIsDeleteChange(index)
                               }
-                              // value={subAdmin.userName}
+                            // value={subAdmin.userName}
                             />
                             <label
                               className="form-check-label"
                               htmlFor={`checkbox${index}`}
-                              // style={{ fontWeight: "bold" }}
+                            // style={{ fontWeight: "bold" }}
                             >
                               Delete
                             </label>
@@ -277,12 +283,12 @@ const SubAdminBank = ({ ID, EditApi, purpose }) => {
                               onChange={() =>
                                 handleCheckboxIsRenewChange(index)
                               }
-                              // value={subAdmin.userName}
+                            // value={subAdmin.userName}
                             />
                             <label
                               className="form-check-label"
                               htmlFor={`checkbox${index}`}
-                              // style={{ fontWeight: "bold" }}
+                            // style={{ fontWeight: "bold" }}
                             >
                               Renew
                             </label>

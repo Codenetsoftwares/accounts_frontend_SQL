@@ -4,8 +4,9 @@ import AccountService from "../../Services/AccountService";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FullScreenLoader from "../FullScreenLoader";
+import { customErrorHandler } from "../../Utils/helper";
 
-const ModalAddBl = ({ ID, renderParent }) => {
+const ModalAddBl = ({ ID, renderParent, setGetBankName, getbankName }) => {
   const auth = useAuth();
   const [Amount, SetAmount] = useState(0);
   const [Remarks, SetRemarks] = useState("");
@@ -59,7 +60,14 @@ const ModalAddBl = ({ ID, renderParent }) => {
         if (res.status === 200) {
           console.log(res);
           toast.success(res.data.message);
-          renderParent(res.data);
+          console.log("res.data.message********", res.data.message);
+          // renderParent(res.data);
+          getbankName.forEach(bank => {
+            if (bank.bankId === ID) {
+              bank.balance = bank.balance + res.data.data.depositAmount
+            }
+          })
+          setGetBankName(getbankName)
           // Close the modal
           const closeButton = document.querySelector("#modalAdbl .btn-close");
           if (closeButton) {
@@ -69,8 +77,7 @@ const ModalAddBl = ({ ID, renderParent }) => {
       })
       .catch((error) => {
         setIsLoading(false);
-        toast.error(error.response.data.message);
-        // alert.error("e.message");
+        toast.error(customErrorHandler(error))
       });
   };
 
