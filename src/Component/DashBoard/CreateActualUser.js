@@ -314,7 +314,6 @@ const CreateActualUser = () => {
                             <div className="form-group">
                               <label htmlFor="introducersUserName">
                                 <FaIdCard /> Introducer's User Name
-                                <span className="text-danger">*</span>
                               </label>
                               <Field
                                 id="introducersUserName"
@@ -533,7 +532,6 @@ const CreateActualUser = () => {
                               className="form-label"
                             >
                               Introducer's Percentage
-                              <span className="text-danger">*</span>
                             </label>
                             <Field
                               type="text"

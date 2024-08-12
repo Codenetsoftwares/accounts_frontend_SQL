@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import UserResetPass from "../Modal/UserResetPass";
 import { Alert } from "react-bootstrap";
 import SingleCard from "../../common/singleCard";
+import { customErrorHandler } from "../../Utils/helper";
 
 const InnerUserProfile = () => {
   // const { id } = useParams();
@@ -31,6 +32,7 @@ const InnerUserProfile = () => {
   const [filteredOptions1, setFilteredOptions1] = useState([]);
   const [filteredOptions2, setFilteredOptions2] = useState([]);
   const [filteredOptions3, setFilteredOptions3] = useState([]);
+  const [renderSate, setRenderSate] = useState("");
   const location = useLocation();
   console.log("location", location);
   // Calling Single Introducer Name API
@@ -70,7 +72,7 @@ const InnerUserProfile = () => {
     AccountService.singleuserprofile(auth.user, id).then((res) =>
       setFoundObject(res.data.data)
     );
-  }, [id, auth]);
+  }, [id, auth, renderSate]);
   console.log("This is single user", foundObject);
 
   const toggleAccordion = () => {
@@ -94,7 +96,6 @@ const InnerUserProfile = () => {
   console.log("password ========>", username);
 
   const handleSave = (field) => {
-    setIsEditing(false);
     setEditedData({ ...editedData, [field]: "" });
     const data = {
       firstName: editedData.firstName,
@@ -135,13 +136,13 @@ const InnerUserProfile = () => {
       .then((res) => {
         console.log("res", res);
         if (res.status === 200) {
-          alert("Profile Updated");
-          window.location.reload();
+          toast.success(res.data.message);
+          setIsEditing(false);
+          setRenderSate(res.data);
         }
       })
       .catch((err) => {
-        console.log("err", err);
-        toast.error(err.response.data.errMessage);
+        toast.error(customErrorHandler(err));
       });
   };
   console.log("User Deatils", foundObject);
@@ -205,7 +206,7 @@ const InnerUserProfile = () => {
 
   return (
     <div
-      className="d-flex align-items-center justify-content-center mt-3"
+      className="d-flex align-items-center justify-content-center pt-3"
       style={{
         // background:
         //   "linear-gradient(90deg, rgba(23,183,184,1) 0%, rgba(23,184,155,0.9668242296918768) 100%)",
@@ -513,6 +514,7 @@ const InnerUserProfile = () => {
                                 onChange={handleInputChange}
                                 className="form-control"
                                 disabled={!isEditing}
+                                type="number"
                               />
                             </div>
 
@@ -530,6 +532,7 @@ const InnerUserProfile = () => {
                                 onChange={handleInputChange}
                                 className="form-control"
                                 disabled={!isEditing}
+                                type="number"
                               />
                             </div>
 
@@ -547,6 +550,7 @@ const InnerUserProfile = () => {
                                 onChange={handleInputChange}
                                 className="form-control"
                                 disabled={!isEditing}
+                                type="number"
                               />
                             </div>
                           </div>
@@ -760,12 +764,20 @@ const InnerUserProfile = () => {
                           </div>
                         )}
                         {isEditing ? (
-                          <button
-                            className="btn btn-dark mx-1 "
-                            onClick={handleSave}
-                          >
-                            <FontAwesomeIcon icon={faSave} /> Save
-                          </button>
+                          <>
+                            <button
+                              className="btn btn-dark mx-1 "
+                              onClick={handleSave}
+                            >
+                              <FontAwesomeIcon icon={faSave} /> Save
+                            </button>
+                            <button
+                              className="btn btn-secondary mx-1 "
+                              onClick={() => setIsEditing(false)}
+                            >
+                              Back
+                            </button>
+                          </>
                         ) : (
                           <>
                             <button
