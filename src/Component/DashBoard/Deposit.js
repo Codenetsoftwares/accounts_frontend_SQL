@@ -59,6 +59,7 @@ const Deposit = () => {
   // Debounce function to search user names
   const handleSearchUserName = useCallback(
     debounce((value) => {
+      if (!(allUserNameOptions && allUserNameOptions.length)) return
       if (value) {
         const filteredItems = allUserNameOptions.filter((item) =>
           item.toLowerCase().includes(value.toLowerCase())

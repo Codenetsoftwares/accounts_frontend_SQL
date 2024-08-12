@@ -11,3 +11,7 @@ body {
 	position: absolute;
 	bottom: -8px;
 }
+
+.custom-cursor {
+	cursor: pointer;
+}

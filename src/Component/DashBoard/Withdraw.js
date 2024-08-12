@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { Button, Col, Row, Container } from "react-bootstrap";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaTimes } from "react-icons/fa";
 import { CreateWithDrawTransactionSchema } from "../../Services/schema";
 import AccountService from "../../Services/AccountService";
 import { useAuth } from "../../Utils/Auth";
@@ -338,43 +338,46 @@ const Withdraw = () => {
                       className="text-danger withdraw-error-msg"
                     />
                     {isBankDropdownVisible && (
-                      <ul
-                        style={{
-                          border: "1px solid #ccc",
-                          listStyle: "none",
-                          padding: 0,
-                          margin: 0,
-                          position: "absolute",
-                          zIndex: 1,
-                          background: "white",
-                          width: "93%",
-                          maxHeight: "200px",
-                          overflow: "auto",
-                        }}
-                      >
-                        {filteredBankOptions.length > 0 ? (
-                          filteredBankOptions.map((option, index) => (
-                            <li
-                              key={index}
-                              onClick={() =>
-                                handleBankOptionClick(option, setFieldValue)
-                              }
-                              style={{
-                                padding: "8px",
-                                cursor: "pointer",
-                                backgroundColor:
-                                  activeBankIndex === index
-                                    ? "#f0f0f0"
-                                    : "white",
-                              }}
-                            >
-                              {option.bankName}
-                            </li>
-                          ))
-                        ) : (
-                          <li style={{ padding: "8px" }}>Not found</li>
-                        )}
-                      </ul>
+                      <div className="custom-cursor">
+                        <FaTimes onClick={() => setIsBankDropdownVisible(false)} />
+                        <ul
+                          style={{
+                            border: "1px solid #ccc",
+                            listStyle: "none",
+                            padding: 0,
+                            margin: 0,
+                            position: "absolute",
+                            zIndex: 1,
+                            background: "white",
+                            width: "93%",
+                            maxHeight: "200px",
+                            overflow: "auto",
+                          }}
+                        >
+                          {filteredBankOptions.length > 0 ? (
+                            filteredBankOptions.map((option, index) => (
+                              <li
+                                key={index}
+                                onClick={() =>
+                                  handleBankOptionClick(option, setFieldValue)
+                                }
+                                style={{
+                                  padding: "8px",
+                                  cursor: "pointer",
+                                  backgroundColor:
+                                    activeBankIndex === index
+                                      ? "#f0f0f0"
+                                      : "white",
+                                }}
+                              >
+                                {option.bankName}
+                              </li>
+                            ))
+                          ) : (
+                            <li style={{ padding: "8px" }}>Not found</li>
+                          )}
+                        </ul>
+                      </div>
                     )}
                   </div>
                 </Col>

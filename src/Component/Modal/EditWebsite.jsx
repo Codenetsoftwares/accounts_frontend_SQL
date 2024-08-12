@@ -35,9 +35,9 @@ const EditWebsite = ({ ID, webName , show , setShow }) => {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
-        Edit Website Name
-      </Button>
+      {/* <Button variant="primary" onClick={handleShow}>
+        Edit Website asdfName
+      </Button> */}
 
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>

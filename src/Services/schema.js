@@ -25,7 +25,7 @@ export const CreateDepositTransactionSchema = Yup.object({
     .oneOf(["Deposit", "Withdrawal"], "Invalid Transaction Type")
     .required("Transaction Type is required"),
   bonus: Yup.number()
-    .positive("Amount must be a positive number"),
+    .moreThan(-1, "Amount must be zero or  a positive number"),
   remarks: Yup.string().required("Remarks are required"),
 });
 
@@ -33,7 +33,7 @@ export const CreateWithDrawTransactionSchema = Yup.object({
   transactionID: Yup.string().required("Transaction ID is required"),
   amount: Yup.number()
     .required("Amount is required")
-    .min(1, "Amount must be a one"),
+    .positive("Amount must be a positive number"),
   paymentMethod: Yup.string()
     .oneOf(["UPI", "IMPS", "RTGS", "NEFT"], "Invalid Transaction Type")
     .required("Payment Method is required"),
