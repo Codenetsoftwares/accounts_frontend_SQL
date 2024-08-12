@@ -15,7 +15,9 @@ const WebsiteDelete = () => {
   useEffect(() => {
     if (auth.user) {
       EditServices.ViewWebsiteDelete(auth.user).then((res) =>
-        setViewWebsiteDelete(res.data.data)
+        setViewWebsiteDelete(res.data.data && res.data.data.filter(ele =>
+          ele.type === "Delete"
+        ))
       );
     }
   }, [auth, renderSate]);

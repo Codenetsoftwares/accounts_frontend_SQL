@@ -12,7 +12,9 @@ const WebsiteEdit = () => {
   useEffect(() => {
     if (auth.user) {
       EditServices.ViewwebsiteEditRq(auth.user).then((res) => {
-        SetEditRq(res.data.data);
+        SetEditRq(res.data.data && res.data.data.filter(ele =>
+          ele.type === "Edit"
+        ));
       });
     }
   }, [auth, renderSate]);
