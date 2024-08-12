@@ -69,6 +69,8 @@ export const CreateUserSchema = Yup.object({
   firstName: Yup.string()
     .min(2, "FirstName must be at least 2 characters")
     .max(10, "FirstName must not exceed 10 characters")
+    // .matches(/^[A-Za-z0-9][A-Za-z0-9]*$/, "FirstName must be alphanumeric and not start with a number")
+    .matches(/^[^0-9]/, "FirstName must not start with a number")
     .required("FirstName is required"),
   userName: Yup.string()
     .min(2, "Username must be at least 2 characters")

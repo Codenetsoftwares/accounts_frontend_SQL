@@ -16,7 +16,7 @@ import EditTransaction from "../Modal/EditTransaction";
 import Pagination from "../Pagination";
 import SingleCard from "../../common/singleCard";
 import { debounce } from "lodash";
-import { errorHandler } from "../../Utils/helper";
+import { customErrorHandler, errorHandler } from "../../Utils/helper";
 
 const WebsiteStatement = () => {
   const { id } = useParams();
@@ -110,7 +110,7 @@ const WebsiteStatement = () => {
   useEffect(() => {
     const fetchManualStatement = async () => {
       try {
-        const res = await AccountService.GetWebsiteStateMent(auth.user, id, data,page);
+        const res = await AccountService.GetWebsiteStateMent(auth.user, id, data, page);
         setDocumentView(res.data.data);
         setAccountData(res.data.data);
         setPage(res.data.pagination.page);
@@ -171,66 +171,64 @@ const WebsiteStatement = () => {
         AccountService.SaveTransaction({ requestId: id }, auth.user)
 
           .then((res) => {
-            toast.success("Transaction delete request sent to Super Admin");
+            toast.success(res.data.message);
           })
           .catch((err) => {
-            toast.error(err.response.data.message);
+            toast.error(customErrorHandler(err));
           });
         break;
       case "Withdraw":
         AccountService.SaveTransaction({ requestId: id }, auth.user)
           .then((res) => {
-            toast.success("Transaction delete request sent to Super Admin");
+            toast.success(res.data.message);
           })
           .catch((err) => {
-            toast.error(err.response.data.message);
+            toast.error(customErrorHandler(err));
           });
         break;
 
-      case "Manual-Bank-Withdraw":
-        AccountService.SaveBankTransaction({ requestId: id }, auth.user)
+      // case "Manual-Bank-Withdraw":
+      //   AccountService.SaveBankTransaction({ requestId: id }, auth.user)
 
-          .then((res) => {
-            toast.success(
-              "Bank Transaction delete request sent to Super Admin"
-            );
-          })
-          .catch((err) => {
-            toast.error(err.response.data.message);
-          });
-        break;
+      //     .then((res) => {
+      //       toast.success(
+      //         "Bank Transaction delete request sent to Super Admin"
+      //       );
+      //     })
+      //     .catch((err) => {
+      //       toast.error(err.response.data.message);
+      //     });
+      //   break;
 
-      case "Manual-Bank-Deposit":
-        AccountService.SaveBankTransaction({ requestId: id }, auth.user)
+      // case "Manual-Bank-Deposit":
+      //   AccountService.SaveBankTransaction({ requestId: id }, auth.user)
 
-          .then((res) => {
-            toast.success(
-              "Website Transaction delete request sent to Super Admin"
-            );
-          })
-          .catch((err) => {
-            toast.error(err.response.data.message);
-          });
-        break;
+      //     .then((res) => {
+      //       toast.success(
+      //         "Website Transaction delete request sent to Super Admin"
+      //       );
+      //     })
+      //     .catch((err) => {
+      //       toast.error(err.response.data.message);
+      //     });
+      //   break;
 
       case "Manual-Website-Withdraw":
         AccountService.SaveWebsiteTransaction({ requestId: id }, auth.user)
           .then((res) => {
-            toast.success(
-              "Website Transaction delete request sent to Super Admin"
-            );
+            toast.success(res.data.message);
           })
           .catch((err) => {
-            toast.error(err.response.data.message);
+            toast.error(customErrorHandler(err));
           });
         break;
       case "Manual-Website-Deposit":
         AccountService.SaveWebsiteTransaction({ requestId: id }, auth.user)
           .then((res) => {
-            toast.success("Bank Transaction deleted");
+            toast.success(res.data.message);
           })
           .catch((err) => {
-            toast.error(err.response.data.message);
+            toast.error(customErrorHandler(err));
           });
         break;
       default:
