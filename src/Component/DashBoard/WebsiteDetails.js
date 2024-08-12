@@ -50,6 +50,7 @@ const WebsiteDetails = () => {
   const [search, setSearch] = useState(""); // usestate for search state
   const [hasMore, setHasMore] = useState(true);
   const [response, setResponse] = useState({});
+  const [showEditModal, setShowEditModal] = useState(false);
 
   const handleCardClick = (id) => {
     setActiveCard(id);
@@ -130,6 +131,7 @@ const WebsiteDetails = () => {
     console.log("=>>", websiteName);
     setWebId(_id);
     setWebName(websiteName);
+    setShowEditModal(true);
     console.log("Line 116=>>", WebName);
   };
 
@@ -202,12 +204,17 @@ const WebsiteDetails = () => {
     AccountService.activeInactiveWebsite(ID, data, auth.user)
       .then((response) => {
         toast.success(response.data.message);
-        getWebsite.forEach((website) => {
+        const updatedWebsites = getWebsite.map((website) => {
           if (website.websiteId === ID) {
-            website.isActive = !website.isActive;
+            return {
+              ...website,
+              isActive: !website.isActive,
+            };
           }
+          return website;
         });
-        setGetWebsite(getWebsite);
+        
+        setGetWebsite(updatedWebsites);
         console.log(response.data);
       })
       .catch((error) => {
@@ -224,12 +231,18 @@ const WebsiteDetails = () => {
     AccountService.activeInactiveWebsite(ID, data, auth.user)
       .then((response) => {
         toast.success(response.data.message);
-        getWebsite.forEach((website) => {
+        const updatedWebsites = getWebsite.map((website) => {
           if (website.websiteId === ID) {
-            website.isActive = !website.isActive;
+            return {
+              ...website,
+              isActive: !website.isActive,
+            };
           }
+          return website;
         });
-        setGetWebsite(getWebsite);
+        
+        setGetWebsite(updatedWebsites);
+       
         console.log(response.data);
       })
       .catch((error) => {
@@ -237,6 +250,7 @@ const WebsiteDetails = () => {
         console.error(error);
       });
   };
+  
   const handelSubAdmin = (SubAdmins, ID) => {
     setSubAdmins(SubAdmins);
     setSId(ID);
@@ -419,8 +433,7 @@ const WebsiteDetails = () => {
                                   );
                                 }}
                                 title="Edit Website"
-                                data-toggle="modal"
-                                data-target="#editwebsite"
+                               
                               >
                                 <FontAwesomeIcon
                                   icon={faEdit}
@@ -528,7 +541,7 @@ const WebsiteDetails = () => {
           setGetWebsite={setGetWebsite}
         />
         <ModalWbdl name={name} />
-        <EditWebsite ID={WebId} webName={WebName} />
+        <EditWebsite ID={WebId} webName={WebName} show={showEditModal} setShow={setShowEditModal}/>
         <RenewWebsitePermission
           SubAdmins={SubAdmins}
           ID={SId}

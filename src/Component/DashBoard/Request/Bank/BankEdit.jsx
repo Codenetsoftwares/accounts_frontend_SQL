@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
 import EditServices from "../../../../Services/EditServices";
 import { useAuth } from "../../../../Utils/Auth";
+import { toast } from "react-toastify";
+import { customErrorHandler } from "../../../../Utils/helper";
 
 const BankEdit = () => {
   const auth = useAuth();
   const [ChangeFiled, SetChangeFiled] = useState([]);
   const [EditRq, SetEditRq] = useState([]);
+  const [renderSate, setRenderSate] = useState("");
+
   useEffect(() => {
     if (auth.user) {
       EditServices.ViewBankEditRq(auth.user).then((res) => {
@@ -14,14 +18,11 @@ const BankEdit = () => {
         );
 
         SetChangeFiled(changedFieldsArray);
-
         SetEditRq(res.data.data);
       });
     }
-  }, [auth]);
+  }, [auth, renderSate]);
 
-  console.log("ALL Request", EditRq);
-  console.log("Change Request", ChangeFiled);
   const handleapprove = (ID) => {
     const flag = true;
 
@@ -31,12 +32,11 @@ const BankEdit = () => {
 
     EditServices.IsBankEditApprove(ID, data, auth.user)
       .then((response) => {
-        console.log(response);
-        alert("Approved");
-        window.location.reload();
+        toast.success(response.data.message);
+        setRenderSate(response.data);
       })
       .catch((error) => {
-        alert(error);
+        toast.error(customErrorHandler(error));
       });
   };
 
@@ -44,89 +44,69 @@ const BankEdit = () => {
     e.preventDefault();
     EditServices.IsBankDeleteReject(id, auth.user)
       .then((response) => {
-        console.log(response.data);
-        alert("Rejected");
-        window.location.reload();
+        toast.success(response.data.message);
+        setRenderSate(response.data);
       })
       .catch((error) => {
-        console.error(error);
+        toast.error(customErrorHandler(error));
       });
   };
 
   return (
     <>
       {EditRq.length > 0 ? (
-        <div className="d-flex justify-content-center">
-          {EditRq.map((item, index) => (
-            <div
-              className="card ml-5 "
-              style={{ width: "50rem" }}
-              key={item.id}
-            >
-              <p key={index} className="ml-2 mt-2">
-                <b className="text-success">All Data</b>
-                <br />
-                <br />
-                <b>Account Holder Name</b>: {item.accountHolderName}
-                <br />
-                <b>Account Number</b>: {item.accountNumber}
-                <br />
-                <b>Bank Name</b>: {item.bankName}
-                <br />
-                <b>IFSC Code</b>: {item.ifscCode}
-                <br />
-                <b>UPI App Name</b>: {item.upiAppName}
-                <br />
-                <b> UPI ID</b>: {item.upiId}
-                <br />
-                <b>UPI Number</b>: {item.upiNumber}
-                <br />
-              </p>
-              <hr />
-              <p className="d-flex justify-content-center text-primary">
-                {item.message}
-              </p>
-              <hr />
-              {/* commented for null data type */}
-              {/* <p className="ml-2">
-                <b className="ml-2 text-danger">
-                  {" "}
-                  Here are the fields that have been changed{" "}
-                </b>
-
-                {item.hasOwnProperty("changedFields") &&
-                  item.changedFields &&
-                  Object.keys(item?.changedFields).length > 0 && (
-                    <ul>
-                      {Object.keys(item?.changedFields).map((key) => (
-                        <li key={key}>
-                          <b>{key}</b>: {item?.changedFields[key]}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-              // </p> */}
-              <p>
-                <button
-                  type="button"
-                  class="btn btn-success mr-2 ml-2"
-                  onClick={() => handleapprove(item.bankId)}
-                >
-                  Approve
-                </button>
-                <button
-                  class="btn btn-danger"
-                  onClick={(e) => handleReject(e, item.bankId)}
-                >
-                  Reject
-                </button>
-              </p>
-            </div>
-          ))}
+        <div className="table-responsive">
+          <table className="table table-bordered table-striped">
+            <thead>
+              <tr align= "center">
+                <th>Account Holder Name</th>
+                <th>Account Number</th>
+                <th>Bank Name</th>
+                <th>IFSC Code</th>
+                <th>UPI App Name</th>
+                <th>UPI ID</th>
+                <th>UPI Number</th>
+                <th>Message</th>
+                <th colSpan="2">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {EditRq.map((item) => (
+                <tr key={item.id} align= "center">
+                  <td>{item.accountHolderName}</td>
+                  <td>{item.accountNumber}</td>
+                  <td>{item.bankName}</td>
+                  <td>{item.ifscCode}</td>
+                  <td>{item.upiAppName}</td>
+                  <td>{item.upiId}</td>
+                  <td>{item.upiNumber}</td>
+                  <td>{item.message}</td>
+                  <td>
+                    <button
+                      type="button"
+                      className="btn btn-outline-success mr-2"
+                      onClick={() => handleapprove(item.bankId)}
+                    >
+                      Approve
+                    </button>
+                   
+                  </td>
+                  <td>
+                  <button
+                      className="btn btn-outline-danger"
+                      onClick={(e) => handleReject(e, item.bankId)}
+                    >
+                      Reject
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       ) : (
         <div
-          class="alert alert-warning fs-6 d-flex justify-content-center container"
+          className="alert alert-warning fs-6 d-flex justify-content-center container"
           role="alert"
         >
           No Alert Found

@@ -4,7 +4,7 @@ import { useAuth } from "../../Utils/Auth";
 import { toast } from "react-toastify";
 import { customErrorHandler } from "../../Utils/helper";
 
-const SubAdminBank = ({ ID, EditApi, purpose }) => {
+const SubAdminBank = ({ ID, EditApi, purpose , renderParent }) => {
   console.log("first1011110", purpose);
   const [subAdminlist, setSubAdminlist] = useState([]);
   const [subAdmin, setSubAdmin] = useState([]);
@@ -114,9 +114,8 @@ const SubAdminBank = ({ ID, EditApi, purpose }) => {
         console.log("res", response.data);
         // alert(response.data.message);
         toast.success(response.data.message);
-        setTimeout(() => {
-          window.location.reload();
-        }, 500)
+        renderParent(response.data)
+       document.querySelector("#exampleModal .close").click();
       })
       .catch((error) => {
         // alert(error.response.data.message);

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../Utils/Auth";
 import SubAdminBank from "./Modal/SubAdminBank";
+import { toast } from "react-toastify";
+import { customErrorHandler } from "../Utils/helper";
 
 const CreateRequestNew = ({ Api, purpose, ApiReject, EditApi }) => {
   console.log("first", purpose);
@@ -8,6 +10,7 @@ const CreateRequestNew = ({ Api, purpose, ApiReject, EditApi }) => {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
   const [Id, setId] = useState();
+  const [childresponse, setChildResponse] = useState("");
 
   useEffect(() => {
     Api(auth.user)
@@ -18,7 +21,7 @@ const CreateRequestNew = ({ Api, purpose, ApiReject, EditApi }) => {
       .catch((err) => {
         setError("Error fetching data. Please try again.");
       });
-  }, [auth]);
+  }, [auth , childresponse]);
 
   console.log("data = >>>>>", data);
 
@@ -45,11 +48,11 @@ const CreateRequestNew = ({ Api, purpose, ApiReject, EditApi }) => {
     ApiReject(_id, auth.user)
       .then((response) => {
         console.log(response.data);
-        alert(`Rejected \uD83C\uDFA3`);
-        window.location.reload();
+        toast.success(response.data.message);
+        setChildResponse(response.data)
       })
       .catch((error) => {
-        console.error(error);
+        toast.error(customErrorHandler(error));
       });
   };
   return (
@@ -173,7 +176,7 @@ const CreateRequestNew = ({ Api, purpose, ApiReject, EditApi }) => {
           </tbody>
         </table>
       )}
-      <SubAdminBank ID={Id} EditApi={EditApi} purpose={purpose} />
+      <SubAdminBank ID={Id} EditApi={EditApi} purpose={purpose} renderParent={setChildResponse} />
     </div>
   );
 };

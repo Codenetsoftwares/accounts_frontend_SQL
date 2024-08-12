@@ -54,6 +54,7 @@ const ModalAdWbl = ({ ID , setGetWebsite , getWebsite }) => {
       .then((res) => {
         // console.log(response.data);
         setIsLoading(false);
+        toast.success(res.data.message);
         if (res.status === 201) {
           const updatedWebsites = getWebsite.map(website => {
             if (website.websiteId === ID){
