@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { useAuth } from '../../Utils/Auth';
-import AccountService from '../../Services/AccountService';
-import { toast } from 'react-toastify';
-import { customErrorHandler } from '../../Utils/helper';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
+import React, { useState, useEffect } from "react";
+import { useAuth } from "../../Utils/Auth";
+import AccountService from "../../Services/AccountService";
+import { toast } from "react-toastify";
+import { customErrorHandler } from "../../Utils/helper";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+import Form from "react-bootstrap/Form";
 
-const EditWebsite = ({ ID, webName , show , setShow }) => {
+const EditWebsite = ({ ID, webName, show, setShow }) => {
   const auth = useAuth();
-  
-  const [name, setName] = useState('');
+
+  const [name, setName] = useState("");
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   useEffect(() => {
     if (show) {
-      setName('');
+      setName("");
     }
   }, [show]);
 
@@ -35,10 +35,6 @@ const EditWebsite = ({ ID, webName , show , setShow }) => {
 
   return (
     <>
-      {/* <Button variant="primary" onClick={handleShow}>
-        Edit Website asdfName
-      </Button> */}
-
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
           <Modal.Title>Provide New Name</Modal.Title>
@@ -52,7 +48,7 @@ const EditWebsite = ({ ID, webName , show , setShow }) => {
                 value={webName}
                 disabled
                 className="font-weight-bold"
-                style={{ fontSize: '15px' }}
+                style={{ fontSize: "15px" }}
               />
             </Form.Group>
 
@@ -63,7 +59,7 @@ const EditWebsite = ({ ID, webName , show , setShow }) => {
                 value={auth.user.userName}
                 disabled
                 className="font-weight-bold"
-                style={{ fontSize: '15px' }}
+                style={{ fontSize: "15px" }}
               />
             </Form.Group>
 

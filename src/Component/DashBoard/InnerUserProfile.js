@@ -134,7 +134,7 @@ const InnerUserProfile = () => {
     AccountService.inneruserprofile(id, data, auth.user)
       .then((res) => {
         console.log("res", res);
-        if (res.status === 201) {
+        if (res.status === 200) {
           alert("Profile Updated");
           window.location.reload();
         }

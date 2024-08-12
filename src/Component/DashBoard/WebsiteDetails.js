@@ -82,14 +82,14 @@ const WebsiteDetails = () => {
       .then((res) => {
         console.log("res", res);
         if (res.status === 201) {
-          toast.success(res.data.message)
+          toast.success(res.data.message);
           setWebsite("");
         }
       })
       .catch((err) => {
         toast.error(customErrorHandler(err));
         console.log(err);
-      }); 
+      });
   };
 
   const handelName = (id) => {
@@ -213,7 +213,7 @@ const WebsiteDetails = () => {
           }
           return website;
         });
-        
+
         setGetWebsite(updatedWebsites);
         console.log(response.data);
       })
@@ -240,9 +240,9 @@ const WebsiteDetails = () => {
           }
           return website;
         });
-        
+
         setGetWebsite(updatedWebsites);
-       
+
         console.log(response.data);
       })
       .catch((error) => {
@@ -250,7 +250,7 @@ const WebsiteDetails = () => {
         console.error(error);
       });
   };
-  
+
   const handelSubAdmin = (SubAdmins, ID) => {
     setSubAdmins(SubAdmins);
     setSId(ID);
@@ -433,7 +433,6 @@ const WebsiteDetails = () => {
                                   );
                                 }}
                                 title="Edit Website"
-                               
                               >
                                 <FontAwesomeIcon
                                   icon={faEdit}
@@ -541,7 +540,12 @@ const WebsiteDetails = () => {
           setGetWebsite={setGetWebsite}
         />
         <ModalWbdl name={name} />
-        <EditWebsite ID={WebId} webName={WebName} show={showEditModal} setShow={setShowEditModal}/>
+        <EditWebsite
+          ID={WebId}
+          webName={WebName}
+          show={showEditModal}
+          setShow={setShowEditModal}
+        />
         <RenewWebsitePermission
           SubAdmins={SubAdmins}
           ID={SId}

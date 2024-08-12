@@ -143,8 +143,8 @@ const CreateActualUser = () => {
           // window.location.reload(); // Reload page after successful submission
         })
         .catch((err) => {
-          console.log("error", err.response.data.message);
-          toast.error(err?.response?.data?.message); // Display error message
+          console.log("error", err);
+          toast.error(err?.response?.data?.errMessage); // Display error message
           return;
         });
     } else {
