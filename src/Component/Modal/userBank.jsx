@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import AccountService from "../../Services/AccountService";
 import { useAuth } from "../../Utils/Auth";
+import { customErrorHandler } from "../../Utils/helper";
+import { toast } from "react-toastify";
 
 const UserBank = ({ bankDetail, upiDetail, paramsid }) => {
   const auth = useAuth();
@@ -35,20 +37,20 @@ const UserBank = ({ bankDetail, upiDetail, paramsid }) => {
 
   const handleUpdate = () => {
     const updatedData = {
-      bankDetail: editedBankDetail,
-      upiDetail: editedUpiDetail,
+      Bank_Details: editedBankDetail,
+      Upi_Details: editedUpiDetail,
     };
 
     AccountService.inneruserprofile(paramsid, updatedData, auth.user)
       .then((res) => {
         console.log("res", res);
-        if (res.status === 201) {
-          alert("Profile Updated");
-          window.location.reload();
+        if (res.status === 200) {
+          toast.success(res.data.message);
+          document.querySelector("#modalbank .btn-close").click();
         }
       })
       .catch((err) => {
-        alert("The sum of introducer percentages must be between 0 and 100");
+        toast.error(customErrorHandler(err));
       });
 
     setIsEditing({});

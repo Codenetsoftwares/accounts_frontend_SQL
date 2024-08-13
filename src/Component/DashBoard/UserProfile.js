@@ -38,6 +38,7 @@ const UserProfile = () => {
   const [profileView, setProfileView] = useState("");
   const [bankViewEdit, setBankViewEdit] = useState("");
   const [selectedUser, setSelectedUser] = useState(null);
+ 
 
   console.log("======>>> data", users);
 
@@ -344,6 +345,7 @@ const UserProfile = () => {
             bankDetail={selectedUser.Bank_Details}
             upiDetail={selectedUser.Upi_Details}
             paramsid={bankViewEdit}
+           
           />
         )}
       </div>
