@@ -58,7 +58,7 @@ const BankEdit = () => {
         <div className="table-responsive">
           <table className="table table-bordered table-striped">
             <thead>
-              <tr align= "center">
+              <tr align="center">
                 <th>Account Holder Name</th>
                 <th>Account Number</th>
                 <th>Bank Name</th>
@@ -71,8 +71,8 @@ const BankEdit = () => {
               </tr>
             </thead>
             <tbody>
-              {EditRq.map((item) => (
-                <tr key={item.id} align= "center">
+              {EditRq.reverse().map((item) => (
+                <tr key={item.id} align="center">
                   <td>{item.accountHolderName}</td>
                   <td>{item.accountNumber}</td>
                   <td>{item.bankName}</td>
@@ -89,10 +89,9 @@ const BankEdit = () => {
                     >
                       Approve
                     </button>
-                   
                   </td>
                   <td>
-                  <button
+                    <button
                       className="btn btn-outline-danger"
                       onClick={(e) => handleReject(e, item.bankId)}
                     >

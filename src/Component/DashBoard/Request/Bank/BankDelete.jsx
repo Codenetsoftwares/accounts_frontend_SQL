@@ -27,8 +27,8 @@ const BankDelete = () => {
     };
     EditServices.IsBankDeleteApprove(id, auth.user)
       .then((response) => {
-        toast.success(response.data.message)
-        setRenderSate(response.data)
+        toast.success(response.data.message);
+        setRenderSate(response.data);
       })
       .catch((error) => {
         toast.error(customErrorHandler(error));
@@ -39,8 +39,8 @@ const BankDelete = () => {
     e.preventDefault();
     EditServices.IsBankDeleteReject(id, auth.user)
       .then((response) => {
-        toast.success(response.data.message)
-        setRenderSate(response.data)
+        toast.success(response.data.message);
+        setRenderSate(response.data);
       })
       .catch((error) => {
         toast.error(customErrorHandler(error));
@@ -52,22 +52,28 @@ const BankDelete = () => {
       {viewBankDelete.length > 0 ? (
         <table className="table table-striped table-hover">
           <thead>
-            <tr align= "center">
-              
+            <tr align="center">
               <th scope="col">Bank Name</th>
               <th scope="col">Account Holder Name</th>
               <th scope="col">Account Number</th>
               <th scope="col">IFSC Code</th>
               <th scope="col">UPI App Name</th>
               <th scope="col">UPI Id</th>
-              <th scope="col" colspan="2">Actions</th>
+              <th scope="col" colspan="2">
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody>
-            {viewBankDelete.map((data, i) => (
-              <tr key={i} align= "center">
-                
-                <td className={data.changedFields?.bankName ? "text-danger" : "text-success"}>
+            {viewBankDelete.reverse().map((data, i) => (
+              <tr key={i} align="center">
+                <td
+                  className={
+                    data.changedFields?.bankName
+                      ? "text-danger"
+                      : "text-success"
+                  }
+                >
                   {data.changedFields?.bankName || data.bankName}
                 </td>
                 <td className="text-success">{data.accountHolderName}</td>
@@ -82,10 +88,9 @@ const BankDelete = () => {
                   >
                     Approve
                   </button>
-                
                 </td>
                 <td>
-                <button
+                  <button
                     className="btn btn-outline-danger"
                     onClick={(e) => handleReject(e, data.bankId)}
                   >
@@ -98,8 +103,8 @@ const BankDelete = () => {
         </table>
       ) : (
         <div class="alert alert-warning text-center" role="alert">
-    No Alert Found 
-      </div>
+          No Alert Found
+        </div>
       )}
     </div>
   );

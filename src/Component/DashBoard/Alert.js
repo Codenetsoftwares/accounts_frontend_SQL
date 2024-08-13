@@ -81,7 +81,7 @@ const Alert = () => {
               </tr>
             </thead>
             <tbody>
-              {alert.map((data, i) => (
+              {alert.reverse().map((data, i) => (
                 <tr key={i}>
                   <td>{data.transactionType}</td>
                   <td

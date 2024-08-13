@@ -15,9 +15,9 @@ const WebsiteDelete = () => {
   useEffect(() => {
     if (auth.user) {
       EditServices.ViewWebsiteDelete(auth.user).then((res) =>
-        setViewWebsiteDelete(res.data.data && res.data.data.filter(ele =>
-          ele.type === "Delete"
-        ))
+        setViewWebsiteDelete(
+          res.data.data && res.data.data.filter((ele) => ele.type === "Delete")
+        )
       );
     }
   }, [auth, renderSate]);
@@ -71,7 +71,7 @@ const WebsiteDelete = () => {
                     <th></th>
                   </tr>
                 </thead>
-                {viewWebsiteDelete.map((data, index) => (
+                {viewWebsiteDelete.reverse().map((data, index) => (
                   <tr key={data.websiteTransactionId}>
                     <th scope="row">{index + 1}</th>
                     <td>{data.websiteName}</td>

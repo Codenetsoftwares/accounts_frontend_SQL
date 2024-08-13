@@ -101,7 +101,7 @@ const TrashAllTransaction = () => {
         ></div>
         <div className=" p-2">
           {alert.length > 0 ? (
-            alert.map((data, i) => {
+            alert.reverse().map((data, i) => {
               return (
                 <>
                   <div className="card">

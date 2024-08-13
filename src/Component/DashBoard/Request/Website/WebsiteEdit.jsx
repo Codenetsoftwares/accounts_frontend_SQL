@@ -12,9 +12,9 @@ const WebsiteEdit = () => {
   useEffect(() => {
     if (auth.user) {
       EditServices.ViewwebsiteEditRq(auth.user).then((res) => {
-        SetEditRq(res.data.data && res.data.data.filter(ele =>
-          ele.type === "Edit"
-        ));
+        SetEditRq(
+          res.data.data && res.data.data.filter((ele) => ele.type === "Edit")
+        );
       });
     }
   }, [auth, renderSate]);
@@ -69,7 +69,7 @@ const WebsiteEdit = () => {
               </tr>
             </thead>
             <tbody>
-              {EditRq.map((item, index) => (
+              {EditRq.reverse().map((item, index) => (
                 <tr key={item.id} align="center">
                   <td>{item.websiteName}</td>
                   <td>{item.message}</td>
