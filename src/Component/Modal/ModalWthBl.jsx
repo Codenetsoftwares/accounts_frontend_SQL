@@ -59,12 +59,13 @@ const ModalWthBl = ({ ID, renderParent, setGetBankName, getbankName }) => {
         setIsLoading(false);
         if (res.status === 200) {
           toast.success(res.data.message);
-          getbankName.forEach(bank => {
+          const getbankNameUpdated = JSON.parse(JSON.stringify(getbankName))
+          getbankNameUpdated.forEach(bank => {
             if (bank.bankId === ID) {
               bank.balance = bank.balance - res.data.data.withdrawAmount
             }
           })
-          setGetBankName(getbankName)
+          setGetBankName(getbankNameUpdated)
           // renderParent(res.data);
           // Close the modal
           const closeButton = document.querySelector("#modalWthbl .btn-close");

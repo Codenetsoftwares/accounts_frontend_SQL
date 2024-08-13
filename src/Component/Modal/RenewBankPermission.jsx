@@ -189,12 +189,13 @@ const RenewBankPermission = ({ SubAdmins, ID, getbankName, setGetBankName }) => 
       .then((response) => {
         console.log("res", response.data);
         toast.success(response.data.message);
-        getbankName.forEach(bank => {
+        const getbankNameUpdated = JSON.parse(JSON.stringify(getbankName))
+        getbankNameUpdated.forEach(bank => {
           if (bank.bankId === ID) {
             bank.subAdmins = data.subAdmins
           }
         })
-        setGetBankName(getbankName)
+        setGetBankName(getbankNameUpdated)
         // Close the modal
         document.querySelector("#RenewBankPermission .btn-close").click();
       })

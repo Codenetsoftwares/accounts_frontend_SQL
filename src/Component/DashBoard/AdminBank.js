@@ -175,13 +175,14 @@ const AdminBank = () => {
     AccountService.activeInactiveBank(ID, data, auth.user)
       .then((response) => {
         toast.success(response.data.message);
-        getbankName.forEach(bank => {
+        const getbankNameUpdated = JSON.parse(JSON.stringify(getbankName))
+        getbankNameUpdated.forEach(bank => {
           if (bank.bankId === ID) {
             bank.isActive = !bank.isActive
 
           }
         })
-        setGetBankName(getbankName)
+        setGetBankName(getbankNameUpdated)
       })
       .catch((error) => {
         toast.error(error.response.data.errMessage);
@@ -196,13 +197,14 @@ const AdminBank = () => {
     AccountService.activeInactiveBank(ID, data, auth.user)
       .then((response) => {
         toast.success(response.data.message);
-        getbankName.forEach(bank => {
+        const getbankNameUpdated = JSON.parse(JSON.stringify(getbankName))
+        getbankNameUpdated.forEach(bank => {
           if (bank.bankId === ID) {
             bank.isActive = !bank.isActive
 
           }
         })
-        setGetBankName(getbankName)
+        setGetBankName(getbankNameUpdated)
         console.log(response.data);
       })
       .catch((error) => {
