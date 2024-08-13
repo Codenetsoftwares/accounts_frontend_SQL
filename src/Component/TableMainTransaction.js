@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import EditTransaction from './Modal/EditTransaction';
 import Pagination from './Pagination';
 import SingleCard from '../common/singleCard';
+import { customErrorHandler } from '../Utils/helper';
 
 const TableMainTransaction = ({ FilterData, purpose, page, handlePage, totalPage, totalData }) => {
     console.log('totalData', totalData)
@@ -33,7 +34,7 @@ const TableMainTransaction = ({ FilterData, purpose, page, handlePage, totalPage
                         toast.success("Transaction delete request sent to Super Admin");
                     })
                     .catch((err) => {
-                        toast.error(err.response.data?.errMessage)
+                        toast.error(customErrorHandler(err));
                     });
                 break;
 
@@ -45,7 +46,7 @@ const TableMainTransaction = ({ FilterData, purpose, page, handlePage, totalPage
                         toast.success("Transaction delete request sent to Super Admin");
                     })
                     .catch((err) => {
-                        toast.error(err.response.data?.errMessage)
+                        toast.error(customErrorHandler(err));
                     });
                 break;
 
@@ -59,7 +60,7 @@ const TableMainTransaction = ({ FilterData, purpose, page, handlePage, totalPage
                         );
                     })
                     .catch((err) => {
-                        toast.error(err.response.data?.errMessage)
+                        toast.error(customErrorHandler(err));
                     });
                 break;
 
@@ -73,7 +74,7 @@ const TableMainTransaction = ({ FilterData, purpose, page, handlePage, totalPage
                         );
                     })
                     .catch((err) => {
-                        toast.error(err.response.data?.errMessage)
+                        toast.error(customErrorHandler(err));
                     });
                 break;
 
@@ -86,7 +87,7 @@ const TableMainTransaction = ({ FilterData, purpose, page, handlePage, totalPage
                         );
                     })
                     .catch((err) => {
-                        toast.error(err.response.data?.errMessage)
+                        toast.error(customErrorHandler(err));
                     });
                 break;
 
@@ -99,7 +100,7 @@ const TableMainTransaction = ({ FilterData, purpose, page, handlePage, totalPage
                         );
                     })
                     .catch((err) => {
-                        toast.error(err.response.data?.errMessage)
+                        toast.error(customErrorHandler(err));
                     });
                 break;
 

@@ -15,7 +15,7 @@ import TransactionSercvice from "../../Services/TransactionSercvice";
 import { Button } from "react-bootstrap";
 import Pagination from "../Pagination";
 import SingleCard from "../../common/singleCard";
-import { errorHandler } from "../../Utils/helper";
+import { customErrorHandler, errorHandler } from "../../Utils/helper";
 
 const MyTxn = () => {
   const { id } = useParams();
@@ -150,7 +150,7 @@ const MyTxn = () => {
         toast.success("Bank Transaction deleted");
       })
       .catch((err) => {
-        toast.error(err.response.data.message);
+        toast.error(customErrorHandler(err));
       });
   };
 
