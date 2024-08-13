@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from "react";
 import EditServices from "../../../../Services/EditServices";
 import { useAuth } from "../../../../Utils/Auth";
+import { toast } from "react-toastify";
+import { customErrorHandler } from "../../../../Utils/helper";
 
 const WebsiteEdit = () => {
   const auth = useAuth();
   const [EditRq, SetEditRq] = useState([]);
+  const [renderSate, setRenderSate] = useState("");
+
   useEffect(() => {
     if (auth.user) {
       EditServices.ViewwebsiteEditRq(auth.user).then((res) => {
-        SetEditRq(res.data.data);
+        SetEditRq(res.data.data && res.data.data.filter(ele =>
+          ele.type === "Edit"
+        ));
       });
     }
-  }, [auth]);
+  }, [auth, renderSate]);
 
   console.log("ALL Request", EditRq);
 
@@ -25,65 +31,73 @@ const WebsiteEdit = () => {
     EditServices.IsWebsiteEditApprove(ID, data, auth.user)
       .then((response) => {
         console.log(response);
-        alert("Approved !! Website Name Changed");
-        window.location.reload();
+        toast.success(response.data.message);
+        setRenderSate(response.data);
       })
       .catch((error) => {
-        alert(error.response.data.message);
+        toast.error(customErrorHandler(error));
       });
   };
+
   const handleReject = (e, id) => {
     e.preventDefault();
     EditServices.IsWebsiteDeleteReject(id, auth.user)
       .then((response) => {
-        alert("Rejected !! Website Name Remains Same ");
-        window.location.reload();
-        console.log(response.data);
+        toast.success(response.data.message);
+        setRenderSate(response.data);
       })
       .catch((error) => {
-        alert(error.response.data.message);
+        toast.error(customErrorHandler(error));
       });
   };
+
   return (
     <>
       {EditRq.length > 0 ? (
         <div className="d-flex justify-content-center">
-          {EditRq.map((item, index) => (
-            <div
-              className="card ml-5 mt-5"
-              style={{ width: "50rem" }}
-              key={item.id}
-            >
-              <p key={index} className="ml-2 mt-2">
-                <b>Website Name</b>: {item.websiteName}
-                <br />
-              </p>
-              <hr />
-              <p className="d-flex justify-content-center text-primary">
-                {item.message}
-              </p>
-              <hr />
-              <p>
-                <button
-                  type="button"
-                  class="btn btn-success mr-2 ml-2"
-                  onClick={() => handleapprove(item.websiteId)}
-                >
-                  Approve
-                </button>
-                <button
-                  class="btn btn-danger"
-                  onClick={(e) => handleReject(e, item.websiteId)}
-                >
-                  Reject
-                </button>
-              </p>
-            </div>
-          ))}
+          <table
+            className="table table-striped table-bordered"
+            style={{ width: "80%" }}
+          >
+            <thead>
+              <tr align="center">
+                <th scope="col">Website Name</th>
+                <th scope="col">Message</th>
+                <th scope="col" colSpan="2">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {EditRq.map((item, index) => (
+                <tr key={item.id} align="center">
+                  <td>{item.websiteName}</td>
+                  <td>{item.message}</td>
+                  <td>
+                    <button
+                      type="button"
+                      className="btn btn-outline-success mr-2"
+                      onClick={() => handleapprove(item.websiteId)}
+                    >
+                      Approve
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      className="btn btn-outline-danger"
+                      onClick={(e) => handleReject(e, item.websiteId)}
+                    >
+                      Reject
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       ) : (
-        <div class="card">
-          <div class="card-body">No Request Found</div>
+        <div class="alert alert-warning text-center" role="alert">
+          No Edit Request Found
         </div>
       )}
     </>

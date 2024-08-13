@@ -29,8 +29,8 @@ const CreateUser = () => {
         resetForm(); // Reset the form after successful submission
       })
       .catch((err) => {
-        console.log("error", err.response.data.message);
-        toast.error(err.response.data.message);
+        console.log("error", err);
+        toast.error(err?.response?.data?.errMessage);
       });
   };
 

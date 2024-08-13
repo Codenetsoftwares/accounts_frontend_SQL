@@ -3,12 +3,15 @@ import InnerAlert from "../Modal/InnerAlert";
 import EditServices from "../Services/EditServices";
 import TransactionSercvice from "../Services/TransactionSercvice";
 import { useAuth } from "../Utils/Auth";
+import { toast } from "react-toastify";
+import { customErrorHandler } from "../Utils/helper";
 
 const IntroducerAlert = () => {
   const auth = useAuth();
   console.log(auth);
   const [alert, setAlert] = useState([]);
   const [isApproved, setIsApproved] = useState();
+  const [renderSate, setRenderSate] = useState("");
   var EditData = [];
 
   useEffect(() => {
@@ -17,7 +20,7 @@ const IntroducerAlert = () => {
         setAlert(res.data)
       );
     }
-  }, [auth]);
+  }, [auth, renderSate]);
 
   for (let i = 0; i < alert.length; i++) {
     EditData[i] = alert[i].changedFields;
@@ -36,21 +39,21 @@ const IntroducerAlert = () => {
       case "Deposit":
         EditServices.IsEditIntroducerApprove(id, data, auth.user)
           .then((response) => {
-            window.location.reload();
-            console.log(response.data);
+            toast.success(response.data.message);
+            setRenderSate(response.data);
           })
           .catch((error) => {
-            console.error(error);
+            toast.error(customErrorHandler(error));
           });
         break;
       case "Withdraw":
         EditServices.IsEditIntroducerApprove(id, data, auth.user)
           .then((response) => {
-            window.location.reload();
-            console.log(response.data);
+            toast.success(response.data.message);
+            setRenderSate(response.data);
           })
           .catch((error) => {
-            console.error(error);
+            toast.error(customErrorHandler(error));
           });
         break;
 
@@ -63,21 +66,21 @@ const IntroducerAlert = () => {
       case "Deposit":
         EditServices.IsReject(id, auth.user)
           .then((response) => {
-            window.location.reload();
-            console.log(response.data);
+            toast.success(response.data.message);
+            setRenderSate(response.data);
           })
           .catch((error) => {
-            console.error(error);
+            toast.error(customErrorHandler(error));
           });
         break;
       case "Withdraw":
         EditServices.IsReject(id, auth.user)
           .then((response) => {
-            window.location.reload();
-            console.log(response.data);
+            toast.success(response.data.message);
+            setRenderSate(response.data);
           })
           .catch((error) => {
-            console.error(error);
+            toast.error(customErrorHandler(error));
           });
         break;
 
@@ -98,21 +101,21 @@ const IntroducerAlert = () => {
       case "Deposit":
         EditServices.IsDeleteIntroducerApprove(id, auth.user)
           .then((response) => {
-            window.location.reload();
-            console.log(response.data);
+            toast.success(response.data.message);
+            setRenderSate(response.data);
           })
           .catch((error) => {
-            console.error(error);
+            toast.error(customErrorHandler(error));
           });
         break;
       case "Withdraw":
         EditServices.IsDeleteIntroducerApprove(id, auth.user)
           .then((response) => {
-            window.location.reload();
-            console.log(response.data);
+            toast.success(response.data.message);
+            setRenderSate(response.data);
           })
           .catch((error) => {
-            console.error(error);
+            toast.error(customErrorHandler(error));
           });
         break;
 
@@ -125,21 +128,21 @@ const IntroducerAlert = () => {
       case "Deposit":
         EditServices.IsIntroducerTransactionDeleteReject(id, auth.user)
           .then((response) => {
-            window.location.reload();
-            console.log(response.data);
+            toast.success(response.data.message);
+            setRenderSate(response.data);
           })
           .catch((error) => {
-            console.error(error);
+            toast.error(customErrorHandler(error));
           });
         break;
       case "Withdraw":
         EditServices.IsIntroducerTransactionDeleteReject(id, auth.user)
           .then((response) => {
-            window.location.reload();
-            console.log(response.data);
+            toast.success(response.data.message);
+            setRenderSate(response.data);
           })
           .catch((error) => {
-            console.error(error);
+            toast.error(customErrorHandler(error));
           });
         break;
 

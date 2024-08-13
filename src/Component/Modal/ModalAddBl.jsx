@@ -62,12 +62,13 @@ const ModalAddBl = ({ ID, renderParent, setGetBankName, getbankName }) => {
           toast.success(res.data.message);
           console.log("res.data.message********", res.data.message);
           // renderParent(res.data);
-          getbankName.forEach(bank => {
+          const getbankNameUpdated = JSON.parse(JSON.stringify(getbankName))
+          getbankNameUpdated.forEach(bank => {
             if (bank.bankId === ID) {
               bank.balance = bank.balance + res.data.data.depositAmount
             }
           })
-          setGetBankName(getbankName)
+          setGetBankName(getbankNameUpdated)
           // Close the modal
           const closeButton = document.querySelector("#modalAdbl .btn-close");
           if (closeButton) {

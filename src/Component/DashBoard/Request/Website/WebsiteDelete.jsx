@@ -1,21 +1,26 @@
 import React, { useEffect, useState } from "react";
 import EditServices from "../../../../Services/EditServices";
 import { useAuth } from "../../../../Utils/Auth";
+import { toast } from "react-toastify";
+import { customErrorHandler } from "../../../../Utils/helper";
 
 const WebsiteDelete = () => {
   const auth = useAuth();
 
   const [viewWebsiteDelete, setViewWebsiteDelete] = useState([]);
+  const [renderSate, setRenderSate] = useState("");
   // const [isApproved, setIsApproved] = useState();
   var EditData = [];
 
   useEffect(() => {
     if (auth.user) {
       EditServices.ViewWebsiteDelete(auth.user).then((res) =>
-        setViewWebsiteDelete(res.data.data)
+        setViewWebsiteDelete(res.data.data && res.data.data.filter(ele =>
+          ele.type === "Delete"
+        ))
       );
     }
-  }, [auth]);
+  }, [auth, renderSate]);
 
   for (let i = 0; i < alert.length; i++) {
     EditData[i] = alert[i].changedFields;
@@ -32,22 +37,22 @@ const WebsiteDelete = () => {
     };
     EditServices.IsWebsiteDeleteApprove(id, auth.user)
       .then((response) => {
-        window.location.reload();
-        console.log(response.data);
+        toast.success(response.data.message);
+        setRenderSate(response.data);
       })
       .catch((error) => {
-        console.error(error);
+        toast.error(customErrorHandler(error));
       });
   };
   const handleReject = (e, id) => {
     e.preventDefault();
     EditServices.IsWebsiteDeleteReject(id, auth.user)
       .then((response) => {
-        window.location.reload();
-        console.log(response.data);
+        toast.success(response.data.message);
+        setRenderSate(response.data);
       })
       .catch((error) => {
-        console.error(error);
+        toast.error(customErrorHandler(error));
       });
   };
 

@@ -414,7 +414,7 @@ class AccountService {
     console.log("user", user);
     return axios({
       method: "put",
-      url: `${API_HOST}/api/admin/intoducer-profile-edit/${id}`,
+      url: `${API_HOST}/api/admin/introducer-profile-edit/${id}`,
       data: data,
       headers: {
         Authorization: `Bearer ${user.token}`,
@@ -569,7 +569,7 @@ class AccountService {
   IntoducerResetPassword(data, user) {
     return axios({
       method: "post",
-      url: API_HOST + "/api/admin/intorducer/reset-password",
+      url: API_HOST + "/api/admin/introducer/reset-password",
       data: data,
       headers: {
         Authorization: `Bearer ${user.token}`,

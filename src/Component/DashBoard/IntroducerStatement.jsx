@@ -63,7 +63,9 @@ const IntroducerStatement = () => {
 
   useEffect(() => {
     TransactionSercvice.IntroducerStatement(id, auth.user)
-      .then((res) => (setDocumentView(res.data), setAccountData(res.data)))
+      .then(
+        (res) => (setDocumentView(res.data.data), setAccountData(res.data.data))
+      )
       .catch((err) => {
         console.error(err, "object");
       });
@@ -72,7 +74,7 @@ const IntroducerStatement = () => {
   useEffect(() => {
     if (auth.user) {
       TransactionSercvice.subAdminList(auth.user).then((res) => {
-        setSubAdminlist(res.data);
+        setSubAdminlist(res.data.data);
       });
     }
   }, [auth]);
@@ -128,7 +130,7 @@ const IntroducerStatement = () => {
         AccountService.DeleteIntroducerTransaction({ requestId: id }, auth.user)
 
           .then((res) => {
-            console.log(res.data);
+            console.log(res.data.data);
 
             toast.success("Transaction delete request sent to Super Admin");
           })
@@ -139,7 +141,7 @@ const IntroducerStatement = () => {
       case "Withdraw":
         AccountService.DeleteIntroducerTransaction({ requestId: id }, auth.user)
           .then((res) => {
-            console.log(res.data);
+            console.log(res.data.data);
             toast.success("Transaction delete request sent to Super Admin");
           })
           .catch((err) => {
@@ -441,9 +443,7 @@ const IntroducerStatement = () => {
 
                         <td>
                           {data.balance ? (
-                            <p className="col fs-6 ">
-                              {data.balance}
-                            </p>
+                            <p className="col fs-6 ">{data.balance}</p>
                           ) : (
                             "N.A"
                           )}
@@ -705,9 +705,7 @@ const IntroducerStatement = () => {
 
                         <td>
                           {data.balance ? (
-                            <p className="col fs-6 ">
-                              {data.balance}
-                            </p>
+                            <p className="col fs-6 ">{data.balance}</p>
                           ) : (
                             "N.A"
                           )}
