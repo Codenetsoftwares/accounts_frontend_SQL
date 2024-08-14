@@ -147,8 +147,8 @@ const CreateUser = () => {
                           <div className="row m-auto justify-content-between">
                             {[
                               "Dashboard-View",
-                              "report-all-txn",
-                              "report-my-txn",
+                              "Report-All-Txn",
+                              "Report-My-Txn",
                               "Create-Transaction",
                               "Bank-View",
                               "Create-User",

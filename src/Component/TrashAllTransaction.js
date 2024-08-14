@@ -2,13 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../Utils/Auth";
 import TransactionSercvice from "../Services/TransactionSercvice";
 import { toast } from "react-toastify";
+import { customErrorHandler } from "../Utils/helper";
 
 const TrashAllTransaction = () => {
   const auth = useAuth();
-
   const [alert, setAlert] = useState([]);
-  const [isApproved, setIsApproved] = useState();
-  var EditData = [];
+  const [renderSate, setRenderSate] = useState("");
 
   useEffect(() => {
     if (auth.user) {
@@ -16,24 +15,20 @@ const TrashAllTransaction = () => {
         setAlert(res.data.data)
       );
     }
-  }, [auth]);
-
-  for (let i = 0; i < alert.length; i++) {
-    EditData[i] = alert[i].changedFields;
-  }
+  }, [auth, renderSate]);
 
   const handleDeleteApprove = (e, id, transactionType) => {
     e.preventDefault();
-
     TransactionSercvice.IsTransactionDelete(id, auth.user)
       .then((response) => {
-        window.location.reload();
-        console.log(response.data);
+        toast.success(response.data.message);
+        setRenderSate(response.data);
       })
       .catch((error) => {
-        toast.error(error.response.data.message);
+        toast.error(customErrorHandler(error));
       });
   };
+
   const handleRestore = (e, id, transactionType) => {
     e.preventDefault();
 
@@ -41,240 +36,170 @@ const TrashAllTransaction = () => {
       case "Transaction":
         TransactionSercvice.RestoreTransaction(id, auth.user)
           .then((response) => {
-            window.location.reload();
-            console.log(response.data);
+            toast.success(response.data.message);
+            setRenderSate(response.data);
           })
           .catch((error) => {
-            toast.error(error.response.data.message);
+            toast.error(customErrorHandler(error));
           });
         break;
       case "Introducer":
         TransactionSercvice.RestoreIntroducerTransaction(id, auth.user)
           .then((response) => {
-            window.location.reload();
-            console.log(response.data);
+            toast.success(response.data.message);
+            setRenderSate(response.data);
           })
           .catch((error) => {
-            toast.error(error.response.data.message);
+            toast.error(customErrorHandler(error));
           });
         break;
-
       case "Bank":
         TransactionSercvice.RestoreBankTransaction(id, auth.user)
           .then((response) => {
-            window.location.reload();
-            console.log(response.data);
+            toast.success(response.data.message);
+            setRenderSate(response.data);
           })
           .catch((error) => {
-            toast.error(error.response.data.message);
+            toast.error(customErrorHandler(error));
           });
         break;
-
       case "Website":
         TransactionSercvice.RestoreWebsiteTransaction(id, auth.user)
           .then((response) => {
-            window.location.reload();
-            console.log(response.data);
+            toast.success(response.data.message);
+            setRenderSate(response.data);
           })
           .catch((error) => {
-            toast.error(error.response.data.message);
+            toast.error(customErrorHandler(error));
           });
         break;
-
       default:
-      // code block
     }
   };
 
-  console.log("=>>>", alert);
   return (
-    <>
-      <div className="container d-flex justify-content-center  ">
-        <br />
-        <div
-          className="card  rounded-2 "
-          style={{
-            boxShadow: "26px -13px 32px -15px rgba(29,29,31,0.68)",
-            backgroundImage:
-              "linear-gradient(90deg, rgba(60,251,165,1) 0%, rgba(171,246,241,1) 50%, rgba(60,251,165,1) 100%)",
-          }}
-        ></div>
-        <div className=" p-2">
-          {alert.length > 0 ? (
-            alert.reverse().map((data, i) => {
-              return (
-                <>
-                  <div className="card">
-                    <h5 class="card-title text-center text-danger">
-                      {data.message}
-                    </h5>
-                    <div className="card-body">
-                      <div className="row">
-                        <div className="row">
-                          <div className="row">
-                            <p className="col fs-6">
-                              Transaction Type:
-                              <br />
-                              <p className="text-success">
-                                {data.transactionType}
-                              </p>
-                            </p>
-                            <p className="col fs-6 ">
-                              Transaction Id:
-                              <br />
-                              <p
-                                className={
-                                  data.changedFields?.transactionID
-                                    ? "text-danger"
-                                    : "text-success"
-                                }
-                              >
-                                {data.changedFields?.transactionID ||
-                                  data.transactionID}
-                              </p>
-                            </p>
-                            <p className="col fs-6 ">
-                              Gateway:
-                              <br />
-                              <p
-                                className={
-                                  data.changedFields?.paymentMethod
-                                    ? "text-danger"
-                                    : "text-success"
-                                }
-                              >
-                                {data.changedFields?.paymentMethod ||
-                                  data.paymentMethod}
-                              </p>
-                            </p>
-                            <p className="col fs-6 ">
-                              UserName:
-                              <br />
-                              <p
-                                className={
-                                  data.changedFields?.userName
-                                    ? "text-danger"
-                                    : "text-success"
-                                }
-                              >
-                                {data.changedFields?.userName || data.userName}
-                              </p>
-                            </p>
-                            <p className="col fs-6 ">
-                              Website:
-                              <br />
-                              <p
-                                className={
-                                  data.changedFields?.websiteName
-                                    ? "text-danger"
-                                    : "text-success"
-                                }
-                              >
-                                {data.changedFields?.websiteName ||
-                                  data.websiteName}
-                              </p>
-                            </p>
-                            <p className="col fs-6 ">
-                              Amount:
-                              <br />
-                              <p
-                                className={
-                                  data.changedFields?.withdrawAmount ||
-                                  data.changedFields?.amount ||
-                                  data.changedFields?.depositAmount
-                                    ? "text-danger"
-                                    : "text-success"
-                                }
-                              >
-                                {data.changedFields?.withdrawAmount ||
-                                  data.changedFields?.amount ||
-                                  data.changedFields?.depositAmount ||
-                                  data.withdrawAmount ||
-                                  data.amount ||
-                                  data.depositAmount}
-                              </p>
-                            </p>
-                            <p className="col fs-6 ">
-                              Bank:
-                              <br />
-                              <p
-                                className={
-                                  data.changedFields?.bankName
-                                    ? "text-danger"
-                                    : "text-success"
-                                }
-                              >
-                                {data.changedFields?.bankName || data.bankName}
-                              </p>
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col d-flex justify-content-center gap-2 mb-2">
-                      <button
-                        class="btn btn-primary"
-                        onClick={(e) =>
-                          handleDeleteApprove(e, data._id, data.transactionType)
-                        }
-                      >
-                        Delete
-                      </button>
-                      {data.Nametype === "Introducer" && (
-                        <button
-                          className="btn btn-danger rounded"
-                          onClick={(e) =>
-                            handleRestore(
-                              e,
-                              data.introTransactionId,
-                              data.Nametype
-                            )
-                          }
-                        >
-                          Restore
-                        </button>
-                      )}
-                      {data.Nametype === "Transaction" && (
-                        <button
-                          className="btn btn-danger rounded"
-                          onClick={(e) =>
-                            handleRestore(e, data.Transaction_Id, data.Nametype)
-                          }
-                        >
-                          Restore
-                        </button>
-                      )}
-                      {data.Nametype === "Bank" && (
-                        <button
-                          className="btn btn-danger rounded"
-                          onClick={(e) =>
-                            handleRestore(e, data.bankId, data.Nametype)
-                          }
-                        >
-                          Restore
-                        </button>
-                      )}
-                      {data.Nametype === "Website" && (
-                        <button
-                          className="btn btn-danger rounded"
-                          onClick={(e) =>
-                            handleRestore(e, data.websiteId, data.Nametype)
-                          }
-                        >
-                          Restore
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                </>
-              );
-            })
-          ) : (
-            <h1>No Alert Found</h1>
-          )}
+    <div className="container d-flex justify-content-center">
+      {alert.length > 0 ? (
+        <table className="table table-striped">
+          <thead>
+            <tr align="center">
+              <th>Message</th>
+              <th>Txn Type</th>
+              <th>Txn Id</th>
+              <th>Gateway</th>
+              <th>UserName</th>
+              <th>Website</th>
+              <th>Amount</th>
+              <th>Bank</th>
+              <th colSpan="2">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {alert.reverse().map((data, i) => (
+              <tr key={i} align="center">
+                <td className="text-danger">{data.message}</td>
+                <td>{data.transactionType}</td>
+                <td
+                  className={
+                    data.changedFields?.transactionID
+                      ? "text-danger"
+                      : "text-success"
+                  }
+                >
+                  {data.changedFields?.transactionID || data.transactionID}
+                </td>
+                <td
+                  className={
+                    data.changedFields?.paymentMethod
+                      ? "text-danger"
+                      : "text-success"
+                  }
+                >
+                  {data.changedFields?.paymentMethod || data.paymentMethod}
+                </td>
+                <td
+                  className={
+                    data.changedFields?.userName
+                      ? "text-danger"
+                      : "text-success"
+                  }
+                >
+                  {data.changedFields?.userName || data.userName}
+                </td>
+                <td
+                  className={
+                    data.changedFields?.websiteName
+                      ? "text-danger"
+                      : "text-success"
+                  }
+                >
+                  {data.changedFields?.websiteName || data.websiteName}
+                </td>
+                <td
+                  className={
+                    data.changedFields?.withdrawAmount ||
+                    data.changedFields?.amount ||
+                    data.changedFields?.depositAmount
+                      ? "text-danger"
+                      : "text-success"
+                  }
+                >
+                  {data.changedFields?.withdrawAmount ||
+                    data.changedFields?.amount ||
+                    data.changedFields?.depositAmount ||
+                    data.withdrawAmount ||
+                    data.amount ||
+                    data.depositAmount}
+                </td>
+                <td
+                  className={
+                    data.changedFields?.bankName
+                      ? "text-danger"
+                      : "text-success"
+                  }
+                >
+                  {data.changedFields?.bankName || data.bankName}
+                </td>
+                <td>
+                  <button
+                    className="btn btn-outline-warning btn-sm"
+                    onClick={(e) =>
+                      handleDeleteApprove(e, data._id, data.transactionType)
+                    }
+                  >
+                    Delete
+                  </button>
+                </td>
+                <td>
+                  {data.nameType && (
+                    <button
+                      className="btn btn-outline-dark btn-sm"
+                      onClick={(e) =>
+                        handleRestore(e, data?.Transaction_Id, [
+                          data.nameType === "Transaction"
+                            ? "Transaction_Id"
+                            : data.nameType === "Introducer"
+                            ? "introTransactionId"
+                            : data.nameType === "Bank"
+                            ? "bankId"
+                            : "websiteId",
+                        ])
+                      }
+                    >
+                      Restore
+                    </button>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <div class="alert alert-primary" role="alert">
+          No Request Found !!
         </div>
-      </div>
-    </>
+      )}
+    </div>
   );
 };
 
