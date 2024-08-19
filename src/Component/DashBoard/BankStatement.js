@@ -708,20 +708,11 @@ const BankStatement = () => {
 
                           <td>{data?.remarks}</td>
 
-                          <td>
+                          <td onClick={(e) => {
+                            handleDelete(e, data?.Transaction_Id ? data?.Transaction_Id : data?.bankTransactionId ? data?.bankTransactionId : "", data?.transactionType);
+                          }}>
                             <button type="button" className="btn btn-danger">
-                              {data?.Transaction_Id && <FontAwesomeIcon
-                                icon={faTrash}
-                                onClick={(e) => {
-                                  handleDelete(e, data?.Transaction_Id, data?.transactionType);
-                                }}
-                              />}
-                              {data?.bankTransactionId && <FontAwesomeIcon
-                                icon={faTrash}
-                                onClick={(e) => {
-                                  handleDelete(e, data?.bankTransactionId, data?.transactionType);
-                                }}
-                              />}
+                              <FontAwesomeIcon icon={faTrash} />
                             </button>
                           </td>
                         </tr>
