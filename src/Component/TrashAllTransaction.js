@@ -29,12 +29,12 @@ const TrashAllTransaction = () => {
       });
   };
 
-  const handleRestore = (e, id, transactionType) => {
+  const handleRestore = (e, data) => {
     e.preventDefault();
 
-    switch (transactionType) {
+    switch (data.nameType) {
       case "Transaction":
-        TransactionSercvice.RestoreTransaction(id, auth.user)
+        TransactionSercvice.RestoreTransaction(data.Transaction_Id, auth.user)
           .then((response) => {
             toast.success(response.data.message);
             setRenderSate(response.data);
@@ -44,7 +44,10 @@ const TrashAllTransaction = () => {
           });
         break;
       case "Introducer":
-        TransactionSercvice.RestoreIntroducerTransaction(id, auth.user)
+        TransactionSercvice.RestoreIntroducerTransaction(
+          data.introTransactionId,
+          auth.user
+        )
           .then((response) => {
             toast.success(response.data.message);
             setRenderSate(response.data);
@@ -54,7 +57,10 @@ const TrashAllTransaction = () => {
           });
         break;
       case "Bank":
-        TransactionSercvice.RestoreBankTransaction(id, auth.user)
+        TransactionSercvice.RestoreBankTransaction(
+          data.bankTransactionId,
+          auth.user
+        )
           .then((response) => {
             toast.success(response.data.message);
             setRenderSate(response.data);
@@ -64,7 +70,10 @@ const TrashAllTransaction = () => {
           });
         break;
       case "Website":
-        TransactionSercvice.RestoreWebsiteTransaction(id, auth.user)
+        TransactionSercvice.RestoreWebsiteTransaction(
+          data.websiteTransactionId,
+          auth.user
+        )
           .then((response) => {
             toast.success(response.data.message);
             setRenderSate(response.data);
@@ -174,17 +183,7 @@ const TrashAllTransaction = () => {
                   {data.nameType && (
                     <button
                       className="btn btn-outline-dark btn-sm"
-                      onClick={(e) =>
-                        handleRestore(e, data?.Transaction_Id, [
-                          data.nameType === "Transaction"
-                            ? "Transaction_Id"
-                            : data.nameType === "Introducer"
-                            ? "introTransactionId"
-                            : data.nameType === "Bank"
-                            ? "bankId"
-                            : "websiteId",
-                        ])
-                      }
+                      onClick={(e) => handleRestore(e, data)}
                     >
                       Restore
                     </button>
