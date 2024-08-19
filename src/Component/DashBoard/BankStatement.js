@@ -16,7 +16,7 @@ import { Button } from "react-bootstrap";
 import Pagination from "../Pagination";
 import SingleCard from "../../common/singleCard";
 import { debounce } from "lodash";
-import { errorHandler } from "../../Utils/helper";
+import { customErrorHandler, errorHandler } from "../../Utils/helper";
 
 const BankStatement = () => {
   const { id } = useParams();
@@ -102,7 +102,7 @@ const BankStatement = () => {
 
 
   const selectPageHandler = (selectedPage) => {
-    console.log("selected",selectedPage)
+    console.log("selected", selectedPage)
     setPage(selectedPage);
   };
 
@@ -209,7 +209,7 @@ const BankStatement = () => {
             );
           })
           .catch((err) => {
-            toast.error(err.response.data.message);
+            toast.error(customErrorHandler(err))
           });
         break;
 
@@ -223,7 +223,7 @@ const BankStatement = () => {
             );
           })
           .catch((err) => {
-            toast.error(err.response.data.message);
+            toast.error(customErrorHandler(err))
           });
         break;
 

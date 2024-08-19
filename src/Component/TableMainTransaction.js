@@ -24,7 +24,6 @@ const TableMainTransaction = ({ FilterData, purpose, page, handlePage, totalPage
 
     const handleDelete = (e, id, transactionType) => {
         e.preventDefault();
-        console.log("id====>", id);
         switch (transactionType) {
             case "Deposit":
                 AccountService.SaveTransaction({ requestId: id }, auth.user)
@@ -56,11 +55,11 @@ const TableMainTransaction = ({ FilterData, purpose, page, handlePage, totalPage
                     .then((res) => {
                         console.log(res.data);
                         toast.success(
-                            "Bank Transaction delete request sent to Super Admin"
+                            res.data.message
                         );
                     })
                     .catch((err) => {
-                        toast.error(customErrorHandler(err));
+                        
                     });
                 break;
 
@@ -70,7 +69,7 @@ const TableMainTransaction = ({ FilterData, purpose, page, handlePage, totalPage
                     .then((res) => {
                         console.log(res.data);
                         toast.success(
-                            "Bank Transaction delete request sent to Super Admin"
+                            res.data.message
                         );
                     })
                     .catch((err) => {
