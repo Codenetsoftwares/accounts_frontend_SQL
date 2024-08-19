@@ -33,10 +33,19 @@ const Alert = () => {
             toast.error(customErrorHandler(error));
           });
         break;
-      case "Manual-Bank-Withdraw":
-      case "Manual-Bank-Deposit":
       case "Manual-Website-Withdraw":
       case "Manual-Website-Deposit":
+        TransactionSercvice.MoveTrashWebsiteTransaction(id, auth.user)
+          .then((response) => {
+            toast.success(response.data.message);
+            setRenderSate(response.data);
+          })
+          .catch((error) => {
+            toast.error(customErrorHandler(error));
+          });
+        break;
+      case "Manual-Bank-Withdraw":
+      case "Manual-Bank-Deposit":
         TransactionSercvice.MoveTrashBankTransaction(id, auth.user)
           .then((response) => {
             toast.success(response.data.message);
@@ -123,8 +132,8 @@ const Alert = () => {
                   <td
                     className={
                       data.changedFields?.withdrawAmount ||
-                      data.changedFields?.amount ||
-                      data.changedFields?.depositAmount
+                        data.changedFields?.amount ||
+                        data.changedFields?.depositAmount
                         ? "text-danger"
                         : "text-success"
                     }
