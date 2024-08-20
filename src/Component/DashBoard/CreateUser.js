@@ -6,6 +6,7 @@ import SingleCard from "../../common/singleCard";
 import AccountService from "../../Services/AccountService";
 import { useAuth } from "../../Utils/Auth";
 import { toast } from "react-toastify";
+import { customErrorHandler } from "../../Utils/helper";
 
 const CreateUser = () => {
   const auth = useAuth();
@@ -30,7 +31,7 @@ const CreateUser = () => {
       })
       .catch((err) => {
         console.log("error", err);
-        toast.error(err?.response?.data?.errMessage);
+        toast.error(customErrorHandler(err));
       });
   };
 

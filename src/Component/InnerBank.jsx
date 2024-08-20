@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../Utils/Auth";
 import AccountService from "../Services/AccountService";
 import { toast } from "react-toastify";
+import { customErrorHandler } from "../Utils/helper";
 
 const InnerBank = ({ getbankName }) => {
   const [bname, setBname] = useState("");
@@ -66,7 +67,7 @@ const InnerBank = ({ getbankName }) => {
         }
       })
       .catch((error) => {
-        toast.error(error.response.data.errMessage);
+        toast.error(customErrorHandler(error));
         console.log(error);
       });
   };

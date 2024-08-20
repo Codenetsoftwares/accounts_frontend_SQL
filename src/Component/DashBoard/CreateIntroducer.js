@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import AccountService from "../../Services/AccountService";
 import SingleCard from "../../common/singleCard";
 import { CreateIntroducerSchema } from "../../Services/schema";
+import { customErrorHandler } from "../../Utils/helper";
 
 const CreateIntroducer = () => {
   const auth = useAuth();
@@ -40,13 +41,11 @@ const CreateIntroducer = () => {
     AccountService.createIntroducer(values, auth.user)
       .then((res) => {
         console.log("res", res);
-        alert(res.data.message);
-        window.location.reload();
+        toast.success(res.data.message);
       })
       .catch((err) => {
         // console.log('error',err.response.data.message)
-        toast.error(err.response.data.message);
-        return;
+        toast.error(customErrorHandler(err));
       });
   };
 

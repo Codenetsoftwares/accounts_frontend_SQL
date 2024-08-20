@@ -29,6 +29,7 @@ import GridCard from "../../common/gridCard";
 import SingleCard from "../../common/singleCard";
 import "./AdminBank.css";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { customErrorHandler } from "../../Utils/helper";
 // import { useParams } from "react-router";
 const AdminBank = () => {
   const navigate = useNavigate();
@@ -128,7 +129,7 @@ const AdminBank = () => {
           }
         })
         .catch((error) => {
-          toast.error(error.response.data.errMessage);
+          toast.error(customErrorHandler(error));
           console.log(error);
           // toast.error(error);
           // alert.error("e.message");
@@ -185,7 +186,7 @@ const AdminBank = () => {
         setGetBankName(getbankNameUpdated)
       })
       .catch((error) => {
-        toast.error(error.response.data.errMessage);
+        toast.error(customErrorHandler(error));
       });
   };
 

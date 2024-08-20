@@ -17,6 +17,7 @@ import SingleCard from "../../common/singleCard";
 import { CreateUserSchema } from "../../Services/schema";
 import AccountService from "../../Services/AccountService";
 import { debounce } from "lodash";
+import { customErrorHandler } from "../../Utils/helper";
 
 const CreateActualUser = () => {
   // Get authentication context
@@ -144,7 +145,7 @@ const CreateActualUser = () => {
         })
         .catch((err) => {
           console.log("error", err);
-          toast.error(err?.response?.data?.errMessage); // Display error message
+         toast.error(customErrorHandler(err));// Display error message
           return;
         });
     } else {

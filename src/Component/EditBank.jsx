@@ -5,6 +5,7 @@ import EditIcon from "../Assets/edit-iconii.png";
 import { useAuth } from "../Utils/Auth";
 import AccountService from "../Services/AccountService";
 import { toast } from "react-toastify";
+import { customErrorHandler } from "../Utils/helper";
 
 const EditBank = () => {
   const auth = useAuth();
@@ -77,7 +78,7 @@ const EditBank = () => {
       })
       .catch((error) => {
         console.error("err=>>>>", error);
-        toast.error(error.response.data.errMessage);
+        toast.error(customErrorHandler(error));
       });
   };
 

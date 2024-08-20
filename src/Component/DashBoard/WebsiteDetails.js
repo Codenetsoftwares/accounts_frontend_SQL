@@ -219,7 +219,7 @@ const WebsiteDetails = () => {
       })
       .catch((error) => {
         console.error(error);
-        toast.error(error.response.data.errMessage);
+        toast.error(customErrorHandler(error));
       });
   };
 
@@ -246,7 +246,7 @@ const WebsiteDetails = () => {
         console.log(response.data);
       })
       .catch((error) => {
-        toast.error(error.response.data.errMessage);
+        toast.error(customErrorHandler(error));
         console.error(error);
       });
   };
