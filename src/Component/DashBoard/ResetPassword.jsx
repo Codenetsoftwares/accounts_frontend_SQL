@@ -4,6 +4,7 @@ import { useAuth } from "../../Utils/Auth";
 import AccountService from "../../Services/AccountService";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { customErrorHandler } from "../../Utils/helper";
 
 const ResetPassword = () => {
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ const ResetPassword = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!oldPassword || !newPassword || !confirmNewPassword) {
-      toast.error("Please fill in all password fields.");
+      toast.error("Please Fill In All Password Fields.");
       return;
     }
     if (newPassword === confirmNewPassword) {
@@ -43,12 +44,14 @@ const ResetPassword = () => {
         .then((res) => {
           console.log("res", res);
           toast.success(res.data.message);
-          navigate("/welcome");
+          navigate("/");
+          toast.success("Please Log In Again With New Password");
+
           //   window.location.reload();
         })
         .catch((err) => {
           // console.log('error',err.response.data.message)
-          toast.error(err.response.data.message);
+          toast.error(customErrorHandler(err));
           return;
         });
     } else {
