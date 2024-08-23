@@ -87,7 +87,7 @@ const CreateIntroducer = () => {
                     <div className="row g-3">
                       <div className="col-md-6">
                         <label htmlFor="userName" className="form-label">
-                          <FaEnvelope /> Introducer User Name
+                          <FaEnvelope />  User Name
                           <span className="text-danger">*</span>
                         </label>
                         <input
@@ -102,6 +102,26 @@ const CreateIntroducer = () => {
                         />
                         {touched.userName && errors.userName ? (
                           <div className="text-danger">{errors.userName}</div>
+                        ) : null}
+                      </div>
+
+                      <div className="col-md-6">
+                        <label htmlFor="password" className="form-label">
+                          <FaLock /> Password
+                          <span className="text-danger">*</span>
+                        </label>
+                        <input
+                          type="password"
+                          className="form-control"
+                          id="password"
+                          name="password"
+                          value={values.password}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          placeholder="Password"
+                        />
+                        {touched.password && errors.password ? (
+                          <div className="text-danger">{errors.password}</div>
                         ) : null}
                       </div>
 
@@ -141,26 +161,6 @@ const CreateIntroducer = () => {
                         />
                         {touched.lastName && errors.lastName ? (
                           <div className="text-danger">{errors.lastName}</div>
-                        ) : null}
-                      </div>
-
-                      <div className="col-md-6">
-                        <label htmlFor="password" className="form-label">
-                          <FaLock /> Password
-                          <span className="text-danger">*</span>
-                        </label>
-                        <input
-                          type="password"
-                          className="form-control"
-                          id="password"
-                          name="password"
-                          value={values.password}
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          placeholder="Password"
-                        />
-                        {touched.password && errors.password ? (
-                          <div className="text-danger">{errors.password}</div>
                         ) : null}
                       </div>
                     </div>
