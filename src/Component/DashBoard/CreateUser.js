@@ -63,42 +63,6 @@ const CreateUser = () => {
                     <div className="card-body">
                       <div className="row g-3">
                         <div className="col-md-6">
-                          <label htmlFor="firstName" className="form-label">
-                            <FaUser /> First name
-                            <span className="text-danger">*</span>
-                          </label>
-                          <Field
-                            type="text"
-                            className="form-control"
-                            id="firstName"
-                            name="firstName"
-                            placeholder="First name"
-                          />
-                          <ErrorMessage
-                            name="firstName"
-                            component="div"
-                            className="text-danger"
-                          />
-                        </div>
-                        <div className="col-md-6">
-                          <label htmlFor="lastName" className="form-label">
-                            <FaUser /> Last name
-                            <span className="text-danger">*</span>
-                          </label>
-                          <Field
-                            type="text"
-                            className="form-control"
-                            id="lastName"
-                            name="lastName"
-                            placeholder="Last name"
-                          />
-                          <ErrorMessage
-                            name="lastName"
-                            component="div"
-                            className="text-danger"
-                          />
-                        </div>
-                        <div className="col-md-6">
                           <label htmlFor="userName" className="form-label">
                             <FaEnvelope /> User Name
                             <span className="text-danger">*</span>
@@ -131,6 +95,42 @@ const CreateUser = () => {
                           />
                           <ErrorMessage
                             name="password"
+                            component="div"
+                            className="text-danger"
+                          />
+                        </div>
+                        <div className="col-md-6">
+                          <label htmlFor="firstName" className="form-label">
+                            <FaUser /> First name
+                            <span className="text-danger">*</span>
+                          </label>
+                          <Field
+                            type="text"
+                            className="form-control"
+                            id="firstName"
+                            name="firstName"
+                            placeholder="First name"
+                          />
+                          <ErrorMessage
+                            name="firstName"
+                            component="div"
+                            className="text-danger"
+                          />
+                        </div>
+                        <div className="col-md-6">
+                          <label htmlFor="lastName" className="form-label">
+                            <FaUser /> Last name
+                            <span className="text-danger">*</span>
+                          </label>
+                          <Field
+                            type="text"
+                            className="form-control"
+                            id="lastName"
+                            name="lastName"
+                            placeholder="Last name"
+                          />
+                          <ErrorMessage
+                            name="lastName"
                             component="div"
                             className="text-danger"
                           />

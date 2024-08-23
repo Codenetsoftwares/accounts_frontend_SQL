@@ -107,7 +107,7 @@ const InnerBank = ({ getbankName }) => {
               <input
                 type="text"
                 className="form-control"
-                placeholder="Acc No. *"
+                placeholder="Acc No. "
                 value={accno}
                 onChange={accnochnage}
               />

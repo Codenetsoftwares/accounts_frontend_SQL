@@ -50,21 +50,24 @@ const MyTxn = () => {
   const [maxAmount, setMaxAmount] = useState(0);
   const [totalData, setTotalData] = useState("");
 
-
   const data = {
-    "filters": {
+    filters: {
       transactionType: select,
       // sdate: moment(startDatevalue).toDate(),
       // edate: moment(endDatevalue).toDate(),
       // maxAmount: maxAmount,
       // minAmount: minAmount
-    }
-  }
-
+    },
+  };
 
   useEffect(() => {
-    TransactionSercvice.subadminWiseTxn(auth.user.userName, auth.user, data, page).then(
-      (res) => {
+    TransactionSercvice.subadminWiseTxn(
+      auth.user.userName,
+      auth.user,
+      data,
+      page
+    )
+      .then((res) => {
         console.log("res=>>>>", res.data);
 
         const filteredData = [];
@@ -80,10 +83,10 @@ const MyTxn = () => {
         setPage(res.data.pagination.page);
         setTotalPage(res.data.pagination.totalPages);
         setTotalData(res.data.pagination.totalItems);
-      }
-    ).catch((err) => {
-      errorHandler(err.message, "Something went wrong");
-    });
+      })
+      .catch((err) => {
+        errorHandler(err.message, "Something went wrong");
+      });
   }, [auth, select, page]);
 
   console.log("txn=>>>", documentView);
@@ -121,15 +124,12 @@ const MyTxn = () => {
     setPage(1);
   };
 
-
   const handleChange = (e) => {
     const value = e.target.value;
     setSelect(value);
     // handleClick("transactionType", value);
     setPage(1);
   };
-
-
 
   const handleMinAmount = (e) => {
     const value = e.target.value;
@@ -142,7 +142,7 @@ const MyTxn = () => {
 
   const handleDelete = (e, id, transactionType) => {
     TransactionSercvice.MoveTrashIntroducerTransaction(
-      { requestId: id, type:transactionType },
+      { requestId: id, type: transactionType },
       auth.user
     )
       .then((res) => {
@@ -176,7 +176,6 @@ const MyTxn = () => {
   const handleEndDatevalue = (e) => {
     setEndDateValue(moment(e).format("DD-MM-YYYY HH:mm"));
   };
-
 
   return (
     <>
@@ -388,7 +387,6 @@ const MyTxn = () => {
                   >
                     Entry by
                   </th>
-
                   <th
                     scope="col"
                     className="text-info"
@@ -396,7 +394,6 @@ const MyTxn = () => {
                   >
                     Remarks
                   </th>
-
                   <th
                     scope="col"
                     className="text-info"
@@ -472,42 +469,48 @@ const MyTxn = () => {
                             <p className="col fs-6 text-break">N.A</p>
                           )}
                         </td>
-                        <td>{data?.subAdminName}</td>
+                        <td>{data?.subAdminId}</td>
 
                         <td>{data?.remarks}</td>
 
                         <td>
                           <button type="button" className="btn btn-danger">
-                            {data?.Transaction_Id && <FontAwesomeIcon
-                              icon={faTrash}
-                              onClick={(e) => {
-                                handleDelete(
-                                  e,
-                                  data?.Transaction_Id,
-                                  data?.type
-                                );
-                              }}
-                            />}
-                            {data?.bankTransactionId && <FontAwesomeIcon
-                              icon={faTrash}
-                              onClick={(e) => {
-                                handleDelete(
-                                  e,
-                                  data?.bankTransactionId,
-                                  data?.type
-                                );
-                              }}
-                            />}
-                            {data?.websiteTransactionId && <FontAwesomeIcon
-                              icon={faTrash}
-                              onClick={(e) => {
-                                handleDelete(
-                                  e,
-                                  data?.websiteTransactionId,
-                                  data?.type
-                                );
-                              }}
-                            />}
+                            {data?.Transaction_Id && (
+                              <FontAwesomeIcon
+                                icon={faTrash}
+                                onClick={(e) => {
+                                  handleDelete(
+                                    e,
+                                    data?.Transaction_Id,
+                                    data?.type
+                                  );
+                                }}
+                              />
+                            )}
+                            {data?.bankTransactionId && (
+                              <FontAwesomeIcon
+                                icon={faTrash}
+                                onClick={(e) => {
+                                  handleDelete(
+                                    e,
+                                    data?.bankTransactionId,
+                                    data?.type
+                                  );
+                                }}
+                              />
+                            )}
+                            {data?.websiteTransactionId && (
+                              <FontAwesomeIcon
+                                icon={faTrash}
+                                onClick={(e) => {
+                                  handleDelete(
+                                    e,
+                                    data?.websiteTransactionId,
+                                    data?.type
+                                  );
+                                }}
+                              />
+                            )}
                           </button>
                         </td>
                       </tr>
@@ -533,7 +536,6 @@ const MyTxn = () => {
             perPagePagination={10}
           />
         ) : null}
-
       </SingleCard>
     </>
   );

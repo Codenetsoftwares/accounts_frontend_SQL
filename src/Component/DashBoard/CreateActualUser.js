@@ -145,7 +145,7 @@ const CreateActualUser = () => {
         })
         .catch((err) => {
           console.log("error", err);
-         toast.error(customErrorHandler(err));// Display error message
+          toast.error(customErrorHandler(err)); // Display error message
           return;
         });
     } else {
@@ -203,25 +203,44 @@ const CreateActualUser = () => {
                               className="text-danger"
                             />
                           </div>
+                          {/* Password Field */}
+                          <div className="col-md-4">
+                            <label htmlFor="password" className="form-label">
+                              <FaLock /> Password
+                              <span className="text-danger">*</span>
+                            </label>
+                            <Field
+                              type="password"
+                              className={`form-control`}
+                              id="password"
+                              name="password"
+                              placeholder="Enter Password"
+                            />
+                            <ErrorMessage
+                              name="password"
+                              component="div"
+                              className="text-danger"
+                            />
+                          </div>
 
-                          {/* Contact Number Field */}
+                          {/* Confirm Password Field */}
                           <div className="col-md-4">
                             <label
-                              htmlFor="contactNumber"
+                              htmlFor="confirmPassword"
                               className="form-label"
                             >
-                              <FaMobile /> Enter Contact No.
+                              <FaKey /> Confirm Password
                               <span className="text-danger">*</span>
                             </label>
                             <Field
                               type="text"
-                              className={`form-control`}
-                              id="contactNumber"
-                              name="contactNumber"
-                              placeholder="Contact Number"
+                              className={`form-control `}
+                              id="confirmPassword"
+                              name="confirmPassword"
+                              placeholder="Confirm Password"
                             />
                             <ErrorMessage
-                              name="contactNumber"
+                              name="confirmPassword"
                               component="div"
                               className="text-danger"
                             />
@@ -266,45 +285,24 @@ const CreateActualUser = () => {
                               className="text-danger"
                             />
                           </div>
-
-                          {/* Password Field */}
-                          <div className="col-md-4">
-                            <label htmlFor="password" className="form-label">
-                              <FaLock /> Password
-                              <span className="text-danger">*</span>
-                            </label>
-                            <Field
-                              type="password"
-                              className={`form-control`}
-                              id="password"
-                              name="password"
-                              placeholder="Enter Password"
-                            />
-                            <ErrorMessage
-                              name="password"
-                              component="div"
-                              className="text-danger"
-                            />
-                          </div>
-
-                          {/* Confirm Password Field */}
+                          {/* Contact Number Field */}
                           <div className="col-md-4">
                             <label
-                              htmlFor="confirmPassword"
+                              htmlFor="contactNumber"
                               className="form-label"
                             >
-                              <FaKey /> Confirm Password
+                              <FaMobile /> Enter Contact No.
                               <span className="text-danger">*</span>
                             </label>
                             <Field
                               type="text"
-                              className={`form-control `}
-                              id="confirmPassword"
-                              name="confirmPassword"
-                              placeholder="Confirm Password"
+                              className={`form-control`}
+                              id="contactNumber"
+                              name="contactNumber"
+                              placeholder="Contact Number"
                             />
                             <ErrorMessage
-                              name="confirmPassword"
+                              name="contactNumber"
                               component="div"
                               className="text-danger"
                             />
