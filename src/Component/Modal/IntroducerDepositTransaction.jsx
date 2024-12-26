@@ -6,6 +6,7 @@ import TransactionSercvice from "../../Services/TransactionSercvice";
 import FullScreenLoader from "../FullScreenLoader";
 
 const IntroducerDepositTransaction = ({ IntroducerName }) => {
+  console.log('=====>>> introducer name',IntroducerName)
   const auth = useAuth();
   const [Amount, SetAmount] = useState(0);
   const [Remarks, SetRemarks] = useState("");
@@ -22,7 +23,7 @@ const IntroducerDepositTransaction = ({ IntroducerName }) => {
   const handleSubmit = () => {
     if (Amount === 0 || Remarks === "" || Amount < 0) {
       if (Amount < 0) {
-        toast.error("Amount can not be negetive");
+        toast.error("Amount cannot be negative");
         return;
       }
       toast.error("Amount and Remarks fields cannot be empty.");
@@ -33,24 +34,24 @@ const IntroducerDepositTransaction = ({ IntroducerName }) => {
       amount: Number(Amount),
       transactionType: "Deposit",
       remarks: Remarks,
-      introducerUserName: IntroducerName,
+      introducerUserName: IntroducerName[0],
     };
+    
     TransactionSercvice.IntroducerDepositTransaction(data, auth.user)
       .then((res) => {
-        // console.log(response.data);
         setIsLoading(false);
         if (res.status === 200) {
           alert(res.data.message);
-          window.location.reload();
+          window.location.reload(); 
         }
       })
       .catch((error) => {
         setIsLoading(false);
-        alert(error.response.data.message);
+        alert(error.response?.data?.message || "An error occurred.");
         console.log(error);
-        // alert.error("e.message");
       });
   };
+  
 
   return (
     <div>
