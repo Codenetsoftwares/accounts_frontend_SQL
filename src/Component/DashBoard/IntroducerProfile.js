@@ -58,11 +58,19 @@ console.log('=========>>> line 53',users)
     }
   };
 
-  const handleIntroducerTx = (e, data) => {
+  const handleIntroducerTx = (e, data , id ) => {
     console.log(data);
     // console.log(IntroducerName);
-    setTxType1(data);
-  };
+    setTxType1(data) ;
+    setID(id)
+
+      // Find the introducerName based on the introId
+      const selectedUser = users.find(user => user.introId === id);
+      if (selectedUser) {
+        setIntroducerName(selectedUser.userName ); 
+      }
+    };
+  
   const handelstatement = (e, id) => {
     navigate(`/introducerstatement/${id}`);
   };
@@ -270,7 +278,7 @@ console.log('=========>>> line 53',users)
                                 data-toggle="modal"
                                 data-target="#withdrawModal"
                                 onClick={(e) => {
-                                  handleIntroducerTx(e, "Withdraw");
+                                  handleIntroducerTx(e, "Withdraw" , user.introId );
                                 }}
                               >
                                 <FontAwesomeIcon icon={faMinus} />
@@ -284,7 +292,7 @@ console.log('=========>>> line 53',users)
                                 data-toggle="modal"
                                 data-target="#depositModal"
                                 onClick={(e) => {
-                                  handleIntroducerTx(e, "Deposit");
+                                  handleIntroducerTx(e, "Deposit" , user.introId);
                                 }}
                               >
                                 <FontAwesomeIcon icon={faPlus} />
@@ -382,8 +390,8 @@ console.log('=========>>> line 53',users)
           TxType={txType}
           IntroducerName={introducerName}
         />
-        {txType1 === "Deposit" && <IntroducerDepositTransaction  IntroducerName={introducerName}/>}
-        {txType1 === "Withdraw" && <IntroducerWithdrawTransaction   IntroducerName={introducerName}/>}
+        {txType1 === "Deposit" && <IntroducerDepositTransaction  IntroducerName={introducerName} ID={ID}/>}
+        {txType1 === "Withdraw" && <IntroducerWithdrawTransaction   IntroducerName={introducerName} ID={ID}/>}
         {profileView && <IntroducerProfileView data={profileView} />}
       </div>
     </div>

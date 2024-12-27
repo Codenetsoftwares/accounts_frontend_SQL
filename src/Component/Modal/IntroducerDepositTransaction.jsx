@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useAuth } from "../../Utils/Auth";
 import AccountService from "../../Services/AccountService";
 import { toast } from "react-toastify";
 import TransactionSercvice from "../../Services/TransactionSercvice";
 import FullScreenLoader from "../FullScreenLoader";
 
-const IntroducerDepositTransaction = ({ IntroducerName }) => {
-  console.log('=====>>> introducer name',IntroducerName)
+const IntroducerDepositTransaction = ({ IntroducerName, ID }) => {
+  console.log("=====>>> introducer name", IntroducerName);
   const auth = useAuth();
   const [Amount, SetAmount] = useState(0);
   const [Remarks, SetRemarks] = useState("");
@@ -34,24 +34,26 @@ const IntroducerDepositTransaction = ({ IntroducerName }) => {
       amount: Number(Amount),
       transactionType: "Deposit",
       remarks: Remarks,
-      introducerUserName: IntroducerName[0],
+      introducerUserName: IntroducerName,
     };
-    
+
     TransactionSercvice.IntroducerDepositTransaction(data, auth.user)
       .then((res) => {
         setIsLoading(false);
-        if (res.status === 200) {
+        if (res.status === 201) {
           alert(res.data.message);
-          window.location.reload(); 
+          // Reset the fields
+          SetAmount(0);
+          SetRemarks("");
+          window.location.reload();
         }
       })
       .catch((error) => {
         setIsLoading(false);
-        alert(error.response?.data?.message || "An error occurred.");
+        alert(error.response?.data?.errMessage || "An error occurred.");
         console.log(error);
       });
   };
-  
 
   return (
     <div>
@@ -60,7 +62,6 @@ const IntroducerDepositTransaction = ({ IntroducerName }) => {
         class="modal fade"
         id="depositModal"
         tabindex="-1"
-        role="dialog"
         aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true"
       >

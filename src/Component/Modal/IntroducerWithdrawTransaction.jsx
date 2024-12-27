@@ -40,8 +40,11 @@ const IntroducerWithdrawTransaction = ({ IntroducerName }) => {
       .then((res) => {
         // console.log(response.data);
         setIsLoading(false);
-        if (res.status === 200) {
+        if (res.status === 201) {
           alert(res.data.message);
+             // Reset the fields
+             SetAmount(0);
+             SetRemarks("");
           window.location.reload();
         }
       })
