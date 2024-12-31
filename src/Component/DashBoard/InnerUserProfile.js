@@ -12,20 +12,27 @@ import SingleCard from "../../common/singleCard";
 import { customErrorHandler } from "../../Utils/helper";
 
 const InnerUserProfile = () => {
-  // const { id } = useParams();
   const auth = useAuth();
-  const navigate = useNavigate();
-  // console.log("User ID==>>", id);
-  const [users, setUsers] = useState([]);
   const [foundObject, setFoundObject] = useState([]);
   const [isAccordionOpen, setIsAccordionOpen] = useState(false); // State for accordion open/close
   const [isEditing, setIsEditing] = useState(false); // Track which field is being edited
-  const [editedData, setEditedData] = useState({}); // Store edited data
-  const [username, setUsername] = useState([]);
+  const [editedData, setEditedData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    contactNumber: "",
+    userName: "",
+    introducerPercentage: "",
+    introducerPercentage1: '',
+    introducerPercentage2: "",
+    introducersUserName: "",
+    introducersUserName1: "",
+    introducersUserName2: "",
+    // websitedetail: "",  // for future use
+    bankDetail: {}, 
+    upiDetail: {},
+  }); // Store edited data
   const [IntroducerName, setIntroducerName] = useState([]);
-  // const [searchTerm, setSearchTerm] = useState("");
-  // const [filteredOptions, setFilteredOptions] = useState([]);
-  const [selectedOption, setSelectedOption] = useState(null);
   const [searchTerm1, setSearchTerm1] = useState("");
   const [searchTerm2, setSearchTerm2] = useState("");
   const [searchTerm3, setSearchTerm3] = useState("");
@@ -35,6 +42,7 @@ const InnerUserProfile = () => {
   const [renderSate, setRenderSate] = useState("");
   const location = useLocation();
   console.log("location", location);
+  console.log("foundObject", foundObject)
   // Calling Single Introducer Name API
   useEffect(() => {
     AccountService.IntroducerUserId(auth.user).then((res) =>
@@ -42,38 +50,13 @@ const InnerUserProfile = () => {
     );
   }, [auth]);
 
-  console.log(auth);
   const { page, id } = location.state || {};
-  console.log("page", page);
-  console.log("id", id);
-
-  const Handletransaction = () => {
-    console.log("first");
-    navigate("/transactiondetails", {
-      state: { txndetails: foundObject?.transactionDetail },
-    });
-  };
-
-  // useEffect(() => {
-  //   AccountService.userprofile(page, auth.user)
-  //     .then((res) => {
-  //       setUsers(res.data);
-  //       const userWithId = res.data.SecondArray.find((user) => user._id === id);
-  //       setFoundObject(userWithId);
-  //     })
-  //     .catch((error) => {
-  //       // Handle error
-  //       console.error("Error fetching user data:", error);
-  //     });
-  // }, [auth, id]);
-  // console.log("This is User Deatils===>>", users);
 
   useEffect(() => {
     AccountService.singleuserprofile(auth.user, id).then((res) =>
       setFoundObject(res.data.data)
     );
   }, [id, auth, renderSate]);
-  console.log("This is single user", foundObject);
 
   const toggleAccordion = () => {
     setIsAccordionOpen(!isAccordionOpen);
@@ -87,33 +70,27 @@ const InnerUserProfile = () => {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setEditedData({ ...editedData, [name]: value });
+    setEditedData((prev)=>({
+      ...prev,
+      [name]: value
+    }))
   };
 
-  const handleResetPassword = (e, username) => {
-    setUsername(username);
-  };
-  console.log("password ========>", username);
-
-  const handleSave = (field) => {
-    setEditedData({ ...editedData, [field]: "" });
+  const handleSave = () => {
     const data = {
-      firstName: editedData.firstName,
-      lastName: editedData.lastName,
-      email: editedData.email,
-      contactnumber: editedData.contactNumber,
-      userName: editedData.userName,
-      introducerPercentage: editedData.introducerPercentage,
-      introducerPercentage1: editedData.introducerPercentage1,
-      introducerPercentage2: editedData.introducerPercentage2,
-      introducersUserName: searchTerm1,
-      introducersUserName1: searchTerm2,
-      introducersUserName2: searchTerm3,
-      websitedetail: editedData.websitedetail,
+      firstName: editedData.firstName || foundObject.firstName,
+      lastName: editedData.lastName || foundObject.lastName,
+      contactnumber: editedData.contactNumber || foundObject.contactNumber,
+      introducerPercentage: editedData.introducerPercentage ||foundObject.introducerPercentage,
+      introducerPercentage1: editedData.introducerPercentage1 || foundObject.introducerPercentage1,
+      introducerPercentage2: editedData.introducerPercentage2 || foundObject.introducerPercentage2,
+      introducersUserName: searchTerm1 || foundObject.introducersUserName,
+      introducersUserName1: searchTerm2 || foundObject.introducersUserName1,
+      introducersUserName2: searchTerm3 || foundObject.introducersUserName2,
+      // websitedetail: editedData.websitedetail || foundObject.websitedetail,  // for future use
       bankDetail: {}, // Initialize empty bankDetail
       upiDetail: {}, // Initialize empty upiDetail
     };
-    console.log("Im here in line number 112=>>", data);
     // Check if bankDetail exists in editedData
     if (editedData.hasOwnProperty("bankDetail")) {
       // Iterate through properties of bankDetail
@@ -145,7 +122,6 @@ const InnerUserProfile = () => {
         toast.error(customErrorHandler(err));
       });
   };
-  console.log("User Deatils", foundObject);
 
   const handleIntroducerChange1 = (e) => {
     const value = e.target.value;
@@ -160,6 +136,7 @@ const InnerUserProfile = () => {
       : [];
     setFilteredOptions1(filtered);
   };
+
   const handleIntroducerChange2 = (e) => {
     const value = e.target.value;
     setSearchTerm2(value);
@@ -174,6 +151,7 @@ const InnerUserProfile = () => {
 
     setFilteredOptions2(filtered);
   };
+
   const handleIntroducerChange3 = (e) => {
     const value = e.target.value;
     setSearchTerm3(value);
@@ -188,6 +166,7 @@ const InnerUserProfile = () => {
 
     setFilteredOptions3(filtered);
   };
+
   const handleOptionSelect1 = (option) => {
     // setSelectedOption(option);
     setSearchTerm1(option.userName);
@@ -221,19 +200,8 @@ const InnerUserProfile = () => {
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-lg-9">
-            {/* <h1
-              className="text-center mb-4"
-              style={{
-                fontFamily: "Montserrat, sans-serif",
-                fontWeight: "bold",
-                fontStyle: "italic",
-                color: "black",
-              }}
-            >
-              User Profile
-            </h1> */}
             <div className="row justify-content-center">
-              {/* <div className="card"> */}
+            
               <SingleCard
                 className="mt-2"
                 style={{ backgroundColor: "#4682b4" }}
@@ -258,7 +226,7 @@ const InnerUserProfile = () => {
                                 First Name
                               </label>
                               <input
-                                name="firstname"
+                                name="firstName"
                                 value={
                                   isEditing
                                     ? editedData.firstName
@@ -275,7 +243,7 @@ const InnerUserProfile = () => {
                                 Last Name
                               </label>
                               <input
-                                name="lastname"
+                                name="lastName"
                                 value={
                                   isEditing
                                     ? editedData.lastName
@@ -305,32 +273,6 @@ const InnerUserProfile = () => {
                             </div>
                           </div>
                         </div>
-                        {/* <div className="mb-3">
-                        <label className="form-label">Email</label>
-                        <input
-                          name="email"
-                          value={
-                            isEditing ? editedData.email : foundObject?.email
-                          }
-                          onChange={handleInputChange}
-                          className="form-control"
-                          disabled={!isEditing}
-                        />
-                      </div> */}
-                        {/* <div className="mb-3">
-                        <label className="form-label">Username</label>
-                        <input
-                          name="userName"
-                          value={
-                            isEditing
-                              ? editedData.userName
-                              : foundObject?.userName
-                          }
-                          onChange={handleInputChange}
-                          className="form-control"
-                          disabled={!isEditing}
-                        />
-                      </div> */}
 
                         {/* Show Intro Name disabled Always and Change Intro */}
                         {isEditing ? (
@@ -556,7 +498,7 @@ const InnerUserProfile = () => {
                           </div>
                         </div>
 
-                        <div className="mb-3">
+                        {/* <div className="mb-3">
                           <label className="form-label text-dark">
                             Website Details
                           </label>
@@ -564,27 +506,15 @@ const InnerUserProfile = () => {
                             name="WebsiteDetails"
                             value={
                               isEditing
-                                ? editedData.Websites_Details
-                                : foundObject?.Websites_Details
+                                ? editedData.WebsiteDetails
+                                : foundObject?.WebsiteDetails
                             }
                             onChange={handleInputChange}
                             className="form-control"
                             disabled={!isEditing}
                           />
-                        </div>
-                        {/* <button
-                        className="btn btn-link"
-                        onClick={toggleAccordion}
-                      >
-                        Payment Details
-                      </button> */}
-                        {/* transaction details commented */}
-                        {/* <p
-                        className="btn btn-link pt-4"
-                        onClick={Handletransaction}
-                      >
-                        Transaction Details
-                      </p> */}
+                        </div> */}
+                    
                         {isAccordionOpen && (
                           <div className="accordion">
                             <div className="accordion-item">
