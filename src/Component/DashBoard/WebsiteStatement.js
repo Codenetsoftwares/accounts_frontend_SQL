@@ -633,7 +633,20 @@ const WebsiteStatement = () => {
                           </td>
                           <td>
                             {data?.transactionType && (
-                              <p className="col fs-6 text-break">
+                              <p
+                                className={`col fs-6 text-break ${
+                                  ["Manual-Website-Deposit", "Deposit"].includes(
+                                    data.transactionType
+                                  )
+                                    ? "text-success" // Green for deposits
+                                    : [
+                                        "Manual-Website-Withdraw",
+                                        "Withdraw",
+                                      ].includes(data.transactionType)
+                                    ? "text-danger" // Red for withdrawals
+                                    : ""
+                                }`}
+                              >
                                 {data?.transactionType}
                               </p>
                             )}

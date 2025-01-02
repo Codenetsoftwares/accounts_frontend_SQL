@@ -49,7 +49,8 @@ const IntroducerProfile = ({ data }) => {
   const [txType1, setTxType1] = useState("");
   const [profileView, setProfileView] = useState("");
   const RawFilterData = [];
-
+console.log('====>>>> line 52',introducerName);
+console.log('=========>>> line 53',users)
   const handleSearch = (event) => {
     setSearch(event.target.value);
     if (!event.target.value) {
@@ -57,11 +58,19 @@ const IntroducerProfile = ({ data }) => {
     }
   };
 
-  const handleIntroducerTx = (e, data) => {
+  const handleIntroducerTx = (e, data , id ) => {
     console.log(data);
     // console.log(IntroducerName);
-    setTxType1(data);
-  };
+    setTxType1(data) ;
+    setID(id)
+
+      // Find the introducerName based on the introId
+      const selectedUser = users.find(user => user.introId === id);
+      if (selectedUser) {
+        setIntroducerName(selectedUser.userName ); 
+      }
+    };
+  
   const handelstatement = (e, id) => {
     navigate(`/introducerstatement/${id}`);
   };
@@ -74,6 +83,14 @@ const IntroducerProfile = ({ data }) => {
       );
 
       const filteredData = res.data.data.filter((item) => item !== null);
+      const usernames = filteredData.map((item) => item.userName);
+
+      console.log('=====>> line 80',usernames)
+
+       
+    setIntroducerName((prevNames) =>
+      searchTerm.length > 0 ? usernames : [...prevNames, ...usernames]
+    );
 
       setUsers((prevUsers) =>
         searchTerm.length > 0 ? filteredData : [...prevUsers, ...filteredData]
@@ -261,7 +278,7 @@ const IntroducerProfile = ({ data }) => {
                                 data-toggle="modal"
                                 data-target="#withdrawModal"
                                 onClick={(e) => {
-                                  handleIntroducerTx(e, "Withdraw");
+                                  handleIntroducerTx(e, "Withdraw" , user.introId );
                                 }}
                               >
                                 <FontAwesomeIcon icon={faMinus} />
@@ -275,7 +292,7 @@ const IntroducerProfile = ({ data }) => {
                                 data-toggle="modal"
                                 data-target="#depositModal"
                                 onClick={(e) => {
-                                  handleIntroducerTx(e, "Deposit");
+                                  handleIntroducerTx(e, "Deposit" , user.introId);
                                 }}
                               >
                                 <FontAwesomeIcon icon={faPlus} />
@@ -373,8 +390,8 @@ const IntroducerProfile = ({ data }) => {
           TxType={txType}
           IntroducerName={introducerName}
         />
-        {txType1 === "Deposit" && <IntroducerDepositTransaction />}
-        {txType1 === "Withdraw" && <IntroducerWithdrawTransaction />}
+        {txType1 === "Deposit" && <IntroducerDepositTransaction  IntroducerName={introducerName} ID={ID}/>}
+        {txType1 === "Withdraw" && <IntroducerWithdrawTransaction   IntroducerName={introducerName} ID={ID}/>}
         {profileView && <IntroducerProfileView data={profileView} />}
       </div>
     </div>

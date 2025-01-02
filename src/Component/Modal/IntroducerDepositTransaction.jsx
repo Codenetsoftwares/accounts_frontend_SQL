@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useAuth } from "../../Utils/Auth";
 import AccountService from "../../Services/AccountService";
 import { toast } from "react-toastify";
 import TransactionSercvice from "../../Services/TransactionSercvice";
 import FullScreenLoader from "../FullScreenLoader";
 
-const IntroducerDepositTransaction = ({ IntroducerName }) => {
+const IntroducerDepositTransaction = ({ IntroducerName, ID }) => {
+  console.log("=====>>> introducer name", IntroducerName);
   const auth = useAuth();
   const [Amount, SetAmount] = useState(0);
   const [Remarks, SetRemarks] = useState("");
@@ -22,7 +23,7 @@ const IntroducerDepositTransaction = ({ IntroducerName }) => {
   const handleSubmit = () => {
     if (Amount === 0 || Remarks === "" || Amount < 0) {
       if (Amount < 0) {
-        toast.error("Amount can not be negetive");
+        toast.error("Amount cannot be negative");
         return;
       }
       toast.error("Amount and Remarks fields cannot be empty.");
@@ -35,20 +36,22 @@ const IntroducerDepositTransaction = ({ IntroducerName }) => {
       remarks: Remarks,
       introducerUserName: IntroducerName,
     };
+
     TransactionSercvice.IntroducerDepositTransaction(data, auth.user)
       .then((res) => {
-        // console.log(response.data);
         setIsLoading(false);
-        if (res.status === 200) {
+        if (res.status === 201) {
           alert(res.data.message);
+          // Reset the fields
+          SetAmount(0);
+          SetRemarks("");
           window.location.reload();
         }
       })
       .catch((error) => {
         setIsLoading(false);
-        alert(error.response.data.message);
+        alert(error.response?.data?.errMessage || "An error occurred.");
         console.log(error);
-        // alert.error("e.message");
       });
   };
 
@@ -59,7 +62,6 @@ const IntroducerDepositTransaction = ({ IntroducerName }) => {
         class="modal fade"
         id="depositModal"
         tabindex="-1"
-        role="dialog"
         aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true"
       >

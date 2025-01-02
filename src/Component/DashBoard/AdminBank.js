@@ -169,48 +169,54 @@ const AdminBank = () => {
   // };
 
   const handelactive = (ID) => {
-    const flag = true;
-    const data = {
-      isActive: flag,
-    };
-    AccountService.activeInactiveBank(ID, data, auth.user)
-      .then((response) => {
-        toast.success(response.data.message);
-        const getbankNameUpdated = JSON.parse(JSON.stringify(getbankName))
-        getbankNameUpdated.forEach(bank => {
-          if (bank.bankId === ID) {
-            bank.isActive = !bank.isActive
-
-          }
+    let confirm = window.confirm("Are You Sure You Want to Active This Bank");
+    if (confirm) {
+      const flag = true;
+      const data = {
+        isActive: flag,
+      };
+      AccountService.activeInactiveBank(ID, data, auth.user)
+        .then((response) => {
+          alert("Bank Activated");
+          toast.success(response.data.message);
+          const getbankNameUpdated = JSON.parse(JSON.stringify(getbankName));
+          getbankNameUpdated.forEach((bank) => {
+            if (bank.bankId === ID) {
+              bank.isActive = !bank.isActive;
+            }
+          });
+          setGetBankName(getbankNameUpdated);
         })
-        setGetBankName(getbankNameUpdated)
-      })
-      .catch((error) => {
-        toast.error(customErrorHandler(error));
-      });
+        .catch((error) => {
+          toast.error(customErrorHandler(error));
+        });
+    }
   };
 
   const handelinactive = (ID) => {
-    const flag = false;
-    const data = {
-      isActive: flag,
-    };
-    AccountService.activeInactiveBank(ID, data, auth.user)
-      .then((response) => {
-        toast.success(response.data.message);
-        const getbankNameUpdated = JSON.parse(JSON.stringify(getbankName))
-        getbankNameUpdated.forEach(bank => {
-          if (bank.bankId === ID) {
-            bank.isActive = !bank.isActive
-
-          }
+    let confirm = window.confirm("Are You Sure You Want to Inactive This Bank");
+    if (confirm) {
+      const flag = false;
+      const data = {
+        isActive: flag,
+      };
+      AccountService.activeInactiveBank(ID, data, auth.user)
+        .then((response) => {
+          alert("Bank Inactivated");
+          toast.success(response.data.message);
+          const getbankNameUpdated = JSON.parse(JSON.stringify(getbankName));
+          getbankNameUpdated.forEach((bank) => {
+            if (bank.bankId === ID) {
+              bank.isActive = !bank.isActive;
+            }
+          });
+          setGetBankName(getbankNameUpdated);
+          console.log(response.data);
         })
-        setGetBankName(getbankNameUpdated)
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+        .catch((error) => {
+          console.error(error);
+        });
+    }
   };
 
   useEffect(() => {
@@ -308,195 +314,220 @@ const AdminBank = () => {
             >
               <br></br>
               <GridCard columns={2}>
-                {getbankName.map((data) => (
-                  <div
-                    key={data.bankId}
-                    className="col d-flex justify-content-center align-items-center "
-                    onMouseEnter={() => setHoveredCard(data.bankId)}
-                    onMouseLeave={() => setHoveredCard(null)}
-                  >
-                    <div
-                      className={`card d-flex justify-content-between ${hoveredCard === data.bankId ? "card-hover-shadow" : ""
-                        }`}
-                      style={{
-                        borderRadius: "20px",
-                        height: "200px",
-                        width: "100%",
-                        position: "relative",
-                      }}
-                      onClick={() => handleCardClick(data.bankId)}
-                    >
-                      <div className="card-body">
-                        <p
-                          className="font-weight-bold fs-4"
-                          style={{ color: "#708090" }}
-                        >
-                          {data.bankName}
-                          <br />
-                          <span className="fs-5" style={{ color: "#A9A9A9" }}>
-                            Balance: {data.balance}
-                          </span>
-                        </p>
-                        <div className="container">
-                          <div className="row g-1 justify-content-center mt-5">
-                            <div className="col-6 col-sm-4 col-md-3 col-lg-2">
-                              <button
-                                type="button"
-                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${data.isWithdraw ? "" : "avoid-clicks"
-                                  }`} // Handling the css from Index css for disable if don't have permission
-                                data-bs-toggle="modal"
-                                data-bs-target="#modalWthbl"
-                                onClick={() => {
-                                  handelId(data.bankId);
-                                }}
-                                title="Withdraw"
-                              >
-                                <FontAwesomeIcon
-                                  icon={faMinus}
-                                  className="add-icon"
-                                />
-                              </button>
-                            </div>
-                            <div className="col-6 col-sm-4 col-md-3 col-lg-2">
-                              <button
-                                type="button"
-                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${data.isDeposit ? "" : "avoid-clicks"
-                                  }`}
-                                data-bs-toggle="modal"
-                                data-bs-target="#modalAdbl"
-                                onClick={() => {
-                                  handelId(data.bankId);
-                                }}
-                                title="Deposit"
-                              >
-                                <FontAwesomeIcon
-                                  icon={faPlus}
-                                  className="add-icon"
-                                />
-                              </button>
-                            </div>
-                            <div className="col-6 col-sm-4 col-md-3 col-lg-2">
-                              <button
-                                type="button"
-                                className="btn btn-steel-blue btn-sm btn-hover-zoom"
-                                onClick={(e) => {
-                                  handelstatement(e, data.bankId);
-                                }}
-                                title="Statement"
-                              >
-                                <FontAwesomeIcon
-                                  icon={faFileAlt}
-                                  className="add-icon"
-                                />
-                              </button>
-                            </div>
+                {getbankName.map((data) => {
+                  const isInactive = !data.isActive;
 
-                            <div className="col-6 col-sm-4 col-md-3 col-lg-2">
-                              <button
-                                type="button"
-                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${data.isEdit ? "" : "avoid-clicks"
+                  return (
+                    <div
+                      key={data.bankId}
+                      className="col d-flex justify-content-center align-items-center "
+                      onMouseEnter={() => setHoveredCard(data.bankId)}
+                      onMouseLeave={() => setHoveredCard(null)}
+                    >
+                      <div
+                        className={`card d-flex justify-content-between ${
+                          hoveredCard === data.bankId ? "card-hover-shadow" : ""
+                        }`}
+                        style={{
+                          borderRadius: "20px",
+                          height: "200px",
+                          width: "100%",
+                          position: "relative",
+                        }}
+                        onClick={() => handleCardClick(data.bankId)}
+                      >
+                        <div className="card-body">
+                          <p
+                            className="font-weight-bold fs-4"
+                            style={{ color: "#708090" }}
+                          >
+                            {data.bankName}
+                            <br />
+                            <span className="fs-5" style={{ color: "#A9A9A9" }}>
+                              Balance: {data.balance}
+                            </span>
+                          </p>
+                          <div className="container">
+                            <div className="row g-1 justify-content-center mt-5">
+                              <div className="col-6 col-sm-4 col-md-3 col-lg-2">
+                                <button
+                                  type="button"
+                                  className={`btn btn-steel-blue btn-sm btn-hover-zoom ${
+                                    data.isWithdraw && !isInactive ? "" : "avoid-clicks"
+                                  }`} // Handling the css from Index css for disable if don't have permission
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#modalWthbl"
+                                  onClick={() => {
+                                    handelId(data.bankId);
+                                  }}
+                                  title="Withdraw"
+                                >
+                                  <FontAwesomeIcon
+                                    icon={faMinus}
+                                    className="add-icon"
+                                  />
+                                </button>
+                              </div>
+                              <div className="col-6 col-sm-4 col-md-3 col-lg-2">
+                                <button
+                                  type="button"
+                                  className={`btn btn-steel-blue btn-sm btn-hover-zoom ${
+                                    data.isDeposit && !isInactive ? "" : "avoid-clicks"
                                   }`}
-                                onClick={(e) => {
-                                  handelEditbank(e, data.bankId);
-                                }}
-                                title="Edit Bank"
-                                data-toggle="modal"
-                                data-target="#exampleModalCenter"
-                              >
-                                <FontAwesomeIcon
-                                  icon={faEdit}
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#modalAdbl"
+                                  onClick={() => {
+                                    handelId(data.bankId);
+                                  }}
+                                  title="Deposit"
+                                >
+                                  <FontAwesomeIcon
+                                    icon={faPlus}
+                                    className="add-icon"
+                                  />
+                                </button>
+                              </div>
+                              <div className="col-6 col-sm-4 col-md-3 col-lg-2">
+                                <button
+                                  type="button"
+                                  className="btn btn-steel-blue btn-sm btn-hover-zoom"
+                                  onClick={(e) => {
+                                    handelstatement(e, data.bankId);
+                                  }}
+                                  title="Statement"
+                                >
+                                  <FontAwesomeIcon
+                                    icon={faFileAlt}
+                                    className="add-icon"
+                                  />
+                                </button>
+                              </div>
+
+                              <div className="col-6 col-sm-4 col-md-3 col-lg-2">
+                                <button
+                                  type="button"
+                                  className={`btn btn-steel-blue btn-sm btn-hover-zoom ${
+                                    data.isEdit && !isInactive ? "" : "avoid-clicks"
+                                  }`}
+                                  onClick={(e) => {
+                                    handelEditbank(e, data.bankId);
+                                  }}
+                                  title="Edit Bank"
                                   data-toggle="modal"
                                   data-target="#exampleModalCenter"
-                                />
-                              </button>
-                            </div>
-                            <div className="col-6 col-sm-4 col-md-3 col-lg-2">
-                              <button
-                                type="button"
-                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${data.isDelete ? "" : "avoid-clicks"
+                                >
+                                  <FontAwesomeIcon
+                                    icon={faEdit}
+                                    data-toggle="modal"
+                                    data-target="#exampleModalCenter"
+                                  />
+                                </button>
+                              </div>
+                              <div className="col-6 col-sm-4 col-md-3 col-lg-2">
+                                <button
+                                  type="button"
+                                  className={`btn btn-steel-blue btn-sm btn-hover-zoom ${
+                                    data.isDelete ? "" : "avoid-clicks"
                                   }`}
-                                onClick={(e) => {
-                                  handleDeleteBank(e, data.bankId);
-                                }}
-                                title="Delete"
-                              >
-                                <FontAwesomeIcon
-                                  icon={faTrashAlt}
-                                  className="delete-icon"
-                                />
-                              </button>
-                            </div>
+                                  onClick={(e) => {
+                                    handleDeleteBank(e, data.bankId);
+                                  }}
+                                  title="Delete"
+                                >
+                                  <FontAwesomeIcon
+                                    icon={faTrashAlt}
+                                    className="delete-icon"
+                                  />
+                                </button>
+                              </div>
 
-                            <div className="col-6 col-sm-4 col-md-3 col-lg-2">
-                              <button
-                                type="button"
-                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${data.isRenew ? "" : "avoid-clicks"
+                              <div className="col-6 col-sm-4 col-md-3 col-lg-2">
+                                <button
+                                  type="button"
+                                  className={`btn btn-steel-blue btn-sm btn-hover-zoom ${
+                                    data.isRenew && !isInactive ? "" : "avoid-clicks"
                                   }`}
-                                data-toggle="modal"
-                                data-target="#RenewBankPermission"
-                                onClick={() => {
-                                  handelSubAdmin(data.subAdmins, data.bankId);
-                                }}
-                                title="Renew Permission"
-                              >
-                                <FontAwesomeIcon
-                                  icon={faEye}
-                                  className="permission"
-                                />
-                              </button>
+                                  data-toggle="modal"
+                                  data-target="#RenewBankPermission"
+                                  onClick={() => {
+                                    handelSubAdmin(data.subAdmins, data.bankId);
+                                  }}
+                                  title="Renew Permission"
+                                >
+                                  <FontAwesomeIcon
+                                    icon={faEye}
+                                    className="permission"
+                                  />
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
 
-                      <div className="card-position-top-right">
-                        {data.isActive === true ? (
-                          <span
-                            type="button"
-                            className="badge-pill badge-success   btn-hover-scale   "
-                            title="Click To Inactive"
-                            onClick={() => {
-                              handelinactive(data.bankId);
-                            }}
-                          >
-                            Active
-                            <FontAwesomeIcon
-                              icon={faCheckCircle}
-                              className="active-icon ms-1"
-                            />
-                            <span className="position-absolute top-0 start-100 translate-middle"></span>
-                          </span>
-                        ) : (
-                          <span
-                            type="button"
-                            className="badge-pill badge-secondary  btn-hover-scale"
-                            title="Click To Active"
-                            onClick={() => {
-                              handelactive(data.bankId);
-                            }}
-                          >
-                            Inactive
-                            <FontAwesomeIcon
-                              icon={faTimesCircle}
-                              className="active-icon ms-1"
-                            />
-                            <span className="dot-merged position-absolute top-0 start-100 translate-middle"></span>
-                          </span>
-                        )}
+                        <div className="card-position-top-right">
+                          {data.isActive === true ? (
+                            <span
+                              type="button"
+                              className="badge-pill badge-success   btn-hover-scale   "
+                              title="Click To Inactive"
+                              onClick={() => {
+                                handelinactive(data.bankId);
+                              }}
+                            >
+                              Active
+                              <FontAwesomeIcon
+                                icon={faCheckCircle}
+                                className="active-icon ms-1"
+                              />
+                              <span className="position-absolute top-0 start-100 translate-middle"></span>
+                            </span>
+                          ) : (
+                            <span
+                              type="button"
+                              className="badge-pill badge-secondary  btn-hover-scale"
+                              title="Click To Active"
+                              onClick={() => {
+                                handelactive(data.bankId);
+                              }}
+                            >
+                              Inactive
+                              <FontAwesomeIcon
+                                icon={faTimesCircle}
+                                className="active-icon ms-1"
+                              />
+                              <span className="dot-merged position-absolute top-0 start-100 translate-middle"></span>
+                            </span>
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </GridCard>
             </InfiniteScroll>
           </SingleCard>
         </div>
 
-        <ModalAddBl ID={Id} renderParent={setResponse} getbankName={getbankName} setGetBankName={setGetBankName} />
-        <ModalWthBl ID={Id} renderParent={setResponse} getbankName={getbankName} setGetBankName={setGetBankName} />
+        <ModalAddBl
+          ID={Id}
+          renderParent={setResponse}
+          getbankName={getbankName}
+          setGetBankName={setGetBankName}
+        />
+        <ModalWthBl
+          ID={Id}
+          renderParent={setResponse}
+          getbankName={getbankName}
+          setGetBankName={setGetBankName}
+        />
         <InnerBank />
         {/* <SubAdminBank ID={Id} /> */}
-        <RenewBankPermission SubAdmins={SubAdmins} ID={SId} getbankName={getbankName} setGetBankName={setGetBankName} />
+        <RenewBankPermission
+          SubAdmins={SubAdmins}
+          ID={SId}
+          getbankName={getbankName}
+          setGetBankName={setGetBankName}
+        />
       </div>
     </div>
   );

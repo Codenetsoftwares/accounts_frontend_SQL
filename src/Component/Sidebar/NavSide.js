@@ -22,6 +22,7 @@ const NavSide = ({ onSelect }) => {
   const [IsToggleBank, setIsToggleBank] = useState(true);
   const [IsToggleWebsite, setIsToggleWebsite] = useState(true);
   const [isToggleRecycleBin, setIsToggleRecycleBin] = useState(true);
+  const [activeLink, setActiveLink] = useState("dashboard");
 
   useEffect(() => {
     setUserEmail(auth?.user?.userName);
@@ -29,35 +30,83 @@ const NavSide = ({ onSelect }) => {
   }, [auth]);
 
   console.log(auth);
+  const resetToggles = () => {
+    setIsToggle(true);
+    setIsToggleCreate(true);
+    setIsToggleDash(true);
+    setIsToggleTransaction(true);
+    setIsToggleRequest(true);
+    setIsToggleBank(true);
+    setIsToggleWebsite(true);
+    setIsToggleRecycleBin(true);
+  };
+
   const handleToggle = () => {
+    resetToggles();
     setIsToggle(!isToggle);
+    if (!isToggle) {
+      setActiveLink("profile");
+    }
   };
   const handleToggleDash = () => {
+    resetToggles();
     setIsToggleDash(!isToggleDash);
+    if (!isToggleDash) {
+      setActiveLink("report");
+    }
   };
   const handleToggleCreate = () => {
+    resetToggles();
     setIsToggleCreate(!isToggleCreate);
+    if (!isToggleCreate) {
+      setActiveLink("create");
+    }
   };
   const handleToggleTransaction = () => {
+    resetToggles();
     setIsToggleTransaction(!IsToggleTransaction);
+    if (!IsToggleTransaction) {
+      setActiveLink("transaction");
+    }
   };
   const handleToggleRequest = () => {
     setIsToggleRequest(!IsToggleRequest);
+    if (!IsToggleRequest) {
+      setActiveLink("request");
+    }
   };
   const handleToggleBank = () => {
     setIsToggleBank(!IsToggleBank);
+    if (!IsToggleBank) {
+      setActiveLink("bank");
+    }
   };
   const handleToggleWebsite = () => {
     setIsToggleWebsite(!IsToggleWebsite);
+    if (!IsToggleWebsite) {
+      setActiveLink("website");
+    }
   };
 
   const handleToggleRecycleBin = () => {
     setIsToggleRecycleBin(!isToggleRecycleBin);
+    if (!isToggleRecycleBin) {
+      setActiveLink("trash");
+    }
   };
   const handleMenuClick = (menuItem) => {
     console.log("=====>>>> menuItem", menuItem);
     onSelect(menuItem); // Call onSelect callback with selected menu item
+    setActiveLink(menuItem);
+    localStorage.setItem("activeLink", menuItem); // Save to localStorage
   };
+
+  useEffect(() => {
+    const storedActiveLink = localStorage.getItem("activeLink");
+    if (storedActiveLink) {
+      setActiveLink(storedActiveLink);
+    }
+  }, []);
   return (
     <div>
       {/* {isTogglenav ? ( */}
@@ -113,7 +162,9 @@ const NavSide = ({ onSelect }) => {
               <Link className="nav-item " to="/welcome">
                 <a
                   href="#"
-                  className="nav-link active"
+                  className={`nav-link text-white ${
+                    activeLink === "dashboard" ? "active bg-primary" : ""
+                  }`}
                   onClick={() => handleMenuClick("dashboard")}
                 >
                   <i className="nav-icon fas fa-tachometer-alt"></i>
@@ -133,7 +184,13 @@ const NavSide = ({ onSelect }) => {
                   {IsToggleTransaction ? (
                     <li className="nav-item ">
                       <a
-                        className="nav-link "
+                        className={`nav-link ${
+                          activeLink === "transaction" ||
+                          activeLink === "Deposit" ||
+                          activeLink === "Withdraw"
+                            ? "active bg-primary"
+                            : ""
+                        }`}
                         onClick={handleToggleTransaction}
                       >
                         &nbsp;{" "}
@@ -150,7 +207,13 @@ const NavSide = ({ onSelect }) => {
                   ) : (
                     <li className="nav-item ">
                       <a
-                        className="nav-link "
+                        className={`nav-link ${
+                          activeLink === "transaction" ||
+                          activeLink === "Deposit" ||
+                          activeLink === "Withdraw"
+                            ? "active bg-primary"
+                            : ""
+                        }`}
                         onClick={handleToggleTransaction}
                       >
                         &nbsp;
@@ -173,7 +236,11 @@ const NavSide = ({ onSelect }) => {
                         <>
                           <Link
                             to="/deposit"
-                            className="nav-link text-white"
+                            className={`nav-link text-white ${
+                              activeLink === "Deposit"
+                                ? "active bg-secondary"
+                                : ""
+                            }`}
                             onClick={() => handleMenuClick("Deposit")}
                           >
                             <i className="far fa-circle nav-icon" />
@@ -191,7 +258,11 @@ const NavSide = ({ onSelect }) => {
                         <>
                           <Link
                             to="/withdraw"
-                            className="nav-link text-white"
+                            className={`nav-link text-white ${
+                              activeLink === "Withdraw"
+                                ? "active bg-secondary"
+                                : ""
+                            }`}
                             onClick={() => handleMenuClick("Withdraw")}
                           >
                             <i className="far fa-circle nav-icon" />
@@ -212,7 +283,9 @@ const NavSide = ({ onSelect }) => {
                 <>
                   <Link
                     to="/bank"
-                    className="nav-link text-white"
+                    className={`nav-link text-white ${
+                      activeLink === "Bank" ? "active bg-primary" : ""
+                    }`}
                     onClick={() => handleMenuClick("Bank")}
                   >
                     <i className="fas fa-university nav-icon m-2" />
@@ -229,7 +302,9 @@ const NavSide = ({ onSelect }) => {
                 <>
                   <Link
                     to="/website"
-                    className="nav-link text-white"
+                    className={`nav-link text-white ${
+                      activeLink === "Website" ? "active bg-primary" : ""
+                    }`}
                     onClick={() => handleMenuClick("Website")}
                   >
                     <i className="fas fa-globe nav-icon m-2" />
@@ -250,7 +325,14 @@ const NavSide = ({ onSelect }) => {
                   {isToggleCreate ? (
                     <li className="nav-item ">
                       <a
-                        className="nav-link text-white"
+                        className={`nav-link text-white ${
+                          activeLink === "create" ||
+                          activeLink === "createSubAdmin" ||
+                          activeLink === "createUser" ||
+                          activeLink === "createIntroducer"
+                            ? "active bg-primary"
+                            : ""
+                        }`}
                         onClick={handleToggleCreate}
                       >
                         &nbsp; <FontAwesomeIcon icon={faSquarePlus} />
@@ -263,7 +345,14 @@ const NavSide = ({ onSelect }) => {
                   ) : (
                     <li className="nav-item ">
                       <a
-                        className="nav-link text-white"
+                        className={`nav-link text-white ${
+                          activeLink === "create" ||
+                          activeLink === "createSubAdmin" ||
+                          activeLink === "createUser" ||
+                          activeLink === "createIntroducer"
+                            ? "active bg-primary"
+                            : ""
+                        }`}
                         onClick={handleToggleCreate}
                       >
                         &nbsp;
@@ -280,7 +369,11 @@ const NavSide = ({ onSelect }) => {
                       ) && (
                         <Link
                           to="/createactualuser"
-                          className="nav-link text-white"
+                          className={`nav-link text-white ${
+                            activeLink === "createUser"
+                              ? "active bg-secondary"
+                              : ""
+                          }`}
                           onClick={() => handleMenuClick("createUser")}
                         >
                           <i className="far fa-circle nav-icon" />
@@ -293,7 +386,11 @@ const NavSide = ({ onSelect }) => {
                       ) && (
                         <Link
                           to="/createintroducer"
-                          className="nav-link text-white"
+                          className={`nav-link text-white ${
+                            activeLink === "createIntroducer"
+                              ? "active bg-secondary"
+                              : ""
+                          }`}
                           onClick={() => handleMenuClick("createIntroducer")}
                         >
                           <i className="far fa-circle nav-icon" />
@@ -304,7 +401,11 @@ const NavSide = ({ onSelect }) => {
                       {userrole.some((role) => role === "superAdmin") && (
                         <Link
                           to="/createuser"
-                          className="nav-link text-white"
+                          className={`nav-link text-white ${
+                            activeLink === "createSubAdmin"
+                              ? "active bg-secondary"
+                              : ""
+                          }`}
                           onClick={() => handleMenuClick("createSubAdmin")}
                         >
                           <i className="far fa-circle nav-icon" />
@@ -328,7 +429,17 @@ const NavSide = ({ onSelect }) => {
                 <>
                   {isToggle ? (
                     <li className="nav-item ">
-                      <a className="nav-link text-white" onClick={handleToggle}>
+                      <a
+                        className={`nav-link text-white ${
+                          activeLink === "profile" ||
+                          activeLink === "userProfile" ||
+                          activeLink === "introducerProfile" ||
+                          activeLink === "subAdminProfile"
+                            ? "active bg-primary"
+                            : ""
+                        }`}
+                        onClick={handleToggle}
+                      >
                         &nbsp; <i className="fa-solid fas fa-user" />
                         <p>
                           &nbsp;Profile
@@ -338,7 +449,17 @@ const NavSide = ({ onSelect }) => {
                     </li>
                   ) : (
                     <li className="nav-item ">
-                      <a className="nav-link text-white" onClick={handleToggle}>
+                      <a
+                        className={`nav-link text-white ${
+                          activeLink === "profile" ||
+                          activeLink === "userProfile" ||
+                          activeLink === "introducerProfile" ||
+                          activeLink === "subAdminProfile"
+                            ? "active bg-primary"
+                            : ""
+                        }`}
+                        onClick={handleToggle}
+                      >
                         &nbsp;
                         <i className="fa-solid fas fa-user" />
                         <p>
@@ -354,7 +475,11 @@ const NavSide = ({ onSelect }) => {
                       ) && (
                         <Link
                           to="userprofile"
-                          className="nav-link text-white"
+                          className={`nav-link text-white ${
+                            activeLink === "userProfile"
+                              ? "active bg-secondary"
+                              : ""
+                          }`}
                           onClick={() => handleMenuClick("userProfile")}
                         >
                           <i className="far fa-circle nav-icon" />
@@ -369,7 +494,11 @@ const NavSide = ({ onSelect }) => {
                       ) && (
                         <Link
                           to="/introducerprofile"
-                          className="nav-link text-white"
+                          className={`nav-link text-white ${
+                            activeLink === "introducerProfile"
+                              ? "active bg-secondary"
+                              : ""
+                          }`}
                           onClick={() => handleMenuClick("introducerProfile")}
                         >
                           <i className="far fa-circle nav-icon" />
@@ -381,7 +510,11 @@ const NavSide = ({ onSelect }) => {
                       ) && (
                         <Link
                           to="/adminlist"
-                          className="nav-link text-white"
+                          className={`nav-link text-white ${
+                            activeLink === "subAdminProfile"
+                              ? "active bg-secondary"
+                              : ""
+                          }`}
                           onClick={() => handleMenuClick("subAdminProfile")}
                         >
                           <i className="far fa-circle nav-icon" />
@@ -403,7 +536,16 @@ const NavSide = ({ onSelect }) => {
                 <>
                   {isToggleDash ? (
                     <li className="nav-item ">
-                      <a className="nav-link " onClick={handleToggleDash}>
+                      <a
+                        className={`nav-link text-white ${
+                          activeLink === "profile" ||
+                          activeLink === "AllTransactionDetails" ||
+                          activeLink === "MyTransactions"
+                            ? "active bg-primary"
+                            : ""
+                        }`}
+                        onClick={handleToggleDash}
+                      >
                         &nbsp;{" "}
                         <FontAwesomeIcon
                           icon={faExchangeAlt}
@@ -417,7 +559,17 @@ const NavSide = ({ onSelect }) => {
                     </li>
                   ) : (
                     <li className="nav-item ">
-                      <a className="nav-link " onClick={handleToggleDash}>
+                      <a 
+                      
+                      className={`nav-link text-white ${
+                        activeLink === "profile" ||
+                        activeLink === "AllTransactionDetails" ||
+                        activeLink === "MyTransactions"
+                          ? "active bg-primary"
+                          : ""
+                      }`} 
+                      
+                      onClick={handleToggleDash}>
                         &nbsp;
                         <FontAwesomeIcon
                           icon={faExchangeAlt}
@@ -434,7 +586,11 @@ const NavSide = ({ onSelect }) => {
                       ) && (
                         <Link
                           to="/mainfiltertransactionpage"
-                          className="nav-link text-white"
+                          className={`nav-link text-white ${
+                            activeLink === "AllTransactionDetails"
+                              ? "active bg-secondary"
+                              : ""
+                          }`}
                           onClick={() =>
                             handleMenuClick("AllTransactionDetails")
                           }
@@ -449,7 +605,11 @@ const NavSide = ({ onSelect }) => {
                       ) && (
                         <Link
                           to="/mytxn"
-                          className="nav-link text-white"
+                          className={`nav-link text-white ${
+                            activeLink === "MyTransactions"
+                              ? "active bg-secondary"
+                              : ""
+                          }`}
                           onClick={() => handleMenuClick("MyTransactions")}
                         >
                           <i className="far fa-circle nav-icon" />
@@ -471,7 +631,13 @@ const NavSide = ({ onSelect }) => {
                   {IsToggleRequest ? (
                     <li className="nav-item ">
                       <a
-                        className="nav-link text-white"
+                        className={`nav-link text-white ${
+                          activeLink === "request" ||
+                          activeLink === "AllTransactionRequest" ||
+                          activeLink === "introducerTransactionRequest"
+                            ? "active bg-primary"
+                            : ""
+                        }`}
                         onClick={handleToggleRequest}
                       >
                         &nbsp;&nbsp;
@@ -486,7 +652,13 @@ const NavSide = ({ onSelect }) => {
                   ) : (
                     <li className="nav-item ">
                       <a
-                        className="nav-link text-white"
+                        className={`nav-link text-white ${
+                          activeLink === "request" ||
+                          activeLink === "AllTransactionRequest" ||
+                          activeLink === "introducerTransactionRequest"
+                            ? "active bg-primary"
+                            : ""
+                        }`}
                         onClick={handleToggleRequest}
                       >
                         &nbsp;&nbsp;
@@ -499,7 +671,11 @@ const NavSide = ({ onSelect }) => {
                       </a>
                       <Link
                         to="/alert"
-                        className="nav-link text-white"
+                        className={`nav-link text-white ${
+                          activeLink === "AllTransactionRequest"
+                            ? "active bg-secondary"
+                            : ""
+                        }`}
                         onClick={() => handleMenuClick("AllTransactionRequest")}
                       >
                         <i className="far fa-circle nav-icon" />
@@ -507,7 +683,11 @@ const NavSide = ({ onSelect }) => {
                       </Link>
                       <Link
                         to="/introduceralert"
-                        className="nav-link text-white"
+                        className={`nav-link text-white ${
+                          activeLink === "introducerTransactionRequest"
+                            ? "active bg-secondary"
+                            : ""
+                        }`}
                         onClick={() =>
                           handleMenuClick("introducerTransactionRequest")
                         }
@@ -522,7 +702,14 @@ const NavSide = ({ onSelect }) => {
                         <>
                           {IsToggleBank ? (
                             <Link
-                              className="nav-link text-white"
+                            className={`nav-link text-white ${
+                              activeLink === "bank" ||
+                              activeLink === "BankEdit" ||
+                              activeLink === "BankDelete" ||
+                              activeLink === "NewBank"
+                                ? "active bg-primary"
+                                : ""
+                            }`}
                               onClick={handleToggleBank}
                             >
                               <i className="far fa-circle nav-icon" />
@@ -535,7 +722,14 @@ const NavSide = ({ onSelect }) => {
                             <li className="nav-item ">
                               <Link
                                 to="#"
-                                className="nav-link text-white"
+                                className={`nav-link text-white ${
+                                  activeLink === "bank" ||
+                                  activeLink === "BankEdit" ||
+                                  activeLink === "BankDelete" ||
+                                  activeLink === "NewBank"
+                                    ? "active bg-primary"
+                                    : ""
+                                }`}
                                 onClick={handleToggleBank}
                               >
                                 <i className="nav-icon fas fa-copy" />
@@ -546,7 +740,11 @@ const NavSide = ({ onSelect }) => {
                               </Link>
                               <Link
                                 to="/bankEdit"
-                                className="nav-link text-white"
+                                className={`nav-link text-white ${
+                                  activeLink === "BankEdit"
+                                    ? "active bg-secondary"
+                                    : ""
+                                }`}
                                 onClick={() => handleMenuClick("BankEdit")}
                               >
                                 <i className="far fa-circle nav-icon" />
@@ -555,7 +753,11 @@ const NavSide = ({ onSelect }) => {
 
                               <Link
                                 to="/bankDelete"
-                                className="nav-link text-white"
+                                className={`nav-link text-white ${
+                                  activeLink === "BankDelete"
+                                    ? "active bg-secondary"
+                                    : ""
+                                }`}
                                 onClick={() => handleMenuClick("BankDelete")}
                               >
                                 <i className="far fa-circle nav-icon" />
@@ -563,7 +765,11 @@ const NavSide = ({ onSelect }) => {
                               </Link>
                               <Link
                                 to="/newbank"
-                                className="nav-link text-white"
+                                className={`nav-link text-white ${
+                                  activeLink === "NewBank"
+                                    ? "active bg-secondary"
+                                    : ""
+                                }`}
                                 onClick={() => handleMenuClick("NewBank")}
                               >
                                 <i className="far fa-circle nav-icon" />
@@ -593,7 +799,14 @@ const NavSide = ({ onSelect }) => {
                             <li className="nav-item ">
                               <Link
                                 to="#"
-                                className="nav-link text-white "
+                                className={`nav-link text-white ${
+                                  activeLink === "website" ||
+                                  activeLink === "WebsiteEdit" ||
+                                  activeLink === "WebsiteDelete" ||
+                                  activeLink === "newWebsite"
+                                    ? "active bg-primary"
+                                    : ""
+                                }`}
                                 onClick={handleToggleWebsite}
                               >
                                 <i className="nav-icon fas fa-copy" />
@@ -604,7 +817,11 @@ const NavSide = ({ onSelect }) => {
                               </Link>
                               <Link
                                 to="/websiteEdit"
-                                className="nav-link text-white"
+                                className={`nav-link text-white ${
+                                  activeLink === "WebsiteEdit"
+                                    ? "active bg-secondary"
+                                    : ""
+                                }`}
                                 onClick={() => handleMenuClick("WebsiteEdit")}
                               >
                                 <i className="far fa-circle nav-icon" />
@@ -612,7 +829,11 @@ const NavSide = ({ onSelect }) => {
                               </Link>
                               <Link
                                 to="/websiteDelete"
-                                className="nav-link text-white"
+                                className={`nav-link text-white ${
+                                  activeLink === "WebsiteDelete"
+                                    ? "active bg-secondary"
+                                    : ""
+                                }`}
                                 onClick={() => handleMenuClick("WebsiteDelete")}
                               >
                                 <i className="far fa-circle nav-icon" />
@@ -620,7 +841,11 @@ const NavSide = ({ onSelect }) => {
                               </Link>
                               <Link
                                 to="/newwebsite"
-                                className="nav-link text-white"
+                                className={`nav-link text-white ${
+                                  activeLink === "newWebsite"
+                                    ? "active bg-secondary"
+                                    : ""
+                                }`}
                                 onClick={() => handleMenuClick("newWebsite")}
                               >
                                 <i className="far fa-circle nav-icon" />
@@ -644,7 +869,12 @@ const NavSide = ({ onSelect }) => {
                   {isToggleRecycleBin ? (
                     <li className="nav-item ">
                       <a
-                        className="nav-link text-white"
+                       className={`nav-link text-white ${
+                        activeLink === "trash" ||
+                        activeLink === "AllTransactionTrash"
+                          ? "active bg-primary"
+                          : ""
+                      }`}
                         onClick={handleToggleRecycleBin}
                       >
                         &nbsp;&nbsp;
@@ -659,7 +889,12 @@ const NavSide = ({ onSelect }) => {
                   ) : (
                     <li className="nav-item ">
                       <a
-                        className="nav-link text-white"
+                         className={`nav-link text-white ${
+                          activeLink === "trash" ||
+                          activeLink === "AllTransactionTrash"
+                            ? "active bg-primary"
+                            : ""
+                        }`}
                         onClick={handleToggleRecycleBin}
                       >
                         &nbsp;&nbsp;
@@ -672,7 +907,11 @@ const NavSide = ({ onSelect }) => {
                       </a>
                       <Link
                         to="trashAllTransaction"
-                        className="nav-link text-white"
+                        className={`nav-link text-white ${
+                          activeLink === "AllTransactionTrash"
+                            ? "active bg-secondary"
+                            : ""
+                        }`}
                         onClick={() => handleMenuClick("AllTransactionTrash")}
                       >
                         <i className="far fa-circle nav-icon" />

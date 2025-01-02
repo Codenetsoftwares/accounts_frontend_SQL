@@ -295,12 +295,26 @@ const TableMainTransaction = ({
                         )}
                       </td>
                       <td>
-                        {data?.transactionType && (
-                          <p className="col fs-6 text-break">
-                            {data?.transactionType}
-                          </p>
-                        )}
-                      </td>
+                            {data?.transactionType && (
+                              <p
+                                className={`col fs-6 text-break ${
+                                  ["Manual-Website-Deposit","Manual-Bank-Deposit", "Deposit"].includes(
+                                    data.transactionType
+                                  )
+                                    ? "text-success" // Green for deposits
+                                    : [
+                                        "Manual-Website-Withdraw",
+                                        "Manual-Bank-Withdraw",
+                                        "Withdraw",
+                                      ].includes(data.transactionType)
+                                    ? "text-danger" // Red for withdrawals
+                                    : ""
+                                }`}
+                              >
+                                {data?.transactionType}
+                              </p>
+                            )}
+                          </td>
                       <td>
                         {data?.paymentMethod && (
                           <p className="col fs-6">{data?.paymentMethod}</p>

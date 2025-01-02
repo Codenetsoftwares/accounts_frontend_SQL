@@ -53,11 +53,12 @@ const BankStatement = () => {
   const [minAmount, setMinAmount] = useState(0);
   const [maxAmount, setMaxAmount] = useState(0);
   const [filteredSubAdminOptions, setFilteredSubAdminOptions] = useState([]);
-  const [isSubAdminDropdownVisible, setIsSubAdminDropdownVisible] = useState(false);
+  const [isSubAdminDropdownVisible, setIsSubAdminDropdownVisible] =
+    useState(false);
   const [activeSubAdminIndex, setActiveSubAdminIndex] = useState(-1);
 
   const data = {
-    "filters": {
+    filters: {
       transactionType: select,
       introducerUserName: introducer,
       subAdminId: subAdmin,
@@ -67,8 +68,8 @@ const BankStatement = () => {
       // edate: moment(endDatevalue).toDate(),
       // maxAmount: maxAmount,
       // minAmount: minAmount
-    }
-  }
+    },
+  };
 
   const handleId = (e, id) => {
     e.preventDefault();
@@ -95,23 +96,21 @@ const BankStatement = () => {
     if (auth.user) {
       TransactionSercvice.subAdminList(auth.user).then((res) => {
         setSubAdminlist(res.data.data);
-
       });
     }
   }, [auth]);
 
-
   const selectPageHandler = (selectedPage) => {
-    console.log("selected", selectedPage)
+    console.log("selected", selectedPage);
     setPage(selectedPage);
   };
 
   const handleFilter = () => {
-    const sdate = moment(startDatevalue, 'DD-MM-YYYY HH:mm').toDate();
-    const edate = moment(endDatevalue, 'DD-MM-YYYY HH:mm').toDate();
+    const sdate = moment(startDatevalue, "DD-MM-YYYY HH:mm").toDate();
+    const edate = moment(endDatevalue, "DD-MM-YYYY HH:mm").toDate();
     console.log("sdate=====>", sdate);
-    console.log("edate=====>", edate)
-    console.log("documentView=====>", documentView)
+    console.log("edate=====>", edate);
+    console.log("documentView=====>", documentView);
     let filteredDocuments = documentView.filter((data) => {
       const transactionDate = new Date(data.createdAt);
       return transactionDate >= sdate && transactionDate <= edate;
@@ -120,22 +119,19 @@ const BankStatement = () => {
     if (minAmount !== 0 || maxAmount !== 0) {
       filteredDocuments = filteredDocuments.filter((transaction) => {
         return (
-          transaction.withdrawAmount >= minAmount &&
-          transaction.withdrawAmount <= maxAmount ||
-          transaction.depositAmount >= minAmount &&
-          transaction.depositAmount <= maxAmount ||
-          transaction.amount >= minAmount &&
-          transaction.amount <= maxAmount
-
+          (transaction.withdrawAmount >= minAmount &&
+            transaction.withdrawAmount <= maxAmount) ||
+          (transaction.depositAmount >= minAmount &&
+            transaction.depositAmount <= maxAmount) ||
+          (transaction.amount >= minAmount && transaction.amount <= maxAmount)
         );
-      }
-      );
-    };
-    console.log("filteredDocuments=======>", filteredDocuments)
+      });
+    }
+    console.log("filteredDocuments=======>", filteredDocuments);
     setDocumentFilter(filteredDocuments);
     setToggle(false);
     setPage(1);
-  }
+  };
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -174,14 +170,11 @@ const BankStatement = () => {
   };
 
   const handleDelete = (e, id, transactionType) => {
-
     switch (transactionType) {
       case "Deposit":
         AccountService.SaveTransaction({ requestId: id }, auth.user)
 
           .then((res) => {
-
-
             toast.success("Transaction delete request sent to Super Admin");
           })
           .catch((err) => {
@@ -191,7 +184,6 @@ const BankStatement = () => {
       case "Withdraw":
         AccountService.SaveTransaction({ requestId: id }, auth.user)
           .then((res) => {
-
             toast.success("Transaction delete request sent to Super Admin");
           })
           .catch((err) => {
@@ -203,13 +195,12 @@ const BankStatement = () => {
         AccountService.SaveBankTransaction({ requestId: id }, auth.user)
 
           .then((res) => {
-
             toast.success(
               "Bank Transaction delete request sent to Super Admin"
             );
           })
           .catch((err) => {
-            toast.error(customErrorHandler(err))
+            toast.error(customErrorHandler(err));
           });
         break;
 
@@ -217,20 +208,18 @@ const BankStatement = () => {
         AccountService.SaveBankTransaction({ requestId: id }, auth.user)
 
           .then((res) => {
-
             toast.success(
               "Website Transaction delete request sent to Super Admin"
             );
           })
           .catch((err) => {
-            toast.error(customErrorHandler(err))
+            toast.error(customErrorHandler(err));
           });
         break;
 
       case "Manual-Website-Withdraw":
         AccountService.SaveWebsiteTransaction({ requestId: id }, auth.user)
           .then((res) => {
-
             toast.success(
               "Website Transaction delete request sent to Super Admin"
             );
@@ -242,7 +231,6 @@ const BankStatement = () => {
       case "Manual-Website-Deposit":
         AccountService.SaveWebsiteTransaction({ requestId: id }, auth.user)
           .then((res) => {
-
             toast.success("Bank Transaction deleted");
           })
           .catch((err) => {
@@ -266,7 +254,7 @@ const BankStatement = () => {
     setPage(1);
     setMinAmount(0);
     setMaxAmount(0);
-    window.location.reload()
+    window.location.reload();
   };
 
   const handleStartDatevalue = (e) => {
@@ -301,8 +289,8 @@ const BankStatement = () => {
 
   const handleSubAdminKeyDown = (e) => {
     if (e.key === "ArrowDown") {
-      setActiveSubAdminIndex((prevIndex) =>
-        (prevIndex + 1) % filteredSubAdminOptions.length
+      setActiveSubAdminIndex(
+        (prevIndex) => (prevIndex + 1) % filteredSubAdminOptions.length
       );
     } else if (e.key === "ArrowUp") {
       setActiveSubAdminIndex(
@@ -310,7 +298,10 @@ const BankStatement = () => {
           (prevIndex - 1 + filteredSubAdminOptions.length) %
           filteredSubAdminOptions.length
       );
-    } else if ((e.key === "Enter" || e.key === "Tab") && activeSubAdminIndex >= 0) {
+    } else if (
+      (e.key === "Enter" || e.key === "Tab") &&
+      activeSubAdminIndex >= 0
+    ) {
       setSubAdmin(filteredSubAdminOptions[activeSubAdminIndex].userName);
       setIsSubAdminDropdownVisible(false);
       setActiveSubAdminIndex(-1);
@@ -320,7 +311,6 @@ const BankStatement = () => {
   return (
     <>
       <div className="">
-
         <SingleCard>
           <SingleCard style={{ border: "1px solid #4682b4 " }}>
             <div
@@ -333,7 +323,7 @@ const BankStatement = () => {
                 padding: "20px",
                 transformStyle: "preserve-3d",
                 margin: "20px",
-                zIndex: "1000"
+                zIndex: "1000",
               }}
             >
               <div className="row g-2">
@@ -393,7 +383,9 @@ const BankStatement = () => {
                         filteredSubAdminOptions.map((option, index) => (
                           <li
                             key={index}
-                            className={`dropdown-item ${index === activeSubAdminIndex ? "active" : ""}`}
+                            className={`dropdown-item ${
+                              index === activeSubAdminIndex ? "active" : ""
+                            }`}
                             onMouseDown={() => {
                               setSubAdmin(option.userName);
                               setIsSubAdminDropdownVisible(false);
@@ -597,7 +589,6 @@ const BankStatement = () => {
                     >
                       User Name
                     </th>
-
                     <th
                       scope="col"
                       className="text-info"
@@ -605,8 +596,6 @@ const BankStatement = () => {
                     >
                       Balance
                     </th>
-
-
                     <th
                       scope="col"
                       className="text-info"
@@ -676,7 +665,20 @@ const BankStatement = () => {
                           </td>
                           <td>
                             {data?.transactionType && (
-                              <p className="col fs-6 text-break">
+                              <p
+                                className={`col fs-6 text-break ${
+                                  ["Manual-Bank-Deposit", "Deposit"].includes(
+                                    data.transactionType
+                                  )
+                                    ? "text-success" // Green for deposits
+                                    : [
+                                        "Manual-Bank-Withdraw",
+                                        "Withdraw",
+                                      ].includes(data.transactionType)
+                                    ? "text-danger" // Red for withdrawals
+                                    : ""
+                                }`}
+                              >
                                 {data?.transactionType}
                               </p>
                             )}
@@ -708,9 +710,19 @@ const BankStatement = () => {
 
                           <td>{data?.remarks}</td>
 
-                          <td onClick={(e) => {
-                            handleDelete(e, data?.Transaction_Id ? data?.Transaction_Id : data?.bankTransactionId ? data?.bankTransactionId : "", data?.transactionType);
-                          }}>
+                          <td
+                            onClick={(e) => {
+                              handleDelete(
+                                e,
+                                data?.Transaction_Id
+                                  ? data?.Transaction_Id
+                                  : data?.bankTransactionId
+                                  ? data?.bankTransactionId
+                                  : "",
+                                data?.transactionType
+                              );
+                            }}
+                          >
                             <button type="button" className="btn btn-danger">
                               <FontAwesomeIcon icon={faTrash} />
                             </button>
@@ -738,7 +750,6 @@ const BankStatement = () => {
               perPagePagination={10}
             />
           ) : null}
-
         </SingleCard>
       </div>
     </>
