@@ -12,7 +12,7 @@ import {
   FormControl,
   Alert,
 } from "react-bootstrap";
- import { FaArrowRight } from "react-icons/fa";
+import { FaArrowRight } from "react-icons/fa";
 
 const InnerIntroducer = () => {
   const auth = useAuth();
@@ -37,9 +37,9 @@ const InnerIntroducer = () => {
     return fullName.includes(q.toLowerCase());
   });
 
-  const handelShowPercentage = (e, Transaction) => {
-    console.log("T=>>>>>", Transaction);
-    navigate("/showpercentageintroducer", { state: { Transaction } });
+  const handelShowPercentage = (e, id) => {
+    console.log("console", id)
+    navigate(`/showpercentageintroducer/${id}`);
   };
 
   return (
@@ -92,11 +92,11 @@ const InnerIntroducer = () => {
                     </div>
                   </div>
                 </td>
-               
+
                 <td>
                   <Button
                     onClick={(e) =>
-                      handelShowPercentage(e, user.transactionDetail, user._id)
+                      handelShowPercentage(e, user.userId)
                     }
                     style={{
                       backgroundColor: "#17a2b8",

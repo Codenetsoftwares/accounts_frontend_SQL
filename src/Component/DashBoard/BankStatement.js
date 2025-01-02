@@ -350,11 +350,11 @@ const BankStatement = () => {
                     <option value="Withdraw">
                       <b>Withdraw</b>
                     </option>
-                    <option value="Manual-Website-Deposit">
-                      <b>Manual Website Deposit</b>
+                    <option value="Manual-Bank-Deposit">
+                      <b>Manual Bank Deposit</b>
                     </option>
-                    <option value="Manual-Website-Withdraw">
-                      <b>Manual Website Withdraw</b>
+                    <option value="Manual-Bank-Withdraw">
+                      <b>Manual Bank Withdraw</b>
                     </option>
                   </select>
                 </div>

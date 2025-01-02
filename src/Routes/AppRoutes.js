@@ -342,7 +342,7 @@ const AppRoutes = () => {
           )}
           {[userrole]?.some(
             (role) =>
-              role.includes("superAdmin") || role.includes("Request-Admin")
+              role.includes("superAdmin") || role.includes("RecycleBin-View")
           ) && (
             <Route
               path="trashAllTransaction"
@@ -454,7 +454,7 @@ const AppRoutes = () => {
           />
 
           <Route
-            path="showpercentageintroducer"
+            path="showpercentageintroducer/:id"
             element={
               <RequireAuth>
                 <IntroShowPr />
@@ -462,7 +462,7 @@ const AppRoutes = () => {
             }
           />
           <Route
-            path="transactiondetails"
+            path="transactiondetails/:id"
             element={
               <RequireAuth>
                 <TransactionDetails />
