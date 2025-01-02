@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import AccountService from "../../Services/AccountService";
 import { useAuth } from "../../Utils/Auth";
+import { toast } from "react-toastify";
 
 const SubAdResetPassword = ({ UserName }) => {
   const auth = useAuth();
@@ -9,9 +10,12 @@ const SubAdResetPassword = ({ UserName }) => {
 
   const handleResetpassword = (e) => {
     e.preventDefault();
-
+    if (password === "" || Cpassword === "") {
+      toast.info("Fileds Can Not Be Empty");
+      return;
+    }
     if (password !== Cpassword) {
-      alert("Passwords do not match.");
+      toast.info("Passwords do not match.");
       return;
     }
 

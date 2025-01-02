@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import SubAdResetPassword from "../Modal/SubAdResetPassword";
 import AssignedBank from "../Modal/AssignedBank";
 import AssignedWebsite from "../Modal/AssignedWebsite";
+import { faL } from "@fortawesome/free-solid-svg-icons";
 
 const AdminEditrole = () => {
   const auth = useAuth();
@@ -14,11 +15,15 @@ const AdminEditrole = () => {
   const [checkedItems, setCheckedItems] = useState([]);
   const [displayEdit, setDisplayEdit] = useState(false);
   const [adminData, setAdminData] = useState([]);
+  const [adminDataCopy, setAdminDataCopy] = useState([]);
+
   const [username, setUsername] = useState([]);
+  const [isPermissionEdit, setIsPermissionEdit] = useState(false);
   console.log('====>>> admin data',adminData)
 
   const setData = () => {
     setCheckedItems(adminData.roles);
+    setAdminDataCopy(adminData.roles);
   };
   const handleResetPassword = (e, username) => {
     setUsername(username);
@@ -45,6 +50,10 @@ const AdminEditrole = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if(checkedItems === adminDataCopy){
+      toast.info(" Atleast One Filed Must Be  Changed");
+      return;
+    }
     console.log(checkedItems);
     AccountService.updateSingleAdminPermission(
       id,
@@ -347,8 +356,17 @@ const AdminEditrole = () => {
                   </label>
                 </div>
               </div>
-              <div className="card-footer">
-                <div className="col-12 text-end">
+              <div className="card-footer ">
+              <div className="col-6 text-end">
+                  <button
+                    onClick={()=>{setDisplayEdit(false)}}
+                    className="btn btn-primary mb-0"
+                  >
+                    Back
+                  </button>
+                </div>
+                <br/>
+                <div className="col-6 text-end">
                   <button
                     onClick={handleSubmit}
                     className="btn btn-primary mb-0"

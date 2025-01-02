@@ -11,9 +11,12 @@ const IntroResetpassword = ({ UserName }) => {
 
   const handleResetpassword = (e) => {
     e.preventDefault();
-
+    if (password === "" || Cpassword === "") {
+      toast.info("Fileds Can Not Be Empty");
+      return;
+    }
     if (password !== Cpassword) {
-      alert("Passwords do not match.");
+      toast.info("Passwords do not match.");
       return;
     }
 
