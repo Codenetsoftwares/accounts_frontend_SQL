@@ -12,16 +12,19 @@ const EditProfileSubadmin = () => {
   const auth = useAuth();
   const [users, setUsers] = useState([]);
   const [foundObject, setFoundObject] = useState([]);
-  const [isAccordionOpen, setIsAccordionOpen] = useState(false); // State for accordion open/close
+  const [isRerender, setIsRerender] = useState(null); // State for accordion open/close
   const [isEditing, setIsEditing] = useState(false); // Track which field is being edited
-  const [editedData, setEditedData] = useState({}); // Store edited data
+  const [editedData, setEditedData] = useState({
+    firstName : '',
+    lastName : ''
+  }); // Store edited data
   console.log(id);
   useEffect(() => {
     AccountService.getSingleAdmin(id, auth.user).then((res) => {
       console.log(res.data);
       setFoundObject(res.data.data);
     });
-  }, []);
+  }, [isRerender]);
 
   console.log("This is User Deatils===>>", foundObject);
 
@@ -34,24 +37,30 @@ const EditProfileSubadmin = () => {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setEditedData({ ...editedData, [name]: value });
+    setEditedData((editedData)=>({ ...editedData, [name]: value }));
   };
 
-  const handleSave = (field) => {
+  const handleSave = () => {
+    console.log("edited data", editedData)
     setIsEditing(false);
-    setEditedData({ ...editedData, [field]: "" });
     const data = {
-      firstName: editedData.firstname,
-      lastName: editedData.lastname,
+      firstName: editedData.firstName || foundObject.firstName,
+      lastName: editedData.lastName || foundObject.lastName,
     };
+    if ((data.firstName === foundObject.firstName && data.lastName === foundObject.lastName)) {
+      toast.info("At Least one field must be changed");
+      return;
+    }
+    
 
     // put Api Fetching
     AccountService.editsubadminprofile(id, data, auth.user)
       .then((res) => {
         console.log("res", res);
         if (res.status === 200) {
-         alert("Profile updated");
-          window.location.reload();
+         toast.success("Profile updated");
+         setIsRerender(res);
+         
         } else {
           toast.error("Failed");
         }
@@ -102,7 +111,7 @@ const EditProfileSubadmin = () => {
                       <div className="mb-3">
                         <label className="form-label">First Name</label>
                         <input
-                          name="firstname"
+                          name="firstName"
                           value={
                             isEditing
                               ? editedData.firstName
@@ -117,7 +126,7 @@ const EditProfileSubadmin = () => {
                       <div className="mb-3">
                         <label className="form-label">Last Name</label>
                         <input
-                          name="lastname"
+                          name="lastName"
                           value={
                             isEditing
                               ? editedData.lastName

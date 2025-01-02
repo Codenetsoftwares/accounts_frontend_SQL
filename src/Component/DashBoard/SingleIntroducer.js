@@ -38,9 +38,15 @@ const SingleIntroducer = () => {
 
   const handleSave = () => {
     const data = {
-      firstname: editedData.firstName,
-      lastname: editedData.lastName,
+      firstName: editedData.firstName,
+      lastName: editedData.lastName,
     };
+    setIsEditing(false);
+
+   if ((data.firstName === foundObject.firstName && data.lastName === foundObject.lastName)) {
+        toast.info("At Least one field must be changed");
+        return;
+      }
 
     AccountService.introducerProfileEdit(data, id, auth.user)
       .then((res) => {
@@ -53,8 +59,9 @@ const SingleIntroducer = () => {
         toast.error(customErrorHandler(err));
       });
 
-    setIsEditing(false);
   };
+
+
 
   return (
     <div
