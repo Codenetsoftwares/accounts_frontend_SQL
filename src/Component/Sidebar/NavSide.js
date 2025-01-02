@@ -624,7 +624,7 @@ const NavSide = ({ onSelect }) => {
 
               {/* request part */}
               {userrole.some(
-                (role) => role === "superAdmin" || role === "RequestAdmin"
+                (role) => role === "superAdmin" || role === "Request-Admin"
               ) && (
                 <>
                   {" "}
@@ -697,7 +697,7 @@ const NavSide = ({ onSelect }) => {
                       </Link>
                       {userrole.some(
                         (role) =>
-                          role === "superAdmin" || role === "RequestAdmin"
+                          role === "superAdmin" || role === "Request-Admin"
                       ) && (
                         <>
                           {IsToggleBank ? (
@@ -781,7 +781,7 @@ const NavSide = ({ onSelect }) => {
                       )}
                       {userrole.some(
                         (role) =>
-                          role === "superAdmin" || role === "RequestAdmin"
+                          role === "superAdmin" || role === "Request-Admin"
                       ) && (
                         <>
                           {IsToggleWebsite ? (

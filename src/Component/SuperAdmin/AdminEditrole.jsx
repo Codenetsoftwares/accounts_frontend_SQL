@@ -315,8 +315,8 @@ const AdminEditrole = () => {
                   <label>
                     <input
                       type="checkbox"
-                      value="RequestAdmin"
-                      checked={checkedItems.includes("RequestAdmin")}
+                      value="Request-Admin"
+                      checked={checkedItems.includes("Request-Admin")}
                       onChange={handleCheckboxChange}
                     />
                     <span>Request</span>

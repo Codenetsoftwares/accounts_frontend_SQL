@@ -238,7 +238,7 @@ const AppRoutes = () => {
           )}
           {[userrole]?.some(
             (role) =>
-              role.includes("superAdmin") || role.includes("RequestAdmin")
+              role.includes("superAdmin") || role.includes("Request-Admin")
           ) && (
             <Route
               path="alert"
@@ -251,7 +251,7 @@ const AppRoutes = () => {
           )}
           {[userrole]?.some(
             (role) =>
-              role.includes("superAdmin") || role.includes("RequestAdmin")
+              role.includes("superAdmin") || role.includes("Request-Admin")
           ) && (
             <Route
               path="introduceralert"
@@ -264,7 +264,7 @@ const AppRoutes = () => {
           )}
           {[userrole]?.some(
             (role) =>
-              role.includes("superAdmin") || role.includes("RequestAdmin")
+              role.includes("superAdmin") || role.includes("Request-Admin")
           ) && (
             <Route
               path="bankDelete"
@@ -277,7 +277,7 @@ const AppRoutes = () => {
           )}
           {[userrole]?.some(
             (role) =>
-              role.includes("superAdmin") || role.includes("RequestAdmin")
+              role.includes("superAdmin") || role.includes("Request-Admin")
           ) && (
             <Route
               path="bankEdit"
@@ -290,7 +290,7 @@ const AppRoutes = () => {
           )}
           {[userrole]?.some(
             (role) =>
-              role.includes("superAdmin") || role.includes("RequestAdmin")
+              role.includes("superAdmin") || role.includes("Request-Admin")
           ) && (
             <Route
               path="newbank"
@@ -303,7 +303,7 @@ const AppRoutes = () => {
           )}
           {[userrole]?.some(
             (role) =>
-              role.includes("superAdmin") || role.includes("RequestAdmin")
+              role.includes("superAdmin") || role.includes("Request-Admin")
           ) && (
             <Route
               path="newwebsite"
@@ -316,7 +316,7 @@ const AppRoutes = () => {
           )}
           {[userrole]?.some(
             (role) =>
-              role.includes("superAdmin") || role.includes("RequestAdmin")
+              role.includes("superAdmin") || role.includes("Request-Admin")
           ) && (
             <Route
               path="websiteEdit"
@@ -329,7 +329,7 @@ const AppRoutes = () => {
           )}
           {[userrole]?.some(
             (role) =>
-              role.includes("superAdmin") || role.includes("RequestAdmin")
+              role.includes("superAdmin") || role.includes("Request-Admin")
           ) && (
             <Route
               path="websiteDelete"
@@ -342,7 +342,7 @@ const AppRoutes = () => {
           )}
           {[userrole]?.some(
             (role) =>
-              role.includes("superAdmin") || role.includes("RequestAdmin")
+              role.includes("superAdmin") || role.includes("Request-Admin")
           ) && (
             <Route
               path="trashAllTransaction"
