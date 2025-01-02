@@ -10,6 +10,7 @@ import "react-datetime/css/react-datetime.css";
 import moment from "moment";
 import TransactionSercvice from "../../Services/TransactionSercvice";
 import Pagination from "../Pagination";
+import NewPagination from "../NewPagination";
 
 const TransactionDetails = () => {
   const [startDatevalue, SetStartDatesetValue] = useState(moment().subtract(1, "days").toDate());
@@ -56,7 +57,7 @@ const TransactionDetails = () => {
       setTotalData(res?.data?.pagination?.totalItems);
       setTotalPage(res?.data?.pagination?.totalPages);
     });
-  }, [auth.user, id, page, startDatevalue, endDatevalue, select, , website, bank, subAdmin ]);
+  }, [auth.user, id, page, startDatevalue, endDatevalue, select, , website, bank, subAdmin]);
 
   const handleReset = () => {
     setSelect("");
@@ -453,7 +454,7 @@ const TransactionDetails = () => {
             </tbody>
           </table>
         </small>
-        <Pagination
+        <NewPagination
           currentPage={page}
           totalPages={totalPage}
           handlePageChange={selectPageHandler}

@@ -11,6 +11,7 @@ import moment from "moment";
 import { useLocation } from "react-router-dom";
 import TransactionSercvice from "../../Services/TransactionSercvice";
 import Pagination from "../Pagination";
+import NewPagination from "../NewPagination";
 
 const IntroShowPr = () => {
   const { id } = useParams()
@@ -89,6 +90,7 @@ const IntroShowPr = () => {
 
   const startIndex = Math.min((page - 1) * pageLimit + 1);
   const endIndex = Math.min(page * pageLimit, totalData);
+  console.log("first",startIndex,endIndex)
 
   const handleReset = () => {
     setSelect("");
@@ -420,7 +422,7 @@ const IntroShowPr = () => {
             </tbody>
           </table>
         </small>
-        <Pagination
+        <NewPagination
           currentPage={page}
           totalPages={totalPage}
           handlePageChange={selectPageHandler}
