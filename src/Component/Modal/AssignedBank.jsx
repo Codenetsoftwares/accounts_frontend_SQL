@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../Utils/Auth";
 import AccountService from "../../Services/AccountService";
+import { toast } from "react-toastify";
 
 const AssignedBank = ({ ID }) => {
   const [BankNames, setBankNames] = useState([]);
@@ -8,13 +9,16 @@ const AssignedBank = ({ ID }) => {
   const auth = useAuth();
 
   useEffect(() => {
-    AccountService.subadminassigneedbankview(ID, auth.user)
-      .then((res) =>
-        setBankNames(res.data.data)
-      )
-      .catch((err) => {
-        console.log(err.response.data.message);
-      });
+    const fetchBankNames = async () => {
+      try {
+        const res = await AccountService.subadminassigneedbankview(ID, auth.user);
+        setBankNames(res.data.data);
+      } catch (err) {
+        console.error("Error fetching bank names:", err.response?.data?.message || err.message);
+      }
+    };
+  
+    fetchBankNames();
   }, [ID, auth]);
 
   const handelsave = () => {
