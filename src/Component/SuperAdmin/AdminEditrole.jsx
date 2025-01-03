@@ -41,11 +41,20 @@ const AdminEditrole = () => {
   };
   console.log(checkedItems);
   useEffect(() => {
-    AccountService.getSingleAdmin(id, auth.user).then((res) => {
-      console.log(res.data);
-      setAdminData(res.data.data);
-    });
-  }, []);
+    const fetchAdminData = async () => {
+      try {
+        const res = await AccountService.getSingleAdmin(id, auth.user);
+        console.log(res.data);
+        setAdminData(res.data.data);
+      } catch (error) {
+        console.error("Error fetching admin data:", error);
+        // Optionally, you can show a toast or set error state to display to the user
+        toast.error("Failed to load admin data. Please try again later.");
+      }
+    };
+  
+    fetchAdminData();
+  }, [id, auth.user]); 
   console.log("Data =>>>>", adminData);
 
   const handleSubmit = (e) => {

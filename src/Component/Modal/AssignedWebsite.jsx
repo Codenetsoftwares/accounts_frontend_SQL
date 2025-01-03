@@ -4,22 +4,30 @@ import AccountService from "../../Services/AccountService";
 
 const AssignedWebsite = ({ ID }) => {
   const [WebsiteNames, setWebsiteNames] = useState([]);
-    const auth = useAuth();
-    const username = ID;
+  const auth = useAuth();
+  const username = ID;
 
   useEffect(() => {
-    AccountService.subadminassigneedwebsiteview(username, auth.user)
-      .then((res) =>
-        setWebsiteNames(res.data.data)
-      )
-      .catch((err) => {
-        console.log(err.response.data.message);
-      });
+    const fetchWebsiteNames = async () => {
+      try {
+        const res = await AccountService.subadminassigneedwebsiteview(
+          username,
+          auth.user
+        );
+        setWebsiteNames(res.data.data); // Update the state with the fetched data
+      } catch (err) {
+        console.error(
+          "Error fetching website names:",
+          err.response?.data?.message || err.message
+        );
+      }
+    };
+
+    fetchWebsiteNames(); // Invoke the async function to fetch data
   }, [username, auth]);
 
   const handelsave = () => {
-      console.log("=>>>>", WebsiteNames);
-     
+    console.log("=>>>>", WebsiteNames);
   };
 
   return (
