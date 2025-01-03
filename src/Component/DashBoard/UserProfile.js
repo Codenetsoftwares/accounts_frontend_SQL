@@ -38,7 +38,7 @@ const UserProfile = () => {
   const [profileView, setProfileView] = useState("");
   const [bankViewEdit, setBankViewEdit] = useState("");
   const [selectedUser, setSelectedUser] = useState(null);
- 
+
 
   console.log("======>>> data", users);
 
@@ -132,12 +132,11 @@ const UserProfile = () => {
     setSelectedUser(user);
   };
 
-  const handleTransaction = (e, userData) => {
+  const handleTransaction = (e, userData, id) => {
     e.preventDefault();
     console.log("Transaction for user:", userData);
 
-    navigate("/transactiondetails", {
-      state: { txndetails: userData?.transactionDetails },
+    navigate(`/transactiondetails/${id}`, {
     });
   };
 
@@ -235,9 +234,8 @@ const UserProfile = () => {
                     onMouseLeave={() => setHoveredCard(null)}
                   >
                     <div
-                      className={`card d-flex justify-content-between ${
-                        hoveredCard === user.userId ? "card-hover-shadow" : ""
-                      }`}
+                      className={`card d-flex justify-content-between ${hoveredCard === user.userId ? "card-hover-shadow" : ""
+                        }`}
                       style={{
                         borderRadius: "20px",
                         height: "200px",
@@ -302,7 +300,7 @@ const UserProfile = () => {
                               <button
                                 type="button"
                                 className="btn btn-steel-blue btn-sm btn-hover-zoom"
-                                onClick={(e) => handleTransaction(e, user)}
+                                onClick={(e) => handleTransaction(e, user, user.userId)}
                                 title="Transaction Details"
                               >
                                 <FontAwesomeIcon
@@ -345,7 +343,7 @@ const UserProfile = () => {
             bankDetail={selectedUser.Bank_Details}
             upiDetail={selectedUser.Upi_Details}
             paramsid={bankViewEdit}
-           
+
           />
         )}
       </div>

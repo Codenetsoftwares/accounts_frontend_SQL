@@ -704,6 +704,16 @@ class AccountService {
       },
     });
   }
+
+  getUserTransaction(user, id, page, pageLimit, type, subAdminName, bankName, websiteName, startDate, endDate,) {
+    return axios({
+      method: "get",
+      url: `${API_HOST}/api/user/transaction/${id}?page=${page}&pageSize=${pageLimit}&transactionType=${type}&bankName=${bankName}&websiteName=${websiteName}&subAdminName=${subAdminName}&startDate=${startDate}&endDate=${endDate}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
 }
 
 export default new AccountService();
