@@ -7,7 +7,7 @@ import { useAuth } from "../../Utils/Auth";
 import { customErrorHandler } from "../../Utils/helper";
 import { toast } from "react-toastify";
 
-const UserBank = ({ bankDetail, upiDetail, paramsid }) => {
+const UserBank = ({ bankDetail, upiDetail, paramsid , setRenderMaster , setUsers  , fetchData}) => {
   const auth = useAuth();
   const [isEditing, setIsEditing] = useState({});
   const [editedBankDetail, setEditedBankDetail] = useState(bankDetail);
@@ -35,7 +35,28 @@ const UserBank = ({ bankDetail, upiDetail, paramsid }) => {
     }
   };
 
+
+
   const handleUpdate = () => {
+    console.log("editedBankDetail", editedBankDetail , editedUpiDetail)
+    if(editedBankDetail===bankDetail){
+      toast.info("At Least One Field Should Be Changed");
+      return;
+    }
+    
+
+    if (
+      editedBankDetail.bankName === "" &&
+      editedBankDetail.accountNumber === "" &&
+      editedUpiDetail.upiApp === "" &&
+      editedUpiDetail.upiId === "" &&
+      editedUpiDetail.upiNumber === ""
+    ) {
+      toast.info("Fields Can Not Be Empty");
+      return; // Exit the function if any field is empty
+    }
+    
+
     const updatedData = {
       Bank_Details: editedBankDetail,
       Upi_Details: editedUpiDetail,
@@ -47,6 +68,9 @@ const UserBank = ({ bankDetail, upiDetail, paramsid }) => {
         if (res.status === 200) {
           toast.success(res.data.message);
           document.querySelector("#modalbank .btn-close").click();
+          setUsers([]);
+          fetchData();
+          setRenderMaster(res);
         }
       })
       .catch((err) => {
