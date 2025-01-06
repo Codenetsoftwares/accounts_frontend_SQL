@@ -5,19 +5,25 @@ import { toast } from "react-toastify";
 
 const AssignedBank = ({ ID }) => {
   const [BankNames, setBankNames] = useState([]);
-  console.log('=====>>> data for banknames',BankNames)
+  console.log("=====>>> data for banknames", BankNames);
   const auth = useAuth();
 
   useEffect(() => {
     const fetchBankNames = async () => {
       try {
-        const res = await AccountService.subadminassigneedbankview(ID, auth.user);
+        const res = await AccountService.subadminassigneedbankview(
+          ID,
+          auth.user
+        );
         setBankNames(res.data.data);
       } catch (err) {
-        console.error("Error fetching bank names:", err.response?.data?.message || err.message);
+        console.error(
+          "Error fetching bank names:",
+          err.response?.data?.message || err.message
+        );
       }
     };
-  
+
     fetchBankNames();
   }, [ID, auth]);
 
@@ -62,7 +68,7 @@ const AssignedBank = ({ ID }) => {
                   {BankNames.map((data, index) => (
                     <tr key={index}>
                       <th scope="row">{index + 1}</th>
-                      <td>{data.bankName}</td> 
+                      <td>{data.bankName}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -78,9 +84,6 @@ const AssignedBank = ({ ID }) => {
               data-dismiss="modal"
             >
               Close
-            </button>
-            <button type="button" class="btn btn-primary" onClick={handelsave}>
-              Save changes
             </button>
           </div>
         </div>

@@ -90,15 +90,15 @@ const IntroShowPr = () => {
 
   const startIndex = Math.min((page - 1) * pageLimit + 1);
   const endIndex = Math.min(page * pageLimit, totalData);
-  console.log("first",startIndex,endIndex)
+  console.log("first", startIndex, endIndex)
 
   const handleReset = () => {
     setSelect("");
     setSubAdmin("");
     setBank("");
     setWebsite("");
-    SetStartDatesetValue("");
-    setEndDateValue("");
+    SetStartDatesetValue(moment().subtract(1, "days").toDate());
+    setEndDateValue(new Date());
   };
 
   const handleStartDatevalue = (e) => {
@@ -422,14 +422,15 @@ const IntroShowPr = () => {
             </tbody>
           </table>
         </small>
-        <NewPagination
+        {documentView.length > 0 && <NewPagination
           currentPage={page}
           totalPages={totalPage}
           handlePageChange={selectPageHandler}
           startIndex={startIndex}
           endIndex={endIndex}
           totalData={totalData}
-        />
+        />}
+
       </div>
     </div>
   );

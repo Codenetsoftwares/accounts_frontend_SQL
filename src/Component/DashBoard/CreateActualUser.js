@@ -18,6 +18,8 @@ import { CreateUserSchema } from "../../Services/schema";
 import AccountService from "../../Services/AccountService";
 import { debounce } from "lodash";
 import { customErrorHandler } from "../../Utils/helper";
+import FullScreenLoader from "../FullScreenLoader";
+import { faSlack } from "@fortawesome/free-brands-svg-icons";
 
 const CreateActualUser = () => {
   // Get authentication context
@@ -38,7 +40,7 @@ const CreateActualUser = () => {
     introducerPercentage1: "",
     introducerPercentage2: "",
   };
-
+  const [isLoading, setIsLoading] = useState(false);
   // State hooks for storing introducer options and filtered results
   const [introducerOption, setIntroducerOption] = useState([]);
   const [introducerOption1, setIntroducerOption1] = useState([]);
@@ -129,6 +131,7 @@ const CreateActualUser = () => {
 
     // Check if passwords match before submitting
     if (values.password === values.confirmPassword) {
+      setIsLoading(true);
       AccountService.createActualuser(values, auth.user)
         .then((res) => {
           console.log("res", res?.data);
@@ -141,10 +144,12 @@ const CreateActualUser = () => {
           setIsDropdownVisible(false);
           setIsDropdownVisible1(false);
           setIsDropdownVisible2(false);
+          setIsLoading(false);
           // window.location.reload(); // Reload page after successful submission
         })
         .catch((err) => {
           console.log("error", err);
+          setIsLoading(false);
           toast.error(customErrorHandler(err)); // Display error message
           return;
         });
@@ -156,6 +161,7 @@ const CreateActualUser = () => {
   return (
     <>
       <div className="row justify-content-center">
+        <FullScreenLoader show={isLoading} />
         <div className="col-lg-9">
           <div className="row justify-content-center">
             <SingleCard className="mt-2" style={{ backgroundColor: "#e6f7ff" }}>
