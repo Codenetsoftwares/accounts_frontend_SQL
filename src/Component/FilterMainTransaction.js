@@ -9,6 +9,7 @@ import AccountService from "../Services/AccountService";
 import { toast } from "react-toastify";
 import SingleCard from "../common/singleCard";
 import { debounce } from "lodash";
+import { formatDate } from "../Utils/helper";
 
 const FilterMainTransaction = ({
   purpose,
@@ -35,8 +36,8 @@ const FilterMainTransaction = ({
   );
   const [endDatevalue, setEndDateValue] = useState(new Date());
   const [documentView, setDocumentView] = useState([]);
-  const [minAmount, setMinAmount] = useState("undefined");
-  const [maxAmount, setMaxAmount] = useState("undefined");
+  const [minAmount, setMinAmount] = useState(0);
+  const [maxAmount, setMaxAmount] = useState(0);
   const [bankList, setBankList] = useState([]);
   const [filteredBankOptions, setFilteredBankOptions] = useState([]);
   const [isBankDropdownVisible, setIsBankDropdownVisible] = useState(false);
@@ -65,9 +66,9 @@ const FilterMainTransaction = ({
         subAdminId: subAdmin,
         bankName: bank,
         websiteName: website,
-        // sdate: moment(startDatevalue).toDate(),
-        // edate: moment(endDatevalue).toDate(),
-        maxAmount: maxAmount,
+        startDate: formatDate(moment(startDatevalue).toDate()),
+        endDate: formatDate(moment(endDatevalue).toDate()),
+        maxAmount: maxAmount === 0 ? 5000 : maxAmount,
         minAmount: minAmount,
         transactionID: searchByTransactionId,
       },
@@ -115,6 +116,8 @@ const FilterMainTransaction = ({
     searchByTransactionId,
     maxAmount,
     minAmount,
+    startDatevalue,
+    endDatevalue
   ]);
 
   useEffect(() => {
@@ -420,9 +423,8 @@ const FilterMainTransaction = ({
                   filteredSubAdminOptions.map((option, index) => (
                     <li
                       key={index}
-                      className={`dropdown-item ${
-                        index === activeSubAdminIndex ? "active" : ""
-                      }`}
+                      className={`dropdown-item ${index === activeSubAdminIndex ? "active" : ""
+                        }`}
                       onMouseDown={() => {
                         setSubAdmin(option.userName);
                         setIsSubAdminDropdownVisible(false);
@@ -464,9 +466,8 @@ const FilterMainTransaction = ({
                       filteredIntroducerOptions.map((option, index) => (
                         <li
                           key={index}
-                          className={`dropdown-item ${
-                            index === activeIntroducerIndex ? "active" : ""
-                          }`}
+                          className={`dropdown-item ${index === activeIntroducerIndex ? "active" : ""
+                            }`}
                           onMouseDown={() => {
                             setIntroducer(option.userName);
                             setIsIntroducerDropdownVisible(false);
@@ -506,9 +507,8 @@ const FilterMainTransaction = ({
                       filteredBankOptions.map((option, index) => (
                         <li
                           key={index}
-                          className={`dropdown-item ${
-                            index === activeBankIndex ? "active" : ""
-                          }`}
+                          className={`dropdown-item ${index === activeBankIndex ? "active" : ""
+                            }`}
                           onMouseDown={() => {
                             setBank(option.bankName);
                             setIsBankDropdownVisible(false);
@@ -550,9 +550,8 @@ const FilterMainTransaction = ({
                   filteredWebsiteOptions.map((option, index) => (
                     <li
                       key={index}
-                      className={`dropdown-item ${
-                        index === activeWebsiteIndex ? "active" : ""
-                      }`}
+                      className={`dropdown-item ${index === activeWebsiteIndex ? "active" : ""
+                        }`}
                       onMouseDown={() => {
                         setWebsite(option.websiteName);
                         setIsWebsiteDropdownVisible(false);
