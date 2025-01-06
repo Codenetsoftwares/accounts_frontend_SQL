@@ -259,10 +259,10 @@ class AccountService {
     });
   }
 
-  introducerUsersingleProfile(id, user) {
+  introducerUsersingleProfile(id, user , search , page , pageSize) {
     return axios({
       method: "get",
-      url: `${API_HOST}/introducer-user-single-data/${id}`,
+      url: `${API_HOST}/introducer-user-single-data/${id}?page=${page}&pageSize=${pageSize}&search=${search}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
