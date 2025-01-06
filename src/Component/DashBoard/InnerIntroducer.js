@@ -13,32 +13,46 @@ import {
   Alert,
 } from "react-bootstrap";
 import { FaArrowRight } from "react-icons/fa";
+import NewPagination from "../NewPagination";
 
 const InnerIntroducer = () => {
   const auth = useAuth();
   const navigate = useNavigate();
   const [client, SetClient] = useState([]);
   const [q, setQ] = useState("");
+  const [page, setPage] = useState(1);
+  const [totalData, setTotalData] = useState(0);
+  const [totalPage, setTotalPage] = useState(0);
+  const pageLimit = 10;
+  const startIndex = Math.min((page - 1) * pageLimit + 1);
+  const endIndex = Math.min(page * pageLimit, totalData);
 
   const { id } = useParams();
+console.log("page", page)
+  const selectPageHandler = (selectedPage) => {
+    console.log(selectedPage);
+    setPage(selectedPage);
+  };
 
   useEffect(() => {
-    AccountService.introducerUsersingleProfile(id, auth.user)
+    AccountService.introducerUsersingleProfile(id, auth.user,q , page, pageLimit)
       .then((res) => {
         SetClient(res.data.data);
+        setTotalData(res?.data?.pagination?.totalItems);
+        setTotalPage(res?.data?.pagination?.totalPages);
       })
       .catch((error) => {
         console.error("Error fetching user data:", error);
       });
-  }, [auth.user, id]);
+  }, [auth.user, id , q , page]);
 
-  const filteredUsers = client.filter((affiliate) => {
-    const fullName = affiliate.userName.toLowerCase();
-    return fullName.includes(q.toLowerCase());
-  });
+  // const filteredUsers = client.filter((affiliate) => {
+  //   const fullName = affiliate.userName.toLowerCase();
+  //   return fullName.includes(q.toLowerCase());
+  // });
 
   const handelShowPercentage = (e, id) => {
-    console.log("console", id)
+    console.log("console", id);
     navigate(`/showpercentageintroducer/${id}`);
   };
 
@@ -52,7 +66,7 @@ const InnerIntroducer = () => {
         />
       </InputGroup>
       <h5 className="text-center mb-3">List of Users</h5>
-      {filteredUsers && filteredUsers.length > 0 ? (
+      {client && client.length > 0 ? (
         <Table striped bordered hover>
           <thead>
             <tr align="center">
@@ -63,7 +77,7 @@ const InnerIntroducer = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredUsers?.map((user) => (
+            {client?.map((user) => (
               <tr key={user._id} align="center">
                 <td>{user.userName}</td>
                 <td>
@@ -95,9 +109,7 @@ const InnerIntroducer = () => {
 
                 <td>
                   <Button
-                    onClick={(e) =>
-                      handelShowPercentage(e, user.userId)
-                    }
+                    onClick={(e) => handelShowPercentage(e, user.userId)}
                     style={{
                       backgroundColor: "#17a2b8",
                       borderColor: "#17a2b8",
@@ -120,6 +132,17 @@ const InnerIntroducer = () => {
         </Table>
       ) : (
         <Alert variant="warning">No Network Found</Alert>
+      )}
+
+      {client.length > 0 && (
+        <NewPagination
+          currentPage={page}
+          totalPages={totalPage}
+          handlePageChange={selectPageHandler}
+          startIndex={startIndex}
+          endIndex={endIndex}
+          totalData={totalData}
+        />
       )}
     </div>
   );
