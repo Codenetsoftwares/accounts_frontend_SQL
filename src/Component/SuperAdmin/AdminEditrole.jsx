@@ -184,8 +184,8 @@ const AdminEditrole = () => {
                   <label>
                     <input
                       type="checkbox"
-                      value="report-all-txn"
-                      checked={checkedItems.includes("report-all-txn")}
+                      value="Report-All-Txn"
+                      checked={checkedItems.includes("Report-All-Txn")}
                       onChange={handleCheckboxChange}
                     />
                     <span>Report-All Transaction</span>
@@ -195,8 +195,8 @@ const AdminEditrole = () => {
                   <label>
                     <input
                       type="checkbox"
-                      value="report-my-txn"
-                      checked={checkedItems.includes("report-my-txn")}
+                      value="Report-My-Txn"
+                      checked={checkedItems.includes("Report-My-Txn")}
                       onChange={handleCheckboxChange}
                     />
                     <span>Report-My Transaction</span>
@@ -366,15 +366,17 @@ const AdminEditrole = () => {
                 </div>
               </div>
               <div className="card-footer ">
-              <div className="col-6 text-end">
+                <div className="col-6 text-end">
                   <button
-                    onClick={()=>{setDisplayEdit(false)}}
+                    onClick={() => {
+                      setDisplayEdit(false);
+                    }}
                     className="btn btn-primary mb-0"
                   >
                     Back
                   </button>
                 </div>
-                <br/>
+                <br />
                 <div className="col-6 text-end">
                   <button
                     onClick={handleSubmit}

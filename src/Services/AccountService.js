@@ -286,7 +286,7 @@ class AccountService {
   Introducerprofile(page, search, user) {
     return axios({
       method: "get",
-      url: `${API_HOST}/api/introducer-profile/${page}?search=${search}`,
+      url: `${API_HOST}/api/introducer-profile?page=${page}&pageSize=${10}&search=${search}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -445,7 +445,7 @@ class AccountService {
   getAdminList(page, search, user) {
     return axios({
       method: "get",
-      url: `${API_HOST}/api/admin/view-sub-admins/${page}?search=${search}`,
+      url: `${API_HOST}/api/admin/view-sub-admins?search=${search}&page=${page}&pageSize=${10}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },

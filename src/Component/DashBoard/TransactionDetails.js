@@ -65,7 +65,7 @@ const TransactionDetails = () => {
     setBank("");
     setWebsite("");
     SetStartDatesetValue(moment().subtract(1, "days").toDate());
-    setEndDateValue("");
+    setEndDateValue(new Date());
   };
 
   const handleStartDatevalue = (e) => {
@@ -153,7 +153,7 @@ const TransactionDetails = () => {
                 <option className="d-flex" value="Withdraw">
                   <b>Withdraw</b>
                 </option>
-                <option className="d-flex" value="Manual-Bank-Deposit">
+                {/* <option className="d-flex" value="Manual-Bank-Deposit">
                   <b>Manual Bank Deposit</b>
                 </option>{" "}
                 <option className="d-flex" value="Manual-Bank-Withdraw">
@@ -164,7 +164,7 @@ const TransactionDetails = () => {
                 </option>{" "}
                 <option className="d-flex" value="Manual-Website-Withdraw">
                   <b>Manual Website Withdraw</b>
-                </option>
+                </option> */}
               </select>
             </div>
 
@@ -454,14 +454,15 @@ const TransactionDetails = () => {
             </tbody>
           </table>
         </small>
-        <NewPagination
+        {documentView.length > 0 && <NewPagination
           currentPage={page}
           totalPages={totalPage}
           handlePageChange={selectPageHandler}
           startIndex={startIndex}
           endIndex={endIndex}
           totalData={totalData}
-        />
+        />}
+
       </div>
     </div>
   );

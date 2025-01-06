@@ -174,64 +174,77 @@ const AdminList = () => {
               }
             >
               <GridCard columns={3}>
-                {adminList.map((data, i) => (
-                  <div
-                    key={data?.adminId}
-                    className="col d-flex justify-content-center align-items-center "
-                    onMouseEnter={() => setHoveredCard(data.adminId)}
-                    onMouseLeave={() => setHoveredCard(null)}
-                  >
+                {adminList && adminList.length > 0 ? (
+                  adminList.map((data, i) => (
                     <div
-                      className={`card d-flex justify-content-between ${
-                        hoveredCard === data?.adminId ? "card-hover-shadow" : ""
-                      }`}
-                      style={{
-                        borderRadius: "20px",
-                        height: "200px",
-                        width: "95%",
-                        position: "relative",
-                      }}
-                      onClick={() => handleCardClick(data?.adminId)}
+                      key={data?.adminId}
+                      className="col d-flex justify-content-center align-items-center"
+                      onMouseEnter={() => setHoveredCard(data.adminId)}
+                      onMouseLeave={() => setHoveredCard(null)}
                     >
-                      <div className="card-body">
-                        <button
-                          type="button"
-                          className="btn btn-steel-blue btn-sm btn-hover-zoom fs-4"
-                          data-toggle="modal"
-                          data-target="#subadminProfile"
-                          onClick={() => {
-                            handleProfileView(data.adminId);
-                          }}
-                        >
-                          <FontAwesomeIcon icon={faUser} className="add-icon" />
-                        </button>
-                        <p
-                          className="font-weight-bold fs-4 text-truncate mt-3"
-                          style={{ color: "#708090" }}
-                        >
-                          {data?.userName}
-                        </p>
-                        <div className="container">
-                          <div>
-                            <button
-                              type="button"
-                              className="btn btn-steel-blue btn-sm btn-hover-zoom font-weight-bold "
-                              style={{
-                                fontFamily: "'Abril Fatface', serif ",
-                                textDecoration: "underline",
-                              }}
-                              onClick={(e) => {
-                                handelDetails(e, data.adminId);
-                              }}
-                            >
-                              Click Here For More Details
-                            </button>
+                      <div
+                        className={`card d-flex justify-content-between ${
+                          hoveredCard === data?.adminId
+                            ? "card-hover-shadow"
+                            : ""
+                        }`}
+                        style={{
+                          borderRadius: "20px",
+                          height: "200px",
+                          width: "95%",
+                          position: "relative",
+                        }}
+                        onClick={() => handleCardClick(data?.adminId)}
+                      >
+                        <div className="card-body">
+                          <button
+                            type="button"
+                            className="btn btn-steel-blue btn-sm btn-hover-zoom fs-4"
+                            data-toggle="modal"
+                            data-target="#subadminProfile"
+                            onClick={() => {
+                              handleProfileView(data.adminId);
+                            }}
+                          >
+                            <FontAwesomeIcon
+                              icon={faUser}
+                              className="add-icon"
+                            />
+                          </button>
+                          <p
+                            className="font-weight-bold fs-4 text-truncate mt-3"
+                            style={{ color: "#708090" }}
+                          >
+                            {data?.userName}
+                          </p>
+                          <div className="container">
+                            <div>
+                              <button
+                                type="button"
+                                className="btn btn-steel-blue btn-sm btn-hover-zoom font-weight-bold"
+                                style={{
+                                  fontFamily: "'Abril Fatface', serif ",
+                                  textDecoration: "underline",
+                                }}
+                                onClick={(e) => {
+                                  handelDetails(e, data.adminId);
+                                }}
+                              >
+                                Click Here For More Details
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
+                  ))
+                ) : (
+                  <div className="col-12 d-flex justify-content-center align-items-center">
+                    <p className="fs-2" style={{ color: "#708090" }}>
+                      No Sub Admin Found
+                    </p>
                   </div>
-                ))}
+                )}
               </GridCard>
             </InfiniteScroll>
           </SingleCard>
