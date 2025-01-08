@@ -84,7 +84,8 @@ const FilterMainTransaction = ({
         );
       })
       .catch((err) => {
-        return handleData(""), toast.error(err.response.data.message);
+        setDocumentFilter([])
+         toast.error(err.response.data.message);
       });
   };
 

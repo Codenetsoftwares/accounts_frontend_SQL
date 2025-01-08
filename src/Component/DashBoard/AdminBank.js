@@ -30,6 +30,7 @@ import SingleCard from "../../common/singleCard";
 import "./AdminBank.css";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { customErrorHandler } from "../../Utils/helper";
+import FullScreenLoader from "../FullScreenLoader";
 // import { useParams } from "react-router";
 const AdminBank = () => {
   const navigate = useNavigate();
@@ -49,6 +50,7 @@ const AdminBank = () => {
   const [activeCard, setActiveCard] = useState(null);
   const [hasMore, setHasMore] = useState(true);
   const [response, setResponse] = useState({});
+  
 
   console.log("========>>>> bankName details", getbankName);
 
@@ -249,6 +251,7 @@ const AdminBank = () => {
           position: "relative",
         }}
       >
+        <FullScreenLoader show={isLoading} />
         <SingleCard
           style={{
             backgroundColor: "#e6f7ff",
@@ -520,7 +523,7 @@ const AdminBank = () => {
           getbankName={getbankName}
           setGetBankName={setGetBankName}
         />
-        <InnerBank />
+        <InnerBank setIsLoading={setIsLoading} isLoading={isLoading}/>
         {/* <SubAdminBank ID={Id} /> */}
         <RenewBankPermission
           SubAdmins={SubAdmins}
