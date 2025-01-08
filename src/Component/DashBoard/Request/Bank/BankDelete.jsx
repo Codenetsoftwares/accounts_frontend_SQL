@@ -3,20 +3,35 @@ import EditServices from "../../../../Services/EditServices";
 import { useAuth } from "../../../../Utils/Auth";
 import { customErrorHandler } from "../../../../Utils/helper";
 import { toast } from "react-toastify";
+import NewPagination from "../../../NewPagination";
 
 const BankDelete = () => {
   const auth = useAuth();
 
   const [viewBankDelete, setViewBankDelete] = useState([]);
   const [renderSate, setRenderSate] = useState("");
+  const [page, setPage] = useState(1);
+  const [totalData, setTotalData] = useState(0);
+  const [totalPage, setTotalPage] = useState(0);
+  const pageLimit = 10;
 
   useEffect(() => {
     if (auth.user) {
-      EditServices.ViewBankDelete(auth.user).then((res) =>
-        setViewBankDelete(res.data.data)
-      );
+      EditServices.ViewBankDelete(auth.user, page, pageLimit).then((res) => {
+        setViewBankDelete(res.data?.data);
+        setTotalData(res?.data?.pagination?.totalItems);
+        setTotalPage(res?.data?.pagination?.totalPages);
+      });
     }
   }, [auth, renderSate]);
+
+  const startIndex = Math.min((page - 1) * pageLimit + 1);
+  const endIndex = Math.min(page * pageLimit, totalData);
+
+  const selectPageHandler = (selectedPage) => {
+    console.log(selectedPage);
+    setPage(selectedPage);
+  };
 
   const handleApprove = (e, id) => {
     e.preventDefault();
@@ -105,6 +120,16 @@ const BankDelete = () => {
         <div class="alert alert-warning text-center" role="alert">
           No Alert Found
         </div>
+      )}
+      {viewBankDelete.length > 0 && (
+        <NewPagination
+          currentPage={page}
+          totalPages={totalPage}
+          handlePageChange={selectPageHandler}
+          startIndex={startIndex}
+          endIndex={endIndex}
+          totalData={totalData}
+        />
       )}
     </div>
   );

@@ -5,19 +5,35 @@ import InnerAlert from "../../Modal/InnerAlert";
 import TransactionSercvice from "../../Services/TransactionSercvice";
 import { toast } from "react-toastify";
 import { customErrorHandler } from "../../Utils/helper";
+import NewPagination from "../NewPagination";
 
 const Alert = () => {
   const auth = useAuth();
   const [alert, setAlert] = useState([]);
   const [renderSate, setRenderSate] = useState("");
+  const [page, setPage] = useState(1);
+  const [totalData, setTotalData] = useState(0);
+  const [totalPage, setTotalPage] = useState(0);
+  const pageLimit = 10;
 
   useEffect(() => {
     if (auth.user) {
-      EditServices.ViewAlert(auth.user).then((res) =>
-        setAlert(res?.data?.data)
+      EditServices.ViewAlert(auth.user, page, pageLimit).then((res) => {
+        setAlert(res.data?.data);
+        setTotalData(res?.data?.pagination?.totalItems);
+        setTotalPage(res?.data?.pagination?.totalPages);
+      }
       );
     }
   }, [auth, renderSate]);
+
+  const selectPageHandler = (selectedPage) => {
+    console.log(selectedPage);
+    setPage(selectedPage);
+  };
+
+  const startIndex = Math.min((page - 1) * pageLimit + 1);
+  const endIndex = Math.min(page * pageLimit, totalData);
 
   const handleDeleteApprove = (e, id, transactionType) => {
     e.preventDefault();
@@ -185,6 +201,16 @@ const Alert = () => {
             No Alert Found
           </div>
         )}
+      {alert.length > 0 && (
+        <NewPagination
+          currentPage={page}
+          totalPages={totalPage}
+          handlePageChange={selectPageHandler}
+          startIndex={startIndex}
+          endIndex={endIndex}
+          totalData={totalData}
+        />
+      )}
       </div>
       <InnerAlert />
     </div>

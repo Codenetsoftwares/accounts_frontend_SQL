@@ -3,10 +3,10 @@ const API_HOST = process.env.REACT_APP_API_HOST;
 console.log(API_HOST);
 
 class EditServices {
-  ViewAlert(user) {
+  ViewAlert(user, page, pageLimit) {
     return axios({
       method: "get",
-      url: API_HOST + "/api/admin/view-Delete-Request",
+      url: API_HOST + `/api/admin/view-Delete-Request?page=${page}&pageSize=${pageLimit}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -176,10 +176,10 @@ class EditServices {
     });
   }
 
-  ViewBankDelete(user) {
+  ViewBankDelete(user,page,pageLimit) {
     return axios({
       method: "get",
-      url: API_HOST + "/api/super-admin/view-bank-edit-requests",
+      url: API_HOST + `/api/super-admin/view-bank-edit-requests?page=${page}&pageSize=${pageLimit}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -217,10 +217,10 @@ class EditServices {
     });
   }
 
-  ViewWebsiteDelete(user) {
+  ViewWebsiteDelete(user,page,pageLimit) {
     return axios({
       method: "get",
-      url: API_HOST + "/api/superadmin/view-website-edit-requests",
+      url: API_HOST + `/api/superAdmin/view-website-edit-requests?page=${page}&limit=${pageLimit}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -256,10 +256,10 @@ class EditServices {
     });
   }
 
-  ViewBankEditRq(user) {
+  ViewBankEditRq(user, page, pageLimit) {
     return axios({
       method: "get",
-      url: API_HOST + "/api/super-admin/view-bank-edit-requests",
+      url: API_HOST + `/api/super-admin/view-bank-edit-requests?page=${page}&pageSize=${pageLimit}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },

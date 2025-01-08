@@ -159,10 +159,10 @@ class TransactionService {
     });
   }
 
-  IntroducerStatement(id, user) {
+  IntroducerStatement(id, page, pageLimit, type, startDate, endDate, user) {
     return axios({
       method: "get",
-      url: `${API_HOST}/api/admin/introducer-account-summary/${id}`,
+      url: `${API_HOST}/api/admin/introducer-account-summary/${id}?page=${page}&pageSize=${pageLimit}&transactionType=${type}&startDate=${startDate}&endDate=${endDate}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -170,7 +170,7 @@ class TransactionService {
   }
 
   subadminWiseTxn(username, user, data, page) {
-    console.log("page",page)
+    console.log("page", page)
     return axios({
       method: "post",
       url: `${API_HOST}/api/view-subadmin-transaction/${username}?page=${page}&pageSize=${10}`,
@@ -192,10 +192,10 @@ class TransactionService {
     });
   }
 
-  IntroducerAlertTransaction(user) {
+  IntroducerAlertTransaction(user, page, pageLimit) {
     return axios({
       method: "get",
-      url: `${API_HOST}/api/superadmin/view-edit-introducer-transaction-requests`,
+      url: `${API_HOST}/api/superAdmin/view-edit-introducer-transaction-requests?page=${page}&pageSize=${pageLimit}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -272,10 +272,10 @@ class TransactionService {
     });
   }
 
-  ViewTrash(user) {
+  ViewTrash(user, page, pageLimit) {
     return axios({
       method: "get",
-      url: `${API_HOST}/api/admin/view-trash`,
+      url: `${API_HOST}/api/admin/view-trash?page=${page}&pageSize=${pageLimit}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },

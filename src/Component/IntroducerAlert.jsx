@@ -5,6 +5,7 @@ import TransactionSercvice from "../Services/TransactionSercvice";
 import { useAuth } from "../Utils/Auth";
 import { toast } from "react-toastify";
 import { customErrorHandler } from "../Utils/helper";
+import NewPagination from "./NewPagination";
 
 const IntroducerAlert = () => {
   const auth = useAuth();
@@ -12,15 +13,29 @@ const IntroducerAlert = () => {
   const [alert, setAlert] = useState([]);
   const [isApproved, setIsApproved] = useState();
   const [renderSate, setRenderSate] = useState("");
+  const [page, setPage] = useState(1);
+  const [totalData, setTotalData] = useState(0);
+  const [totalPage, setTotalPage] = useState(0);
+  const pageLimit = 10;
   var EditData = [];
 
   useEffect(() => {
     if (auth.user) {
-      TransactionSercvice.IntroducerAlertTransaction(auth.user).then((res) =>
-        setAlert(res.data)
-      );
+      TransactionSercvice.IntroducerAlertTransaction(auth.user,page,pageLimit).then((res) => {
+        setAlert(res.data?.data);
+        setTotalData(res?.data?.pagination?.totalItems);
+        setTotalPage(res?.data?.pagination?.totalPages);
+      });
     }
   }, [auth, renderSate]);
+
+  const startIndex = Math.min((page - 1) * pageLimit + 1);
+  const endIndex = Math.min(page * pageLimit, totalData);
+
+  const selectPageHandler = (selectedPage) => {
+    console.log(selectedPage);
+    setPage(selectedPage);
+  };
 
   for (let i = 0; i < alert.length; i++) {
     EditData[i] = alert[i].changedFields;
@@ -447,6 +462,16 @@ const IntroducerAlert = () => {
         </div>
         <InnerAlert />
       </div>
+      {alert.length > 0 && (
+        <NewPagination
+          currentPage={page}
+          totalPages={totalPage}
+          handlePageChange={selectPageHandler}
+          startIndex={startIndex}
+          endIndex={endIndex}
+          totalData={totalData}
+        />
+      )}
     </>
   );
 };

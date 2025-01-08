@@ -95,20 +95,20 @@ class AccountService {
     });
   }
 
-  getrequestedbank(user) {
+  getrequestedbank(user, page, pageLimit) {
     return axios({
       method: "get",
-      url: API_HOST + "/api/superadmin/view-bank-requests",
+      url: API_HOST + `/api/admin/sub-admin-name/bank-view?page=${page}&pageSize=${pageLimit}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
     });
   }
 
-  getrequestedwebsite(user) {
+  getrequestedwebsite(user,page,pageLimit) {
     return axios({
       method: "get",
-      url: API_HOST + "/api/superadmin/view-website-requests",
+      url: API_HOST + `/api/admin/sub-admin-name/website-view?page=${page}&size=${pageLimit}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -259,7 +259,7 @@ class AccountService {
     });
   }
 
-  introducerUsersingleProfile(id, user , search , page , pageSize) {
+  introducerUsersingleProfile(id, user, search, page, pageSize) {
     return axios({
       method: "get",
       url: `${API_HOST}/introducer-user-single-data/${id}?page=${page}&pageSize=${pageSize}&search=${search}`,

@@ -53,10 +53,10 @@ const MyTxn = () => {
   const data = {
     filters: {
       transactionType: select,
-      // sdate: moment(startDatevalue).toDate(),
-      // edate: moment(endDatevalue).toDate(),
-      // maxAmount: maxAmount,
-      // minAmount: minAmount
+      sdate: moment(startDatevalue).toDate(),
+      edate: moment(endDatevalue).toDate(),
+      maxAmount: maxAmount === 0 ? 5000 : maxAmount,
+      minAmount: minAmount
     },
   };
 
@@ -87,7 +87,7 @@ const MyTxn = () => {
       .catch((err) => {
         errorHandler(err.message, "Something went wrong");
       });
-  }, [auth, select, page]);
+  }, [auth, select, page, startDatevalue, endDatevalue, minAmount, maxAmount]);
 
   console.log("txn=>>>", documentView);
 
@@ -202,7 +202,7 @@ const MyTxn = () => {
                   borderRadius: "6px",
                 }}
               >
-                <option value="All">
+                <option value="">
                   <b>All</b>
                 </option>
                 <option value="Deposit">
@@ -288,13 +288,7 @@ const MyTxn = () => {
 
             <div className="col-12 d-flex justify-content-center pt-3">
               <div className="d-flex flex-wrap justify-content-center w-100">
-                <button
-                  type="button"
-                  className="btn btn-dark mx-2"
-                  onClick={handleFilter}
-                >
-                  Filter
-                </button>
+
                 <button
                   type="button"
                   className="btn btn-dark mx-2"
@@ -302,18 +296,9 @@ const MyTxn = () => {
                 >
                   Reset
                 </button>
-                {toggle ? (
-                  <CSVLink data={documentView} className="btn btn-success mx-2">
-                    Download Data
-                  </CSVLink>
-                ) : (
-                  <CSVLink
-                    data={documentFilter}
-                    className="btn btn-success mx-2"
-                  >
-                    Download Filter Data
-                  </CSVLink>
-                )}
+                <CSVLink data={documentView} className="btn btn-success mx-2">
+                  Download Data
+                </CSVLink>
               </div>
             </div>
           </div>
@@ -452,26 +437,25 @@ const MyTxn = () => {
                           )}
                         </td>
                         <td>
-                            {data?.transactionType && (
-                              <p
-                                className={`col fs-6 text-break ${
-                                  ["Manual-Website-Deposit","Manual-Bank-Deposit", "Deposit"].includes(
-                                    data.transactionType
-                                  )
-                                    ? "text-success" // Green for deposits
-                                    : [
-                                        "Manual-Website-Withdraw",
-                                        "Manual-Bank-Withdraw",
-                                        "Withdraw",
-                                      ].includes(data.transactionType)
-                                    ? "text-danger" // Red for withdrawals
-                                    : ""
+                          {data?.transactionType && (
+                            <p
+                              className={`col fs-6 text-break ${["Manual-Website-Deposit", "Manual-Bank-Deposit", "Deposit"].includes(
+                                data.transactionType
+                              )
+                                ? "text-success" // Green for deposits
+                                : [
+                                  "Manual-Website-Withdraw",
+                                  "Manual-Bank-Withdraw",
+                                  "Withdraw",
+                                ].includes(data.transactionType)
+                                  ? "text-danger" // Red for withdrawals
+                                  : ""
                                 }`}
-                              >
-                                {data?.transactionType}
-                              </p>
-                            )}
-                          </td>
+                            >
+                              {data?.transactionType}
+                            </p>
+                          )}
+                        </td>
                         <td>
                           {data?.paymentMethod && (
                             <p className="col fs-6">{data?.paymentMethod}</p>

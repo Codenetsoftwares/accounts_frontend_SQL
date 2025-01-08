@@ -165,7 +165,6 @@ const CreateUser = () => {
                                 "Introducer-Profile-View",
                                 "Request-Admin",
                                 "RecycleBin-View",
-                                "Transaction-Edit-Request",
                                 "Transaction-Delete-Request",
                                 "User-Profile-View",
                                 "Profile-View",

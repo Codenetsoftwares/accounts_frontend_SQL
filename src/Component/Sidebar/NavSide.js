@@ -175,7 +175,6 @@ const NavSide = ({ onSelect }) => {
               {userrole.some(
                 (role) =>
                   role === "superAdmin" ||
-                  role === "Dashboard-View" ||
                   role === "Create-Deposit-Transaction" ||
                   role === "Create-Withdraw-Transaction" ||
                   role === "Create-Transaction"
@@ -738,7 +737,7 @@ const NavSide = ({ onSelect }) => {
                                   <i class="fas fa-chevron-down right"></i>
                                 </p>
                               </Link>
-                              <Link
+                              {/* <Link
                                 to="/bankEdit"
                                 className={`nav-link text-white ${
                                   activeLink === "BankEdit"
@@ -749,7 +748,7 @@ const NavSide = ({ onSelect }) => {
                               >
                                 <i className="far fa-circle nav-icon" />
                                 <p>Edit</p>
-                              </Link>
+                              </Link> */}
 
                               <Link
                                 to="/bankDelete"
@@ -815,7 +814,7 @@ const NavSide = ({ onSelect }) => {
                                   <i class="fas fa-chevron-down right"></i>
                                 </p>
                               </Link>
-                              <Link
+                              {/* <Link
                                 to="/websiteEdit"
                                 className={`nav-link text-white ${
                                   activeLink === "WebsiteEdit"
@@ -826,7 +825,7 @@ const NavSide = ({ onSelect }) => {
                               >
                                 <i className="far fa-circle nav-icon" />
                                 <p>Edit</p>
-                              </Link>
+                              </Link> */}
                               <Link
                                 to="/websiteDelete"
                                 className={`nav-link text-white ${

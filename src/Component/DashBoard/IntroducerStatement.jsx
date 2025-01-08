@@ -13,6 +13,7 @@ import { CSVLink } from "react-csv";
 import TransactionSercvice from "../../Services/TransactionSercvice";
 import EditIntroducerTransaction from "../Modal/EditIntroducerTransaction";
 import NewPagination from "../NewPagination";
+import { formatDate } from "../../Utils/helper";
 
 const IntroducerStatement = () => {
   const { id } = useParams();
@@ -20,19 +21,31 @@ const IntroducerStatement = () => {
   const navigate = useNavigate();
   const [accountData, setAccountData] = useState([]);
   const [documentView, setDocumentView] = useState([]);
-  const [select, setSelect] = useState("All");
-  const [startDatevalue, SetStartDatesetValue] = useState(new Date());
+  const [select, setSelect] = useState("");
+  const [startDatevalue, SetStartDatesetValue] = useState(
+    new Date() - 1 * 24 * 60 * 60 * 1000
+  );
   const [endDatevalue, setEndDateValue] = useState(new Date());
   const [dataId, setDataId] = useState("");
   const [amount, setAmount] = useState("");
   const [remark, setRemark] = useState("");
+  const [minAmount, setMinAmount] = useState(0);
+  const [maxAmount, setMaxAmount] = useState(0);
   const [page, setPage] = useState(1);
   const [totalData, setTotalData] = useState(0);
   const [totalPage, setTotalPage] = useState(0);
   const pageLimit = 10;
 
   useEffect(() => {
-    TransactionSercvice.IntroducerStatement(id, auth.user)
+    TransactionSercvice.IntroducerStatement(
+      id,
+      page,
+      pageLimit,
+      select,
+      formatDate(moment(startDatevalue).toDate()),
+      formatDate(moment(endDatevalue).toDate()),
+      auth.user
+    )
       .then((res) => {
         setDocumentView(res.data?.data);
         setTotalData(res?.data?.pagination?.totalItems);
@@ -41,7 +54,7 @@ const IntroducerStatement = () => {
       .catch((err) => {
         console.error(err, "object");
       });
-  }, [id, auth]);
+  }, [id, auth, page, select, startDatevalue, endDatevalue]);
 
   const startIndex = Math.min((page - 1) * pageLimit + 1);
   const endIndex = Math.min(page * pageLimit, totalData);
@@ -84,7 +97,7 @@ const IntroducerStatement = () => {
 
   const handleReset = () => {
     setSelect("");
-    SetStartDatesetValue(new Date());
+    SetStartDatesetValue(moment().subtract(1, "days").toDate());
     setEndDateValue(new Date());
   };
 
@@ -118,7 +131,7 @@ const IntroducerStatement = () => {
                   borderRadius: "6px",
                 }}
               >
-                <option className="d-flex" value="All">
+                <option className="d-flex" value="">
                   <b>All</b>
                 </option>
                 <option className="d-flex" value="Deposit">
@@ -127,18 +140,7 @@ const IntroducerStatement = () => {
                 <option className="d-flex" value="Withdraw">
                   <b>Withdraw</b>
                 </option>
-                <option className="d-flex" value="Manual-Bank-Deposit">
-                  <b>Manual Bank Deposit</b>
-                </option>{" "}
-                <option className="d-flex" value="Manual-Bank-Withdraw">
-                  <b>Manual Bank Withdraw</b>
-                </option>
-                <option className="d-flex" value="Manual-Website-Deposit">
-                  <b>Manual Website Deposit</b>
-                </option>{" "}
-                <option className="d-flex" value="Manual-Website-Withdraw">
-                  <b>Manual Website Withdraw</b>
-                </option>
+               
               </select>
             </div>
 
@@ -209,7 +211,7 @@ const IntroducerStatement = () => {
                 <th scope="col  fs-6" className="text-primary">
                   Balance
                 </th>
-                
+
                 <th scope="col " className="text-primary">
                   Remarks
                 </th>
@@ -295,7 +297,7 @@ const IntroducerStatement = () => {
                         )}
                       </td>
                       <td>{data.remarks}</td>
-                     
+
                       <td>
                         <button type="button" className="btn btn-danger">
                           <FontAwesomeIcon
