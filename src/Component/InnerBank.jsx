@@ -3,8 +3,9 @@ import { useAuth } from "../Utils/Auth";
 import AccountService from "../Services/AccountService";
 import { toast } from "react-toastify";
 import { customErrorHandler } from "../Utils/helper";
+import FullScreenLoader from "./FullScreenLoader";
 
-const InnerBank = ({ getbankName }) => {
+const InnerBank = ({ setIsLoading , isLoading }) => {
   const [bname, setBname] = useState("");
   const [accno, setAccno] = useState("");
   const [ifsc, setIfsc] = useState("");
@@ -45,7 +46,7 @@ const InnerBank = ({ getbankName }) => {
 
   const handelsubmit = (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     const data = {
       bankName: bname,
       accountNumber: accno,
@@ -56,7 +57,8 @@ const InnerBank = ({ getbankName }) => {
       upiNumber: upiPhoneNumber,
     };
 
-    AccountService.addBank(data, auth.user)
+
+      AccountService.addBank(data, auth.user)
       .then((response) => {
         console.log("bank", response.data);
         toast.success(response.data.message);
@@ -70,6 +72,12 @@ const InnerBank = ({ getbankName }) => {
         toast.error(customErrorHandler(error));
         console.log(error);
       });
+
+      setTimeout(()=>{
+        setIsLoading(false);
+    }, 200)
+   
+
   };
 
   return (
@@ -159,6 +167,7 @@ const InnerBank = ({ getbankName }) => {
                 type="button"
                 className="btn btn-primary"
                 onClick={handelsubmit}
+                disabled={isLoading}
               >
                 Add Bank
               </button>

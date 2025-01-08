@@ -28,6 +28,7 @@ import SingleCard from "../../common/singleCard";
 import "./WebsiteDetails.css";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { customErrorHandler } from "../../Utils/helper";
+import FullScreenLoader from "../FullScreenLoader";
 
 const WebsiteDetails = () => {
   // const { id } = useParams();
@@ -70,7 +71,7 @@ const WebsiteDetails = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     // post api fetch
 
     AccountService.websitedetails(
@@ -90,18 +91,14 @@ const WebsiteDetails = () => {
         toast.error(customErrorHandler(err));
         console.log(err);
       });
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 200);
   };
-
-  const handelName = (id) => {
-    setName(id);
-  };
-  console.log("This is Name==>>>", name);
 
   const handelId = (id) => {
     setId(id);
   };
-
-  console.log("ide", Id);
 
   const handeldeletewebsite = (id) => {
     // e.preventDefault();
@@ -285,6 +282,8 @@ const WebsiteDetails = () => {
           position: "relative",
         }}
       >
+        <FullScreenLoader show={isLoading} />
+
         <SingleCard
           style={{
             backgroundColor: "#e6f7ff",
@@ -385,7 +384,9 @@ const WebsiteDetails = () => {
                                 <button
                                   type="button"
                                   className={`btn btn-steel-blue btn-sm btn-hover-zoom ${
-                                    data.isWithdraw && !isInactive? "" : "avoid-clicks"
+                                    data.isWithdraw && !isInactive
+                                      ? ""
+                                      : "avoid-clicks"
                                   }`}
                                   data-bs-toggle="modal"
                                   data-bs-target="#modalWithdrawBlwebsite"
@@ -404,7 +405,9 @@ const WebsiteDetails = () => {
                                 <button
                                   type="button"
                                   className={`btn btn-steel-blue btn-sm btn-hover-zoom ${
-                                    data.isEdit && !isInactive ? "" : "avoid-clicks"
+                                    data.isEdit && !isInactive
+                                      ? ""
+                                      : "avoid-clicks"
                                   }`}
                                   data-bs-toggle="modal"
                                   data-bs-target="#modalAddBlWebsite"
@@ -439,7 +442,9 @@ const WebsiteDetails = () => {
                                 <button
                                   type="button"
                                   className={`btn btn-steel-blue btn-sm btn-hover-zoom ${
-                                    data.isEdit && !isInactive ? "" : "avoid-clicks"
+                                    data.isEdit && !isInactive
+                                      ? ""
+                                      : "avoid-clicks"
                                   }`}
                                   onClick={() => {
                                     handelWebsiteEdit(
@@ -478,7 +483,9 @@ const WebsiteDetails = () => {
                                 <button
                                   type="button"
                                   className={`btn btn-steel-blue btn-sm btn-hover-zoom ${
-                                    data.isRenew && !isInactive ? "" : "avoid-clicks"
+                                    data.isRenew && !isInactive
+                                      ? ""
+                                      : "avoid-clicks"
                                   }`}
                                   data-toggle="modal"
                                   data-target="#RenewWebsitePermission"
