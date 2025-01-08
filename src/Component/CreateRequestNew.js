@@ -28,7 +28,7 @@ const CreateRequestNew = ({ Api, purpose, ApiReject, EditApi }) => {
       .catch((err) => {
         setError("Error fetching data. Please try again.");
       });
-  }, [auth, childresponse]);
+  }, [auth, childresponse, page]);
 
   console.log("data = >>>>>", data);
 
@@ -121,7 +121,7 @@ const CreateRequestNew = ({ Api, purpose, ApiReject, EditApi }) => {
                 {purpose === "bank" && (
                   <>
                     {" "}
-                    <th scope="row">{index + 1}</th>
+                    <th scope="row">{(page * 10) + (index + 1) - 10}</th>
                     <td>{data.bankName}</td>
                     <td>{data.isActive ? "Active" : "Inactive"}</td>
                     <td>{data.accountHolderName}</td>
@@ -136,7 +136,7 @@ const CreateRequestNew = ({ Api, purpose, ApiReject, EditApi }) => {
                 {purpose === "website" && (
                   <>
                     {" "}
-                    <th scope="row">{index + 1}</th>
+                    <th scope="row">{(page * 10) + (index + 1) - 10}</th>
                     <td>{data.websiteName}</td>
                     <td>{data.isActive ? "Active" : "Inactive"}</td>
                     {/* <td>{data.accountHolderName}</td>

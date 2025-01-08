@@ -98,7 +98,7 @@ class AccountService {
   getrequestedbank(user, page, pageLimit) {
     return axios({
       method: "get",
-      url: API_HOST + `/api/admin/sub-admin-name/bank-view?page=${page}&pageSize=${pageLimit}`,
+      url: API_HOST + `/api/superAdmin/view-bank-requests?page=${page}&pageSize=${pageLimit}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -108,7 +108,7 @@ class AccountService {
   getrequestedwebsite(user,page,pageLimit) {
     return axios({
       method: "get",
-      url: API_HOST + `/api/admin/sub-admin-name/website-view?page=${page}&size=${pageLimit}`,
+      url: API_HOST + `/api/superAdmin/view-website-requests?page=${page}&size=${pageLimit}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
