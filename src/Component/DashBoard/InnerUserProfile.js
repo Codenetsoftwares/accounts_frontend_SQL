@@ -10,6 +10,7 @@ import UserResetPass from "../Modal/UserResetPass";
 import { Alert } from "react-bootstrap";
 import SingleCard from "../../common/singleCard";
 import { customErrorHandler } from "../../Utils/helper";
+import FullScreenLoader from "../FullScreenLoader";
 
 const InnerUserProfile = () => {
   const auth = useAuth();
@@ -23,15 +24,16 @@ const InnerUserProfile = () => {
     contactNumber: "",
     userName: "",
     introducerPercentage: "",
-    introducerPercentage1: '',
+    introducerPercentage1: "",
     introducerPercentage2: "",
     introducersUserName: "",
     introducersUserName1: "",
     introducersUserName2: "",
     // websitedetail: "",  // for future use
-    bankDetail: {}, 
+    bankDetail: {},
     upiDetail: {},
   }); // Store edited data
+  const [isLoading, setIsLoading] = useState(false);
   const [IntroducerName, setIntroducerName] = useState([]);
   const [searchTerm1, setSearchTerm1] = useState("");
   const [searchTerm2, setSearchTerm2] = useState("");
@@ -42,7 +44,7 @@ const InnerUserProfile = () => {
   const [renderSate, setRenderSate] = useState("");
   const location = useLocation();
   console.log("location", location);
-  console.log("foundObject", foundObject)
+  console.log("foundObject", foundObject);
   // Calling Single Introducer Name API
   useEffect(() => {
     AccountService.IntroducerUserId(auth.user).then((res) =>
@@ -70,10 +72,10 @@ const InnerUserProfile = () => {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setEditedData((prev)=>({
+    setEditedData((prev) => ({
       ...prev,
-      [name]: value
-    }))
+      [name]: value,
+    }));
   };
 
   const handleSave = () => {
@@ -81,9 +83,12 @@ const InnerUserProfile = () => {
       firstName: editedData.firstName || foundObject.firstName,
       lastName: editedData.lastName || foundObject.lastName,
       contactnumber: editedData.contactNumber || foundObject.contactNumber,
-      introducerPercentage: editedData.introducerPercentage ||foundObject.introducerPercentage,
-      introducerPercentage1: editedData.introducerPercentage1 || foundObject.introducerPercentage1,
-      introducerPercentage2: editedData.introducerPercentage2 || foundObject.introducerPercentage2,
+      introducerPercentage:
+        editedData.introducerPercentage || foundObject.introducerPercentage,
+      introducerPercentage1:
+        editedData.introducerPercentage1 || foundObject.introducerPercentage1,
+      introducerPercentage2:
+        editedData.introducerPercentage2 || foundObject.introducerPercentage2,
       introducersUserName: searchTerm1 || foundObject.introducersUserName,
       introducersUserName1: searchTerm2 || foundObject.introducersUserName1,
       introducersUserName2: searchTerm3 || foundObject.introducersUserName2,
@@ -108,7 +113,7 @@ const InnerUserProfile = () => {
     }
 
     // put Api Fetching
-
+    setIsLoading(true);
     AccountService.inneruserprofile(id, data, auth.user)
       .then((res) => {
         console.log("res", res);
@@ -117,8 +122,10 @@ const InnerUserProfile = () => {
           setIsEditing(false);
           setRenderSate(res.data);
         }
+        setIsLoading(false);
       })
       .catch((err) => {
+        setIsLoading(false);
         toast.error(customErrorHandler(err));
       });
   };
@@ -197,11 +204,11 @@ const InnerUserProfile = () => {
         position: "relative",
       }}
     >
+      <FullScreenLoader show={isLoading} />
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-lg-9">
             <div className="row justify-content-center">
-            
               <SingleCard
                 className="mt-2"
                 style={{ backgroundColor: "#4682b4" }}
@@ -514,7 +521,7 @@ const InnerUserProfile = () => {
                             disabled={!isEditing}
                           />
                         </div> */}
-                    
+
                         {isAccordionOpen && (
                           <div className="accordion">
                             <div className="accordion-item">
