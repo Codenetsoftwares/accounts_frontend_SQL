@@ -3,24 +3,39 @@ import EditServices from "../../../../Services/EditServices";
 import { useAuth } from "../../../../Utils/Auth";
 import { toast } from "react-toastify";
 import { customErrorHandler } from "../../../../Utils/helper";
+import NewPagination from "../../../NewPagination";
 
 const WebsiteDelete = () => {
   const auth = useAuth();
 
   const [viewWebsiteDelete, setViewWebsiteDelete] = useState([]);
   const [renderSate, setRenderSate] = useState("");
+  const [page, setPage] = useState(1);
+  const [totalData, setTotalData] = useState(0);
+  const [totalPage, setTotalPage] = useState(0);
+  const pageLimit = 10;
   // const [isApproved, setIsApproved] = useState();
   var EditData = [];
 
   useEffect(() => {
     if (auth.user) {
-      EditServices.ViewWebsiteDelete(auth.user).then((res) =>
+      EditServices.ViewWebsiteDelete(auth.user,page,pageLimit).then((res) => {
         setViewWebsiteDelete(
           res.data.data && res.data.data.filter((ele) => ele.type === "Delete")
-        )
-      );
+        );
+        setTotalData(res?.data?.pagination?.totalItems);
+        setTotalPage(res?.data?.pagination?.totalPages);
+      });
     }
   }, [auth, renderSate]);
+
+   const startIndex = Math.min((page - 1) * pageLimit + 1);
+   const endIndex = Math.min(page * pageLimit, totalData);
+
+   const selectPageHandler = (selectedPage) => {
+     console.log(selectedPage);
+     setPage(selectedPage);
+   };
 
   for (let i = 0; i < alert.length; i++) {
     EditData[i] = alert[i].changedFields;
@@ -59,7 +74,7 @@ const WebsiteDelete = () => {
   return (
     <>
       {viewWebsiteDelete.length > 0 ? (
-        <div className="container d-flex justify-content-center ">
+        <div className="container">
           <div className=" p-2">
             <div>
               <table class="table table-striped">
@@ -96,6 +111,16 @@ const WebsiteDelete = () => {
               </table>
             </div>
           </div>
+            {viewWebsiteDelete.length > 0 && (
+              <NewPagination
+                currentPage={page}
+                totalPages={totalPage}
+                handlePageChange={selectPageHandler}
+                startIndex={startIndex}
+                endIndex={endIndex}
+                totalData={totalData}
+              />
+            )}
         </div>
       ) : (
         <div class="container alert alert-warning mt-1" role="alert">

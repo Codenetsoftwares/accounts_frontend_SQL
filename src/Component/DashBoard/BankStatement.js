@@ -341,7 +341,7 @@ const BankStatement = () => {
                       boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
                     }}
                   >
-                    <option value="All">
+                    <option value="">
                       <b>All</b>
                     </option>
                     <option value="Deposit">

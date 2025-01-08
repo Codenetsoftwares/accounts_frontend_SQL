@@ -3,6 +3,7 @@ import { useAuth } from "../Utils/Auth";
 import SubAdminBank from "./Modal/SubAdminBank";
 import { toast } from "react-toastify";
 import { customErrorHandler } from "../Utils/helper";
+import NewPagination from "./NewPagination";
 
 const CreateRequestNew = ({ Api, purpose, ApiReject, EditApi }) => {
   console.log("first", purpose);
@@ -11,19 +12,33 @@ const CreateRequestNew = ({ Api, purpose, ApiReject, EditApi }) => {
   const [error, setError] = useState(null);
   const [Id, setId] = useState();
   const [childresponse, setChildResponse] = useState("");
+  const [page, setPage] = useState(1);
+  const [totalData, setTotalData] = useState(0);
+  const [totalPage, setTotalPage] = useState(0);
+  // const [totalPage, setTotalPage] = useState(0);
+  const pageLimit = 10;
 
   useEffect(() => {
-    Api(auth.user)
+    Api(auth.user, page, pageLimit)
       .then((res) => {
-        setData(res.data.data);
-        console.log(res.data);
+        setData(res.data?.data);
+        setTotalData(res?.data?.pagination?.totalItems);
+        setTotalPage(res?.data?.pagination?.totalPages);
       })
       .catch((err) => {
         setError("Error fetching data. Please try again.");
       });
-  }, [auth , childresponse]);
+  }, [auth, childresponse]);
 
   console.log("data = >>>>>", data);
+
+  const selectPageHandler = (selectedPage) => {
+    console.log(selectedPage);
+    setPage(selectedPage);
+  };
+
+  const startIndex = Math.min((page - 1) * pageLimit + 1);
+  const endIndex = Math.min(page * pageLimit, totalData);
 
   const handleApprove = (_id) => {
     setId(_id);
@@ -175,6 +190,16 @@ const CreateRequestNew = ({ Api, purpose, ApiReject, EditApi }) => {
             ))}
           </tbody>
         </table>
+      )}
+      {data.length > 0 && (
+        <NewPagination
+          currentPage={page}
+          totalPages={totalPage}
+          handlePageChange={selectPageHandler}
+          startIndex={startIndex}
+          endIndex={endIndex}
+          totalData={totalData}
+        />
       )}
       <SubAdminBank ID={Id} EditApi={EditApi} purpose={purpose} renderParent={setChildResponse} />
     </div>

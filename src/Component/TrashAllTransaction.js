@@ -3,16 +3,24 @@ import { useAuth } from "../Utils/Auth";
 import TransactionSercvice from "../Services/TransactionSercvice";
 import { toast } from "react-toastify";
 import { customErrorHandler } from "../Utils/helper";
+import NewPagination from "./NewPagination";
 
 const TrashAllTransaction = () => {
   const auth = useAuth();
   const [alert, setAlert] = useState([]);
   const [renderSate, setRenderSate] = useState("");
+  const [page, setPage] = useState(1);
+  const [totalData, setTotalData] = useState(0);
+  const [totalPage, setTotalPage] = useState(0);
+  const pageLimit = 10;
 
   useEffect(() => {
     if (auth.user) {
-      TransactionSercvice.ViewTrash(auth.user).then((res) =>
-        setAlert(res.data.data)
+      TransactionSercvice.ViewTrash(auth.user, page, pageLimit).then((res) => {
+        setAlert(res.data?.data);
+        setTotalData(res?.data?.pagination?.totalItems);
+        setTotalPage(res?.data?.pagination?.totalPages);
+      }
       );
     }
   }, [auth, renderSate]);
@@ -27,6 +35,14 @@ const TrashAllTransaction = () => {
       .catch((error) => {
         toast.error(customErrorHandler(error));
       });
+  };
+
+  const startIndex = Math.min((page - 1) * pageLimit + 1);
+  const endIndex = Math.min(page * pageLimit, totalData);
+
+  const selectPageHandler = (selectedPage) => {
+    console.log(selectedPage);
+    setPage(selectedPage);
   };
 
   const handleRestore = (e, data) => {
@@ -87,7 +103,7 @@ const TrashAllTransaction = () => {
   };
 
   return (
-    <div className="container d-flex justify-content-center">
+    <div className="container ">
       {alert.length > 0 ? (
         <table className="table table-striped">
           <thead>
@@ -147,8 +163,8 @@ const TrashAllTransaction = () => {
                 <td
                   className={
                     data.changedFields?.withdrawAmount ||
-                    data.changedFields?.amount ||
-                    data.changedFields?.depositAmount
+                      data.changedFields?.amount ||
+                      data.changedFields?.depositAmount
                       ? "text-danger"
                       : "text-success"
                   }
@@ -197,6 +213,16 @@ const TrashAllTransaction = () => {
         <div class="alert alert-primary" role="alert">
           No Request Found !!
         </div>
+      )}
+      {alert.length > 0 && (
+        <NewPagination
+          currentPage={page}
+          totalPages={totalPage}
+          handlePageChange={selectPageHandler}
+          startIndex={startIndex}
+          endIndex={endIndex}
+          totalData={totalData}
+        />
       )}
     </div>
   );
