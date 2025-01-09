@@ -17,6 +17,7 @@ import Pagination from "../Pagination";
 import SingleCard from "../../common/singleCard";
 import { debounce } from "lodash";
 import { customErrorHandler, errorHandler } from "../../Utils/helper";
+import NewPagination from "../NewPagination";
 
 const WebsiteStatement = () => {
   const { id } = useParams();
@@ -25,77 +26,91 @@ const WebsiteStatement = () => {
   const [accountData, setAccountData] = useState([]);
   const [documentView, setDocumentView] = useState([]);
   const [documentFilter, setDocumentFilter] = useState([]);
-  const [Manualstmnt, SetManualstmnt] = useState([]);
-  const [Userstmnt, SetUserstmnt] = useState([]);
   const [select, setSelect] = useState("");
-  // const [startDatevalue, SetStartDatesetValue] = useState(
-  //   new Date() - 1 * 24 * 60 * 60 * 1000
-  // );
   const defaultStartDate = new Date();
   defaultStartDate.setDate(defaultStartDate.getDate() - 1);
 
-  const [startDatevalue, SetStartDatesetValue] = useState(defaultStartDate);
+  const [startDatevalue, SetStartDateValue] = useState(defaultStartDate);
   const [endDatevalue, setEndDateValue] = useState(new Date());
   const [toggle, setToggle] = useState(true);
   const [subAdminlist, setSubAdminlist] = useState([]);
   const [subAdmin, setSubAdmin] = useState("");
-  const [bankList, setBankList] = useState([]);
-  const [bank, setBank] = useState("");
-  const [introducerList, setIntroducerList] = useState([]);
-  const [introducer, setIntroducer] = useState("");
-  const [websiteList, setWebsiteList] = useState([]);
-  const [website, setWebsite] = useState("");
-  const [dataId, setDataId] = useState("");
   const [page, setPage] = useState(1);
   const [pageNumber, setPageNumber] = useState("");
   const [totalData, setTotalData] = useState(0);
   const [totalPage, setTotalPage] = useState("");
-  const [length, setLength] = useState("");
   const [minAmount, setMinAmount] = useState(0);
   const [maxAmount, setMaxAmount] = useState(0);
   const [filteredSubAdminOptions, setFilteredSubAdminOptions] = useState([]);
   const [isSubAdminDropdownVisible, setIsSubAdminDropdownVisible] = useState(false);
   const [activeSubAdminIndex, setActiveSubAdminIndex] = useState(-1);
+  const pageLimit = 10
 
-  const data = {
-    "filters": {
+  const [data, setData] = useState({
+    filters: {
       transactionType: select,
-      subAdminId: subAdmin,
-      // sdate: moment(startDatevalue).toDate(),
-      // edate: moment(endDatevalue).toDate(),
-      // maxAmount: maxAmount,
-      // minAmount: minAmount
+      subAdminName: subAdmin,
+      startDate: moment(startDatevalue).toISOString(),
+      endDate: moment(endDatevalue).toISOString(),
+      maxAmount: maxAmount === 0 ? 5000 : maxAmount,
+      minAmount: minAmount
     }
+  });
+
+
+  const handleDataChange = () => {
+    setPage(1)
+    setData({
+      filters: {
+        transactionType: select,
+        subAdminName: subAdmin,
+        startDate: moment(startDatevalue).toISOString(),
+        endDate: moment(endDatevalue).toISOString(),
+        maxAmount: maxAmount === 0 ? 5000 : maxAmount,
+        minAmount: minAmount
+      }
+    });
+  };
+
+  const handleFilter = () => {
+
+    AccountService.GetWebsiteStateMent(auth.user, id, data, page, pageLimit)
+      .then(
+        (res) => (
+          setDocumentView(res.data.data),
+          setPage(res.data.pagination.page),
+          setTotalPage(res.data.pagination.totalPages),
+          setTotalData(res.data.pagination.totalItems)
+        )
+      )
+      .catch((err) => {
+        errorHandler(err.message, "Something went wrong");
+      });
   }
+
+  useEffect(() => {
+    handleFilter();
+  }, []);
+
+  useEffect(() => {
+    if (data) {
+      handleFilter();
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (page > 1) {
+      handleFilter();
+    }
+  }, [
+    page
+  ]);
 
   const handleChange = (e) => {
     const value = e.target.value;
     setSelect(value);
 
     setPage(1);
-  };
-
-  const handleSubAdmin = (e) => {
-    const value = e.target.value;
-    setSubAdmin(value);
-
-    setPage(1);
-  };
-
-  const handleIntroducer = (e) => {
-    const value = e.target.value;
-    setIntroducer(value);
-
-  };
-
-  const handleBank = (e) => {
-    const value = e.target.value;
-    setBank(value);
-  };
-
-  const handleWebsite = (e) => {
-    const value = e.target.value;
-    setWebsite(value);
   };
 
   const handleMinAmount = (e) => {
@@ -107,34 +122,18 @@ const WebsiteStatement = () => {
     setMaxAmount(value);
   };
 
-  useEffect(() => {
-    const fetchManualStatement = async () => {
-      try {
-        const res = await AccountService.GetWebsiteStateMent(auth.user, id, data, page);
-        setDocumentView(res.data.data);
-        setAccountData(res.data.data);
-        setPage(res.data.pagination.page);
-        setTotalPage(res.data.pagination.totalPages);
-        setTotalData(res.data.pagination.totalItems);
-      } catch (err) {
-        errorHandler(err.message, "Something went wrong");
-
-      }
-    };
-
-    fetchManualStatement();
-  }, [id, auth, select, subAdmin, page]);
-
   const selectPageHandler = (selectedPage) => {
     setPage(selectedPage);
   };
 
   const handleStartDatevalue = (e) => {
-    SetStartDatesetValue(moment(e).format("DD-MM-YYYY HH:mm"));
+    // Store the Date object
+    SetStartDateValue(e);
   };
 
   const handleEndDatevalue = (e) => {
-    setEndDateValue(moment(e).format("DD-MM-YYYY HH:mm"));
+    // Store the Date object
+    setEndDateValue(e);
   };
 
   const handlePage = (page) => {
@@ -150,19 +149,21 @@ const WebsiteStatement = () => {
     }
   }, [auth]);
 
+  const startIndex = Math.min((page - 1) * pageLimit + 1);
+  const endIndex = Math.min(page * pageLimit, totalData);
+
   const handleReset = () => {
-    setSelect("");
-    setDocumentView(accountData);
-    setSubAdmin("");
-    setBank("");
-    setWebsite("");
-    setToggle(true);
-    SetStartDatesetValue(new Date() - 1 * 24 * 60 * 60 * 1000);
-    setEndDateValue(new Date());
-    setPage(1);
-    setMinAmount(0);
-    setMaxAmount(0);
-    window.location.reload();
+    setPage(1)
+    setData({
+      filters: {
+        transactionType: '',
+        subAdminName: '',
+        startDate: moment(defaultStartDate).toISOString(),
+        endDate: moment(new Date()).toISOString(),
+        maxAmount: maxAmount === 0 ? 5000 : maxAmount,
+        minAmount: minAmount
+      }
+    });
   };
 
   const handleDelete = (e, id, transactionType) => {
@@ -187,32 +188,6 @@ const WebsiteStatement = () => {
           });
         break;
 
-      // case "Manual-Bank-Withdraw":
-      //   AccountService.SaveBankTransaction({ requestId: id }, auth.user)
-
-      //     .then((res) => {
-      //       toast.success(
-      //         "Bank Transaction delete request sent to Super Admin"
-      //       );
-      //     })
-      //     .catch((err) => {
-      //       toast.error(err.response.data.message);
-      //     });
-      //   break;
-
-      // case "Manual-Bank-Deposit":
-      //   AccountService.SaveBankTransaction({ requestId: id }, auth.user)
-
-      //     .then((res) => {
-      //       toast.success(
-      //         "Website Transaction delete request sent to Super Admin"
-      //       );
-      //     })
-      //     .catch((err) => {
-      //       toast.error(err.response.data.message);
-      //     });
-      //   break;
-
       case "Manual-Website-Withdraw":
         AccountService.SaveWebsiteTransaction({ requestId: id }, auth.user)
           .then((res) => {
@@ -234,11 +209,6 @@ const WebsiteStatement = () => {
       default:
       // code block
     }
-  };
-
-  const handleId = (e, id) => {
-    e.preventDefault();
-    setDataId(id);
   };
 
   const handleSubAdminSearch = useCallback(
@@ -376,7 +346,7 @@ const WebsiteStatement = () => {
                   <input
                     className="form-control"
                     type="number"
-                    value={minAmount || ""}
+                    value={minAmount}
                     autoComplete="off"
                     onChange={handleMinAmount}
                     placeholder="Min Amt"
@@ -392,7 +362,7 @@ const WebsiteStatement = () => {
                   <input
                     className="form-control"
                     type="number"
-                    value={maxAmount || ""}
+                    value={maxAmount === 0 ? 5000 : maxAmount}
                     autoComplete="off"
                     onChange={handleMaxAmount}
                     placeholder="Max Amt"
@@ -447,7 +417,7 @@ const WebsiteStatement = () => {
                 <button
                   type="button"
                   className="btn btn-dark mx-2"
-                  // onClick={handleFilter}
+                  onClick={handleDataChange}
                   style={{ boxShadow: "0 4px 8px rgba(0,0,0,0.1)" }}
                 >
                   Filter
@@ -634,18 +604,17 @@ const WebsiteStatement = () => {
                           <td>
                             {data?.transactionType && (
                               <p
-                                className={`col fs-6 text-break ${
-                                  ["Manual-Website-Deposit", "Deposit"].includes(
-                                    data.transactionType
-                                  )
-                                    ? "text-success" // Green for deposits
-                                    : [
-                                        "Manual-Website-Withdraw",
-                                        "Withdraw",
-                                      ].includes(data.transactionType)
+                                className={`col fs-6 text-break ${["Manual-Website-Deposit", "Deposit"].includes(
+                                  data.transactionType
+                                )
+                                  ? "text-success" // Green for deposits
+                                  : [
+                                    "Manual-Website-Withdraw",
+                                    "Withdraw",
+                                  ].includes(data.transactionType)
                                     ? "text-danger" // Red for withdrawals
                                     : ""
-                                }`}
+                                  }`}
                               >
                                 {data?.transactionType}
                               </p>
@@ -722,12 +691,13 @@ const WebsiteStatement = () => {
             </div>
           </SingleCard>
           {documentView?.length > 0 ? (
-            <Pagination
-              handlePage={handlePage}
-              page={page}
-              totalPage={totalPage}
+            <NewPagination
+              currentPage={page}
+              totalPages={totalPage}
+              handlePageChange={selectPageHandler}
+              startIndex={startIndex}
+              endIndex={endIndex}
               totalData={totalData}
-              perPagePagination={10}
             />
           ) : null}
 

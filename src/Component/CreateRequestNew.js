@@ -4,18 +4,19 @@ import SubAdminBank from "./Modal/SubAdminBank";
 import { toast } from "react-toastify";
 import { customErrorHandler } from "../Utils/helper";
 import NewPagination from "./NewPagination";
+import FullScreenLoader from "./FullScreenLoader";
 
 const CreateRequestNew = ({ Api, purpose, ApiReject, EditApi }) => {
   console.log("first", purpose);
   const auth = useAuth();
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [Id, setId] = useState();
   const [childresponse, setChildResponse] = useState("");
   const [page, setPage] = useState(1);
   const [totalData, setTotalData] = useState(0);
   const [totalPage, setTotalPage] = useState(0);
-  // const [totalPage, setTotalPage] = useState(0);
   const pageLimit = 10;
 
   useEffect(() => {
@@ -72,6 +73,7 @@ const CreateRequestNew = ({ Api, purpose, ApiReject, EditApi }) => {
   };
   return (
     <div className="container">
+      <FullScreenLoader show={isLoading} />
       <h1 className="text-center">New data Details</h1>
       {error ? (
         <p>{error}</p>
@@ -201,7 +203,7 @@ const CreateRequestNew = ({ Api, purpose, ApiReject, EditApi }) => {
           totalData={totalData}
         />
       )}
-      <SubAdminBank ID={Id} EditApi={EditApi} purpose={purpose} renderParent={setChildResponse} />
+      <SubAdminBank ID={Id} EditApi={EditApi} purpose={purpose} renderParent={setChildResponse} setIsLoading={setIsLoading}/>
     </div>
   );
 };

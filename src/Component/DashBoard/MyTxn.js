@@ -232,7 +232,7 @@ const MyTxn = () => {
                 <input
                   className="form-control mb-2 mb-md-0 mx-0 mx-md-2"
                   type="number"
-                  value={minAmount || ""}
+                  value={minAmount || 0}
                   autoComplete="off"
                   onChange={handleMinAmount}
                   placeholder="Min Amt"
@@ -247,7 +247,7 @@ const MyTxn = () => {
                 <input
                   className="form-control mx-0 mx-md-2"
                   type="number"
-                  value={maxAmount || ""}
+                  value={maxAmount || 0}
                   autoComplete="off"
                   onChange={handleMaxAmount}
                   placeholder="Max Amt"

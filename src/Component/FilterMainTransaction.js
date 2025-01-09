@@ -85,7 +85,7 @@ const FilterMainTransaction = ({
       })
       .catch((err) => {
         setDocumentFilter([])
-         toast.error(err.response.data.message);
+        toast.error(err.response.data.message);
       });
   };
 
@@ -108,17 +108,7 @@ const FilterMainTransaction = ({
   useEffect(() => {
     handleFilter();
   }, [
-    page,
-    select,
-    introducer,
-    subAdmin,
-    bank,
-    website,
-    searchByTransactionId,
-    maxAmount,
-    minAmount,
-    startDatevalue,
-    endDatevalue
+    page
   ]);
 
   useEffect(() => {
@@ -577,7 +567,7 @@ const FilterMainTransaction = ({
                   type="number"
                   className="form-control"
                   placeholder="Min Amount"
-                  value={minAmount || ""}
+                  value={minAmount}
                   onChange={handleMinAmount}
                   style={{ border: "0.5px solid black", borderRadius: "6px" }}
                 />
@@ -586,7 +576,7 @@ const FilterMainTransaction = ({
                   type="number"
                   className="form-control"
                   placeholder="Max Amount"
-                  value={maxAmount || ""}
+                  value={maxAmount === 0 ? 5000 : maxAmount}
                   onChange={handleMaxAmount}
                   style={{ border: "0.5px solid black", borderRadius: "6px" }}
                 />
