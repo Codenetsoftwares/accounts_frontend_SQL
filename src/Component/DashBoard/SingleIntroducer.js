@@ -7,6 +7,7 @@ import { useAuth } from "../../Utils/Auth";
 import { toast } from "react-toastify";
 import IntroResetpassword from "../Modal/IntroResetpassword";
 import { customErrorHandler } from "../../Utils/helper";
+import FullScreenLoader from "../FullScreenLoader";
 
 const SingleIntroducer = () => {
   const { id } = useParams();
@@ -15,6 +16,7 @@ const SingleIntroducer = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedData, setEditedData] = useState({});
   const [username, setUsername] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     AccountService.introducerProfile(id, auth.user).then((res) => {
@@ -43,25 +45,27 @@ const SingleIntroducer = () => {
     };
     setIsEditing(false);
 
-   if ((data.firstName === foundObject.firstName && data.lastName === foundObject.lastName)) {
-        toast.info("At Least one field must be changed");
-        return;
-      }
-
+    if (
+      data.firstName === foundObject.firstName &&
+      data.lastName === foundObject.lastName
+    ) {
+      toast.info("At Least one field must be changed");
+      return;
+    }
+    setIsLoading(true);
     AccountService.introducerProfileEdit(data, id, auth.user)
       .then((res) => {
         if (res.status === 200) {
           toast.success(res.data.message);
           setFoundObject(editedData);
         }
+        setIsLoading(false);
       })
       .catch((err) => {
+        setIsLoading(false);
         toast.error(customErrorHandler(err));
       });
-
   };
-
-
 
   return (
     <div
@@ -77,6 +81,7 @@ const SingleIntroducer = () => {
         overflow: "hidden",
       }}
     >
+      <FullScreenLoader show={isLoading} />
       <div className="container pt-5">
         <div className="row justify-content-center">
           <div className="col-lg-8">

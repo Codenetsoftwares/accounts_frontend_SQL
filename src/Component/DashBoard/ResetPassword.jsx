@@ -5,11 +5,12 @@ import AccountService from "../../Services/AccountService";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { customErrorHandler } from "../../Utils/helper";
+import FullScreenLoader from "../FullScreenLoader";
 
 const ResetPassword = () => {
   const navigate = useNavigate();
   const auth = useAuth();
-
+  const [isLoading, setIsLoading] = useState(false);
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
@@ -40,6 +41,8 @@ const ResetPassword = () => {
         oldPassword: oldPassword,
         password: confirmNewPassword,
       };
+
+      setIsLoading(true);
       AccountService.ResetPassword(data, auth.user)
         .then((res) => {
           console.log("res", res);
@@ -48,8 +51,10 @@ const ResetPassword = () => {
           toast.success("Please Log In Again With New Password");
 
           //   window.location.reload();
+          setIsLoading(false);
         })
         .catch((err) => {
+          setIsLoading(false);
           // console.log('error',err.response.data.message)
           toast.error(customErrorHandler(err));
           return;
@@ -131,6 +136,7 @@ const ResetPassword = () => {
     // </div>
 
     <section className="content mt-2">
+      <FullScreenLoader show={isLoading} />
       <div className="container">
         <div className="row">
           <div className="col-md-12">

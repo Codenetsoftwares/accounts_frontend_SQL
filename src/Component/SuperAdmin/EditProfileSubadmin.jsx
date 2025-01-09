@@ -6,17 +6,19 @@ import { useAuth } from "../../Utils/Auth";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import AccountService from "../../Services/AccountService";
+import FullScreenLoader from "../FullScreenLoader";
 
 const EditProfileSubadmin = () => {
   const { id } = useParams();
   const auth = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState([]);
   const [foundObject, setFoundObject] = useState([]);
   const [isRerender, setIsRerender] = useState(null); // State for accordion open/close
   const [isEditing, setIsEditing] = useState(false); // Track which field is being edited
   const [editedData, setEditedData] = useState({
-    firstName : '',
-    lastName : ''
+    firstName: "",
+    lastName: "",
   }); // Store edited data
   console.log(id);
   useEffect(() => {
@@ -37,36 +39,39 @@ const EditProfileSubadmin = () => {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setEditedData((editedData)=>({ ...editedData, [name]: value }));
+    setEditedData((editedData) => ({ ...editedData, [name]: value }));
   };
 
   const handleSave = () => {
-    console.log("edited data", editedData)
+    console.log("edited data", editedData);
     setIsEditing(false);
     const data = {
       firstName: editedData.firstName || foundObject.firstName,
       lastName: editedData.lastName || foundObject.lastName,
     };
-    if ((data.firstName === foundObject.firstName && data.lastName === foundObject.lastName)) {
+    if (
+      data.firstName === foundObject.firstName &&
+      data.lastName === foundObject.lastName
+    ) {
       toast.info("At Least one field must be changed");
       return;
     }
-    
-
+    setIsLoading(true);
     // put Api Fetching
     AccountService.editsubadminprofile(id, data, auth.user)
       .then((res) => {
         console.log("res", res);
         if (res.status === 200) {
-         toast.success("Profile updated");
-         setIsRerender(res);
-         
+          toast.success("Profile updated");
+          setIsRerender(res);
         } else {
           toast.error("Failed");
         }
+        setIsLoading(false);
       })
 
       .catch((err) => {
+        setIsLoading(false);
         if (!err.response) {
           toast.error(err.message);
           return;
@@ -89,6 +94,7 @@ const EditProfileSubadmin = () => {
         overflow: "hidden",
       }}
     >
+      <FullScreenLoader show={isLoading} />
       <div className="container pt-5">
         <div className="row justify-content-center">
           <div className="col-lg-9">

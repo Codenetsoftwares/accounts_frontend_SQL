@@ -8,9 +8,11 @@ import AccountService from "../../Services/AccountService";
 import SingleCard from "../../common/singleCard";
 import { CreateIntroducerSchema } from "../../Services/schema";
 import { customErrorHandler } from "../../Utils/helper";
+import FullScreenLoader from "../FullScreenLoader";
 
 const CreateIntroducer = () => {
   const auth = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
   const [formData] = useState({
     firstName: "",
     lastName: "",
@@ -38,12 +40,15 @@ const CreateIntroducer = () => {
   });
 
   const introducerFormHandler = (values) => {
+    setIsLoading(true);
     AccountService.createIntroducer(values, auth.user)
       .then((res) => {
         console.log("res", res);
         toast.success(res.data.message);
+        setIsLoading(false);
       })
       .catch((err) => {
+        setIsLoading(false);
         // console.log('error',err.response.data.message)
         toast.error(customErrorHandler(err));
       });
@@ -64,6 +69,7 @@ const CreateIntroducer = () => {
       className="d-flex justify-content-center align-items-center min-vh-100"
       style={{ overflow: "hidden" }}
     >
+      <FullScreenLoader show={isLoading} />
       <div className="container pt-5">
         <div className="row justify-content-center">
           <div className="col-lg-9">
@@ -87,7 +93,7 @@ const CreateIntroducer = () => {
                     <div className="row g-3">
                       <div className="col-md-6">
                         <label htmlFor="userName" className="form-label">
-                          <FaEnvelope />  User Name
+                          <FaEnvelope /> User Name
                           <span className="text-danger">*</span>
                         </label>
                         <input

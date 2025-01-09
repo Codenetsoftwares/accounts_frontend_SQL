@@ -7,11 +7,13 @@ import { useNavigate } from "react-router-dom";
 import "./EditTransaction.css";
 import EditIcon from "../../Assets/edit-iconii.png";
 import AccountService from "../../Services/AccountService";
+import FullScreenLoader from "../FullScreenLoader";
 
 const EditBnkTransaction = () => {
   const auth = useAuth();
   console.log("This is Auth", auth);
   const { id } = useParams();
+  const [isLoading, setIsLoading] = useState(false);
   const [transactionId, setTransactionId] = useState("");
   const [amount, setAmount] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
@@ -52,6 +54,7 @@ const EditBnkTransaction = () => {
       websiteName: Website,
     };
     console.log(id, data);
+    setIsLoading(true);
     TransactionSercvice.editBnkTransactionData(id, data, auth.user)
       .then((response) => {
         console.log(response.data);
@@ -61,8 +64,10 @@ const EditBnkTransaction = () => {
         } else {
           toast.error("Failed");
         }
+        setIsLoading(false);
       })
       .catch((error) => {
+        setIsLoading(false);
         console.error(error);
         toast.error("Failed! Invalid Data");
       });
@@ -89,7 +94,6 @@ const EditBnkTransaction = () => {
     setWebsite(value);
   };
 
- 
   return (
     <div className="EditTransaction">
       {/* <ul class="circles">
@@ -104,6 +108,7 @@ const EditBnkTransaction = () => {
         <li></li>
         <li></li>
       </ul> */}
+      <FullScreenLoader show={isLoading} />
 
       <div
         className="wrapper"
