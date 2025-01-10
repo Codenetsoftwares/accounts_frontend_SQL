@@ -56,11 +56,11 @@ const MyTxn = () => {
       sdate: moment(startDatevalue).toDate(),
       edate: moment(endDatevalue).toDate(),
       maxAmount: maxAmount === 0 ? 5000 : maxAmount,
-      minAmount: minAmount
+      minAmount: minAmount,
     },
   };
 
-  useEffect(() => {
+  const handleFilter = () => {
     TransactionSercvice.subadminWiseTxn(
       auth.user.userName,
       auth.user,
@@ -79,7 +79,6 @@ const MyTxn = () => {
         });
 
         setDocumentView(res.data.data);
-        setAccountData(res.data.data);
         setPage(res.data.pagination.page);
         setTotalPage(res.data.pagination.totalPages);
         setTotalData(res.data.pagination.totalItems);
@@ -87,7 +86,7 @@ const MyTxn = () => {
       .catch((err) => {
         errorHandler(err.message, "Something went wrong");
       });
-  }, [auth, select, page, startDatevalue, endDatevalue, minAmount, maxAmount]);
+  };
 
   console.log("txn=>>>", documentView);
 
@@ -99,30 +98,6 @@ const MyTxn = () => {
   // useEffect(() => {
   //   handleFilter();
   // }, [documentView]);
-
-  const handleFilter = () => {
-    const sdate = moment(startDatevalue, "DD-MM-YYYY HH:mm").toDate();
-    const edate = moment(endDatevalue, "DD-MM-YYYY HH:mm").toDate();
-    let filteredDocuments = documentView.filter((data) => {
-      const transactionDate = new Date(data.createdAt);
-      return transactionDate >= sdate && transactionDate <= edate;
-    });
-
-    if (minAmount !== 0 || maxAmount !== 0) {
-      filteredDocuments = filteredDocuments.filter((transaction) => {
-        return (
-          (transaction.withdrawAmount >= minAmount &&
-            transaction.withdrawAmount <= maxAmount) ||
-          (transaction.depositAmount >= minAmount &&
-            transaction.depositAmount <= maxAmount) ||
-          (transaction.amount >= minAmount && transaction.amount <= maxAmount)
-        );
-      });
-    }
-    setDocumentFilter(filteredDocuments);
-    setToggle(false);
-    setPage(1);
-  };
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -139,6 +114,10 @@ const MyTxn = () => {
     const value = e.target.value;
     setMaxAmount(value);
   };
+
+  useEffect(() => {
+    handleFilter();
+  }, []);
 
   const handleDelete = (e, id, transactionType) => {
     TransactionSercvice.MoveTrashIntroducerTransaction(
@@ -232,7 +211,7 @@ const MyTxn = () => {
                 <input
                   className="form-control mb-2 mb-md-0 mx-0 mx-md-2"
                   type="number"
-                  value={minAmount || 0}
+                  value={minAmount}
                   autoComplete="off"
                   onChange={handleMinAmount}
                   placeholder="Min Amt"
@@ -247,7 +226,7 @@ const MyTxn = () => {
                 <input
                   className="form-control mx-0 mx-md-2"
                   type="number"
-                  value={maxAmount || 0}
+                  value={maxAmount === 0 ? 5000 : maxAmount}
                   autoComplete="off"
                   onChange={handleMaxAmount}
                   placeholder="Max Amt"
@@ -288,7 +267,13 @@ const MyTxn = () => {
 
             <div className="col-12 d-flex justify-content-center pt-3">
               <div className="d-flex flex-wrap justify-content-center w-100">
-
+                <button
+                  className="btn btn-dark"
+                  onClick={handleFilter}
+                  style={{ borderRadius: "6px" }}
+                >
+                  Filter
+                </button>
                 <button
                   type="button"
                   className="btn btn-dark mx-2"
@@ -439,18 +424,21 @@ const MyTxn = () => {
                         <td>
                           {data?.transactionType && (
                             <p
-                              className={`col fs-6 text-break ${["Manual-Website-Deposit", "Manual-Bank-Deposit", "Deposit"].includes(
-                                data.transactionType
-                              )
-                                ? "text-success" // Green for deposits
-                                : [
-                                  "Manual-Website-Withdraw",
-                                  "Manual-Bank-Withdraw",
-                                  "Withdraw",
+                              className={`col fs-6 text-break ${
+                                [
+                                  "Manual-Website-Deposit",
+                                  "Manual-Bank-Deposit",
+                                  "Deposit",
                                 ].includes(data.transactionType)
+                                  ? "text-success" // Green for deposits
+                                  : [
+                                      "Manual-Website-Withdraw",
+                                      "Manual-Bank-Withdraw",
+                                      "Withdraw",
+                                    ].includes(data.transactionType)
                                   ? "text-danger" // Red for withdrawals
                                   : ""
-                                }`}
+                              }`}
                             >
                               {data?.transactionType}
                             </p>
