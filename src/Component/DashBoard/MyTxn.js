@@ -46,26 +46,32 @@ const MyTxn = () => {
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState("");
   const [length, setLength] = useState("");
-  const [minAmount, setMinAmount] = useState(0);
-  const [maxAmount, setMaxAmount] = useState(0);
+  const [minAmount, setMinAmount] = useState("");
+  const [maxAmount, setMaxAmount] = useState("");
   const [totalData, setTotalData] = useState("");
-
+  const pageLimit = 10;
   const data = {
     filters: {
       transactionType: select,
       sdate: moment(startDatevalue).toDate(),
       edate: moment(endDatevalue).toDate(),
       maxAmount: maxAmount === 0 ? 5000 : maxAmount,
-      minAmount: minAmount
+      minAmount: minAmount,
     },
   };
 
-  useEffect(() => {
+  const handleFilter = () => {
     TransactionSercvice.subadminWiseTxn(
       auth.user.userName,
       auth.user,
       data,
-      page
+      page,
+      pageLimit,
+      select,
+      moment(startDatevalue).toISOString(),
+      moment(endDatevalue).toISOString(),
+      minAmount,
+      maxAmount
     )
       .then((res) => {
         console.log("res=>>>>", res.data);
@@ -79,7 +85,6 @@ const MyTxn = () => {
         });
 
         setDocumentView(res.data.data);
-        setAccountData(res.data.data);
         setPage(res.data.pagination.page);
         setTotalPage(res.data.pagination.totalPages);
         setTotalData(res.data.pagination.totalItems);
@@ -87,7 +92,7 @@ const MyTxn = () => {
       .catch((err) => {
         errorHandler(err.message, "Something went wrong");
       });
-  }, [auth, select, page, startDatevalue, endDatevalue, minAmount, maxAmount]);
+  };
 
   console.log("txn=>>>", documentView);
 
@@ -95,33 +100,6 @@ const MyTxn = () => {
     console.log(selectedPage);
 
     setPage(selectedPage);
-  };
-  // useEffect(() => {
-  //   handleFilter();
-  // }, [documentView]);
-
-  const handleFilter = () => {
-    const sdate = moment(startDatevalue, "DD-MM-YYYY HH:mm").toDate();
-    const edate = moment(endDatevalue, "DD-MM-YYYY HH:mm").toDate();
-    let filteredDocuments = documentView.filter((data) => {
-      const transactionDate = new Date(data.createdAt);
-      return transactionDate >= sdate && transactionDate <= edate;
-    });
-
-    if (minAmount !== 0 || maxAmount !== 0) {
-      filteredDocuments = filteredDocuments.filter((transaction) => {
-        return (
-          (transaction.withdrawAmount >= minAmount &&
-            transaction.withdrawAmount <= maxAmount) ||
-          (transaction.depositAmount >= minAmount &&
-            transaction.depositAmount <= maxAmount) ||
-          (transaction.amount >= minAmount && transaction.amount <= maxAmount)
-        );
-      });
-    }
-    setDocumentFilter(filteredDocuments);
-    setToggle(false);
-    setPage(1);
   };
 
   const handleChange = (e) => {
@@ -134,11 +112,23 @@ const MyTxn = () => {
   const handleMinAmount = (e) => {
     const value = e.target.value;
     setMinAmount(value);
+    setPage(1);
   };
   const handleMaxAmount = (e) => {
     const value = e.target.value;
     setMaxAmount(value);
+    setPage(1);
   };
+
+  useEffect(() => {
+    handleFilter();
+  }, []);
+
+  useEffect(() => {
+    if (page > 1) {
+      handleFilter();
+    }
+  }, [page]);
 
   const handleDelete = (e, id, transactionType) => {
     TransactionSercvice.MoveTrashIntroducerTransaction(
@@ -156,25 +146,23 @@ const MyTxn = () => {
 
   const handleReset = () => {
     setSelect("");
-    setDocumentView(accountData);
-    setSubAdmin("");
     setBank("");
     setWebsite("");
-    setToggle(true);
     SetStartDatesetValue(new Date() - 1 * 24 * 60 * 60 * 1000);
     setEndDateValue(new Date());
     setPage(1);
-    setMinAmount(0);
-    setMaxAmount(0);
-    window.location.reload();
+    setMinAmount("");
+    setMaxAmount("");
   };
 
   const handleStartDatevalue = (e) => {
-    SetStartDatesetValue(moment(e).format("DD-MM-YYYY HH:mm"));
+    SetStartDatesetValue(e);
+    setPage(1);
   };
 
   const handleEndDatevalue = (e) => {
-    setEndDateValue(moment(e).format("DD-MM-YYYY HH:mm"));
+    setEndDateValue(e);
+    setPage(1);
   };
 
   return (
@@ -231,8 +219,8 @@ const MyTxn = () => {
               <div className="d-flex flex-column flex-md-row align-items-center w-100">
                 <input
                   className="form-control mb-2 mb-md-0 mx-0 mx-md-2"
-                  type="number"
-                  value={minAmount || ""}
+                  type="text"
+                  value={minAmount}
                   autoComplete="off"
                   onChange={handleMinAmount}
                   placeholder="Min Amt"
@@ -246,8 +234,8 @@ const MyTxn = () => {
                 <h6 className="fw-bold mx-2">To</h6>
                 <input
                   className="form-control mx-0 mx-md-2"
-                  type="number"
-                  value={maxAmount || ""}
+                  type="text"
+                  value={maxAmount}
                   autoComplete="off"
                   onChange={handleMaxAmount}
                   placeholder="Max Amt"
@@ -288,7 +276,13 @@ const MyTxn = () => {
 
             <div className="col-12 d-flex justify-content-center pt-3">
               <div className="d-flex flex-wrap justify-content-center w-100">
-
+                <button
+                  className="btn btn-dark"
+                  onClick={handleFilter}
+                  style={{ borderRadius: "6px" }}
+                >
+                  Filter
+                </button>
                 <button
                   type="button"
                   className="btn btn-dark mx-2"
@@ -439,18 +433,21 @@ const MyTxn = () => {
                         <td>
                           {data?.transactionType && (
                             <p
-                              className={`col fs-6 text-break ${["Manual-Website-Deposit", "Manual-Bank-Deposit", "Deposit"].includes(
-                                data.transactionType
-                              )
-                                ? "text-success" // Green for deposits
-                                : [
-                                  "Manual-Website-Withdraw",
-                                  "Manual-Bank-Withdraw",
-                                  "Withdraw",
+                              className={`col fs-6 text-break ${
+                                [
+                                  "Manual-Website-Deposit",
+                                  "Manual-Bank-Deposit",
+                                  "Deposit",
                                 ].includes(data.transactionType)
+                                  ? "text-success" // Green for deposits
+                                  : [
+                                      "Manual-Website-Withdraw",
+                                      "Manual-Bank-Withdraw",
+                                      "Withdraw",
+                                    ].includes(data.transactionType)
                                   ? "text-danger" // Red for withdrawals
                                   : ""
-                                }`}
+                              }`}
                             >
                               {data?.transactionType}
                             </p>

@@ -98,17 +98,21 @@ class AccountService {
   getrequestedbank(user, page, pageLimit) {
     return axios({
       method: "get",
-      url: API_HOST + `/api/superAdmin/view-bank-requests?page=${page}&pageSize=${pageLimit}`,
+      url:
+        API_HOST +
+        `/api/superAdmin/view-bank-requests?page=${page}&pageSize=${pageLimit}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
     });
   }
 
-  getrequestedwebsite(user,page,pageLimit) {
+  getrequestedwebsite(user, page, pageLimit) {
     return axios({
       method: "get",
-      url: API_HOST + `/api/superAdmin/view-website-requests?page=${page}&size=${pageLimit}`,
+      url:
+        API_HOST +
+        `/api/superAdmin/view-website-requests?page=${page}&size=${pageLimit}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -335,11 +339,31 @@ class AccountService {
     });
   }
 
-  GetBankStMent(user, id, data, page) {
+  GetBankStMent(
+    user,
+    id,
+    page,
+    pageLimit,
+    transactionType,
+    subAdminName,
+    startDate,
+    endDate,
+    minAmount,
+    maxAmount
+  ) {
+    console.log(
+      page,
+      pageLimit,
+      transactionType,
+      subAdminName,
+      startDate,
+      endDate,
+      minAmount,
+      maxAmount
+    );
     return axios({
       method: "post",
-      url: `${API_HOST}/api/admin/manual-user-bank-account-summary/${id}?page=${page}&pageSize=${10}`,
-      data: data,
+      url: `${API_HOST}/api/admin/manual-user-bank-account-summary/${id}?page=${page}&pageSize=${pageLimit}&transactionType=${transactionType}&subAdminId=${subAdminName}&startDate=${startDate}&endDate=${endDate}&minAmount=${minAmount}&maxAmount=${maxAmount}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -377,11 +401,21 @@ class AccountService {
     });
   }
 
-  GetWebsiteStateMent(user, id, data, page) {
+  GetWebsiteStateMent(
+    user,
+    id,
+    page,
+    pageLimit,
+    transactionType,
+    subAdminName,
+    startDate,
+    endDate,
+    minAmount,
+    maxAmount
+  ) {
     return axios({
       method: "post",
-      url: `${API_HOST}/api/admin/manual-user-website-account-summary/${id}?page=${page}&pageSize=${10}`,
-      data: data,
+      url: `${API_HOST}/api/admin/manual-user-website-account-summary/${id}?page=${page}&pageSize=${pageLimit}&transactionType=${transactionType}&subAdminId=${subAdminName}&startDate=${startDate}&endDate=${endDate}&minAmount=${minAmount}&maxAmount=${maxAmount}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -705,7 +739,18 @@ class AccountService {
     });
   }
 
-  getUserTransaction(user, id, page, pageLimit, type, subAdminName, bankName, websiteName, startDate, endDate,) {
+  getUserTransaction(
+    user,
+    id,
+    page,
+    pageLimit,
+    type,
+    subAdminName,
+    bankName,
+    websiteName,
+    startDate,
+    endDate
+  ) {
     return axios({
       method: "get",
       url: `${API_HOST}/api/user/transaction/${id}?page=${page}&pageSize=${pageLimit}&transactionType=${type}&bankName=${bankName}&websiteName=${websiteName}&subAdminName=${subAdminName}&startDate=${startDate}&endDate=${endDate}`,

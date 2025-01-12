@@ -17,6 +17,7 @@ import Pagination from "../Pagination";
 import SingleCard from "../../common/singleCard";
 import { debounce } from "lodash";
 import { customErrorHandler, errorHandler } from "../../Utils/helper";
+import NewPagination from "../NewPagination";
 
 const WebsiteStatement = () => {
   const { id } = useParams();
@@ -25,116 +26,94 @@ const WebsiteStatement = () => {
   const [accountData, setAccountData] = useState([]);
   const [documentView, setDocumentView] = useState([]);
   const [documentFilter, setDocumentFilter] = useState([]);
-  const [Manualstmnt, SetManualstmnt] = useState([]);
-  const [Userstmnt, SetUserstmnt] = useState([]);
   const [select, setSelect] = useState("");
-  // const [startDatevalue, SetStartDatesetValue] = useState(
-  //   new Date() - 1 * 24 * 60 * 60 * 1000
-  // );
   const defaultStartDate = new Date();
   defaultStartDate.setDate(defaultStartDate.getDate() - 1);
 
-  const [startDatevalue, SetStartDatesetValue] = useState(defaultStartDate);
+  const [startDatevalue, setStartDateValue] = useState(defaultStartDate);
   const [endDatevalue, setEndDateValue] = useState(new Date());
   const [toggle, setToggle] = useState(true);
   const [subAdminlist, setSubAdminlist] = useState([]);
   const [subAdmin, setSubAdmin] = useState("");
-  const [bankList, setBankList] = useState([]);
-  const [bank, setBank] = useState("");
-  const [introducerList, setIntroducerList] = useState([]);
-  const [introducer, setIntroducer] = useState("");
-  const [websiteList, setWebsiteList] = useState([]);
-  const [website, setWebsite] = useState("");
-  const [dataId, setDataId] = useState("");
   const [page, setPage] = useState(1);
   const [pageNumber, setPageNumber] = useState("");
   const [totalData, setTotalData] = useState(0);
   const [totalPage, setTotalPage] = useState("");
-  const [length, setLength] = useState("");
-  const [minAmount, setMinAmount] = useState(0);
-  const [maxAmount, setMaxAmount] = useState(0);
+  const [minAmount, setMinAmount] = useState("");
+  const [maxAmount, setMaxAmount] = useState("");
   const [filteredSubAdminOptions, setFilteredSubAdminOptions] = useState([]);
-  const [isSubAdminDropdownVisible, setIsSubAdminDropdownVisible] = useState(false);
+  const [isSubAdminDropdownVisible, setIsSubAdminDropdownVisible] =
+    useState(false);
   const [activeSubAdminIndex, setActiveSubAdminIndex] = useState(-1);
+  const pageLimit = 10;
 
-  const data = {
-    "filters": {
-      transactionType: select,
-      subAdminId: subAdmin,
-      // sdate: moment(startDatevalue).toDate(),
-      // edate: moment(endDatevalue).toDate(),
-      // maxAmount: maxAmount,
-      // minAmount: minAmount
+  const handleFilter = () => {
+    AccountService.GetWebsiteStateMent(
+      auth.user,
+      id,
+      page,
+      pageLimit,
+      select,
+      subAdmin,
+      moment(startDatevalue).toISOString(),
+      moment(endDatevalue).toISOString(),
+      minAmount,
+      maxAmount
+    )
+      .then(
+        (res) => (
+          setDocumentView(res.data.data),
+          setPage(res.data.pagination.page),
+          setTotalPage(res.data.pagination.totalPages),
+          setTotalData(res.data.pagination.totalItems)
+        )
+      )
+      .catch((err) => {
+        errorHandler(err.message, "Something went wrong");
+      });
+  };
+
+  useEffect(() => {
+    handleFilter();
+  }, []);
+
+  useEffect(() => {
+    if (page > 1) {
+      handleFilter();
     }
-  }
+  }, [page]);
 
   const handleChange = (e) => {
     const value = e.target.value;
     setSelect(value);
-
     setPage(1);
-  };
-
-  const handleSubAdmin = (e) => {
-    const value = e.target.value;
-    setSubAdmin(value);
-
-    setPage(1);
-  };
-
-  const handleIntroducer = (e) => {
-    const value = e.target.value;
-    setIntroducer(value);
-
-  };
-
-  const handleBank = (e) => {
-    const value = e.target.value;
-    setBank(value);
-  };
-
-  const handleWebsite = (e) => {
-    const value = e.target.value;
-    setWebsite(value);
   };
 
   const handleMinAmount = (e) => {
     const value = e.target.value;
     setMinAmount(value);
+    setPage(1);
   };
   const handleMaxAmount = (e) => {
     const value = e.target.value;
     setMaxAmount(value);
+    setPage(1);
   };
-
-  useEffect(() => {
-    const fetchManualStatement = async () => {
-      try {
-        const res = await AccountService.GetWebsiteStateMent(auth.user, id, data, page);
-        setDocumentView(res.data.data);
-        setAccountData(res.data.data);
-        setPage(res.data.pagination.page);
-        setTotalPage(res.data.pagination.totalPages);
-        setTotalData(res.data.pagination.totalItems);
-      } catch (err) {
-        errorHandler(err.message, "Something went wrong");
-
-      }
-    };
-
-    fetchManualStatement();
-  }, [id, auth, select, subAdmin, page]);
 
   const selectPageHandler = (selectedPage) => {
     setPage(selectedPage);
   };
 
   const handleStartDatevalue = (e) => {
-    SetStartDatesetValue(moment(e).format("DD-MM-YYYY HH:mm"));
+    // Store the Date object
+    setStartDateValue(e);
+    setPage(1);
   };
 
   const handleEndDatevalue = (e) => {
-    setEndDateValue(moment(e).format("DD-MM-YYYY HH:mm"));
+    // Store the Date object
+    setEndDateValue(e);
+    setPage(1);
   };
 
   const handlePage = (page) => {
@@ -145,24 +124,21 @@ const WebsiteStatement = () => {
     if (auth.user) {
       TransactionSercvice.subAdminList(auth.user).then((res) => {
         setSubAdminlist(res.data.data);
-
       });
     }
   }, [auth]);
 
+  const startIndex = Math.min((page - 1) * pageLimit + 1);
+  const endIndex = Math.min(page * pageLimit, totalData);
+
   const handleReset = () => {
-    setSelect("");
-    setDocumentView(accountData);
-    setSubAdmin("");
-    setBank("");
-    setWebsite("");
-    setToggle(true);
-    SetStartDatesetValue(new Date() - 1 * 24 * 60 * 60 * 1000);
-    setEndDateValue(new Date());
     setPage(1);
-    setMinAmount(0);
-    setMaxAmount(0);
-    window.location.reload();
+    setSelect("");
+    setSubAdmin("");
+    setStartDateValue(new Date() - 1 * 24 * 60 * 60 * 1000);
+    setEndDateValue(new Date());
+    setMinAmount("");
+    setMaxAmount("");
   };
 
   const handleDelete = (e, id, transactionType) => {
@@ -187,32 +163,6 @@ const WebsiteStatement = () => {
           });
         break;
 
-      // case "Manual-Bank-Withdraw":
-      //   AccountService.SaveBankTransaction({ requestId: id }, auth.user)
-
-      //     .then((res) => {
-      //       toast.success(
-      //         "Bank Transaction delete request sent to Super Admin"
-      //       );
-      //     })
-      //     .catch((err) => {
-      //       toast.error(err.response.data.message);
-      //     });
-      //   break;
-
-      // case "Manual-Bank-Deposit":
-      //   AccountService.SaveBankTransaction({ requestId: id }, auth.user)
-
-      //     .then((res) => {
-      //       toast.success(
-      //         "Website Transaction delete request sent to Super Admin"
-      //       );
-      //     })
-      //     .catch((err) => {
-      //       toast.error(err.response.data.message);
-      //     });
-      //   break;
-
       case "Manual-Website-Withdraw":
         AccountService.SaveWebsiteTransaction({ requestId: id }, auth.user)
           .then((res) => {
@@ -236,11 +186,6 @@ const WebsiteStatement = () => {
     }
   };
 
-  const handleId = (e, id) => {
-    e.preventDefault();
-    setDataId(id);
-  };
-
   const handleSubAdminSearch = useCallback(
     debounce((value) => {
       if (value) {
@@ -261,12 +206,13 @@ const WebsiteStatement = () => {
     const value = e.target.value;
     setSubAdmin(value);
     handleSubAdminSearch(value);
+    setPage(1);
   };
 
   const handleSubAdminKeyDown = (e) => {
     if (e.key === "ArrowDown") {
-      setActiveSubAdminIndex((prevIndex) =>
-        (prevIndex + 1) % filteredSubAdminOptions.length
+      setActiveSubAdminIndex(
+        (prevIndex) => (prevIndex + 1) % filteredSubAdminOptions.length
       );
     } else if (e.key === "ArrowUp") {
       setActiveSubAdminIndex(
@@ -274,7 +220,10 @@ const WebsiteStatement = () => {
           (prevIndex - 1 + filteredSubAdminOptions.length) %
           filteredSubAdminOptions.length
       );
-    } else if ((e.key === "Enter" || e.key === "Tab") && activeSubAdminIndex >= 0) {
+    } else if (
+      (e.key === "Enter" || e.key === "Tab") &&
+      activeSubAdminIndex >= 0
+    ) {
       setSubAdmin(filteredSubAdminOptions[activeSubAdminIndex].userName);
       setIsSubAdminDropdownVisible(false);
       setActiveSubAdminIndex(-1);
@@ -353,7 +302,9 @@ const WebsiteStatement = () => {
                       filteredSubAdminOptions.map((option, index) => (
                         <li
                           key={index}
-                          className={`dropdown-item ${index === activeSubAdminIndex ? "active" : ""}`}
+                          className={`dropdown-item ${
+                            index === activeSubAdminIndex ? "active" : ""
+                          }`}
                           onMouseDown={() => {
                             setSubAdmin(option.userName);
                             setIsSubAdminDropdownVisible(false);
@@ -375,8 +326,8 @@ const WebsiteStatement = () => {
                 <div className="d-flex align-items-center">
                   <input
                     className="form-control"
-                    type="number"
-                    value={minAmount || ""}
+                    type="text"
+                    value={minAmount}
                     autoComplete="off"
                     onChange={handleMinAmount}
                     placeholder="Min Amt"
@@ -391,8 +342,8 @@ const WebsiteStatement = () => {
                   <h6 className="fw-bold text-light px-2">To</h6>
                   <input
                     className="form-control"
-                    type="number"
-                    value={maxAmount || ""}
+                    type="text"
+                    value={maxAmount}
                     autoComplete="off"
                     onChange={handleMaxAmount}
                     placeholder="Max Amt"
@@ -447,7 +398,7 @@ const WebsiteStatement = () => {
                 <button
                   type="button"
                   className="btn btn-dark mx-2"
-                  // onClick={handleFilter}
+                  onClick={handleFilter}
                   style={{ boxShadow: "0 4px 8px rgba(0,0,0,0.1)" }}
                 >
                   Filter
@@ -461,10 +412,7 @@ const WebsiteStatement = () => {
                   Reset
                 </button>
                 {toggle ? (
-                  <CSVLink
-                    data={documentView}
-                    className="btn btn-success mx-2"
-                  >
+                  <CSVLink data={documentView} className="btn btn-success mx-2">
                     Download Data
                   </CSVLink>
                 ) : (
@@ -635,9 +583,10 @@ const WebsiteStatement = () => {
                             {data?.transactionType && (
                               <p
                                 className={`col fs-6 text-break ${
-                                  ["Manual-Website-Deposit", "Deposit"].includes(
-                                    data.transactionType
-                                  )
+                                  [
+                                    "Manual-Website-Deposit",
+                                    "Deposit",
+                                  ].includes(data.transactionType)
                                     ? "text-success" // Green for deposits
                                     : [
                                         "Manual-Website-Withdraw",
@@ -693,18 +642,30 @@ const WebsiteStatement = () => {
                                     </td> */}
                           <td>
                             <button type="button" className="btn btn-danger">
-                              {data?.Transaction_Id && <FontAwesomeIcon
-                                icon={faTrash}
-                                onClick={(e) => {
-                                  handleDelete(e, data?.Transaction_Id, data?.transactionType);
-                                }}
-                              />}
-                              {data?.websiteTransactionId && <FontAwesomeIcon
-                                icon={faTrash}
-                                onClick={(e) => {
-                                  handleDelete(e, data?.websiteTransactionId, data?.transactionType);
-                                }}
-                              />}
+                              {data?.Transaction_Id && (
+                                <FontAwesomeIcon
+                                  icon={faTrash}
+                                  onClick={(e) => {
+                                    handleDelete(
+                                      e,
+                                      data?.Transaction_Id,
+                                      data?.transactionType
+                                    );
+                                  }}
+                                />
+                              )}
+                              {data?.websiteTransactionId && (
+                                <FontAwesomeIcon
+                                  icon={faTrash}
+                                  onClick={(e) => {
+                                    handleDelete(
+                                      e,
+                                      data?.websiteTransactionId,
+                                      data?.transactionType
+                                    );
+                                  }}
+                                />
+                              )}
                             </button>
                           </td>
                         </tr>
@@ -722,15 +683,15 @@ const WebsiteStatement = () => {
             </div>
           </SingleCard>
           {documentView?.length > 0 ? (
-            <Pagination
-              handlePage={handlePage}
-              page={page}
-              totalPage={totalPage}
+            <NewPagination
+              currentPage={page}
+              totalPages={totalPage}
+              handlePageChange={selectPageHandler}
+              startIndex={startIndex}
+              endIndex={endIndex}
               totalData={totalData}
-              perPagePagination={10}
             />
           ) : null}
-
         </SingleCard>
       </SingleCard>
     </div>

@@ -529,15 +529,15 @@ const NavSide = ({ onSelect }) => {
               {userrole.some(
                 (role) =>
                   role === "superAdmin" ||
-                  role === "report-all-txn" ||
-                  role === "report-my-txn"
+                  role === "Report-All-Txn" ||
+                  role === "Report-My-Txn"
               ) && (
                 <>
                   {isToggleDash ? (
                     <li className="nav-item ">
                       <a
                         className={`nav-link text-white ${
-                          activeLink === "profile" ||
+                          activeLink === "report" ||
                           activeLink === "AllTransactionDetails" ||
                           activeLink === "MyTransactions"
                             ? "active bg-primary"
@@ -561,7 +561,7 @@ const NavSide = ({ onSelect }) => {
                       <a 
                       
                       className={`nav-link text-white ${
-                        activeLink === "profile" ||
+                            activeLink === "report" ||
                         activeLink === "AllTransactionDetails" ||
                         activeLink === "MyTransactions"
                           ? "active bg-primary"
@@ -581,7 +581,7 @@ const NavSide = ({ onSelect }) => {
                       </a>
                       {userrole.some(
                         (role) =>
-                          role === "superAdmin" || role === "report-all-txn"
+                          role === "superAdmin" || role === "Report-All-Txn"
                       ) && (
                         <Link
                           to="/mainfiltertransactionpage"
@@ -600,7 +600,7 @@ const NavSide = ({ onSelect }) => {
                       )}
                       {userrole.some(
                         (role) =>
-                          role === "superAdmin" || role === "report-my-txn"
+                          role === "superAdmin" || role === "Report-All-Txn"
                       ) && (
                         <Link
                           to="/mytxn"

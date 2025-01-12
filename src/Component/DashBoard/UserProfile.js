@@ -24,6 +24,7 @@ import UserBank from "../Modal/userBank";
 import TransactionDetails from "./TransactionDetails";
 
 import { Oval } from "react-loader-spinner"; // Import the Oval spinner
+import FullScreenLoader from "../FullScreenLoader";
 
 const UserProfile = () => {
   const auth = useAuth();
@@ -38,7 +39,7 @@ const UserProfile = () => {
   const [profileView, setProfileView] = useState("");
   const [bankViewEdit, setBankViewEdit] = useState("");
   const [selectedUser, setSelectedUser] = useState(null);
-  const [renderMaster , setRenderMaster] = useState(null);
+  const [renderMaster, setRenderMaster] = useState(null);
 
   console.log("======>>> data", users);
 
@@ -107,10 +108,10 @@ const UserProfile = () => {
 
 
   useEffect(() => {
-    if (page > 1 ) {
+    if (page > 1) {
       fetchData(); // Fetch more data when page changes
     }
-  }, [page, search , renderMaster]);
+  }, [page, search, renderMaster]);
 
   const handleInnerProfile = (id) => {
     navigate(`/innerprofile`, { state: { page: page, id: id, q: search } });
@@ -142,6 +143,7 @@ const UserProfile = () => {
 
   return (
     <div className="bg-white">
+      <FullScreenLoader show={isLoading} />
       <div
         className="card text-center mt-2 mr-5 ml-5"
         style={{
@@ -235,9 +237,8 @@ const UserProfile = () => {
                       onMouseLeave={() => setHoveredCard(null)}
                     >
                       <div
-                        className={`card d-flex justify-content-between ${
-                          hoveredCard === user.userId ? "card-hover-shadow" : ""
-                        }`}
+                        className={`card d-flex justify-content-between ${hoveredCard === user.userId ? "card-hover-shadow" : ""
+                          }`}
                         style={{
                           borderRadius: "20px",
                           height: "200px",

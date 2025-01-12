@@ -19,7 +19,7 @@ const AdminEditrole = () => {
 
   const [username, setUsername] = useState([]);
   const [isPermissionEdit, setIsPermissionEdit] = useState(false);
-  console.log('====>>> admin data',adminData)
+  console.log("====>>> admin data", adminData);
 
   const setData = () => {
     setCheckedItems(adminData.roles);
@@ -52,14 +52,14 @@ const AdminEditrole = () => {
         toast.error("Failed to load admin data. Please try again later.");
       }
     };
-  
+
     fetchAdminData();
-  }, [id, auth.user]); 
+  }, [id, auth.user]);
   console.log("Data =>>>>", adminData);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(checkedItems === adminDataCopy){
+    if (checkedItems === adminDataCopy) {
       toast.info(" Atleast One Filed Must Be  Changed");
       return;
     }
@@ -314,19 +314,6 @@ const AdminEditrole = () => {
                       onChange={handleCheckboxChange}
                     />
                     <span>Create User</span>
-                  </label>
-                </div>
-                <div>
-                  <label>
-                    <input
-                      type="checkbox"
-                      value="Transaction-Edit-Request"
-                      checked={checkedItems.includes(
-                        "Transaction-Edit-Request"
-                      )}
-                      onChange={handleCheckboxChange}
-                    />
-                    <span>Transaction Edit Request</span>
                   </label>
                 </div>
                 <div>
