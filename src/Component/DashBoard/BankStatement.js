@@ -29,48 +29,33 @@ const BankStatement = () => {
   const defaultStartDate = new Date();
   defaultStartDate.setDate(defaultStartDate.getDate() - 1);
 
-  const [startDatevalue, SetStartDateValue] = useState(defaultStartDate);
+  const [startDatevalue, setStartDateValue] = useState(defaultStartDate);
   const [endDatevalue, setEndDateValue] = useState(new Date());
   const [subAdminlist, setSubAdminlist] = useState([]);
   const [subAdmin, setSubAdmin] = useState("");
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState("");
   const [totalData, setTotalData] = useState("");
-  const [minAmount, setMinAmount] = useState(0);
-  const [maxAmount, setMaxAmount] = useState(0);
+  const [minAmount, setMinAmount] = useState("");
+  const [maxAmount, setMaxAmount] = useState("");
   const [filteredSubAdminOptions, setFilteredSubAdminOptions] = useState([]);
   const [isSubAdminDropdownVisible, setIsSubAdminDropdownVisible] =
     useState(false);
   const [activeSubAdminIndex, setActiveSubAdminIndex] = useState(-1);
-  const [data, setData] = useState({
-    filters: {
-      transactionType: select,
-      subAdminName: subAdmin,
-      startDate: moment(startDatevalue).toISOString(),
-      endDate: moment(endDatevalue).toISOString(),
-      maxAmount: maxAmount === 0 ? 5000 : maxAmount,
-      minAmount: minAmount
-    }
-  });
-  const pageLimit = 10
-
-  const handleDataChange = () => {
-    setPage(1)
-    setData({
-      filters: {
-        transactionType: select,
-        subAdminName: subAdmin,
-        startDate: moment(startDatevalue).toISOString(),
-        endDate: moment(endDatevalue).toISOString(),
-        maxAmount: maxAmount === 0 ? 5000 : maxAmount,
-        minAmount: minAmount
-      }
-    });
-  };
-
+  const pageLimit = 10;
   const handleFilter = () => {
-
-    AccountService.GetBankStMent(auth.user, id, data, page, pageLimit)
+    AccountService.GetBankStMent(
+      auth.user,
+      id,
+      page,
+      pageLimit,
+      select,
+      subAdmin,
+      moment(startDatevalue).toISOString(),
+      moment(endDatevalue).toISOString(),
+      minAmount,
+      maxAmount
+    )
       .then(
         (res) => (
           setDocumentView(res.data.data),
@@ -82,26 +67,17 @@ const BankStatement = () => {
       .catch((err) => {
         errorHandler(err.message, "Something went wrong");
       });
-  }
-
+  };
 
   useEffect(() => {
     handleFilter();
   }, []);
 
   useEffect(() => {
-    if (data) {
-      handleFilter();
-    }
-  }, [data]);
-
-  useEffect(() => {
     if (page > 1) {
       handleFilter();
     }
-  }, [
-    page
-  ]);
+  }, [page]);
 
   useEffect(() => {
     if (auth.user) {
@@ -122,15 +98,18 @@ const BankStatement = () => {
   const handleChange = (e) => {
     const value = e.target.value;
     setSelect(value);
+    setPage(1);
   };
 
   const handleMinAmount = (e) => {
     const value = e.target.value;
     setMinAmount(value);
+    setPage(1);
   };
   const handleMaxAmount = (e) => {
     const value = e.target.value;
     setMaxAmount(value);
+    setPage(1);
   };
 
   const handleDelete = (e, id, transactionType) => {
@@ -207,27 +186,26 @@ const BankStatement = () => {
   };
 
   const handleReset = () => {
-    setPage(1)
-    setData({
-      filters: {
-        transactionType: '',
-        subAdminName: '',
-        startDate: moment(defaultStartDate).toISOString(),
-        endDate: moment(new Date()).toISOString(),
-        maxAmount: maxAmount === 0 ? 5000 : maxAmount,
-        minAmount: minAmount
-      }
-    });
+    setPage(1);
+    setSelect("");
+    setSubAdmin("");
+    setStartDateValue(new Date() - 1 * 24 * 60 * 60 * 1000);
+    setEndDateValue(new Date());
+    setMinAmount("");
+    setMaxAmount("");
+    
   };
 
   const handleStartDatevalue = (e) => {
     // Store the Date object
-    SetStartDateValue(e);
+    setStartDateValue(e);
+    setPage(1);
   };
 
   const handleEndDatevalue = (e) => {
     // Store the Date object
     setEndDateValue(e);
+    setPage(1);
   };
 
   const handleSubAdminSearch = useCallback(
@@ -250,6 +228,7 @@ const BankStatement = () => {
     const value = e.target.value;
     setSubAdmin(value);
     handleSubAdminSearch(value);
+    setPage(1);
   };
 
   const handleSubAdminKeyDown = (e) => {
@@ -348,8 +327,9 @@ const BankStatement = () => {
                         filteredSubAdminOptions.map((option, index) => (
                           <li
                             key={index}
-                            className={`dropdown-item ${index === activeSubAdminIndex ? "active" : ""
-                              }`}
+                            className={`dropdown-item ${
+                              index === activeSubAdminIndex ? "active" : ""
+                            }`}
                             onMouseDown={() => {
                               setSubAdmin(option.userName);
                               setIsSubAdminDropdownVisible(false);
@@ -372,7 +352,7 @@ const BankStatement = () => {
                   <div className="d-flex align-items-center">
                     <input
                       className="form-control"
-                      type="number"
+                      type="text"
                       value={minAmount}
                       autoComplete="off"
                       onChange={handleMinAmount}
@@ -388,8 +368,8 @@ const BankStatement = () => {
                     <h6 className="fw-bold text-light px-2">To</h6>
                     <input
                       className="form-control"
-                      type="number"
-                      value={maxAmount === 0 ? 5000 : maxAmount}
+                      type="text"
+                      value={maxAmount}
                       autoComplete="off"
                       onChange={handleMaxAmount}
                       placeholder="Max Amt"
@@ -445,7 +425,7 @@ const BankStatement = () => {
                   <button
                     type="button"
                     className="btn btn-dark mx-2"
-                    onClick={handleDataChange}
+                    onClick={handleFilter}
                     style={{ boxShadow: "0 4px 8px rgba(0,0,0,0.1)" }}
                   >
                     Filter
@@ -458,10 +438,7 @@ const BankStatement = () => {
                   >
                     Reset
                   </button>
-                  <CSVLink
-                    data={documentView}
-                    className="btn btn-success mx-2"
-                  >
+                  <CSVLink data={documentView} className="btn btn-success mx-2">
                     Download Data
                   </CSVLink>
                 </div>
@@ -621,17 +598,18 @@ const BankStatement = () => {
                           <td>
                             {data?.transactionType && (
                               <p
-                                className={`col fs-6 text-break ${["Manual-Bank-Deposit", "Deposit"].includes(
-                                  data.transactionType
-                                )
-                                  ? "text-success" // Green for deposits
-                                  : [
-                                    "Manual-Bank-Withdraw",
-                                    "Withdraw",
-                                  ].includes(data.transactionType)
+                                className={`col fs-6 text-break ${
+                                  ["Manual-Bank-Deposit", "Deposit"].includes(
+                                    data.transactionType
+                                  )
+                                    ? "text-success" // Green for deposits
+                                    : [
+                                        "Manual-Bank-Withdraw",
+                                        "Withdraw",
+                                      ].includes(data.transactionType)
                                     ? "text-danger" // Red for withdrawals
                                     : ""
-                                  }`}
+                                }`}
                               >
                                 {data?.transactionType}
                               </p>
@@ -671,8 +649,8 @@ const BankStatement = () => {
                                 data?.Transaction_Id
                                   ? data?.Transaction_Id
                                   : data?.bankTransactionId
-                                    ? data?.bankTransactionId
-                                    : "",
+                                  ? data?.bankTransactionId
+                                  : "",
                                 data?.transactionType
                               );
                             }}

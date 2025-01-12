@@ -46,10 +46,10 @@ const MyTxn = () => {
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState("");
   const [length, setLength] = useState("");
-  const [minAmount, setMinAmount] = useState(0);
-  const [maxAmount, setMaxAmount] = useState(0);
+  const [minAmount, setMinAmount] = useState("");
+  const [maxAmount, setMaxAmount] = useState("");
   const [totalData, setTotalData] = useState("");
-
+  const pageLimit = 10;
   const data = {
     filters: {
       transactionType: select,
@@ -65,7 +65,13 @@ const MyTxn = () => {
       auth.user.userName,
       auth.user,
       data,
-      page
+      page,
+      pageLimit,
+      select,
+      moment(startDatevalue).toISOString(),
+      moment(endDatevalue).toISOString(),
+      minAmount,
+      maxAmount
     )
       .then((res) => {
         console.log("res=>>>>", res.data);
@@ -95,9 +101,6 @@ const MyTxn = () => {
 
     setPage(selectedPage);
   };
-  // useEffect(() => {
-  //   handleFilter();
-  // }, [documentView]);
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -109,15 +112,23 @@ const MyTxn = () => {
   const handleMinAmount = (e) => {
     const value = e.target.value;
     setMinAmount(value);
+    setPage(1);
   };
   const handleMaxAmount = (e) => {
     const value = e.target.value;
     setMaxAmount(value);
+    setPage(1);
   };
 
   useEffect(() => {
     handleFilter();
   }, []);
+
+  useEffect(() => {
+    if (page > 1) {
+      handleFilter();
+    }
+  }, [page]);
 
   const handleDelete = (e, id, transactionType) => {
     TransactionSercvice.MoveTrashIntroducerTransaction(
@@ -135,25 +146,23 @@ const MyTxn = () => {
 
   const handleReset = () => {
     setSelect("");
-    setDocumentView(accountData);
-    setSubAdmin("");
     setBank("");
     setWebsite("");
-    setToggle(true);
     SetStartDatesetValue(new Date() - 1 * 24 * 60 * 60 * 1000);
     setEndDateValue(new Date());
     setPage(1);
-    setMinAmount(0);
-    setMaxAmount(0);
-    window.location.reload();
+    setMinAmount("");
+    setMaxAmount("");
   };
 
   const handleStartDatevalue = (e) => {
-    SetStartDatesetValue(moment(e).format("DD-MM-YYYY HH:mm"));
+    SetStartDatesetValue(e);
+    setPage(1);
   };
 
   const handleEndDatevalue = (e) => {
-    setEndDateValue(moment(e).format("DD-MM-YYYY HH:mm"));
+    setEndDateValue(e);
+    setPage(1);
   };
 
   return (
@@ -210,7 +219,7 @@ const MyTxn = () => {
               <div className="d-flex flex-column flex-md-row align-items-center w-100">
                 <input
                   className="form-control mb-2 mb-md-0 mx-0 mx-md-2"
-                  type="number"
+                  type="text"
                   value={minAmount}
                   autoComplete="off"
                   onChange={handleMinAmount}
@@ -225,8 +234,8 @@ const MyTxn = () => {
                 <h6 className="fw-bold mx-2">To</h6>
                 <input
                   className="form-control mx-0 mx-md-2"
-                  type="number"
-                  value={maxAmount === 0 ? 5000 : maxAmount}
+                  type="text"
+                  value={maxAmount}
                   autoComplete="off"
                   onChange={handleMaxAmount}
                   placeholder="Max Amt"

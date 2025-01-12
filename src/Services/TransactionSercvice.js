@@ -113,11 +113,23 @@ class TransactionService {
       },
     });
   }
-  filterTransaction(data, page, user) {
+  filterTransaction(
+    page,
+    pageLimit,
+    transactionType,
+    subAdminName,
+    startDate,
+    endDate,
+    minAmount,
+    maxAmount,
+    bankName,
+    transactionID,
+    websiteName,
+    user
+  ) {
     return axios({
       method: "post",
-      url: `${API_HOST}/api/admin/account-summary?page=${page}&pageSize=${10}`,
-      data: data,
+      url: `${API_HOST}/api/admin/account-summary?page=${page}&pageSize=${pageLimit}&transactionType=${transactionType}&subAdminId=${subAdminName}&startDate=${startDate}&endDate=${endDate}&minAmount=${minAmount}&maxAmount=${maxAmount}&bankName=${bankName}&transactionID=${transactionID}&websiteName=${websiteName}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -169,11 +181,22 @@ class TransactionService {
     });
   }
 
-  subadminWiseTxn(username, user, data, page) {
-    console.log("page", page)
+  subadminWiseTxn(
+    username,
+    user,
+    data,
+    page,
+    pageLimit,
+    transactionType,
+    startDate,
+    endDate,
+    minAmount,
+    maxAmount
+  ) {
+    console.log("page", page);
     return axios({
       method: "post",
-      url: `${API_HOST}/api/view-subadmin-transaction/${username}?page=${page}&pageSize=${10}`,
+      url: `${API_HOST}/api/view-subadmin-transaction/${username}?page=${page}&pageSize=${pageLimit}&transactionType=${transactionType}&startDate=${startDate}&endDate=${endDate}&minAmount=${minAmount}&maxAmount=${maxAmount}`,
       data: data,
       headers: {
         Authorization: `Bearer ${user.token}`,

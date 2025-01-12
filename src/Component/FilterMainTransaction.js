@@ -36,8 +36,8 @@ const FilterMainTransaction = ({
   );
   const [endDatevalue, setEndDateValue] = useState(new Date());
   const [documentView, setDocumentView] = useState([]);
-  const [minAmount, setMinAmount] = useState(0);
-  const [maxAmount, setMaxAmount] = useState(0);
+  const [minAmount, setMinAmount] = useState("");
+  const [maxAmount, setMaxAmount] = useState("");
   const [bankList, setBankList] = useState([]);
   const [filteredBankOptions, setFilteredBankOptions] = useState([]);
   const [isBankDropdownVisible, setIsBankDropdownVisible] = useState(false);
@@ -57,23 +57,22 @@ const FilterMainTransaction = ({
     useState(false);
   const [activeWebsiteIndex, setActiveWebsiteIndex] = useState(-1);
   const [searchByTransactionId, setSearchByTransactionId] = useState("");
-
+  const pageLimit = 10;
   const handleFilter = () => {
-    const data = {
-      filters: {
-        transactionType: select,
-        introducerUserName: introducer,
-        subAdminId: subAdmin,
-        bankName: bank,
-        websiteName: website,
-        startDate: formatDate(moment(startDatevalue).toDate()),
-        endDate: formatDate(moment(endDatevalue).toDate()),
-        maxAmount: maxAmount === 0 ? 5000 : maxAmount,
-        minAmount: minAmount,
-        transactionID: searchByTransactionId,
-      },
-    };
-    TransactionSercvice.filterTransaction(data, page, auth.user)
+    TransactionSercvice.filterTransaction(
+      page,
+      pageLimit,
+      select,
+      subAdmin,
+      moment(startDatevalue).toISOString(),
+      moment(endDatevalue).toISOString(),
+      minAmount,
+      maxAmount,
+      bank,
+      searchByTransactionId,
+      website,
+      auth.user
+    )
       .then((res) => {
         return (
           console.log(res.data.pagination),
@@ -84,7 +83,7 @@ const FilterMainTransaction = ({
         );
       })
       .catch((err) => {
-        setDocumentFilter([])
+        setDocumentFilter([]);
         toast.error(err.response.data.message);
       });
   };
@@ -99,17 +98,18 @@ const FilterMainTransaction = ({
     setIntroducer("");
     handleFilter();
     handlePage(1);
-    window.location.reload();
+    setMaxAmount("")
+    setMinAmount("")
   };
   useEffect(() => {
     handleFilter();
   }, []);
 
   useEffect(() => {
-    handleFilter();
-  }, [
-    page
-  ]);
+    if (page > 1) {
+      handleFilter();
+    }
+  }, [page]);
 
   useEffect(() => {
     if (auth.user) {
@@ -146,16 +146,19 @@ const FilterMainTransaction = ({
 
   console.log(websiteList);
   const handleStartDatevalue = (e) => {
-    SetStartDatesetValue(moment(e));
+    SetStartDatesetValue(e);
+    setPage(1);
   };
 
   const handleEndDatevalue = (e) => {
-    setEndDateValue(moment(e));
+    setEndDateValue(e);
+    setPage(1);
   };
 
   const handleChange = (e) => {
     const value = e.target.value;
     setSelect(value);
+    setPage(1);
   };
 
   const handleSubAdmin = (e) => {
@@ -168,19 +171,15 @@ const FilterMainTransaction = ({
     setIntroducer(value);
   };
 
-  const handleBank = (e) => {
-    const value = e.target.value;
-    setBank(value);
-    handleSearchBank(value); // Ensure this is called here
-  };
-
   const handleMinAmount = (e) => {
     const value = e.target.value;
     setMinAmount(value);
+    setPage(1);
   };
   const handleMaxAmount = (e) => {
     const value = e.target.value;
     setMaxAmount(value);
+    setPage(1);
   };
   const handleWebsite = (e) => {
     const value = e.target.value;
@@ -190,6 +189,7 @@ const FilterMainTransaction = ({
   const handleSearchByTransactionId = (e) => {
     const value = e.target.value;
     setSearchByTransactionId(value);
+    setPage(1);
   };
 
   // Debounced function for searching banks
@@ -209,6 +209,12 @@ const FilterMainTransaction = ({
     }, 1300),
     [bankList]
   );
+  const handleBank = (e) => {
+    const value = e.target.value;
+    setBank(value);
+    handleSearchBank(value); // Ensure this is called here
+    setPage(1);
+  };
 
   const handleBankKeyDown = (e) => {
     if (e.key === "ArrowDown") {
@@ -248,6 +254,7 @@ const FilterMainTransaction = ({
     const value = e.target.value;
     setWebsite(value);
     handleWebsiteSearch(value);
+    setPage(1);
   };
 
   const handleWebsiteKeyDown = (e) => {
@@ -291,6 +298,7 @@ const FilterMainTransaction = ({
     const value = e.target.value;
     setSubAdmin(value);
     handleSubAdminSearch(value);
+    setPage(1);
   };
 
   const handleSubAdminKeyDown = (e) => {
@@ -334,6 +342,7 @@ const FilterMainTransaction = ({
     const value = e.target.value;
     setIntroducer(value);
     handleIntroducerSearch(value);
+    setPage(1);
   };
 
   const handleIntroducerKeyDown = (e) => {
@@ -414,8 +423,9 @@ const FilterMainTransaction = ({
                   filteredSubAdminOptions.map((option, index) => (
                     <li
                       key={index}
-                      className={`dropdown-item ${index === activeSubAdminIndex ? "active" : ""
-                        }`}
+                      className={`dropdown-item ${
+                        index === activeSubAdminIndex ? "active" : ""
+                      }`}
                       onMouseDown={() => {
                         setSubAdmin(option.userName);
                         setIsSubAdminDropdownVisible(false);
@@ -457,8 +467,9 @@ const FilterMainTransaction = ({
                       filteredIntroducerOptions.map((option, index) => (
                         <li
                           key={index}
-                          className={`dropdown-item ${index === activeIntroducerIndex ? "active" : ""
-                            }`}
+                          className={`dropdown-item ${
+                            index === activeIntroducerIndex ? "active" : ""
+                          }`}
                           onMouseDown={() => {
                             setIntroducer(option.userName);
                             setIsIntroducerDropdownVisible(false);
@@ -498,8 +509,9 @@ const FilterMainTransaction = ({
                       filteredBankOptions.map((option, index) => (
                         <li
                           key={index}
-                          className={`dropdown-item ${index === activeBankIndex ? "active" : ""
-                            }`}
+                          className={`dropdown-item ${
+                            index === activeBankIndex ? "active" : ""
+                          }`}
                           onMouseDown={() => {
                             setBank(option.bankName);
                             setIsBankDropdownVisible(false);
@@ -541,8 +553,9 @@ const FilterMainTransaction = ({
                   filteredWebsiteOptions.map((option, index) => (
                     <li
                       key={index}
-                      className={`dropdown-item ${index === activeWebsiteIndex ? "active" : ""
-                        }`}
+                      className={`dropdown-item ${
+                        index === activeWebsiteIndex ? "active" : ""
+                      }`}
                       onMouseDown={() => {
                         setWebsite(option.websiteName);
                         setIsWebsiteDropdownVisible(false);
@@ -564,7 +577,7 @@ const FilterMainTransaction = ({
               <h6 className="fw-bold text-nowrap">Range Of Amount</h6>
               <div className="d-flex justify-content-between">
                 <input
-                  type="number"
+                  type="text"
                   className="form-control"
                   placeholder="Min Amount"
                   value={minAmount}
@@ -573,10 +586,10 @@ const FilterMainTransaction = ({
                 />
                 <h6 className="fw-bold mx-2">To</h6>
                 <input
-                  type="number"
+                  type="text"
                   className="form-control"
                   placeholder="Max Amount"
-                  value={maxAmount === 0 ? 5000 : maxAmount}
+                  value={maxAmount}
                   onChange={handleMaxAmount}
                   style={{ border: "0.5px solid black", borderRadius: "6px" }}
                 />
