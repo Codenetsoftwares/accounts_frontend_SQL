@@ -56,7 +56,9 @@ const TransactionDetails = () => {
       setDocumentView(res.data?.data);
       setTotalData(res?.data?.pagination?.totalItems);
       setTotalPage(res?.data?.pagination?.totalPages);
-    });
+    }).catch((err)=>{
+      console.error(err)
+    })
   }, [auth.user, id, page, startDatevalue, endDatevalue, select, , website, bank, subAdmin]);
 
   const handleReset = () => {

@@ -70,7 +70,7 @@ const AppRoutes = () => {
             (role) =>
               role.includes("superAdmin") ||
               role.includes("Create-Withdraw-Transaction") ||
-              role.includes("Create-Transaction")
+              role.includes("Create-Transaction") 
           ) && (
             <Route
               path="withdraw"
@@ -84,7 +84,7 @@ const AppRoutes = () => {
           {[userrole]?.some(
             (role) =>
               role.includes("superAdmin") ||
-              role.includes("Create-Withdraw-Transaction") ||
+              role.includes("Create-Deposit-Transaction") ||
               role.includes("Create-Transaction")
           ) && (
             <Route
