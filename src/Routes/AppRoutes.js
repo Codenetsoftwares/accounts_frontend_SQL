@@ -70,7 +70,7 @@ const AppRoutes = () => {
             (role) =>
               role.includes("superAdmin") ||
               role.includes("Create-Withdraw-Transaction") ||
-              role.includes("Create-Transaction") 
+              role.includes("Create-Transaction")
           ) && (
             <Route
               path="withdraw"
@@ -199,7 +199,9 @@ const AppRoutes = () => {
           )}
           {[userrole]?.some(
             (role) =>
-              role.includes("superAdmin") || role.includes("Report-All-Txn") || role.includes("Report-My-Txn")
+              role.includes("superAdmin") ||
+              role.includes("Report-All-Txn") ||
+              role.includes("Report-Admin")
           ) && (
             <Route
               path="maintransactionpage"
@@ -212,7 +214,9 @@ const AppRoutes = () => {
           )}
           {[userrole]?.some(
             (role) =>
-              role.includes("superAdmin") || role.includes("Report-All-Txn")
+              role.includes("superAdmin") ||
+              role.includes("Report-All-Txn") ||
+              role.includes("Report-Admin")
           ) && (
             <Route
               path="mainfiltertransactionpage"
@@ -225,7 +229,9 @@ const AppRoutes = () => {
           )}
           {[userrole]?.some(
             (role) =>
-              role.includes("superAdmin") || role.includes("Report-My-Txn")
+              role.includes("superAdmin") ||
+              role.includes("Report-My-Txn") ||
+              role.includes("Report-Admin")
           ) && (
             <Route
               path="mytxn"
@@ -238,7 +244,9 @@ const AppRoutes = () => {
           )}
           {[userrole]?.some(
             (role) =>
-              role.includes("superAdmin") || role.includes("Request-Admin")
+              role.includes("superAdmin") ||
+              role.includes("Request-Admin") ||
+              role.includes("Transaction-Delete-Request")
           ) && (
             <Route
               path="alert"

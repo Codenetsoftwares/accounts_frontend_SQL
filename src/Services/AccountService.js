@@ -753,7 +753,7 @@ class AccountService {
   ) {
     return axios({
       method: "get",
-      url: `${API_HOST}/api/user/transaction/${id}?page=${page}&pageSize=${pageLimit}&transactionType=${type}&bankName=${bankName}&websiteName=${websiteName}&subAdminName=${subAdminName}&startDate=${startDate}&endDate=${endDate}`,
+      url: `${API_HOST}/api/user/transaction/${id}?page=${page}&pageSize=${pageLimit}&transactionType=${type}&bankName=${bankName}&websiteName=${websiteName}&subAdminId=${subAdminName}&startDate=${startDate}&endDate=${endDate}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },

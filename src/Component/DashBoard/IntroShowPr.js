@@ -14,10 +14,12 @@ import Pagination from "../Pagination";
 import NewPagination from "../NewPagination";
 
 const IntroShowPr = () => {
-  const { id } = useParams()
+  const { id } = useParams();
 
   // const flag = transactionDetails;
-  const [startDatevalue, SetStartDatesetValue] = useState(moment().subtract(1, "days").toDate());
+  const [startDatevalue, SetStartDatesetValue] = useState(
+    moment().subtract(1, "days").toDate()
+  );
   const [endDatevalue, setEndDateValue] = useState(new Date());
   const [documentView, setDocumentView] = useState([]);
   const [subAdminlist, setSubAdminlist] = useState([]);
@@ -34,15 +36,7 @@ const IntroShowPr = () => {
 
   const auth = useAuth();
 
-  useEffect(() => {
-    const formattedStartDate = moment(
-      startDatevalue,
-      "DD-MM-YYYY HH:mm"
-    ).format("YYYY-MM-DD");
-    const formattedEndDate = moment(endDatevalue, "DD-MM-YYYY HH:mm").format(
-      "YYYY-MM-DD"
-    );
-
+  const handleFilter = () => {
     AccountService.getUserTransaction(
       auth.user,
       id,
@@ -52,14 +46,24 @@ const IntroShowPr = () => {
       subAdmin,
       bank,
       website,
-      formattedStartDate,
-      formattedEndDate
+      moment(startDatevalue).toISOString(),
+      moment(endDatevalue).toISOString()
     ).then((res) => {
       setDocumentView(res.data?.data);
       setTotalData(res?.data?.pagination?.totalItems);
       setTotalPage(res?.data?.pagination?.totalPages);
     });
-  }, [auth.user, id, page, startDatevalue, endDatevalue, select, website, bank, subAdmin]);
+  };
+
+  useEffect(() => {
+    handleFilter();
+  }, []);
+
+  useEffect(() => {
+    if (page > 1) {
+      handleFilter();
+    }
+  }, [page]);
 
   useEffect(() => {
     if (auth.user) {
@@ -90,7 +94,7 @@ const IntroShowPr = () => {
 
   const startIndex = Math.min((page - 1) * pageLimit + 1);
   const endIndex = Math.min(page * pageLimit, totalData);
-  console.log("first", startIndex, endIndex)
+  console.log("first", startIndex, endIndex);
 
   const handleReset = () => {
     setSelect("");
@@ -271,7 +275,17 @@ const IntroShowPr = () => {
                   timeFormat="HH:mm"
                 />
               </div>
-              <div className="d-flex col justify-content-center">
+              <div className="d-flex col justify-content-between">
+                <div className="mx-2">
+                  <button
+                    type="button"
+                    className="btn btn-dark mx-2"
+                    onClick={handleFilter}
+                    style={{ boxShadow: "0 4px 8px rgba(0,0,0,0.1)" }}
+                  >
+                    Filter
+                  </button>
+                </div>
                 <div className="mx-2">
                   <button
                     type="button"
@@ -401,7 +415,7 @@ const IntroShowPr = () => {
                           <p className="col fs-6 text-break">N.A</p>
                         )}
                       </td>
-                      <td>{data.subAdminName}</td>
+                      <td>{data.subAdminId}</td>
                       <td>
                         <p className="col fs-6">
                           {data.bankName ? data.bankName : "N.A"}
@@ -422,15 +436,16 @@ const IntroShowPr = () => {
             </tbody>
           </table>
         </small>
-        {documentView.length > 0 && <NewPagination
-          currentPage={page}
-          totalPages={totalPage}
-          handlePageChange={selectPageHandler}
-          startIndex={startIndex}
-          endIndex={endIndex}
-          totalData={totalData}
-        />}
-
+        {documentView.length > 0 && (
+          <NewPagination
+            currentPage={page}
+            totalPages={totalPage}
+            handlePageChange={selectPageHandler}
+            startIndex={startIndex}
+            endIndex={endIndex}
+            totalData={totalData}
+          />
+        )}
       </div>
     </div>
   );

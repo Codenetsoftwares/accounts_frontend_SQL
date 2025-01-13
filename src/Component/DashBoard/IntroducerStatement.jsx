@@ -36,7 +36,7 @@ const IntroducerStatement = () => {
   const [totalPage, setTotalPage] = useState(0);
   const pageLimit = 10;
 
-  useEffect(() => {
+  const handleFilter = () => {
     TransactionSercvice.IntroducerStatement(
       id,
       page,
@@ -54,7 +54,7 @@ const IntroducerStatement = () => {
       .catch((err) => {
         console.error(err, "object");
       });
-  }, [id, auth, page, select, startDatevalue, endDatevalue]);
+  };
 
   const startIndex = Math.min((page - 1) * pageLimit + 1);
   const endIndex = Math.min(page * pageLimit, totalData);
@@ -94,6 +94,16 @@ const IntroducerStatement = () => {
       // code block
     }
   };
+
+  useEffect(() => {
+    handleFilter();
+  }, []);
+
+  useEffect(() => {
+    if (page > 1) {
+      handleFilter();
+    }
+  }, [page]);
 
   const handleReset = () => {
     setSelect("");
@@ -140,7 +150,6 @@ const IntroducerStatement = () => {
                 <option className="d-flex" value="Withdraw">
                   <b>Withdraw</b>
                 </option>
-               
               </select>
             </div>
 
@@ -166,7 +175,17 @@ const IntroducerStatement = () => {
                   timeFormat="HH:mm"
                 />
               </div>
-              <div className="d-flex col justify-content-center">
+              <div className="d-flex col justify-content-between">
+                <div className="mx-2">
+                  <button
+                    type="button"
+                    className="btn btn-dark mx-2"
+                    onClick={handleFilter}
+                    style={{ boxShadow: "0 4px 8px rgba(0,0,0,0.1)" }}
+                  >
+                    Filter
+                  </button>
+                </div>
                 <div className="mx-2">
                   <button
                     type="button"

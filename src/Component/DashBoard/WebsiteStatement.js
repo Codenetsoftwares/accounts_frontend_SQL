@@ -611,7 +611,7 @@ const WebsiteStatement = () => {
                               <p className="col fs-6 text-break">N.A</p>
                             )}
                           </td>
-                          <td>{data?.subAdminName}</td>
+                          <td>{data?.subAdminId}</td>
                           <td>
                             {data?.paymentMethod && (
                               <p className="col fs-6">{data?.userName}</p>

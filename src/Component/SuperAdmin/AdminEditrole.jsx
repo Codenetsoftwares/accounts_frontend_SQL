@@ -331,6 +331,17 @@ const AdminEditrole = () => {
                   <label>
                     <input
                       type="checkbox"
+                      value="Report-Admin"
+                      checked={checkedItems.includes("Report-Admin")}
+                      onChange={handleCheckboxChange}
+                    />
+                    <span>Report</span>
+                  </label>
+                </div>
+                <div>
+                  <label>
+                    <input
+                      type="checkbox"
                       value="Transaction-Delete-Request"
                       checked={checkedItems.includes(
                         "Transaction-Delete-Request"

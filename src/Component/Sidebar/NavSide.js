@@ -228,29 +228,34 @@ const NavSide = ({ onSelect }) => {
                       {userrole.some(
                         (role) =>
                           role === "superAdmin" ||
-                          role === "Dashboard-View" ||
                           role === "Create-Deposit-Transaction" ||
                           role === "Create-Transaction"
                       ) && (
                         <>
-                          <Link
-                            to="/deposit"
-                            className={`nav-link text-white ${
-                              activeLink === "Deposit"
-                                ? "active bg-secondary"
-                                : ""
-                            }`}
-                            onClick={() => handleMenuClick("Deposit")}
-                          >
-                            <i className="far fa-circle nav-icon" />
-                            <p>Deposit</p>
-                          </Link>
+                          {userrole.some(
+                            (role) =>
+                              role === "superAdmin" ||
+                              role === "Create-Deposit-Transaction" ||
+                              role === "Create-Transaction"
+                          ) && (
+                            <Link
+                              to="/deposit"
+                              className={`nav-link text-white ${
+                                activeLink === "Deposit"
+                                  ? "active bg-secondary"
+                                  : ""
+                              }`}
+                              onClick={() => handleMenuClick("Deposit")}
+                            >
+                              <i className="far fa-circle nav-icon" />
+                              <p>Deposit</p>
+                            </Link>
+                          )}
                         </>
                       )}
                       {userrole.some(
                         (role) =>
                           role === "superAdmin" ||
-                          role === "Dashboard-View" ||
                           role === "Create-Withdraw-Transaction" ||
                           role === "Create-Transaction"
                       ) && (
@@ -529,6 +534,7 @@ const NavSide = ({ onSelect }) => {
               {userrole.some(
                 (role) =>
                   role === "superAdmin" ||
+                  role === "Report-Admin" ||
                   role === "Report-All-Txn" ||
                   role === "Report-My-Txn"
               ) && (
@@ -558,17 +564,16 @@ const NavSide = ({ onSelect }) => {
                     </li>
                   ) : (
                     <li className="nav-item ">
-                      <a 
-                      
-                      className={`nav-link text-white ${
-                            activeLink === "report" ||
-                        activeLink === "AllTransactionDetails" ||
-                        activeLink === "MyTransactions"
-                          ? "active bg-primary"
-                          : ""
-                      }`} 
-                      
-                      onClick={handleToggleDash}>
+                      <a
+                        className={`nav-link text-white ${
+                          activeLink === "report" ||
+                          activeLink === "AllTransactionDetails" ||
+                          activeLink === "MyTransactions"
+                            ? "active bg-primary"
+                            : ""
+                        }`}
+                        onClick={handleToggleDash}
+                      >
                         &nbsp;
                         <FontAwesomeIcon
                           icon={faExchangeAlt}
@@ -581,7 +586,9 @@ const NavSide = ({ onSelect }) => {
                       </a>
                       {userrole.some(
                         (role) =>
-                          role === "superAdmin" || role === "Report-All-Txn"
+                          role === "Report-Admin" ||
+                          role === "superAdmin" ||
+                          role === "Report-All-Txn"
                       ) && (
                         <Link
                           to="/mainfiltertransactionpage"
@@ -600,7 +607,9 @@ const NavSide = ({ onSelect }) => {
                       )}
                       {userrole.some(
                         (role) =>
-                          role === "superAdmin" || role === "Report-All-Txn"
+                          role === "Report-Admin" ||
+                          role === "superAdmin" ||
+                          role === "Report-My-Txn"
                       ) && (
                         <Link
                           to="/mytxn"
@@ -623,7 +632,10 @@ const NavSide = ({ onSelect }) => {
 
               {/* request part */}
               {userrole.some(
-                (role) => role === "superAdmin" || role === "Request-Admin"
+                (role) =>
+                  role === "superAdmin" ||
+                  role === "Request-Admin" ||
+                  role === "Transaction-Delete-Request"
               ) && (
                 <>
                   {" "}
@@ -668,32 +680,46 @@ const NavSide = ({ onSelect }) => {
                           <i class="fas fa-chevron-down right"></i>
                         </p>
                       </a>
-                      <Link
-                        to="/alert"
-                        className={`nav-link text-white ${
-                          activeLink === "AllTransactionRequest"
-                            ? "active bg-secondary"
-                            : ""
-                        }`}
-                        onClick={() => handleMenuClick("AllTransactionRequest")}
-                      >
-                        <i className="far fa-circle nav-icon" />
-                        <p>All transaction</p>
-                      </Link>
-                      <Link
-                        to="/introduceralert"
-                        className={`nav-link text-white ${
-                          activeLink === "introducerTransactionRequest"
-                            ? "active bg-secondary"
-                            : ""
-                        }`}
-                        onClick={() =>
-                          handleMenuClick("introducerTransactionRequest")
-                        }
-                      >
-                        <i className="far fa-circle nav-icon" />
-                        <p>Introducer transaction</p>
-                      </Link>
+                      {userrole.some(
+                        (role) =>
+                          role === "superAdmin" ||
+                          role === "Request-Admin" ||
+                          role === "Transaction-Delete-Request"
+                      ) && (
+                        <Link
+                          to="/alert"
+                          className={`nav-link text-white ${
+                            activeLink === "AllTransactionRequest"
+                              ? "active bg-secondary"
+                              : ""
+                          }`}
+                          onClick={() =>
+                            handleMenuClick("AllTransactionRequest")
+                          }
+                        >
+                          <i className="far fa-circle nav-icon" />
+                          <p>All transaction</p>
+                        </Link>
+                      )}
+                      {userrole.some(
+                        (role) =>
+                          role === "superAdmin" || role === "Request-Admin"
+                      ) && (
+                        <Link
+                          to="/introduceralert"
+                          className={`nav-link text-white ${
+                            activeLink === "introducerTransactionRequest"
+                              ? "active bg-secondary"
+                              : ""
+                          }`}
+                          onClick={() =>
+                            handleMenuClick("introducerTransactionRequest")
+                          }
+                        >
+                          <i className="far fa-circle nav-icon" />
+                          <p>Introducer transaction</p>
+                        </Link>
+                      )}
                       {userrole.some(
                         (role) =>
                           role === "superAdmin" || role === "Request-Admin"
@@ -701,14 +727,14 @@ const NavSide = ({ onSelect }) => {
                         <>
                           {IsToggleBank ? (
                             <Link
-                            className={`nav-link text-white ${
-                              activeLink === "bank" ||
-                              activeLink === "BankEdit" ||
-                              activeLink === "BankDelete" ||
-                              activeLink === "NewBank"
-                                ? "active bg-primary"
-                                : ""
-                            }`}
+                              className={`nav-link text-white ${
+                                activeLink === "bank" ||
+                                activeLink === "BankEdit" ||
+                                activeLink === "BankDelete" ||
+                                activeLink === "NewBank"
+                                  ? "active bg-primary"
+                                  : ""
+                              }`}
                               onClick={handleToggleBank}
                             >
                               <i className="far fa-circle nav-icon" />
@@ -868,12 +894,12 @@ const NavSide = ({ onSelect }) => {
                   {isToggleRecycleBin ? (
                     <li className="nav-item ">
                       <a
-                       className={`nav-link text-white ${
-                        activeLink === "trash" ||
-                        activeLink === "AllTransactionTrash"
-                          ? "active bg-primary"
-                          : ""
-                      }`}
+                        className={`nav-link text-white ${
+                          activeLink === "trash" ||
+                          activeLink === "AllTransactionTrash"
+                            ? "active bg-primary"
+                            : ""
+                        }`}
                         onClick={handleToggleRecycleBin}
                       >
                         &nbsp;&nbsp;
@@ -888,7 +914,7 @@ const NavSide = ({ onSelect }) => {
                   ) : (
                     <li className="nav-item ">
                       <a
-                         className={`nav-link text-white ${
+                        className={`nav-link text-white ${
                           activeLink === "trash" ||
                           activeLink === "AllTransactionTrash"
                             ? "active bg-primary"

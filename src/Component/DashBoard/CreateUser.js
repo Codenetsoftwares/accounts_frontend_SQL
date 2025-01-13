@@ -171,6 +171,7 @@ const CreateUser = () => {
                                 "Create-Withdraw-Transaction",
                                 "Create-Deposit-Transaction",
                                 "Create-Introducer",
+                                "Report-Admin",
                               ].map((role) => (
                                 <div
                                   key={role}
@@ -192,8 +193,8 @@ const CreateUser = () => {
                                           checked
                                             ? [...values.roles, value]
                                             : values.roles.filter(
-                                              (role) => role !== value
-                                            )
+                                                (role) => role !== value
+                                              )
                                         );
                                       }}
                                     />
@@ -241,7 +242,6 @@ const CreateUser = () => {
         )}
       </Formik>
     </div>
-
   );
 };
 

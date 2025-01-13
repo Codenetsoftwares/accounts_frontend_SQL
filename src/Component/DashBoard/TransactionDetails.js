@@ -13,7 +13,9 @@ import Pagination from "../Pagination";
 import NewPagination from "../NewPagination";
 
 const TransactionDetails = () => {
-  const [startDatevalue, SetStartDatesetValue] = useState(moment().subtract(1, "days").toDate());
+  const [startDatevalue, SetStartDatesetValue] = useState(
+    moment().subtract(1, "days").toDate()
+  );
   const [endDatevalue, setEndDateValue] = useState(new Date());
   const [documentView, setDocumentView] = useState([]);
   const [subAdminlist, setSubAdminlist] = useState([]);
@@ -30,17 +32,9 @@ const TransactionDetails = () => {
 
   const location = useLocation();
   const auth = useAuth();
-  const { id } = useParams()
+  const { id } = useParams();
 
-  useEffect(() => {
-    const formattedStartDate = moment(
-      startDatevalue,
-      "DD-MM-YYYY HH:mm"
-    ).format("YYYY-MM-DD");
-    const formattedEndDate = moment(endDatevalue, "DD-MM-YYYY HH:mm").format(
-      "YYYY-MM-DD"
-    );
-
+  const handleFilter = () => {
     AccountService.getUserTransaction(
       auth.user,
       id,
@@ -50,16 +44,28 @@ const TransactionDetails = () => {
       subAdmin,
       bank,
       website,
-      formattedStartDate,
-      formattedEndDate
-    ).then((res) => {
-      setDocumentView(res.data?.data);
-      setTotalData(res?.data?.pagination?.totalItems);
-      setTotalPage(res?.data?.pagination?.totalPages);
-    }).catch((err)=>{
-      console.error(err)
-    })
-  }, [auth.user, id, page, startDatevalue, endDatevalue, select, , website, bank, subAdmin]);
+      moment(startDatevalue).toISOString(),
+      moment(endDatevalue).toISOString()
+    )
+      .then((res) => {
+        setDocumentView(res.data?.data);
+        setTotalData(res?.data?.pagination?.totalItems);
+        setTotalPage(res?.data?.pagination?.totalPages);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  useEffect(() => {
+    handleFilter();
+  }, []);
+
+  useEffect(() => {
+    if (page > 1) {
+      handleFilter();
+    }
+  }, [page]);
 
   const handleReset = () => {
     setSelect("");
@@ -98,7 +104,9 @@ const TransactionDetails = () => {
   }, [auth]);
 
   useEffect(() => {
-    AccountService.website(auth.user).then((res) => setWebsiteList(res.data.data));
+    AccountService.website(auth.user).then((res) =>
+      setWebsiteList(res.data.data)
+    );
   }, [auth]);
 
   const selectPageHandler = (selectedPage) => {
@@ -267,7 +275,17 @@ const TransactionDetails = () => {
                   timeFormat="HH:mm"
                 />
               </div>
-              <div className="d-flex col justify-content-center">
+              <div className="d-flex col justify-content-between">
+                <div className="mx-2">
+                  <button
+                    type="button"
+                    className="btn btn-dark mx-2"
+                    onClick={handleFilter}
+                    style={{ boxShadow: "0 4px 8px rgba(0,0,0,0.1)" }}
+                  >
+                    Filter
+                  </button>
+                </div>
                 <div className="mx-2">
                   <button
                     type="button"
@@ -349,16 +367,17 @@ const TransactionDetails = () => {
 
                       <td>
                         <p
-                          className={`col fs-6  ${data.transactionType.includes(
-                            "Manual-Website-Withdraw"
-                          ) ||
+                          className={`col fs-6  ${
+                            data.transactionType.includes(
+                              "Manual-Website-Withdraw"
+                            ) ||
                             data.transactionType.includes(
                               "Manual-Bank-Withdraw"
                             ) ||
                             data.transactionType === "Withdraw"
-                            ? "text-red"
-                            : "text-black"
-                            }`}
+                              ? "text-red"
+                              : "text-black"
+                          }`}
                         >
                           {data.amount && (
                             <p className="col fs-6 font-weight-bold">
@@ -382,9 +401,7 @@ const TransactionDetails = () => {
                         {data.transactionID && (
                           <p className="col fs-6 ">{data.transactionID}</p>
                         )}
-                        {data.depositAmount && (
-                          <p className="col fs-6 ">N.A</p>
-                        )}
+                        {data.depositAmount && <p className="col fs-6 ">N.A</p>}
                         {data.withdrawAmount && (
                           <p className="col fs-6 ">N.A</p>
                         )}
@@ -393,18 +410,21 @@ const TransactionDetails = () => {
                       <td>
                         {data?.transactionType && (
                           <p
-                            className={`col fs-6 text-break ${["Manual-Website-Deposit", "Manual-Bank-Deposit", "Deposit"].includes(
-                              data.transactionType
-                            )
-                              ? "text-success" // Green for deposits
-                              : [
-                                "Manual-Website-Withdraw",
-                                "Manual-Bank-Withdraw",
-                                "Withdraw",
+                            className={`col fs-6 text-break ${
+                              [
+                                "Manual-Website-Deposit",
+                                "Manual-Bank-Deposit",
+                                "Deposit",
                               ].includes(data.transactionType)
+                                ? "text-success" // Green for deposits
+                                : [
+                                    "Manual-Website-Withdraw",
+                                    "Manual-Bank-Withdraw",
+                                    "Withdraw",
+                                  ].includes(data.transactionType)
                                 ? "text-danger" // Red for withdrawals
                                 : ""
-                              }`}
+                            }`}
                           >
                             {data?.transactionType}
                           </p>
@@ -415,23 +435,17 @@ const TransactionDetails = () => {
                         {data.paymentMethod && (
                           <p className="col fs-6">{data.paymentMethod}</p>
                         )}
-                        {data.depositAmount && (
-                          <p className="col fs-6 ">N.A</p>
-                        )}
+                        {data.depositAmount && <p className="col fs-6 ">N.A</p>}
                         {data.withdrawAmount && (
                           <p className="col fs-6 ">N.A</p>
                         )}
                       </td>
-                      <td>{data.subAdminName}</td>
+                      <td>{data.subAdminId}</td>
                       <td>
                         {data.paymentMethod && (
-                          <p className="col fs-6">
-                            {data.introducerUserName}
-                          </p>
+                          <p className="col fs-6">{data.introducerUserName}</p>
                         )}
-                        {data.depositAmount && (
-                          <p className="col fs-6 ">N.A</p>
-                        )}
+                        {data.depositAmount && <p className="col fs-6 ">N.A</p>}
                         {data.withdrawAmount && (
                           <p className="col fs-6 ">N.A</p>
                         )}
@@ -456,15 +470,16 @@ const TransactionDetails = () => {
             </tbody>
           </table>
         </small>
-        {documentView.length > 0 && <NewPagination
-          currentPage={page}
-          totalPages={totalPage}
-          handlePageChange={selectPageHandler}
-          startIndex={startIndex}
-          endIndex={endIndex}
-          totalData={totalData}
-        />}
-
+        {documentView.length > 0 && (
+          <NewPagination
+            currentPage={page}
+            totalPages={totalPage}
+            handlePageChange={selectPageHandler}
+            startIndex={startIndex}
+            endIndex={endIndex}
+            totalData={totalData}
+          />
+        )}
       </div>
     </div>
   );
