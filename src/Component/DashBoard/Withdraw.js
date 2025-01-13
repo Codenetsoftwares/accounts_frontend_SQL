@@ -190,7 +190,7 @@ const Withdraw = () => {
   const handleSubmit = (values, { resetForm }) => {
     console.log("values", values);
     const confirmed = window.confirm(
-      "Please double-check the form on obhiasb before confirming, as changes or deletions won't be possible afterward."
+      "Please double-check the form on Sobhisab before confirming, as changes or deletions won't be possible afterward."
     );
     if (confirmed) {
       setIsLoading(true);

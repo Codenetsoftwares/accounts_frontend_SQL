@@ -74,7 +74,7 @@ const Login = () => {
               >
                 <div className="card-body p-5 text-center">
                   <div className="mb-md-5 mt-md-4 pb-5">
-                    <h2 className="fw-bold mb-2 text-uppercase">obhiasb</h2>
+                    <h2 className="fw-bold mb-2 text-uppercase">Sobhisab</h2>
                     <p className="text-white-50 mb-5">
                       Hi! Admin Please enter your login credentials!
                     </p>

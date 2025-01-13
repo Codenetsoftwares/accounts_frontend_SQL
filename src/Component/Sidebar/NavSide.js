@@ -125,7 +125,7 @@ const NavSide = ({ onSelect }) => {
               style={{ opacity: ".8" }}
             />
             <span className="brand-text font-weight-light text-white">
-              &nbsp;obhiasb
+              &nbsp;Sobhisab
             </span>
             <span
               className="fs-4 ms-4  d-xl-none"
