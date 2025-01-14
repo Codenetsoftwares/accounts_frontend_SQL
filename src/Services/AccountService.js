@@ -55,10 +55,10 @@ class AccountService {
     });
   }
 
-  getbank(user, page, search) {
+  getbank(user, page, search , pageLimit) {
     return axios({
       method: "get",
-      url: `${API_HOST}/api/get-bank-name?page=${page}&pageSize=10&search=${search}`,
+      url: `${API_HOST}/api/get-bank-name?page=${page}&pageSize=${pageLimit}&search=${search}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -129,10 +129,10 @@ class AccountService {
     });
   }
 
-  getWebsiteDetails(user, page, search) {
+  getWebsiteDetails(user, page, search , pageLimit) {
     return axios({
       method: "get",
-      url: `${API_HOST}/api/get-website-name?page=${page}&pageSize=10&search=${search}`,
+      url: `${API_HOST}/api/get-website-name?page=${page}&pageSize=${pageLimit}&search=${search}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -242,11 +242,11 @@ class AccountService {
     });
   }
 
-  userprofile(page, search, user) {
+  userprofile(page,pageSize,search, user) {
     console.log(user);
     return axios({
       method: "get",
-      url: `${API_HOST}/api/user-profile/${page}?search=${search}`,
+      url: `${API_HOST}/api/user-profile/?page=${page}&pageSize=${pageSize}&search=${search}`,       
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -287,10 +287,10 @@ class AccountService {
     // }
   }
 
-  Introducerprofile(page, search, user) {
+  Introducerprofile(page, search, pageLimit ,user) {
     return axios({
       method: "get",
-      url: `${API_HOST}/api/introducer-profile?page=${page}&pageSize=${10}&search=${search}`,
+      url: `${API_HOST}/api/introducer-profile?page=${page}&pageSize=${pageLimit}&search=${search}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -476,10 +476,10 @@ class AccountService {
       },
     });
   }
-  getAdminList(page, search, user) {
+  getAdminList(page, search, pageLimit ,user) {
     return axios({
       method: "get",
-      url: `${API_HOST}/api/admin/view-sub-admins?search=${search}&page=${page}&pageSize=${10}`,
+      url: `${API_HOST}/api/admin/view-sub-admins?search=${search}&page=${page}&pageSize=${pageLimit}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
