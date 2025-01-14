@@ -25,12 +25,13 @@ import TransactionDetails from "./TransactionDetails";
 
 import { Oval } from "react-loader-spinner"; // Import the Oval spinner
 import FullScreenLoader from "../FullScreenLoader";
+import NewPagination from "../NewPagination";
 
 const UserProfile = () => {
   const auth = useAuth();
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
-  const [page, setPage] = useState(1);
+  // const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [hoveredCard, setHoveredCard] = useState(null);
@@ -40,6 +41,19 @@ const UserProfile = () => {
   const [bankViewEdit, setBankViewEdit] = useState("");
   const [selectedUser, setSelectedUser] = useState(null);
   const [renderMaster, setRenderMaster] = useState(null);
+  const [page, setPage] = useState(1);
+  const [totalData, setTotalData] = useState(0);
+  const [totalPage, setTotalPage] = useState(0);
+  const pageLimit = 9;
+
+  const selectPageHandler = (selectedPage) => {
+    console.log(selectedPage);
+    setPage(selectedPage);
+  };
+
+  
+  const startIndex = Math.min((page - 1) * pageLimit + 1);
+  const endIndex = Math.min(page * pageLimit, totalData);
 
   console.log("======>>> data", users);
 
@@ -63,16 +77,17 @@ const UserProfile = () => {
       setIsLoading(true);
       const res = await AccountService.userprofile(
         newPage,
+        pageLimit,
         searchTerm,
         auth.user
       );
 
       const filteredData = res.data.data.filter((item) => item !== null);
 
-      setUsers((prevUsers) =>
-        searchTerm.length > 0 ? filteredData : [...prevUsers, ...filteredData]
-      );
+      setUsers(res?.data?.data);
       setHasMore(newPage < res.data.pagination.totalPages);
+      setTotalData(res?.data?.pagination?.totalItems);
+      setTotalPage(res?.data?.pagination?.totalPages);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
@@ -86,7 +101,7 @@ const UserProfile = () => {
       setPage(1); // Reset page to 1 on new search
       fetchData(searchTerm, 1);
     }, 1300),
-    [] // Empty dependency array ensures stable function
+    [search] // Empty dependency array ensures stable function
   );
 
   useEffect(() => {
@@ -106,12 +121,11 @@ const UserProfile = () => {
     }
   };
 
-
   useEffect(() => {
-    if (page > 1) {
+
       fetchData(); // Fetch more data when page changes
-    }
-  }, [page, search, renderMaster]);
+    
+  }, [page, renderMaster]);
 
   const handleInnerProfile = (id) => {
     navigate(`/innerprofile`, { state: { page: page, id: id, q: search } });
@@ -195,160 +209,133 @@ const UserProfile = () => {
 
         <div className="card-body  mt-2 mb-3">
           <SingleCard className="mb-2 p-4">
-            <InfiniteScroll
-              style={{ overflowX: "hidden" }}
-              dataLength={users.length}
-              next={fetchMoreData}
-              hasMore={hasMore}
-              loader={
-                // Use the spinner here
-                <div
-                  className="d-flex justify-content-center align-items-center"
-                  style={{ height: "80vh" }}
-                >
-                  <Oval
-                    height={40}
-                    width={40}
-                    color="#4fa94d"
-                    wrapperStyle={{}}
-                    wrapperClass=""
-                    visible={true}
-                    ariaLabel="oval-loading"
-                    secondaryColor="#4fa94d"
-                    strokeWidth={2}
-                    strokeWidthSecondary={2}
-                  />
-                </div>
-              }
-              height={600}
-              endMessage={
-                <p style={{ textAlign: "center" }}>
-                  <b>No more data to load</b>
-                </p>
-              }
-            >
-              <GridCard columns={3}>
-                {users && users.length > 0 ? (
-                  users.map((user, index) => (
+            <GridCard columns={3}>
+              {users && users.length > 0 ? (
+                users.map((user, index) => (
+                  <div
+                    key={user.userId}
+                    className="col d-flex justify-content-center align-items-center"
+                    onMouseEnter={() => setHoveredCard(user.userId)}
+                    onMouseLeave={() => setHoveredCard(null)}
+                  >
                     <div
-                      key={user.userId}
-                      className="col d-flex justify-content-center align-items-center"
-                      onMouseEnter={() => setHoveredCard(user.userId)}
-                      onMouseLeave={() => setHoveredCard(null)}
+                      className={`card d-flex justify-content-between ${
+                        hoveredCard === user.userId ? "card-hover-shadow" : ""
+                      }`}
+                      style={{
+                        borderRadius: "20px",
+                        height: "200px",
+                        width: "95%",
+                        position: "relative",
+                      }}
+                      onClick={() => handleCardClick(user.userId)}
                     >
-                      <div
-                        className={`card d-flex justify-content-between ${hoveredCard === user.userId ? "card-hover-shadow" : ""
-                          }`}
-                        style={{
-                          borderRadius: "20px",
-                          height: "200px",
-                          width: "95%",
-                          position: "relative",
-                        }}
-                        onClick={() => handleCardClick(user.userId)}
-                      >
-                        <div className="card-body">
-                          <button
-                            type="button"
-                            className="btn btn-steel-blue btn-sm btn-hover-zoom fs-4"
-                            data-toggle="modal"
-                            data-target="#exampleModalp"
-                            onClick={() => {
-                              handleProfileView(user.userId, user);
-                            }}
-                          >
-                            <FontAwesomeIcon
-                              icon={faUser}
-                              className="add-icon"
-                            />
-                          </button>
-                          <p
-                            className="font-weight-bold fs-4 text-truncate mt-3"
-                            style={{ color: "#708090" }}
-                          >
-                            {user.userName}
-                          </p>
-                          <div className="container">
-                            <div className="row g-1 justify-content-center mt-3">
-                              <div className="col-6 col-sm-4 col-md-3 col-lg-2">
-                                <button
-                                  type="button"
-                                  className="btn btn-steel-blue btn-sm btn-hover-zoom"
-                                  onClick={() => {
-                                    handleInnerProfile(user.userId);
-                                  }}
-                                  title="Profile Edit"
-                                >
-                                  <FontAwesomeIcon
-                                    icon={faUserEdit}
-                                    className="add-icon"
-                                  />
-                                </button>
-                              </div>
-                              <div className="col-6 col-sm-4 col-md-3 col-lg-2">
-                                <button
-                                  data-toggle="modal"
-                                  data-target="#modalbank"
-                                  type="button"
-                                  className="btn btn-steel-blue btn-sm btn-hover-zoom"
-                                  onClick={(e) => {
-                                    handleBankVIewEdit(e, user.userId, user);
-                                  }}
-                                  title="Bank Details & Edit"
-                                >
-                                  <FontAwesomeIcon
-                                    icon={faBank}
-                                    className="add-icon"
-                                  />
-                                </button>
-                              </div>
-                              <div className="col-6 col-sm-4 col-md-3 col-lg-2">
-                                <button
-                                  type="button"
-                                  className="btn btn-steel-blue btn-sm btn-hover-zoom"
-                                  onClick={(e) =>
-                                    handleTransaction(e, user, user.userId)
-                                  }
-                                  title="Transaction Details"
-                                >
-                                  <FontAwesomeIcon
-                                    icon={faFileAlt}
-                                    className="add-icon"
-                                  />
-                                </button>
-                              </div>
-                              <div className="col-6 col-sm-4 col-md-3 col-lg-2">
-                                <button
-                                  data-toggle="modal"
-                                  data-target="#modalreset"
-                                  type="button"
-                                  className="btn btn-steel-blue btn-sm btn-hover-zoom"
-                                  onClick={(e) => {
-                                    handleResetPassword(e, user.userName);
-                                  }}
-                                  title="Reset Password"
-                                >
-                                  <FontAwesomeIcon
-                                    icon={faKey}
-                                    className="add-icon"
-                                  />
-                                </button>
-                              </div>
+                      <div className="card-body">
+                        <button
+                          type="button"
+                          className="btn btn-steel-blue btn-sm btn-hover-zoom fs-4"
+                          data-toggle="modal"
+                          data-target="#exampleModalp"
+                          onClick={() => {
+                            handleProfileView(user.userId, user);
+                          }}
+                        >
+                          <FontAwesomeIcon icon={faUser} className="add-icon" />
+                        </button>
+                        <p
+                          className="font-weight-bold fs-4 text-truncate mt-3"
+                          style={{ color: "#708090" }}
+                        >
+                          {user.userName}
+                        </p>
+                        <div className="container">
+                          <div className="row g-1 justify-content-center mt-3">
+                            <div className="col-6 col-sm-4 col-md-3 col-lg-2">
+                              <button
+                                type="button"
+                                className="btn btn-steel-blue btn-sm btn-hover-zoom"
+                                onClick={() => {
+                                  handleInnerProfile(user.userId);
+                                }}
+                                title="Profile Edit"
+                              >
+                                <FontAwesomeIcon
+                                  icon={faUserEdit}
+                                  className="add-icon"
+                                />
+                              </button>
+                            </div>
+                            <div className="col-6 col-sm-4 col-md-3 col-lg-2">
+                              <button
+                                data-toggle="modal"
+                                data-target="#modalbank"
+                                type="button"
+                                className="btn btn-steel-blue btn-sm btn-hover-zoom"
+                                onClick={(e) => {
+                                  handleBankVIewEdit(e, user.userId, user);
+                                }}
+                                title="Bank Details & Edit"
+                              >
+                                <FontAwesomeIcon
+                                  icon={faBank}
+                                  className="add-icon"
+                                />
+                              </button>
+                            </div>
+                            <div className="col-6 col-sm-4 col-md-3 col-lg-2">
+                              <button
+                                type="button"
+                                className="btn btn-steel-blue btn-sm btn-hover-zoom"
+                                onClick={(e) =>
+                                  handleTransaction(e, user, user.userId)
+                                }
+                                title="Transaction Details"
+                              >
+                                <FontAwesomeIcon
+                                  icon={faFileAlt}
+                                  className="add-icon"
+                                />
+                              </button>
+                            </div>
+                            <div className="col-6 col-sm-4 col-md-3 col-lg-2">
+                              <button
+                                data-toggle="modal"
+                                data-target="#modalreset"
+                                type="button"
+                                className="btn btn-steel-blue btn-sm btn-hover-zoom"
+                                onClick={(e) => {
+                                  handleResetPassword(e, user.userName);
+                                }}
+                                title="Reset Password"
+                              >
+                                <FontAwesomeIcon
+                                  icon={faKey}
+                                  className="add-icon"
+                                />
+                              </button>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  ))
-                ) : (
-                  <div className="col-12 d-flex justify-content-center align-items-center">
-                    <span className="fs-4" style={{ color: "#708090" }}>
-                      No Users Found
-                    </span>
                   </div>
-                )}
-              </GridCard>
-            </InfiniteScroll>
+                ))
+              ) : (
+                <div className="col-12 d-flex justify-content-center align-items-center">
+                  <span className="fs-4" style={{ color: "#708090" }}>
+                    No Users Found
+                  </span>
+                </div>
+              )}
+            </GridCard>
+            <NewPagination
+              currentPage={page}
+              totalPages={totalPage}
+              handlePageChange={selectPageHandler}
+              startIndex={startIndex}
+              endIndex={endIndex}
+              totalData={totalData}
+            />
           </SingleCard>
         </div>
         <UserProfileView user={profileView} />

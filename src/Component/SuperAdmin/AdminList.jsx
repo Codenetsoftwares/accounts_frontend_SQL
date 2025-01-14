@@ -16,6 +16,8 @@ import { Oval } from "react-loader-spinner";
 import "./AdminList.css";
 import SingleCard from "../../common/singleCard";
 import GridCard from "../../common/gridCard";
+import NewPagination from "../NewPagination";
+import FullScreenLoader from "../FullScreenLoader";
 
 const AdminList = () => {
   const navigate = useNavigate();
@@ -25,14 +27,26 @@ const AdminList = () => {
   const auth = useAuth();
 
   const [pageNumber, setPageNumber] = useState("");
-  const [totalData, setTotalData] = useState(0);
+
   const [search, setSearch] = useState("");
-  const [page, setPage] = useState(1);
+
   const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [hoveredCard, setHoveredCard] = useState(null);
   const [activeCard, setActiveCard] = useState(null);
   const [profileView, setProfileView] = useState("");
+  const [page, setPage] = useState(1);
+  const [totalData, setTotalData] = useState(0);
+  const [totalPage, setTotalPage] = useState(0);
+  const pageLimit = 9;
+
+  const selectPageHandler = (selectedPage) => {
+    console.log(selectedPage);
+    setPage(selectedPage);
+  };
+
+  const startIndex = Math.min((page - 1) * pageLimit + 1);
+  const endIndex = Math.min(page * pageLimit, totalData);
 
   console.log("=====>>> sub list", adminList);
 
@@ -49,18 +63,20 @@ const AdminList = () => {
   };
 
   const fetchData = async (searchTerm = search, newPage = page) => {
+    setIsLoading(true);
+
     try {
-      setIsLoading(true);
       const res = await AccountService.getAdminList(
         newPage,
         searchTerm,
+        pageLimit,
         auth.user
       );
       console.log("======>>>>> response", res.data);
       const filteredData = res.data.data.filter((item) => item !== null);
-      setAdminList((prevUsers) =>
-        searchTerm.length > 0 ? filteredData : [...prevUsers, ...filteredData]
-      );
+      setAdminList(res?.data?.data);
+      setTotalData(res?.data?.pagination?.totalItems);
+      setTotalPage(res?.data?.pagination?.totalPages);
       setHasMore(newPage < res.data.pagination.totalPages);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -96,9 +112,7 @@ const AdminList = () => {
   };
 
   useEffect(() => {
-    if (page > 1) {
-      fetchData(); // Fetch more data when page changes
-    }
+    fetchData(); // Fetch more data when page changes
   }, [page]);
 
   const handleProfileView = (id) => {
@@ -114,6 +128,7 @@ const AdminList = () => {
 
   return (
     <div className="bg-white">
+      <FullScreenLoader show={isLoading} />
       <div
         className="card text-center mt-2 mr-5 ml-5"
         style={{
@@ -142,111 +157,82 @@ const AdminList = () => {
         </SingleCard>
         <div className="card-body  mt-2 mb-3">
           <SingleCard className="mb-2 p-4">
-            <InfiniteScroll
-              style={{ overflowX: "hidden" }}
-              dataLength={adminList.length}
-              next={fetchMoreData}
-              hasMore={hasMore}
-              loader={
-                <div
-                  className="d-flex justify-content-center align-items-center"
-                  style={{ height: "80vh" }}
-                >
-                  <Oval
-                    height={40}
-                    width={40}
-                    color="#4fa94d"
-                    wrapperStyle={{}}
-                    wrapperClass=""
-                    visible={true}
-                    ariaLabel="oval-loading"
-                    secondaryColor="#4fa94d"
-                    strokeWidth={2}
-                    strokeWidthSecondary={2}
-                  />
-                </div>
-              }
-              height={600}
-              endMessage={
-                <p style={{ textAlign: "center" }}>
-                  <b>No more data to load</b>
-                </p>
-              }
-            >
-              <GridCard columns={3}>
-                {adminList && adminList.length > 0 ? (
-                  adminList.map((data, i) => (
+            <GridCard columns={3}>
+              {adminList && adminList.length > 0 ? (
+                adminList.map((data, i) => (
+                  <div
+                    key={data?.adminId}
+                    className="col d-flex justify-content-center align-items-center"
+                    onMouseEnter={() => setHoveredCard(data.adminId)}
+                    onMouseLeave={() => setHoveredCard(null)}
+                  >
                     <div
-                      key={data?.adminId}
-                      className="col d-flex justify-content-center align-items-center"
-                      onMouseEnter={() => setHoveredCard(data.adminId)}
-                      onMouseLeave={() => setHoveredCard(null)}
+                      className={`card d-flex justify-content-between ${
+                        hoveredCard === data?.adminId ? "card-hover-shadow" : ""
+                      }`}
+                      style={{
+                        borderRadius: "20px",
+                        height: "200px",
+                        width: "95%",
+                        position: "relative",
+                      }}
+                      onClick={() => handleCardClick(data?.adminId)}
                     >
-                      <div
-                        className={`card d-flex justify-content-between ${
-                          hoveredCard === data?.adminId
-                            ? "card-hover-shadow"
-                            : ""
-                        }`}
-                        style={{
-                          borderRadius: "20px",
-                          height: "200px",
-                          width: "95%",
-                          position: "relative",
-                        }}
-                        onClick={() => handleCardClick(data?.adminId)}
-                      >
-                        <div className="card-body">
-                          <button
-                            type="button"
-                            className="btn btn-steel-blue btn-sm btn-hover-zoom fs-4"
-                            data-toggle="modal"
-                            data-target="#subadminProfile"
-                            onClick={() => {
-                              handleProfileView(data.adminId);
-                            }}
-                          >
-                            <FontAwesomeIcon
-                              icon={faUser}
-                              className="add-icon"
-                            />
-                          </button>
-                          <p
-                            className="font-weight-bold fs-4 text-truncate mt-3"
-                            style={{ color: "#708090" }}
-                          >
-                            {data?.userName}
-                          </p>
-                          <div className="container">
-                            <div>
-                              <button
-                                type="button"
-                                className="btn btn-steel-blue btn-sm btn-hover-zoom font-weight-bold"
-                                style={{
-                                  fontFamily: "'Abril Fatface', serif ",
-                                  textDecoration: "underline",
-                                }}
-                                onClick={(e) => {
-                                  handelDetails(e, data.adminId);
-                                }}
-                              >
-                                Click Here For More Details
-                              </button>
-                            </div>
+                      <div className="card-body">
+                        <button
+                          type="button"
+                          className="btn btn-steel-blue btn-sm btn-hover-zoom fs-4"
+                          data-toggle="modal"
+                          data-target="#subadminProfile"
+                          onClick={() => {
+                            handleProfileView(data.adminId);
+                          }}
+                        >
+                          <FontAwesomeIcon icon={faUser} className="add-icon" />
+                        </button>
+                        <p
+                          className="font-weight-bold fs-4 text-truncate mt-3"
+                          style={{ color: "#708090" }}
+                        >
+                          {data?.userName}
+                        </p>
+                        <div className="container">
+                          <div>
+                            <button
+                              type="button"
+                              className="btn btn-steel-blue btn-sm btn-hover-zoom font-weight-bold"
+                              style={{
+                                fontFamily: "'Abril Fatface', serif ",
+                                textDecoration: "underline",
+                              }}
+                              onClick={(e) => {
+                                handelDetails(e, data.adminId);
+                              }}
+                            >
+                              Click Here For More Details
+                            </button>
                           </div>
                         </div>
                       </div>
                     </div>
-                  ))
-                ) : (
-                  <div className="col-12 d-flex justify-content-center align-items-center">
-                    <p className="fs-2" style={{ color: "#708090" }}>
-                      No Sub Admin Found
-                    </p>
                   </div>
-                )}
-              </GridCard>
-            </InfiniteScroll>
+                ))
+              ) : (
+                <div className="col-12 d-flex justify-content-center align-items-center">
+                  <p className="fs-2" style={{ color: "#708090" }}>
+                    No Sub Admin Found
+                  </p>
+                </div>
+              )}
+            </GridCard>
+            <NewPagination
+              currentPage={page}
+              totalPages={totalPage}
+              handlePageChange={selectPageHandler}
+              startIndex={startIndex}
+              endIndex={endIndex}
+              totalData={totalData}
+            />
           </SingleCard>
         </div>
       </div>

@@ -32,6 +32,8 @@ import IntroducerProfileView from "../Modal/IntroducerProfileView";
 
 import { Oval } from "react-loader-spinner"; // Import the Oval spinner
 import InfiniteScroll from "react-infinite-scroll-component";
+import NewPagination from "../NewPagination";
+import FullScreenLoader from "../FullScreenLoader";
 
 const IntroducerProfile = ({ data }) => {
   const auth = useAuth();
@@ -42,15 +44,30 @@ const IntroducerProfile = ({ data }) => {
   const [introducerName, setIntroducerName] = useState("");
   const [txType, setTxType] = useState("");
   const [search, setSearch] = useState("");
-  const [page, setPage] = useState(1);
+  // const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [hoveredCard, setHoveredCard] = useState(null);
   const [activeCard, setActiveCard] = useState(null);
   const [txType1, setTxType1] = useState("");
   const [profileView, setProfileView] = useState("");
   const RawFilterData = [];
+  const [isLoading, setIsLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [totalData, setTotalData] = useState(0);
+  const [totalPage, setTotalPage] = useState(0);
+  const pageLimit = 9;
+
+  const selectPageHandler = (selectedPage) => {
+    console.log(selectedPage);
+    setPage(selectedPage);
+  };
+
+  const startIndex = Math.min((page - 1) * pageLimit + 1);
+  const endIndex = Math.min(page * pageLimit, totalData);
+
   console.log("====>>>> line 52", introducerName);
   console.log("=========>>> line 53", users);
+
   const handleSearch = (event) => {
     setSearch(event.target.value);
     if (!event.target.value) {
@@ -75,10 +92,12 @@ const IntroducerProfile = ({ data }) => {
     navigate(`/introducerstatement/${id}`);
   };
   const fetchData = async (searchTerm = search, newPage = page) => {
+    setIsLoading(true);
     try {
       const res = await AccountService.Introducerprofile(
         newPage,
         searchTerm,
+        pageLimit,
         auth.user
       );
 
@@ -91,12 +110,15 @@ const IntroducerProfile = ({ data }) => {
         searchTerm.length > 0 ? usernames : [...prevNames, ...usernames]
       );
 
-      setUsers((prevUsers) =>
-        searchTerm.length > 0 ? filteredData : [...prevUsers, ...filteredData]
-      );
+      setUsers(res?.data?.data);
+
+      setTotalData(res?.data?.pagination?.totalItems);
+      setTotalPage(res?.data?.pagination?.totalPages);
       setHasMore(newPage < res.data.pagination.totalPages);
     } catch (error) {
       console.error("Error fetching data:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -110,8 +132,8 @@ const IntroducerProfile = ({ data }) => {
     debounce((searchTerm) => {
       setPage(1); // Reset page to 1 on new search
       fetchData(searchTerm, 1);
-    }, 1300),
-    [] // Empty dependency array ensures stable function
+    }, 1000),
+    [search] // Empty dependency array ensures stable function
   );
 
   useEffect(() => {
@@ -132,10 +154,8 @@ const IntroducerProfile = ({ data }) => {
   };
 
   useEffect(() => {
-    if (page > 1) {
-      fetchData(); // Fetch more data when page changes
-    }
-  }, [page, search]);
+    fetchData();
+  }, [page]);
 
   const handleCardClick = (id) => {
     setActiveCard(id);
@@ -154,8 +174,10 @@ const IntroducerProfile = ({ data }) => {
     const selectedUser = users.find((user) => user.introId === id);
     setProfileView(selectedUser);
   };
+
   return (
     <div className="bg-white">
+      <FullScreenLoader show={isLoading} />
       <div
         className="card text-center mt-2 mr-5 ml-5"
         style={{
@@ -185,183 +207,155 @@ const IntroducerProfile = ({ data }) => {
         </SingleCard>
         <div className="card-body  mt-2 mb-3">
           <SingleCard className="mb-2 p-4">
-            <InfiniteScroll
-              style={{ overflowX: "hidden" }}
-              dataLength={users.length}
-              next={fetchMoreData}
-              loader={
-                // Center the spinner
-                <div
-                  className="d-flex justify-content-center align-items-center"
-                  style={{ height: "80vh" }}
-                >
-                  <Oval
-                    height={50}
-                    width={50}
-                    color="#4fa94d"
-                    visible={true}
-                    ariaLabel="oval-loading"
-                    secondaryColor="#4fa94d"
-                    strokeWidth={2}
-                    strokeWidthSecondary={2}
-                  />
-                </div>
-              }
-              hasMore={hasMore}
-              height={600}
-              endMessage={
-                <p style={{ textAlign: "center" }}>
-                  <b>No more data to load</b>
-                </p>
-              }
-            >
-              <GridCard columns={3}>
-                {users && users.length > 0 ? (
-                  users.map((user, index) => (
+            <GridCard columns={3}>
+              {users && users.length > 0 ? (
+                users.map((user, index) => (
+                  <div
+                    key={user.introId}
+                    className="col d-flex justify-content-center align-items-center"
+                    onMouseEnter={() => setHoveredCard(user.introId)}
+                    onMouseLeave={() => setHoveredCard(null)}
+                  >
                     <div
-                      key={user.introId}
-                      className="col d-flex justify-content-center align-items-center"
-                      onMouseEnter={() => setHoveredCard(user.introId)}
-                      onMouseLeave={() => setHoveredCard(null)}
+                      className={`card d-flex justify-content-between ${
+                        hoveredCard === user.introId ? "card-hover-shadow" : ""
+                      }`}
+                      style={{
+                        borderRadius: "20px",
+                        height: "200px",
+                        width: "95%",
+                        position: "relative",
+                      }}
+                      onClick={() => handleCardClick(user.introId)}
                     >
-                      <div
-                        className={`card d-flex justify-content-between ${
-                          hoveredCard === user.introId
-                            ? "card-hover-shadow"
-                            : ""
-                        }`}
-                        style={{
-                          borderRadius: "20px",
-                          height: "200px",
-                          width: "95%",
-                          position: "relative",
-                        }}
-                        onClick={() => handleCardClick(user.introId)}
-                      >
-                        <div className="card-body">
-                          <button
-                            type="button"
-                            className="btn btn-steel-blue btn-sm btn-hover-zoom fs-4"
-                            data-toggle="modal"
-                            data-target="#introducerProfile"
-                            onClick={() => {
-                              handleProfileView(user.introId);
-                            }}
-                          >
-                            <FontAwesomeIcon
-                              icon={faUser}
-                              className="add-icon"
-                            />
-                          </button>
-                          <p
-                            className="font-weight-bold fs-4 text-truncate mt-3"
-                            style={{ color: "#708090" }}
-                          >
-                            {user.userName}
-                          </p>
-                          <div className="container">
-                            <div className="row g-1 justify-content-center mt-3">
-                              <div className="col-6 col-sm-4 col-md-3 col-lg-2">
-                                <button
-                                  type="button"
-                                  className="btn btn-steel-blue btn-sm btn-hover-zoom"
-                                  title=" NetWork"
-                                  data-toggle="modal"
-                                  data-target="#withdrawModal"
-                                  onClick={(e) => {
-                                    handleIntroducerTx(
-                                      e,
-                                      "Withdraw",
-                                      user.introId
-                                    );
-                                  }}
-                                >
-                                  <FontAwesomeIcon icon={faMinus} />
-                                </button>
-                              </div>
-                              <div className="col-6 col-sm-4 col-md-3 col-lg-2">
-                                <button
-                                  type="button"
-                                  className="btn btn-steel-blue btn-sm btn-hover-zoom"
-                                  title=" NetWork"
-                                  data-toggle="modal"
-                                  data-target="#depositModal"
-                                  onClick={(e) => {
-                                    handleIntroducerTx(
-                                      e,
-                                      "Deposit",
-                                      user.introId
-                                    );
-                                  }}
-                                >
-                                  <FontAwesomeIcon icon={faPlus} />
-                                </button>
-                              </div>
-                              <div className="col-6 col-sm-4 col-md-3 col-lg-2">
-                                <button
-                                  type="button"
-                                  className="btn btn-steel-blue btn-sm btn-hover-zoom"
-                                  title=" NetWork"
-                                  onClick={(e) => {
-                                    handelstatement(e, user.introId);
-                                  }}
-                                >
-                                  <FontAwesomeIcon icon={faFileAlt} />
-                                </button>
-                              </div>
-                              <div className="col-6 col-sm-4 col-md-3 col-lg-2">
-                                <button
-                                  type="button"
-                                  className="btn btn-steel-blue btn-sm btn-hover-zoom"
-                                  title=" Edit Profile"
-                                  onClick={(e) => {
-                                    handelUserEdit(e, user.introId);
-                                  }}
-                                >
-                                  <FontAwesomeIcon icon={faUserEdit} />
-                                </button>
-                              </div>
-                              <div className="col-6 col-sm-4 col-md-3 col-lg-2">
-                                <button
-                                  type="button"
-                                  className="btn btn-steel-blue btn-sm btn-hover-zoom"
-                                  title=" NetWork"
-                                  onClick={(e) => {
-                                    handelNetwork(e, user.introId);
-                                  }}
-                                >
-                                  <FontAwesomeIcon icon={faNetworkWired} />
-                                </button>
-                              </div>
-                              <div className="col-6 col-sm-4 col-md-3 col-lg-2">
-                                <button
-                                  type="button"
-                                  className="btn btn-steel-blue btn-sm btn-hover-zoom"
-                                  data-toggle="modal"
-                                  data-target="#LiveBalance"
-                                  title="Total Profit Lifetime"
-                                  onClick={(e) => {
-                                    handleLiveBl(e, user.introId);
-                                  }}
-                                >
-                                  <FontAwesomeIcon icon={faBalanceScale} />
-                                </button>
-                              </div>
+                      <div className="card-body">
+                        <button
+                          type="button"
+                          className="btn btn-steel-blue btn-sm btn-hover-zoom fs-4"
+                          data-toggle="modal"
+                          data-target="#introducerProfile"
+                          onClick={() => {
+                            handleProfileView(user.introId);
+                          }}
+                        >
+                          <FontAwesomeIcon icon={faUser} className="add-icon" />
+                        </button>
+                        <p
+                          className="font-weight-bold fs-4 text-truncate mt-3"
+                          style={{ color: "#708090" }}
+                        >
+                          {user.userName}
+                        </p>
+                        <div className="container">
+                          <div className="row g-1 justify-content-center mt-3">
+                            <div className="col-6 col-sm-4 col-md-3 col-lg-2">
+                              <button
+                                type="button"
+                                className="btn btn-steel-blue btn-sm btn-hover-zoom"
+                                title=" NetWork"
+                                data-toggle="modal"
+                                data-target="#withdrawModal"
+                                onClick={(e) => {
+                                  handleIntroducerTx(
+                                    e,
+                                    "Withdraw",
+                                    user.introId
+                                  );
+                                }}
+                              >
+                                <FontAwesomeIcon icon={faMinus} />
+                              </button>
+                            </div>
+                            <div className="col-6 col-sm-4 col-md-3 col-lg-2">
+                              <button
+                                type="button"
+                                className="btn btn-steel-blue btn-sm btn-hover-zoom"
+                                title=" NetWork"
+                                data-toggle="modal"
+                                data-target="#depositModal"
+                                onClick={(e) => {
+                                  handleIntroducerTx(
+                                    e,
+                                    "Deposit",
+                                    user.introId
+                                  );
+                                }}
+                              >
+                                <FontAwesomeIcon icon={faPlus} />
+                              </button>
+                            </div>
+                            <div className="col-6 col-sm-4 col-md-3 col-lg-2">
+                              <button
+                                type="button"
+                                className="btn btn-steel-blue btn-sm btn-hover-zoom"
+                                title=" NetWork"
+                                onClick={(e) => {
+                                  handelstatement(e, user.introId);
+                                }}
+                              >
+                                <FontAwesomeIcon icon={faFileAlt} />
+                              </button>
+                            </div>
+                            <div className="col-6 col-sm-4 col-md-3 col-lg-2">
+                              <button
+                                type="button"
+                                className="btn btn-steel-blue btn-sm btn-hover-zoom"
+                                title=" Edit Profile"
+                                onClick={(e) => {
+                                  handelUserEdit(e, user.introId);
+                                }}
+                              >
+                                <FontAwesomeIcon icon={faUserEdit} />
+                              </button>
+                            </div>
+                            <div className="col-6 col-sm-4 col-md-3 col-lg-2">
+                              <button
+                                type="button"
+                                className="btn btn-steel-blue btn-sm btn-hover-zoom"
+                                title=" NetWork"
+                                onClick={(e) => {
+                                  handelNetwork(e, user.introId);
+                                }}
+                              >
+                                <FontAwesomeIcon icon={faNetworkWired} />
+                              </button>
+                            </div>
+                            <div className="col-6 col-sm-4 col-md-3 col-lg-2">
+                              <button
+                                type="button"
+                                className="btn btn-steel-blue btn-sm btn-hover-zoom"
+                                data-toggle="modal"
+                                data-target="#LiveBalance"
+                                title="Total Profit Lifetime"
+                                onClick={(e) => {
+                                  handleLiveBl(e, user.introId);
+                                }}
+                              >
+                                <FontAwesomeIcon icon={faBalanceScale} />
+                              </button>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  ))
-                ) : (
-                  <div className="col-12 d-flex justify-content-center align-items-center">
-                    <p className="fs-4" style={{ color: "#708090" }}>
-                      No Introducer Found
-                    </p>
                   </div>
-                )}
-              </GridCard>
-            </InfiniteScroll>
+                ))
+              ) : (
+                <div className="col-12 d-flex justify-content-center align-items-center">
+                  <p className="fs-4" style={{ color: "#708090" }}>
+                    No Introducer Found
+                  </p>
+                </div>
+              )}
+            </GridCard>
+            <NewPagination
+              currentPage={page}
+              totalPages={totalPage}
+              handlePageChange={selectPageHandler}
+              startIndex={startIndex}
+              endIndex={endIndex}
+              totalData={totalData}
+            />
           </SingleCard>
         </div>
         {ID && !!ID.length && <LiveBalanceIntroducer ID={ID} />}
