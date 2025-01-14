@@ -27,7 +27,7 @@ const WebsiteDelete = () => {
         setTotalPage(res?.data?.pagination?.totalPages);
       });
     }
-  }, [auth, renderSate]);
+  }, [auth, renderSate, page]);
 
    const startIndex = Math.min((page - 1) * pageLimit + 1);
    const endIndex = Math.min(page * pageLimit, totalData);

@@ -25,7 +25,7 @@ const Alert = () => {
       }
       );
     }
-  }, [auth, renderSate]);
+  }, [auth, renderSate, page]);
 
   const selectPageHandler = (selectedPage) => {
     console.log(selectedPage);

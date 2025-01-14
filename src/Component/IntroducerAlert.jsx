@@ -27,7 +27,7 @@ const IntroducerAlert = () => {
         setTotalPage(res?.data?.pagination?.totalPages);
       });
     }
-  }, [auth, renderSate]);
+  }, [auth, renderSate, page]);
 
   const startIndex = Math.min((page - 1) * pageLimit + 1);
   const endIndex = Math.min(page * pageLimit, totalData);
@@ -76,6 +76,8 @@ const IntroducerAlert = () => {
       // code block
     }
   };
+
+
   const handleEditReject = (e, id, transactionType) => {
     switch (transactionType) {
       case "Deposit":
@@ -103,6 +105,7 @@ const IntroducerAlert = () => {
       // code block
     }
   };
+
 
   const handleDeleteApprove = (e, id, transactionType) => {
     console.log(auth.user);
@@ -429,7 +432,7 @@ const IntroducerAlert = () => {
                           onClick={(e) =>
                             handleDeleteApprove(
                               e,
-                              data.IntroEditID,
+                              data.introTransactionId,
                               data.transactionType
                             )
                           }
@@ -441,7 +444,7 @@ const IntroducerAlert = () => {
                           onClick={(e) =>
                             handleDeleteReject(
                               e,
-                              data.IntroEditID,
+                              data.introTransactionId,
                               data.transactionType
                             )
                           }

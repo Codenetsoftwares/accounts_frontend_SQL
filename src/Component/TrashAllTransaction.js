@@ -23,7 +23,7 @@ const TrashAllTransaction = () => {
       }
       );
     }
-  }, [auth, renderSate]);
+  }, [auth, renderSate, page]);
 
   const handleDeleteApprove = (e, id, transactionType) => {
     e.preventDefault();
