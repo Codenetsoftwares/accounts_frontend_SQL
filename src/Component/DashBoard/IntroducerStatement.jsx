@@ -76,7 +76,7 @@ const IntroducerStatement = () => {
             toast.success("Transaction delete request sent to Super Admin");
           })
           .catch((err) => {
-            toast.error(err.response.data.message);
+            toast.error(err.response.data.errMessage);
           });
         break;
       case "Withdraw":
