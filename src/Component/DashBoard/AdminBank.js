@@ -272,7 +272,7 @@ const AdminBank = () => {
               <input
                 type="text"
                 className="form-control rounded-pill shadow"
-                placeholder="Search Bankname"
+                placeholder="Search Bank Name"
                 value={search}
                 onChange={handleSearch}
               />

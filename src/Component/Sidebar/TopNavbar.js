@@ -43,7 +43,7 @@ const TopNavbar = ({ selectedMenuItem }) => {
   } else if (selectedMenuItem === "createIntroducer") {
     heading = "Create Introducer";
   } else if (selectedMenuItem === "userProfile") {
-    heading = "user Profile";
+    heading = "User Profile";
   } else if (selectedMenuItem === "introducerProfile") {
     heading = "Introducer Profile";
   } else if (selectedMenuItem === "subAdminProfile") {
@@ -55,7 +55,7 @@ const TopNavbar = ({ selectedMenuItem }) => {
   } else if (selectedMenuItem === "AllTransactionRequest") {
     heading = "All Transaction Requests";
   } else if (selectedMenuItem === "introducerTransactionRequest") {
-    heading = " introducer Transactions Requests";
+    heading = " Introducer Transactions Requests";
   } else if (selectedMenuItem === "BankEdit") {
     heading = "Bank Edit";
   } else if (selectedMenuItem === "BankDelete") {
