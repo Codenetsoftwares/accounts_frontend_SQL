@@ -102,6 +102,8 @@ const TrashAllTransaction = () => {
     }
   };
 
+  console.log("alert", alert)
+
   return (
     <div className="container ">
       {alert.length > 0 ? (
