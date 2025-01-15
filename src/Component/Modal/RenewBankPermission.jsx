@@ -172,7 +172,7 @@ const RenewBankPermission = ({ SubAdmins, ID, getbankName, setGetBankName }) => 
             isWithdraw: checkboxIsWithdraw[i],
             isEdit: checkboxIsEdit[i],
             isDelete: checkboxIsDelete[i],
-            isRenew: checkboxIsWithdraw[i],
+            isRenew: checkboxIsRenew[i], 
           };
           arr.push(data);
         }

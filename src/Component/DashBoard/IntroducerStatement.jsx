@@ -97,13 +97,9 @@ const IntroducerStatement = () => {
 
   useEffect(() => {
     handleFilter();
-  }, []);
-
-  useEffect(() => {
-    if (page > 1) {
-      handleFilter();
-    }
   }, [page]);
+
+
 
   const handleReset = () => {
     setSelect("");
