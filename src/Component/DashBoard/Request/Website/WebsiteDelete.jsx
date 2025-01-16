@@ -19,23 +19,21 @@ const WebsiteDelete = () => {
 
   useEffect(() => {
     if (auth.user) {
-      EditServices.ViewWebsiteDelete(auth.user,page,pageLimit).then((res) => {
-        setViewWebsiteDelete(
-          res.data.data && res.data.data.filter((ele) => ele.type === "Delete")
-        );
+      EditServices.ViewWebsiteDelete(auth.user, page, pageLimit).then((res) => {
+        setViewWebsiteDelete(res.data.data);
         setTotalData(res?.data?.pagination?.totalItems);
         setTotalPage(res?.data?.pagination?.totalPages);
       });
     }
   }, [auth, renderSate, page]);
 
-   const startIndex = Math.min((page - 1) * pageLimit + 1);
-   const endIndex = Math.min(page * pageLimit, totalData);
+  const startIndex = Math.min((page - 1) * pageLimit + 1);
+  const endIndex = Math.min(page * pageLimit, totalData);
 
-   const selectPageHandler = (selectedPage) => {
-     console.log(selectedPage);
-     setPage(selectedPage);
-   };
+  const selectPageHandler = (selectedPage) => {
+    console.log(selectedPage);
+    setPage(selectedPage);
+  };
 
   for (let i = 0; i < alert.length; i++) {
     EditData[i] = alert[i].changedFields;
@@ -111,16 +109,16 @@ const WebsiteDelete = () => {
               </table>
             </div>
           </div>
-            {viewWebsiteDelete.length > 0 && (
-              <NewPagination
-                currentPage={page}
-                totalPages={totalPage}
-                handlePageChange={selectPageHandler}
-                startIndex={startIndex}
-                endIndex={endIndex}
-                totalData={totalData}
-              />
-            )}
+          {viewWebsiteDelete.length > 0 && (
+            <NewPagination
+              currentPage={page}
+              totalPages={totalPage}
+              handlePageChange={selectPageHandler}
+              startIndex={startIndex}
+              endIndex={endIndex}
+              totalData={totalData}
+            />
+          )}
         </div>
       ) : (
         <div class="container alert alert-warning mt-1" role="alert">
