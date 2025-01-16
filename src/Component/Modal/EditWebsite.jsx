@@ -6,12 +6,13 @@ import { customErrorHandler } from "../../Utils/helper";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
+import FullScreenLoader from "../FullScreenLoader";
 
 const EditWebsite = ({ ID, webName, show, setShow }) => {
   const auth = useAuth();
 
   const [name, setName] = useState("");
-
+ const [isLoading, setIsLoading] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -23,18 +24,22 @@ const EditWebsite = ({ ID, webName, show, setShow }) => {
 
   const handleSubmit = () => {
     const data = { websiteName: name };
+    setIsLoading(true);
     AccountService.EditWebsite(data, ID, auth.user)
       .then((response) => {
         toast.success(response.data.message);
+        setIsLoading(false);
         handleClose();
       })
       .catch((error) => {
+        setIsLoading(false);
         toast.error(customErrorHandler(error));
       });
   };
 
   return (
     <>
+    <FullScreenLoader show={isLoading} />
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
           <Modal.Title>Provide New Name</Modal.Title>

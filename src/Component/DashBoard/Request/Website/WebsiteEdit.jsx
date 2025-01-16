@@ -4,6 +4,7 @@ import { useAuth } from "../../../../Utils/Auth";
 import { toast } from "react-toastify";
 import { customErrorHandler } from "../../../../Utils/helper";
 import NewPagination from "../../../NewPagination";
+import FullScreenLoader from "../../../FullScreenLoader";
 const WebsiteEdit = () => {
   const auth = useAuth();
   const [EditRq, SetEditRq] = useState([]);
@@ -12,6 +13,7 @@ const WebsiteEdit = () => {
   const [totalData, setTotalData] = useState(0);
   const [totalPage, setTotalPage] = useState(0);
   const pageLimit = 10;
+ const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (auth.user) {
@@ -43,32 +45,38 @@ const WebsiteEdit = () => {
     const data = {
       isApproved: flag,
     };
-
+    setIsLoading(true);
     EditServices.IsWebsiteEditApprove(ID, data, auth.user)
       .then((response) => {
         console.log(response);
         toast.success(response.data.message);
+        setIsLoading(false);
         setRenderSate(response.data);
       })
       .catch((error) => {
+        setIsLoading(false);
         toast.error(customErrorHandler(error));
       });
   };
 
   const handleReject = (e, id) => {
     e.preventDefault();
+    setIsLoading(true);
     EditServices.IsWebsiteDeleteReject(id, auth.user)
       .then((response) => {
         toast.success(response.data.message);
+        setIsLoading(false);
         setRenderSate(response.data);
       })
       .catch((error) => {
+        setIsLoading(false);
         toast.error(customErrorHandler(error));
       });
   };
 
   return (
     <>
+    <FullScreenLoader show={isLoading} />
       {EditRq.length > 0 ? (
         <>
           <div className="d-flex justify-content-center">
@@ -78,7 +86,8 @@ const WebsiteEdit = () => {
             >
               <thead>
                 <tr align="center">
-                  <th scope="col">Website Name</th>
+                  <th scope="col">Edited Website Name</th>
+                  <th scope="col">Present Website Name</th>
                   <th scope="col">Message</th>
                   <th scope="col" colSpan="2">
                     Actions
@@ -88,6 +97,7 @@ const WebsiteEdit = () => {
               <tbody>
                 {EditRq.reverse().map((item, index) => (
                   <tr key={item.id} align="center">
+                    <td>{item.changedFields[0].value}</td>
                     <td>{item.websiteName}</td>
                     <td>{item.message}</td>
                     <td>

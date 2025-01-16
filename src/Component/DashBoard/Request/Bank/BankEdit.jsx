@@ -4,6 +4,7 @@ import { useAuth } from "../../../../Utils/Auth";
 import { toast } from "react-toastify";
 import { customErrorHandler } from "../../../../Utils/helper";
 import NewPagination from "../../../NewPagination";
+import FullScreenLoader from "../../../FullScreenLoader";
 
 const BankEdit = () => {
   const auth = useAuth();
@@ -14,6 +15,7 @@ const BankEdit = () => {
   const [totalData, setTotalData] = useState(0);
   const [totalPage, setTotalPage] = useState(0);
   const pageLimit = 10;
+ const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (auth.user) {
@@ -36,25 +38,30 @@ const BankEdit = () => {
     const data = {
       isApproved: flag,
     };
-
+    setIsLoading(true);
     EditServices.IsBankEditApprove(ID, data, auth.user)
       .then((response) => {
         toast.success(response.data.message);
+        setIsLoading(false);
         setRenderSate(response.data);
       })
       .catch((error) => {
+        setIsLoading(false);
         toast.error(customErrorHandler(error));
       });
   };
 
   const handleReject = (e, id) => {
     e.preventDefault();
+    setIsLoading(true);
     EditServices.IsBankDeleteReject(id, auth.user)
       .then((response) => {
         toast.success(response.data.message);
+        setIsLoading(false);
         setRenderSate(response.data);
       })
       .catch((error) => {
+        setIsLoading(false);
         toast.error(customErrorHandler(error));
       });
   };
@@ -68,6 +75,7 @@ const BankEdit = () => {
   };
   return (
     <div className="container">
+       <FullScreenLoader show={isLoading} />
       {EditRq.length > 0 ? (
         <div className="table-responsive">
           <table className="table table-bordered table-striped">
@@ -75,7 +83,8 @@ const BankEdit = () => {
               <tr align="center">
                 <th>Account Holder Name</th>
                 <th>Account Number</th>
-                <th>Bank Name</th>
+                <th>Edited Bank Name</th>
+                <th>Present Bank Name</th>
                 <th>IFSC Code</th>
                 <th>UPI App Name</th>
                 <th>UPI ID</th>
@@ -89,6 +98,7 @@ const BankEdit = () => {
                 <tr key={item.id} align="center">
                   <td>{item.accountHolderName}</td>
                   <td>{item.accountNumber}</td>
+                  <td>{item.changedFields[1].value}</td>
                   <td>{item.bankName}</td>
                   <td>{item.ifscCode}</td>
                   <td>{item.upiAppName}</td>
