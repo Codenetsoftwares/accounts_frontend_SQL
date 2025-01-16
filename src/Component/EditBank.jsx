@@ -127,7 +127,7 @@ const EditBank = () => {
             <input
               type="text"
               className="form-control"
-              placeholder="Acc No. *"
+              placeholder="Acc No. "
               aria-describedby="addon-wrapping"
               onChange={accnochnage}
               value={accno}
@@ -135,7 +135,7 @@ const EditBank = () => {
             <input
               type="text"
               className="form-control"
-              placeholder="IFSC CODE *"
+              placeholder="IFSC CODE "
               aria-describedby="addon-wrapping"
               onChange={ifscchnage}
               value={ifsc}
@@ -143,7 +143,7 @@ const EditBank = () => {
             <input
               type="text"
               className="form-control"
-              placeholder="Name of the Acc. Holder *"
+              placeholder="Name of the Acc. Holder "
               aria-describedby="addon-wrapping"
               onChange={hnamechnage}
               value={hname}
@@ -151,7 +151,7 @@ const EditBank = () => {
             <input
               type="text"
               className="form-control"
-              placeholder="UPI ID *"
+              placeholder="UPI ID "
               aria-describedby="addon-wrapping"
               onChange={hUpichnage}
               value={upi}
@@ -159,7 +159,7 @@ const EditBank = () => {
             <input
               type="text"
               className="form-control"
-              placeholder="UPI App Name *"
+              placeholder="UPI App Name "
               aria-describedby="addon-wrapping"
               onChange={hupiNamechnage}
               value={upiName}
@@ -167,7 +167,7 @@ const EditBank = () => {
             <input
               type="text"
               className="form-control"
-              placeholder="UPI Phone Number *"
+              placeholder="UPI Phone Number "
               aria-describedby="addon-wrapping"
               onChange={hUpiNumberchnage}
               value={upiPhoneNumber}

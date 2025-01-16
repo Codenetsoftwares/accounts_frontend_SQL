@@ -121,7 +121,7 @@ const BankStatement = () => {
             toast.success("Transaction delete request sent to Super Admin");
           })
           .catch((err) => {
-            toast.error(err.response.data.message);
+            toast.error(err.response.data.errMessage);
           });
         break;
       case "Withdraw":
@@ -130,7 +130,7 @@ const BankStatement = () => {
             toast.success("Transaction delete request sent to Super Admin");
           })
           .catch((err) => {
-            toast.error(err.response.data.message);
+            toast.error(err.response.data.errMessage);
           });
         break;
 
@@ -152,7 +152,7 @@ const BankStatement = () => {
 
           .then((res) => {
             toast.success(
-              "Website Transaction delete request sent to Super Admin"
+              "Bank Transaction delete request sent to Super Admin"
             );
           })
           .catch((err) => {
@@ -168,16 +168,16 @@ const BankStatement = () => {
             );
           })
           .catch((err) => {
-            toast.error(err.response.data.message);
+            toast.error(err.response.data.errMessage);
           });
         break;
       case "Manual-Website-Deposit":
         AccountService.SaveWebsiteTransaction({ requestId: id }, auth.user)
           .then((res) => {
-            toast.success("Bank Transaction deleted");
+            toast.success("Website Transaction delete request sent to Super Admin");
           })
           .catch((err) => {
-            toast.error(err.response.data.message);
+            toast.error(err.response.data.errMessage);
           });
         break;
       default:

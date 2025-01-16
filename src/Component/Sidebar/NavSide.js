@@ -698,7 +698,7 @@ const NavSide = ({ onSelect }) => {
                           }
                         >
                           <i className="far fa-circle nav-icon" />
-                          <p>All transaction</p>
+                          <p>All Transaction</p>
                         </Link>
                       )}
                       {userrole.some(
@@ -717,7 +717,7 @@ const NavSide = ({ onSelect }) => {
                           }
                         >
                           <i className="far fa-circle nav-icon" />
-                          <p>Introducer transaction</p>
+                          <p>Introducer Transaction</p>
                         </Link>
                       )}
                       {userrole.some(
