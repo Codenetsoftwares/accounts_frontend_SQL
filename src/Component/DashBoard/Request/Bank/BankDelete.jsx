@@ -81,38 +81,42 @@ const BankDelete = () => {
           </thead>
           <tbody>
             {viewBankDelete.reverse().map((data, i) => (
-              <tr key={i} align="center">
-                <td
-                  className={
-                    data.changedFields?.bankName
-                      ? "text-danger"
-                      : "text-success"
-                  }
-                >
-                  {data.changedFields?.bankName || data.bankName}
-                </td>
-                <td className="text-success">{data.accountHolderName}</td>
-                <td className="text-success">{data.accountNumber}</td>
-                <td className="text-success">{data.ifscCode}</td>
-                <td className="text-success">{data.upiAppName}</td>
-                <td className="text-success">{data.upiId}</td>
-                <td>
-                  <button
-                    className="btn btn-outline-success me-2"
-                    onClick={(e) => handleApprove(e, data.bankId)}
-                  >
-                    Approve
-                  </button>
-                </td>
-                <td>
-                  <button
-                    className="btn btn-outline-danger"
-                    onClick={(e) => handleReject(e, data.bankId)}
-                  >
-                    Reject
-                  </button>
-                </td>
-              </tr>
+              <>
+                {data.type === "Delete" && (
+                  <tr key={i} align="center">
+                    <td
+                      className={
+                        data.changedFields?.bankName
+                          ? "text-danger"
+                          : "text-success"
+                      }
+                    >
+                      {data.changedFields?.bankName || data.bankName}
+                    </td>
+                    <td className="text-success">{data.accountHolderName}</td>
+                    <td className="text-success">{data.accountNumber}</td>
+                    <td className="text-success">{data.ifscCode}</td>
+                    <td className="text-success">{data.upiAppName}</td>
+                    <td className="text-success">{data.upiId}</td>
+                    <td>
+                      <button
+                        className="btn btn-outline-success me-2"
+                        onClick={(e) => handleApprove(e, data.bankId)}
+                      >
+                        Approve
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        className="btn btn-outline-danger"
+                        onClick={(e) => handleReject(e, data.bankId)}
+                      >
+                        Reject
+                      </button>
+                    </td>
+                  </tr>
+                )}
+              </>
             ))}
           </tbody>
         </table>

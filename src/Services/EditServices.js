@@ -176,10 +176,10 @@ class EditServices {
     });
   }
 
-  ViewBankDelete(user,page,pageLimit) {
+  ViewBankDelete(user, page, pageLimit) {
     return axios({
       method: "get",
-      url: API_HOST + `/api/super-admin/view-bank-edit-requests?page=${page}&pageSize=${pageLimit}`,
+      url: API_HOST + `/api/super-admin/view-bank-delete-requests?page=${page}&pageSize=${pageLimit}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -217,10 +217,10 @@ class EditServices {
     });
   }
 
-  ViewWebsiteDelete(user,page,pageLimit) {
+  ViewWebsiteDelete(user, page, pageLimit) {
     return axios({
       method: "get",
-      url: API_HOST + `/api/superAdmin/view-website-edit-requests?page=${page}&limit=${pageLimit}`,
+      url: API_HOST + `/api/superAdmin/view-website-delete-requests?page=${page}&limit=${pageLimit}`,
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -246,15 +246,7 @@ class EditServices {
       },
     });
   }
-  ViewwebsiteEditRq(user) {
-    return axios({
-      method: "get",
-      url: API_HOST + "/api/superadmin/view-website-edit-requests",
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
-  }
+
 
   ViewBankEditRq(user, page, pageLimit) {
     return axios({
@@ -265,6 +257,17 @@ class EditServices {
       },
     });
   }
+
+  ViewWebsiteEditRq(user, page, pageLimit) {
+    return axios({
+      method: "get",
+      url: API_HOST + `/api/superAdmin/view-website-edit-requests?page=${page}&pageSize=${pageLimit}`,
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+  }
+
   IsEditIntroducerApprove(_id, data, user) {
     return axios({
       method: "post",
