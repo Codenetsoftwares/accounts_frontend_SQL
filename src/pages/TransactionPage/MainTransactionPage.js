@@ -8,6 +8,7 @@ const MainTransactionPage = () => {
   const [page, setPage] = useState(1)
   const [totalPage, setTotalPage] = useState(1)
   const [totalData, setTotalData] = useState(0)
+  const pageLimit = 10;
   console.log(totalData)
   // const handleData = (data, totalPage) => {
   //   // if (data !== undefined) {
@@ -15,6 +16,10 @@ const MainTransactionPage = () => {
   //   // }
   //   setTotalPage(totalPage);
   // }
+
+  const startIndex = Math.min((page - 1) * pageLimit + 1);
+  const endIndex = Math.min(page * pageLimit, totalData);
+
 
   const handlePage = (page) => {
     setPage(page);
@@ -47,6 +52,9 @@ const MainTransactionPage = () => {
         handleTotalData={handleTotalData}
         api={TransactionSercvice.filterTransaction}
         setDocumentFilter={setDocumentFilter}
+        documentFilter={documentFilter}
+        pageLimit={pageLimit}
+        setTotalData={setTotalData}
       />
       <div className="d-flex justify-content-center">
         <TableMainTransaction
@@ -57,6 +65,8 @@ const MainTransactionPage = () => {
           totalPage={totalPage}
           totalData={totalData}
           selectPageHandler={selectPageHandler}
+          startIndex={startIndex}
+          endIndex={endIndex}
         />
       </div>
     </div>

@@ -9,6 +9,7 @@ import EditTransaction from "./Modal/EditTransaction";
 import Pagination from "./Pagination";
 import SingleCard from "../common/singleCard";
 import { customErrorHandler } from "../Utils/helper";
+import NewPagination from "./NewPagination";
 
 const TableMainTransaction = ({
   FilterData,
@@ -17,6 +18,9 @@ const TableMainTransaction = ({
   handlePage,
   totalPage,
   totalData,
+  selectPageHandler,
+  startIndex,
+  endIndex
 }) => {
   console.log("totalData", totalData);
   const auth = useAuth();
@@ -63,7 +67,7 @@ const TableMainTransaction = ({
             console.log(res.data);
             toast.success(res.data.message);
           })
-          .catch((err) => {});
+          .catch((err) => { });
         break;
 
       case "Manual-Bank-Withdraw":
@@ -295,26 +299,25 @@ const TableMainTransaction = ({
                         )}
                       </td>
                       <td>
-                            {data?.transactionType && (
-                              <p
-                                className={`col fs-6 text-break ${
-                                  ["Manual-Website-Deposit","Manual-Bank-Deposit", "Deposit"].includes(
-                                    data.transactionType
-                                  )
-                                    ? "text-success" // Green for deposits
-                                    : [
-                                        "Manual-Website-Withdraw",
-                                        "Manual-Bank-Withdraw",
-                                        "Withdraw",
-                                      ].includes(data.transactionType)
-                                    ? "text-danger" // Red for withdrawals
-                                    : ""
-                                }`}
-                              >
-                                {data?.transactionType}
-                              </p>
-                            )}
-                          </td>
+                        {data?.transactionType && (
+                          <p
+                            className={`col fs-6 text-break ${["Manual-Website-Deposit", "Manual-Bank-Deposit", "Deposit"].includes(
+                              data.transactionType
+                            )
+                              ? "text-success" // Green for deposits
+                              : [
+                                "Manual-Website-Withdraw",
+                                "Manual-Bank-Withdraw",
+                                "Withdraw",
+                              ].includes(data.transactionType)
+                                ? "text-danger" // Red for withdrawals
+                                : ""
+                              }`}
+                          >
+                            {data?.transactionType}
+                          </p>
+                        )}
+                      </td>
                       <td>
                         {data?.paymentMethod && (
                           <p className="col fs-6">{data?.paymentMethod}</p>
@@ -444,12 +447,13 @@ const TableMainTransaction = ({
         </div>
       </SingleCard>
       {FilterData?.length > 0 ? (
-        <Pagination
-          handlePage={handlePage}
-          page={page}
-          totalPage={totalPage}
+        <NewPagination
+          currentPage={page}
+          totalPages={totalPage}
+          handlePageChange={selectPageHandler}
+          startIndex={startIndex}
+          endIndex={endIndex}
           totalData={totalData}
-          perPagePagination={10}
         />
       ) : null}
     </SingleCard>

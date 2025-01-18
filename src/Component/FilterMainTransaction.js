@@ -21,6 +21,7 @@ const FilterMainTransaction = ({
   page,
   setTotalPage,
   setDocumentFilter,
+  documentFilter, setTotalData
 }) => {
   const auth = useAuth();
   const [subAdminlist, setSubAdminlist] = useState([]);
@@ -76,10 +77,11 @@ const FilterMainTransaction = ({
       .then((res) => {
         return (
           console.log(res.data.pagination),
-          setDocumentFilter(res.data.data),
-          setPage(res.data.pagination.page),
-          setTotalPage(res.data.pagination.totalPages),
-          handleTotalData(res.data.pagination.totalItems)
+          setDocumentFilter(res?.data?.data),
+          setPage(res?.data?.pagination?.page),
+          setTotalPage(res?.data?.pagination?.totalPages),
+          setTotalData(res?.data?.pagination?.totalItems),
+          handleTotalData(res?.data?.pagination?.totalItems)
         );
       })
       .catch((err) => {
@@ -423,9 +425,8 @@ const FilterMainTransaction = ({
                   filteredSubAdminOptions.map((option, index) => (
                     <li
                       key={index}
-                      className={`dropdown-item ${
-                        index === activeSubAdminIndex ? "active" : ""
-                      }`}
+                      className={`dropdown-item ${index === activeSubAdminIndex ? "active" : ""
+                        }`}
                       onMouseDown={() => {
                         setSubAdmin(option.userName);
                         setIsSubAdminDropdownVisible(false);
@@ -467,9 +468,8 @@ const FilterMainTransaction = ({
                       filteredIntroducerOptions.map((option, index) => (
                         <li
                           key={index}
-                          className={`dropdown-item ${
-                            index === activeIntroducerIndex ? "active" : ""
-                          }`}
+                          className={`dropdown-item ${index === activeIntroducerIndex ? "active" : ""
+                            }`}
                           onMouseDown={() => {
                             setIntroducer(option.userName);
                             setIsIntroducerDropdownVisible(false);
@@ -509,9 +509,8 @@ const FilterMainTransaction = ({
                       filteredBankOptions.map((option, index) => (
                         <li
                           key={index}
-                          className={`dropdown-item ${
-                            index === activeBankIndex ? "active" : ""
-                          }`}
+                          className={`dropdown-item ${index === activeBankIndex ? "active" : ""
+                            }`}
                           onMouseDown={() => {
                             setBank(option.bankName);
                             setIsBankDropdownVisible(false);
@@ -553,9 +552,8 @@ const FilterMainTransaction = ({
                   filteredWebsiteOptions.map((option, index) => (
                     <li
                       key={index}
-                      className={`dropdown-item ${
-                        index === activeWebsiteIndex ? "active" : ""
-                      }`}
+                      className={`dropdown-item ${index === activeWebsiteIndex ? "active" : ""
+                        }`}
                       onMouseDown={() => {
                         setWebsite(option.websiteName);
                         setIsWebsiteDropdownVisible(false);
@@ -645,7 +643,7 @@ const FilterMainTransaction = ({
               </button>
 
               {documentView !== undefined && (
-                <CSVLink data={documentView} className="btn btn-success">
+                <CSVLink data={documentFilter} className="btn btn-success">
                   Download Data
                 </CSVLink>
               )}
