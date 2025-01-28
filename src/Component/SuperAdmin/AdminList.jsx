@@ -225,14 +225,16 @@ const AdminList = () => {
                 </div>
               )}
             </GridCard>
-            <NewPagination
-              currentPage={page}
-              totalPages={totalPage}
-              handlePageChange={selectPageHandler}
-              startIndex={startIndex}
-              endIndex={endIndex}
-              totalData={totalData}
-            />
+            {adminList.length > 0 && (
+              <NewPagination
+                currentPage={page}
+                totalPages={totalPage}
+                handlePageChange={selectPageHandler}
+                startIndex={startIndex}
+                endIndex={endIndex}
+                totalData={totalData}
+              />
+            )}
           </SingleCard>
         </div>
       </div>

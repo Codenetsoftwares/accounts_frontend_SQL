@@ -152,7 +152,7 @@ const AdminBank = () => {
   const fetchData = async () => {
     try {
       setIsLoading(true);
-      const res = await AccountService.getbank(auth.user, page, search , pageLimit);
+      const res = await AccountService.getbank(auth.user, page, search, pageLimit);
       setGetBankName(res?.data?.data);
       setTotalData(res?.data?.pagination?.totalItems);
       setTotalPage(res?.data?.pagination?.totalPages);
@@ -234,7 +234,7 @@ const AdminBank = () => {
     fetchData();
   }, [search, response]);
 
-  
+
   // for search input field handled from frontend   to be done by serverside
   const fetchMoreData = () => {
     if (hasMore) {
@@ -243,9 +243,9 @@ const AdminBank = () => {
   };
 
   useEffect(() => {
-   
-      fetchData(); // Fetch more data when page changes
-    
+
+    fetchData(); // Fetch more data when page changes
+
   }, [page]);
 
   console.log("SubAdmins", SubAdmins);
@@ -325,9 +325,8 @@ const AdminBank = () => {
                     onMouseLeave={() => setHoveredCard(null)}
                   >
                     <div
-                      className={`card d-flex justify-content-between ${
-                        hoveredCard === data.bankId ? "card-hover-shadow" : ""
-                      }`}
+                      className={`card d-flex justify-content-between ${hoveredCard === data.bankId ? "card-hover-shadow" : ""
+                        }`}
                       style={{
                         borderRadius: "20px",
                         height: "200px",
@@ -352,11 +351,10 @@ const AdminBank = () => {
                             <div className="col-6 col-sm-4 col-md-3 col-lg-2">
                               <button
                                 type="button"
-                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${
-                                  data.isWithdraw && !isInactive
+                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${data.isWithdraw && !isInactive
                                     ? ""
                                     : "avoid-clicks"
-                                }`} // Handling the css from Index css for disable if don't have permission
+                                  }`} // Handling the css from Index css for disable if don't have permission
                                 data-bs-toggle="modal"
                                 data-bs-target="#modalWthbl"
                                 onClick={() => {
@@ -373,11 +371,10 @@ const AdminBank = () => {
                             <div className="col-6 col-sm-4 col-md-3 col-lg-2">
                               <button
                                 type="button"
-                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${
-                                  data.isDeposit && !isInactive
+                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${data.isDeposit && !isInactive
                                     ? ""
                                     : "avoid-clicks"
-                                }`}
+                                  }`}
                                 data-bs-toggle="modal"
                                 data-bs-target="#modalAdbl"
                                 onClick={() => {
@@ -410,11 +407,10 @@ const AdminBank = () => {
                             <div className="col-6 col-sm-4 col-md-3 col-lg-2">
                               <button
                                 type="button"
-                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${
-                                  data.isEdit && !isInactive
+                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${data.isEdit && !isInactive
                                     ? ""
                                     : "avoid-clicks"
-                                }`}
+                                  }`}
                                 onClick={(e) => {
                                   handelEditbank(e, data.bankId);
                                 }}
@@ -432,9 +428,8 @@ const AdminBank = () => {
                             <div className="col-6 col-sm-4 col-md-3 col-lg-2">
                               <button
                                 type="button"
-                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${
-                                  data.isDelete ? "" : "avoid-clicks"
-                                }`}
+                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${data.isDelete ? "" : "avoid-clicks"
+                                  }`}
                                 onClick={(e) => {
                                   handleDeleteBank(e, data.bankId);
                                 }}
@@ -450,11 +445,10 @@ const AdminBank = () => {
                             <div className="col-6 col-sm-4 col-md-3 col-lg-2">
                               <button
                                 type="button"
-                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${
-                                  data.isRenew && !isInactive
+                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${data.isRenew && !isInactive
                                     ? ""
                                     : "avoid-clicks"
-                                }`}
+                                  }`}
                                 data-toggle="modal"
                                 data-target="#RenewBankPermission"
                                 onClick={() => {
@@ -512,14 +506,15 @@ const AdminBank = () => {
                 );
               })}
             </GridCard>
-            <NewPagination
+            {getbankName.length > 0 && <NewPagination
               currentPage={page}
               totalPages={totalPage}
               handlePageChange={selectPageHandler}
               startIndex={startIndex}
               endIndex={endIndex}
               totalData={totalData}
-            />
+            />}
+
           </SingleCard>
         </div>
 

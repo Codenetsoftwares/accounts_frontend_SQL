@@ -346,11 +346,10 @@ const WebsiteDetails = () => {
                     onMouseLeave={() => setHoveredCard(null)}
                   >
                     <div
-                      className={`card d-flex justify-content-between ${
-                        hoveredCard === data.websiteId
+                      className={`card d-flex justify-content-between ${hoveredCard === data.websiteId
                           ? "card-hover-highlight"
                           : ""
-                      }`}
+                        }`}
                       style={{
                         borderRadius: "20px",
                         height: "200px",
@@ -378,11 +377,10 @@ const WebsiteDetails = () => {
                             <div className="col-6 col-sm-4 col-md-3 col-lg-2">
                               <button
                                 type="button"
-                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${
-                                  data.isWithdraw && !isInactive
+                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${data.isWithdraw && !isInactive
                                     ? ""
                                     : "avoid-clicks"
-                                }`}
+                                  }`}
                                 data-bs-toggle="modal"
                                 data-bs-target="#modalWithdrawBlwebsite"
                                 onClick={() => {
@@ -399,11 +397,10 @@ const WebsiteDetails = () => {
                             <div className="col-6 col-sm-4 col-md-3 col-lg-2">
                               <button
                                 type="button"
-                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${
-                                  data.isEdit && !isInactive
+                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${data.isEdit && !isInactive
                                     ? ""
                                     : "avoid-clicks"
-                                }`}
+                                  }`}
                                 data-bs-toggle="modal"
                                 data-bs-target="#modalAddBlWebsite"
                                 onClick={() => {
@@ -436,11 +433,10 @@ const WebsiteDetails = () => {
                             <div className="col-6 col-sm-4 col-md-3 col-lg-2">
                               <button
                                 type="button"
-                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${
-                                  data.isEdit && !isInactive
+                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${data.isEdit && !isInactive
                                     ? ""
                                     : "avoid-clicks"
-                                }`}
+                                  }`}
                                 onClick={() => {
                                   handelWebsiteEdit(
                                     data.websiteId,
@@ -459,9 +455,8 @@ const WebsiteDetails = () => {
                             <div className="col-6 col-sm-4 col-md-3 col-lg-2">
                               <button
                                 type="button"
-                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${
-                                  data.isDelete ? "" : "avoid-clicks"
-                                }`}
+                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${data.isDelete ? "" : "avoid-clicks"
+                                  }`}
                                 onClick={(e) => {
                                   handeldeletewebsite(data.websiteId);
                                 }}
@@ -477,11 +472,10 @@ const WebsiteDetails = () => {
                             <div className="col-6 col-sm-4 col-md-3 col-lg-2">
                               <button
                                 type="button"
-                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${
-                                  data.isRenew && !isInactive
+                                className={`btn btn-steel-blue btn-sm btn-hover-zoom ${data.isRenew && !isInactive
                                     ? ""
                                     : "avoid-clicks"
-                                }`}
+                                  }`}
                                 data-toggle="modal"
                                 data-target="#RenewWebsitePermission"
                                 onClick={() => {
@@ -543,14 +537,15 @@ const WebsiteDetails = () => {
                 );
               })}
             </GridCard>
-            <NewPagination
+            {getWebsite.length > 0 && <NewPagination
               currentPage={page}
               totalPages={totalPage}
               handlePageChange={selectPageHandler}
               startIndex={startIndex}
               endIndex={endIndex}
               totalData={totalData}
-            />
+            />}
+
           </SingleCard>
         </div>
 

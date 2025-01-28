@@ -51,7 +51,7 @@ const UserProfile = () => {
     setPage(selectedPage);
   };
 
-  
+
   const startIndex = Math.min((page - 1) * pageLimit + 1);
   const endIndex = Math.min(page * pageLimit, totalData);
 
@@ -123,8 +123,8 @@ const UserProfile = () => {
 
   useEffect(() => {
 
-      fetchData(); // Fetch more data when page changes
-    
+    fetchData(); // Fetch more data when page changes
+
   }, [page, renderMaster]);
 
   const handleInnerProfile = (id) => {
@@ -219,9 +219,8 @@ const UserProfile = () => {
                     onMouseLeave={() => setHoveredCard(null)}
                   >
                     <div
-                      className={`card d-flex justify-content-between ${
-                        hoveredCard === user.userId ? "card-hover-shadow" : ""
-                      }`}
+                      className={`card d-flex justify-content-between ${hoveredCard === user.userId ? "card-hover-shadow" : ""
+                        }`}
                       style={{
                         borderRadius: "20px",
                         height: "200px",
@@ -328,14 +327,15 @@ const UserProfile = () => {
                 </div>
               )}
             </GridCard>
-            <NewPagination
+            {users.length > 0 && <NewPagination
               currentPage={page}
               totalPages={totalPage}
               handlePageChange={selectPageHandler}
               startIndex={startIndex}
               endIndex={endIndex}
               totalData={totalData}
-            />
+            />}
+
           </SingleCard>
         </div>
         <UserProfileView user={profileView} />

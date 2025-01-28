@@ -217,9 +217,8 @@ const IntroducerProfile = ({ data }) => {
                     onMouseLeave={() => setHoveredCard(null)}
                   >
                     <div
-                      className={`card d-flex justify-content-between ${
-                        hoveredCard === user.introId ? "card-hover-shadow" : ""
-                      }`}
+                      className={`card d-flex justify-content-between ${hoveredCard === user.introId ? "card-hover-shadow" : ""
+                        }`}
                       style={{
                         borderRadius: "20px",
                         height: "200px",
@@ -348,14 +347,15 @@ const IntroducerProfile = ({ data }) => {
                 </div>
               )}
             </GridCard>
-            <NewPagination
+            {users.length > 0 && <NewPagination
               currentPage={page}
               totalPages={totalPage}
               handlePageChange={selectPageHandler}
               startIndex={startIndex}
               endIndex={endIndex}
               totalData={totalData}
-            />
+            />}
+
           </SingleCard>
         </div>
         {ID && !!ID.length && <LiveBalanceIntroducer ID={ID} />}
