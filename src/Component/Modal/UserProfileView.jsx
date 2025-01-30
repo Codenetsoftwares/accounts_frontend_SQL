@@ -116,7 +116,7 @@ const UserProfileView = ({ user }) => {
                       </div>
                       <div class="col-sm-9">
                         <p class="text-muted mb-0">
-                          {user?.introducersUserName1}
+                          {user?.introducersUserName}
                         </p>
                       </div>
                     </div>
@@ -142,7 +142,7 @@ const UserProfileView = ({ user }) => {
                       </div>
                       <div class="col-sm-9 text-truncate">
                         <p class="text-muted  mb-0">
-                          {user?.introducersUserName2}
+                          {user?.introducersUserName1}
                         </p>
                       </div>
                     </div>
@@ -168,7 +168,7 @@ const UserProfileView = ({ user }) => {
                       </div>
                       <div class="col-sm-9">
                         <p class="text-muted mb-0">
-                          {user?.introducersUserName}
+                          {user?.introducersUserName2}
                         </p>
                       </div>
                     </div>
