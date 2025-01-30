@@ -1,8 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SingleCard from "../../common/singleCard";
+import AccountService from "../../Services/AccountService";
+import { useAuth } from "../../Utils/Auth";
+import { toast } from "react-toastify";
 
-const IntroducerProfileView = ({data}) => {
-    console.log('===>>>> data',data)
+const IntroducerProfileView = ({ data,ID }) => {
+    const auth = useAuth();
+
+  console.log("===>>>> data", data);
+
+   const [LiveBalance, SetLiveBalance] = useState(0);
+  
+    useEffect(() => {
+      AccountService.introducerLiveBalance(ID, auth.user)
+  
+        .then((res) => {
+          console.log("res", res);
+          SetLiveBalance(res.data.data.LiveBalance);
+        })
+        .catch((error) => {
+          toast.error(error.response.data.message);
+          SetLiveBalance(0);
+        });
+    }, [auth.user, ID]);
 
   return (
     <div>
@@ -11,15 +31,13 @@ const IntroducerProfileView = ({data}) => {
         id="introducerProfile"
         tabIndex="-1"
         role="dialog"
-        aria-labelledby="exampleModalLabel"  
+        aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
         <div className="modal-dialog modal-dialog-centered " role="document">
           <div className="modal-content" style={{ backgroundColor: "#4682b4" }}>
             <div className="modal-header">
-              <h5 className="modal-title text-white" >
-               INTRODUCER PROFILE
-              </h5>
+              <h5 className="modal-title text-white">INTRODUCER PROFILE</h5>
               <button
                 type="button"
                 className="btn-close"
@@ -65,75 +83,92 @@ const IntroducerProfileView = ({data}) => {
                     // height:"25px"
                   }}
                 >
-                 
-                         <SingleCard  >
-                         <h5 className="text-dark">
-                             {data.userName} <br/>
-                               Details</h5>
-                               
-                         <div className="row">
-                           <div className="col-sm-3 text-truncate">
-                             <p className="mb-0">First Name:</p>
-                           </div>
-                           <div className="col-sm-9">
-                             <p className="text-muted mb-0">
-                                 {data.firstName}
-                                 </p>
-                           </div>
-                         </div>
-                         <hr />
-                         <div className="row">
-                           {" "}
-                           <div className="col-sm-3 text-truncate">
-                             <p className="mb-0">Last Name:</p>
-                           </div>
-                           <div className="col-sm-9">
-                             <p className="text-muted mb-0">
-                                 {data.lastName}
-                                 </p>
-                           </div>
-                         </div>
-     
-                         <hr />
-                         <div className="row bg-dark">
-                           {" "}
-                           <div className="col-sm-3 text-nowrap ">
-                             <p className="mb-0">Payment Done Lifetime</p>
-                           </div>
-                        
-                         </div>
-     
-                         <hr />
-                         <div className="row">
-                           {" "}
-                           <div className="col-sm-3 text-truncate">
-                             <p className="mb-0">Balance:</p>
-                           </div>
-                           <div className="col-sm-9">
-                             <p className="text-muted mb-0">
-                             {data.balance.balance}
-                                 </p>
-                           </div>
-                         </div>
-     
-                         <hr />
-                         <div className="row">
-                           {" "}
-                           <div className="col-sm-3 text-nowrap">
-                             <p className="mb-0"> Current Due:</p>
-                           </div>
-                           <div className="col-sm-9">
-                             <p className="text-muted mb-0">
-                             {data.balance.currentDue}
-                             </p>
-                           </div>
-                         </div>
-     
-                     
-                       </SingleCard>
+                  <SingleCard>
+                    <h5 className="text-dark">
+                      {data.userName} <br />
+                      Details
+                    </h5>
 
-                
-                 
+                    <div className="row">
+                      <div className="col-sm-3 text-truncate">
+                        <p className="mb-0">First Name:</p>
+                      </div>
+                      <div className="col-sm-9">
+                        <p className="text-muted mb-0">{data.firstName}</p>
+                      </div>
+                    </div>
+                    <hr />
+                    <div className="row">
+                      {" "}
+                      <div className="col-sm-3 text-truncate">
+                        <p className="mb-0">Last Name:</p>
+                      </div>
+                      <div className="col-sm-9">
+                        <p className="text-muted mb-0">{data.lastName}</p>
+                      </div>
+                    </div>
+
+                    <hr />
+                    <div className="row bg-dark">
+                      {" "}
+                      <div className="col-sm-3 text-nowrap ">
+                        <p className="mb-0">Payment Done Lifetime</p>
+                      </div>
+                    </div>
+
+                    <hr />
+                    <div className="row">
+                      {" "}
+                      <div className="col-sm-3 text-truncate">
+                        <p className="mb-0">Balance:</p>
+                      </div>
+                      <div className="col-sm-9">
+                        <p className="text-muted mb-0">
+                          {data.balance.balance}
+                        </p>
+                      </div>
+                    </div>
+
+                    <hr />
+                    <div className="row">
+                      {" "}
+                      <div className="col-sm-3 text-nowrap">
+                        <p className="mb-0"> Current Due:</p>
+                      </div>
+                      <div className="col-sm-9">
+                        <p className="text-muted mb-0">
+                          {data.balance.currentDue}
+                        </p>
+                      </div>
+                    </div>
+
+                    <hr />
+                    <div className="row">
+                      {" "}
+                      <div className="col-sm-3 text-nowrap">
+                        <p className="mb-0"> Current Due:</p>
+                      </div>
+                      <div className="col-sm-9">
+                        <p className="text-muted mb-0">
+                          {LiveBalance > 0 ? (
+                            <blink>
+                              {" "}
+                              <b
+                                className="blink_me"
+                                style={{ color: "green" }}
+                              >
+                                {LiveBalance}
+                              </b>
+                            </blink>
+                          ) : (
+                            <b className="blink_me" style={{ color: "red" }}>
+                              <blink>{LiveBalance}</blink>
+                            </b>
+                          )}
+                        </p>
+                      </div>
+                    </div>
+                  </SingleCard>
                 </SingleCard>
               </div>
             </div>

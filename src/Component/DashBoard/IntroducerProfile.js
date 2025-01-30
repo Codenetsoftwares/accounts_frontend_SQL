@@ -44,7 +44,6 @@ const IntroducerProfile = ({ data }) => {
   const [introducerName, setIntroducerName] = useState("");
   const [txType, setTxType] = useState("");
   const [search, setSearch] = useState("");
-  // const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [hoveredCard, setHoveredCard] = useState(null);
   const [activeCard, setActiveCard] = useState(null);
@@ -225,7 +224,7 @@ const IntroducerProfile = ({ data }) => {
                         width: "95%",
                         position: "relative",
                       }}
-                      onClick={() => handleCardClick(user.introId)}
+                      onClick={(e) => { handleCardClick(user.introId); handleLiveBl(e, user.introId); }}
                     >
                       <div className="card-body">
                         <button
@@ -319,7 +318,7 @@ const IntroducerProfile = ({ data }) => {
                                 <FontAwesomeIcon icon={faNetworkWired} />
                               </button>
                             </div>
-                            <div className="col-6 col-sm-4 col-md-3 col-lg-2">
+                            {/* <div className="col-6 col-sm-4 col-md-3 col-lg-2">
                               <button
                                 type="button"
                                 className="btn btn-steel-blue btn-sm btn-hover-zoom"
@@ -332,7 +331,7 @@ const IntroducerProfile = ({ data }) => {
                               >
                                 <FontAwesomeIcon icon={faBalanceScale} />
                               </button>
-                            </div>
+                            </div> */}
                           </div>
                         </div>
                       </div>
@@ -358,7 +357,7 @@ const IntroducerProfile = ({ data }) => {
 
           </SingleCard>
         </div>
-        {ID && !!ID.length && <LiveBalanceIntroducer ID={ID} />}
+        {/* {ID && !!ID.length && <LiveBalanceIntroducer ID={ID} />} */}
         <IntroducerTransaction
           TxType={txType}
           IntroducerName={introducerName}
@@ -375,7 +374,7 @@ const IntroducerProfile = ({ data }) => {
             ID={ID}
           />
         )}
-        {profileView && <IntroducerProfileView data={profileView} />}
+        {profileView && ID && !!ID.length && <IntroducerProfileView data={profileView} ID={ID} />}
       </div>
     </div>
   );
